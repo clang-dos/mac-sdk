@@ -1,0 +1,683 @@
+
+# ####
+
+- struct:
+    name: MIDIPacket
+    size: 256
+    members:
+    - name: flags
+      type: uint8_t
+    - name: len
+      type: uint8_t
+    - name: tcStamp
+      type: int32_t
+    - name: data
+      type: uint8_t[249]
+
+# ####
+
+- typedef:
+    name: MIDIPacketPtr
+    type: MIDIPacket*
+
+# ####
+
+- struct:
+    name: MIDIClkInfo
+    size: 8
+    members:
+    - name: syncType
+      type: INTEGER
+    - name: curTime
+      type: int32_t
+    - name: format
+      type: INTEGER
+
+# ####
+
+- struct:
+    name: MIDIIDRec
+    size: 8
+    members:
+    - name: clientID
+      type: OSType
+    - name: portID
+      type: OSType
+
+# ####
+
+- struct:
+    name: MIDIPortInfo
+    size: 20
+    members:
+    - name: portType
+      type: INTEGER
+    - name: timeBase
+      type: MIDIIDRec
+    - name: numConnects
+      type: INTEGER
+    - name: cList
+      type: MIDIIDRec[1]
+
+# ####
+
+- typedef:
+    name: MIDIPortInfoPtr
+    type: MIDIPortInfo*
+
+# ####
+
+- typedef:
+    name: MIDIPortInfoHdl
+    type: MIDIPortInfoPtr*
+
+# ####
+
+- typedef:
+    name: MIDIPortInfoHandle
+    type: MIDIPortInfoPtr*
+
+# ####
+
+- struct:
+    name: MIDIPortParams
+    size: 284
+    members:
+    - name: portID
+      type: OSType
+    - name: portType
+      type: INTEGER
+    - name: timeBase
+      type: INTEGER
+    - name: offsetTime
+      type: int32_t
+    - name: readHook
+      type: Ptr
+    - name: refCon
+      type: int32_t
+    - name: initClock
+      type: MIDIClkInfo
+    - name: name
+      type: Str255
+
+# ####
+
+- typedef:
+    name: MIDIPortParamsPtr
+    type: MIDIPortParams*
+
+# ####
+
+- struct:
+    name: MIDIIDList
+    size: 6
+    members:
+    - name: numIDs
+      type: INTEGER
+    - name: list
+      type: OSType[1]
+
+# ####
+
+- typedef:
+    name: MIDIIDListPtr
+    type: MIDIIDList*
+
+# ####
+
+- typedef:
+    name: MIDIIDListHdl
+    type: MIDIIDListPtr*
+
+# ####
+
+- typedef:
+    name: MIDIIDListHandle
+    type: MIDIIDListPtr*
+
+# ####
+
+- typedef:
+    name: MIDITimeProcPtr
+    type: ProcPtr
+
+# ####
+
+- typedef:
+    name: MIDIReadHookProcPtr
+    type: ProcPtr
+
+# ####
+
+- enum:
+    values:
+    - name: midiPortTypeTime
+      value: 0
+    - name: midiPortTypeInput
+      value: 1
+    - name: midiPortTypeOutput
+      value: 2
+    - name: midiPortTypeTimeInv
+      value: 3
+    - name: midiInternalSync
+      value: 0
+    - name: midiExternalSync
+      value: 1
+    - name: midiFormatMSec
+      value: 0
+    - name: midiFormatBeats
+      value: 1
+    - name: midiFormat24fpsBit
+      value: 2
+    - name: midiFormat25fpsBit
+      value: 3
+    - name: midiFormat30fpsDBit
+      value: 4
+    - name: midiFormat30fpsBit
+      value: 5
+    - name: midiFormat24fpsQF
+      value: 6
+    - name: midiFormat25fpsQF
+      value: 7
+    - name: midiFormat30fpsDQF
+      value: 8
+    - name: midiFormat30fpsQF
+      value: 9
+
+# ####
+
+- function:
+    name: MIDIVersion
+    return: NumVersion
+    comment: MIDI Manager
+    dispatcher: SoundDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: MIDISignIn
+    return: OSErr
+    args:
+    - name: clientID
+      type: OSType
+    - name: refCon
+      type: int32_t
+    - name: icon
+      type: Handle
+    - name: name
+      type: ConstStr255Param
+    dispatcher: SoundDispatch
+    selector: 262148
+
+# ####
+
+- function:
+    name: MIDISignOut
+    args:
+    - name: clientID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 524292
+
+# ####
+
+- function:
+    name: MIDIGetClients
+    return: MIDIIDListHdl
+    dispatcher: SoundDispatch
+    selector: 786436
+
+# ####
+
+- function:
+    name: MIDIGetClientName
+    args:
+    - name: clientID
+      type: OSType
+    - name: name
+      type: Str255
+    dispatcher: SoundDispatch
+    selector: 1048580
+
+# ####
+
+- function:
+    name: MIDISetClientName
+    args:
+    - name: clientID
+      type: OSType
+    - name: name
+      type: ConstStr255Param
+    dispatcher: SoundDispatch
+    selector: 1310724
+
+# ####
+
+- function:
+    name: MIDIGetPorts
+    return: MIDIIDListHdl
+    args:
+    - name: clientID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 1572868
+
+# ####
+
+- function:
+    name: MIDIAddPort
+    return: OSErr
+    args:
+    - name: clientID
+      type: OSType
+    - name: BufSize
+      type: INTEGER
+    - name: refnum
+      type: INTEGER*
+    - name: init
+      type: MIDIPortParamsPtr
+    dispatcher: SoundDispatch
+    selector: 1835012
+
+# ####
+
+- function:
+    name: MIDIGetPortInfo
+    return: MIDIPortInfoHdl
+    args:
+    - name: clientID
+      type: OSType
+    - name: portID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 2097156
+
+# ####
+
+- function:
+    name: MIDIConnectData
+    return: OSErr
+    args:
+    - name: srcClID
+      type: OSType
+    - name: srcPortID
+      type: OSType
+    - name: dstClID
+      type: OSType
+    - name: dstPortID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 2359300
+
+# ####
+
+- function:
+    name: MIDIUnConnectData
+    return: OSErr
+    args:
+    - name: srcClID
+      type: OSType
+    - name: srcPortID
+      type: OSType
+    - name: dstClID
+      type: OSType
+    - name: dstPortID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 2621444
+
+# ####
+
+- function:
+    name: MIDIConnectTime
+    return: OSErr
+    args:
+    - name: srcClID
+      type: OSType
+    - name: srcPortID
+      type: OSType
+    - name: dstClID
+      type: OSType
+    - name: dstPortID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 2883588
+
+# ####
+
+- function:
+    name: MIDIUnConnectTime
+    return: OSErr
+    args:
+    - name: srcClID
+      type: OSType
+    - name: srcPortID
+      type: OSType
+    - name: dstClID
+      type: OSType
+    - name: dstPortID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 3145732
+
+# ####
+
+- function:
+    name: MIDIFlush
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 3407876
+
+# ####
+
+- function:
+    name: MIDIGetReadHook
+    return: ProcPtr
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 3670020
+
+# ####
+
+- function:
+    name: MIDISetReadHook
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: hook
+      type: ProcPtr
+    dispatcher: SoundDispatch
+    selector: 3932164
+
+# ####
+
+- function:
+    name: MIDIGetPortName
+    args:
+    - name: clientID
+      type: OSType
+    - name: portID
+      type: OSType
+    - name: name
+      type: Str255
+    dispatcher: SoundDispatch
+    selector: 4194308
+
+# ####
+
+- function:
+    name: MIDISetPortName
+    args:
+    - name: clientID
+      type: OSType
+    - name: portID
+      type: OSType
+    - name: name
+      type: ConstStr255Param
+    dispatcher: SoundDispatch
+    selector: 4456452
+
+# ####
+
+- function:
+    name: MIDIWakeUp
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: time
+      type: int32_t
+    - name: period
+      type: int32_t
+    - name: timeProc
+      type: MIDITimeProcPtr
+    dispatcher: SoundDispatch
+    selector: 4718596
+
+# ####
+
+- function:
+    name: MIDIRemovePort
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 4980740
+
+# ####
+
+- function:
+    name: MIDIGetSync
+    return: INTEGER
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 5242884
+
+# ####
+
+- function:
+    name: MIDISetSync
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: sync
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 5505028
+
+# ####
+
+- function:
+    name: MIDIGetCurTime
+    return: int32_t
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 5767172
+
+# ####
+
+- function:
+    name: MIDISetCurTime
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: time
+      type: int32_t
+    dispatcher: SoundDispatch
+    selector: 6029316
+
+# ####
+
+- function:
+    name: MIDIStartTime
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 6291460
+
+# ####
+
+- function:
+    name: MIDIStopTime
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 6553604
+
+# ####
+
+- function:
+    name: MIDIPoll
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: offsetTime
+      type: int32_t
+    dispatcher: SoundDispatch
+    selector: 6815748
+
+# ####
+
+- function:
+    name: MIDIWritePacket
+    return: OSErr
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: packet
+      type: MIDIPacketPtr
+    dispatcher: SoundDispatch
+    selector: 7077892
+
+# ####
+
+- function:
+    name: MIDIWorldChanged
+    return: Boolean
+    args:
+    - name: clientID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 7340036
+
+# ####
+
+- function:
+    name: MIDIGetOffsetTime
+    return: int32_t
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 7602180
+
+# ####
+
+- function:
+    name: MIDISetOffsetTime
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: offsetTime
+      type: int32_t
+    dispatcher: SoundDispatch
+    selector: 7864324
+
+# ####
+
+- function:
+    name: MIDIConvertTime
+    return: int32_t
+    args:
+    - name: srcFormat
+      type: INTEGER
+    - name: dstFormat
+      type: INTEGER
+    - name: time
+      type: int32_t
+    dispatcher: SoundDispatch
+    selector: 8126468
+
+# ####
+
+- function:
+    name: MIDIGetRefCon
+    return: int32_t
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 8388612
+
+# ####
+
+- function:
+    name: MIDISetRefCon
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: refCon
+      type: int32_t
+    dispatcher: SoundDispatch
+    selector: 8650756
+
+# ####
+
+- function:
+    name: MIDIGetClRefCon
+    return: int32_t
+    args:
+    - name: clientID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 8912900
+
+# ####
+
+- function:
+    name: MIDISetClRefCon
+    args:
+    - name: clientID
+      type: OSType
+    - name: refCon
+      type: int32_t
+    dispatcher: SoundDispatch
+    selector: 9175044
+
+# ####
+
+- function:
+    name: MIDIGetTCFormat
+    return: INTEGER
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 9437188
+
+# ####
+
+- function:
+    name: MIDISetTCFormat
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: format
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 9699332
+
+# ####
+
+- function:
+    name: MIDISetRunRate
+    args:
+    - name: refnum
+      type: INTEGER
+    - name: rate
+      type: INTEGER
+    - name: period
+      type: int32_t
+    dispatcher: SoundDispatch
+    selector: 9961476
+
+# ####
+
+- function:
+    name: MIDIGetClientIcon
+    return: Handle
+    args:
+    - name: clientID
+      type: OSType
+    dispatcher: SoundDispatch
+    selector: 10223620

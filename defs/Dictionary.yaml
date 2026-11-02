@@ -1,0 +1,198 @@
+
+# ####
+
+- typedef:
+    name: DictionaryDataInsertMode
+    type: INTEGER
+
+# ####
+
+- enum:
+    values:
+    - name: kInsert
+      value: 0
+    - name: kReplace
+      value: 1
+    - name: kInsertOrReplace
+      value: 2
+
+# ####
+
+- enum:
+    values:
+    - name: kIsCaseSensitive
+      value: 16
+    - name: kIsNotDiacriticalSensitive
+      value: 32
+
+# ####
+
+- enum:
+    values:
+    - name: kNoun
+      value: -1
+    - name: kVerb
+      value: -2
+    - name: kAdjective
+      value: -3
+    - name: kAdverb
+      value: -4
+
+# ####
+
+- dispatcher:
+    name: DictionaryDispatch
+    trap: 43603
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: OpenDictionary
+    return: OSErr
+    args:
+    - name: theFsspecPtr
+      type: const FSSpec*
+    - name: accessPermission
+      type: SInt8
+    - name: dictionaryReference
+      type: SInt32*
+    dispatcher: DictionaryDispatch
+    selector: 1281
+
+# ####
+
+- function:
+    name: CloseDictionary
+    return: OSErr
+    args:
+    - name: dictionaryReference
+      type: SInt32
+    dispatcher: DictionaryDispatch
+    selector: 514
+
+# ####
+
+- function:
+    name: InsertRecordToDictionary
+    return: OSErr
+    args:
+    - name: dictionaryReference
+      type: SInt32
+    - name: key
+      type: ConstStr255Param
+    - name: recordDataHandle
+      type: Handle
+    - name: whichMode
+      type: DictionaryDataInsertMode
+    dispatcher: DictionaryDispatch
+    selector: 1795
+
+# ####
+
+- function:
+    name: DeleteRecordFromDictionary
+    return: OSErr
+    args:
+    - name: dictionaryReference
+      type: SInt32
+    - name: key
+      type: ConstStr255Param
+    dispatcher: DictionaryDispatch
+    selector: 1028
+
+# ####
+
+- function:
+    name: FindRecordInDictionary
+    return: OSErr
+    args:
+    - name: dictionaryReference
+      type: SInt32
+    - name: key
+      type: ConstStr255Param
+    - name: requestedAttributeTablePointer
+      type: SInt32*
+    - name: recordDataHandle
+      type: Handle
+    dispatcher: DictionaryDispatch
+    selector: 2053
+
+# ####
+
+- function:
+    name: FindRecordByIndexInDictionary
+    return: OSErr
+    args:
+    - name: dictionaryReference
+      type: SInt32
+    - name: recordIndex
+      type: SInt32
+    - name: requestedAttributeTablePointer
+      type: SInt32*
+    - name: recordKey
+      type: Str255
+    - name: recordDataHandle
+      type: Handle
+    dispatcher: DictionaryDispatch
+    selector: 2566
+
+# ####
+
+- function:
+    name: CompactDictionary
+    return: OSErr
+    args:
+    - name: dictionaryReference
+      type: SInt32
+    dispatcher: DictionaryDispatch
+    selector: 520
+
+# ####
+
+- struct:
+    name: DictionaryInformation
+    size: 84
+    members:
+    - name: dictionaryFSSpec
+      type: FSSpec
+    - name: numberOfRecords
+      type: int32_t
+    - name: currentGarbageSize
+      type: int32_t
+    - name: script
+      type: ScriptCode
+    - name: maximumKeyLength
+      type: INTEGER
+    - name: keyAttributes
+      type: INTEGER
+
+# ####
+
+- function:
+    name: InitializeDictionary
+    return: OSErr
+    args:
+    - name: theFsspecPtr
+      type: const FSSpec*
+    - name: maximumKeyLength
+      type: SInt16
+    - name: keyAttributes
+      type: SInt8
+    - name: script
+      type: ScriptCode
+    dispatcher: DictionaryDispatch
+    selector: 1280
+
+# ####
+
+- function:
+    name: GetDictionaryInformation
+    return: OSErr
+    args:
+    - name: dictionaryReference
+      type: SInt32
+    - name: theDictionaryInformation
+      type: DictionaryInformation*
+    dispatcher: DictionaryDispatch
+    selector: 1031

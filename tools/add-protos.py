@@ -33,7 +33,7 @@ DISPATCHER_NAMES = {
     0xA82A: "ComponentDispatch", 0xAA54: "TSMDispatch",
     0xA82F: "Pack13", 0xAADB: "CursorDeviceDispatch",
     0xA815: "SCSIDispatch", 0xA88F: "OSDispatch", 0xA8B5: "ScriptUtil",
-    0xAA53: "ControlStripDispatch", 0xA825: "TranslationDispatch",
+    0xAA53: "DictionaryDispatch", 0xA825: "TranslationDispatch",
     0xA9C9: "SysErrorDispatch", 0xA82B: "Pack9", 0xA08B: "CommToolboxDispatch",
     0xA06E: "SlotManager", 0xA08F: "DeferredTask", 0xA0AC: "FSMDispatch",
     0xA0DD: "PPCDispatch", 0xA05D: "MemoryDispatch", 0xA08D: "DebugUtil",
