@@ -44,7 +44,7 @@ TYPE_SIZE = {"uint8_t": 1, "uint16_t": 2, "uint32_t": 4, "uint64_t": 8,
 APPLE_NAMES = [
     "AppleEvents", "Aliases", "CodeFragments", "Components", "CursorDevices", "DatabaseAccess",
     "ConditionalMacros", "Connections", "CommResources", "CTBUtilities", "Displays", "ADSP", "ENET", "FileTransfers", "Terminals", "AppleTalk", "Dictionary", "MIDI", "Power", "PPCToolbox", "SCSI", "Slots", "TextServices",
-    "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices",
+    "Appearance", "Collections", "ControlDefinitions", "ContextualMenu", "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices",
     "Errors", "Events", "Files", "Finder", "FixMath", "Folders", "Fonts",
     "Gestalt", "Icons", "Interrupts", "Kernel", "Lists", "LowMem",
     "MacErrors", "MacMemory", "MacTypes", "MacWindows", "Memory", "Menus",
@@ -452,7 +452,10 @@ class Generator:
             fun.get("callconv") == "C" else "pascal "
         proto = f"{cc}{ret} {name}({params})"
 
-        if fun.get("inline"):
+        if fun.get("m68k") == "none":
+            # A library that never ran on 68k Macs (Mac OS 8.5 and later).
+            out += ["#if !TARGET_CPU_68K", proto + ";", "#endif"]
+        elif fun.get("inline"):
             names = ", ".join(a["name"] for a in args)
             macro = f"#define {name}({names}) ({fun['inline']})"
             cond = {"carbon": "!TARGET_API_MAC_CARBON", "ppc": "TARGET_CPU_68K",

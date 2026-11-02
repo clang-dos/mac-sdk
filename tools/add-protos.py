@@ -15,6 +15,9 @@ against the procInfo and refuses a mismatch. Functions with no glue
 entry (native-only, or 68k glue we do not know) get no 68k trap: they
 are PowerPC-only until someone adds the trap. Lines starting with //
 are copied as comments; a line `# Title` starts a section comment.
+After a line `## ppc-only`, functions are declared for PowerPC only
+(`m68k: none`), for libraries that never ran on 68k Macs, such as the
+ones new in Mac OS 8.5; `## both` ends that.
 
 Dispatchers the definitions do not name yet are added under the names
 in DISPATCHER_NAMES.
@@ -35,6 +38,8 @@ DISPATCHER_NAMES = {
     0xA815: "SCSIDispatch", 0xA88F: "OSDispatch", 0xA8B5: "ScriptUtil",
     0xAA53: "DictionaryDispatch", 0xA825: "MenuDispatch",
     0xA9C9: "SysErrorDispatch", 0xA82B: "Pack9", 0xA08B: "CommToolboxDispatch",
+    0xAA74: "AppearanceDispatch", 0xAA73: "ControlDispatch",
+    0xAA68: "DialogDispatch", 0xABF6: "CollectionMgr",
     0xA06E: "SlotManager", 0xA08F: "DeferredTask", 0xA0AC: "FSMDispatch",
     0xA0DD: "PPCDispatch", 0xA05D: "MemoryDispatch", 0xA08D: "DebugUtil",
     0xA085: "PowerDispatch", 0xA0AE: "VADBProc", 0xA089: "SCSIAtomic",
@@ -137,12 +142,18 @@ def norm_type(t):
 def main():
     out_path = sys.argv[1]
     info = json.load(open(os.path.join(ROOT, "data", "trapinfo.json")))
+    # Mac OS 8's Appearance, Collection and Drag Manager glue libraries
+    info.update(json.load(open(os.path.join(ROOT, "data", "trapinfo-os8.json"))))
     disp, sizes, names = load_defs()
     items, new_disp, report = [], {}, []
     pending_comment = None
+    ppc_only = False
     for line in sys.stdin:
         line = line.rstrip()
         if not line.strip():
+            continue
+        if line.startswith("## "):
+            ppc_only = line[3:].strip() == "ppc-only"
             continue
         if line.startswith("#"):
             pending_comment = line.lstrip("# ").strip()
@@ -168,7 +179,10 @@ def main():
             pending_comment = None
         o = info.get(name)
         status = "PowerPC only (no glue entry)"
-        if o:
+        if ppc_only:
+            fun["m68k"] = "none"
+            status = "PowerPC only"
+        elif o:
             status = attach_trap(fun, p, o, disp, new_disp, sizes)
         report.append(f"{name}: {status}")
         items.append({"function": fun})

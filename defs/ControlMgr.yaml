@@ -667,3 +667,1865 @@
         type: LONGINT
     name: ControlDefUPP
 
+
+# ####
+
+- enum:
+    values:
+    - name: gestaltControlMgrAttr
+      value: '''cntl'''
+    - name: gestaltControlMgrPresent
+      value: 1
+    - name: gestaltControlMgrPresentBit
+      value: 0
+    comment: Control Manager 8 (Appearance Manager). Gestalt selector.
+
+# ####
+
+- typedef:
+    name: ControlPartCode
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ControlFocusPart
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ControlContentType
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ControlButtonGraphicAlignment
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ControlButtonTextAlignment
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ControlButtonTextPlacement
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ControlVariant
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: EventModifiers
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ClickActivationResult
+    type: UInt32
+
+# ####
+
+- enum:
+    values:
+    - name: kControlBevelButtonSmallBevelProc
+      value: 32
+    - name: kControlBevelButtonNormalBevelProc
+      value: 33
+    - name: kControlBevelButtonLargeBevelProc
+      value: 34
+    - name: kControlSliderProc
+      value: 48
+    - name: kControlTriangleProc
+      value: 64
+    - name: kControlTriangleLeftFacingProc
+      value: 65
+    - name: kControlTriangleAutoToggleProc
+      value: 66
+    - name: kControlTriangleLeftFacingAutoToggleProc
+      value: 67
+    - name: kControlProgressBarProc
+      value: 80
+    - name: kControlLittleArrowsProc
+      value: 96
+    - name: kControlChasingArrowsProc
+      value: 112
+    - name: kControlTabLargeProc
+      value: 128
+    - name: kControlTabSmallProc
+      value: 129
+    - name: kControlTabLargeNorthProc
+      value: 128
+    - name: kControlTabSmallNorthProc
+      value: 129
+    - name: kControlTabLargeSouthProc
+      value: 130
+    - name: kControlTabSmallSouthProc
+      value: 131
+    - name: kControlTabLargeEastProc
+      value: 132
+    - name: kControlTabSmallEastProc
+      value: 133
+    - name: kControlTabLargeWestProc
+      value: 134
+    - name: kControlTabSmallWestProc
+      value: 135
+    - name: kControlSeparatorLineProc
+      value: 144
+    - name: kControlGroupBoxTextTitleProc
+      value: 160
+    - name: kControlGroupBoxCheckBoxProc
+      value: 161
+    - name: kControlGroupBoxPopupButtonProc
+      value: 162
+    - name: kControlGroupBoxSecondaryTextTitleProc
+      value: 164
+    - name: kControlGroupBoxSecondaryCheckBoxProc
+      value: 165
+    - name: kControlGroupBoxSecondaryPopupButtonProc
+      value: 166
+    - name: kControlImageWellProc
+      value: 176
+    - name: kControlPopupArrowEastProc
+      value: 192
+    - name: kControlPopupArrowWestProc
+      value: 193
+    - name: kControlPopupArrowNorthProc
+      value: 194
+    - name: kControlPopupArrowSouthProc
+      value: 195
+    - name: kControlPopupArrowSmallEastProc
+      value: 196
+    - name: kControlPopupArrowSmallWestProc
+      value: 197
+    - name: kControlPopupArrowSmallNorthProc
+      value: 198
+    - name: kControlPopupArrowSmallSouthProc
+      value: 199
+    - name: kControlPlacardProc
+      value: 224
+    - name: kControlClockTimeProc
+      value: 240
+    - name: kControlClockTimeSecondsProc
+      value: 241
+    - name: kControlClockDateProc
+      value: 242
+    - name: kControlClockMonthYearProc
+      value: 243
+    - name: kControlUserPaneProc
+      value: 256
+    - name: kControlEditTextProc
+      value: 272
+    - name: kControlEditTextPasswordProc
+      value: 274
+    - name: kControlEditTextInlineInputProc
+      value: 276
+    - name: kControlStaticTextProc
+      value: 288
+    - name: kControlPictureProc
+      value: 304
+    - name: kControlPictureNoTrackProc
+      value: 305
+    - name: kControlIconProc
+      value: 320
+    - name: kControlIconNoTrackProc
+      value: 321
+    - name: kControlIconSuiteProc
+      value: 322
+    - name: kControlIconSuiteNoTrackProc
+      value: 323
+    - name: kControlWindowHeaderProc
+      value: 336
+    - name: kControlWindowListViewHeaderProc
+      value: 337
+    - name: kControlListBoxProc
+      value: 352
+    - name: kControlListBoxAutoSizeProc
+      value: 353
+    - name: kControlPushButtonProc
+      value: 368
+    - name: kControlCheckBoxProc
+      value: 369
+    - name: kControlRadioButtonProc
+      value: 370
+    - name: kControlCheckBoxAutoToggleProc
+      value: 371
+    - name: kControlRadioButtonAutoToggleProc
+      value: 372
+    - name: kControlPushButLeftIconProc
+      value: 374
+    - name: kControlPushButRightIconProc
+      value: 375
+    - name: kControlScrollBarProc
+      value: 384
+    - name: kControlScrollBarLiveProc
+      value: 386
+    - name: kControlPopupButtonProc
+      value: 400
+    - name: kControlRadioGroupProc
+      value: 416
+    - name: kControlScrollTextBoxProc
+      value: 432
+    - name: kControlScrollTextBoxAutoScrollProc
+      value: 433
+    - name: kControlSliderLiveFeedback
+      value: 1
+    - name: kControlSliderHasTickMarks
+      value: 2
+    - name: kControlSliderReverseDirection
+      value: 4
+    - name: kControlSliderNonDirectional
+      value: 8
+    - name: kControlBevelButtonSmallBevel
+      value: 0
+    - name: kControlBevelButtonNormalBevel
+      value: 1
+    - name: kControlBevelButtonLargeBevel
+      value: 2
+    - name: kControlBehaviorPushbutton
+      value: 0
+    - name: kControlBehaviorToggles
+      value: 256
+    - name: kControlBehaviorSticky
+      value: 512
+    - name: kControlBehaviorSingleValueMenu
+      value: 0
+    - name: kControlBehaviorMultiValueMenu
+      value: 16384
+    - name: kControlBehaviorOffsetContents
+      value: 32768
+    - name: kControlBevelButtonMenuOnRight
+      value: 1
+    comment: Control definition IDs for the Appearance controls (NewControl's procID).
+
+# ####
+
+- enum:
+    values:
+    - name: kControlNoPart
+      value: 0
+    - name: kControlIndicatorPart
+      value: 129
+    - name: kControlDisabledPart
+      value: 254
+    - name: kControlInactivePart
+      value: 255
+    - name: kControlEntireControl
+      value: 0
+    - name: kControlStructureMetaPart
+      value: -1
+    - name: kControlContentMetaPart
+      value: -2
+    - name: kControlFocusNoPart
+      value: 0
+    - name: kControlFocusNextPart
+      value: -1
+    - name: kControlFocusPrevPart
+      value: -2
+    - name: kControlLabelPart
+      value: 1
+    - name: kControlMenuPart
+      value: 2
+    - name: kControlTrianglePart
+      value: 4
+    - name: kControlEditTextPart
+      value: 5
+    - name: kControlPicturePart
+      value: 6
+    - name: kControlIconPart
+      value: 7
+    - name: kControlClockPart
+      value: 8
+    - name: kControlButtonPart
+      value: 10
+    - name: kControlCheckBoxPart
+      value: 11
+    - name: kControlRadioButtonPart
+      value: 12
+    - name: kControlUpButtonPart
+      value: 20
+    - name: kControlDownButtonPart
+      value: 21
+    - name: kControlPageUpPart
+      value: 22
+    - name: kControlPageDownPart
+      value: 23
+    - name: kControlListBoxPart
+      value: 24
+    - name: kControlListBoxDoubleClickPart
+      value: 25
+    - name: kControlImageWellPart
+      value: 26
+    - name: kControlRadioGroupPart
+      value: 27
+    comment: Part codes.
+
+# ####
+
+- enum:
+    values:
+    - name: kControlSupportsGhosting
+      value: 1
+    - name: kControlSupportsEmbedding
+      value: 2
+    - name: kControlSupportsFocus
+      value: 4
+    - name: kControlWantsIdle
+      value: 8
+    - name: kControlWantsActivate
+      value: 16
+    - name: kControlHandlesTracking
+      value: 32
+    - name: kControlSupportsDataAccess
+      value: 64
+    - name: kControlHasSpecialBackground
+      value: 128
+    - name: kControlGetsFocusOnClick
+      value: 256
+    - name: kControlSupportsCalcBestRect
+      value: 512
+    - name: kControlSupportsLiveFeedback
+      value: 1024
+    - name: kControlHasRadioBehavior
+      value: 2048
+    comment: What GetControlFeatures reports.
+
+# ####
+
+- enum:
+    values:
+    - name: kControlMsgDrawGhost
+      value: 13
+    - name: kControlMsgCalcBestRect
+      value: 14
+    - name: kControlMsgHandleTracking
+      value: 15
+    - name: kControlMsgFocus
+      value: 16
+    - name: kControlMsgKeyDown
+      value: 17
+    - name: kControlMsgIdle
+      value: 18
+    - name: kControlMsgGetFeatures
+      value: 19
+    - name: kControlMsgSetData
+      value: 20
+    - name: kControlMsgGetData
+      value: 21
+    - name: kControlMsgActivate
+      value: 22
+    - name: kControlMsgSetUpBackground
+      value: 23
+    - name: kControlMsgCalcValueFromPos
+      value: 26
+    - name: kControlMsgTestNewMsgSupport
+      value: 27
+    - name: kControlMsgSubValueChanged
+      value: 25
+    - name: kControlMsgSubControlAdded
+      value: 28
+    - name: kControlMsgSubControlRemoved
+      value: 29
+    comment: Control definition messages added in Mac OS 8.
+
+# ####
+
+- enum:
+    values:
+    - name: kControlUseFontMask
+      value: 1
+    - name: kControlUseFaceMask
+      value: 2
+    - name: kControlUseSizeMask
+      value: 4
+    - name: kControlUseForeColorMask
+      value: 8
+    - name: kControlUseBackColorMask
+      value: 16
+    - name: kControlUseModeMask
+      value: 32
+    - name: kControlUseJustMask
+      value: 64
+    - name: kControlUseAllMask
+      value: 255
+    - name: kControlAddFontSizeMask
+      value: 256
+    - name: kControlAddToMetaFontMask
+      value: 512
+    comment: ControlFontStyleRec flags.
+
+# ####
+
+- struct:
+    name: ControlFontStyleRec
+    size: 24
+    members:
+    - name: flags
+      type: SInt16
+    - name: font
+      type: SInt16
+    - name: size
+      type: SInt16
+    - name: style
+      type: SInt16
+    - name: mode
+      type: SInt16
+    - name: just
+      type: SInt16
+    - name: foreColor
+      type: RGBColor
+    - name: backColor
+      type: RGBColor
+
+# ####
+
+- typedef:
+    name: ControlFontStylePtr
+    type: ControlFontStyleRec*
+
+# ####
+
+- enum:
+    values:
+    - name: kControlContentTextOnly
+      value: 0
+    - name: kControlNoContent
+      value: 0
+    - name: kControlContentIconSuiteRes
+      value: 1
+    - name: kControlContentCIconRes
+      value: 2
+    - name: kControlContentPictRes
+      value: 3
+    - name: kControlContentICONRes
+      value: 4
+    - name: kControlContentIconSuiteHandle
+      value: 129
+    - name: kControlContentCIconHandle
+      value: 130
+    - name: kControlContentPictHandle
+      value: 131
+    - name: kControlContentIconRef
+      value: 132
+    - name: kControlContentICON
+      value: 133
+    comment: Button and image well content.
+
+# ####
+
+- union:
+    name: ControlButtonContentUnion
+    size: 4
+    members:
+    - name: resID
+      type: SInt16
+    - name: cIconHandle
+      type: CIconHandle
+    - name: iconSuite
+      type: Handle
+    - name: iconRef
+      type: Handle
+    - name: picture
+      type: PicHandle
+    - name: ICONHandle
+      type: Handle
+
+# ####
+
+- struct:
+    name: ControlButtonContentInfo
+    size: 6
+    members:
+    - name: contentType
+      type: ControlContentType
+    - name: u
+      type: ControlButtonContentUnion
+
+# ####
+
+- typedef:
+    name: ControlButtonContentInfoPtr
+    type: ControlButtonContentInfo*
+
+# ####
+
+- typedef:
+    name: ControlImageContentInfo
+    type: ControlButtonContentInfo
+
+# ####
+
+- typedef:
+    name: ControlImageContentInfoPtr
+    type: ControlButtonContentInfo*
+
+# ####
+
+- enum:
+    values:
+    - name: kControlBevelButtonAlignSysDirection
+      value: -1
+    - name: kControlBevelButtonAlignCenter
+      value: 0
+    - name: kControlBevelButtonAlignLeft
+      value: 1
+    - name: kControlBevelButtonAlignRight
+      value: 2
+    - name: kControlBevelButtonAlignTop
+      value: 3
+    - name: kControlBevelButtonAlignBottom
+      value: 4
+    - name: kControlBevelButtonAlignTopLeft
+      value: 5
+    - name: kControlBevelButtonAlignBottomLeft
+      value: 6
+    - name: kControlBevelButtonAlignTopRight
+      value: 7
+    - name: kControlBevelButtonAlignBottomRight
+      value: 8
+    - name: kControlBevelButtonAlignTextSysDirection
+      value: 0
+    - name: kControlBevelButtonAlignTextCenter
+      value: 1
+    - name: kControlBevelButtonAlignTextFlushRight
+      value: -1
+    - name: kControlBevelButtonAlignTextFlushLeft
+      value: -2
+    - name: kControlBevelButtonPlaceSysDirection
+      value: -1
+    - name: kControlBevelButtonPlaceNormally
+      value: 0
+    - name: kControlBevelButtonPlaceToRightOfGraphic
+      value: 1
+    - name: kControlBevelButtonPlaceToLeftOfGraphic
+      value: 2
+    - name: kControlBevelButtonPlaceBelowGraphic
+      value: 3
+    - name: kControlBevelButtonPlaceAboveGraphic
+      value: 4
+
+# ####
+
+- enum:
+    values:
+    - name: kControlFontStyleTag
+      value: '''font'''
+    - name: kControlKeyFilterTag
+      value: '''fltr'''
+    - name: kControlBevelButtonContentTag
+      value: '''cont'''
+    - name: kControlBevelButtonTransformTag
+      value: '''tran'''
+    - name: kControlBevelButtonTextAlignTag
+      value: '''tali'''
+    - name: kControlBevelButtonTextOffsetTag
+      value: '''toff'''
+    - name: kControlBevelButtonGraphicAlignTag
+      value: '''gali'''
+    - name: kControlBevelButtonGraphicOffsetTag
+      value: '''goff'''
+    - name: kControlBevelButtonTextPlaceTag
+      value: '''tplc'''
+    - name: kControlBevelButtonMenuValueTag
+      value: '''mval'''
+    - name: kControlBevelButtonMenuHandleTag
+      value: '''mhnd'''
+    - name: kControlBevelButtonCenterPopupGlyphTag
+      value: '''pglc'''
+    - name: kControlTriangleLastValueTag
+      value: '''last'''
+    - name: kControlProgressBarIndeterminateTag
+      value: '''inde'''
+    - name: kControlTabContentRectTag
+      value: '''rect'''
+    - name: kControlTabEnabledFlagTag
+      value: '''enab'''
+    - name: kControlTabFontStyleTag
+      value: '''font'''
+    - name: kControlGroupBoxMenuHandleTag
+      value: '''mhan'''
+    - name: kControlGroupBoxFontStyleTag
+      value: '''font'''
+    - name: kControlImageWellContentTag
+      value: '''cont'''
+    - name: kControlImageWellTransformTag
+      value: '''tran'''
+    - name: kControlClockLongDateTag
+      value: '''date'''
+    - name: kControlClockFontStyleTag
+      value: '''font'''
+    - name: kControlUserItemDrawProcTag
+      value: '''uidp'''
+    - name: kControlUserPaneDrawProcTag
+      value: '''draw'''
+    - name: kControlUserPaneHitTestProcTag
+      value: '''hitt'''
+    - name: kControlUserPaneTrackingProcTag
+      value: '''trak'''
+    - name: kControlUserPaneIdleProcTag
+      value: '''idle'''
+    - name: kControlUserPaneKeyDownProcTag
+      value: '''keyd'''
+    - name: kControlUserPaneActivateProcTag
+      value: '''acti'''
+    - name: kControlUserPaneFocusProcTag
+      value: '''foci'''
+    - name: kControlUserPaneBackgroundProcTag
+      value: '''back'''
+    - name: kControlEditTextStyleTag
+      value: '''font'''
+    - name: kControlEditTextTextTag
+      value: '''text'''
+    - name: kControlEditTextTEHandleTag
+      value: '''than'''
+    - name: kControlEditTextKeyFilterTag
+      value: '''fltr'''
+    - name: kControlEditTextSelectionTag
+      value: '''sele'''
+    - name: kControlEditTextPasswordTag
+      value: '''pass'''
+    - name: kControlEditTextLockedTag
+      value: '''lock'''
+    - name: kControlStaticTextStyleTag
+      value: '''font'''
+    - name: kControlStaticTextTextTag
+      value: '''text'''
+    - name: kControlStaticTextTextHeightTag
+      value: '''thei'''
+    - name: kControlPictureHandleTag
+      value: '''pich'''
+    - name: kControlIconTransformTag
+      value: '''trfm'''
+    - name: kControlIconAlignmentTag
+      value: '''algn'''
+    - name: kControlIconSuiteTag
+      value: '''icsu'''
+    - name: kControlListBoxListHandleTag
+      value: '''lhan'''
+    - name: kControlListBoxKeyFilterTag
+      value: '''fltr'''
+    - name: kControlListBoxFontStyleTag
+      value: '''font'''
+    - name: kControlPushButtonDefaultTag
+      value: '''dflt'''
+    - name: kControlPushButtonCancelTag
+      value: '''cncl'''
+    - name: kControlPopupButtonMenuHandleTag
+      value: '''mhan'''
+    - name: kControlPopupButtonMenuIDTag
+      value: '''mnid'''
+    - name: kControlScrollTextBoxDelayBeforeAutoScrollTag
+      value: '''stdl'''
+    - name: kControlScrollTextBoxDelayBetweenAutoScrollTag
+      value: '''scdl'''
+    - name: kControlScrollTextBoxAutoScrollAmountTag
+      value: '''samt'''
+    - name: kControlScrollTextBoxContentsTag
+      value: '''tres'''
+    comment: Data tags for GetControlData and SetControlData.
+
+# ####
+
+- struct:
+    name: ControlEditTextSelectionRec
+    size: 4
+    members:
+    - name: selStart
+      type: SInt16
+    - name: selEnd
+      type: SInt16
+
+# ####
+
+- enum:
+    values:
+    - name: errMessageNotSupported
+      value: -30580
+    - name: errDataNotSupported
+      value: -30581
+    - name: errControlDoesntSupportFocus
+      value: -30582
+    - name: errUnknownControl
+      value: -30584
+    - name: errCouldntSetFocus
+      value: -30585
+    - name: errNoRootControl
+      value: -30586
+    - name: errRootAlreadyExists
+      value: -30587
+    - name: errInvalidPartCode
+      value: -30588
+    - name: errControlsAlreadyExist
+      value: -30589
+    - name: errControlIsNotEmbedder
+      value: -30590
+    - name: errDataSizeMismatch
+      value: -30591
+    - name: errControlHiddenOrDisabled
+      value: -30592
+    - name: errCantEmbedIntoSelf
+      value: -30594
+    - name: errCantEmbedRoot
+      value: -30595
+    - name: errItemNotControl
+      value: -30596
+    - name: controlInvalidDataVersionErr
+      value: -30597
+    - name: controlPropertyInvalid
+      value: -5603
+    - name: controlPropertyNotFoundErr
+      value: -5604
+    - name: controlHandleInvalidErr
+      value: -30599
+    comment: Control Manager errors.
+
+# ####
+
+- funptr:
+    name: ControlColorProcPtr
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inMessage
+      type: SInt16
+    - name: inDrawDepth
+      type: SInt16
+    - name: inDrawInColor
+      type: Boolean
+
+# ####
+
+- funptr:
+    name: ControlKeyFilterProcPtr
+    return: SInt16
+    args:
+    - name: theControl
+      type: ControlRef
+    - name: keyCode
+      type: SInt16*
+    - name: charCode
+      type: SInt16*
+    - name: modifiers
+      type: SInt16*
+
+# ####
+
+- funptr:
+    name: ControlUserPaneDrawProcPtr
+    args:
+    - name: control
+      type: ControlRef
+    - name: part
+      type: SInt16
+
+# ####
+
+- funptr:
+    name: ControlUserPaneHitTestProcPtr
+    return: ControlPartCode
+    args:
+    - name: control
+      type: ControlRef
+    - name: where
+      type: Point
+
+# ####
+
+- funptr:
+    name: ControlUserPaneTrackingProcPtr
+    return: ControlPartCode
+    args:
+    - name: control
+      type: ControlRef
+    - name: startPt
+      type: Point
+    - name: actionProc
+      type: ControlActionUPP
+
+# ####
+
+- funptr:
+    name: ControlUserPaneIdleProcPtr
+    args:
+    - name: control
+      type: ControlRef
+
+# ####
+
+- funptr:
+    name: ControlUserPaneKeyDownProcPtr
+    return: ControlPartCode
+    args:
+    - name: control
+      type: ControlRef
+    - name: keyCode
+      type: SInt16
+    - name: charCode
+      type: SInt16
+    - name: modifiers
+      type: SInt16
+
+# ####
+
+- funptr:
+    name: ControlUserPaneActivateProcPtr
+    args:
+    - name: control
+      type: ControlRef
+    - name: activating
+      type: Boolean
+
+# ####
+
+- funptr:
+    name: ControlUserPaneFocusProcPtr
+    return: ControlPartCode
+    args:
+    - name: control
+      type: ControlRef
+    - name: action
+      type: ControlFocusPart
+
+# ####
+
+- struct:
+    name: ControlID
+    size: 8
+    comment: Names a control in its window (Mac OS 8.5).
+    members:
+    - name: signature
+      type: OSType
+    - name: id
+      type: SInt32
+
+# ####
+
+- dispatcher:
+    name: ControlDispatch
+    trap: 43635
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: CreateRootControl
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: outControl
+      type: ControlRef*
+    comment: 'Control Manager 8: embedding, keyboard focus, control data (Appearance Manager)'
+    dispatcher: ControlDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: GetRootControl
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: outControl
+      type: ControlRef*
+    dispatcher: ControlDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: EmbedControl
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inContainer
+      type: ControlRef
+    dispatcher: ControlDispatch
+    selector: 3
+
+# ####
+
+- function:
+    name: AutoEmbedControl
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inWindow
+      type: WindowRef
+    dispatcher: ControlDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: IsControlActive
+    return: Boolean
+    args:
+    - name: inControl
+      type: ControlRef
+    dispatcher: ControlDispatch
+    selector: 5
+
+# ####
+
+- function:
+    name: IsControlVisible
+    return: Boolean
+    args:
+    - name: inControl
+      type: ControlRef
+    dispatcher: ControlDispatch
+    selector: 6
+
+# ####
+
+- function:
+    name: ActivateControl
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    dispatcher: ControlDispatch
+    selector: 7
+
+# ####
+
+- function:
+    name: DeactivateControl
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    dispatcher: ControlDispatch
+    selector: 8
+
+# ####
+
+- function:
+    name: FindControlUnderMouse
+    return: ControlRef
+    args:
+    - name: inWhere
+      type: Point
+    - name: inWindow
+      type: WindowRef
+    - name: outPart
+      type: SInt16*
+    dispatcher: ControlDispatch
+    selector: 9
+
+# ####
+
+- function:
+    name: HandleControlClick
+    return: ControlPartCode
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inWhere
+      type: Point
+    - name: inModifiers
+      type: EventModifiers
+    - name: inAction
+      type: ControlActionUPP
+    dispatcher: ControlDispatch
+    selector: 10
+
+# ####
+
+- function:
+    name: HandleControlKey
+    return: SInt16
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inKeyCode
+      type: SInt16
+    - name: inCharCode
+      type: SInt16
+    - name: inModifiers
+      type: EventModifiers
+    dispatcher: ControlDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: IdleControls
+    args:
+    - name: inWindow
+      type: WindowRef
+    dispatcher: ControlDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: GetKeyboardFocus
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: outControl
+      type: ControlRef*
+    dispatcher: ControlDispatch
+    selector: 13
+
+# ####
+
+- function:
+    name: SetKeyboardFocus
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: inControl
+      type: ControlRef
+    - name: inPart
+      type: ControlFocusPart
+    dispatcher: ControlDispatch
+    selector: 14
+
+# ####
+
+- function:
+    name: AdvanceKeyboardFocus
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    dispatcher: ControlDispatch
+    selector: 15
+
+# ####
+
+- function:
+    name: ReverseKeyboardFocus
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    dispatcher: ControlDispatch
+    selector: 16
+
+# ####
+
+- function:
+    name: GetControlFeatures
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: outFeatures
+      type: UInt32*
+    dispatcher: ControlDispatch
+    selector: 17
+
+# ####
+
+- function:
+    name: SetControlData
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inPart
+      type: ControlPartCode
+    - name: inTagName
+      type: ResType
+    - name: inSize
+      type: Size
+    - name: inData
+      type: Ptr
+    dispatcher: ControlDispatch
+    selector: 18
+
+# ####
+
+- function:
+    name: GetControlData
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inPart
+      type: ControlPartCode
+    - name: inTagName
+      type: ResType
+    - name: inBufferSize
+      type: Size
+    - name: inBuffer
+      type: Ptr
+    - name: outActualSize
+      type: Size*
+    dispatcher: ControlDispatch
+    selector: 19
+
+# ####
+
+- function:
+    name: GetControlDataSize
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inPart
+      type: ControlPartCode
+    - name: inTagName
+      type: ResType
+    - name: outMaxSize
+      type: Size*
+    dispatcher: ControlDispatch
+    selector: 20
+
+# ####
+
+- function:
+    name: GetSuperControl
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: outParent
+      type: ControlRef*
+    dispatcher: ControlDispatch
+    selector: 21
+
+# ####
+
+- function:
+    name: CountSubControls
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: outNumChildren
+      type: UInt16*
+    dispatcher: ControlDispatch
+    selector: 22
+
+# ####
+
+- function:
+    name: GetIndexedSubControl
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inIndex
+      type: UInt16
+    - name: outSubControl
+      type: ControlRef*
+    dispatcher: ControlDispatch
+    selector: 23
+
+# ####
+
+- function:
+    name: DrawControlInCurrentPort
+    args:
+    - name: inControl
+      type: ControlRef
+    dispatcher: ControlDispatch
+    selector: 24
+
+# ####
+
+- function:
+    name: ClearKeyboardFocus
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    dispatcher: ControlDispatch
+    selector: 25
+
+# ####
+
+- function:
+    name: SetControlSupervisor
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inBoss
+      type: ControlRef
+    dispatcher: ControlDispatch
+    selector: 26
+
+# ####
+
+- function:
+    name: GetBestControlRect
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: outRect
+      type: Rect*
+    - name: outBaseLineOffset
+      type: SInt16*
+    dispatcher: ControlDispatch
+    selector: 27
+
+# ####
+
+- function:
+    name: SetControlFontStyle
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inStyle
+      type: const ControlFontStyleRec*
+    dispatcher: ControlDispatch
+    selector: 28
+
+# ####
+
+- function:
+    name: SetUpControlBackground
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    dispatcher: ControlDispatch
+    selector: 29
+
+# ####
+
+- function:
+    name: SetControlVisibility
+    return: OSErr
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inIsVisible
+      type: Boolean
+    - name: inDoDraw
+      type: Boolean
+    dispatcher: ControlDispatch
+    selector: 30
+
+# ####
+
+- function:
+    name: SendControlMessage
+    return: SInt32
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inMessage
+      type: SInt16
+    - name: inParam
+      type: void*
+    dispatcher: ControlDispatch
+    selector: 4294967294
+
+# ####
+
+- function:
+    name: DumpControlHierarchy
+    return: OSErr
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: inDumpFile
+      type: const FSSpec*
+    dispatcher: ControlDispatch
+    selector: 4294967295
+
+# ####
+
+- function:
+    name: GetControl32BitValue
+    return: SInt32
+    args:
+    - name: theControl
+      type: ControlRef
+    comment: Control Manager in Mac OS 8.5 (ControlsLib)
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControl32BitValue
+    args:
+    - name: theControl
+      type: ControlRef
+    - name: newValue
+      type: SInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControl32BitMaximum
+    return: SInt32
+    args:
+    - name: theControl
+      type: ControlRef
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControl32BitMaximum
+    args:
+    - name: theControl
+      type: ControlRef
+    - name: newMaximum
+      type: SInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControl32BitMinimum
+    return: SInt32
+    args:
+    - name: theControl
+      type: ControlRef
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControl32BitMinimum
+    args:
+    - name: theControl
+      type: ControlRef
+    - name: newMinimum
+      type: SInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControlViewSize
+    return: SInt32
+    args:
+    - name: theControl
+      type: ControlRef
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControlViewSize
+    args:
+    - name: theControl
+      type: ControlRef
+    - name: newViewSize
+      type: SInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: IsValidControlHandle
+    return: Boolean
+    args:
+    - name: theControl
+      type: ControlRef
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControlID
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inID
+      type: const ControlID*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControlID
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: outID
+      type: ControlID*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControlByID
+    return: OSStatus
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: inID
+      type: const ControlID*
+    - name: outControl
+      type: ControlRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetUpControlTextColor
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControlRegion
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inPart
+      type: ControlPartCode
+    - name: outRegion
+      type: RgnHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControlColorProc
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inProc
+      type: ControlColorUPP
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControlProperty
+    return: OSStatus
+    args:
+    - name: control
+      type: ControlRef
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    - name: bufferSize
+      type: UInt32
+    - name: actualSize
+      type: UInt32*
+    - name: propertyBuffer
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControlPropertySize
+    return: OSStatus
+    args:
+    - name: control
+      type: ControlRef
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    - name: size
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControlProperty
+    return: OSStatus
+    args:
+    - name: control
+      type: ControlRef
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    - name: propertySize
+      type: UInt32
+    - name: propertyData
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: RemoveControlProperty
+    return: OSStatus
+    args:
+    - name: control
+      type: ControlRef
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    m68k: none
+
+# ####
+
+- function:
+    name: GetControlClickActivation
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inWhere
+      type: Point
+    - name: inModifiers
+      type: EventModifiers
+    - name: outResult
+      type: ClickActivationResult*
+    m68k: none
+
+# ####
+
+- function:
+    name: HandleControlContextualMenuClick
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inWhere
+      type: Point
+    - name: menuDisplayed
+      type: Boolean*
+    m68k: none
+
+# ####
+
+- function:
+    name: HandleControlSetCursor
+    return: OSStatus
+    args:
+    - name: control
+      type: ControlRef
+    - name: localPoint
+      type: Point
+    - name: modifiers
+      type: EventModifiers
+    - name: cursorWasSet
+      type: Boolean*
+    m68k: none
+
+# ####
+
+- function:
+    name: HandleControlDragTracking
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inMessage
+      type: DragTrackingMessage
+    - name: inDrag
+      type: DragReference
+    - name: outLikesDrag
+      type: Boolean*
+    m68k: none
+
+# ####
+
+- function:
+    name: HandleControlDragReceive
+    return: OSStatus
+    args:
+    - name: inControl
+      type: ControlRef
+    - name: inDrag
+      type: DragReference
+    m68k: none
+
+# ####
+
+- function:
+    name: SetControlDragTrackingEnabled
+    return: OSStatus
+    args:
+    - name: theControl
+      type: ControlRef
+    - name: tracks
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: IsControlDragTrackingEnabled
+    return: OSStatus
+    args:
+    - name: theControl
+      type: ControlRef
+    - name: tracks
+      type: Boolean*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetAutomaticControlDragTrackingEnabledForWindow
+    return: OSStatus
+    args:
+    - name: theWindow
+      type: WindowRef
+    - name: tracks
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: IsAutomaticControlDragTrackingEnabledForWindow
+    return: OSStatus
+    args:
+    - name: theWindow
+      type: WindowRef
+    - name: tracks
+      type: Boolean*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetBevelButtonMenuValue
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: outValue
+      type: SInt16*
+    comment: Accessors for the Appearance controls. On 68k they are inline calls to GetControlData and
+      SetControlData; PowerPC gets them from AppearanceLib.
+    m68k-body: |
+      return GetControlData(inButton, 0, kControlBevelButtonMenuValueTag, sizeof(SInt16), (Ptr)outValue, 0);
+
+# ####
+
+- function:
+    name: SetBevelButtonMenuValue
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: inValue
+      type: SInt16
+    m68k-body: |
+      return SetControlData(inButton, 0, kControlBevelButtonMenuValueTag, sizeof(SInt16), (Ptr)&inValue);
+
+# ####
+
+- function:
+    name: GetBevelButtonMenuHandle
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: outHandle
+      type: MenuHandle*
+    m68k-body: |
+      return GetControlData(inButton, 0, kControlBevelButtonMenuHandleTag, sizeof(MenuHandle), (Ptr)outHandle, 0);
+
+# ####
+
+- function:
+    name: GetBevelButtonContentInfo
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: outContent
+      type: ControlButtonContentInfoPtr
+    m68k-body: |
+      return GetControlData(inButton, 0, kControlBevelButtonContentTag, sizeof(ControlButtonContentInfo), (Ptr)outContent, 0);
+
+# ####
+
+- function:
+    name: SetBevelButtonContentInfo
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: inContent
+      type: ControlButtonContentInfoPtr
+    m68k-body: |
+      return SetControlData(inButton, 0, kControlBevelButtonContentTag, sizeof(ControlButtonContentInfo), (Ptr)inContent);
+
+# ####
+
+- function:
+    name: SetBevelButtonTransform
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: transform
+      type: IconTransformType
+    m68k-body: |
+      return SetControlData(inButton, 0, kControlBevelButtonTransformTag, sizeof(IconTransformType), (Ptr)&transform);
+
+# ####
+
+- function:
+    name: SetBevelButtonGraphicAlignment
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: inAlign
+      type: ControlButtonGraphicAlignment
+    - name: inHOffset
+      type: SInt16
+    - name: inVOffset
+      type: SInt16
+    m68k-body: |
+      Point offset;
+      OSErr err = SetControlData(inButton, 0, kControlBevelButtonGraphicAlignTag, sizeof(ControlButtonGraphicAlignment), (Ptr)&inAlign);
+      if (err)
+        return err;
+      offset.h = inHOffset;
+      offset.v = inVOffset;
+      return SetControlData(inButton, 0, kControlBevelButtonGraphicOffsetTag, sizeof(Point), (Ptr)&offset);
+
+# ####
+
+- function:
+    name: SetBevelButtonTextAlignment
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: inAlign
+      type: ControlButtonTextAlignment
+    - name: inHOffset
+      type: SInt16
+    m68k-body: |
+      OSErr err = SetControlData(inButton, 0, kControlBevelButtonTextAlignTag, sizeof(ControlButtonTextAlignment), (Ptr)&inAlign);
+      if (err)
+        return err;
+      return SetControlData(inButton, 0, kControlBevelButtonTextOffsetTag, sizeof(SInt16), (Ptr)&inHOffset);
+
+# ####
+
+- function:
+    name: SetBevelButtonTextPlacement
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: inWhere
+      type: ControlButtonTextPlacement
+    m68k-body: |
+      return SetControlData(inButton, 0, kControlBevelButtonTextPlaceTag, sizeof(ControlButtonTextPlacement), (Ptr)&inWhere);
+
+# ####
+
+- function:
+    name: GetImageWellContentInfo
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: outContent
+      type: ControlButtonContentInfoPtr
+    m68k-body: |
+      return GetControlData(inButton, 0, kControlImageWellContentTag, sizeof(ControlButtonContentInfo), (Ptr)outContent, 0);
+
+# ####
+
+- function:
+    name: SetImageWellContentInfo
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: inContent
+      type: ControlButtonContentInfoPtr
+    m68k-body: |
+      return SetControlData(inButton, 0, kControlImageWellContentTag, sizeof(ControlButtonContentInfo), (Ptr)inContent);
+
+# ####
+
+- function:
+    name: SetImageWellTransform
+    return: OSErr
+    args:
+    - name: inButton
+      type: ControlRef
+    - name: inTransform
+      type: IconTransformType
+    m68k-body: |
+      return SetControlData(inButton, 0, kControlImageWellTransformTag, sizeof(IconTransformType), (Ptr)&inTransform);
+
+# ####
+
+- function:
+    name: GetTabContentRect
+    return: OSErr
+    args:
+    - name: inTabControl
+      type: ControlRef
+    - name: outContentRect
+      type: Rect*
+    m68k-body: |
+      return GetControlData(inTabControl, 0, kControlTabContentRectTag, sizeof(Rect), (Ptr)outContentRect, 0);
+
+# ####
+
+- function:
+    name: SetTabEnabled
+    return: OSErr
+    args:
+    - name: inTabControl
+      type: ControlRef
+    - name: inTabToHilite
+      type: SInt16
+    - name: inEnabled
+      type: Boolean
+    m68k-body: |
+      return SetControlData(inTabControl, inTabToHilite, kControlTabEnabledFlagTag, sizeof(Boolean), (Ptr)&inEnabled);
+
+# ####
+
+- function:
+    name: SetDisclosureTriangleLastValue
+    return: OSErr
+    args:
+    - name: inTabControl
+      type: ControlRef
+    - name: inValue
+      type: SInt16
+    m68k-body: |
+      return SetControlData(inTabControl, 0, kControlTriangleLastValueTag, sizeof(SInt16), (Ptr)&inValue);

@@ -3,6 +3,8 @@
 #define __MV_MENUMGR__
 
 #include "../ConditionalMacros.h"
+#include "DriverServices.h"
+#include "EventMgr.h"
 #include "MacTypes.h"
 #include "QuickDraw.h"
 
@@ -326,6 +328,193 @@ enum { _MenuDispatch = 0xA825 };
 pascal void InsertFontResMenu(MenuHandle theMenu, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0400, 0xA825);
 
 pascal void InsertIntlResMenu(MenuHandle theMenu, ResType theType, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0601, 0xA825);
+
+// Menu Manager 8: item modifiers, icon types, keyboard glyphs.
+typedef UInt32 MenuCommand;
+
+enum {
+    gestaltMenuMgrAttr = 'menu',
+    gestaltMenuMgrPresent = 1,
+    gestaltMenuMgrPresentBit = 0,
+    kMenuNoModifiers = 0,
+    kMenuShiftModifier = 1,
+    kMenuOptionModifier = 2,
+    kMenuControlModifier = 4,
+    kMenuNoCommandModifier = 8,
+    kMenuNoIcon = 0,
+    kMenuIconType = 1,
+    kMenuShrinkIconType = 2,
+    kMenuSmallIconType = 3,
+    kMenuColorIconType = 4,
+    kMenuIconSuiteType = 5,
+    kMenuIconRefType = 6,
+    kMenuNullGlyph = 0,
+    kMenuTabRightGlyph = 2,
+    kMenuTabLeftGlyph = 3,
+    kMenuEnterGlyph = 4,
+    kMenuShiftGlyph = 5,
+    kMenuControlGlyph = 6,
+    kMenuOptionGlyph = 7,
+    kMenuSpaceGlyph = 9,
+    kMenuDeleteRightGlyph = 10,
+    kMenuReturnGlyph = 11,
+    kMenuReturnR2LGlyph = 12,
+    kMenuNonmarkingReturnGlyph = 13,
+    kMenuPencilGlyph = 15,
+    kMenuDownwardArrowDashedGlyph = 16,
+    kMenuCommandGlyph = 17,
+    kMenuCheckmarkGlyph = 18,
+    kMenuDiamondGlyph = 19,
+    kMenuAppleLogoFilledGlyph = 20,
+    kMenuParagraphKoreanGlyph = 21,
+    kMenuDeleteLeftGlyph = 23,
+    kMenuLeftArrowDashedGlyph = 24,
+    kMenuUpArrowDashedGlyph = 25,
+    kMenuRightArrowDashedGlyph = 26,
+    kMenuEscapeGlyph = 27,
+    kMenuClearGlyph = 28,
+    kMenuLeftDoubleQuotesJapaneseGlyph = 29,
+    kMenuRightDoubleQuotesJapaneseGlyph = 30,
+    kMenuTrademarkJapaneseGlyph = 31,
+    kMenuBlankGlyph = 97,
+    kMenuPageUpGlyph = 98,
+    kMenuCapsLockGlyph = 99,
+    kMenuLeftArrowGlyph = 100,
+    kMenuRightArrowGlyph = 101,
+    kMenuNorthwestArrowGlyph = 102,
+    kMenuHelpGlyph = 103,
+    kMenuUpArrowGlyph = 104,
+    kMenuSoutheastArrowGlyph = 105,
+    kMenuDownArrowGlyph = 106,
+    kMenuPageDownGlyph = 107,
+    kMenuAppleLogoOutlineGlyph = 108,
+    kMenuContextualMenuGlyph = 109,
+    kMenuPowerGlyph = 110,
+    kMenuF1Glyph = 111,
+    kMenuF2Glyph = 112,
+    kMenuF3Glyph = 113,
+    kMenuF4Glyph = 114,
+    kMenuF5Glyph = 115,
+    kMenuF6Glyph = 116,
+    kMenuF7Glyph = 117,
+    kMenuF8Glyph = 118,
+    kMenuF9Glyph = 119,
+    kMenuF10Glyph = 120,
+    kMenuF11Glyph = 121,
+    kMenuF12Glyph = 122,
+    kMenuF13Glyph = 135,
+    kMenuF14Glyph = 136,
+    kMenuF15Glyph = 137,
+    kMenuControlISOGlyph = 138,
+};
+
+// Menu Manager 8 (Appearance Manager)
+pascal UInt32 MenuEvent(const EventRecord *inEvent) M68K_INLINE(0x303C, 0x020C, 0xA825);
+
+pascal OSErr SetMenuItemCommandID(MenuRef inMenu, SInt16 inItem, UInt32 inCommandID) M68K_INLINE(0x303C, 0x0502, 0xA825);
+
+pascal OSErr GetMenuItemCommandID(MenuRef inMenu, SInt16 inItem, UInt32 *outCommandID) M68K_INLINE(0x303C, 0x0503, 0xA825);
+
+pascal OSErr SetMenuItemModifiers(MenuRef inMenu, SInt16 inItem, UInt8 inModifiers) M68K_INLINE(0x303C, 0x0404, 0xA825);
+
+pascal OSErr GetMenuItemModifiers(MenuRef inMenu, SInt16 inItem, UInt8 *outModifiers) M68K_INLINE(0x303C, 0x0505, 0xA825);
+
+pascal OSErr SetMenuItemIconHandle(MenuRef inMenu, SInt16 inItem, UInt8 inIconType, Handle inIconHandle) M68K_INLINE(0x303C, 0x0606, 0xA825);
+
+pascal OSErr GetMenuItemIconHandle(MenuRef inMenu, SInt16 inItem, UInt8 *outIconType, Handle *outIconHandle) M68K_INLINE(0x303C, 0x0707, 0xA825);
+
+pascal OSErr SetMenuItemTextEncoding(MenuRef inMenu, SInt16 inItem, TextEncoding inScriptID) M68K_INLINE(0x303C, 0x0508, 0xA825);
+
+pascal OSErr GetMenuItemTextEncoding(MenuRef inMenu, SInt16 inItem, TextEncoding *outScriptID) M68K_INLINE(0x303C, 0x0509, 0xA825);
+
+pascal OSErr SetMenuItemHierarchicalID(MenuRef inMenu, SInt16 inItem, SInt16 inHierID) M68K_INLINE(0x303C, 0x040D, 0xA825);
+
+pascal OSErr GetMenuItemHierarchicalID(MenuRef inMenu, SInt16 inItem, SInt16 *outHierID) M68K_INLINE(0x303C, 0x050E, 0xA825);
+
+pascal OSErr SetMenuItemFontID(MenuRef inMenu, SInt16 inItem, SInt16 inFontID) M68K_INLINE(0x303C, 0x040F, 0xA825);
+
+pascal OSErr GetMenuItemFontID(MenuRef inMenu, SInt16 inItem, SInt16 *outFontID) M68K_INLINE(0x303C, 0x0510, 0xA825);
+
+pascal OSErr SetMenuItemRefCon(MenuRef inMenu, SInt16 inItem, UInt32 inRefCon) M68K_INLINE(0x303C, 0x050A, 0xA825);
+
+pascal OSErr GetMenuItemRefCon(MenuRef inMenu, SInt16 inItem, UInt32 *outRefCon) M68K_INLINE(0x303C, 0x050B, 0xA825);
+
+pascal OSErr SetMenuItemRefCon2(MenuRef inMenu, SInt16 inItem, UInt32 inRefCon2) M68K_INLINE(0x303C, 0x0511, 0xA825);
+
+pascal OSErr GetMenuItemRefCon2(MenuRef inMenu, SInt16 inItem, UInt32 *outRefCon2) M68K_INLINE(0x303C, 0x0512, 0xA825);
+
+pascal OSErr SetMenuItemKeyGlyph(MenuRef inMenu, SInt16 inItem, SInt16 inGlyph) M68K_INLINE(0x303C, 0x0513, 0xA825);
+
+pascal OSErr GetMenuItemKeyGlyph(MenuRef inMenu, SInt16 inItem, SInt16 *outGlyph) M68K_INLINE(0x303C, 0x0514, 0xA825);
+
+// Menu Manager in Mac OS 8.5 (MenusLib)
+#if !TARGET_CPU_68K
+pascal void EnableMenuItemIcon(MenuRef theMenu, UInt16 item);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void DisableMenuItemIcon(MenuRef theMenu, UInt16 item);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean IsMenuItemIconEnabled(MenuRef theMenu, UInt16 item);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean IsMenuItemEnabled(MenuRef menu, UInt16 item);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean IsMenuBarVisible(void);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void ShowMenuBar(void);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void HideMenuBar(void);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetMenuFont(MenuRef menu, SInt16 *outFontID, UInt16 *outFontSize);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetMenuFont(MenuRef menu, SInt16 inFontID, UInt16 inFontSize);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean GetMenuExcludesMarkColumn(MenuRef menu);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetMenuExcludesMarkColumn(MenuRef menu, Boolean excludesMark);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetMenuItemProperty(MenuRef menu, SInt16 item, OSType propertyCreator, OSType propertyTag, UInt32 bufferSize, UInt32 *actualSize, void *propertyBuffer);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetMenuItemPropertySize(MenuRef menu, SInt16 item, OSType propertyCreator, OSType propertyTag, UInt32 *size);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetMenuItemProperty(MenuRef menu, SInt16 item, OSType propertyCreator, OSType propertyTag, UInt32 propertySize, void *propertyData);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus RemoveMenuItemProperty(MenuRef menu, SInt16 item, OSType propertyCreator, OSType propertyTag);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus InsertMenuItemText(MenuRef menu, ConstStr255Param inString, UInt16 afterItem);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus AppendMenuItemText(MenuRef menu, ConstStr255Param inString);
+#endif
 
 #if TARGET_CPU_68K
 #if TARGET_API_MAC_CARBON

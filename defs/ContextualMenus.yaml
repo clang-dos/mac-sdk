@@ -1,0 +1,92 @@
+
+# ####
+
+- enum:
+    values:
+    - name: gestaltContextualMenuAttr
+      value: '''cmnu'''
+    - name: gestaltContextualMenuUnusedBit
+      value: 0
+    - name: gestaltContextualMenuTrapAvailable
+      value: 1
+    - name: kCMHelpItemNoHelp
+      value: 0
+    - name: kCMHelpItemAppleGuide
+      value: 1
+    - name: kCMHelpItemOtherHelp
+      value: 2
+    - name: kCMNothingSelected
+      value: 0
+    - name: kCMMenuItemSelected
+      value: 1
+    - name: kCMShowHelpSelected
+      value: 3
+    comment: 'Contextual Menu Manager: what ContextualMenuSelect returns, and help types.'
+- dispatcher:
+    name: ContextualMenuDispatch
+    trap: 43634
+    selector-location: D0L
+
+# ####
+
+
+# ####
+
+- function:
+    name: InitContextualMenus
+    return: OSStatus
+    comment: Contextual Menu Manager (Mac OS 8). Trap 0xAA72 with the selector in D0, as installed by
+      the Contextual Menu Extension.
+    dispatcher: ContextualMenuDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: IsShowContextualMenuClick
+    return: Boolean
+    args:
+    - name: inEvent
+      type: const EventRecord*
+    dispatcher: ContextualMenuDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: ContextualMenuSelect
+    return: OSStatus
+    args:
+    - name: inMenu
+      type: MenuHandle
+    - name: inGlobalLocation
+      type: Point
+    - name: inReserved
+      type: Boolean
+    - name: inHelpType
+      type: UInt32
+    - name: inHelpItemString
+      type: ConstStr255Param
+    - name: inSelection
+      type: const AEDesc*
+    - name: outUserSelectionType
+      type: UInt32*
+    - name: outMenuID
+      type: SInt16*
+    - name: outMenuItem
+      type: UInt16*
+    dispatcher: ContextualMenuDispatch
+    selector: 3
+
+# ####
+
+- function:
+    name: ProcessIsContextualMenuClient
+    return: OSStatus
+    args:
+    - name: inPSN
+      type: ProcessSerialNumber*
+    - name: outIsClient
+      type: Boolean*
+    dispatcher: ContextualMenuDispatch
+    selector: 4

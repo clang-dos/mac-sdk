@@ -1,0 +1,3196 @@
+{
+ "ActivateControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x7",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "AddCollectionItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x8",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "AddCollectionItemHdl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x21",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "AddDragItemFlavor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFE8",
+  "result": 2,
+  "selector": "0x7",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "AdvanceKeyboardFocus": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0xF",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "AutoEmbedControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "AutoSizeDialog": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x20D",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "ChangeDragBehaviors": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x28",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "ClearKeyboardFocus": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x19",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "CloneCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003F8",
+  "result": 4,
+  "selector": "0x2",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "CollapseAllWindows": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000001B8",
+  "result": 4,
+  "selector": "0x12",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "CollapseWindow": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000007B8",
+  "result": 4,
+  "selector": "0x11",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "CollectionTagExists": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FD8",
+  "result": 1,
+  "selector": "0x12",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "CopyCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FF8",
+  "result": 4,
+  "selector": "0x4",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "CountCollectionItems": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003F8",
+  "result": 4,
+  "selector": "0x7",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "CountCollectionOwners": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003F8",
+  "result": 4,
+  "selector": "0x3",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "CountCollectionTags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003F8",
+  "result": 4,
+  "selector": "0x13",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "CountDragItemFlavors": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x10",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "CountDragItems": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "CountSubControls": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x16",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "CountTaggedCollectionItems": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FF8",
+  "result": 4,
+  "selector": "0x15",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "CreateRootControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x1",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "DeactivateControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x8",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "DisposeCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003C8",
+  "result": 0,
+  "selector": "0x1",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "DisposeDrag": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x6",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "DragPostScroll": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x21",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "DragPreScroll": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002BE8",
+  "result": 2,
+  "selector": "0x20",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "DrawControlInCurrentPort": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000388",
+  "result": 0,
+  "selector": "0x18",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "DrawThemeEditTextFrame": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0x9",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeFocusRect": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000007B8",
+  "result": 4,
+  "selector": "0xB",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeFocusRegion": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000007B8",
+  "result": 4,
+  "selector": "0x23",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeGenericWell": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001FB8",
+  "result": 4,
+  "selector": "0x22",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeListBoxFrame": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0xA",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeMenuBackground": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00000BB8",
+  "result": 4,
+  "selector": "0x1B",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeMenuBarBackground": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BB8",
+  "result": 4,
+  "selector": "0x18",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeMenuItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00FAAFB8",
+  "result": 4,
+  "selector": "0x1D",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeMenuSeparator": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003B8",
+  "result": 4,
+  "selector": "0x1E",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeMenuTitle": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FEFB8",
+  "result": 4,
+  "selector": "0x19",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeModelessDialogFrame": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0x8",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemePlacard": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0x7",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemePrimaryGroup": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0xC",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeSecondaryGroup": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0xD",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeSeparator": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0xE",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeWindowHeader": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0x5",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DrawThemeWindowListViewHeader": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0x6",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "DumpControlHierarchy": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0xFFFFFFFF",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "EmbedControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x3",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "EmptyCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003C8",
+  "result": 0,
+  "selector": "0x1A",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "FindControlUnderMouse": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FB8",
+  "result": 4,
+  "selector": "0x9",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "FlattenCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x1B",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "FlattenCollectionToHdl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x25",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "FlattenPartialCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x1C",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetBestControlRect": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x1B",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetCollectionDefaultAttributes": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003F8",
+  "result": 4,
+  "selector": "0x5",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetCollectionExceptionProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003F8",
+  "result": 4,
+  "selector": "0x1E",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetCollectionItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x9",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetCollectionItemHdl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x22",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetCollectionItemInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFE8",
+  "result": 2,
+  "selector": "0xC",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetControlData": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFBA8",
+  "result": 2,
+  "selector": "0x13",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetControlDataSize": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FBA8",
+  "result": 2,
+  "selector": "0x14",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetControlFeatures": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x11",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetDialogItemAsControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x50F",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "GetDragAttributes": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x19",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetDragHiliteColor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x26",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetDragItemBounds": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x15",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetDragItemReferenceNumber": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BE8",
+  "result": 2,
+  "selector": "0xF",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetDragModifiers": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x1D",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetDragMouse": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x1A",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetDragOrigin": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x1C",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetDropLocation": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x17",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetFlavorData": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFE8",
+  "result": 2,
+  "selector": "0x14",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetFlavorDataSize": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x13",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetFlavorFlags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x12",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetFlavorType": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000EFE8",
+  "result": 2,
+  "selector": "0x11",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "GetIndexedCollectionItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetIndexedCollectionItemHdl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x24",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetIndexedCollectionItemInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFE8",
+  "result": 2,
+  "selector": "0x11",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetIndexedCollectionTag": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x14",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetIndexedSubControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x17",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetKeyboardFocus": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0xD",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetMenuItemBounds": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x515",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemCommandID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x503",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemFontID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x510",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemHierarchicalID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x50E",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemIconHandle": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FBA8",
+  "result": 2,
+  "selector": "0x707",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemKeyGlyph": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x514",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemModifiers": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x505",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemPencilGlyph": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x517",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemRefCon": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x50B",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemRefCon2": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x512",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetMenuItemTextEncoding": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x509",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "GetNewCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002F8",
+  "result": 4,
+  "selector": "0x20",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetRootControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x2",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetSuperControl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x15",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "GetTaggedCollectionItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x16",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetTaggedCollectionItemInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x003FFFE8",
+  "result": 2,
+  "selector": "0x17",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "GetThemeAccentColors": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003B8",
+  "result": 4,
+  "selector": "0x25",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "GetThemeMenuBackgroundRegion": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BB8",
+  "result": 4,
+  "selector": "0x1C",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "GetThemeMenuBarHeight": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003B8",
+  "result": 4,
+  "selector": "0x1A",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "GetThemeMenuItemExtra": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003EB8",
+  "result": 4,
+  "selector": "0x20",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "GetThemeMenuSeparatorHeight": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003B8",
+  "result": 4,
+  "selector": "0x1F",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "GetThemeMenuTitleExtra": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000007B8",
+  "result": 4,
+  "selector": "0x21",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "GetWindowFeatures": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FB8",
+  "result": 4,
+  "selector": "0x13",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "GetWindowRegion": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BB8",
+  "result": 4,
+  "selector": "0x14",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "HandleControlClick": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000EFA8",
+  "result": 2,
+  "selector": "0xA",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "HandleControlKey": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0000ABA8",
+  "result": 2,
+  "selector": "0xB",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "HideDragHilite": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x1F",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "IdleControls": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000388",
+  "result": 0,
+  "selector": "0xC",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "InstallReceiveHandler": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x2",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "InstallTrackingHandler": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x1",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "IsControlActive": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000398",
+  "result": 1,
+  "selector": "0x5",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "IsControlVisible": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000398",
+  "result": 1,
+  "selector": "0x6",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "IsThemeInColor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00000698",
+  "result": 1,
+  "selector": "0x24",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "IsWindowCollapsable": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000398",
+  "result": 1,
+  "selector": "0xF",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "IsWindowCollapsed": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000398",
+  "result": 1,
+  "selector": "0x10",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "MenuEvent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003B8",
+  "result": 4,
+  "selector": "0x20C",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "MoveDialogItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0000ABA8",
+  "result": 2,
+  "selector": "0x510",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "NewCollection": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000F8",
+  "result": 4,
+  "selector": "0x0",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "NewDrag": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x5",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "NewFeaturesDialog": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0FDE7FB8",
+  "result": 4,
+  "selector": "0x110C",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "PurgeCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FC8",
+  "result": 0,
+  "selector": "0x18",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "PurgeCollectionTag": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FC8",
+  "result": 0,
+  "selector": "0x19",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "RegisterAppearanceClient": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000B8",
+  "result": 4,
+  "selector": "0x15",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "RemoveCollectionItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0xA",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "RemoveIndexedCollectionItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0xF",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "RemoveReceiveHandler": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x4",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "RemoveTrackingHandler": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x3",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "ReplaceIndexedCollectionItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0xD",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "ReplaceIndexedCollectionItemHdl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x23",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "ReverseKeyboardFocus": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x10",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "SendControlMessage": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BB8",
+  "result": 4,
+  "selector": "0xFFFFFFFE",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "SetCollectionDefaultAttributes": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FC8",
+  "result": 0,
+  "selector": "0x6",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "SetCollectionExceptionProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FC8",
+  "result": 0,
+  "selector": "0x1F",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "SetCollectionItemInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0xB",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "SetControlData": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FBA8",
+  "result": 2,
+  "selector": "0x12",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "SetControlFontStyle": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x1C",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "SetControlSupervisor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x1A",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "SetControlVisibility": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000017A8",
+  "result": 2,
+  "selector": "0x1E",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "SetDragDrawingProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0xC",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetDragImage": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x27",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetDragInputProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0xB",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetDragItemBounds": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x16",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetDragItemFlavorData": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFE8",
+  "result": 2,
+  "selector": "0x9",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetDragMouse": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x1B",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetDragSendProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0xA",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetDropLocation": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x18",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SetIndexedCollectionItemInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x10",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "SetKeyboardFocus": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002FA8",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "SetMenuItemCommandID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x502",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemFontID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002BA8",
+  "result": 2,
+  "selector": "0x40F",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemHierarchicalID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002BA8",
+  "result": 2,
+  "selector": "0x40D",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemIconHandle": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000DBA8",
+  "result": 2,
+  "selector": "0x606",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemKeyGlyph": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002BA8",
+  "result": 2,
+  "selector": "0x513",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemModifiers": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001BA8",
+  "result": 2,
+  "selector": "0x404",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemPencilGlyph": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001BA8",
+  "result": 2,
+  "selector": "0x416",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemRefCon": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x50A",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemRefCon2": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x511",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetMenuItemTextEncoding": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BA8",
+  "result": 2,
+  "selector": "0x508",
+  "selector_size": 2,
+  "trap": "0xA825"
+ },
+ "SetThemeBackground": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001AB8",
+  "result": 4,
+  "selector": "0x2",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "SetThemeFont": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00000AB8",
+  "result": 4,
+  "selector": "0x17",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "SetThemePen": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001AB8",
+  "result": 4,
+  "selector": "0x1",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "SetThemeTextColor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001AB8",
+  "result": 4,
+  "selector": "0x3",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "SetThemeWindowBackground": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001BB8",
+  "result": 4,
+  "selector": "0x4",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "SetUpControlBackground": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001BA8",
+  "result": 2,
+  "selector": "0x1D",
+  "selector_size": 2,
+  "trap": "0xAA73"
+ },
+ "ShowDragHilite": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001FE8",
+  "result": 2,
+  "selector": "0x1E",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "SizeDialogItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0000ABA8",
+  "result": 2,
+  "selector": "0x511",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "StandardAlert": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FEA8",
+  "result": 2,
+  "selector": "0x90E",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "TEGetHiliteRgn": {
+  "conv": "stack-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FAE",
+  "result": 2,
+  "selector": "0xF",
+  "selector_size": 2,
+  "trap": "0xA83D"
+ },
+ "TrackDrag": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0xD",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "UnflattenCollection": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x1D",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "UnflattenCollectionFromHdl": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x26",
+  "selector_size": 4,
+  "trap": "0xABF6"
+ },
+ "UnregisterAppearanceClient": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000B8",
+  "result": 4,
+  "selector": "0x16",
+  "selector_size": 2,
+  "trap": "0xAA74"
+ },
+ "UpdateDragHilite": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x22",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "WaitMouseMoved": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003D8",
+  "result": 1,
+  "selector": "0x23",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "ZoomRects": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0000AFE8",
+  "result": 2,
+  "selector": "0x24",
+  "selector_size": 4,
+  "trap": "0xABED"
+ },
+ "ZoomRegion": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0000AFE8",
+  "result": 2,
+  "selector": "0x25",
+  "selector_size": 4,
+  "trap": "0xABED"
+ }
+}

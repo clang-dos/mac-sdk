@@ -9,7 +9,7 @@ The ROM's InterfaceLib exports 2493 symbols. The headers declare 2490 of them (1
 ## 68k
 
 - 222 declared calls have no 68k trap and need glue code on 68k (listed in `include/needs-glue.txt`). Most are Mac OS 9 calls that never ran on 68k: the HFS Plus API, Navigation Services, Driver Services and the Name Registry.
-- The ROM's PowerPC glue describes 1575 68k calls. Checked against it: 1554 calls match the ROM, 0 differ, 21 implemented in C glue or not declared.
+- The ROM's PowerPC glue describes 1575 68k calls. Checked against it: 1724 calls match the ROM, 0 differ, 27 implemented in C glue or not declared.
 
 ## Not declared yet
 

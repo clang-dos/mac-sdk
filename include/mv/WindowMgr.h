@@ -3,8 +3,13 @@
 #define __MV_WINDOWMGR__
 
 #include "../ConditionalMacros.h"
+#include "AliasMgr.h"
+#include "Collections.h"
+#include "DriverServices.h"
 #include "EventMgr.h"
+#include "FileMgr.h"
 #include "MacTypes.h"
+#include "MenuMgr.h"
 #include "QuickDraw.h"
 
 #pragma options align=mac68k
@@ -437,6 +442,377 @@ static __inline__ void InvalWindowRect(WindowRef w, const Rect *r);
 #else
 pascal void InvalWindowRect(WindowRef w, const Rect *r);
 #endif
+#endif
+
+typedef UInt16 WindowRegionCode;
+
+// Window regions, for GetWindowRegion and the theme window calls.
+enum {
+    kWindowTitleBarRgn = 0,
+    kWindowTitleTextRgn = 1,
+    kWindowCloseBoxRgn = 2,
+    kWindowZoomBoxRgn = 3,
+    kWindowDragRgn = 5,
+    kWindowGrowRgn = 6,
+    kWindowCollapseBoxRgn = 7,
+    kWindowTitleProxyIconRgn = 8,
+    kWindowStructureRgn = 32,
+    kWindowContentRgn = 33,
+    kWindowUpdateRgn = 34,
+    kWindowGlobalPortRgn = 40,
+};
+
+// Window Manager 8 and 8.5. Gestalt selector.
+enum {
+    gestaltWindowMgrAttr = 'wind',
+    gestaltWindowMgrPresent = 1,
+    gestaltWindowMgrPresentBit = 0,
+};
+
+// Window definition IDs for the Appearance window definitions.
+enum {
+    kWindowDocumentProc = 1024,
+    kWindowGrowDocumentProc = 1025,
+    kWindowVertZoomDocumentProc = 1026,
+    kWindowVertZoomGrowDocumentProc = 1027,
+    kWindowHorizZoomDocumentProc = 1028,
+    kWindowHorizZoomGrowDocumentProc = 1029,
+    kWindowFullZoomDocumentProc = 1030,
+    kWindowFullZoomGrowDocumentProc = 1031,
+    kWindowPlainDialogProc = 1040,
+    kWindowShadowDialogProc = 1041,
+    kWindowModalDialogProc = 1042,
+    kWindowMovableModalDialogProc = 1043,
+    kWindowAlertProc = 1044,
+    kWindowMovableAlertProc = 1045,
+    kWindowMovableModalGrowProc = 1046,
+    kWindowFloatProc = 1057,
+    kWindowFloatGrowProc = 1059,
+    kWindowFloatVertZoomProc = 1061,
+    kWindowFloatVertZoomGrowProc = 1063,
+    kWindowFloatHorizZoomProc = 1065,
+    kWindowFloatHorizZoomGrowProc = 1067,
+    kWindowFloatFullZoomProc = 1069,
+    kWindowFloatFullZoomGrowProc = 1071,
+    kWindowFloatSideProc = 1073,
+    kWindowFloatSideGrowProc = 1075,
+    kWindowFloatSideVertZoomProc = 1077,
+    kWindowFloatSideVertZoomGrowProc = 1079,
+    kWindowFloatSideHorizZoomProc = 1081,
+    kWindowFloatSideHorizZoomGrowProc = 1083,
+    kWindowFloatSideFullZoomProc = 1085,
+    kWindowFloatSideFullZoomGrowProc = 1087,
+    inCollapseBox = 11,
+    inProxyIcon = 12,
+};
+
+// What GetWindowFeatures reports.
+enum {
+    kWindowCanGrow = 1,
+    kWindowCanZoom = 2,
+    kWindowCanCollapse = 4,
+    kWindowIsModal = 8,
+    kWindowCanGetWindowRegion = 16,
+    kWindowIsAlert = 32,
+    kWindowHasTitleBar = 64,
+    kWindowSupportsDragHilite = 128,
+    kWindowSupportsModifiedBit = 256,
+    kWindowCanDrawInCurrentPort = 512,
+    kWindowCanSetupProxyDragImage = 1024,
+    kWindowCanMeasureTitle = 2048,
+    kWindowWantsDisposeAtProcessDeath = 4096,
+    kWindowSupportsSetGrowImageRegion = 8192,
+    kWindowDefSupportsColorGrafPort = 1073741826,
+};
+
+typedef UInt32 WindowClass;
+
+typedef UInt32 WindowAttributes;
+
+typedef UInt32 WindowPositionMethod;
+
+typedef UInt32 WindowTransitionEffect;
+
+typedef UInt32 WindowTransitionAction;
+
+typedef UInt32 WindowPaintProcOptions;
+
+typedef SInt16 WindowDefPartCode;
+
+typedef OSType PropertyCreator;
+
+typedef OSType PropertyTag;
+
+typedef struct OpaqueIconRef *IconRef;
+
+// Window classes and attributes, for CreateNewWindow (Mac OS 8.5).
+enum {
+    kAlertWindowClass = 1,
+    kMovableAlertWindowClass = 2,
+    kModalWindowClass = 3,
+    kMovableModalWindowClass = 4,
+    kFloatingWindowClass = 5,
+    kDocumentWindowClass = 6,
+    kDesktopWindowClass = 7,
+    kAllWindowClasses = 4294967295,
+    kWindowNoAttributes = 0,
+    kWindowCloseBoxAttribute = 1,
+    kWindowHorizontalZoomAttribute = 2,
+    kWindowVerticalZoomAttribute = 4,
+    kWindowFullZoomAttribute = 6,
+    kWindowCollapseBoxAttribute = 8,
+    kWindowResizableAttribute = 16,
+    kWindowSideTitlebarAttribute = 32,
+    kWindowNoUpdatesAttribute = 65536,
+    kWindowNoActivatesAttribute = 131072,
+    kWindowStandardDocumentAttributes = 31,
+    kWindowStandardFloatingAttributes = 9,
+    kWindowCenterOnMainScreen = 1,
+    kWindowCenterOnParentWindow = 2,
+    kWindowCenterOnParentWindowScreen = 3,
+    kWindowCascadeOnMainScreen = 4,
+    kWindowCascadeOnParentWindow = 5,
+    kWindowCascadeOnParentWindowScreen = 6,
+    kWindowAlertPositionOnMainScreen = 7,
+    kWindowAlertPositionOnParentWindow = 8,
+    kWindowAlertPositionOnParentWindowScreen = 9,
+    kWindowZoomTransitionEffect = 1,
+    kWindowShowTransitionAction = 1,
+    kWindowHideTransitionAction = 2,
+    kWindowPaintProcOptionsNone = 0,
+    kWindowDefaultPosition = 0,
+    kWindowCenterMainScreen = 10250,
+    kWindowAlertPositionMainScreen = 12298,
+    kWindowStaggerMainScreen = 14346,
+    kWindowCenterParentWindow = 43018,
+    kWindowAlertPositionParentWindow = 45066,
+    kWindowStaggerParentWindow = 47114,
+    kWindowCenterParentWindowScreen = 26634,
+    kWindowAlertPositionParentWindowScreen = 28682,
+    kWindowStaggerParentWindowScreen = 30730,
+};
+
+// Window Manager errors.
+enum {
+    errInvalidWindowPtr = -5600,
+    errInvalidWindowRef = -5600,
+    errUnsupportedWindowAttributesForClass = -5601,
+    errWindowDoesNotHaveProxy = -5602,
+    errInvalidWindowProperty = -5603,
+    errWindowPropertyNotFound = -5604,
+    errUnrecognizedWindowClass = -5605,
+    errCorruptWindowResource = -5606,
+    errUserWantsToDragWindow = -5607,
+    errWindowsAlreadyInitialized = -5608,
+    errFloatingWindowsNotInitialized = -5609,
+};
+
+enum { _AppearanceDispatch = 0xAA74 };
+
+// Window Manager 8: collapsing (window shade) and regions, from the Appearance Manager
+pascal Boolean IsWindowCollapsable(WindowRef inWindow) M68K_INLINE(0x700F, 0xAA74);
+
+pascal Boolean IsWindowCollapsed(WindowRef inWindow) M68K_INLINE(0x7010, 0xAA74);
+
+pascal OSStatus CollapseWindow(WindowRef inWindow, Boolean inCollapseIt) M68K_INLINE(0x7011, 0xAA74);
+
+pascal OSStatus CollapseAllWindows(Boolean inCollapseEm) M68K_INLINE(0x7012, 0xAA74);
+
+pascal OSStatus GetWindowFeatures(WindowRef inWindow, UInt32 *outFeatures) M68K_INLINE(0x7013, 0xAA74);
+
+pascal OSStatus GetWindowRegion(WindowRef inWindow, WindowRegionCode inRegionCode, RgnHandle ioWinRgn) M68K_INLINE(0x7014, 0xAA74);
+
+// Window Manager 2.0 (Mac OS 8.5, WindowsLib)
+#if !TARGET_CPU_68K
+pascal OSStatus CreateNewWindow(WindowClass windowClass, WindowAttributes attributes, const Rect *contentBounds, WindowRef *outWindow);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus CreateWindowFromResource(SInt16 resID, WindowRef *outWindow);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus StoreWindowIntoCollection(WindowRef window, Collection collection);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus CreateWindowFromCollection(Collection collection, WindowRef *outWindow);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowOwnerCount(WindowRef window, UInt32 *outCount);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus CloneWindow(WindowRef window);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowClass(WindowRef window, WindowClass *outClass);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowAttributes(WindowRef window, WindowAttributes *outAttributes);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowContentColor(WindowRef window, const RGBColor *color);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowContentColor(WindowRef window, RGBColor *color);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowContentPattern(WindowRef window, PixPatHandle outPixPat);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowContentPattern(WindowRef window, PixPatHandle pixPat);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus InvalWindowRgn(WindowRef window, RgnHandle region);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus ValidWindowRgn(WindowRef window, RgnHandle region);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus ValidWindowRect(WindowRef window, const Rect *bounds);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowProxyFSSpec(WindowRef window, const FSSpec *inFile);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowProxyFSSpec(WindowRef window, FSSpec *outFile);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowProxyAlias(WindowRef window, AliasHandle alias);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowProxyAlias(WindowRef window, AliasHandle *alias);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowProxyCreatorAndType(WindowRef window, OSType fileCreator, OSType fileType, SInt16 vRefNum);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowProxyIcon(WindowRef window, IconRef *outIcon);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowProxyIcon(WindowRef window, IconRef icon);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus RemoveWindowProxy(WindowRef window);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus TrackWindowProxyDrag(WindowRef window, Point startPt);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean IsWindowModified(WindowRef window);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowModified(WindowRef window, Boolean modified);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean IsWindowPathSelectClick(WindowRef window, const EventRecord *event);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus WindowPathSelect(WindowRef window, MenuHandle menu, SInt32 *outMenuResult);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus HiliteWindowFrameForDrag(WindowRef window, Boolean hilited);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus TransitionWindow(WindowRef window, WindowTransitionEffect effect, WindowTransitionAction action, const Rect *rect);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus MoveWindowStructure(WindowRef window, INTEGER hGlobal, INTEGER vGlobal);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean IsWindowInStandardState(WindowRef window, Point *idealSize, Rect *idealStandardState);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus ZoomWindowIdeal(WindowRef window, SInt16 partCode, Point *ioIdealSize);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowIdealUserState(WindowRef window, Rect *userState);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowIdealUserState(WindowRef window, Rect *userState);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean ResizeWindow(WindowRef window, Point startPoint, const Rect *sizeConstraints, Rect *newContentRect);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowBounds(WindowRef window, WindowRegionCode regionCode, Rect *globalBounds);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowBounds(WindowRef window, WindowRegionCode regionCode, const Rect *globalBounds);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus RepositionWindow(WindowRef window, WindowRef parentWindow, WindowPositionMethod method);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowProperty(WindowRef window, PropertyCreator propertyCreator, PropertyTag propertyTag, UInt32 bufferSize, UInt32 *actualSize, void *propertyBuffer);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetWindowPropertySize(WindowRef window, PropertyCreator creator, PropertyTag tag, UInt32 *size);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetWindowProperty(WindowRef window, PropertyCreator propertyCreator, PropertyTag propertyTag, UInt32 propertySize, void *propertyBuffer);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus RemoveWindowProperty(WindowRef window, PropertyCreator propertyCreator, PropertyTag propertyTag);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus InitFloatingWindows(void);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus ShowFloatingWindows(void);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus HideFloatingWindows(void);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean AreFloatingWindowsVisible(void);
+#endif
+
+#if !TARGET_CPU_68K
+pascal WindowRef FrontNonFloatingWindow(void);
 #endif
 
 #if TARGET_CPU_68K
