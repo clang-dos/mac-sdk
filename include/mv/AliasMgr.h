@@ -3,6 +3,7 @@
 #define __MV_ALIASMGR__
 
 #include "../ConditionalMacros.h"
+#include "DriverServices.h"
 #include "FileMgr.h"
 #include "MacTypes.h"
 
@@ -51,30 +52,164 @@ pascal OSErr GetAliasInfo(AliasHandle alias, AliasTypeInfo index, Str63 theStrin
 
 pascal OSErr FollowFinderAlias(const FSSpec *fromFile, AliasHandle alias, Boolean logon, FSSpec *target, Boolean *wasChanged) M68K_INLINE(0x700F, 0xA823);
 
-pascal OSErr IsAliasFile(const FSSpec *fileFSSpec, Boolean *aliasFileFlag, Boolean *folderFlag);
+pascal OSErr IsAliasFile(const FSSpec *fileFSSpec, Boolean *aliasFileFlag, Boolean *folderFlag) M68K_INLINE(0x702A, 0xA823);
 
-pascal OSErr ResolveAliasFileWithMountFlags(FSSpec *theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags);
+pascal OSErr ResolveAliasFileWithMountFlags(FSSpec *theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags) M68K_INLINE(0x7029, 0xA823);
 
 // Aliases by FSRef (Mac OS 9 and later)
-pascal OSErr FSNewAlias(const FSRef *fromFile, const FSRef *target, AliasHandle *inAlias);
+pascal OSErr FSNewAlias(const FSRef *fromFile, const FSRef *target, AliasHandle *inAlias) M68K_INLINE(0x7036, 0xA823);
 
-pascal OSErr FSNewAliasMinimal(const FSRef *target, AliasHandle *inAlias);
+pascal OSErr FSNewAliasMinimal(const FSRef *target, AliasHandle *inAlias) M68K_INLINE(0x7037, 0xA823);
 
-pascal OSErr FSIsAliasFile(const FSRef *fileRef, Boolean *aliasFileFlag, Boolean *folderFlag);
+pascal OSErr FSIsAliasFile(const FSRef *fileRef, Boolean *aliasFileFlag, Boolean *folderFlag) M68K_INLINE(0x7038, 0xA823);
 
-pascal OSErr FSResolveAliasWithMountFlags(const FSRef *fromFile, AliasHandle inAlias, FSRef *target, Boolean *wasChanged, unsigned long mountFlags);
+pascal OSErr FSResolveAliasWithMountFlags(const FSRef *fromFile, AliasHandle inAlias, FSRef *target, Boolean *wasChanged, unsigned long mountFlags) M68K_INLINE(0x7039, 0xA823);
 
-pascal OSErr FSResolveAlias(const FSRef *fromFile, AliasHandle alias, FSRef *target, Boolean *wasChanged);
+pascal OSErr FSResolveAlias(const FSRef *fromFile, AliasHandle alias, FSRef *target, Boolean *wasChanged) M68K_INLINE(0x703A, 0xA823);
 
-pascal OSErr FSResolveAliasFileWithMountFlags(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags);
+pascal OSErr FSResolveAliasFileWithMountFlags(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags) M68K_INLINE(0x703B, 0xA823);
 
-pascal OSErr FSResolveAliasFile(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased);
+pascal OSErr FSResolveAliasFile(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased) M68K_INLINE(0x703C, 0xA823);
 
-pascal OSErr FSFollowFinderAlias(FSRef *fromFile, AliasHandle alias, Boolean logon, FSRef *target, Boolean *wasChanged);
+pascal OSErr FSFollowFinderAlias(FSRef *fromFile, AliasHandle alias, Boolean logon, FSRef *target, Boolean *wasChanged) M68K_INLINE(0x703D, 0xA823);
 
-pascal OSErr FSUpdateAlias(const FSRef *fromFile, const FSRef *target, AliasHandle alias, Boolean *wasChanged);
+pascal OSErr FSUpdateAlias(const FSRef *fromFile, const FSRef *target, AliasHandle alias, Boolean *wasChanged) M68K_INLINE(0x703E, 0xA823);
 
-pascal OSErr FSFindFolder(INTEGER vRefNum, OSType folderType, Boolean createFolder, FSRef *foundRef);
+pascal OSErr FSFindFolder(INTEGER vRefNum, OSType folderType, Boolean createFolder, FSRef *foundRef) M68K_INLINE(0x7034, 0xA823);
+
+// Folder Manager 9: folder descriptors, routing and notifications.
+typedef OSType FolderType;
+
+typedef OSType FolderClass;
+
+typedef OSType FolderLocation;
+
+typedef UInt32 FolderDescFlags;
+
+typedef UInt32 RoutingFlags;
+
+enum {
+    kCreateFolderAtBoot = 2,
+    kCreateFolderAtBootBit = 1,
+    kFolderCreatedInvisible = 4,
+    kFolderCreatedInvisibleBit = 2,
+    kFolderCreatedNameLocked = 8,
+    kFolderCreatedNameLockedBit = 3,
+    kFolderCreatedAdminPrivs = 16,
+    kFolderCreatedAdminPrivsBit = 4,
+    kFolderInUserFolder = 32,
+    kFolderInUserFolderBit = 5,
+    kFolderTrackedByAlias = 64,
+    kFolderTrackedByAliasBit = 6,
+    kFolderInRemoteUserFolderIfAvailable = 128,
+    kFolderInRemoteUserFolderIfAvailableBit = 7,
+    kFolderNeverMatchedInIdentifyFolder = 256,
+    kFolderNeverMatchedInIdentifyFolderBit = 8,
+    kFolderMustStayOnSameVolume = 512,
+    kFolderMustStayOnSameVolumeBit = 9,
+    kFolderManagerFolderInMacOS9FolderIfMacOSXIsInstalledMask = 1024,
+    kFolderManagerFolderInMacOS9FolderIfMacOSXIsInstalledBit = 10,
+    kFolderInLocalOrRemoteUserFolder = 160,
+    kRelativeFolder = 'relf',
+    kSpecialFolder = 'spcf',
+    kBlessedFolder = 'blsf',
+    kRootFolder = 'rotf',
+    kCurrentUserFolderLocation = 'cusf',
+    kFindFolderExtendedFlagsDoNotFollowAliasesBit = 0,
+    kFindFolderExtendedFlagsDoNotUseUserFolderBit = 1,
+    kFindFolderExtendedFlagsUseOtherUserRecord = 16777216,
+    kFolderManagerNotificationMessageUserLogIn = 'log+',
+    kFolderManagerNotificationMessagePreUserLogIn = 'logj',
+    kFolderManagerNotificationMessageUserLogOut = 'log-',
+    kFolderManagerNotificationMessagePostUserLogOut = 'logp',
+    kFolderManagerNotificationDiscardCachedData = 'dche',
+    kFolderManagerNotificationMessageLoginStartup = 'stup',
+    kDoNotRemoveWhenCurrentApplicationQuitsBit = 0,
+    kDoNotRemoveWheCurrentApplicationQuitsBit = 0,
+    kStopIfAnyNotificationProcReturnsErrorBit = 31,
+};
+
+// What GetFolderDescriptor returns about a folder type.
+typedef struct FolderDesc FolderDesc;
+struct FolderDesc {
+    Size descSize;
+    FolderType foldType;
+    FolderDescFlags flags;
+    FolderClass foldClass;
+    FolderType foldLocation;
+    OSType badgeSignature;
+    OSType badgeType;
+    UInt32 reserved;
+    Str63 name;
+};
+
+// Where files of one type dropped on a folder go instead.
+typedef struct FolderRouting FolderRouting;
+struct FolderRouting {
+    Size descSize;
+    OSType fileType;
+    FolderType routeFromFolder;
+    FolderType routeToFolder;
+    RoutingFlags flags;
+};
+
+typedef pascal OSStatus (*FolderManagerNotificationProcPtr)(OSType message, void *arg, void *userRefCon);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr FolderManagerNotificationUPP;
+enum { uppFolderManagerNotificationProcInfo = 0x00000FF0 };
+#define NewFolderManagerNotificationUPP(proc) ((FolderManagerNotificationUPP)NewRoutineDescriptor((ProcPtr)(proc), uppFolderManagerNotificationProcInfo, GetCurrentArchitecture()))
+#define DisposeFolderManagerNotificationUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef FolderManagerNotificationProcPtr FolderManagerNotificationUPP;
+#define NewFolderManagerNotificationUPP(proc) (proc)
+#define DisposeFolderManagerNotificationUPP(upp) ((void)0)
+#endif
+#define NewFolderManagerNotificationProc(proc) NewFolderManagerNotificationUPP(proc)
+#define DisposeFolderManagerNotificationProc(proc) DisposeFolderManagerNotificationUPP(proc)
+
+// Folder Manager 9 (Mac OS 8.5 to 9)
+pascal OSErr FindFolderExtended(INTEGER vol, OSType foldType, Boolean createFolder, UInt32 flags, void *data, INTEGER *vRefNum, long *dirID) M68K_INLINE(0x303C, 0x0B2C, 0xA823);
+
+pascal OSErr FSFindFolderExtended(INTEGER vol, OSType foldType, Boolean createFolder, UInt32 flags, void *data, FSRef *foundRef) M68K_INLINE(0x7035, 0xA823);
+
+pascal OSErr ReleaseFolder(INTEGER vRefNum, OSType folderType) M68K_INLINE(0x700B, 0xA823);
+
+pascal OSErr GetFolderName(INTEGER vRefNum, OSType foldType, INTEGER *foundVRefNum, StringPtr name) M68K_INLINE(0x700E, 0xA823);
+
+pascal OSErr AddFolderDescriptor(FolderType foldType, FolderDescFlags flags, FolderClass foldClass, FolderLocation foldLocation, OSType badgeSignature, OSType badgeType, ConstStr63Param name, Boolean replaceFlag) M68K_INLINE(0x7020, 0xA823);
+
+pascal OSErr GetFolderDescriptor(FolderType foldType, Size descSize, FolderDesc *foldDesc) M68K_INLINE(0x7023, 0xA823);
+
+pascal OSErr GetFolderTypes(UInt32 requestedTypeCount, UInt32 *totalTypeCount, FolderType *theTypes) M68K_INLINE(0x7024, 0xA823);
+
+pascal OSErr RemoveFolderDescriptor(FolderType foldType) M68K_INLINE(0x7021, 0xA823);
+
+pascal OSErr InvalidateFolderDescriptorCache(INTEGER vRefNum, long dirID) M68K_INLINE(0x7025, 0xA823);
+
+pascal OSErr IdentifyFolder(INTEGER vRefNum, long dirID, FolderType *foldType) M68K_INLINE(0x701F, 0xA823);
+
+pascal OSErr AddFolderRouting(OSType fileType, FolderType routeFromFolder, FolderType routeToFolder, RoutingFlags flags, Boolean replaceFlag) M68K_INLINE(0x7026, 0xA823);
+
+pascal OSErr RemoveFolderRouting(OSType fileType, FolderType routeFromFolder) M68K_INLINE(0x7027, 0xA823);
+
+pascal OSErr FindFolderRouting(OSType fileType, FolderType routeFromFolder, FolderType *routeToFolder, RoutingFlags *flags) M68K_INLINE(0x7022, 0xA823);
+
+pascal OSErr GetFolderRoutings(UInt32 requestedRoutingCount, UInt32 *totalRoutingCount, Size routingSize, FolderRouting *theRoutings) M68K_INLINE(0x701E, 0xA823);
+
+pascal OSErr FolderManagerRegisterNotificationProc(FolderManagerNotificationUPP notificationProc, void *refCon, UInt32 options) M68K_INLINE(0x303C, 0x062F, 0xA823);
+
+pascal OSErr FolderManagerUnregisterNotificationProc(FolderManagerNotificationUPP notificationProc, void *refCon) M68K_INLINE(0x303C, 0x0430, 0xA823);
+
+// Alias Manager: resolve without mounting volumes (Mac OS 8.5)
+pascal OSErr ResolveAliasWithMountFlags(const FSSpec *fromFile, AliasHandle alias, FSSpec *target, Boolean *wasChanged, unsigned long mountFlags) M68K_INLINE(0x702B, 0xA823);
+
+// Folder Manager volume and creation arguments.
+enum {
+    kOnSystemDisk = -32768,
+    kOnAppropriateDisk = -32767,
+    kCreateFolder = 1,
+    kDontCreateFolder = 0,
+};
 
 #pragma options align=reset
 

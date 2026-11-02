@@ -3,6 +3,7 @@
 #define __MV_FONTMGR__
 
 #include "../ConditionalMacros.h"
+#include "DriverServices.h"
 #include "MacTypes.h"
 #include "QuickDraw.h"
 
@@ -340,6 +341,15 @@ pascal INTEGER GetAppFont(void);
 #else
 pascal INTEGER GetDefFontSize(void);
 #endif
+
+// Anti-aliased text and text measurement (QuickDraw in Mac OS 8.5)
+pascal OSStatus SetAntiAliasedTextEnabled(Boolean iEnable, SInt16 iMinFontSize) M68K_INLINE(0x7011, 0xA854);
+
+pascal Boolean IsAntiAliasedTextEnabled(SInt16 *oMinFontSize) M68K_INLINE(0x7012, 0xA854);
+
+pascal void QDTextBounds(INTEGER byteCount, const void *textAddr, Rect *bounds) M68K_INLINE(0x7013, 0xA854);
+
+pascal OSErr FetchFontInfo(SInt16 fontID, SInt16 fontSize, SInt16 fontStyle, FontInfo *info) M68K_INLINE(0x7014, 0xA854);
 
 #pragma options align=reset
 

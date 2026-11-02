@@ -1,0 +1,7941 @@
+{
+ "AVLCount": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x804",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLDispose": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00000BA8",
+  "result": 2,
+  "selector": "0x302",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLFind": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x808",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLGetIndItem": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x805",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLGetRefcon": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x409",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLInit": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFA8",
+  "result": 2,
+  "selector": "0xC01",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLInsert": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x406",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLRemove": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x807",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AVLWalk": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000EFA8",
+  "result": 2,
+  "selector": "0x703",
+  "selector_size": 2,
+  "trap": "0xAA80"
+ },
+ "AcquireIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x27",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "AddFolderDescriptor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x007FFFE8",
+  "result": 2,
+  "selector": "0x20",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "AddFolderRouting": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x0001FFE8",
+  "result": 2,
+  "selector": "0x26",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "AutoSleepControl": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "BatteryCount": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1A"
+   }
+  ],
+  "procinfo": "0x00071822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "BatteryStatus": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133022",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA085"
+ },
+ "CloneIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0xC",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "CloseCursorComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x4000C",
+  "selector_size": 4,
+  "trap": "0xABE0"
+ },
+ "CloseMappedFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x3",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "CloseMixerSoundComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2180018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "CloseSoundOutputDevice": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2740018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "CompositeIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x14",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "CurrentProcessorSpeed": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x11"
+   }
+  ],
+  "procinfo": "0x00071822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "CursorComponentChanged": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x4000E",
+  "selector_size": 4,
+  "trap": "0xABE0"
+ },
+ "CursorComponentSetData": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x8000F",
+  "selector_size": 4,
+  "trap": "0xABE0"
+ },
+ "DIReformat": {
+  "conv": "stack-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FAAE",
+  "result": 2,
+  "selector": "0x10",
+  "selector_size": 2,
+  "trap": "0xA9E9"
+ },
+ "DIXFormat": {
+  "conv": "stack-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000F6AE",
+  "result": 2,
+  "selector": "0xC",
+  "selector_size": 2,
+  "trap": "0xA9E9"
+ },
+ "DIXZero": {
+  "conv": "stack-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x003EAEAE",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 2,
+  "trap": "0xA9E9"
+ },
+ "DMAddProfileTags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x8D4",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMChangedDesktopIconRgn": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000E8",
+  "result": 2,
+  "selector": "0xFFFFFFF7",
+  "selector_size": 4,
+  "trap": "0xABEB"
+ },
+ "DMConfigureHardware": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x8E7",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMConfirmConfiguration": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x83F",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDeskClick": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000398",
+  "result": 1,
+  "selector": "0x2F6",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDisplayGestalt": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x6D3",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDisposeAVComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x231",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDisposeDeskIconRegionRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x2E0",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDisposeDisplayBaseComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x2D9",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDisposeList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x22C",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDoDelayedScreenUpdates": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4EA",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMDoToolboxPatch": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x8E4",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMFinalInit": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000001A8",
+  "result": 2,
+  "selector": "0x1ED",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetAVPowerState": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x839",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetBestDepthModeInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xAF3",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetDeskIconRegionByRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4DF",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetDeviceAVIDByPortAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x43B",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetDeviceComponentByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x835",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetDisplayMode": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x43E",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetEnableByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x63C",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetGammaByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x6D0",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetGraphicInfoByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x838",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetIndexedComponentFromList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xA2B",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetIndexedDisplayFromList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xAD5",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetIndexedDisplayModeFromList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xA37",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetIndexedProfileFromList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xADB",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetInitializationFlags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x2E3",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetMakeAndModelByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4D7",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetNameByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x62D",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetPortComponentByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x82F",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetProfileByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4DE",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMGetROMMultiModeTable": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x2F5",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMInitDisplayManager": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000E8",
+  "result": 2,
+  "selector": "0xFFFFFFFE",
+  "selector_size": 4,
+  "trap": "0xABEB"
+ },
+ "DMInstallDisplayManager": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000E8",
+  "result": 2,
+  "selector": "0xFFFFFFFF",
+  "selector_size": 4,
+  "trap": "0xABEB"
+ },
+ "DMInstallDisplays": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x2EB",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMKeepWindowOnscreen": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4FA",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMMoveCursor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4F0",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewAVDeviceList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xA29",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewAVEngineList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x003FFFA8",
+  "result": 2,
+  "selector": "0xC28",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewAVIDByDeviceComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x833",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewAVIDByPortComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x82E",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewAVPanelList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x003FFFA8",
+  "result": 2,
+  "selector": "0xC27",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewAVPortListByDeviceAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFA8",
+  "result": 2,
+  "selector": "0xC34",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewAVPortListByPortType": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xA2A",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewDeskIconRegionRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x2E1",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewDisplayBaseComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x6DA",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewDisplayList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xAD6",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewDisplayModeList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFA8",
+  "result": 2,
+  "selector": "0xA36",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNewProfileListByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x8DC",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMNotifyAllProcesses": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x2F9",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMPrivateBeginConfigureDisplays": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000007A8",
+  "result": 2,
+  "selector": "0x3F2",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMProbeFramebufferConnections": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4CF",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMRegisterExtendedNotifyProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000EFA8",
+  "result": 2,
+  "selector": "0x7EF",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMRegisterOverrideFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4D2",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMRemoveCurrentProcessProcs": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000E8",
+  "result": 2,
+  "selector": "0xFFFFFFF1",
+  "selector_size": 4,
+  "trap": "0xABEB"
+ },
+ "DMRemoveExtendedNotifyProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0000BFA8",
+  "result": 2,
+  "selector": "0x726",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMResumeConfigure": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4E8",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSaveScreenPrefs": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x632",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSendDependentNotification": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x830",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSetAVPowerState": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFA8",
+  "result": 2,
+  "selector": "0x83A",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSetAuxGDeviceFlag": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00001FA8",
+  "result": 2,
+  "selector": "0x5E5",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSetDeskDrawProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4E2",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSetDisplayID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4EE",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSetEnableByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000037A8",
+  "result": 2,
+  "selector": "0x53D",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSetGammaByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x6D1",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSetProfileByAVID": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4DD",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMSuspendConfigure": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4E9",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMTestAuxGDeviceFlag": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x6E6",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMUpdateProfileCache": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x4D8",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DMUseScreenPrefs": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000DA8",
+  "result": 2,
+  "selector": "0x3EC",
+  "selector_size": 2,
+  "trap": "0xABEB"
+ },
+ "DelaySystemIdle": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x25"
+   }
+  ],
+  "procinfo": "0x00071822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "DeleteGestaltValue": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003A8",
+  "result": 2,
+  "selector": "0x203",
+  "selector_size": 2,
+  "trap": "0xABF1"
+ },
+ "DialogCopy": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000388",
+  "result": 0,
+  "selector": "0x216",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "DialogCut": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000388",
+  "result": 0,
+  "selector": "0x214",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "DialogDelete": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000388",
+  "result": 0,
+  "selector": "0x217",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "DialogPaste": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000388",
+  "result": 0,
+  "selector": "0x215",
+  "selector_size": 2,
+  "trap": "0xAA68"
+ },
+ "DimmingControl": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "DisableWUTime": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133022",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA085"
+ },
+ "DisposeIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0xD",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "DisposeSoundGlobals": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000E8",
+  "result": 2,
+  "selector": "0x18",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "DriverInstall": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "D0",
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00533822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA03D"
+ },
+ "DriverInstallReserveMem": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "D0",
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00533822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA43D"
+ },
+ "EnableProcessorCycling": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "FSCreateResFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x003FFFC8",
+  "result": 0,
+  "selector": "0x14",
+  "selector_size": 4,
+  "trap": "0xA822"
+ },
+ "FSFindFolder": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000DEE8",
+  "result": 2,
+  "selector": "0x34",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSFindFolderExtended": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FDEE8",
+  "result": 2,
+  "selector": "0x35",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSFollowFinderAlias": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003DFE8",
+  "result": 2,
+  "selector": "0x3D",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSIsAliasFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x38",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSNewAlias": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x36",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSNewAliasMinimal": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x37",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSOpenResFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000007E8",
+  "result": 2,
+  "selector": "0x13",
+  "selector_size": 4,
+  "trap": "0xA822"
+ },
+ "FSResolveAlias": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x3A",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSResolveAliasFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000F7E8",
+  "result": 2,
+  "selector": "0x3C",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSResolveAliasFileWithMountFlags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003F7E8",
+  "result": 2,
+  "selector": "0x3B",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSResolveAliasWithMountFlags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x39",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSResourceFileAlreadyOpen": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FD8",
+  "result": 1,
+  "selector": "0x15",
+  "selector_size": 4,
+  "trap": "0xA822"
+ },
+ "FSUpdateAlias": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x3E",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FSpOpenMappedFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000F7E8",
+  "result": 2,
+  "selector": "0x1",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "FSpResourceFileAlreadyOpen": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FD8",
+  "result": 1,
+  "selector": "0x10",
+  "selector_size": 4,
+  "trap": "0xA822"
+ },
+ "FetchFontInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000EAE8",
+  "result": 2,
+  "selector": "0x14",
+  "selector_size": 4,
+  "trap": "0xA854"
+ },
+ "FindFolderExtended": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x003FDEA8",
+  "result": 2,
+  "selector": "0xB2C",
+  "selector_size": 2,
+  "trap": "0xA823"
+ },
+ "FindFolderInternal": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FDEE8",
+  "result": 2,
+  "selector": "0xA",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FindFolderRouting": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x22",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "FlushCodeCacheRange": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x9"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "A1",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x5E671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA098"
+ },
+ "FlushIconRefs": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x29",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "FlushIconRefsByName": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x17",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "FlushIconRefsByVolume": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x18",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "FlushMemory": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xE"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "A1",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x5E671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA05C"
+ },
+ "FolderManagerRegisterCallNotificationProcs": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FB8",
+  "result": 4,
+  "selector": "0x631",
+  "selector_size": 2,
+  "trap": "0xA823"
+ },
+ "FolderManagerRegisterNotificationProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FA8",
+  "result": 2,
+  "selector": "0x62F",
+  "selector_size": 2,
+  "trap": "0xA823"
+ },
+ "FolderManagerUnregisterNotificationProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x430",
+  "selector_size": 2,
+  "trap": "0xA823"
+ },
+ "FullProcessorSpeed": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x12"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetAlertBeepResID": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x2007C"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA051"
+ },
+ "GetBatteryTimes": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "GetBatteryVoltage": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071832",
+  "result": 4,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetCompressionInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003AEE8",
+  "result": 2,
+  "selector": "0x7100018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "GetCompressionName": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x44C0018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "GetCustomIconsEnabled": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000EE8",
+  "result": 2,
+  "selector": "0x20",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetDeepIconsEnabled": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2C",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetDefaultSoundOutput": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x21C0018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "GetDimSuspendState": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x2B"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetDimmingTimeout": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1D"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetFileViewAccessOptions": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x7",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "GetFileViewFromAddress": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0xB",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "GetFileViewInformation": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0xA",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "GetFolderDescriptor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x23",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "GetFolderName": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FEE8",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "GetFolderRoutings": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x1E",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "GetFolderTypes": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x24",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "GetHardDiskTimeout": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x4"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetIconFamilyData": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x31",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FEE8",
+  "result": 2,
+  "selector": "0x21",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefByName": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefFromFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x2",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefFromFileInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x0001FFE8",
+  "result": 2,
+  "selector": "0x3",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefFromFileTypeAndCreator": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0000BFE8",
+  "result": 2,
+  "selector": "0x19",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefFromFolder": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000D7EE8",
+  "result": 2,
+  "selector": "0x22",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefFromFolderInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x0001FEE8",
+  "result": 2,
+  "selector": "0x4",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefOwners": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0xB",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconRefVariant": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FF8",
+  "result": 4,
+  "selector": "0x34",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIconSizesFromIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x12",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "GetIntModemInfo": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xE"
+   }
+  ],
+  "procinfo": "0x00071832",
+  "result": 4,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetLastActivity": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x28"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetMappedFileInformation": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x4",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "GetNextFileView": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0xC",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "GetNextMappedFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x5",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "GetPixRowBytes": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003F8",
+  "result": 4,
+  "selector": "0x40018",
+  "selector_size": 4,
+  "trap": "0xAB1D"
+ },
+ "GetPortCustomXFerProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x100019",
+  "selector_size": 4,
+  "trap": "0xAB1D"
+ },
+ "GetSCSIDiskModeAddress": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x14"
+   }
+  ],
+  "procinfo": "0x00071822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetScaledBatteryInfo": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671832",
+  "result": 4,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetSleepTimeout": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x2"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetSoundMixerState": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x29"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetSoundOutputInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6440018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "GetSoundPreference": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6380018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "GetStartupTimer": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x26"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "GetVolumeVirtualMemoryInfo": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xF"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA05C"
+ },
+ "GetWUTime": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133022",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA085"
+ },
+ "GetWakeupTimer": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x16"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "HardDiskPowered": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x6"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "HardDiskQInstall": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xA"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "HardDiskQRemove": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xB"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "IPCKillListPorts": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xB"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA0DD"
+ },
+ "IconFamilyToIconSuite": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x25",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IconRefToIconFamily": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x24",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IconRefToRgn": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003EFE8",
+  "result": 2,
+  "selector": "0x11",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IconServicesInit": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x15",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IconServicesTerminate": {
+  "conv": "d0-pascal",
+  "params": [],
+  "procinfo": "0x000000C8",
+  "result": 0,
+  "selector": "0x16",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IconSuiteToIconFamily": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x26",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IdentifyFolder": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003EE8",
+  "result": 2,
+  "selector": "0x1F",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "InstallExtensionNotificationProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x0",
+  "selector_size": 4,
+  "trap": "0xAA7D"
+ },
+ "InstallExtensionTableHandlerProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x2",
+  "selector_size": 4,
+  "trap": "0xAA7D"
+ },
+ "InstallFS": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x0"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA0AC"
+ },
+ "InstallTimeTask": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA058"
+ },
+ "InstallXTimeTask": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA458"
+ },
+ "InvalidateFolderDescriptorCache": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000EE8",
+  "result": 2,
+  "selector": "0x25",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "IsAliasFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x2A",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "IsAntiAliasedTextEnabled": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003D8",
+  "result": 1,
+  "selector": "0x12",
+  "selector_size": 4,
+  "trap": "0xA854"
+ },
+ "IsAutoSlpControlDisabled": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x21"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "IsDimmingControlDisabled": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x20"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "IsIconRefComposite": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x1A",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IsIconRefMaskEmpty": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003D8",
+  "result": 1,
+  "selector": "0x33",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "IsProcessorCyclingEnabled": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x18"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "IsSpindownDisabled": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x8"
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "IsValidIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003D8",
+  "result": 1,
+  "selector": "0x32",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "LaunchControlPanel": {
+  "conv": "stack-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003AE",
+  "result": 2,
+  "selector": "0x7B",
+  "selector_size": 2,
+  "trap": "0xA88F"
+ },
+ "LockMemoryForOutput": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xA"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "A1",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x5E671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA05C"
+ },
+ "MakeMemoryNonResident": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xD"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "A1",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x5E671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA05C"
+ },
+ "MakeMemoryResident": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xB"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "A1",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x5E671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA05C"
+ },
+ "MakeSoundComponentChain": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFE8",
+  "result": 2,
+  "selector": "0xC080018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "MapFileView": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x03FFFFE8",
+  "result": 2,
+  "selector": "0x8",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "MaximumProcessorSpeed": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x10"
+   }
+  ],
+  "procinfo": "0x00071822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "ModemStatus": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133022",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA085"
+ },
+ "NewCServiceWindow": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x03DE7FE8",
+  "result": 2,
+  "selector": "0x1A",
+  "selector_size": 4,
+  "trap": "0xAA54"
+ },
+ "NewGestaltValue": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x401",
+  "selector_size": 2,
+  "trap": "0xABF1"
+ },
+ "NewIconFamilyFromIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x1B",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "NewIconSuiteByName": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x5",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "NewIconSuiteFromFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x1",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "NewIconSuiteFromIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0xA",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "OpenCursorComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x8000B",
+  "selector_size": 4,
+  "trap": "0xABE0"
+ },
+ "OpenMappedFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x0",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "OpenMappedScratchFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FEE8",
+  "result": 2,
+  "selector": "0x2",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "OpenMixerSoundComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6140018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "OpenSoundOutputDevice": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x00007FE8",
+  "result": 2,
+  "selector": "0xA700018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "OverrideIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x2B",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "OverrideIconRefFromFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FBE8",
+  "result": 2,
+  "selector": "0x1D",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "OverrideIconRefFromResource": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002FE8",
+  "result": 2,
+  "selector": "0x2A",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "PBAllocateForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x57"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBAllocateForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x57"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBCatalogSearchAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5D"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBCatalogSearchSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5D"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBCloseForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x59"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBCloseForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x59"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBCloseIteratorAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5B"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBCloseIteratorSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5B"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBCompareFSRefsAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7C"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBCompareFSRefsSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7C"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBCreateDirectoryUnicodeAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x71"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBCreateDirectoryUnicodeSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x71"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBCreateFileUnicodeAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x70"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBCreateFileUnicodeSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x70"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBCreateForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7D"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBCreateForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7D"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBDeleteForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7E"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBDeleteForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7E"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBDeleteObjectAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x72"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBDeleteObjectSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x72"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBExchangeObjectsAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x75"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBExchangeObjectsSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x75"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBFlushForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x58"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBFlushForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x58"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBGetCatalogInfoAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x76"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBGetCatalogInfoBulkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5C"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBGetCatalogInfoBulkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5C"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBGetCatalogInfoSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x76"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBGetForkCBInfoAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5A"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBGetForkCBInfoSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x5A"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBGetForkPositionAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x53"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBGetForkPositionSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x53"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBGetForkSizeAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x55"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBGetForkSizeSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x55"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBGetVolumeInfoAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1D"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBGetVolumeInfoSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1D"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBGetXCatInfoAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x3A"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA660"
+ },
+ "PBGetXCatInfoSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x3A"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBHTrashVolumeCachesSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA213"
+ },
+ "PBIterateForksAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7F"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBIterateForksSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7F"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBMakeFSRefAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x6E"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBMakeFSRefSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x6E"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBMakeFSRefUnicodeAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7A"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBMakeFSRefUnicodeSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7A"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBMoveObjectAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x73"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBMoveObjectSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x73"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBOpenForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x79"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBOpenForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x79"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBOpenIteratorAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x78"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBOpenIteratorSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x78"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBReadForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x51"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA6A8"
+ },
+ "PBReadForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x51"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA2A8"
+ },
+ "PBRenameUnicodeAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x74"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBRenameUnicodeSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x74"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBSetCatalogInfoAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x77"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBSetCatalogInfoSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x77"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBSetForkPositionAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x54"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBSetForkPositionSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x54"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBSetForkSizeAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x56"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBSetForkSizeSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x56"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBSetVolumeInfoAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1E"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA660"
+ },
+ "PBSetVolumeInfoSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1E"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA260"
+ },
+ "PBUnmountVolImmed": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA20E"
+ },
+ "PBWriteForkAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x52"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA6A8"
+ },
+ "PBWriteForkSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x52"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA2A8"
+ },
+ "PBXGetVolInfoAsync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x12"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA460"
+ },
+ "PBXGetVolInfoSync": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x12"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA060"
+ },
+ "PMFeatures": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1"
+   }
+  ],
+  "procinfo": "0x00071832",
+  "result": 4,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "PMScaledBattery": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071832",
+  "result": 4,
+  "result_reg": "D0",
+  "trap": "0xA09F"
+ },
+ "PMSelectorCount": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x0"
+   }
+  ],
+  "procinfo": "0x00071822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "PMgrStateQInstall": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x22"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "PMgrStateQRemove": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x23"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "ParseAIFFHeader": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FEE8",
+  "result": 2,
+  "selector": "0x7580014",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "ParseSndHeader": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x85C0014",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "PlotIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003EBE8",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "PrimeTimeTask": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00733822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA05A"
+ },
+ "PtInIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003EFD8",
+  "result": 1,
+  "selector": "0xF",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "PurgeSpaceContiguous": {
+  "conv": "register",
+  "params": [],
+  "procinfo": "0x00003832",
+  "result": 4,
+  "result_reg": "D0",
+  "trap": "0xA062"
+ },
+ "PurgeSpaceSysContiguous": {
+  "conv": "register",
+  "params": [],
+  "procinfo": "0x00003832",
+  "result": 4,
+  "result_reg": "D0",
+  "trap": "0xA562"
+ },
+ "PurgeSpaceSysTotal": {
+  "conv": "register",
+  "params": [],
+  "procinfo": "0x00003932",
+  "result": 4,
+  "result_reg": "A0",
+  "trap": "0xA562"
+ },
+ "PurgeSpaceTotal": {
+  "conv": "register",
+  "params": [],
+  "procinfo": "0x00003932",
+  "result": 4,
+  "result_reg": "A0",
+  "trap": "0xA062"
+ },
+ "QDTextBounds": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003EC8",
+  "result": 0,
+  "selector": "0x13",
+  "selector_size": 4,
+  "trap": "0xA854"
+ },
+ "ReadIconFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x36",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "ReallocateHandleSys": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00733802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA427"
+ },
+ "RectInIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003EFD8",
+  "result": 1,
+  "selector": "0x10",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "RegisterIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x7",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "RegisterIconRefFromFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003EFE8",
+  "result": 2,
+  "selector": "0x13",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "RegisterIconRefFromIconFamily": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x1C",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "RegisterIconRefFromIconFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x35",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "RegisterIconRefFromResource": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003BFE8",
+  "result": 2,
+  "selector": "0x23",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "ReleaseFolder": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000EE8",
+  "result": 2,
+  "selector": "0xB",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "ReleaseIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x28",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "ReleaseMemoryData": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0xC"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "A1",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x5E671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA05C"
+ },
+ "RemoveExtensionNotificationProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x1",
+  "selector_size": 4,
+  "trap": "0xAA7D"
+ },
+ "RemoveExtensionTableHandlerProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x3",
+  "selector_size": 4,
+  "trap": "0xAA7D"
+ },
+ "RemoveFS": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x1"
+   },
+   {
+    "reg": "A0",
+    "size": 2
+   }
+  ],
+  "procinfo": "0x02471822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA0AC"
+ },
+ "RemoveFolderDescriptor": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x21",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "RemoveFolderRouting": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x27",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "RemoveIconRefOverride": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x1E",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "RemoveTimeTask": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA059"
+ },
+ "ReplaceGestaltValue": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x402",
+  "selector_size": 2,
+  "trap": "0xABF1"
+ },
+ "ResolveAliasFileWithMountFlags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003F7E8",
+  "result": 2,
+  "selector": "0x29",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "ResolveAliasWithMountFlags": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x2B",
+  "selector_size": 4,
+  "trap": "0xA823"
+ },
+ "SPBGetDefaultDevice": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2500014",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SPBSetDefaultDevice": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2540014",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SetAlertBeepResID": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x2007C"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA052"
+ },
+ "SetAntiAliasedTextEnabled": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 1
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000009F8",
+  "result": 4,
+  "selector": "0x11",
+  "selector_size": 4,
+  "trap": "0xA854"
+ },
+ "SetCursorComponent": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x4000D",
+  "selector_size": 4,
+  "trap": "0xABE0"
+ },
+ "SetCustomIconsEnabled": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000006E8",
+  "result": 2,
+  "selector": "0x1F",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "SetDeepIconsEnabled": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 1
+   }
+  ],
+  "procinfo": "0x000001E8",
+  "result": 2,
+  "selector": "0x2D",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "SetDefaultSoundOutput": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2200018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SetDimSuspendState": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SetDimmingTimeout": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SetFileViewAccess": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0xD",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "SetFileViewBackingBase": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "SetGestaltValue": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FA8",
+  "result": 2,
+  "selector": "0x404",
+  "selector_size": 2,
+  "trap": "0xABF1"
+ },
+ "SetHardDiskTimeout": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SetIconFamilyData": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x30",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "SetIntModemState": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SetMappedFileSize": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003BE8",
+  "result": 2,
+  "selector": "0x6",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "SetPortCustomXFerProc": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x10001A",
+  "selector_size": 4,
+  "trap": "0xAB1D"
+ },
+ "SetProcessorSpeed": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071812",
+  "result": 1,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "SetSCSIDiskModeAddress": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SetSleepTimeout": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SetSoundMixerState": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x2A"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "SetSoundOutputInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6480018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SetSoundPreference": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6340018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SetSpindownDisable": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SetStartupTimer": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x27"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "SetWUTime": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00133022",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA085"
+ },
+ "SetWakeupTimer": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x17"
+   },
+   {
+    "reg": "A0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x02671802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "SndDispatchAddTool": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000EE8",
+  "result": 2,
+  "selector": "0x40000",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SndDispatchRemoveTool": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x80000",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SndDispatchToolAddress": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002F8",
+  "result": 4,
+  "selector": "0xC0000",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SndDispatchVersion": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002F8",
+  "result": 4,
+  "selector": "0x0",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SndGetInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x63C0018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SndSetInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6400018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SortResourceFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002C8",
+  "result": 0,
+  "selector": "0x16",
+  "selector_size": 4,
+  "trap": "0xA822"
+ },
+ "SoundConverterBeginConversion": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x25C0018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterClose": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2540018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterConvertBuffer": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000FFFE8",
+  "result": 2,
+  "selector": "0xC600018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterEndConversion": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x8640018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterFillBuffer": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00FFFFE8",
+  "result": 2,
+  "selector": "0x10780018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterGetBufferSizes": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0xA580018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterGetInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6680018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterOpen": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x6500018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundConverterSetInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x66C0018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundManagerGetInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x47C0018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SoundManagerSetInfo": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x4800018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "SpinDownHardDisk": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4,
+    "value": "0x7"
+   }
+  ],
+  "procinfo": "0x00071802",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA09E"
+ },
+ "UTAddFCBToSearchList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x39",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTAddNewVCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003EE8",
+  "result": 2,
+  "selector": "0x7",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTAdjustEOF": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x10",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTAllocateFCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x0",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTAllocateVCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002FE8",
+  "result": 2,
+  "selector": "0x6",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTAllocateWDCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0xC",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTBlockInFQHashP": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000EE8",
+  "result": 2,
+  "selector": "0x2C",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCacheReadIP": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x002FBFE8",
+  "result": 2,
+  "selector": "0x27",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCacheWriteIP": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x002FBFE8",
+  "result": 2,
+  "selector": "0x28",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckDirBusy": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x1A",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckFCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x37",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckFileModifiable": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x19",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckFileRefNum": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x14",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckForkPermissions": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 1
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00F57FE8",
+  "result": 2,
+  "selector": "0x38",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckPermission": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x16",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckVolModifiable": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x18",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckVolOffline": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x17",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckVolRefNum": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x15",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTCheckWDRefNum": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x13",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTDetermineVol": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x1D",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTDisposeVCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x8",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTEjectVol": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x2B",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTFindDrive": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000EE8",
+  "result": 2,
+  "selector": "0xF",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTFlushCache": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00000AE8",
+  "result": 2,
+  "selector": "0x21",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTGetBlock": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003BEE8",
+  "result": 2,
+  "selector": "0x1F",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTGetDefaultVol": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x12",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTGetForkControlBlockSize": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x3C",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTGetPathComponentName": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x1C",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTIndexFCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FE8",
+  "result": 2,
+  "selector": "0x4",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTLocateFCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x2",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTLocateFCBInSearchList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0x3B",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTLocateNextFCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0003FFE8",
+  "result": 2,
+  "selector": "0x3",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTLocateNextVCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0xB",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTLocateVCBByName": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000FFE8",
+  "result": 2,
+  "selector": "0xA",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTLocateVCBByRefNum": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003EE8",
+  "result": 2,
+  "selector": "0x9",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTMarkDirty": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x23",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTParsePathname": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x1B",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTReleaseBlock": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00000BE8",
+  "result": 2,
+  "selector": "0x20",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTReleaseFCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0x1",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTReleaseWDCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000002E8",
+  "result": 2,
+  "selector": "0xD",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTRemoveFCBFromSearchList": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x3A",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTResolveFCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000EE8",
+  "result": 2,
+  "selector": "0x5",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTResolveFileRefNum": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x36",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTResolveWDCB": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x0000EBE8",
+  "result": 2,
+  "selector": "0xE",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTSetDefaultVol": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x00002FE8",
+  "result": 2,
+  "selector": "0x11",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTTrashBlocks": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x0002BFE8",
+  "result": 2,
+  "selector": "0x26",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTTrashFileBlocks": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x25",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTTrashVolBlocks": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x24",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTVolCacheReadIP": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000BFFE8",
+  "result": 2,
+  "selector": "0x34",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UTVolCacheWriteIP": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 2
+   }
+  ],
+  "procinfo": "0x000BFFE8",
+  "result": 2,
+  "selector": "0x35",
+  "selector_size": 4,
+  "trap": "0xA824"
+ },
+ "UnmapFileView": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x9",
+  "selector_size": 4,
+  "trap": "0xAA81"
+ },
+ "UnregisterIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x8",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "UnsignedFixedMulDiv": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00003FF8",
+  "result": 4,
+  "selector": "0x60C0018",
+  "selector_size": 4,
+  "trap": "0xA800"
+ },
+ "UpdateIconRef": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000003E8",
+  "result": 2,
+  "selector": "0x9",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "UpdateSystemActivity": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "D0",
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00071822",
+  "result": 2,
+  "result_reg": "D0",
+  "trap": "0xA09E"
+ },
+ "WriteIconFile": {
+  "conv": "d0-pascal",
+  "params": [
+   {
+    "size": 4
+   },
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x00000FE8",
+  "result": 2,
+  "selector": "0x37",
+  "selector_size": 4,
+  "trap": "0xAA75"
+ },
+ "ataManager": {
+  "conv": "pascal",
+  "params": [
+   {
+    "size": 4
+   }
+  ],
+  "procinfo": "0x000000E0",
+  "result": 2,
+  "trap": "0xAAF1"
+ },
+ "upperstring": {
+  "conv": "register",
+  "params": [
+   {
+    "reg": "A0",
+    "size": 4
+   },
+   {
+    "reg": "D0",
+    "size": 2,
+    "value": "0x1"
+   }
+  ],
+  "procinfo": "0x00533002",
+  "result": 0,
+  "result_reg": null,
+  "trap": "0xA254"
+ }
+}

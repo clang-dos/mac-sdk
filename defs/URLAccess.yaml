@@ -1,0 +1,483 @@
+
+# ####
+
+- typedef:
+    name: URLReference
+    type: struct OpaqueURLReference*
+    comment: 'URL Access Manager (Mac OS 9; an extension for 8.6): HTTP, HTTPS and FTP transfers.'
+
+# ####
+
+- typedef:
+    name: URLOpenFlags
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: URLState
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: URLEvent
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: URLEventMask
+    type: UInt32
+
+# ####
+
+- enum:
+    values:
+    - name: kURLReplaceExistingFlag
+      value: 1
+    - name: kURLBinHexFileFlag
+      value: 2
+    - name: kURLExpandFileFlag
+      value: 4
+    - name: kURLDisplayProgressFlag
+      value: 8
+    - name: kURLDisplayAuthFlag
+      value: 16
+    - name: kURLUploadFlag
+      value: 32
+    - name: kURLIsDirectoryHintFlag
+      value: 64
+    - name: kURLDoNotTryAnonymousFlag
+      value: 128
+    - name: kURLDirectoryListingFlag
+      value: 256
+    - name: kURLExpandAndVerifyFlag
+      value: 512
+    - name: kURLNoAutoRedirectFlag
+      value: 1024
+    - name: kURLDebinhexOnlyFlag
+      value: 2048
+    - name: kURLDoNotDeleteOnErrorFlag
+      value: 4096
+    - name: kURLResumeDownloadFlag
+      value: 8192
+
+# ####
+
+- enum:
+    values:
+    - name: kURLNullState
+      value: 0
+    - name: kURLInitiatingState
+      value: 1
+    - name: kURLLookingUpHostState
+      value: 2
+    - name: kURLConnectingState
+      value: 3
+    - name: kURLResourceFoundState
+      value: 4
+    - name: kURLDownloadingState
+      value: 5
+    - name: kURLDataAvailableState
+      value: 21
+    - name: kURLTransactionCompleteState
+      value: 6
+    - name: kURLErrorOccurredState
+      value: 7
+    - name: kURLAbortingState
+      value: 8
+    - name: kURLCompletedState
+      value: 9
+    - name: kURLUploadingState
+      value: 10
+
+# ####
+
+- enum:
+    values:
+    - name: kURLInitiatedEvent
+      value: 1
+    - name: kURLResourceFoundEvent
+      value: 4
+    - name: kURLDownloadingEvent
+      value: 5
+    - name: kURLAbortInitiatedEvent
+      value: 8
+    - name: kURLCompletedEvent
+      value: 9
+    - name: kURLErrorOccurredEvent
+      value: 7
+    - name: kURLDataAvailableEvent
+      value: 21
+    - name: kURLTransactionCompleteEvent
+      value: 6
+    - name: kURLUploadingEvent
+      value: 10
+    - name: kURLSystemEvent
+      value: 29
+    - name: kURLPercentEvent
+      value: 30
+    - name: kURLPeriodicEvent
+      value: 31
+    - name: kURLPropertyChangedEvent
+      value: 32
+
+# ####
+
+- enum:
+    values:
+    - name: kURLAllBufferEventsMask
+      value: 1048576
+    - name: kURLAllNonBufferEventsMask
+      value: 4026532863
+    - name: kURLAllEventsMask
+      value: 4294967295
+
+# ####
+
+- struct:
+    name: URLCallbackInfo
+    size: 20
+    members:
+    - name: version
+      type: UInt32
+    - name: urlRef
+      type: URLReference
+    - name: property
+      type: const char*
+    - name: currentSize
+      type: UInt32
+    - name: systemEvent
+      type: EventRecord*
+
+# ####
+
+- funptr:
+    name: URLNotifyProcPtr
+    return: OSStatus
+    args:
+    - name: userContext
+      type: void*
+    - name: event
+      type: URLEvent
+    - name: callbackInfo
+      type: URLCallbackInfo*
+
+# ####
+
+- funptr:
+    name: URLSystemEventProcPtr
+    return: OSStatus
+    args:
+    - name: userContext
+      type: void*
+    - name: event
+      type: EventRecord*
+
+# ####
+
+- enum:
+    values:
+    - name: kURLInvalidURLReferenceError
+      value: -30770
+    - name: kURLProgressAlreadyDisplayedError
+      value: -30771
+    - name: kURLDestinationExistsError
+      value: -30772
+    - name: kURLInvalidURLError
+      value: -30773
+    - name: kURLUnsupportedSchemeError
+      value: -30774
+    - name: kURLServerBusyError
+      value: -30775
+    - name: kURLAuthenticationError
+      value: -30776
+    - name: kURLPropertyNotYetKnownError
+      value: -30777
+    - name: kURLUnknownPropertyError
+      value: -30778
+    - name: kURLPropertyBufferTooSmallError
+      value: -30779
+    - name: kURLUnsettablePropertyError
+      value: -30780
+    - name: kURLInvalidCallError
+      value: -30781
+    - name: kURLFileEmptyError
+      value: -30783
+    - name: kURLExtensionFailureError
+      value: -30785
+    - name: kURLInvalidConfigurationError
+      value: -30786
+    - name: kURLAccessNotAvailableError
+      value: -30787
+    - name: kURL68kNotSupportedError
+      value: -30788
+
+# ####
+
+- function:
+    name: URLGetURLAccessVersion
+    return: OSStatus
+    args:
+    - name: returnVers
+      type: UInt32*
+    comment: URL Access Manager
+    m68k: none
+
+# ####
+
+- function:
+    name: URLSimpleDownload
+    return: OSStatus
+    args:
+    - name: url
+      type: const char*
+    - name: destination
+      type: FSSpec*
+    - name: destinationHandle
+      type: Handle
+    - name: openFlags
+      type: URLOpenFlags
+    - name: eventProc
+      type: URLSystemEventUPP
+    - name: userContext
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLDownload
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: destination
+      type: FSSpec*
+    - name: destinationHandle
+      type: Handle
+    - name: openFlags
+      type: URLOpenFlags
+    - name: eventProc
+      type: URLSystemEventUPP
+    - name: userContext
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLSimpleUpload
+    return: OSStatus
+    args:
+    - name: url
+      type: const char*
+    - name: source
+      type: const FSSpec*
+    - name: openFlags
+      type: URLOpenFlags
+    - name: eventProc
+      type: URLSystemEventUPP
+    - name: userContext
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLUpload
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: source
+      type: const FSSpec*
+    - name: openFlags
+      type: URLOpenFlags
+    - name: eventProc
+      type: URLSystemEventUPP
+    - name: userContext
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLNewReference
+    return: OSStatus
+    args:
+    - name: url
+      type: const char*
+    - name: urlRef
+      type: URLReference*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLDisposeReference
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    m68k: none
+
+# ####
+
+- function:
+    name: URLOpen
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: fileSpec
+      type: FSSpec*
+    - name: openFlags
+      type: URLOpenFlags
+    - name: notifyProc
+      type: URLNotifyUPP
+    - name: eventRegister
+      type: URLEventMask
+    - name: userContext
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLAbort
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    m68k: none
+
+# ####
+
+- function:
+    name: URLGetDataAvailable
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: dataSize
+      type: Size*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLGetBuffer
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: buffer
+      type: void**
+    - name: bufferSize
+      type: Size*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLReleaseBuffer
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: buffer
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLGetProperty
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: property
+      type: const char*
+    - name: propertyBuffer
+      type: void*
+    - name: bufferSize
+      type: Size
+    m68k: none
+
+# ####
+
+- function:
+    name: URLGetPropertySize
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: property
+      type: const char*
+    - name: propertySize
+      type: Size*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLSetProperty
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: property
+      type: const char*
+    - name: propertyBuffer
+      type: void*
+    - name: bufferSize
+      type: Size
+    m68k: none
+
+# ####
+
+- function:
+    name: URLGetCurrentState
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: state
+      type: URLState*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLGetError
+    return: OSStatus
+    args:
+    - name: urlRef
+      type: URLReference
+    - name: urlError
+      type: OSStatus*
+    m68k: none
+
+# ####
+
+- function:
+    name: URLIdle
+    return: OSStatus
+    m68k: none
+
+# ####
+
+- function:
+    name: URLGetFileInfo
+    return: OSStatus
+    args:
+    - name: fName
+      type: StringPtr
+    - name: fType
+      type: OSType*
+    - name: fCreator
+      type: OSType*
+    m68k: none

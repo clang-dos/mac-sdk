@@ -1,0 +1,1003 @@
+
+# ####
+
+- typedef:
+    name: MPOpaqueID
+    type: struct OpaqueMPOpaqueID*
+    comment: 'Multiprocessing Services 2.x (MPLibrary, Mac OS 8.6 to 9.2): preemptive tasks on PowerPC.'
+
+# ####
+
+- typedef:
+    name: MPProcessID
+    type: struct OpaqueMPProcessID*
+
+# ####
+
+- typedef:
+    name: MPTaskID
+    type: struct OpaqueMPTaskID*
+
+# ####
+
+- typedef:
+    name: MPQueueID
+    type: struct OpaqueMPQueueID*
+
+# ####
+
+- typedef:
+    name: MPSemaphoreID
+    type: struct OpaqueMPSemaphoreID*
+
+# ####
+
+- typedef:
+    name: MPCriticalRegionID
+    type: struct OpaqueMPCriticalRegionID*
+
+# ####
+
+- typedef:
+    name: MPTimerID
+    type: struct OpaqueMPTimerID*
+
+# ####
+
+- typedef:
+    name: MPEventID
+    type: struct OpaqueMPEventID*
+
+# ####
+
+- typedef:
+    name: MPAddressSpaceID
+    type: struct OpaqueMPAddressSpaceID*
+
+# ####
+
+- typedef:
+    name: MPNotificationID
+    type: struct OpaqueMPNotificationID*
+
+# ####
+
+- typedef:
+    name: MPCoherenceID
+    type: struct OpaqueMPCoherenceID*
+
+# ####
+
+- typedef:
+    name: MPCpuID
+    type: struct OpaqueMPCpuID*
+
+# ####
+
+- typedef:
+    name: MPAreaID
+    type: struct OpaqueMPAreaID*
+
+# ####
+
+- typedef:
+    name: MPConsoleID
+    type: struct OpaqueMPConsoleID*
+
+# ####
+
+- typedef:
+    name: MPOpaqueIDClass
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: MPSemaphoreCount
+    type: ItemCount
+
+# ####
+
+- typedef:
+    name: MPTaskWeight
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: MPTaskOptions
+    type: OptionBits
+
+# ####
+
+- typedef:
+    name: MPEventFlags
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: MPExceptionKind
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: MPDebuggerLevel
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: MPRemoteContext
+    type: UInt8
+
+# ####
+
+- typedef:
+    name: TaskStorageIndex
+    type: ItemCount
+
+# ####
+
+- typedef:
+    name: TaskStorageValue
+    type: LogicalAddress
+
+# ####
+
+- funptr:
+    name: TaskProc
+    callconv: C
+    return: OSStatus
+    args:
+    - name: parameter
+      type: void*
+
+# ####
+
+- funptr:
+    name: MPRemoteProcedure
+    callconv: C
+    return: void*
+    args:
+    - name: parameter
+      type: void*
+
+# ####
+
+- enum:
+    values:
+    - name: kDurationImmediate
+      value: 0
+    - name: kDurationForever
+      value: 2147483647
+    - name: kDurationMillisecond
+      value: 1
+    - name: kDurationMicrosecond
+      value: -1
+
+# ####
+
+- enum:
+    values:
+    - name: kMPNoID
+      value: 0
+    - name: kMPCreateTaskSuspendedMask
+      value: 131072
+    - name: kMPCreateTaskTakesAllExceptionsMask
+      value: 262144
+    - name: kMPCreateTaskNotDebuggableMask
+      value: 524288
+    - name: kMPCreateTaskValidOptionsMask
+      value: 917504
+
+# ####
+
+- enum:
+    values:
+    - name: kMPMaxAllocSize
+      value: 1073741824
+    - name: kMPAllocateDefaultAligned
+      value: 0
+    - name: kMPAllocate8ByteAligned
+      value: 3
+    - name: kMPAllocate16ByteAligned
+      value: 4
+    - name: kMPAllocate32ByteAligned
+      value: 5
+    - name: kMPAllocate1024ByteAligned
+      value: 10
+    - name: kMPAllocate4096ByteAligned
+      value: 12
+    - name: kMPAllocateMaxAlignment
+      value: 16
+    - name: kMPAllocateAltiVecAligned
+      value: 4
+    - name: kMPAllocateVMXAligned
+      value: 4
+    - name: kMPAllocateVMPageAligned
+      value: 254
+    - name: kMPAllocateInterlockAligned
+      value: 255
+
+# ####
+
+- enum:
+    values:
+    - name: kMPAllocateClearMask
+      value: 1
+    - name: kMPAllocateGloballyMask
+      value: 2
+    - name: kMPAllocateResidentMask
+      value: 4
+    - name: kMPAllocateNoGrowthMask
+      value: 16
+    - name: kMPAllocateNoCreateMask
+      value: 32
+
+# ####
+
+- enum:
+    values:
+    - name: kMPPreserveTimerIDMask
+      value: 1
+    - name: kMPTimeIsDeltaMask
+      value: 2
+    - name: kMPTimeIsDurationMask
+      value: 4
+
+# ####
+
+- enum:
+    values:
+    - name: kMPAnyRemoteContext
+      value: 0
+    - name: kMPOwningProcessRemoteContext
+      value: 1
+    - name: kMPInterruptRemoteContext
+      value: 2
+
+# ####
+
+- enum:
+    values:
+    - name: kMPIterationEndErr
+      value: -29275
+    - name: kMPPrivilegedErr
+      value: -29276
+    - name: kMPProcessCreatedErr
+      value: -29288
+    - name: kMPProcessTerminatedErr
+      value: -29289
+    - name: kMPTaskCreatedErr
+      value: -29290
+    - name: kMPTaskBlockedErr
+      value: -29291
+    - name: kMPTaskStoppedErr
+      value: -29292
+    - name: kMPBlueBlockingErr
+      value: -29293
+    - name: kMPDeletedErr
+      value: -29295
+    - name: kMPTimeoutErr
+      value: -29296
+    - name: kMPTaskAbortedErr
+      value: -29297
+    - name: kMPInsufficientResourcesErr
+      value: -29298
+    - name: kMPInvalidIDErr
+      value: -29299
+
+# ####
+
+- function:
+    name: MPProcessors
+    return: UInt32
+    callconv: C
+    comment: Multiprocessing Services (MPLibrary; check MPLibraryIsLoaded() before calling)
+    m68k: none
+
+# ####
+
+- function:
+    name: MPProcessorsScheduled
+    return: ItemCount
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCreateTask
+    return: OSStatus
+    args:
+    - name: entryPoint
+      type: TaskProc
+    - name: parameter
+      type: void*
+    - name: stackSize
+      type: ByteCount
+    - name: notifyQueue
+      type: MPQueueID
+    - name: terminationParameter1
+      type: void*
+    - name: terminationParameter2
+      type: void*
+    - name: options
+      type: MPTaskOptions
+    - name: task
+      type: MPTaskID*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPTerminateTask
+    return: OSStatus
+    args:
+    - name: task
+      type: MPTaskID
+    - name: terminationStatus
+      type: OSStatus
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSetTaskWeight
+    return: OSStatus
+    args:
+    - name: task
+      type: MPTaskID
+    - name: weight
+      type: MPTaskWeight
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPTaskIsPreemptive
+    return: Boolean
+    args:
+    - name: taskID
+      type: MPTaskID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPExit
+    args:
+    - name: status
+      type: OSStatus
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPYield
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCurrentTaskID
+    return: MPTaskID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSetTaskType
+    return: OSStatus
+    args:
+    - name: task
+      type: MPTaskID
+    - name: taskType
+      type: OSType
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPAllocateTaskStorageIndex
+    return: OSStatus
+    args:
+    - name: index
+      type: TaskStorageIndex*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDeallocateTaskStorageIndex
+    return: OSStatus
+    args:
+    - name: index
+      type: TaskStorageIndex
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSetTaskStorageValue
+    return: OSStatus
+    args:
+    - name: index
+      type: TaskStorageIndex
+    - name: value
+      type: TaskStorageValue
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPGetTaskStorageValue
+    return: TaskStorageValue
+    args:
+    - name: index
+      type: TaskStorageIndex
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCreateQueue
+    return: OSStatus
+    args:
+    - name: queue
+      type: MPQueueID*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDeleteQueue
+    return: OSStatus
+    args:
+    - name: queue
+      type: MPQueueID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPNotifyQueue
+    return: OSStatus
+    args:
+    - name: queue
+      type: MPQueueID
+    - name: param1
+      type: void*
+    - name: param2
+      type: void*
+    - name: param3
+      type: void*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPWaitOnQueue
+    return: OSStatus
+    args:
+    - name: queue
+      type: MPQueueID
+    - name: param1
+      type: void**
+    - name: param2
+      type: void**
+    - name: param3
+      type: void**
+    - name: timeout
+      type: Duration
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSetQueueReserve
+    return: OSStatus
+    args:
+    - name: queue
+      type: MPQueueID
+    - name: count
+      type: ItemCount
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCreateSemaphore
+    return: OSStatus
+    args:
+    - name: maximumValue
+      type: MPSemaphoreCount
+    - name: initialValue
+      type: MPSemaphoreCount
+    - name: semaphore
+      type: MPSemaphoreID*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDeleteSemaphore
+    return: OSStatus
+    args:
+    - name: semaphore
+      type: MPSemaphoreID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSignalSemaphore
+    return: OSStatus
+    args:
+    - name: semaphore
+      type: MPSemaphoreID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPWaitOnSemaphore
+    return: OSStatus
+    args:
+    - name: semaphore
+      type: MPSemaphoreID
+    - name: timeout
+      type: Duration
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCreateCriticalRegion
+    return: OSStatus
+    args:
+    - name: criticalRegion
+      type: MPCriticalRegionID*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDeleteCriticalRegion
+    return: OSStatus
+    args:
+    - name: criticalRegion
+      type: MPCriticalRegionID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPEnterCriticalRegion
+    return: OSStatus
+    args:
+    - name: criticalRegion
+      type: MPCriticalRegionID
+    - name: timeout
+      type: Duration
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPExitCriticalRegion
+    return: OSStatus
+    args:
+    - name: criticalRegion
+      type: MPCriticalRegionID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCreateEvent
+    return: OSStatus
+    args:
+    - name: event
+      type: MPEventID*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDeleteEvent
+    return: OSStatus
+    args:
+    - name: event
+      type: MPEventID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSetEvent
+    return: OSStatus
+    args:
+    - name: event
+      type: MPEventID
+    - name: flags
+      type: MPEventFlags
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPWaitForEvent
+    return: OSStatus
+    args:
+    - name: event
+      type: MPEventID
+    - name: flags
+      type: MPEventFlags*
+    - name: timeout
+      type: Duration
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCreateNotification
+    return: OSStatus
+    args:
+    - name: notificationID
+      type: MPNotificationID*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDeleteNotification
+    return: OSStatus
+    args:
+    - name: notificationID
+      type: MPNotificationID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPModifyNotification
+    return: OSStatus
+    args:
+    - name: notificationID
+      type: MPNotificationID
+    - name: anID
+      type: MPOpaqueID
+    - name: notifyParam1
+      type: void*
+    - name: notifyParam2
+      type: void*
+    - name: notifyParam3
+      type: void*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPModifyNotificationParameters
+    return: OSStatus
+    args:
+    - name: notificationID
+      type: MPNotificationID
+    - name: kind
+      type: MPOpaqueIDClass
+    - name: notifyParam1
+      type: void*
+    - name: notifyParam2
+      type: void*
+    - name: notifyParam3
+      type: void*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCauseNotification
+    return: OSStatus
+    args:
+    - name: notificationID
+      type: MPNotificationID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDelayUntil
+    return: OSStatus
+    args:
+    - name: expirationTime
+      type: AbsoluteTime*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCreateTimer
+    return: OSStatus
+    args:
+    - name: timerID
+      type: MPTimerID*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDeleteTimer
+    return: OSStatus
+    args:
+    - name: timerID
+      type: MPTimerID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSetTimerNotify
+    return: OSStatus
+    args:
+    - name: timerID
+      type: MPTimerID
+    - name: anID
+      type: MPOpaqueID
+    - name: notifyParam1
+      type: void*
+    - name: notifyParam2
+      type: void*
+    - name: notifyParam3
+      type: void*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPArmTimer
+    return: OSStatus
+    args:
+    - name: timerID
+      type: MPTimerID
+    - name: expirationTime
+      type: AbsoluteTime*
+    - name: options
+      type: OptionBits
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPCancelTimer
+    return: OSStatus
+    args:
+    - name: timerID
+      type: MPTimerID
+    - name: timeRemaining
+      type: AbsoluteTime*
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPAllocateAligned
+    return: LogicalAddress
+    args:
+    - name: size
+      type: ByteCount
+    - name: alignment
+      type: UInt8
+    - name: options
+      type: OptionBits
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPAllocate
+    return: LogicalAddress
+    args:
+    - name: size
+      type: ByteCount
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPFree
+    args:
+    - name: object
+      type: LogicalAddress
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPGetAllocatedBlockSize
+    return: ByteCount
+    args:
+    - name: object
+      type: LogicalAddress
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPBlockCopy
+    args:
+    - name: source
+      type: LogicalAddress
+    - name: destination
+      type: LogicalAddress
+    - name: size
+      type: ByteCount
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPBlockClear
+    args:
+    - name: address
+      type: LogicalAddress
+    - name: size
+      type: ByteCount
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDataToCode
+    args:
+    - name: address
+      type: LogicalAddress
+    - name: size
+      type: ByteCount
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPSetExceptionHandler
+    return: OSStatus
+    args:
+    - name: task
+      type: MPTaskID
+    - name: exceptionQ
+      type: MPQueueID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPDisposeTaskException
+    return: OSStatus
+    args:
+    - name: task
+      type: MPTaskID
+    - name: action
+      type: OptionBits
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPThrowException
+    return: OSStatus
+    args:
+    - name: task
+      type: MPTaskID
+    - name: kind
+      type: MPExceptionKind
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPRegisterDebugger
+    return: OSStatus
+    args:
+    - name: queue
+      type: MPQueueID
+    - name: level
+      type: MPDebuggerLevel
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPUnregisterDebugger
+    return: OSStatus
+    args:
+    - name: queue
+      type: MPQueueID
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: MPRemoteCall
+    return: void*
+    args:
+    - name: remoteProc
+      type: MPRemoteProcedure
+    - name: parameter
+      type: void*
+    - name: context
+      type: MPRemoteContext
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: _MPIsFullyInitialized
+    return: Boolean
+    callconv: C
+    m68k: none
+
+# ####
+
+- function:
+    name: AbsoluteToDuration
+    return: Duration
+    args:
+    - name: absoluteTime
+      type: AbsoluteTime
+    callconv: C
+    m68k: none

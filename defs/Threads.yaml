@@ -1,0 +1,528 @@
+
+# ####
+
+- typedef:
+    name: ThreadState
+    type: UInt16
+    comment: Thread Manager (System 7 with the Thread Manager extension, built in from System 7.5).
+
+# ####
+
+- enum:
+    values:
+    - name: kReadyThreadState
+      value: 0
+    - name: kStoppedThreadState
+      value: 1
+    - name: kRunningThreadState
+      value: 2
+
+# ####
+
+- typedef:
+    name: ThreadTaskRef
+    type: void*
+
+# ####
+
+- typedef:
+    name: ThreadStyle
+    type: UInt32
+
+# ####
+
+- enum:
+    values:
+    - name: kCooperativeThread
+      value: 1
+    - name: kPreemptiveThread
+      value: 2
+
+# ####
+
+- typedef:
+    name: ThreadID
+    type: UInt32
+
+# ####
+
+- enum:
+    values:
+    - name: kNoThreadID
+      value: 0
+    - name: kCurrentThreadID
+      value: 1
+    - name: kApplicationThreadID
+      value: 2
+
+# ####
+
+- typedef:
+    name: ThreadOptions
+    type: UInt32
+
+# ####
+
+- enum:
+    values:
+    - name: kNewSuspend
+      value: 1
+    - name: kUsePremadeThread
+      value: 2
+    - name: kCreateIfNeeded
+      value: 4
+    - name: kFPUNotNeeded
+      value: 8
+    - name: kExactMatchThread
+      value: 16
+
+# ####
+
+- struct:
+    name: SchedulerInfoRec
+    size: 16
+    members:
+    - name: InfoRecSize
+      type: UInt32
+    - name: CurrentThreadID
+      type: ThreadID
+    - name: SuggestedThreadID
+      type: ThreadID
+    - name: InterruptedCoopThreadID
+      type: ThreadID
+
+# ####
+
+- typedef:
+    name: SchedulerInfoRecPtr
+    type: SchedulerInfoRec*
+
+# ####
+
+- typedef:
+    name: voidPtr
+    type: void*
+
+# ####
+
+- funptr:
+    name: ThreadEntryProcPtr
+    tvector: true
+    return: voidPtr
+    args:
+    - name: threadParam
+      type: void*
+
+# ####
+
+- funptr:
+    name: ThreadSchedulerProcPtr
+    tvector: true
+    return: ThreadID
+    args:
+    - name: schedulerInfo
+      type: SchedulerInfoRecPtr
+
+# ####
+
+- funptr:
+    name: ThreadSwitchProcPtr
+    tvector: true
+    args:
+    - name: threadBeingSwitched
+      type: ThreadID
+    - name: switchProcParam
+      type: void*
+
+# ####
+
+- funptr:
+    name: ThreadTerminationProcPtr
+    tvector: true
+    args:
+    - name: threadTerminated
+      type: ThreadID
+    - name: terminationProcParam
+      type: void*
+
+# ####
+
+- funptr:
+    name: DebuggerNewThreadProcPtr
+    tvector: true
+    args:
+    - name: threadCreated
+      type: ThreadID
+
+# ####
+
+- funptr:
+    name: DebuggerDisposeThreadProcPtr
+    tvector: true
+    args:
+    - name: threadDeleted
+      type: ThreadID
+
+# ####
+
+- funptr:
+    name: DebuggerThreadSchedulerProcPtr
+    tvector: true
+    return: ThreadID
+    args:
+    - name: schedulerInfo
+      type: SchedulerInfoRecPtr
+
+# ####
+
+- enum:
+    values:
+    - name: threadTooManyReqsErr
+      value: -617
+    - name: threadNotFoundErr
+      value: -618
+    - name: threadProtocolErr
+      value: -619
+
+# ####
+
+- typedef:
+    name: ThreadEntryTPP
+    type: ThreadEntryUPP
+
+# ####
+
+- typedef:
+    name: ThreadSchedulerTPP
+    type: ThreadSchedulerUPP
+
+# ####
+
+- typedef:
+    name: ThreadSwitchTPP
+    type: ThreadSwitchUPP
+
+# ####
+
+- typedef:
+    name: ThreadTerminationTPP
+    type: ThreadTerminationUPP
+
+# ####
+
+- typedef:
+    name: DebuggerNewThreadTPP
+    type: DebuggerNewThreadUPP
+
+# ####
+
+- typedef:
+    name: DebuggerDisposeThreadTPP
+    type: DebuggerDisposeThreadUPP
+
+# ####
+
+- typedef:
+    name: DebuggerThreadSchedulerTPP
+    type: DebuggerThreadSchedulerUPP
+
+# ####
+
+- function:
+    name: CreateThreadPool
+    return: OSErr
+    args:
+    - name: threadStyle
+      type: ThreadStyle
+    - name: numToCreate
+      type: SInt16
+    - name: stackSize
+      type: Size
+    comment: Thread Manager, trap 0xABF2 with the selector in D0
+    dispatcher: ThreadDispatch
+    selector: 1281
+
+# ####
+
+- function:
+    name: GetFreeThreadCount
+    return: OSErr
+    args:
+    - name: threadStyle
+      type: ThreadStyle
+    - name: freeCount
+      type: SInt16*
+    dispatcher: ThreadDispatch
+    selector: 1026
+
+# ####
+
+- function:
+    name: GetSpecificFreeThreadCount
+    return: OSErr
+    args:
+    - name: threadStyle
+      type: ThreadStyle
+    - name: stackSize
+      type: Size
+    - name: freeCount
+      type: SInt16*
+    dispatcher: ThreadDispatch
+    selector: 1557
+
+# ####
+
+- function:
+    name: GetDefaultThreadStackSize
+    return: OSErr
+    args:
+    - name: threadStyle
+      type: ThreadStyle
+    - name: stackSize
+      type: Size*
+    dispatcher: ThreadDispatch
+    selector: 1043
+
+# ####
+
+- function:
+    name: ThreadCurrentStackSpace
+    return: OSErr
+    args:
+    - name: thread
+      type: ThreadID
+    - name: freeStack
+      type: UInt32*
+    dispatcher: ThreadDispatch
+    selector: 1044
+
+# ####
+
+- function:
+    name: NewThread
+    return: OSErr
+    args:
+    - name: threadStyle
+      type: ThreadStyle
+    - name: threadEntry
+      type: ThreadEntryTPP
+    - name: threadParam
+      type: void*
+    - name: stackSize
+      type: Size
+    - name: options
+      type: ThreadOptions
+    - name: threadResult
+      type: void**
+    - name: threadMade
+      type: ThreadID*
+    dispatcher: ThreadDispatch
+    selector: 3587
+
+# ####
+
+- function:
+    name: SetThreadScheduler
+    return: OSErr
+    args:
+    - name: threadScheduler
+      type: ThreadSchedulerTPP
+    dispatcher: ThreadDispatch
+    selector: 521
+
+# ####
+
+- function:
+    name: SetThreadSwitcher
+    return: OSErr
+    args:
+    - name: thread
+      type: ThreadID
+    - name: threadSwitcher
+      type: ThreadSwitchTPP
+    - name: switchProcParam
+      type: void*
+    - name: inOrOut
+      type: Boolean
+    dispatcher: ThreadDispatch
+    selector: 1802
+
+# ####
+
+- function:
+    name: SetThreadTerminator
+    return: OSErr
+    args:
+    - name: thread
+      type: ThreadID
+    - name: threadTerminator
+      type: ThreadTerminationTPP
+    - name: terminationProcParam
+      type: void*
+    dispatcher: ThreadDispatch
+    selector: 1553
+
+# ####
+
+- function:
+    name: DisposeThread
+    return: OSErr
+    args:
+    - name: threadToDump
+      type: ThreadID
+    - name: threadResult
+      type: void*
+    - name: recycleThread
+      type: Boolean
+    dispatcher: ThreadDispatch
+    selector: 1284
+
+# ####
+
+- function:
+    name: YieldToAnyThread
+    return: OSErr
+    m68k-body: |
+      return YieldToThread(kNoThreadID);
+
+# ####
+
+- function:
+    name: YieldToThread
+    return: OSErr
+    args:
+    - name: suggestedThread
+      type: ThreadID
+    dispatcher: ThreadDispatch
+    selector: 517
+
+# ####
+
+- function:
+    name: GetCurrentThread
+    return: OSErr
+    args:
+    - name: currentThreadID
+      type: ThreadID*
+    dispatcher: ThreadDispatch
+    selector: 518
+
+# ####
+
+- function:
+    name: GetThreadState
+    return: OSErr
+    args:
+    - name: threadToGet
+      type: ThreadID
+    - name: threadState
+      type: ThreadState*
+    dispatcher: ThreadDispatch
+    selector: 1031
+
+# ####
+
+- function:
+    name: SetThreadState
+    return: OSErr
+    args:
+    - name: threadToSet
+      type: ThreadID
+    - name: newState
+      type: ThreadState
+    - name: suggestedThread
+      type: ThreadID
+    dispatcher: ThreadDispatch
+    selector: 1288
+
+# ####
+
+- function:
+    name: SetThreadStateEndCritical
+    return: OSErr
+    args:
+    - name: threadToSet
+      type: ThreadID
+    - name: newState
+      type: ThreadState
+    - name: suggestedThread
+      type: ThreadID
+    dispatcher: ThreadDispatch
+    selector: 1298
+
+# ####
+
+- function:
+    name: ThreadBeginCritical
+    return: OSErr
+    dispatcher: ThreadDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: ThreadEndCritical
+    return: OSErr
+    dispatcher: ThreadDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: SetDebuggerNotificationProcs
+    return: OSErr
+    args:
+    - name: notifyNewThread
+      type: DebuggerNewThreadTPP
+    - name: notifyDisposeThread
+      type: DebuggerDisposeThreadTPP
+    - name: notifyThreadScheduler
+      type: DebuggerThreadSchedulerTPP
+    dispatcher: ThreadDispatch
+    selector: 1549
+
+# ####
+
+- function:
+    name: GetThreadCurrentTaskRef
+    return: OSErr
+    args:
+    - name: threadTRef
+      type: ThreadTaskRef*
+    dispatcher: ThreadDispatch
+    selector: 526
+
+# ####
+
+- function:
+    name: GetThreadStateGivenTaskRef
+    return: OSErr
+    args:
+    - name: threadTRef
+      type: ThreadTaskRef
+    - name: threadToGet
+      type: ThreadID
+    - name: threadState
+      type: ThreadState*
+    dispatcher: ThreadDispatch
+    selector: 1551
+
+# ####
+
+- function:
+    name: SetThreadReadyGivenTaskRef
+    return: OSErr
+    args:
+    - name: threadTRef
+      type: ThreadTaskRef
+    - name: threadToSet
+      type: ThreadID
+    dispatcher: ThreadDispatch
+    selector: 1040
+
+# ####
+
+- dispatcher:
+    name: ThreadDispatch
+    trap: 0xABF2
+    selector-location: D0W

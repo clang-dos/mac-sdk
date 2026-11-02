@@ -5,6 +5,7 @@
 #include "../ConditionalMacros.h"
 #include "DriverServices.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 
 #pragma options align=mac68k
 
@@ -3447,196 +3448,1010 @@ struct FSVolumeInfoParam {
 typedef FSVolumeInfoParam *FSVolumeInfoParamPtr;
 
 // HFS Plus API (Mac OS 9 and later, PowerPC)
+#if TARGET_CPU_68K
+static __inline__ OSErr FSpMakeFSRef(const FSSpec *source, FSRef *newRef);
+#else
 pascal OSErr FSpMakeFSRef(const FSSpec *source, FSRef *newRef);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSMakeFSRefUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef);
+#else
 pascal OSErr FSMakeFSRefUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSCompareFSRefs(const FSRef *ref1, const FSRef *ref2);
+#else
 pascal OSErr FSCompareFSRefs(const FSRef *ref1, const FSRef *ref2);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSCreateFileUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec);
+#else
 pascal OSErr FSCreateFileUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSCreateDirectoryUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec, UInt32 *newDirID);
+#else
 pascal OSErr FSCreateDirectoryUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec, UInt32 *newDirID);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSDeleteObject(const FSRef *ref);
+#else
 pascal OSErr FSDeleteObject(const FSRef *ref);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSMoveObject(const FSRef *ref, const FSRef *destDirectory, FSRef *newRef);
+#else
 pascal OSErr FSMoveObject(const FSRef *ref, const FSRef *destDirectory, FSRef *newRef);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSExchangeObjects(const FSRef *ref, const FSRef *destRef);
+#else
 pascal OSErr FSExchangeObjects(const FSRef *ref, const FSRef *destRef);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSRenameUnicode(const FSRef *ref, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef);
+#else
 pascal OSErr FSRenameUnicode(const FSRef *ref, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfo, HFSUniStr255 *outName, FSSpec *fsSpec, FSRef *parentRef);
+#else
 pascal OSErr FSGetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfo, HFSUniStr255 *outName, FSSpec *fsSpec, FSRef *parentRef);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSSetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo);
+#else
 pascal OSErr FSSetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSOpenIterator(const FSRef *container, FSIteratorFlags iteratorFlags, FSIterator *iterator);
+#else
 pascal OSErr FSOpenIterator(const FSRef *container, FSIteratorFlags iteratorFlags, FSIterator *iterator);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSCloseIterator(FSIterator iterator);
+#else
 pascal OSErr FSCloseIterator(FSIterator iterator);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetCatalogInfoBulk(FSIterator iterator, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names);
+#else
 pascal OSErr FSGetCatalogInfoBulk(FSIterator iterator, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSCatalogSearch(FSIterator iterator, const FSSearchParams *searchCriteria, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names);
+#else
 pascal OSErr FSCatalogSearch(FSIterator iterator, const FSSearchParams *searchCriteria, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSCreateFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName);
+#else
 pascal OSErr FSCreateFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSDeleteFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName);
+#else
 pascal OSErr FSDeleteFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSIterateForks(const FSRef *ref, CatPositionRec *forkIterator, HFSUniStr255 *forkName, SInt64 *forkSize, UInt64 *forkPhysicalSize);
+#else
 pascal OSErr FSIterateForks(const FSRef *ref, CatPositionRec *forkIterator, HFSUniStr255 *forkName, SInt64 *forkSize, UInt64 *forkPhysicalSize);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSOpenFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName, SInt8 permissions, SInt16 *forkRefNum);
+#else
 pascal OSErr FSOpenFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName, SInt8 permissions, SInt16 *forkRefNum);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSReadFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, void *buffer, ByteCount *actualCount);
+#else
 pascal OSErr FSReadFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, void *buffer, ByteCount *actualCount);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSWriteFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, const void *buffer, ByteCount *actualCount);
+#else
 pascal OSErr FSWriteFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, const void *buffer, ByteCount *actualCount);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetForkPosition(SInt16 forkRefNum, SInt64 *position);
+#else
 pascal OSErr FSGetForkPosition(SInt16 forkRefNum, SInt64 *position);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSSetForkPosition(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset);
+#else
 pascal OSErr FSSetForkPosition(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetForkSize(SInt16 forkRefNum, SInt64 *forkSize);
+#else
 pascal OSErr FSGetForkSize(SInt16 forkRefNum, SInt64 *forkSize);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSSetForkSize(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset);
+#else
 pascal OSErr FSSetForkSize(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSAllocateFork(SInt16 forkRefNum, FSAllocationFlags flags, UInt16 positionMode, SInt64 positionOffset, UInt64 requestCount, UInt64 *actualCount);
+#else
 pascal OSErr FSAllocateFork(SInt16 forkRefNum, FSAllocationFlags flags, UInt16 positionMode, SInt64 positionOffset, UInt64 requestCount, UInt64 *actualCount);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSFlushFork(SInt16 forkRefNum);
+#else
 pascal OSErr FSFlushFork(SInt16 forkRefNum);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSCloseFork(SInt16 forkRefNum);
+#else
 pascal OSErr FSCloseFork(SInt16 forkRefNum);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetForkCBInfo(SInt16 desiredRefNum, FSVolumeRefNum volume, SInt16 *iterator, SInt16 *actualRefNum, FSForkInfo *forkInfo, FSRef *ref, HFSUniStr255 *outForkName);
+#else
 pascal OSErr FSGetForkCBInfo(SInt16 desiredRefNum, FSVolumeRefNum volume, SInt16 *iterator, SInt16 *actualRefNum, FSForkInfo *forkInfo, FSRef *ref, HFSUniStr255 *outForkName);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetVolumeInfo(FSVolumeRefNum volume, ItemCount volumeIndex, FSVolumeRefNum *actualVolume, FSVolumeInfoBitmap whichInfo, FSVolumeInfo *info, HFSUniStr255 *volumeName, FSRef *rootDirectory);
+#else
 pascal OSErr FSGetVolumeInfo(FSVolumeRefNum volume, ItemCount volumeIndex, FSVolumeRefNum *actualVolume, FSVolumeInfoBitmap whichInfo, FSVolumeInfo *info, HFSUniStr255 *volumeName, FSRef *rootDirectory);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSSetVolumeInfo(FSVolumeRefNum volume, FSVolumeInfoBitmap whichInfo, const FSVolumeInfo *info);
+#else
 pascal OSErr FSSetVolumeInfo(FSVolumeRefNum volume, FSVolumeInfoBitmap whichInfo, const FSVolumeInfo *info);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetDataForkName(HFSUniStr255 *dataForkName);
+#else
 pascal OSErr FSGetDataForkName(HFSUniStr255 *dataForkName);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSGetResourceForkName(HFSUniStr255 *resourceForkName);
+#else
 pascal OSErr FSGetResourceForkName(HFSUniStr255 *resourceForkName);
+#endif
 
 // Parameter block forms of the HFS Plus API
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x706E, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBMakeFSRefSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x706E, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBMakeFSRefAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefUnicodeSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707A, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBMakeFSRefUnicodeSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefUnicodeAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707A, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBMakeFSRefUnicodeAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCompareFSRefsSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707C, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBCompareFSRefsSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBCompareFSRefsAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707C, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBCompareFSRefsAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileUnicodeSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7070, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBCreateFileUnicodeSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBCreateFileUnicodeAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7070, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBCreateFileUnicodeAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCreateDirectoryUnicodeSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7071, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBCreateDirectoryUnicodeSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBCreateDirectoryUnicodeAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7071, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBCreateDirectoryUnicodeAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteObjectSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7072, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBDeleteObjectSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBDeleteObjectAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7072, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBDeleteObjectAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBMoveObjectSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7073, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBMoveObjectSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBMoveObjectAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7073, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBMoveObjectAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeObjectsSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7075, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBExchangeObjectsSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBExchangeObjectsAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7075, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBExchangeObjectsAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBRenameUnicodeSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7074, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBRenameUnicodeSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBRenameUnicodeAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7074, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBRenameUnicodeAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7076, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBGetCatalogInfoSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7076, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBGetCatalogInfoAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatalogInfoSync(FSRefParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7077, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBSetCatalogInfoSync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBSetCatalogInfoAsync(FSRefParam *paramBlock) {
+    register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7077, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBSetCatalogInfoAsync(FSRefParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBOpenIteratorSync(FSCatalogBulkParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7078, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBOpenIteratorSync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBOpenIteratorAsync(FSCatalogBulkParam *paramBlock) {
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7078, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBOpenIteratorAsync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCloseIteratorSync(FSCatalogBulkParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705B, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBCloseIteratorSync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBCloseIteratorAsync(FSCatalogBulkParam *paramBlock) {
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705B, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBCloseIteratorAsync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoBulkSync(FSCatalogBulkParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705C, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBGetCatalogInfoBulkSync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoBulkAsync(FSCatalogBulkParam *paramBlock) {
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705C, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBGetCatalogInfoBulkAsync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCatalogSearchSync(FSCatalogBulkParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705D, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBCatalogSearchSync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBCatalogSearchAsync(FSCatalogBulkParam *paramBlock) {
+    register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705D, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBCatalogSearchAsync(FSCatalogBulkParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCreateForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707D, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBCreateForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBCreateForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707D, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBCreateForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707E, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBDeleteForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBDeleteForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707E, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBDeleteForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBIterateForksSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707F, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBIterateForksSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBIterateForksAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x707F, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBIterateForksAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBOpenForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7079, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBOpenForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBOpenForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7079, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBOpenForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBReadForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7051, 0xA2A8"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBReadForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBReadForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7051, 0xA6A8"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBReadForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBWriteForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7052, 0xA2A8"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBWriteForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBWriteForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7052, 0xA6A8"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBWriteForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkPositionSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7053, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBGetForkPositionSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBGetForkPositionAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7053, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBGetForkPositionAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkPositionSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7054, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBSetForkPositionSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBSetForkPositionAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7054, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBSetForkPositionAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkSizeSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7055, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBGetForkSizeSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBGetForkSizeAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7055, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBGetForkSizeAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkSizeSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7056, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBSetForkSizeSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBSetForkSizeAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7056, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBSetForkSizeAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBAllocateForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7057, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBAllocateForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBAllocateForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7057, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBAllocateForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBFlushForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7058, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBFlushForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBFlushForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7058, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBFlushForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCloseForkSync(FSForkIOParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7059, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBCloseForkSync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBCloseForkAsync(FSForkIOParam *paramBlock) {
+    register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7059, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBCloseForkAsync(FSForkIOParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkCBInfoSync(FSForkCBInfoParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSForkCBInfoParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705A, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBGetForkCBInfoSync(FSForkCBInfoParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBGetForkCBInfoAsync(FSForkCBInfoParam *paramBlock) {
+    register FSForkCBInfoParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x705A, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBGetForkCBInfoAsync(FSForkCBInfoParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolumeInfoSync(FSVolumeInfoParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x701D, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBGetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBGetVolumeInfoAsync(FSVolumeInfoParam *paramBlock) {
+    register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x701D, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBGetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x701E, 0xA260"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
 pascal OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock) {
+    register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x701E, 0xA660"
+        : "+r"(_paramBlock)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
 pascal void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
+#endif
 
 typedef DrvQEl *DrvQElPtr;
 
@@ -4160,6 +4975,382 @@ static __inline__ OSErr CloseWD(INTEGER wdRefNum) {
     pb.ioCompletion = 0;
     pb.ioVRefNum = wdRefNum;
     return PBCloseWDSync(&pb);
+}
+
+static __inline__ OSErr FSpMakeFSRef(const FSSpec *source, FSRef *newRef) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = source->name;
+    pb.ioVRefNum = source->vRefNum;
+    pb.ioDirID = source->parID;
+    pb.newRef = newRef;
+    return PBMakeFSRefSync(&pb);
+}
+
+static __inline__ OSErr FSMakeFSRefUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = parentRef;
+    pb.nameLength = nameLength;
+    pb.name = name;
+    pb.textEncodingHint = textEncodingHint;
+    pb.newRef = newRef;
+    return PBMakeFSRefUnicodeSync(&pb);
+}
+
+static __inline__ OSErr FSCompareFSRefs(const FSRef *ref1, const FSRef *ref2) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref1;
+    pb.parentRef = (FSRef *)ref2;
+    return PBCompareFSRefsSync(&pb);
+}
+
+static __inline__ OSErr FSCreateFileUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = parentRef;
+    pb.nameLength = nameLength;
+    pb.name = name;
+    pb.whichInfo = whichInfo;
+    pb.catInfo = (FSCatalogInfo *)catalogInfo;
+    pb.newRef = newRef;
+    pb.spec = newSpec;
+    return PBCreateFileUnicodeSync(&pb);
+}
+
+static __inline__ OSErr FSCreateDirectoryUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec, UInt32 *newDirID) {
+    FSRefParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ref = parentRef;
+    pb.nameLength = nameLength;
+    pb.name = name;
+    pb.whichInfo = whichInfo;
+    pb.catInfo = (FSCatalogInfo *)catalogInfo;
+    pb.newRef = newRef;
+    pb.spec = newSpec;
+    err = PBCreateDirectoryUnicodeSync(&pb);
+    if (newDirID)
+      *newDirID = pb.ioDirID;
+    return err;
+}
+
+static __inline__ OSErr FSDeleteObject(const FSRef *ref) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    return PBDeleteObjectSync(&pb);
+}
+
+static __inline__ OSErr FSMoveObject(const FSRef *ref, const FSRef *destDirectory, FSRef *newRef) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.parentRef = (FSRef *)destDirectory;
+    pb.newRef = newRef;
+    return PBMoveObjectSync(&pb);
+}
+
+static __inline__ OSErr FSExchangeObjects(const FSRef *ref, const FSRef *destRef) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.parentRef = (FSRef *)destRef;
+    return PBExchangeObjectsSync(&pb);
+}
+
+static __inline__ OSErr FSRenameUnicode(const FSRef *ref, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.nameLength = nameLength;
+    pb.name = name;
+    pb.textEncodingHint = textEncodingHint;
+    pb.newRef = newRef;
+    return PBRenameUnicodeSync(&pb);
+}
+
+static __inline__ OSErr FSGetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfo, HFSUniStr255 *outName, FSSpec *fsSpec, FSRef *parentRef) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.whichInfo = whichInfo;
+    pb.catInfo = catalogInfo;
+    pb.outName = outName;
+    pb.spec = fsSpec;
+    pb.parentRef = parentRef;
+    return PBGetCatalogInfoSync(&pb);
+}
+
+static __inline__ OSErr FSSetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo) {
+    FSRefParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.whichInfo = whichInfo;
+    pb.catInfo = (FSCatalogInfo *)catalogInfo;
+    return PBSetCatalogInfoSync(&pb);
+}
+
+static __inline__ OSErr FSOpenIterator(const FSRef *container, FSIteratorFlags iteratorFlags, FSIterator *iterator) {
+    FSCatalogBulkParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.container = container;
+    pb.iteratorFlags = iteratorFlags;
+    err = PBOpenIteratorSync(&pb);
+    *iterator = pb.iterator;
+    return err;
+}
+
+static __inline__ OSErr FSCloseIterator(FSIterator iterator) {
+    FSCatalogBulkParam pb;
+    pb.ioCompletion = 0;
+    pb.iterator = iterator;
+    return PBCloseIteratorSync(&pb);
+}
+
+static __inline__ OSErr FSGetCatalogInfoBulk(FSIterator iterator, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names) {
+    FSCatalogBulkParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.iterator = iterator;
+    pb.maximumItems = maximumObjects;
+    pb.whichInfo = whichInfo;
+    pb.catalogInfo = catalogInfos;
+    pb.refs = refs;
+    pb.specs = specs;
+    pb.names = names;
+    err = PBGetCatalogInfoBulkSync(&pb);
+    if (actualObjects)
+      *actualObjects = pb.actualItems;
+    if (containerChanged)
+      *containerChanged = pb.containerChanged;
+    return err;
+}
+
+static __inline__ OSErr FSCatalogSearch(FSIterator iterator, const FSSearchParams *searchCriteria, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names) {
+    FSCatalogBulkParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.iterator = iterator;
+    pb.searchParams = searchCriteria;
+    pb.maximumItems = maximumObjects;
+    pb.whichInfo = whichInfo;
+    pb.catalogInfo = catalogInfos;
+    pb.refs = refs;
+    pb.specs = specs;
+    pb.names = names;
+    err = PBCatalogSearchSync(&pb);
+    if (actualObjects)
+      *actualObjects = pb.actualItems;
+    if (containerChanged)
+      *containerChanged = pb.containerChanged;
+    return err;
+}
+
+static __inline__ OSErr FSCreateFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName) {
+    FSForkIOParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.forkNameLength = forkNameLength;
+    pb.forkName = forkName;
+    return PBCreateForkSync(&pb);
+}
+
+static __inline__ OSErr FSDeleteFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName) {
+    FSForkIOParam pb;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.forkNameLength = forkNameLength;
+    pb.forkName = forkName;
+    return PBDeleteForkSync(&pb);
+}
+
+static __inline__ OSErr FSIterateForks(const FSRef *ref, CatPositionRec *forkIterator, HFSUniStr255 *forkName, SInt64 *forkSize, UInt64 *forkPhysicalSize) {
+    FSForkIOParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    BlockMoveData(forkIterator, &pb.forkIterator, sizeof(CatPositionRec));
+    pb.outForkName = forkName;
+    err = PBIterateForksSync(&pb);
+    BlockMoveData(&pb.forkIterator, forkIterator, sizeof(CatPositionRec));
+    if (forkSize)
+      *forkSize = pb.positionOffset;
+    if (forkPhysicalSize)
+      *forkPhysicalSize = pb.allocationAmount;
+    return err;
+}
+
+static __inline__ OSErr FSOpenFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName, SInt8 permissions, SInt16 *forkRefNum) {
+    FSForkIOParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ref = ref;
+    pb.forkNameLength = forkNameLength;
+    pb.forkName = forkName;
+    pb.permissions = permissions;
+    err = PBOpenForkSync(&pb);
+    if (forkRefNum)
+      *forkRefNum = pb.forkRefNum;
+    return err;
+}
+
+static __inline__ OSErr FSReadFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, void *buffer, ByteCount *actualCount) {
+    FSForkIOParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    pb.positionMode = positionMode;
+    pb.positionOffset = positionOffset;
+    pb.requestCount = requestCount;
+    pb.buffer = (Ptr)buffer;
+    err = PBReadForkSync(&pb);
+    if (actualCount)
+      *actualCount = pb.actualCount;
+    return err;
+}
+
+static __inline__ OSErr FSWriteFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, const void *buffer, ByteCount *actualCount) {
+    FSForkIOParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    pb.positionMode = positionMode;
+    pb.positionOffset = positionOffset;
+    pb.requestCount = requestCount;
+    pb.buffer = (Ptr)buffer;
+    err = PBWriteForkSync(&pb);
+    if (actualCount)
+      *actualCount = pb.actualCount;
+    return err;
+}
+
+static __inline__ OSErr FSGetForkPosition(SInt16 forkRefNum, SInt64 *position) {
+    FSForkIOParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    err = PBGetForkPositionSync(&pb);
+    *position = pb.positionOffset;
+    return err;
+}
+
+static __inline__ OSErr FSSetForkPosition(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset) {
+    FSForkIOParam pb;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    pb.positionMode = positionMode;
+    pb.positionOffset = positionOffset;
+    return PBSetForkPositionSync(&pb);
+}
+
+static __inline__ OSErr FSGetForkSize(SInt16 forkRefNum, SInt64 *forkSize) {
+    FSForkIOParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    err = PBGetForkSizeSync(&pb);
+    *forkSize = pb.positionOffset;
+    return err;
+}
+
+static __inline__ OSErr FSSetForkSize(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset) {
+    FSForkIOParam pb;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    pb.positionMode = positionMode;
+    pb.positionOffset = positionOffset;
+    return PBSetForkSizeSync(&pb);
+}
+
+static __inline__ OSErr FSAllocateFork(SInt16 forkRefNum, FSAllocationFlags flags, UInt16 positionMode, SInt64 positionOffset, UInt64 requestCount, UInt64 *actualCount) {
+    FSForkIOParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    pb.allocationFlags = flags;
+    pb.positionMode = positionMode;
+    pb.positionOffset = positionOffset;
+    pb.allocationAmount = requestCount;
+    err = PBAllocateForkSync(&pb);
+    if (actualCount)
+      *actualCount = pb.allocationAmount;
+    return err;
+}
+
+static __inline__ OSErr FSFlushFork(SInt16 forkRefNum) {
+    FSForkIOParam pb;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    return PBFlushForkSync(&pb);
+}
+
+static __inline__ OSErr FSCloseFork(SInt16 forkRefNum) {
+    FSForkIOParam pb;
+    pb.ioCompletion = 0;
+    pb.forkRefNum = forkRefNum;
+    return PBCloseForkSync(&pb);
+}
+
+static __inline__ OSErr FSGetForkCBInfo(SInt16 desiredRefNum, FSVolumeRefNum volume, SInt16 *iterator, SInt16 *actualRefNum, FSForkInfo *forkInfo, FSRef *ref, HFSUniStr255 *outForkName) {
+    FSForkCBInfoParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.desiredRefNum = desiredRefNum;
+    pb.volumeRefNum = volume;
+    pb.iterator = iterator ? *iterator : 0;
+    pb.forkInfo = forkInfo;
+    pb.ref = ref;
+    pb.forkName = outForkName;
+    err = PBGetForkCBInfoSync(&pb);
+    if (iterator)
+      *iterator = pb.iterator;
+    if (actualRefNum)
+      *actualRefNum = pb.actualRefNum;
+    return err;
+}
+
+static __inline__ OSErr FSGetVolumeInfo(FSVolumeRefNum volume, ItemCount volumeIndex, FSVolumeRefNum *actualVolume, FSVolumeInfoBitmap whichInfo, FSVolumeInfo *info, HFSUniStr255 *volumeName, FSRef *rootDirectory) {
+    FSVolumeInfoParam pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = 0;
+    pb.ioVRefNum = volume;
+    pb.volumeIndex = volumeIndex;
+    pb.whichInfo = whichInfo;
+    pb.volumeInfo = info;
+    pb.volumeName = volumeName;
+    pb.ref = rootDirectory;
+    err = PBGetVolumeInfoSync(&pb);
+    if (actualVolume)
+      *actualVolume = pb.ioVRefNum;
+    return err;
+}
+
+static __inline__ OSErr FSSetVolumeInfo(FSVolumeRefNum volume, FSVolumeInfoBitmap whichInfo, const FSVolumeInfo *info) {
+    FSVolumeInfoParam pb;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = 0;
+    pb.ioVRefNum = volume;
+    pb.whichInfo = whichInfo;
+    pb.volumeInfo = (FSVolumeInfo *)info;
+    return PBSetVolumeInfoSync(&pb);
+}
+
+static __inline__ OSErr FSGetDataForkName(HFSUniStr255 *dataForkName) {
+    dataForkName->length = 0;
+    return noErr;
+}
+
+static __inline__ OSErr FSGetResourceForkName(HFSUniStr255 *resourceForkName) {
+    static const char name[] = "RESOURCE_FORK";
+    int i;
+    for (i = 0; name[i]; ++i)
+      resourceForkName->unicode[i] = name[i];
+    resourceForkName->length = i;
+    return noErr;
 }
 
 #endif

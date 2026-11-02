@@ -54,6 +54,8 @@ def main():
     info = json.load(open(os.path.join(ROOT, "data", "trapinfo.json")))
     # Mac OS 8's Appearance, Collection and Drag Manager glue libraries
     info.update(json.load(open(os.path.join(ROOT, "data", "trapinfo-os8.json"))))
+    # and the glue for calls new in Mac OS 8.5 to 9.2.1
+    info.update(json.load(open(os.path.join(ROOT, "data", "trapinfo-os9.json"))))
     code = words_by_function()
     ok, bad, skipped = 0, [], 0
     for name, o in sorted(info.items()):

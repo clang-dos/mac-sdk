@@ -256,3 +256,751 @@
 - function:
     name: DisableWUTime
     return: OSErr
+
+# ####
+
+- struct:
+    name: BatteryInfo
+    size: 4
+    comment: Power Manager 2 (PowerBooks, System 7.5 and later).
+    members:
+    - name: flags
+      type: UInt8
+    - name: warningLevel
+      type: UInt8
+    - name: reserved
+      type: UInt8
+    - name: batteryLevel
+      type: UInt8
+
+# ####
+
+- struct:
+    name: BatteryTimeRec
+    size: 16
+    members:
+    - name: expectedBatteryTime
+      type: UInt32
+    - name: minimumBatteryTime
+      type: UInt32
+    - name: maximumBatteryTime
+      type: UInt32
+    - name: timeUntilCharged
+      type: UInt32
+
+# ####
+
+- struct:
+    name: WakeupTime
+    size: 6
+    members:
+    - name: wakeTime
+      type: UInt32
+    - name: wakeEnabled
+      type: Boolean
+    - name: filler
+      type: SInt8
+
+# ####
+
+- struct:
+    name: StartupTime
+    size: 6
+    members:
+    - name: startTime
+      type: UInt32
+    - name: startEnabled
+      type: Boolean
+    - name: filler
+      type: SInt8
+
+# ####
+
+- struct:
+    name: ActivityInfo
+    size: 6
+    members:
+    - name: ActivityType
+      type: SInt16
+    - name: ActivityTime
+      type: UInt32
+
+# ####
+
+- typedef:
+    name: SoundMixerByte
+    type: SInt8
+
+# ####
+
+- verbatim: typedef struct HDQueueElement HDQueueElement;
+
+# ####
+
+- funptr:
+    name: HDSpindownProcPtr
+    args:
+    - name: theElement
+      type: HDQueueElement*
+
+# ####
+
+- struct:
+    name: HDQueueElement
+    size: 16
+    members:
+    - name: hdQLink
+      type: HDQueueElement*
+    - name: hdQType
+      type: SInt16
+    - name: hdFlags
+      type: SInt16
+    - name: hdProc
+      type: HDSpindownUPP
+    - name: hdUser
+      type: SInt32
+
+# ####
+
+- verbatim: typedef struct PMgrQueueElement PMgrQueueElement;
+
+# ####
+
+- funptr:
+    name: PMgrStateChangeProcPtr
+    args:
+    - name: theElement
+      type: PMgrQueueElement*
+    - name: stateBits
+      type: SInt32
+
+# ####
+
+- struct:
+    name: PMgrQueueElement
+    size: 20
+    members:
+    - name: pmQLink
+      type: PMgrQueueElement*
+    - name: pmQType
+      type: SInt16
+    - name: pmFlags
+      type: SInt16
+    - name: pmNotifyBits
+      type: SInt32
+    - name: pmProc
+      type: PMgrStateChangeUPP
+    - name: pmUser
+      type: SInt32
+
+# ####
+
+- enum:
+    values:
+    - name: hasWakeupTimer
+      value: 0
+    - name: hasSharedModemPort
+      value: 1
+    - name: hasProcessorCycling
+      value: 2
+    - name: mustProcessorCycle
+      value: 3
+    - name: hasReducedSpeed
+      value: 4
+    - name: dynamicSpeedChange
+      value: 5
+    - name: hasSCSIDiskMode
+      value: 6
+    - name: canGetBatteryTime
+      value: 7
+    - name: canWakeupOnRing
+      value: 8
+    - name: hasDimmingSupport
+      value: 9
+    - name: hasStartupTimer
+      value: 10
+    - name: hasChargeNotification
+      value: 11
+    - name: hasDimSuspendSupport
+      value: 12
+    - name: hasWakeOnNetActivity
+      value: 13
+    - name: hasWakeOnLid
+      value: 14
+    - name: canPowerOffPCIGraphicsCard
+      value: 15
+    - name: hasDeepSleep
+      value: 16
+    - name: OverallAct
+      value: 0
+    - name: UsrActivity
+      value: 1
+    - name: NetActivity
+      value: 2
+    - name: HDActivity
+      value: 3
+    - name: kHDQueuePostBit
+      value: 0
+    - name: kHDQueuePostMask
+      value: 1
+    - name: batteryInstalled
+      value: 7
+    - name: batteryCharging
+      value: 6
+    - name: chargerConnected
+      value: 5
+
+# ####
+
+- function:
+    name: PMSelectorCount
+    return: INTEGER
+    comment: Power Manager 2 (System 7.5 and later), trap 0xA09E with the selector in D0
+    returnreg: D0
+    m68k-inline:
+    - 28672
+    - 41118
+
+# ####
+
+- function:
+    name: PMFeatures
+    return: UInt32
+    returnreg: D0
+    m68k-inline:
+    - 28673
+    - 41118
+
+# ####
+
+- function:
+    name: GetSleepTimeout
+    return: UInt8
+    returnreg: D0
+    m68k-inline:
+    - 28674
+    - 41118
+
+# ####
+
+- function:
+    name: GetHardDiskTimeout
+    return: UInt8
+    returnreg: D0
+    m68k-inline:
+    - 28676
+    - 41118
+
+# ####
+
+- function:
+    name: HardDiskPowered
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28678
+    - 41118
+
+# ####
+
+- function:
+    name: SpinDownHardDisk
+    m68k-inline:
+    - 28679
+    - 41118
+
+# ####
+
+- function:
+    name: IsSpindownDisabled
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28680
+    - 41118
+
+# ####
+
+- function:
+    name: HardDiskQInstall
+    return: OSErr
+    args:
+    - name: theElement
+      type: HDQueueElement*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28682
+    - 41118
+
+# ####
+
+- function:
+    name: HardDiskQRemove
+    return: OSErr
+    args:
+    - name: theElement
+      type: HDQueueElement*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28683
+    - 41118
+
+# ####
+
+- function:
+    name: GetIntModemInfo
+    return: UInt32
+    returnreg: D0
+    m68k-inline:
+    - 28686
+    - 41118
+
+# ####
+
+- function:
+    name: MaximumProcessorSpeed
+    return: INTEGER
+    returnreg: D0
+    m68k-inline:
+    - 28688
+    - 41118
+
+# ####
+
+- function:
+    name: CurrentProcessorSpeed
+    return: INTEGER
+    returnreg: D0
+    m68k-inline:
+    - 28689
+    - 41118
+
+# ####
+
+- function:
+    name: FullProcessorSpeed
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28690
+    - 41118
+
+# ####
+
+- function:
+    name: GetSCSIDiskModeAddress
+    return: INTEGER
+    returnreg: D0
+    m68k-inline:
+    - 28692
+    - 41118
+
+# ####
+
+- function:
+    name: GetWakeupTimer
+    args:
+    - name: theTime
+      type: WakeupTime*
+      register: A0
+    m68k-inline:
+    - 28694
+    - 41118
+
+# ####
+
+- function:
+    name: SetWakeupTimer
+    args:
+    - name: theTime
+      type: WakeupTime*
+      register: A0
+    m68k-inline:
+    - 28695
+    - 41118
+
+# ####
+
+- function:
+    name: IsProcessorCyclingEnabled
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28696
+    - 41118
+
+# ####
+
+- function:
+    name: BatteryCount
+    return: INTEGER
+    returnreg: D0
+    m68k-inline:
+    - 28698
+    - 41118
+
+# ####
+
+- function:
+    name: GetDimmingTimeout
+    return: UInt8
+    returnreg: D0
+    m68k-inline:
+    - 28701
+    - 41118
+
+# ####
+
+- function:
+    name: IsDimmingControlDisabled
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28704
+    - 41118
+
+# ####
+
+- function:
+    name: IsAutoSlpControlDisabled
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28705
+    - 41118
+
+# ####
+
+- function:
+    name: PMgrStateQInstall
+    return: OSErr
+    args:
+    - name: theElement
+      type: PMgrQueueElement*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28706
+    - 41118
+
+# ####
+
+- function:
+    name: PMgrStateQRemove
+    return: OSErr
+    args:
+    - name: theElement
+      type: PMgrQueueElement*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28707
+    - 41118
+
+# ####
+
+- function:
+    name: DelaySystemIdle
+    return: OSErr
+    returnreg: D0
+    m68k-inline:
+    - 28709
+    - 41118
+
+# ####
+
+- function:
+    name: GetStartupTimer
+    return: OSErr
+    args:
+    - name: theTime
+      type: StartupTime*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28710
+    - 41118
+
+# ####
+
+- function:
+    name: SetStartupTimer
+    return: OSErr
+    args:
+    - name: theTime
+      type: StartupTime*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28711
+    - 41118
+
+# ####
+
+- function:
+    name: GetLastActivity
+    return: OSErr
+    args:
+    - name: theActivity
+      type: ActivityInfo*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28712
+    - 41118
+
+# ####
+
+- function:
+    name: GetSoundMixerState
+    return: OSErr
+    args:
+    - name: theSoundMixerByte
+      type: SoundMixerByte*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28713
+    - 41118
+
+# ####
+
+- function:
+    name: SetSoundMixerState
+    return: OSErr
+    args:
+    - name: theSoundMixerByte
+      type: SoundMixerByte*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28714
+    - 41118
+
+# ####
+
+- function:
+    name: GetDimSuspendState
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28715
+    - 41118
+
+# ####
+
+- function:
+    name: SetSleepTimeout
+    args:
+    - name: timeout
+      type: UInt8
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 3
+    - 41118
+
+# ####
+
+- function:
+    name: SetHardDiskTimeout
+    args:
+    - name: timeout
+      type: UInt8
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 5
+    - 41118
+
+# ####
+
+- function:
+    name: SetSpindownDisable
+    args:
+    - name: setDisable
+      type: Boolean
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 9
+    - 41118
+
+# ####
+
+- function:
+    name: AutoSleepControl
+    args:
+    - name: enableSleep
+      type: Boolean
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 13
+    - 41118
+
+# ####
+
+- function:
+    name: SetIntModemState
+    args:
+    - name: theState
+      type: INTEGER
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 15
+    - 41118
+
+# ####
+
+- function:
+    name: SetProcessorSpeed
+    return: Boolean
+    args:
+    - name: fullSpeed
+      type: Boolean
+      register: D0
+    returnreg: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 19
+    - 41118
+
+# ####
+
+- function:
+    name: SetSCSIDiskModeAddress
+    args:
+    - name: scsiAddress
+      type: INTEGER
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 21
+    - 41118
+
+# ####
+
+- function:
+    name: EnableProcessorCycling
+    args:
+    - name: enable
+      type: Boolean
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 25
+    - 41118
+
+# ####
+
+- function:
+    name: SetDimmingTimeout
+    args:
+    - name: timeout
+      type: UInt8
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 30
+    - 41118
+
+# ####
+
+- function:
+    name: DimmingControl
+    args:
+    - name: enableSleep
+      type: Boolean
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 31
+    - 41118
+
+# ####
+
+- function:
+    name: UpdateSystemActivity
+    return: OSErr
+    args:
+    - name: activity
+      type: UInt8
+      register: D0
+    returnreg: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 36
+    - 41118
+
+# ####
+
+- function:
+    name: SetDimSuspendState
+    args:
+    - name: dimSuspendState
+      type: Boolean
+      register: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 44
+    - 41118
+
+# ####
+
+- function:
+    name: GetScaledBatteryInfo
+    args:
+    - name: whichBattery
+      type: INTEGER
+    - name: theInfo
+      type: BatteryInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetBatteryVoltage
+    return: Fixed
+    args:
+    - name: whichBattery
+      type: INTEGER
+      register: D0
+    returnreg: D0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 27
+    - 41118
+
+# ####
+
+- function:
+    name: GetBatteryTimes
+    args:
+    - name: whichBattery
+      type: INTEGER
+      register: D0
+    - name: theTimes
+      type: BatteryTimeRec*
+      register: A0
+    m68k-inline:
+    - 18496
+    - 12348
+    - 28
+    - 41118

@@ -4931,6 +4931,14 @@
     - name: newRef
       type: FSRef*
     comment: HFS Plus API (Mac OS 9 and later, PowerPC)
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = source->name;
+      pb.ioVRefNum = source->vRefNum;
+      pb.ioDirID = source->parID;
+      pb.newRef = newRef;
+      return PBMakeFSRefSync(&pb);
 
 # ####
 
@@ -4948,6 +4956,15 @@
       type: TextEncoding
     - name: newRef
       type: FSRef*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = parentRef;
+      pb.nameLength = nameLength;
+      pb.name = name;
+      pb.textEncodingHint = textEncodingHint;
+      pb.newRef = newRef;
+      return PBMakeFSRefUnicodeSync(&pb);
 
 # ####
 
@@ -4959,6 +4976,12 @@
       type: const FSRef*
     - name: ref2
       type: const FSRef*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref1;
+      pb.parentRef = (FSRef *)ref2;
+      return PBCompareFSRefsSync(&pb);
 
 # ####
 
@@ -4980,6 +5003,17 @@
       type: FSRef*
     - name: newSpec
       type: FSSpec*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = parentRef;
+      pb.nameLength = nameLength;
+      pb.name = name;
+      pb.whichInfo = whichInfo;
+      pb.catInfo = (FSCatalogInfo *)catalogInfo;
+      pb.newRef = newRef;
+      pb.spec = newSpec;
+      return PBCreateFileUnicodeSync(&pb);
 
 # ####
 
@@ -5003,6 +5037,21 @@
       type: FSSpec*
     - name: newDirID
       type: UInt32*
+    m68k-body: |
+      FSRefParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ref = parentRef;
+      pb.nameLength = nameLength;
+      pb.name = name;
+      pb.whichInfo = whichInfo;
+      pb.catInfo = (FSCatalogInfo *)catalogInfo;
+      pb.newRef = newRef;
+      pb.spec = newSpec;
+      err = PBCreateDirectoryUnicodeSync(&pb);
+      if (newDirID)
+        *newDirID = pb.ioDirID;
+      return err;
 
 # ####
 
@@ -5012,6 +5061,11 @@
     args:
     - name: ref
       type: const FSRef*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      return PBDeleteObjectSync(&pb);
 
 # ####
 
@@ -5025,6 +5079,13 @@
       type: const FSRef*
     - name: newRef
       type: FSRef*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.parentRef = (FSRef *)destDirectory;
+      pb.newRef = newRef;
+      return PBMoveObjectSync(&pb);
 
 # ####
 
@@ -5036,6 +5097,12 @@
       type: const FSRef*
     - name: destRef
       type: const FSRef*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.parentRef = (FSRef *)destRef;
+      return PBExchangeObjectsSync(&pb);
 
 # ####
 
@@ -5053,6 +5120,15 @@
       type: TextEncoding
     - name: newRef
       type: FSRef*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.nameLength = nameLength;
+      pb.name = name;
+      pb.textEncodingHint = textEncodingHint;
+      pb.newRef = newRef;
+      return PBRenameUnicodeSync(&pb);
 
 # ####
 
@@ -5072,6 +5148,16 @@
       type: FSSpec*
     - name: parentRef
       type: FSRef*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.whichInfo = whichInfo;
+      pb.catInfo = catalogInfo;
+      pb.outName = outName;
+      pb.spec = fsSpec;
+      pb.parentRef = parentRef;
+      return PBGetCatalogInfoSync(&pb);
 
 # ####
 
@@ -5085,6 +5171,13 @@
       type: FSCatalogInfoBitmap
     - name: catalogInfo
       type: const FSCatalogInfo*
+    m68k-body: |
+      FSRefParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.whichInfo = whichInfo;
+      pb.catInfo = (FSCatalogInfo *)catalogInfo;
+      return PBSetCatalogInfoSync(&pb);
 
 # ####
 
@@ -5098,6 +5191,15 @@
       type: FSIteratorFlags
     - name: iterator
       type: FSIterator*
+    m68k-body: |
+      FSCatalogBulkParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.container = container;
+      pb.iteratorFlags = iteratorFlags;
+      err = PBOpenIteratorSync(&pb);
+      *iterator = pb.iterator;
+      return err;
 
 # ####
 
@@ -5107,6 +5209,11 @@
     args:
     - name: iterator
       type: FSIterator
+    m68k-body: |
+      FSCatalogBulkParam pb;
+      pb.ioCompletion = 0;
+      pb.iterator = iterator;
+      return PBCloseIteratorSync(&pb);
 
 # ####
 
@@ -5132,6 +5239,23 @@
       type: FSSpec*
     - name: names
       type: HFSUniStr255*
+    m68k-body: |
+      FSCatalogBulkParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.iterator = iterator;
+      pb.maximumItems = maximumObjects;
+      pb.whichInfo = whichInfo;
+      pb.catalogInfo = catalogInfos;
+      pb.refs = refs;
+      pb.specs = specs;
+      pb.names = names;
+      err = PBGetCatalogInfoBulkSync(&pb);
+      if (actualObjects)
+        *actualObjects = pb.actualItems;
+      if (containerChanged)
+        *containerChanged = pb.containerChanged;
+      return err;
 
 # ####
 
@@ -5159,6 +5283,24 @@
       type: FSSpec*
     - name: names
       type: HFSUniStr255*
+    m68k-body: |
+      FSCatalogBulkParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.iterator = iterator;
+      pb.searchParams = searchCriteria;
+      pb.maximumItems = maximumObjects;
+      pb.whichInfo = whichInfo;
+      pb.catalogInfo = catalogInfos;
+      pb.refs = refs;
+      pb.specs = specs;
+      pb.names = names;
+      err = PBCatalogSearchSync(&pb);
+      if (actualObjects)
+        *actualObjects = pb.actualItems;
+      if (containerChanged)
+        *containerChanged = pb.containerChanged;
+      return err;
 
 # ####
 
@@ -5172,6 +5314,13 @@
       type: UniCharCount
     - name: forkName
       type: const UniChar*
+    m68k-body: |
+      FSForkIOParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.forkNameLength = forkNameLength;
+      pb.forkName = forkName;
+      return PBCreateForkSync(&pb);
 
 # ####
 
@@ -5185,6 +5334,13 @@
       type: UniCharCount
     - name: forkName
       type: const UniChar*
+    m68k-body: |
+      FSForkIOParam pb;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.forkNameLength = forkNameLength;
+      pb.forkName = forkName;
+      return PBDeleteForkSync(&pb);
 
 # ####
 
@@ -5202,6 +5358,21 @@
       type: SInt64*
     - name: forkPhysicalSize
       type: UInt64*
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      FSForkIOParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      BlockMoveData(forkIterator, &pb.forkIterator, sizeof(CatPositionRec));
+      pb.outForkName = forkName;
+      err = PBIterateForksSync(&pb);
+      BlockMoveData(&pb.forkIterator, forkIterator, sizeof(CatPositionRec));
+      if (forkSize)
+        *forkSize = pb.positionOffset;
+      if (forkPhysicalSize)
+        *forkPhysicalSize = pb.allocationAmount;
+      return err;
 
 # ####
 
@@ -5219,6 +5390,18 @@
       type: SInt8
     - name: forkRefNum
       type: SInt16*
+    m68k-body: |
+      FSForkIOParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ref = ref;
+      pb.forkNameLength = forkNameLength;
+      pb.forkName = forkName;
+      pb.permissions = permissions;
+      err = PBOpenForkSync(&pb);
+      if (forkRefNum)
+        *forkRefNum = pb.forkRefNum;
+      return err;
 
 # ####
 
@@ -5238,6 +5421,19 @@
       type: void*
     - name: actualCount
       type: ByteCount*
+    m68k-body: |
+      FSForkIOParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      pb.positionMode = positionMode;
+      pb.positionOffset = positionOffset;
+      pb.requestCount = requestCount;
+      pb.buffer = (Ptr)buffer;
+      err = PBReadForkSync(&pb);
+      if (actualCount)
+        *actualCount = pb.actualCount;
+      return err;
 
 # ####
 
@@ -5257,6 +5453,19 @@
       type: const void*
     - name: actualCount
       type: ByteCount*
+    m68k-body: |
+      FSForkIOParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      pb.positionMode = positionMode;
+      pb.positionOffset = positionOffset;
+      pb.requestCount = requestCount;
+      pb.buffer = (Ptr)buffer;
+      err = PBWriteForkSync(&pb);
+      if (actualCount)
+        *actualCount = pb.actualCount;
+      return err;
 
 # ####
 
@@ -5268,6 +5477,14 @@
       type: SInt16
     - name: position
       type: SInt64*
+    m68k-body: |
+      FSForkIOParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      err = PBGetForkPositionSync(&pb);
+      *position = pb.positionOffset;
+      return err;
 
 # ####
 
@@ -5281,6 +5498,13 @@
       type: UInt16
     - name: positionOffset
       type: SInt64
+    m68k-body: |
+      FSForkIOParam pb;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      pb.positionMode = positionMode;
+      pb.positionOffset = positionOffset;
+      return PBSetForkPositionSync(&pb);
 
 # ####
 
@@ -5292,6 +5516,14 @@
       type: SInt16
     - name: forkSize
       type: SInt64*
+    m68k-body: |
+      FSForkIOParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      err = PBGetForkSizeSync(&pb);
+      *forkSize = pb.positionOffset;
+      return err;
 
 # ####
 
@@ -5305,6 +5537,13 @@
       type: UInt16
     - name: positionOffset
       type: SInt64
+    m68k-body: |
+      FSForkIOParam pb;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      pb.positionMode = positionMode;
+      pb.positionOffset = positionOffset;
+      return PBSetForkSizeSync(&pb);
 
 # ####
 
@@ -5324,6 +5563,19 @@
       type: UInt64
     - name: actualCount
       type: UInt64*
+    m68k-body: |
+      FSForkIOParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      pb.allocationFlags = flags;
+      pb.positionMode = positionMode;
+      pb.positionOffset = positionOffset;
+      pb.allocationAmount = requestCount;
+      err = PBAllocateForkSync(&pb);
+      if (actualCount)
+        *actualCount = pb.allocationAmount;
+      return err;
 
 # ####
 
@@ -5333,6 +5585,11 @@
     args:
     - name: forkRefNum
       type: SInt16
+    m68k-body: |
+      FSForkIOParam pb;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      return PBFlushForkSync(&pb);
 
 # ####
 
@@ -5342,6 +5599,11 @@
     args:
     - name: forkRefNum
       type: SInt16
+    m68k-body: |
+      FSForkIOParam pb;
+      pb.ioCompletion = 0;
+      pb.forkRefNum = forkRefNum;
+      return PBCloseForkSync(&pb);
 
 # ####
 
@@ -5363,6 +5625,22 @@
       type: FSRef*
     - name: outForkName
       type: HFSUniStr255*
+    m68k-body: |
+      FSForkCBInfoParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.desiredRefNum = desiredRefNum;
+      pb.volumeRefNum = volume;
+      pb.iterator = iterator ? *iterator : 0;
+      pb.forkInfo = forkInfo;
+      pb.ref = ref;
+      pb.forkName = outForkName;
+      err = PBGetForkCBInfoSync(&pb);
+      if (iterator)
+        *iterator = pb.iterator;
+      if (actualRefNum)
+        *actualRefNum = pb.actualRefNum;
+      return err;
 
 # ####
 
@@ -5384,6 +5662,21 @@
       type: HFSUniStr255*
     - name: rootDirectory
       type: FSRef*
+    m68k-body: |
+      FSVolumeInfoParam pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = volume;
+      pb.volumeIndex = volumeIndex;
+      pb.whichInfo = whichInfo;
+      pb.volumeInfo = info;
+      pb.volumeName = volumeName;
+      pb.ref = rootDirectory;
+      err = PBGetVolumeInfoSync(&pb);
+      if (actualVolume)
+        *actualVolume = pb.ioVRefNum;
+      return err;
 
 # ####
 
@@ -5397,6 +5690,14 @@
       type: FSVolumeInfoBitmap
     - name: info
       type: const FSVolumeInfo*
+    m68k-body: |
+      FSVolumeInfoParam pb;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = volume;
+      pb.whichInfo = whichInfo;
+      pb.volumeInfo = (FSVolumeInfo *)info;
+      return PBSetVolumeInfoSync(&pb);
 
 # ####
 
@@ -5406,6 +5707,9 @@
     args:
     - name: dataForkName
       type: HFSUniStr255*
+    m68k-body: |
+      dataForkName->length = 0;
+      return noErr;
 
 # ####
 
@@ -5415,6 +5719,13 @@
     args:
     - name: resourceForkName
       type: HFSUniStr255*
+    m68k-body: |
+      static const char name[] = "RESOURCE_FORK";
+      int i;
+      for (i = 0; name[i]; ++i)
+        resourceForkName->unicode[i] = name[i];
+      resourceForkName->length = i;
+      return noErr;
 
 # ####
 
@@ -5424,7 +5735,12 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
     comment: Parameter block forms of the HFS Plus API
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 110
+    trap: 41568
 
 # ####
 
@@ -5433,6 +5749,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 110
+    trap: 42592
 
 # ####
 
@@ -5442,6 +5762,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 122
+    trap: 41568
 
 # ####
 
@@ -5450,6 +5775,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 122
+    trap: 42592
 
 # ####
 
@@ -5459,6 +5788,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 124
+    trap: 41568
 
 # ####
 
@@ -5467,6 +5801,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 124
+    trap: 42592
 
 # ####
 
@@ -5476,6 +5814,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 112
+    trap: 41568
 
 # ####
 
@@ -5484,6 +5827,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 112
+    trap: 42592
 
 # ####
 
@@ -5493,6 +5840,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 113
+    trap: 41568
 
 # ####
 
@@ -5501,6 +5853,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 113
+    trap: 42592
 
 # ####
 
@@ -5510,6 +5866,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 114
+    trap: 41568
 
 # ####
 
@@ -5518,6 +5879,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 114
+    trap: 42592
 
 # ####
 
@@ -5527,6 +5892,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 115
+    trap: 41568
 
 # ####
 
@@ -5535,6 +5905,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 115
+    trap: 42592
 
 # ####
 
@@ -5544,6 +5918,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 117
+    trap: 41568
 
 # ####
 
@@ -5552,6 +5931,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 117
+    trap: 42592
 
 # ####
 
@@ -5561,6 +5944,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 116
+    trap: 41568
 
 # ####
 
@@ -5569,6 +5957,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 116
+    trap: 42592
 
 # ####
 
@@ -5578,6 +5970,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 118
+    trap: 41568
 
 # ####
 
@@ -5586,6 +5983,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 118
+    trap: 42592
 
 # ####
 
@@ -5595,6 +5996,11 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 119
+    trap: 41568
 
 # ####
 
@@ -5603,6 +6009,10 @@
     args:
     - name: paramBlock
       type: FSRefParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 119
+    trap: 42592
 
 # ####
 
@@ -5612,6 +6022,11 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 120
+    trap: 41568
 
 # ####
 
@@ -5620,6 +6035,10 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 120
+    trap: 42592
 
 # ####
 
@@ -5629,6 +6048,11 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 91
+    trap: 41568
 
 # ####
 
@@ -5637,6 +6061,10 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 91
+    trap: 42592
 
 # ####
 
@@ -5646,6 +6074,11 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 92
+    trap: 41568
 
 # ####
 
@@ -5654,6 +6087,10 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 92
+    trap: 42592
 
 # ####
 
@@ -5663,6 +6100,11 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 93
+    trap: 41568
 
 # ####
 
@@ -5671,6 +6113,10 @@
     args:
     - name: paramBlock
       type: FSCatalogBulkParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 93
+    trap: 42592
 
 # ####
 
@@ -5680,6 +6126,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 125
+    trap: 41568
 
 # ####
 
@@ -5688,6 +6139,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 125
+    trap: 42592
 
 # ####
 
@@ -5697,6 +6152,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 126
+    trap: 41568
 
 # ####
 
@@ -5705,6 +6165,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 126
+    trap: 42592
 
 # ####
 
@@ -5714,6 +6178,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 127
+    trap: 41568
 
 # ####
 
@@ -5722,6 +6191,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 127
+    trap: 42592
 
 # ####
 
@@ -5731,6 +6204,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 121
+    trap: 41568
 
 # ####
 
@@ -5739,6 +6217,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 121
+    trap: 42592
 
 # ####
 
@@ -5748,6 +6230,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28753
+    - 41640
 
 # ####
 
@@ -5756,6 +6243,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    m68k-inline:
+    - 28753
+    - 42664
 
 # ####
 
@@ -5765,6 +6256,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28754
+    - 41640
 
 # ####
 
@@ -5773,6 +6269,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    m68k-inline:
+    - 28754
+    - 42664
 
 # ####
 
@@ -5782,6 +6282,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 83
+    trap: 41568
 
 # ####
 
@@ -5790,6 +6295,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 83
+    trap: 42592
 
 # ####
 
@@ -5799,6 +6308,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 84
+    trap: 41568
 
 # ####
 
@@ -5807,6 +6321,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 84
+    trap: 42592
 
 # ####
 
@@ -5816,6 +6334,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 85
+    trap: 41568
 
 # ####
 
@@ -5824,6 +6347,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 85
+    trap: 42592
 
 # ####
 
@@ -5833,6 +6360,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 86
+    trap: 41568
 
 # ####
 
@@ -5841,6 +6373,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 86
+    trap: 42592
 
 # ####
 
@@ -5850,6 +6386,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 87
+    trap: 41568
 
 # ####
 
@@ -5858,6 +6399,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 87
+    trap: 42592
 
 # ####
 
@@ -5867,6 +6412,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 88
+    trap: 41568
 
 # ####
 
@@ -5875,6 +6425,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 88
+    trap: 42592
 
 # ####
 
@@ -5884,6 +6438,11 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 89
+    trap: 41568
 
 # ####
 
@@ -5892,6 +6451,10 @@
     args:
     - name: paramBlock
       type: FSForkIOParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 89
+    trap: 42592
 
 # ####
 
@@ -5901,6 +6464,11 @@
     args:
     - name: paramBlock
       type: FSForkCBInfoParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 90
+    trap: 41568
 
 # ####
 
@@ -5909,6 +6477,10 @@
     args:
     - name: paramBlock
       type: FSForkCBInfoParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 90
+    trap: 42592
 
 # ####
 
@@ -5918,6 +6490,11 @@
     args:
     - name: paramBlock
       type: FSVolumeInfoParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 29
+    trap: 41568
 
 # ####
 
@@ -5926,6 +6503,10 @@
     args:
     - name: paramBlock
       type: FSVolumeInfoParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 29
+    trap: 42592
 
 # ####
 
@@ -5935,6 +6516,11 @@
     args:
     - name: paramBlock
       type: FSVolumeInfoParam*
+      register: A0
+    returnreg: D0
+    dispatcher: FSDispatch
+    selector: 30
+    trap: 41568
 
 # ####
 
@@ -5943,6 +6529,10 @@
     args:
     - name: paramBlock
       type: FSVolumeInfoParam*
+      register: A0
+    dispatcher: FSDispatch
+    selector: 30
+    trap: 42592
 
 # ####
 

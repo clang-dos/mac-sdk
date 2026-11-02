@@ -608,3 +608,410 @@
       type: ComponentInstance
     dispatcher: DisplayDispatch
     selector: 1029
+
+# ####
+
+- typedef:
+    name: AVIDType
+    type: UInt32
+    comment: 'Display Manager 2.0 (Mac OS 8): audio/video devices, ports and display modes.'
+
+# ####
+
+- typedef:
+    name: DMListType
+    type: void*
+
+# ####
+
+- typedef:
+    name: DMListIndexType
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: DMFidelityType
+    type: UInt32
+
+# ####
+
+- funptr:
+    name: DMExtendedNotificationProcPtr
+    args:
+    - name: userData
+      type: void*
+    - name: theMessage
+      type: short
+    - name: notifyData
+      type: void*
+
+# ####
+
+- enum:
+    values:
+    - name: kDMNotifyRequestConnectionProbe
+      value: 0
+    - name: kDMBlankWhileProbing
+      value: 1
+    - name: kDMAllowDisplayMenuOnly
+      value: 2
+    - name: kNoFidelity
+      value: 0
+    - name: kMinimumFidelity
+      value: 1
+    - name: kDefaultFidelity
+      value: 500
+    - name: kDefaultManufacturerFidelity
+      value: 1000
+    - name: kAnyPanelType
+      value: 0
+    - name: kAnyEngineType
+      value: 0
+    - name: kAnyDeviceType
+      value: 0
+    - name: kAnyPortType
+      value: 0
+    - name: kDMNotifyRequestDisplayProbe
+      value: 9
+    - name: kExtendedNotificationProc
+      value: 65536
+
+# ####
+
+- function:
+    name: DMRegisterExtendedNotifyProc
+    return: OSErr
+    args:
+    - name: notifyProc
+      type: DMExtendedNotificationUPP
+    - name: notifyUserData
+      type: void*
+    - name: nofificationFlags
+      type: uint16_t
+    - name: whichPSN
+      type: ProcessSerialNumber*
+    comment: Display Manager 2.0 (Mac OS 8), on DisplayDispatch
+    dispatcher: DisplayDispatch
+    selector: 2031
+
+# ####
+
+- function:
+    name: DMRemoveExtendedNotifyProc
+    return: OSErr
+    args:
+    - name: notifyProc
+      type: DMExtendedNotificationUPP
+    - name: notifyUserData
+      type: void*
+    - name: whichPSN
+      type: ProcessSerialNumber*
+    - name: removeFlags
+      type: uint16_t
+    dispatcher: DisplayDispatch
+    selector: 1830
+
+# ####
+
+- function:
+    name: DMNewAVPanelList
+    return: OSErr
+    args:
+    - name: displayID
+      type: DisplayIDType
+    - name: panelType
+      type: ResType
+    - name: minimumFidelity
+      type: DMFidelityType
+    - name: panelListFlags
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: thePanelCount
+      type: ItemCount*
+    - name: thePanelList
+      type: DMListType*
+    dispatcher: DisplayDispatch
+    selector: 3111
+
+# ####
+
+- function:
+    name: DMNewAVEngineList
+    return: OSErr
+    args:
+    - name: displayID
+      type: DisplayIDType
+    - name: engineType
+      type: ResType
+    - name: minimumFidelity
+      type: DMFidelityType
+    - name: engineListFlags
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: engineCount
+      type: ItemCount*
+    - name: engineList
+      type: DMListType*
+    dispatcher: DisplayDispatch
+    selector: 3112
+
+# ####
+
+- function:
+    name: DMNewAVDeviceList
+    return: OSErr
+    args:
+    - name: deviceType
+      type: ResType
+    - name: deviceListFlags
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: deviceCount
+      type: ItemCount*
+    - name: deviceList
+      type: DMListType*
+    dispatcher: DisplayDispatch
+    selector: 2601
+
+# ####
+
+- function:
+    name: DMNewAVPortListByPortType
+    return: OSErr
+    args:
+    - name: subType
+      type: ResType
+    - name: portListFlags
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: devicePortCount
+      type: ItemCount*
+    - name: theDevicePortList
+      type: DMListType*
+    dispatcher: DisplayDispatch
+    selector: 2602
+
+# ####
+
+- function:
+    name: DMNewAVPortListByDeviceAVID
+    return: OSErr
+    args:
+    - name: theID
+      type: AVIDType
+    - name: minimumFidelity
+      type: DMFidelityType
+    - name: portListFlags
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: devicePortCount
+      type: ItemCount*
+    - name: theDevicePortList
+      type: DMListType*
+    dispatcher: DisplayDispatch
+    selector: 3124
+
+# ####
+
+- function:
+    name: DMNewDisplayModeList
+    return: OSErr
+    args:
+    - name: displayID
+      type: DisplayIDType
+    - name: modeListFlags
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: thePanelCount
+      type: ItemCount*
+    - name: thePanelList
+      type: DMListType*
+    dispatcher: DisplayDispatch
+    selector: 2614
+
+# ####
+
+- function:
+    name: DMDisposeList
+    return: OSErr
+    args:
+    - name: panelList
+      type: DMListType
+    dispatcher: DisplayDispatch
+    selector: 556
+
+# ####
+
+- function:
+    name: DMGetNameByAVID
+    return: OSErr
+    args:
+    - name: theID
+      type: AVIDType
+    - name: nameFlags
+      type: uint32_t
+    - name: name
+      type: Str255
+    dispatcher: DisplayDispatch
+    selector: 1581
+
+# ####
+
+- function:
+    name: DMNewAVIDByPortComponent
+    return: OSErr
+    args:
+    - name: thePortComponent
+      type: Component
+    - name: portKind
+      type: ResType
+    - name: reserved
+      type: uint32_t
+    - name: newID
+      type: AVIDType*
+    dispatcher: DisplayDispatch
+    selector: 2094
+
+# ####
+
+- function:
+    name: DMNewAVIDByDeviceComponent
+    return: OSErr
+    args:
+    - name: theDeviceComponent
+      type: Component
+    - name: portKind
+      type: ResType
+    - name: reserved
+      type: uint32_t
+    - name: newID
+      type: DisplayIDType*
+    dispatcher: DisplayDispatch
+    selector: 2099
+
+# ####
+
+- function:
+    name: DMGetPortComponentByAVID
+    return: OSErr
+    args:
+    - name: thePortID
+      type: DisplayIDType
+    - name: thePortComponent
+      type: Component*
+    - name: theDesciption
+      type: ComponentDescription*
+    - name: thePortKind
+      type: ResType*
+    dispatcher: DisplayDispatch
+    selector: 2095
+
+# ####
+
+- function:
+    name: DMGetDeviceComponentByAVID
+    return: OSErr
+    args:
+    - name: theDeviceID
+      type: AVIDType
+    - name: theDeviceComponent
+      type: Component*
+    - name: theDesciption
+      type: ComponentDescription*
+    - name: theDeviceKind
+      type: ResType*
+    dispatcher: DisplayDispatch
+    selector: 2101
+
+# ####
+
+- function:
+    name: DMSendDependentNotification
+    return: OSErr
+    args:
+    - name: notifyType
+      type: ResType
+    - name: notifyClass
+      type: ResType
+    - name: displayID
+      type: AVIDType
+    - name: notifyComponent
+      type: ComponentInstance
+    dispatcher: DisplayDispatch
+    selector: 2096
+
+# ####
+
+- function:
+    name: DMDisposeAVComponent
+    return: OSErr
+    args:
+    - name: theAVComponent
+      type: Component
+    dispatcher: DisplayDispatch
+    selector: 561
+
+# ####
+
+- function:
+    name: DMSaveScreenPrefs
+    return: OSErr
+    args:
+    - name: reserved1
+      type: uint32_t
+    - name: saveFlags
+      type: uint32_t
+    - name: reserved2
+      type: uint32_t
+    dispatcher: DisplayDispatch
+    selector: 1586
+
+# ####
+
+- function:
+    name: DMGetDeviceAVIDByPortAVID
+    return: OSErr
+    args:
+    - name: portAVID
+      type: AVIDType
+    - name: deviceAVID
+      type: AVIDType*
+    dispatcher: DisplayDispatch
+    selector: 1083
+
+# ####
+
+- function:
+    name: DMGetEnableByAVID
+    return: OSErr
+    args:
+    - name: theAVID
+      type: AVIDType
+    - name: isAVIDEnabledNow
+      type: Boolean*
+    - name: canChangeEnableNow
+      type: Boolean*
+    dispatcher: DisplayDispatch
+    selector: 1596
+
+# ####
+
+- function:
+    name: DMSetEnableByAVID
+    return: OSErr
+    args:
+    - name: theAVID
+      type: AVIDType
+    - name: doEnable
+      type: Boolean
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1341

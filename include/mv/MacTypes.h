@@ -100,6 +100,8 @@ typedef INTEGER OSErr;
 
 typedef LONGINT OSType;
 
+typedef unsigned long FourCharCode;
+
 typedef LONGINT ResType;
 
 typedef union QElem QElem;

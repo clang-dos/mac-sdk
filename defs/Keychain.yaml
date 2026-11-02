@@ -1,0 +1,710 @@
+
+# ####
+
+- typedef:
+    name: KCRef
+    type: struct OpaqueKCRef*
+    comment: Keychain Manager (Mac OS 9; Keychain 1.0 was an extension for 8.6).
+
+# ####
+
+- typedef:
+    name: KCItemRef
+    type: struct OpaqueKCItemRef*
+
+# ####
+
+- typedef:
+    name: KCSearchRef
+    type: struct OpaqueKCSearchRef*
+
+# ####
+
+- typedef:
+    name: KCStatus
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: KCItemClass
+    type: FourCharCode
+
+# ####
+
+- typedef:
+    name: KCAttrType
+    type: FourCharCode
+
+# ####
+
+- typedef:
+    name: KCProtocolType
+    type: FourCharCode
+
+# ####
+
+- typedef:
+    name: KCAuthType
+    type: FourCharCode
+
+# ####
+
+- struct:
+    name: KCAttribute
+    size: 12
+    members:
+    - name: tag
+      type: KCAttrType
+    - name: length
+      type: UInt32
+    - name: data
+      type: void*
+
+# ####
+
+- struct:
+    name: KCAttributeList
+    size: 8
+    members:
+    - name: count
+      type: UInt32
+    - name: attr
+      type: KCAttribute*
+
+# ####
+
+- enum:
+    values:
+    - name: kUnlockStateKCStatus
+      value: 1
+    - name: kRdPermKCStatus
+      value: 2
+    - name: kWrPermKCStatus
+      value: 4
+
+# ####
+
+- enum:
+    values:
+    - name: kCertificateKCItemClass
+      value: '''cert'''
+    - name: kAppleSharePasswordKCItemClass
+      value: '''ashp'''
+    - name: kInternetPasswordKCItemClass
+      value: '''inet'''
+    - name: kGenericPasswordKCItemClass
+      value: '''genp'''
+
+# ####
+
+- enum:
+    values:
+    - name: kClassKCItemAttr
+      value: '''clas'''
+    - name: kCreationDateKCItemAttr
+      value: '''cdat'''
+    - name: kModDateKCItemAttr
+      value: '''mdat'''
+    - name: kDescriptionKCItemAttr
+      value: '''desc'''
+    - name: kCommentKCItemAttr
+      value: '''icmt'''
+    - name: kCreatorKCItemAttr
+      value: '''crtr'''
+    - name: kTypeKCItemAttr
+      value: '''type'''
+    - name: kScriptCodeKCItemAttr
+      value: '''scrp'''
+    - name: kLabelKCItemAttr
+      value: '''labl'''
+    - name: kInvisibleKCItemAttr
+      value: '''invi'''
+    - name: kNegativeKCItemAttr
+      value: '''nega'''
+    - name: kCustomIconKCItemAttr
+      value: '''cusi'''
+    - name: kAccountKCItemAttr
+      value: '''acct'''
+    - name: kServiceKCItemAttr
+      value: '''svce'''
+    - name: kGenericKCItemAttr
+      value: '''gena'''
+    - name: kSecurityDomainKCItemAttr
+      value: '''sdmn'''
+    - name: kServerKCItemAttr
+      value: '''srvr'''
+    - name: kAuthTypeKCItemAttr
+      value: '''atyp'''
+    - name: kPortKCItemAttr
+      value: '''port'''
+    - name: kPathKCItemAttr
+      value: '''path'''
+    - name: kVolumeKCItemAttr
+      value: '''vlme'''
+    - name: kAddressKCItemAttr
+      value: '''addr'''
+    - name: kSignatureKCItemAttr
+      value: '''ssig'''
+    - name: kProtocolKCItemAttr
+      value: '''ptcl'''
+
+# ####
+
+- enum:
+    values:
+    - name: kKCProtocolTypeFTP
+      value: '''ftp '''
+    - name: kKCProtocolTypeFTPAccount
+      value: '''ftpa'''
+    - name: kKCProtocolTypeHTTP
+      value: '''http'''
+    - name: kKCProtocolTypeIRC
+      value: '''irc '''
+    - name: kKCProtocolTypeNNTP
+      value: '''nntp'''
+    - name: kKCProtocolTypePOP3
+      value: '''pop3'''
+    - name: kKCProtocolTypeSMTP
+      value: '''smtp'''
+    - name: kKCProtocolTypeSOCKS
+      value: '''sox '''
+    - name: kKCProtocolTypeIMAP
+      value: '''imap'''
+    - name: kKCProtocolTypeLDAP
+      value: '''ldap'''
+    - name: kKCProtocolTypeAppleTalk
+      value: '''atlk'''
+    - name: kKCProtocolTypeAFP
+      value: '''afp '''
+    - name: kKCProtocolTypeTelnet
+      value: '''teln'''
+
+# ####
+
+- enum:
+    values:
+    - name: kKCAuthTypeNTLM
+      value: '''ntlm'''
+    - name: kKCAuthTypeMSN
+      value: '''msna'''
+    - name: kKCAuthTypeDPA
+      value: '''dpaa'''
+    - name: kKCAuthTypeRPA
+      value: '''rpaa'''
+    - name: kKCAuthTypeHTTPDigest
+      value: '''httd'''
+    - name: kKCAuthTypeDefault
+      value: '''dflt'''
+
+# ####
+
+- enum:
+    values:
+    - name: errKCNotAvailable
+      value: -25291
+    - name: errKCReadOnly
+      value: -25292
+    - name: errKCAuthFailed
+      value: -25293
+    - name: errKCNoSuchKeychain
+      value: -25294
+    - name: errKCInvalidKeychain
+      value: -25295
+    - name: errKCDuplicateKeychain
+      value: -25296
+    - name: errKCDuplicateCallback
+      value: -25297
+    - name: errKCInvalidCallback
+      value: -25298
+    - name: errKCDuplicateItem
+      value: -25299
+    - name: errKCItemNotFound
+      value: -25300
+    - name: errKCBufferTooSmall
+      value: -25301
+    - name: errKCDataTooLarge
+      value: -25302
+    - name: errKCNoSuchAttr
+      value: -25303
+    - name: errKCInvalidItemRef
+      value: -25304
+    - name: errKCInvalidSearchRef
+      value: -25305
+    - name: errKCNoSuchClass
+      value: -25306
+    - name: errKCNoDefaultKeychain
+      value: -25307
+    - name: errKCInteractionNotAllowed
+      value: -25308
+    - name: errKCReadOnlyAttr
+      value: -25309
+    - name: errKCWrongKCVersion
+      value: -25310
+    - name: errKCKeySizeNotAllowed
+      value: -25311
+    - name: errKCNoStorageModule
+      value: -25312
+    - name: errKCNoCertificateModule
+      value: -25313
+    - name: errKCNoPolicyModule
+      value: -25314
+    - name: errKCInteractionRequired
+      value: -25315
+    - name: errKCDataNotAvailable
+      value: -25316
+    - name: errKCDataNotModifiable
+      value: -25317
+    - name: errKCCreateChainFailed
+      value: -25318
+
+# ####
+
+- function:
+    name: KCGetKeychainManagerVersion
+    return: OSStatus
+    args:
+    - name: returnVers
+      type: UInt32*
+    comment: Keychain Manager
+    m68k: none
+
+# ####
+
+- function:
+    name: KCSetInteractionAllowed
+    return: OSStatus
+    args:
+    - name: state
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: KCIsInteractionAllowed
+    return: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: KCMakeKCRefFromFSSpec
+    return: OSStatus
+    args:
+    - name: keychainFSSpec
+      type: FSSpec*
+    - name: keychain
+      type: KCRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCMakeKCRefFromAlias
+    return: OSStatus
+    args:
+    - name: keychainAlias
+      type: AliasHandle
+    - name: keychain
+      type: KCRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCMakeAliasFromKCRef
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    - name: keychainAlias
+      type: AliasHandle*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCReleaseKeychain
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCGetDefaultKeychain
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCSetDefaultKeychain
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    m68k: none
+
+# ####
+
+- function:
+    name: KCGetStatus
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    - name: keychainStatus
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCGetKeychain
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    - name: keychain
+      type: KCRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCGetKeychainName
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    - name: keychainName
+      type: StringPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: KCCountKeychains
+    return: UInt16
+    m68k: none
+
+# ####
+
+- function:
+    name: KCGetIndKeychain
+    return: OSStatus
+    args:
+    - name: index
+      type: UInt16
+    - name: keychain
+      type: KCRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCUnlock
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    - name: password
+      type: StringPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: KCCreateKeychain
+    return: OSStatus
+    args:
+    - name: password
+      type: StringPtr
+    - name: keychain
+      type: KCRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCChangeSettings
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    m68k: none
+
+# ####
+
+- function:
+    name: KCLock
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    m68k: none
+
+# ####
+
+- function:
+    name: KCAddGenericPassword
+    return: OSStatus
+    args:
+    - name: serviceName
+      type: StringPtr
+    - name: accountName
+      type: StringPtr
+    - name: passwordLength
+      type: UInt32
+    - name: passwordData
+      type: const void*
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCFindGenericPassword
+    return: OSStatus
+    args:
+    - name: serviceName
+      type: StringPtr
+    - name: accountName
+      type: StringPtr
+    - name: maxLength
+      type: UInt32
+    - name: passwordData
+      type: void*
+    - name: actualLength
+      type: UInt32*
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCAddInternetPassword
+    return: OSStatus
+    args:
+    - name: serverName
+      type: StringPtr
+    - name: securityDomain
+      type: StringPtr
+    - name: accountName
+      type: StringPtr
+    - name: port
+      type: UInt16
+    - name: protocol
+      type: OSType
+    - name: authType
+      type: OSType
+    - name: passwordLength
+      type: UInt32
+    - name: passwordData
+      type: const void*
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCFindInternetPassword
+    return: OSStatus
+    args:
+    - name: serverName
+      type: StringPtr
+    - name: securityDomain
+      type: StringPtr
+    - name: accountName
+      type: StringPtr
+    - name: port
+      type: UInt16
+    - name: protocol
+      type: OSType
+    - name: authType
+      type: OSType
+    - name: maxLength
+      type: UInt32
+    - name: passwordData
+      type: void*
+    - name: actualLength
+      type: UInt32*
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCNewItem
+    return: OSStatus
+    args:
+    - name: itemClass
+      type: KCItemClass
+    - name: itemCreator
+      type: OSType
+    - name: length
+      type: UInt32
+    - name: data
+      type: const void*
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCSetAttribute
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    - name: attr
+      type: KCAttribute*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCGetAttribute
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    - name: attr
+      type: KCAttribute*
+    - name: actualLength
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCSetData
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    - name: length
+      type: UInt32
+    - name: data
+      type: const void*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCGetData
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    - name: maxLength
+      type: UInt32
+    - name: data
+      type: void*
+    - name: actualLength
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCAddItem
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    m68k: none
+
+# ####
+
+- function:
+    name: KCDeleteItem
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    m68k: none
+
+# ####
+
+- function:
+    name: KCUpdateItem
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    m68k: none
+
+# ####
+
+- function:
+    name: KCReleaseItem
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCCopyItem
+    return: OSStatus
+    args:
+    - name: item
+      type: KCItemRef
+    - name: destKeychain
+      type: KCRef
+    - name: copy
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCFindFirstItem
+    return: OSStatus
+    args:
+    - name: keychain
+      type: KCRef
+    - name: attrList
+      type: const KCAttributeList*
+    - name: search
+      type: KCSearchRef*
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCFindNextItem
+    return: OSStatus
+    args:
+    - name: search
+      type: KCSearchRef
+    - name: item
+      type: KCItemRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: KCReleaseSearch
+    return: OSStatus
+    args:
+    - name: search
+      type: KCSearchRef*
+    m68k: none

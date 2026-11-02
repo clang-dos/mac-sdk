@@ -6,6 +6,7 @@
 #include "AppleEvents.h"
 #include "CQuickDraw.h"
 #include "Components.h"
+#include "DriverServices.h"
 #include "MacTypes.h"
 #include "ProcessMgr.h"
 #include "QuickDraw.h"
@@ -150,6 +151,86 @@ pascal OSErr DMGetComponentAnimateTicks(ComponentInstance animationComponent, UI
 pascal OSErr DMSetComponentAnimateTicks(ComponentInstance animationComponent, UInt32 animationTicks, UInt32 *nextAnimateTick) M68K_INLINE(0x303C, 0x060E, 0xABEB);
 
 pascal OSErr DMSetGDeviceTablecloth(GDHandle displayDevice, ComponentInstance tableclothInstance) M68K_INLINE(0x303C, 0x0405, 0xABEB);
+
+// Display Manager 2.0 (Mac OS 8): audio/video devices, ports and display modes.
+typedef UInt32 AVIDType;
+
+typedef void *DMListType;
+
+typedef UInt32 DMListIndexType;
+
+typedef UInt32 DMFidelityType;
+
+typedef pascal void (*DMExtendedNotificationProcPtr)(void *userData, short theMessage, void *notifyData);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr DMExtendedNotificationUPP;
+enum { uppDMExtendedNotificationProcInfo = 0x00000CC0 };
+#define NewDMExtendedNotificationUPP(proc) ((DMExtendedNotificationUPP)NewRoutineDescriptor((ProcPtr)(proc), uppDMExtendedNotificationProcInfo, GetCurrentArchitecture()))
+#define DisposeDMExtendedNotificationUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef DMExtendedNotificationProcPtr DMExtendedNotificationUPP;
+#define NewDMExtendedNotificationUPP(proc) (proc)
+#define DisposeDMExtendedNotificationUPP(upp) ((void)0)
+#endif
+#define NewDMExtendedNotificationProc(proc) NewDMExtendedNotificationUPP(proc)
+#define DisposeDMExtendedNotificationProc(proc) DisposeDMExtendedNotificationUPP(proc)
+
+enum {
+    kDMNotifyRequestConnectionProbe = 0,
+    kDMBlankWhileProbing = 1,
+    kDMAllowDisplayMenuOnly = 2,
+    kNoFidelity = 0,
+    kMinimumFidelity = 1,
+    kDefaultFidelity = 500,
+    kDefaultManufacturerFidelity = 1000,
+    kAnyPanelType = 0,
+    kAnyEngineType = 0,
+    kAnyDeviceType = 0,
+    kAnyPortType = 0,
+    kDMNotifyRequestDisplayProbe = 9,
+    kExtendedNotificationProc = 65536,
+};
+
+// Display Manager 2.0 (Mac OS 8), on DisplayDispatch
+pascal OSErr DMRegisterExtendedNotifyProc(DMExtendedNotificationUPP notifyProc, void *notifyUserData, uint16_t nofificationFlags, ProcessSerialNumber *whichPSN) M68K_INLINE(0x303C, 0x07EF, 0xABEB);
+
+pascal OSErr DMRemoveExtendedNotifyProc(DMExtendedNotificationUPP notifyProc, void *notifyUserData, ProcessSerialNumber *whichPSN, uint16_t removeFlags) M68K_INLINE(0x303C, 0x0726, 0xABEB);
+
+pascal OSErr DMNewAVPanelList(DisplayIDType displayID, ResType panelType, DMFidelityType minimumFidelity, unsigned long panelListFlags, unsigned long reserved, ItemCount *thePanelCount, DMListType *thePanelList) M68K_INLINE(0x303C, 0x0C27, 0xABEB);
+
+pascal OSErr DMNewAVEngineList(DisplayIDType displayID, ResType engineType, DMFidelityType minimumFidelity, unsigned long engineListFlags, unsigned long reserved, ItemCount *engineCount, DMListType *engineList) M68K_INLINE(0x303C, 0x0C28, 0xABEB);
+
+pascal OSErr DMNewAVDeviceList(ResType deviceType, unsigned long deviceListFlags, unsigned long reserved, ItemCount *deviceCount, DMListType *deviceList) M68K_INLINE(0x303C, 0x0A29, 0xABEB);
+
+pascal OSErr DMNewAVPortListByPortType(ResType subType, unsigned long portListFlags, unsigned long reserved, ItemCount *devicePortCount, DMListType *theDevicePortList) M68K_INLINE(0x303C, 0x0A2A, 0xABEB);
+
+pascal OSErr DMNewAVPortListByDeviceAVID(AVIDType theID, DMFidelityType minimumFidelity, unsigned long portListFlags, unsigned long reserved, ItemCount *devicePortCount, DMListType *theDevicePortList) M68K_INLINE(0x303C, 0x0C34, 0xABEB);
+
+pascal OSErr DMNewDisplayModeList(DisplayIDType displayID, unsigned long modeListFlags, unsigned long reserved, ItemCount *thePanelCount, DMListType *thePanelList) M68K_INLINE(0x303C, 0x0A36, 0xABEB);
+
+pascal OSErr DMDisposeList(DMListType panelList) M68K_INLINE(0x303C, 0x022C, 0xABEB);
+
+pascal OSErr DMGetNameByAVID(AVIDType theID, unsigned long nameFlags, Str255 name) M68K_INLINE(0x303C, 0x062D, 0xABEB);
+
+pascal OSErr DMNewAVIDByPortComponent(Component thePortComponent, ResType portKind, unsigned long reserved, AVIDType *newID) M68K_INLINE(0x303C, 0x082E, 0xABEB);
+
+pascal OSErr DMNewAVIDByDeviceComponent(Component theDeviceComponent, ResType portKind, unsigned long reserved, DisplayIDType *newID) M68K_INLINE(0x303C, 0x0833, 0xABEB);
+
+pascal OSErr DMGetPortComponentByAVID(DisplayIDType thePortID, Component *thePortComponent, ComponentDescription *theDesciption, ResType *thePortKind) M68K_INLINE(0x303C, 0x082F, 0xABEB);
+
+pascal OSErr DMGetDeviceComponentByAVID(AVIDType theDeviceID, Component *theDeviceComponent, ComponentDescription *theDesciption, ResType *theDeviceKind) M68K_INLINE(0x303C, 0x0835, 0xABEB);
+
+pascal OSErr DMSendDependentNotification(ResType notifyType, ResType notifyClass, AVIDType displayID, ComponentInstance notifyComponent) M68K_INLINE(0x303C, 0x0830, 0xABEB);
+
+pascal OSErr DMDisposeAVComponent(Component theAVComponent) M68K_INLINE(0x303C, 0x0231, 0xABEB);
+
+pascal OSErr DMSaveScreenPrefs(unsigned long reserved1, unsigned long saveFlags, unsigned long reserved2) M68K_INLINE(0x303C, 0x0632, 0xABEB);
+
+pascal OSErr DMGetDeviceAVIDByPortAVID(AVIDType portAVID, AVIDType *deviceAVID) M68K_INLINE(0x303C, 0x043B, 0xABEB);
+
+pascal OSErr DMGetEnableByAVID(AVIDType theAVID, Boolean *isAVIDEnabledNow, Boolean *canChangeEnableNow) M68K_INLINE(0x303C, 0x063C, 0xABEB);
+
+pascal OSErr DMSetEnableByAVID(AVIDType theAVID, Boolean doEnable, Handle displayState) M68K_INLINE(0x303C, 0x053D, 0xABEB);
 
 #pragma options align=reset
 

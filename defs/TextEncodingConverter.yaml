@@ -1,0 +1,475 @@
+
+# ####
+
+- typedef:
+    name: TECObjectRef
+    type: struct OpaqueTECObjectRef*
+    comment: Text Encoding Converter (Mac OS 8.5 and later; an extension for 7.6 and 8.1).
+
+# ####
+
+- typedef:
+    name: TECSnifferObjectRef
+    type: struct OpaqueTECSnifferObjectRef*
+
+# ####
+
+- typedef:
+    name: TECPluginSignature
+    type: OSType
+
+# ####
+
+- typedef:
+    name: TECPluginVersion
+    type: UInt32
+
+# ####
+
+- struct:
+    name: TECConversionInfo
+    size: 12
+    members:
+    - name: sourceEncoding
+      type: TextEncoding
+    - name: destinationEncoding
+      type: TextEncoding
+    - name: reserved1
+      type: UInt16
+    - name: reserved2
+      type: UInt16
+
+# ####
+
+- function:
+    name: TECCountAvailableTextEncodings
+    return: OSStatus
+    args:
+    - name: numberEncodings
+      type: ItemCount*
+    comment: Text Encoding Converter
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetAvailableTextEncodings
+    return: OSStatus
+    args:
+    - name: availableEncodings
+      type: TextEncoding*
+    - name: maxAvailableEncodings
+      type: ItemCount
+    - name: actualAvailableEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCountDirectTextEncodingConversions
+    return: OSStatus
+    args:
+    - name: numberOfEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetDirectTextEncodingConversions
+    return: OSStatus
+    args:
+    - name: availableConversions
+      type: TECConversionInfo*
+    - name: maxAvailableConversions
+      type: ItemCount
+    - name: actualAvailableConversions
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCountDestinationTextEncodings
+    return: OSStatus
+    args:
+    - name: inputEncoding
+      type: TextEncoding
+    - name: numberOfEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetDestinationTextEncodings
+    return: OSStatus
+    args:
+    - name: inputEncoding
+      type: TextEncoding
+    - name: destinationEncodings
+      type: TextEncoding*
+    - name: maxDestinationEncodings
+      type: ItemCount
+    - name: actualDestinationEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetTextEncodingInternetName
+    return: OSStatus
+    args:
+    - name: textEncoding
+      type: TextEncoding
+    - name: encodingName
+      type: StringPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetTextEncodingFromInternetName
+    return: OSStatus
+    args:
+    - name: textEncoding
+      type: TextEncoding*
+    - name: encodingName
+      type: ConstStr255Param
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCreateConverter
+    return: OSStatus
+    args:
+    - name: newEncodingConverter
+      type: TECObjectRef*
+    - name: inputEncoding
+      type: TextEncoding
+    - name: outputEncoding
+      type: TextEncoding
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCreateConverterFromPath
+    return: OSStatus
+    args:
+    - name: newEncodingConverter
+      type: TECObjectRef*
+    - name: inPath
+      type: const TextEncoding*
+    - name: inEncodings
+      type: ItemCount
+    m68k: none
+
+# ####
+
+- function:
+    name: TECDisposeConverter
+    return: OSStatus
+    args:
+    - name: newEncodingConverter
+      type: TECObjectRef
+    m68k: none
+
+# ####
+
+- function:
+    name: TECClearConverterContextInfo
+    return: OSStatus
+    args:
+    - name: encodingConverter
+      type: TECObjectRef
+    m68k: none
+
+# ####
+
+- function:
+    name: TECConvertText
+    return: OSStatus
+    args:
+    - name: encodingConverter
+      type: TECObjectRef
+    - name: inputBuffer
+      type: ConstTextPtr
+    - name: inputBufferLength
+      type: ByteCount
+    - name: actualInputLength
+      type: ByteCount*
+    - name: outputBuffer
+      type: TextPtr
+    - name: outputBufferLength
+      type: ByteCount
+    - name: actualOutputLength
+      type: ByteCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECFlushText
+    return: OSStatus
+    args:
+    - name: encodingConverter
+      type: TECObjectRef
+    - name: outputBuffer
+      type: TextPtr
+    - name: outputBufferLength
+      type: ByteCount
+    - name: actualOutputLength
+      type: ByteCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCountSubTextEncodings
+    return: OSStatus
+    args:
+    - name: inputEncoding
+      type: TextEncoding
+    - name: numberOfEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetSubTextEncodings
+    return: OSStatus
+    args:
+    - name: inputEncoding
+      type: TextEncoding
+    - name: subEncodings
+      type: TextEncoding*
+    - name: maxSubEncodings
+      type: ItemCount
+    - name: actualSubEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetEncodingList
+    return: OSStatus
+    args:
+    - name: encodingConverter
+      type: TECObjectRef
+    - name: numEncodings
+      type: ItemCount*
+    - name: encodingList
+      type: Handle*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCreateOneToManyConverter
+    return: OSStatus
+    args:
+    - name: newEncodingConverter
+      type: TECObjectRef*
+    - name: inputEncoding
+      type: TextEncoding
+    - name: numOutputEncodings
+      type: ItemCount
+    - name: outputEncodings
+      type: const TextEncoding*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECConvertTextToMultipleEncodings
+    return: OSStatus
+    args:
+    - name: encodingConverter
+      type: TECObjectRef
+    - name: inputBuffer
+      type: ConstTextPtr
+    - name: inputBufferLength
+      type: ByteCount
+    - name: actualInputLength
+      type: ByteCount*
+    - name: outputBuffer
+      type: TextPtr
+    - name: outputBufferLength
+      type: ByteCount
+    - name: actualOutputLength
+      type: ByteCount*
+    - name: outEncodingsBuffer
+      type: TextEncodingRun*
+    - name: maxOutEncodingRuns
+      type: ItemCount
+    - name: actualOutEncodingRuns
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECFlushMultipleEncodings
+    return: OSStatus
+    args:
+    - name: encodingConverter
+      type: TECObjectRef
+    - name: outputBuffer
+      type: TextPtr
+    - name: outputBufferLength
+      type: ByteCount
+    - name: actualOutputLength
+      type: ByteCount*
+    - name: outEncodingsBuffer
+      type: TextEncodingRun*
+    - name: maxOutEncodingRuns
+      type: ItemCount
+    - name: actualOutEncodingRuns
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCountWebTextEncodings
+    return: OSStatus
+    args:
+    - name: locale
+      type: RegionCode
+    - name: numberEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetWebTextEncodings
+    return: OSStatus
+    args:
+    - name: locale
+      type: RegionCode
+    - name: availableEncodings
+      type: TextEncoding*
+    - name: maxAvailableEncodings
+      type: ItemCount
+    - name: actualAvailableEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCountMailTextEncodings
+    return: OSStatus
+    args:
+    - name: locale
+      type: RegionCode
+    - name: numberEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetMailTextEncodings
+    return: OSStatus
+    args:
+    - name: locale
+      type: RegionCode
+    - name: availableEncodings
+      type: TextEncoding*
+    - name: maxAvailableEncodings
+      type: ItemCount
+    - name: actualAvailableEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCountAvailableSniffers
+    return: OSStatus
+    args:
+    - name: numberOfEncodings
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECGetAvailableSniffers
+    return: OSStatus
+    args:
+    - name: availableSniffers
+      type: TextEncoding*
+    - name: maxAvailableSniffers
+      type: ItemCount
+    - name: actualAvailableSniffers
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TECCreateSniffer
+    return: OSStatus
+    args:
+    - name: encodingSniffer
+      type: TECSnifferObjectRef*
+    - name: testEncodings
+      type: TextEncoding*
+    - name: numTextEncodings
+      type: ItemCount
+    m68k: none
+
+# ####
+
+- function:
+    name: TECSniffTextEncoding
+    return: OSStatus
+    args:
+    - name: encodingSniffer
+      type: TECSnifferObjectRef
+    - name: inputBuffer
+      type: TextPtr
+    - name: inputBufferLength
+      type: ByteCount
+    - name: testEncodings
+      type: TextEncoding*
+    - name: numTextEncodings
+      type: ItemCount
+    - name: numErrsArray
+      type: ItemCount*
+    - name: maxErrs
+      type: ItemCount
+    - name: numFeaturesArray
+      type: ItemCount*
+    - name: maxFeatures
+      type: ItemCount
+    m68k: none
+
+# ####
+
+- function:
+    name: TECDisposeSniffer
+    return: OSStatus
+    args:
+    - name: encodingSniffer
+      type: TECSnifferObjectRef
+    m68k: none
+
+# ####
+
+- function:
+    name: TECClearSnifferContextInfo
+    return: OSStatus
+    args:
+    - name: encodingSniffer
+      type: TECSnifferObjectRef
+    m68k: none

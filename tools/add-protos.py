@@ -43,7 +43,7 @@ DISPATCHER_NAMES = {
     0xA06E: "SlotManager", 0xA08F: "DeferredTask", 0xA0AC: "FSMDispatch",
     0xA0DD: "PPCDispatch", 0xA05D: "MemoryDispatch", 0xA08D: "DebugUtil",
     0xA085: "PowerDispatch", 0xA0AE: "VADBProc", 0xA089: "SCSIAtomic",
-    0xA0BD: "FlushCodeCacheRange",
+    0xA0BD: "FlushCodeCacheRange", 0xAA75: "IconServicesDispatch", 0xABF1: "GestaltValueDispatch",
 }
 
 TYPE_MAP = {
@@ -144,6 +144,9 @@ def main():
     info = json.load(open(os.path.join(ROOT, "data", "trapinfo.json")))
     # Mac OS 8's Appearance, Collection and Drag Manager glue libraries
     info.update(json.load(open(os.path.join(ROOT, "data", "trapinfo-os8.json"))))
+    # Calls new in Mac OS 8.5 to 9.2.1 whose glue in 9.2.1 still calls a
+    # 68k trap (68k applications run under emulation there)
+    info.update(json.load(open(os.path.join(ROOT, "data", "trapinfo-os9.json"))))
     disp, sizes, names = load_defs()
     items, new_disp, report = [], {}, []
     pending_comment = None

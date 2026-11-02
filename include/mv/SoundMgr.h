@@ -3,6 +3,7 @@
 #define __MV_SOUNDMGR__
 
 #include "../ConditionalMacros.h"
+#include "Components.h"
 #include "MacTypes.h"
 #include "SANE.h"
 
@@ -362,6 +363,103 @@ pascal LONGINT DirectorUnknown3(void) M68K_INLINE(0x7004, 0xA800);
 pascal INTEGER DirectorUnknown4(ResType arg0, INTEGER arg1, Ptr arg2, Ptr arg3) M68K_INLINE(0x203C, 0x001C, 0x0004, 0xA800);
 
 pascal long SndDispVersion(INTEGER dispatchID) M68K_INLINE(0x7000, 0xA800);
+
+// Sound Manager 3.x: the format of a buffer of sound, for sound components and converters.
+typedef struct SoundComponentData SoundComponentData;
+struct SoundComponentData {
+    SInt32 flags;
+    OSType format;
+    SInt16 numChannels;
+    SInt16 sampleSize;
+    UnsignedFixed sampleRate;
+    SInt32 sampleCount;
+    Byte *buffer;
+    SInt32 reserved;
+};
+
+typedef SoundComponentData *SoundComponentDataPtr;
+
+typedef struct OpaqueSoundConverter *SoundConverter;
+
+typedef pascal Boolean (*SoundConverterFillBufferDataProcPtr)(SoundComponentDataPtr *data, void *refCon);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr SoundConverterFillBufferDataUPP;
+enum { uppSoundConverterFillBufferDataProcInfo = 0x000003D0 };
+#define NewSoundConverterFillBufferDataUPP(proc) ((SoundConverterFillBufferDataUPP)NewRoutineDescriptor((ProcPtr)(proc), uppSoundConverterFillBufferDataProcInfo, GetCurrentArchitecture()))
+#define DisposeSoundConverterFillBufferDataUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef SoundConverterFillBufferDataProcPtr SoundConverterFillBufferDataUPP;
+#define NewSoundConverterFillBufferDataUPP(proc) (proc)
+#define DisposeSoundConverterFillBufferDataUPP(upp) ((void)0)
+#endif
+#define NewSoundConverterFillBufferDataProc(proc) NewSoundConverterFillBufferDataUPP(proc)
+#define DisposeSoundConverterFillBufferDataProc(proc) DisposeSoundConverterFillBufferDataUPP(proc)
+
+enum {
+    kNoSoundComponentType = '****',
+    kSoundComponentType = 'sift',
+    kSoundComponentPPCType = 'nift',
+    kRate8SubType = 'ratb',
+    kRate16SubType = 'ratw',
+    kConverterSubType = 'conv',
+    kSndSourceSubType = 'sour',
+    kMixerType = 'mixr',
+    kMixer8SubType = 'mixb',
+    kMixer16SubType = 'mixw',
+    kSoundOutputDeviceType = 'sdev',
+    kClassicSubType = 'clsc',
+    kASCSubType = 'asc ',
+    kDSPSubType = 'dsp ',
+    kAwacsSubType = 'awac',
+    kGCAwacsSubType = 'awgc',
+    kSingerSubType = 'sing',
+    kSinger2SubType = 'sng2',
+    kWhitSubType = 'whit',
+    kSoundBlasterSubType = 'sbls',
+    kWaveInSubType = 'wavi',
+    kWaveInSnifferSubType = 'wisn',
+    kSoundDecompressor = 'sdec',
+    kSoundCompressor = 'scom',
+    kSoundConverterDidntFillBuffer = 1,
+    kSoundConverterHasLeftOverData = 2,
+};
+
+// Sound Manager 3.1 to 3.6: output devices, converters, parsing sound headers
+pascal OSErr GetSoundOutputInfo(Component outputDevice, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0644, 0x0018, 0xA800);
+
+pascal OSErr SetSoundOutputInfo(Component outputDevice, OSType selector, const void *infoPtr) M68K_INLINE(0x203C, 0x0648, 0x0018, 0xA800);
+
+pascal OSErr GetCompressionName(OSType compressionType, Str255 compressionName) M68K_INLINE(0x203C, 0x044C, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterOpen(const SoundComponentData *inputFormat, const SoundComponentData *outputFormat, SoundConverter *sc) M68K_INLINE(0x203C, 0x0650, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterClose(SoundConverter sc) M68K_INLINE(0x203C, 0x0254, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterGetBufferSizes(SoundConverter sc, unsigned long inputBytesTarget, unsigned long *inputFrames, unsigned long *inputBytes, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0A58, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterBeginConversion(SoundConverter sc) M68K_INLINE(0x203C, 0x025C, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterConvertBuffer(SoundConverter sc, const void *inputPtr, unsigned long inputFrames, void *outputPtr, unsigned long *outputFrames, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0C60, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterEndConversion(SoundConverter sc, void *outputPtr, unsigned long *outputFrames, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0864, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterGetInfo(SoundConverter sc, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0668, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterSetInfo(SoundConverter sc, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x066C, 0x0018, 0xA800);
+
+pascal OSErr SoundConverterFillBuffer(SoundConverter sc, SoundConverterFillBufferDataUPP fillBufferDataUPP, void *fillBufferDataRefCon, void *outputBuffer, unsigned long outputBufferByteSize, unsigned long *bytesWritten, unsigned long *framesWritten, unsigned long *outputFlags) M68K_INLINE(0x203C, 0x1078, 0x0018, 0xA800);
+
+pascal OSErr SoundManagerGetInfo(OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x047C, 0x0018, 0xA800);
+
+pascal OSErr SoundManagerSetInfo(OSType selector, const void *infoPtr) M68K_INLINE(0x203C, 0x0480, 0x0018, 0xA800);
+
+pascal OSErr ParseAIFFHeader(INTEGER refNum, SoundComponentData *sndInfo, unsigned long *numFrames, unsigned long *dataOffset) M68K_INLINE(0x203C, 0x0758, 0x0014, 0xA800);
+
+pascal OSErr ParseSndHeader(Handle sndHandle, SoundComponentData *sndInfo, unsigned long *numFrames, unsigned long *dataOffset) M68K_INLINE(0x203C, 0x085C, 0x0014, 0xA800);
+
+pascal OSErr OpenMixerSoundComponent(SoundComponentDataPtr outputDescription, long outputFlags, ComponentInstance *mixerComponent) M68K_INLINE(0x203C, 0x0614, 0x0018, 0xA800);
+
+pascal OSErr CloseMixerSoundComponent(ComponentInstance ci) M68K_INLINE(0x203C, 0x0218, 0x0018, 0xA800);
 
 #pragma options align=reset
 

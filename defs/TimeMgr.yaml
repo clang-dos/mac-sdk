@@ -85,3 +85,55 @@
         type: UnsignedWide*
     comment: The trap returns the high half in A0 and the low half in D0.
     m68k-inline: [0xA193, 0x225F, 0x22C8, 0x2280]
+
+# ####
+
+- function:
+    name: InstallTimeTask
+    return: OSErr
+    args:
+    - name: tmTaskPtr
+      type: QElemPtr
+      register: A0
+    comment: Time Manager calls that return an error (Mac OS 8.6)
+    returnreg: D0
+    trap: 41048
+
+# ####
+
+- function:
+    name: InstallXTimeTask
+    return: OSErr
+    args:
+    - name: tmTaskPtr
+      type: QElemPtr
+      register: A0
+    returnreg: D0
+    trap: 42072
+
+# ####
+
+- function:
+    name: PrimeTimeTask
+    return: OSErr
+    args:
+    - name: tmTaskPtr
+      type: QElemPtr
+      register: A0
+    - name: count
+      type: int32_t
+      register: D0
+    returnreg: D0
+    trap: 41050
+
+# ####
+
+- function:
+    name: RemoveTimeTask
+    return: OSErr
+    args:
+    - name: tmTaskPtr
+      type: QElemPtr
+      register: A0
+    returnreg: D0
+    trap: 41049

@@ -1,0 +1,483 @@
+
+# ####
+
+- typedef:
+    name: RegionCode
+    type: SInt16
+    comment: Text Encoding basics shared by the Text Encoding Converter and the Unicode Converter (TextCommon,
+      Mac OS 8.5 and later).
+
+# ####
+
+- typedef:
+    name: ByteOffset
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: TextPtr
+    type: UInt8*
+
+# ####
+
+- typedef:
+    name: ConstTextPtr
+    type: const UInt8*
+
+# ####
+
+- typedef:
+    name: ConstLogicalAddress
+    type: const void*
+
+# ####
+
+- typedef:
+    name: UniCharArrayPtr
+    type: UniChar*
+
+# ####
+
+- typedef:
+    name: ConstUniCharArrayPtr
+    type: const UniChar*
+
+# ####
+
+- typedef:
+    name: UniCharArrayOffset
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: TextEncodingBase
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: TextEncodingVariant
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: TextEncodingFormat
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: TextEncodingNameSelector
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: UCCharPropertyType
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: UCCharPropertyValue
+    type: UInt32
+
+# ####
+
+- struct:
+    name: TextEncodingRun
+    size: 8
+    members:
+    - name: offset
+      type: ByteOffset
+    - name: textEncoding
+      type: TextEncoding
+
+# ####
+
+- typedef:
+    name: TextEncodingRunPtr
+    type: TextEncodingRun*
+
+# ####
+
+- typedef:
+    name: ConstTextEncodingRunPtr
+    type: const TextEncodingRun*
+
+# ####
+
+- struct:
+    name: ScriptCodeRun
+    size: 6
+    members:
+    - name: offset
+      type: ByteOffset
+    - name: script
+      type: ScriptCode
+
+# ####
+
+- typedef:
+    name: ScriptCodeRunPtr
+    type: ScriptCodeRun*
+
+# ####
+
+- typedef:
+    name: ConstScriptCodeRunPtr
+    type: const ScriptCodeRun*
+
+# ####
+
+- enum:
+    values:
+    - name: kTextEncodingMacRoman
+      value: 0
+    - name: kTextEncodingMacJapanese
+      value: 1
+    - name: kTextEncodingMacChineseTrad
+      value: 2
+    - name: kTextEncodingMacKorean
+      value: 3
+    - name: kTextEncodingMacArabic
+      value: 4
+    - name: kTextEncodingMacHebrew
+      value: 5
+    - name: kTextEncodingMacGreek
+      value: 6
+    - name: kTextEncodingMacCyrillic
+      value: 7
+    - name: kTextEncodingMacDevanagari
+      value: 9
+    - name: kTextEncodingMacGurmukhi
+      value: 10
+    - name: kTextEncodingMacGujarati
+      value: 11
+    - name: kTextEncodingMacThai
+      value: 21
+    - name: kTextEncodingMacChineseSimp
+      value: 25
+    - name: kTextEncodingMacCentralEurRoman
+      value: 29
+    - name: kTextEncodingMacSymbol
+      value: 33
+    - name: kTextEncodingMacDingbats
+      value: 34
+    - name: kTextEncodingMacTurkish
+      value: 35
+    - name: kTextEncodingMacCroatian
+      value: 36
+    - name: kTextEncodingMacIcelandic
+      value: 37
+    - name: kTextEncodingMacRomanian
+      value: 38
+    - name: kTextEncodingUnicodeDefault
+      value: 256
+    - name: kTextEncodingUnicodeV1_1
+      value: 257
+    - name: kTextEncodingISO10646_1993
+      value: 257
+    - name: kTextEncodingUnicodeV2_0
+      value: 259
+    - name: kTextEncodingUnicodeV2_1
+      value: 259
+    - name: kTextEncodingUnicodeV3_0
+      value: 260
+    - name: kTextEncodingISOLatin1
+      value: 513
+    - name: kTextEncodingISOLatin2
+      value: 514
+    - name: kTextEncodingISOLatinCyrillic
+      value: 517
+    - name: kTextEncodingISOLatinArabic
+      value: 518
+    - name: kTextEncodingISOLatinGreek
+      value: 519
+    - name: kTextEncodingISOLatinHebrew
+      value: 520
+    - name: kTextEncodingISOLatin5
+      value: 521
+    - name: kTextEncodingDOSLatinUS
+      value: 1024
+    - name: kTextEncodingDOSLatin1
+      value: 1040
+    - name: kTextEncodingDOSJapanese
+      value: 1056
+    - name: kTextEncodingWindowsLatin1
+      value: 1280
+    - name: kTextEncodingWindowsANSI
+      value: 1280
+    - name: kTextEncodingWindowsLatin2
+      value: 1281
+    - name: kTextEncodingWindowsCyrillic
+      value: 1282
+    - name: kTextEncodingUS_ASCII
+      value: 1536
+    - name: kTextEncodingISO_2022_JP
+      value: 2080
+    - name: kTextEncodingEUC_JP
+      value: 2336
+    - name: kTextEncodingEUC_CN
+      value: 2352
+    - name: kTextEncodingEUC_KR
+      value: 2368
+    - name: kTextEncodingShiftJIS
+      value: 2561
+    - name: kTextEncodingKOI8_R
+      value: 2562
+    - name: kTextEncodingBig5
+      value: 2563
+    - name: kTextEncodingMacRomanLatin1
+      value: 2564
+    - name: kTextEncodingHZ_GB_2312
+      value: 2565
+    - name: kTextEncodingMultiRun
+      value: 4095
+    - name: kTextEncodingUnknown
+      value: 65535
+
+# ####
+
+- enum:
+    values:
+    - name: kTextEncodingDefaultVariant
+      value: 0
+    - name: kTextEncodingDefaultFormat
+      value: 0
+    - name: kUnicode16BitFormat
+      value: 0
+    - name: kUnicodeUTF7Format
+      value: 1
+    - name: kUnicodeUTF8Format
+      value: 2
+    - name: kUnicode32BitFormat
+      value: 3
+
+# ####
+
+- enum:
+    values:
+    - name: kTextScriptDontCare
+      value: -128
+    - name: kTextLanguageDontCare
+      value: -128
+    - name: kTextRegionDontCare
+      value: -128
+
+# ####
+
+- enum:
+    values:
+    - name: kTextEncodingFullName
+      value: 0
+    - name: kTextEncodingBaseName
+      value: 1
+    - name: kTextEncodingVariantName
+      value: 2
+    - name: kTextEncodingFormatName
+      value: 3
+
+# ####
+
+- enum:
+    values:
+    - name: kUCCharPropTypeGenlCategory
+      value: 1
+    - name: kUCCharPropTypeCombiningClass
+      value: 2
+    - name: kUCCharPropTypeBidiCategory
+      value: 3
+
+# ####
+
+- enum:
+    values:
+    - name: kTextUnsupportedEncodingErr
+      value: -8738
+    - name: kTextMalformedInputErr
+      value: -8739
+    - name: kTextUndefinedElementErr
+      value: -8740
+    - name: kTECMissingTableErr
+      value: -8745
+    - name: kTECTableChecksumErr
+      value: -8746
+    - name: kTECTableFormatErr
+      value: -8747
+    - name: kTECCorruptConverterErr
+      value: -8748
+    - name: kTECNoConversionPathErr
+      value: -8749
+    - name: kTECBufferBelowMinimumSizeErr
+      value: -8750
+    - name: kTECArrayFullErr
+      value: -8751
+    - name: kTECBadTextRunErr
+      value: -8752
+    - name: kTECPartialCharErr
+      value: -8753
+    - name: kTECUnmappableElementErr
+      value: -8754
+    - name: kTECIncompleteElementErr
+      value: -8755
+    - name: kTECDirectionErr
+      value: -8756
+    - name: kTECGlobalsUnavailableErr
+      value: -8770
+    - name: kTECItemUnavailableErr
+      value: -8771
+    - name: kTECUsedFallbacksStatus
+      value: -8783
+    - name: kTECNeedFlushStatus
+      value: -8784
+    - name: kTECOutputBufferFullStatus
+      value: -8785
+
+# ####
+
+- function:
+    name: CreateTextEncoding
+    return: TextEncoding
+    args:
+    - name: encodingBase
+      type: TextEncodingBase
+    - name: encodingVariant
+      type: TextEncodingVariant
+    - name: encodingFormat
+      type: TextEncodingFormat
+    comment: TextCommon (Mac OS 8.5 and later)
+    m68k: none
+
+# ####
+
+- function:
+    name: GetTextEncodingBase
+    return: TextEncodingBase
+    args:
+    - name: encoding
+      type: TextEncoding
+    m68k: none
+
+# ####
+
+- function:
+    name: GetTextEncodingVariant
+    return: TextEncodingVariant
+    args:
+    - name: encoding
+      type: TextEncoding
+    m68k: none
+
+# ####
+
+- function:
+    name: GetTextEncodingFormat
+    return: TextEncodingFormat
+    args:
+    - name: encoding
+      type: TextEncoding
+    m68k: none
+
+# ####
+
+- function:
+    name: ResolveDefaultTextEncoding
+    return: TextEncoding
+    args:
+    - name: encoding
+      type: TextEncoding
+    m68k: none
+
+# ####
+
+- function:
+    name: GetTextEncodingName
+    return: OSStatus
+    args:
+    - name: iEncoding
+      type: TextEncoding
+    - name: iNamePartSelector
+      type: TextEncodingNameSelector
+    - name: iPreferredRegion
+      type: RegionCode
+    - name: iPreferredEncoding
+      type: TextEncoding
+    - name: iOutputBufLen
+      type: ByteCount
+    - name: oNameLength
+      type: ByteCount*
+    - name: oActualRegion
+      type: RegionCode*
+    - name: oActualEncoding
+      type: TextEncoding*
+    - name: oEncodingName
+      type: TextPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: UpgradeScriptInfoToTextEncoding
+    return: OSStatus
+    args:
+    - name: iTextScriptID
+      type: ScriptCode
+    - name: iTextLanguageID
+      type: LangCode
+    - name: iRegionID
+      type: RegionCode
+    - name: iTextFontname
+      type: ConstStr255Param
+    - name: oEncoding
+      type: TextEncoding*
+    m68k: none
+
+# ####
+
+- function:
+    name: RevertTextEncodingToScriptInfo
+    return: OSStatus
+    args:
+    - name: iEncoding
+      type: TextEncoding
+    - name: oTextScriptID
+      type: ScriptCode*
+    - name: oTextLanguageID
+      type: LangCode*
+    - name: oTextFontname
+      type: StringPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: NearestMacTextEncodings
+    return: OSStatus
+    args:
+    - name: generalEncoding
+      type: TextEncoding
+    - name: bestMacEncoding
+      type: TextEncoding*
+    - name: alternateMacEncoding
+      type: TextEncoding*
+    m68k: none
+
+# ####
+
+- function:
+    name: UCGetCharProperty
+    return: OSStatus
+    args:
+    - name: charPtr
+      type: const UniChar*
+    - name: textLength
+      type: UniCharCount
+    - name: propType
+      type: UCCharPropertyType
+    - name: propValue
+      type: UCCharPropertyValue*
+    m68k: none
