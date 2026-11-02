@@ -2151,3 +2151,27 @@
       type: ScriptCode
     dispatcher: ScriptUtil
     selector: 3221880894
+
+# ####
+
+- enum:
+    values:
+    - name: smTruncEnd
+      value: 0
+    - name: smTruncMiddle
+      value: 16384
+    - name: truncEnd
+      value: 0
+    - name: truncMiddle
+      value: 16384
+
+# ####
+
+- enum:
+    values:
+    - name: smNotTruncated
+      value: 0
+    - name: smTruncated
+      value: 1
+    - name: smTruncErr
+      value: -1

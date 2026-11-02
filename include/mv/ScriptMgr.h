@@ -628,6 +628,19 @@ pascal Ptr GetScriptQDPatchAddress(INTEGER trapNum, Boolean before, Boolean forP
 
 pascal void SetScriptQDPatchAddress(INTEGER trapNum, Boolean before, Boolean forPrinting, Ptr routineAddr, ScriptCode script) M68K_INLINE(0x2F3C, 0xC00A, 0x003E, 0xA8B5);
 
+enum {
+    smTruncEnd = 0,
+    smTruncMiddle = 16384,
+    truncEnd = 0,
+    truncMiddle = 16384,
+};
+
+enum {
+    smNotTruncated = 0,
+    smTruncated = 1,
+    smTruncErr = -1,
+};
+
 #pragma options align=reset
 
 #endif
