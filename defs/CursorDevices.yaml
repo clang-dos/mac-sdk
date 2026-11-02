@@ -1,0 +1,405 @@
+
+# ####
+
+- typedef:
+    name: CursorDevicePtr
+    type: struct CursorDevice*
+    comment: The record's fields are not declared here yet.
+
+# ####
+
+- typedef:
+    name: ButtonOpcode
+    type: INTEGER
+
+# ####
+
+- enum:
+    values:
+    - name: kButtonNoOp
+      value: 0
+    - name: kButtonSingleClick
+      value: 1
+    - name: kButtonDoubleClick
+      value: 2
+    - name: kButtonClickLock
+      value: 3
+    - name: kButtonCustom
+      value: 6
+
+# ####
+
+- dispatcher:
+    name: CursorDeviceDispatch
+    trap: 43739
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: CrsrDevMove
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: deltaX
+      type: int32_t
+    - name: deltaY
+      type: int32_t
+    comment: Cursor Device Manager
+    dispatcher: CursorDeviceDispatch
+    selector: 0
+
+# ####
+
+- function:
+    name: CrsrDevMoveTo
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: absX
+      type: int32_t
+    - name: absY
+      type: int32_t
+    dispatcher: CursorDeviceDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: CrsrDevFlush
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: CrsrDevButtons
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: buttons
+      type: INTEGER
+    m68k-inline:
+    - 28675
+    - 43739
+
+# ####
+
+- function:
+    name: CrsrDevButtonDown
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: CrsrDevButtonUp
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 5
+
+# ####
+
+- function:
+    name: CrsrDevButtonOp
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: buttonNumber
+      type: INTEGER
+    - name: opcode
+      type: ButtonOpcode
+    - name: data
+      type: int32_t
+    m68k-inline:
+    - 28678
+    - 43739
+
+# ####
+
+- function:
+    name: CrsrDevSetButtons
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: numberOfButtons
+      type: INTEGER
+    m68k-inline:
+    - 28679
+    - 43739
+
+# ####
+
+- function:
+    name: CrsrDevSetAcceleration
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: acceleration
+      type: Fixed
+    m68k-inline:
+    - 28680
+    - 43739
+
+# ####
+
+- function:
+    name: CrsrDevDoubleTime
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: durationTicks
+      type: int32_t
+    m68k-inline:
+    - 28681
+    - 43739
+
+# ####
+
+- function:
+    name: CrsrDevUnitsPerInch
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: resolution
+      type: Fixed
+    m68k-inline:
+    - 28682
+    - 43739
+
+# ####
+
+- function:
+    name: CrsrDevNextDevice
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr*
+    dispatcher: CursorDeviceDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: CrsrDevNewDevice
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr*
+    dispatcher: CursorDeviceDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: CrsrDevDisposeDevice
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 13
+
+# ####
+
+- function:
+    name: CursorDeviceMove
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: deltaX
+      type: int32_t
+    - name: deltaY
+      type: int32_t
+    dispatcher: CursorDeviceDispatch
+    selector: 0
+    comment: The same calls under their later names.
+
+# ####
+
+- function:
+    name: CursorDeviceMoveTo
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: absX
+      type: int32_t
+    - name: absY
+      type: int32_t
+    dispatcher: CursorDeviceDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: CursorDeviceFlush
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: CursorDeviceButtons
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: buttons
+      type: INTEGER
+    m68k-inline:
+    - 28675
+    - 43739
+
+# ####
+
+- function:
+    name: CursorDeviceButtonDown
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: CursorDeviceButtonUp
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 5
+
+# ####
+
+- function:
+    name: CursorDeviceButtonOp
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: buttonNumber
+      type: INTEGER
+    - name: opcode
+      type: ButtonOpcode
+    - name: data
+      type: int32_t
+    m68k-inline:
+    - 28678
+    - 43739
+
+# ####
+
+- function:
+    name: CursorDeviceSetButtons
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: numberOfButtons
+      type: INTEGER
+    m68k-inline:
+    - 28679
+    - 43739
+
+# ####
+
+- function:
+    name: CursorDeviceSetAcceleration
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: acceleration
+      type: Fixed
+    m68k-inline:
+    - 28680
+    - 43739
+
+# ####
+
+- function:
+    name: CursorDeviceDoubleTime
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: durationTicks
+      type: int32_t
+    m68k-inline:
+    - 28681
+    - 43739
+
+# ####
+
+- function:
+    name: CursorDeviceUnitsPerInch
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    - name: resolution
+      type: Fixed
+    m68k-inline:
+    - 28682
+    - 43739
+
+# ####
+
+- function:
+    name: CursorDeviceNextDevice
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr*
+    dispatcher: CursorDeviceDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: CursorDeviceNewDevice
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr*
+    dispatcher: CursorDeviceDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: CursorDeviceDisposeDevice
+    return: OSErr
+    args:
+    - name: ourDevice
+      type: CursorDevicePtr
+    dispatcher: CursorDeviceDispatch
+    selector: 13

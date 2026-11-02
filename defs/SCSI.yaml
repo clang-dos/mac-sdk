@@ -1,0 +1,205 @@
+
+# ####
+
+- struct:
+    name: SCSIInstr
+    size: 10
+    members:
+    - name: scOpcode
+      type: INTEGER
+    - name: scParam1
+      type: int32_t
+    - name: scParam2
+      type: int32_t
+
+# ####
+
+- enum:
+    values:
+    - name: scInc
+      value: 1
+    - name: scNoInc
+      value: 2
+    - name: scAdd
+      value: 3
+    - name: scMove
+      value: 4
+    - name: scLoop
+      value: 5
+    - name: scNop
+      value: 6
+    - name: scStop
+      value: 7
+    - name: scComp
+      value: 8
+
+# ####
+
+- enum:
+    values:
+    - name: scCommErr
+      value: 2
+    - name: scArbNBErr
+      value: 3
+    - name: scBadParmsErr
+      value: 4
+    - name: scPhaseErr
+      value: 5
+    - name: scCompareErr
+      value: 6
+    - name: scMgrBusyErr
+      value: 7
+    - name: scSequenceErr
+      value: 8
+    - name: scBusTOErr
+      value: 9
+    - name: scComplPhaseErr
+      value: 10
+
+# ####
+
+- dispatcher:
+    name: SCSIDispatch
+    trap: 43029
+    selector-location: StackW
+
+# ####
+
+- function:
+    name: SCSIReset
+    return: OSErr
+    comment: Original SCSI Manager
+    dispatcher: SCSIDispatch
+    selector: 0
+
+# ####
+
+- function:
+    name: SCSIGet
+    return: OSErr
+    dispatcher: SCSIDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: SCSISelect
+    return: OSErr
+    args:
+    - name: targetID
+      type: INTEGER
+    dispatcher: SCSIDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: SCSICmd
+    return: OSErr
+    args:
+    - name: buffer
+      type: Ptr
+    - name: count
+      type: INTEGER
+    dispatcher: SCSIDispatch
+    selector: 3
+
+# ####
+
+- function:
+    name: SCSIRead
+    return: OSErr
+    args:
+    - name: tibPtr
+      type: Ptr
+    dispatcher: SCSIDispatch
+    selector: 5
+
+# ####
+
+- function:
+    name: SCSIRBlind
+    return: OSErr
+    args:
+    - name: tibPtr
+      type: Ptr
+    dispatcher: SCSIDispatch
+    selector: 8
+
+# ####
+
+- function:
+    name: SCSIWrite
+    return: OSErr
+    args:
+    - name: tibPtr
+      type: Ptr
+    dispatcher: SCSIDispatch
+    selector: 6
+
+# ####
+
+- function:
+    name: SCSIWBlind
+    return: OSErr
+    args:
+    - name: tibPtr
+      type: Ptr
+    dispatcher: SCSIDispatch
+    selector: 9
+
+# ####
+
+- function:
+    name: SCSIComplete
+    return: OSErr
+    args:
+    - name: stat
+      type: INTEGER*
+    - name: message
+      type: INTEGER*
+    - name: wait
+      type: uint32_t
+    dispatcher: SCSIDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: SCSIStat
+    return: INTEGER
+    dispatcher: SCSIDispatch
+    selector: 10
+
+# ####
+
+- function:
+    name: SCSISelAtn
+    return: OSErr
+    args:
+    - name: targetID
+      type: INTEGER
+    dispatcher: SCSIDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: SCSIMsgIn
+    return: OSErr
+    args:
+    - name: message
+      type: INTEGER*
+    dispatcher: SCSIDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: SCSIMsgOut
+    return: OSErr
+    args:
+    - name: message
+      type: INTEGER
+    dispatcher: SCSIDispatch
+    selector: 13
