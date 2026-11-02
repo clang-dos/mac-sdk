@@ -66,6 +66,204 @@ pascal OSErr SCSIMsgIn(INTEGER *message) M68K_INLINE(0x3F3C, 0x000C, 0xA815);
 
 pascal OSErr SCSIMsgOut(INTEGER message) M68K_INLINE(0x3F3C, 0x000D, 0xA815);
 
+// SCSI Manager 4.3
+enum {
+    SCSINop = 0,
+    SCSIExecIO = 1,
+    SCSIBusInquiry = 3,
+    SCSIReleaseQ = 4,
+    SCSIAbortCommand = 16,
+    SCSIResetBus = 17,
+    SCSIResetDevice = 18,
+    SCSITerminateIO = 19,
+    SCSIGetVirtualIDInfo = 128,
+    SCSILoadDriver = 130,
+    SCSIOldCall = 132,
+    SCSICreateRefNumXref = 133,
+    SCSILookupRefNumXref = 134,
+    SCSIRemoveRefNumXref = 135,
+    SCSIRegisterWithNewXPT = 136,
+};
+
+enum {
+    scsiDirectionIn = 64,
+    scsiDirectionOut = 128,
+    scsiDirectionNone = 192,
+    scsiDirectionMask = 192,
+};
+
+typedef struct DeviceIdent DeviceIdent;
+struct DeviceIdent {
+    uint8_t diReserved;
+    uint8_t bus;
+    uint8_t targetID;
+    uint8_t LUN;
+};
+
+typedef union CDB CDB;
+union CDB {
+    uint8_t *cdbPtr;
+    uint8_t cdbBytes[16];
+};
+
+typedef CDB *CDBPtr;
+
+typedef struct SGRecord SGRecord;
+struct SGRecord {
+    Ptr SGAddr;
+    unsigned long SGCount;
+};
+
+// Completion routines are called with the parameter block as their argument
+typedef UniversalProcPtr SCSICallbackUPP;
+
+typedef struct SCSIHdr SCSIHdr;
+struct SCSIHdr {
+    struct SCSIHdr *qLink;
+    INTEGER scsiReserved1;
+    uint16_t scsiPBLength;
+    uint8_t scsiFunctionCode;
+    uint8_t scsiReserved2;
+    OSErr scsiResult;
+    DeviceIdent scsiDevice;
+    SCSICallbackUPP scsiCompletion;
+    unsigned long scsiFlags;
+    uint8_t *scsiDriverStorage;
+    Ptr scsiXPTprivate;
+    long scsiReserved3;
+};
+
+typedef SCSIHdr SCSI_PB;
+
+typedef struct SCSIExecIOPB SCSIExecIOPB;
+struct SCSIExecIOPB {
+    struct SCSIHdr *qLink;
+    INTEGER scsiReserved1;
+    uint16_t scsiPBLength;
+    uint8_t scsiFunctionCode;
+    uint8_t scsiReserved2;
+    OSErr scsiResult;
+    DeviceIdent scsiDevice;
+    SCSICallbackUPP scsiCompletion;
+    unsigned long scsiFlags;
+    uint8_t *scsiDriverStorage;
+    Ptr scsiXPTprivate;
+    long scsiReserved3;
+    uint16_t scsiResultFlags;
+    uint16_t scsiReserved12;
+    uint8_t *scsiDataPtr;
+    unsigned long scsiDataLength;
+    uint8_t *scsiSensePtr;
+    uint8_t scsiSenseLength;
+    uint8_t scsiCDBLength;
+    uint16_t scsiSGListCount;
+    unsigned long scsiReserved4;
+    uint8_t scsiSCSIstatus;
+    int8_t scsiSenseResidual;
+    uint16_t scsiReserved5;
+    long scsiDataResidual;
+    CDB scsiCDB;
+    long scsiTimeout;
+    uint8_t *scsiReserved13;
+    uint16_t scsiReserved14;
+    uint16_t scsiIOFlags;
+    uint8_t scsiTagAction;
+    uint8_t scsiReserved6;
+    uint16_t scsiReserved7;
+    uint16_t scsiSelectTimeout;
+    uint8_t scsiDataType;
+    uint8_t scsiTransferType;
+    unsigned long scsiReserved8;
+    unsigned long scsiReserved9;
+    uint16_t scsiHandshake[8];
+    unsigned long scsiReserved10;
+    unsigned long scsiReserved11;
+    struct SCSIExecIOPB *scsiCommandLink;
+    uint8_t scsiSIMpublics[8];
+    uint8_t scsiAppleReserved6[8];
+    uint16_t scsiCurrentPhase;
+    INTEGER scsiSelector;
+    OSErr scsiOldCallResult;
+    uint8_t scsiSCSImessage;
+    uint8_t XPTprivateFlags;
+    uint8_t XPTextras[12];
+};
+
+typedef SCSIExecIOPB SCSI_IO;
+
+// Passed to SCSIRegisterBus by a SIM; see the SCSI Manager 4.3 documentation
+typedef struct SIMInitInfo SIMInitInfo;
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr SCSIAction(SCSI_PB *parameterBlock) {
+    register OSErr _ret __asm__("d0");
+    register SCSI_PB* _parameterBlock __asm__("a0") = parameterBlock;
+    __asm__ __volatile__(".short 0x7001, 0xA089"
+        : "=r"(_ret)
+        : "r"(_parameterBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr SCSIAction(SCSI_PB *parameterBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr SCSIRegisterBus(SIMInitInfo *SIMinfoPtr) {
+    register OSErr _ret __asm__("d0");
+    register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
+    __asm__ __volatile__(".short 0x7002, 0xA089"
+        : "=r"(_ret)
+        : "r"(_SIMinfoPtr)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr SCSIRegisterBus(SIMInitInfo *SIMinfoPtr);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr SCSIDeregisterBus(SCSI_PB *parameterBlock) {
+    register OSErr _ret __asm__("d0");
+    register SCSI_PB* _parameterBlock __asm__("a0") = parameterBlock;
+    __asm__ __volatile__(".short 0x7003, 0xA089"
+        : "=r"(_ret)
+        : "r"(_parameterBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr SCSIDeregisterBus(SCSI_PB *parameterBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr SCSIReregisterBus(SIMInitInfo *SIMinfoPtr) {
+    register OSErr _ret __asm__("d0");
+    register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
+    __asm__ __volatile__(".short 0x7004, 0xA089"
+        : "=r"(_ret)
+        : "r"(_SIMinfoPtr)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr SCSIReregisterBus(SIMInitInfo *SIMinfoPtr);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr SCSIKillXPT(SIMInitInfo *SIMinfoPtr) {
+    register OSErr _ret __asm__("d0");
+    register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
+    __asm__ __volatile__(".short 0x7005, 0xA089"
+        : "=r"(_ret)
+        : "r"(_SIMinfoPtr)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr SCSIKillXPT(SIMInitInfo *SIMinfoPtr);
+#endif
+
 #pragma options align=reset
 
 #endif

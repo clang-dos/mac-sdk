@@ -703,6 +703,14 @@ static __inline__ __attribute__((__always_inline__)) OSErr OpenSlotAsync(ParmBlk
 pascal OSErr OpenSlotAsync(ParmBlkPtr paramBlock);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr OpenSlot(ParmBlkPtr paramBlock, Boolean async) {
+    return async ? OpenSlotAsync(paramBlock) : OpenSlotSync(paramBlock);
+}
+#else
+pascal OSErr OpenSlot(ParmBlkPtr paramBlock, Boolean async);
+#endif
+
 #pragma options align=reset
 
 #endif

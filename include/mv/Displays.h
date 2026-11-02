@@ -145,6 +145,12 @@ pascal OSErr DMGetGDeviceTablecloth(GDHandle displayDevice, Boolean *useTableclo
 
 pascal OSErr DMGetNextAnimateTime(UInt32 *nextAnimateTime) M68K_INLINE(0x303C, 0x020F, 0xABEB);
 
+pascal OSErr DMGetComponentAnimateTicks(ComponentInstance animationComponent, UInt32 *animationTicks, UInt32 *nextAnimateTick) M68K_INLINE(0x303C, 0x060D, 0xABEB);
+
+pascal OSErr DMSetComponentAnimateTicks(ComponentInstance animationComponent, UInt32 animationTicks, UInt32 *nextAnimateTick) M68K_INLINE(0x303C, 0x060E, 0xABEB);
+
+pascal OSErr DMSetGDeviceTablecloth(GDHandle displayDevice, ComponentInstance tableclothInstance) M68K_INLINE(0x303C, 0x0405, 0xABEB);
+
 #pragma options align=reset
 
 #endif

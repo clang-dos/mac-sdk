@@ -267,6 +267,65 @@ pascal OSErr KillIO(INTEGER rn);
 
 pascal DCtlHandle GetDCtlEntry(INTEGER rn);
 
+typedef struct DRVRHeader DRVRHeader;
+struct DRVRHeader {
+    INTEGER drvrFlags;
+    INTEGER drvrDelay;
+    INTEGER drvrEMask;
+    INTEGER drvrMenu;
+    INTEGER drvrOpen;
+    INTEGER drvrPrime;
+    INTEGER drvrCtl;
+    INTEGER drvrStatus;
+    INTEGER drvrClose;
+    Str255 drvrName;
+};
+
+typedef DRVRHeader *DRVRHeaderPtr;
+
+typedef DRVRHeaderPtr *DRVRHeaderHandle;
+
+enum { _DrvrRemove = 0xA03E };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DrvrRemove(INTEGER refNum) {
+    register OSErr _ret __asm__("d0");
+    register INTEGER _refNum __asm__("d0") = refNum;
+    __asm__ __volatile__(".short 0xA03E"
+        : "=r"(_ret)
+        : "r"(_refNum)
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DrvrRemove(INTEGER refNum);
+#endif
+
+// The trap takes the driver itself (A0) and the reference number (D0).
+#if TARGET_CPU_68K
+static __inline__ OSErr DrvrInstall(DRVRHeaderHandle drvrHandle, INTEGER refNum) {
+    register OSErr _d0 __asm__("d0") = refNum;
+    register DRVRHeaderPtr _a0 __asm__("a0") = *drvrHandle;
+    __asm__ __volatile__(".short 0xA03D"
+        : "+r"(_d0), "+r"(_a0) : : "d1", "d2", "a1", "cc", "memory");
+    return _d0;
+}
+#else
+pascal OSErr DrvrInstall(DRVRHeaderHandle drvrHandle, INTEGER refNum);
+#endif
+
+// The trap takes the drive number in the high word of D0 and the
+// driver in the low word.
+#if TARGET_CPU_68K
+static __inline__ void AddDrive(INTEGER drvrRefNum, INTEGER drvNum, DrvQElPtr qEl) {
+    register long _d0 __asm__("d0") = ((long)drvNum << 16) | (unsigned short)drvrRefNum;
+    register DrvQElPtr _a0 __asm__("a0") = qEl;
+    __asm__ __volatile__(".short 0xA04E"
+        : "+r"(_d0), "+r"(_a0) : : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void AddDrive(INTEGER drvrRefNum, INTEGER drvNum, DrvQElPtr qEl);
+#endif
+
 #pragma options align=reset
 
 #endif

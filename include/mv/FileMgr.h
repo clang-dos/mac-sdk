@@ -3454,6 +3454,8 @@ pascal OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
 
 pascal void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
 
+typedef DrvQEl *DrvQElPtr;
+
 #pragma options align=reset
 
 #endif

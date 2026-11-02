@@ -565,3 +565,46 @@
       type: UInt32*
     dispatcher: DisplayDispatch
     selector: 527
+
+# ####
+
+- function:
+    name: DMGetComponentAnimateTicks
+    return: OSErr
+    args:
+    - name: animationComponent
+      type: ComponentInstance
+    - name: animationTicks
+      type: UInt32*
+    - name: nextAnimateTick
+      type: UInt32*
+    dispatcher: DisplayDispatch
+    selector: 1549
+
+# ####
+
+- function:
+    name: DMSetComponentAnimateTicks
+    return: OSErr
+    args:
+    - name: animationComponent
+      type: ComponentInstance
+    - name: animationTicks
+      type: UInt32
+    - name: nextAnimateTick
+      type: UInt32*
+    dispatcher: DisplayDispatch
+    selector: 1550
+
+# ####
+
+- function:
+    name: DMSetGDeviceTablecloth
+    return: OSErr
+    args:
+    - name: displayDevice
+      type: GDHandle
+    - name: tableclothInstance
+      type: ComponentInstance
+    dispatcher: DisplayDispatch
+    selector: 1029

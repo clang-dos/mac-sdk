@@ -741,3 +741,17 @@
       register: A0
     returnreg: D0
     trap: 42496
+
+# ####
+
+- function:
+    name: OpenSlot
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+    - name: async
+      type: Boolean
+    m68k-needs: [OpenSlotSync, OpenSlotAsync]
+    m68k-body: |
+      return async ? OpenSlotAsync(paramBlock) : OpenSlotSync(paramBlock);

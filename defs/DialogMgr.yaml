@@ -849,3 +849,24 @@
 - typedef:
     name: DialogItemType
     type: int16_t
+
+# ####
+
+- function:
+    name: StdFilterProc
+    return: Boolean
+    args:
+    - name: theDialog
+      type: DialogPtr
+    - name: event
+      type: EventRecord*
+    - name: itemHit
+      type: DialogItemIndex*
+    comment: |
+      Calls the standard modal dialog filter (GetStdFilterProc).
+    m68k-needs: [GetStdFilterProc]
+    m68k-body: |
+      ModalFilterUPP proc;
+      if (GetStdFilterProc((ProcPtr *)&proc) != noErr)
+          return false;
+      return proc(theDialog, event, itemHit);

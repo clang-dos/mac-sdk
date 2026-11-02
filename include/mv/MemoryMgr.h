@@ -1125,6 +1125,69 @@ pascal void BlockMoveUncached(const void *srcPtr, void *destPtr, Size byteCount)
 
 pascal void BlockMoveDataUncached(const void *srcPtr, void *destPtr, Size byteCount);
 
+typedef struct MemoryBlock MemoryBlock;
+struct MemoryBlock {
+    void *address;
+    unsigned long count;
+};
+
+typedef MemoryBlock *MemoryBlockPtr;
+
+enum {
+    defaultPhysicalEntryCount = 8,
+};
+
+typedef struct LogicalToPhysicalTable LogicalToPhysicalTable;
+struct LogicalToPhysicalTable {
+    MemoryBlock logical;
+    MemoryBlock physical[8];
+};
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DisposeZone(THz zone) {
+    register OSErr _ret __asm__("d0");
+    register THz _zone __asm__("a0") = zone;
+    __asm__ __volatile__(".short 0x701D, 0xA0A4"
+        : "=r"(_ret)
+        : "r"(_zone)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DisposeZone(THz zone);
+#endif
+
+enum { _InlineGetHandleSize = 0xA025 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Size InlineGetHandleSize(Handle h) {
+    register Size _ret __asm__("d0");
+    register Handle _h __asm__("a0") = h;
+    __asm__ __volatile__(".short 0xA025"
+        : "=r"(_ret)
+        : "r"(_h)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Size InlineGetHandleSize(Handle h);
+#endif
+
+// _MemoryDispatch selector 5: A0 is the table and A1 the entry count,
+// which comes back in A1.
+#if TARGET_CPU_68K
+static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount) {
+    register long _d0 __asm__("d0") = 5;
+    register LogicalToPhysicalTable *_a0 __asm__("a0") = addresses;
+    register unsigned long _a1 __asm__("a1") = *physicalEntryCount;
+    __asm__ __volatile__(".short 0xA15C"
+        : "+r"(_d0), "+r"(_a0), "+r"(_a1) : : "d1", "d2", "cc", "memory");
+    *physicalEntryCount = _a1;
+    return (OSErr)_d0;
+}
+#else
+pascal OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
+#endif
+
 #pragma options align=reset
 
 #endif

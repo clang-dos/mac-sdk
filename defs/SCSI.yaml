@@ -203,3 +203,328 @@
       type: INTEGER
     dispatcher: SCSIDispatch
     selector: 13
+
+# ####
+
+- enum:
+    values:
+    - name: SCSINop
+      value: 0
+    - name: SCSIExecIO
+      value: 1
+    - name: SCSIBusInquiry
+      value: 3
+    - name: SCSIReleaseQ
+      value: 4
+    - name: SCSIAbortCommand
+      value: 16
+    - name: SCSIResetBus
+      value: 17
+    - name: SCSIResetDevice
+      value: 18
+    - name: SCSITerminateIO
+      value: 19
+    - name: SCSIGetVirtualIDInfo
+      value: 128
+    - name: SCSILoadDriver
+      value: 130
+    - name: SCSIOldCall
+      value: 132
+    - name: SCSICreateRefNumXref
+      value: 133
+    - name: SCSILookupRefNumXref
+      value: 134
+    - name: SCSIRemoveRefNumXref
+      value: 135
+    - name: SCSIRegisterWithNewXPT
+      value: 136
+    comment: SCSI Manager 4.3
+
+# ####
+
+- enum:
+    values:
+    - name: scsiDirectionIn
+      value: 64
+    - name: scsiDirectionOut
+      value: 128
+    - name: scsiDirectionNone
+      value: 192
+    - name: scsiDirectionMask
+      value: 192
+
+# ####
+
+- struct:
+    name: DeviceIdent
+    size: 4
+    members:
+    - name: diReserved
+      type: uint8_t
+    - name: bus
+      type: uint8_t
+    - name: targetID
+      type: uint8_t
+    - name: LUN
+      type: uint8_t
+
+# ####
+
+- union:
+    name: CDB
+    size: 16
+    members:
+    - name: cdbPtr
+      type: uint8_t*
+    - name: cdbBytes
+      type: uint8_t[16]
+
+# ####
+
+- typedef:
+    name: CDBPtr
+    type: CDB*
+
+# ####
+
+- struct:
+    name: SGRecord
+    size: 8
+    members:
+    - name: SGAddr
+      type: Ptr
+    - name: SGCount
+      type: uint32_t
+
+# ####
+
+- typedef:
+    name: SCSICallbackUPP
+    type: UniversalProcPtr
+    comment: Completion routines are called with the parameter block as their argument
+
+# ####
+
+- struct:
+    name: SCSIHdr
+    size: 36
+    members:
+    - name: qLink
+      type: struct SCSIHdr*
+    - name: scsiReserved1
+      type: INTEGER
+    - name: scsiPBLength
+      type: uint16_t
+    - name: scsiFunctionCode
+      type: uint8_t
+    - name: scsiReserved2
+      type: uint8_t
+    - name: scsiResult
+      type: OSErr
+    - name: scsiDevice
+      type: DeviceIdent
+    - name: scsiCompletion
+      type: SCSICallbackUPP
+    - name: scsiFlags
+      type: uint32_t
+    - name: scsiDriverStorage
+      type: uint8_t*
+    - name: scsiXPTprivate
+      type: Ptr
+    - name: scsiReserved3
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: SCSI_PB
+    type: SCSIHdr
+
+# ####
+
+- struct:
+    name: SCSIExecIOPB
+    size: 176
+    members:
+    - name: qLink
+      type: struct SCSIHdr*
+    - name: scsiReserved1
+      type: INTEGER
+    - name: scsiPBLength
+      type: uint16_t
+    - name: scsiFunctionCode
+      type: uint8_t
+    - name: scsiReserved2
+      type: uint8_t
+    - name: scsiResult
+      type: OSErr
+    - name: scsiDevice
+      type: DeviceIdent
+    - name: scsiCompletion
+      type: SCSICallbackUPP
+    - name: scsiFlags
+      type: uint32_t
+    - name: scsiDriverStorage
+      type: uint8_t*
+    - name: scsiXPTprivate
+      type: Ptr
+    - name: scsiReserved3
+      type: int32_t
+    - name: scsiResultFlags
+      type: uint16_t
+    - name: scsiReserved12
+      type: uint16_t
+    - name: scsiDataPtr
+      type: uint8_t*
+    - name: scsiDataLength
+      type: uint32_t
+    - name: scsiSensePtr
+      type: uint8_t*
+    - name: scsiSenseLength
+      type: uint8_t
+    - name: scsiCDBLength
+      type: uint8_t
+    - name: scsiSGListCount
+      type: uint16_t
+    - name: scsiReserved4
+      type: uint32_t
+    - name: scsiSCSIstatus
+      type: uint8_t
+    - name: scsiSenseResidual
+      type: int8_t
+    - name: scsiReserved5
+      type: uint16_t
+    - name: scsiDataResidual
+      type: int32_t
+    - name: scsiCDB
+      type: CDB
+    - name: scsiTimeout
+      type: int32_t
+    - name: scsiReserved13
+      type: uint8_t*
+    - name: scsiReserved14
+      type: uint16_t
+    - name: scsiIOFlags
+      type: uint16_t
+    - name: scsiTagAction
+      type: uint8_t
+    - name: scsiReserved6
+      type: uint8_t
+    - name: scsiReserved7
+      type: uint16_t
+    - name: scsiSelectTimeout
+      type: uint16_t
+    - name: scsiDataType
+      type: uint8_t
+    - name: scsiTransferType
+      type: uint8_t
+    - name: scsiReserved8
+      type: uint32_t
+    - name: scsiReserved9
+      type: uint32_t
+    - name: scsiHandshake
+      type: uint16_t[8]
+    - name: scsiReserved10
+      type: uint32_t
+    - name: scsiReserved11
+      type: uint32_t
+    - name: scsiCommandLink
+      type: struct SCSIExecIOPB*
+    - name: scsiSIMpublics
+      type: uint8_t[8]
+    - name: scsiAppleReserved6
+      type: uint8_t[8]
+    - name: scsiCurrentPhase
+      type: uint16_t
+    - name: scsiSelector
+      type: INTEGER
+    - name: scsiOldCallResult
+      type: OSErr
+    - name: scsiSCSImessage
+      type: uint8_t
+    - name: XPTprivateFlags
+      type: uint8_t
+    - name: XPTextras
+      type: uint8_t[12]
+
+# ####
+
+- typedef:
+    name: SCSI_IO
+    type: SCSIExecIOPB
+
+# ####
+
+- struct:
+    name: SIMInitInfo
+    comment: Passed to SCSIRegisterBus by a SIM; see the SCSI Manager 4.3 documentation
+
+# ####
+
+- function:
+    name: SCSIAction
+    return: OSErr
+    args:
+    - name: parameterBlock
+      type: SCSI_PB*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28673
+    - 41097
+
+# ####
+
+- function:
+    name: SCSIRegisterBus
+    return: OSErr
+    args:
+    - name: SIMinfoPtr
+      type: SIMInitInfo*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28674
+    - 41097
+
+# ####
+
+- function:
+    name: SCSIDeregisterBus
+    return: OSErr
+    args:
+    - name: parameterBlock
+      type: SCSI_PB*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28675
+    - 41097
+
+# ####
+
+- function:
+    name: SCSIReregisterBus
+    return: OSErr
+    args:
+    - name: SIMinfoPtr
+      type: SIMInitInfo*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28676
+    - 41097
+
+# ####
+
+- function:
+    name: SCSIKillXPT
+    return: OSErr
+    args:
+    - name: SIMinfoPtr
+      type: SIMInitInfo*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28677
+    - 41097

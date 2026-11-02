@@ -347,6 +347,18 @@ typedef int16_t DialogItemIndex;
 
 typedef int16_t DialogItemType;
 
+// Calls the standard modal dialog filter (GetStdFilterProc).
+#if TARGET_CPU_68K
+static __inline__ Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit) {
+    ModalFilterUPP proc;
+    if (GetStdFilterProc((ProcPtr *)&proc) != noErr)
+        return false;
+    return proc(theDialog, event, itemHit);
+}
+#else
+pascal Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit);
+#endif
+
 #pragma options align=reset
 
 #endif

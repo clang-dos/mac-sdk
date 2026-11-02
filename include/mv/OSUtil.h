@@ -824,6 +824,43 @@ static __inline__ __attribute__((__always_inline__)) StatusRegisterContents Ente
 pascal StatusRegisterContents EnterSupervisorMode(void);
 #endif
 
+// Enters the 68k debugger; on 68k this is Debugger.
+#if TARGET_CPU_68K
+static __inline__ void Debugger68k(void) {
+    Debugger();
+}
+#else
+pascal void Debugger68k(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ void DebugStr68k(ConstStr255Param debuggerMsg) {
+    DebugStr(debuggerMsg);
+}
+#else
+pascal void DebugStr68k(ConstStr255Param debuggerMsg);
+#endif
+
+// The address of a trap's entry in the dispatch tables in low memory.
+#if TARGET_CPU_68K
+static __inline__ UniversalProcPtr* GetTrapVector(uint16_t trapNumber) {
+    if (trapNumber & 0x0800)
+        return (UniversalProcPtr *)(0xE00 + ((trapNumber & 0x3FF) << 2));
+    return (UniversalProcPtr *)(0x400 + ((trapNumber & 0xFF) << 2));
+}
+#else
+pascal UniversalProcPtr* GetTrapVector(uint16_t trapNumber);
+#endif
+
+// PowerPC exceptions (MachineExceptions.h). The handler gets the
+// machine state; its layout is in Apple's MachineExceptions.h.
+typedef struct ExceptionInformation ExceptionInformation;
+
+typedef OSStatus (*ExceptionHandler)(ExceptionInformation *theException);
+
+// PowerPC only.
+pascal ExceptionHandler InstallExceptionHandler(ExceptionHandler theHandler);
+
 #pragma options align=reset
 
 #endif

@@ -1261,3 +1261,63 @@
     m68k-inline:
     - 28680
     - 41101
+
+# ####
+
+- function:
+    name: Debugger68k
+    comment: |
+      Enters the 68k debugger; on 68k this is Debugger.
+    m68k-needs: [Debugger]
+    m68k-body: |
+      Debugger();
+
+# ####
+
+- function:
+    name: DebugStr68k
+    args:
+    - name: debuggerMsg
+      type: ConstStr255Param
+    m68k-needs: [DebugStr]
+    m68k-body: |
+      DebugStr(debuggerMsg);
+
+# ####
+
+- function:
+    name: GetTrapVector
+    return: UniversalProcPtr*
+    args:
+    - name: trapNumber
+      type: uint16_t
+    comment: |
+      The address of a trap's entry in the dispatch tables in low memory.
+    m68k-body: |
+      if (trapNumber & 0x0800)
+          return (UniversalProcPtr *)(0xE00 + ((trapNumber & 0x3FF) << 2));
+      return (UniversalProcPtr *)(0x400 + ((trapNumber & 0xFF) << 2));
+
+# ####
+
+- struct:
+    name: ExceptionInformation
+    comment: |
+      PowerPC exceptions (MachineExceptions.h). The handler gets the
+      machine state; its layout is in Apple's MachineExceptions.h.
+
+# ####
+
+- verbatim: |
+    typedef OSStatus (*ExceptionHandler)(ExceptionInformation *theException);
+
+# ####
+
+- function:
+    name: InstallExceptionHandler
+    return: ExceptionHandler
+    args:
+    - name: theHandler
+      type: ExceptionHandler
+    comment: |
+      PowerPC only.

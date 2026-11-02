@@ -5471,3 +5471,9 @@
     args:
     - name: paramBlock
       type: FSVolumeInfoParam*
+
+# ####
+
+- typedef:
+    name: DrvQElPtr
+    type: DrvQEl*

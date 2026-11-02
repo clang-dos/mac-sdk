@@ -468,3 +468,93 @@
     name: SCSIDispatch
     executor_raw: true
     trap: 0xA815
+
+# ####
+
+- struct:
+    name: DRVRHeader
+    size: 274
+    members:
+    - name: drvrFlags
+      type: INTEGER
+    - name: drvrDelay
+      type: INTEGER
+    - name: drvrEMask
+      type: INTEGER
+    - name: drvrMenu
+      type: INTEGER
+    - name: drvrOpen
+      type: INTEGER
+    - name: drvrPrime
+      type: INTEGER
+    - name: drvrCtl
+      type: INTEGER
+    - name: drvrStatus
+      type: INTEGER
+    - name: drvrClose
+      type: INTEGER
+    - name: drvrName
+      type: Str255
+
+# ####
+
+- typedef:
+    name: DRVRHeaderPtr
+    type: DRVRHeader*
+
+# ####
+
+- typedef:
+    name: DRVRHeaderHandle
+    type: DRVRHeaderPtr*
+
+# ####
+
+- function:
+    name: DrvrRemove
+    return: OSErr
+    args:
+    - name: refNum
+      type: INTEGER
+      register: D0
+    returnreg: D0
+    trap: 41022
+
+# ####
+
+- function:
+    name: DrvrInstall
+    return: OSErr
+    args:
+    - name: drvrHandle
+      type: DRVRHeaderHandle
+    - name: refNum
+      type: INTEGER
+    comment: |
+      The trap takes the driver itself (A0) and the reference number (D0).
+    m68k-body: |
+      register OSErr _d0 __asm__("d0") = refNum;
+      register DRVRHeaderPtr _a0 __asm__("a0") = *drvrHandle;
+      __asm__ __volatile__(".short 0xA03D"
+          : "+r"(_d0), "+r"(_a0) : : "d1", "d2", "a1", "cc", "memory");
+      return _d0;
+
+# ####
+
+- function:
+    name: AddDrive
+    args:
+    - name: drvrRefNum
+      type: INTEGER
+    - name: drvNum
+      type: INTEGER
+    - name: qEl
+      type: DrvQElPtr
+    comment: |
+      The trap takes the drive number in the high word of D0 and the
+      driver in the low word.
+    m68k-body: |
+      register long _d0 __asm__("d0") = ((long)drvNum << 16) | (unsigned short)drvrRefNum;
+      register DrvQElPtr _a0 __asm__("a0") = qEl;
+      __asm__ __volatile__(".short 0xA04E"
+          : "+r"(_d0), "+r"(_a0) : : "d1", "d2", "a1", "cc", "memory");
