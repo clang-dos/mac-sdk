@@ -5,8 +5,11 @@ set -e
 cd "$(dirname "$0")/.."
 CLANG=${CLANG:-clang}
 SIZES=$(mktemp "${TMPDIR:-/tmp}/defsizes.XXXXXX")
-trap 'rm -f "$SIZES"' EXIT
 python3 tests/defsizes.py > "$SIZES"
+INLINES=$(mktemp "${TMPDIR:-/tmp}/inlines.XXXXXX")
+trap 'rm -f "$SIZES" "$INLINES"' EXIT
+python3 tests/inlines.py > "$INLINES"
+$CLANG --target=m68k-apple-macos -O1 -Iinclude -x c -c "$INLINES" -o /dev/null
 for t in m68k-apple-macos powerpc-apple-macos9; do
   $CLANG --target=$t -fsyntax-only -Wall -Werror -Iinclude tests/all.c
   $CLANG --target=$t -fsyntax-only -Iinclude tests/sizes.c

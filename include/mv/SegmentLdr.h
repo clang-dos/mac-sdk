@@ -29,6 +29,7 @@ struct AppFile {
 
 // SegmentLdr IMII-59 (true);
 #define LMGetFinderName() ((Byte *)0x000002E0)
+#define LMSetFinderName(val) BlockMoveData((const void *)(val), (void *)0x000002E0, sizeof(Byte[16]))
 
 // SegmentLdr IMII-58 (true);
 #define LMGetCurApRefNum() (*(INTEGER *)0x00000900)
@@ -38,6 +39,7 @@ struct AppFile {
 //  * it is really 34 bytes long.
 // SegmentLdr IMII-58 (true);
 #define LMGetCurApName() ((Byte *)0x00000910)
+#define LMSetCurApName(val) BlockMoveData((const void *)(val), (void *)0x00000910, sizeof(Byte[34]))
 
 // SegmentLdr IMII-62 (true-b);
 #define LMGetCurJTOffset() (*(INTEGER *)0x00000934)

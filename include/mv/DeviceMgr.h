@@ -126,9 +126,11 @@ enum {
 
 // DeviceMgr IMII-197 (false);
 #define LMGetLvl1DT() ((ProcPtr *)0x00000192)
+#define LMSetLvl1DT(val) BlockMoveData((const void *)(val), (void *)0x00000192, sizeof(ProcPtr[8]))
 
 // DeviceMgr IMII-198 (false);
 #define LMGetLvl2DT() ((ProcPtr *)0x000001B2)
+#define LMSetLvl2DT(val) BlockMoveData((const void *)(val), (void *)0x000001B2, sizeof(ProcPtr[8]))
 
 // DeviceMgr ThinkC (true-b);
 #define LMGetUnitNtryCnt() (*(INTEGER *)0x000001D2)
@@ -152,6 +154,7 @@ enum {
 
 // DeviceMgr IMII-199 (false);
 #define LMGetExtStsDT() ((ProcPtr *)0x000002BE)
+#define LMSetExtStsDT(val) BlockMoveData((const void *)(val), (void *)0x000002BE, sizeof(ProcPtr[4]))
 
 // DeviceMgr IMII-194 (false);
 #define LMGetJFetch() (*(Ptr *)0x000008F4)

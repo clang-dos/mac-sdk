@@ -87,6 +87,7 @@ enum {
 
 // ResourceMgr IMI-114 (true);
 #define LMGetSysResName() ((Byte *)0x00000AD8)
+#define LMSetSysResName(val) BlockMoveData((const void *)(val), (void *)0x00000AD8, sizeof(Byte[20]))
 
 // ResourceMgr IMIV-19 (false);
 #define LMGetRomMapInsert() (*(Byte *)0x00000B9E)

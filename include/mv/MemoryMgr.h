@@ -145,12 +145,15 @@ typedef Zone *THz;
 
 // MemoryMgr IMI-85 (true);
 #define LMGetScratch20() ((Byte *)0x000001E4)
+#define LMSetScratch20(val) BlockMoveData((const void *)(val), (void *)0x000001E4, sizeof(Byte[20]))
 
 // MemoryMgr IMI-85 (true);
 #define LMGetToolScratch() ((Byte *)0x000009CE)
+#define LMSetToolScratch(val) BlockMoveData((const void *)(val), (void *)0x000009CE, sizeof(Byte[8]))
 
 // MemoryMgr IMI-85 (true);
 #define LMGetScratch8() ((Byte *)0x000009FA)
+#define LMSetScratch8(val) BlockMoveData((const void *)(val), (void *)0x000009FA, sizeof(Byte[8]))
 
 // MemoryMgr IMI-85 (true);
 #define LMGetOneOne() (*(LONGINT *)0x00000A02)
@@ -162,6 +165,7 @@ typedef Zone *THz;
 
 // MemoryMgr IMI-85 (true);
 #define LMGetApplScratch() ((Byte *)0x00000A78)
+#define LMSetApplScratch(val) BlockMoveData((const void *)(val), (void *)0x00000A78, sizeof(Byte[12]))
 
 enum { _NewEmptyHandle = 0xA166 };
 #if TARGET_CPU_68K

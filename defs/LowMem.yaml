@@ -270,3 +270,59 @@
     name: MouseTemp
     type: Point
     address: 2088
+
+# ####
+
+- lowmem:
+    name: GNEFilter
+    type: ProcPtr
+    address: 666
+
+# ####
+
+- lowmem:
+    name: HighHeapMark
+    type: Ptr
+    address: 2990
+
+# ####
+
+- lowmem:
+    name: KeyTime
+    type: int32_t
+    address: 390
+
+# ####
+
+- lowmem:
+    name: MouseButtonState
+    type: uint8_t
+    address: 370
+
+# ####
+
+- lowmem:
+    name: PortAInfo
+    type: uint8_t
+    address: 656
+
+# ####
+
+- lowmem:
+    name: ROMMapHandle
+    type: Handle
+    address: 2822
+
+# ####
+
+- lowmem:
+    name: StackLowPoint
+    type: Ptr
+    address: 272
+
+# ####
+
+- lowmem:
+    name: ABusGlobals
+    type: Ptr
+    address: 728

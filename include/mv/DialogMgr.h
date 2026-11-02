@@ -182,6 +182,7 @@ typedef UserItemProcPtr UserItemUPP;
 
 // DialogMgr IMI-421 (true);
 #define LMGetDAStrings() ((Handle *)0x00000AA0)
+#define LMSetDAStrings(val) BlockMoveData((const void *)(val), (void *)0x00000AA0, sizeof(Handle[4]))
 
 // DialogMgr IMI-412 (true);
 #define LMGetDlgFont() (*(INTEGER *)0x00000AFA)

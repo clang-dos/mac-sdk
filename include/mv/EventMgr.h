@@ -82,6 +82,7 @@ struct EventRecord {
 // was LONGINT KeypadMap[2];
 // EventMgr SysEqu.a (true-b);
 #define LMGetKeyMap() ((uint8_t *)0x00000174)
+#define LMSetKeyMap(val) BlockMoveData((const void *)(val), (void *)0x00000174, sizeof(uint8_t[16]))
 
 #pragma options align=reset
 

@@ -18,6 +18,7 @@
 // * NOTE: MacWrite starts writing longwords at location 0x80 for TRAPs
 // rsys/misc WHOKNOWS (true-b);
 #define LMGettrapvectors() ((LONGINT *)0x00000080)
+#define LMSettrapvectors(val) BlockMoveData((const void *)(val), (void *)0x00000080, sizeof(LONGINT[10]))
 
 // rsys/misc WHOKNOWS (true-b);
 #define LMGetdodusesit() (*(Ptr *)0x000000E4)
@@ -134,6 +135,30 @@
 
 #define LMGetMouseTemp() (*(Point *)0x00000828)
 #define LMSetMouseTemp(val) ((*(Point *)0x00000828) = (val))
+
+#define LMGetGNEFilter() (*(ProcPtr *)0x0000029A)
+#define LMSetGNEFilter(val) ((*(ProcPtr *)0x0000029A) = (val))
+
+#define LMGetHighHeapMark() (*(Ptr *)0x00000BAE)
+#define LMSetHighHeapMark(val) ((*(Ptr *)0x00000BAE) = (val))
+
+#define LMGetKeyTime() (*(long *)0x00000186)
+#define LMSetKeyTime(val) ((*(long *)0x00000186) = (val))
+
+#define LMGetMouseButtonState() (*(uint8_t *)0x00000172)
+#define LMSetMouseButtonState(val) ((*(uint8_t *)0x00000172) = (val))
+
+#define LMGetPortAInfo() (*(uint8_t *)0x00000290)
+#define LMSetPortAInfo(val) ((*(uint8_t *)0x00000290) = (val))
+
+#define LMGetROMMapHandle() (*(Handle *)0x00000B06)
+#define LMSetROMMapHandle(val) ((*(Handle *)0x00000B06) = (val))
+
+#define LMGetStackLowPoint() (*(Ptr *)0x00000110)
+#define LMSetStackLowPoint(val) ((*(Ptr *)0x00000110) = (val))
+
+#define LMGetABusGlobals() (*(Ptr *)0x000002D8)
+#define LMSetABusGlobals(val) ((*(Ptr *)0x000002D8) = (val))
 
 #pragma options align=reset
 

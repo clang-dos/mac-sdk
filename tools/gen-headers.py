@@ -243,6 +243,8 @@ class Generator:
         m = re.match(r"^(.*)\[[^\[\]]*\]$", v["type"])
         if m:
             out.append(f"#define LMGet{v['name']}() (({ctype_of(m.group(1))} *){addr})")
+            out.append(f"#define LMSet{v['name']}(val) BlockMoveData((const void *)(val), "
+                       f"(void *){addr}, sizeof({ctype_of(v['type'])}))")
         else:
             e = f"(*({ctype_of(v['type'])} *){addr})"
             out.append(f"#define LMGet{v['name']}() {e}")

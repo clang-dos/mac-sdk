@@ -634,6 +634,7 @@ typedef QDGlobals *QDGlobalsPtr;
 
 // QuickDraw MPW (false);
 #define LMGetScreenVars() ((Byte *)0x00000292)
+#define LMSetScreenVars(val) BlockMoveData((const void *)(val), (void *)0x00000292, sizeof(Byte[8]))
 
 // * NOTE: Key1Trans in the keyboard translator procedure, and Key2Trans in the
 //  * numeric keypad translator procedure (MPW).
