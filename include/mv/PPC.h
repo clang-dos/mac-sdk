@@ -7,6 +7,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef int16_t PPCPortKinds;
 
@@ -285,7 +289,7 @@ typedef IPCListPortsPBRec *IPCListPortsPBPtr;
 
 // PPC Toolbox
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCInit(void) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCInit(void) {
     register OSErr _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7000, 0xA0DD"
         : "=r"(_ret)
@@ -294,11 +298,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCInit(void) {
     return _ret;
 }
 #else
-pascal OSErr PPCInit(void);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCInit(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenSync(PPCOpenPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenSync(PPCOpenPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCOpenPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA0DD"
@@ -308,11 +312,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenSync(PPCOpenPB
     return _ret;
 }
 #else
-pascal OSErr PPCOpenSync(PPCOpenPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCOpenSync(PPCOpenPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenAsync(PPCOpenPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenAsync(PPCOpenPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCOpenPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA4DD"
@@ -322,11 +326,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenAsync(PPCOpenP
     return _ret;
 }
 #else
-pascal OSErr PPCOpenAsync(PPCOpenPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCOpenAsync(PPCOpenPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCStartSync(PPCStartPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCStartSync(PPCStartPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCStartPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA0DD"
@@ -336,11 +340,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCStartSync(PPCStart
     return _ret;
 }
 #else
-pascal OSErr PPCStartSync(PPCStartPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCStartSync(PPCStartPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCStartAsync(PPCStartPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCStartAsync(PPCStartPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCStartPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA4DD"
@@ -350,11 +354,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCStartAsync(PPCStar
     return _ret;
 }
 #else
-pascal OSErr PPCStartAsync(PPCStartPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCStartAsync(PPCStartPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCInformSync(PPCInformPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCInformSync(PPCInformPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCInformPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7003, 0xA0DD"
@@ -364,11 +368,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCInformSync(PPCInfo
     return _ret;
 }
 #else
-pascal OSErr PPCInformSync(PPCInformPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCInformSync(PPCInformPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCInformAsync(PPCInformPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCInformAsync(PPCInformPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCInformPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7003, 0xA4DD"
@@ -378,11 +382,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCInformAsync(PPCInf
     return _ret;
 }
 #else
-pascal OSErr PPCInformAsync(PPCInformPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCInformAsync(PPCInformPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptSync(PPCAcceptPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptSync(PPCAcceptPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCAcceptPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7004, 0xA0DD"
@@ -392,11 +396,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptSync(PPCAcce
     return _ret;
 }
 #else
-pascal OSErr PPCAcceptSync(PPCAcceptPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCAcceptSync(PPCAcceptPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptAsync(PPCAcceptPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptAsync(PPCAcceptPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCAcceptPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7004, 0xA4DD"
@@ -406,11 +410,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptAsync(PPCAcc
     return _ret;
 }
 #else
-pascal OSErr PPCAcceptAsync(PPCAcceptPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCAcceptAsync(PPCAcceptPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectSync(PPCRejectPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectSync(PPCRejectPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCRejectPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA0DD"
@@ -420,11 +424,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectSync(PPCReje
     return _ret;
 }
 #else
-pascal OSErr PPCRejectSync(PPCRejectPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCRejectSync(PPCRejectPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectAsync(PPCRejectPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectAsync(PPCRejectPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCRejectPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA4DD"
@@ -434,11 +438,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectAsync(PPCRej
     return _ret;
 }
 #else
-pascal OSErr PPCRejectAsync(PPCRejectPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCRejectAsync(PPCRejectPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteSync(PPCWritePBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteSync(PPCWritePBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCWritePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA0DD"
@@ -448,11 +452,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteSync(PPCWrite
     return _ret;
 }
 #else
-pascal OSErr PPCWriteSync(PPCWritePBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCWriteSync(PPCWritePBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteAsync(PPCWritePBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteAsync(PPCWritePBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCWritePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA4DD"
@@ -462,11 +466,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteAsync(PPCWrit
     return _ret;
 }
 #else
-pascal OSErr PPCWriteAsync(PPCWritePBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCWriteAsync(PPCWritePBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCReadSync(PPCReadPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCReadSync(PPCReadPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCReadPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA0DD"
@@ -476,11 +480,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCReadSync(PPCReadPB
     return _ret;
 }
 #else
-pascal OSErr PPCReadSync(PPCReadPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCReadSync(PPCReadPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCReadAsync(PPCReadPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCReadAsync(PPCReadPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCReadPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA4DD"
@@ -490,11 +494,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCReadAsync(PPCReadP
     return _ret;
 }
 #else
-pascal OSErr PPCReadAsync(PPCReadPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCReadAsync(PPCReadPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCEndSync(PPCEndPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCEndSync(PPCEndPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCEndPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA0DD"
@@ -504,11 +508,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCEndSync(PPCEndPBPt
     return _ret;
 }
 #else
-pascal OSErr PPCEndSync(PPCEndPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCEndSync(PPCEndPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCEndAsync(PPCEndPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCEndAsync(PPCEndPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCEndPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA4DD"
@@ -518,11 +522,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCEndAsync(PPCEndPBP
     return _ret;
 }
 #else
-pascal OSErr PPCEndAsync(PPCEndPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCEndAsync(PPCEndPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseSync(PPCClosePBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseSync(PPCClosePBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCClosePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA0DD"
@@ -532,11 +536,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseSync(PPCClose
     return _ret;
 }
 #else
-pascal OSErr PPCCloseSync(PPCClosePBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCCloseSync(PPCClosePBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseAsync(PPCClosePBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseAsync(PPCClosePBPtr pb) {
     register OSErr _ret __asm__("d0");
     register PPCClosePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA4DD"
@@ -546,11 +550,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseAsync(PPCClos
     return _ret;
 }
 #else
-pascal OSErr PPCCloseAsync(PPCClosePBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCCloseAsync(PPCClosePBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsSync(IPCListPortsPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsSync(IPCListPortsPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register IPCListPortsPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA0DD"
@@ -560,11 +564,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsSync(IPCL
     return _ret;
 }
 #else
-pascal OSErr IPCListPortsSync(IPCListPortsPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr IPCListPortsSync(IPCListPortsPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsAsync(IPCListPortsPBPtr pb) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsAsync(IPCListPortsPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register IPCListPortsPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA4DD"
@@ -574,11 +578,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsAsync(IPC
     return _ret;
 }
 #else
-pascal OSErr IPCListPortsAsync(IPCListPortsPBPtr pb);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr IPCListPortsAsync(IPCListPortsPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DeleteUserIdentity(unsigned long userRef) {
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr DeleteUserIdentity(unsigned long userRef) {
     register OSErr _ret __asm__("d0");
     register unsigned long _userRef __asm__("a0") = userRef;
     __asm__ __volatile__(".short 0x700C, 0xA0DD"
@@ -588,7 +592,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr DeleteUserIdentity(un
     return _ret;
 }
 #else
-pascal OSErr DeleteUserIdentity(unsigned long userRef);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr DeleteUserIdentity(unsigned long userRef);
 #endif
 
 pascal OSErr GetDefaultUser(unsigned long *userRef, Str32 userName);
@@ -597,8 +601,37 @@ pascal OSErr StartSecureSession(PPCStartPBPtr pb, Str32 userName, Boolean useDef
 
 enum { _Pack9 = 0xA82B };
 
-pascal OSErr PPCBrowser(ConstStr255Param prompt, ConstStr255Param applListLabel, Boolean defaultSpecified, LocationNameRec *theLocation, PortInfoRec *thePortInfo, PPCFilterUPP portFilter, ConstStr32Param theLocNBPType) M68K_INLINE(0x303C, 0x0D00, 0xA82B);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ppc '") pascal OSErr PPCBrowser(ConstStr255Param prompt, ConstStr255Param applListLabel, Boolean defaultSpecified, LocationNameRec *theLocation, PortInfoRec *thePortInfo, PPCFilterUPP portFilter, ConstStr32Param theLocNBPType) M68K_INLINE(0x303C, 0x0D00, 0xA82B);
 
+#if TARGET_CPU_68K
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCKillSync(void *pb) {
+    register OSErr _ret __asm__("d0");
+    register void* _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x700B, 0xA0DD"
+        : "=r"(_ret), "+r"(_pb)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCKillSync(void *pb);
+#endif
+
+#if TARGET_CPU_68K
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") static __inline__ __attribute__((__always_inline__)) OSErr PPCKillAsync(void *pb) {
+    register OSErr _ret __asm__("d0");
+    register void* _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x700B, 0xA4DD"
+        : "=r"(_ret), "+r"(_pb)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+MAC_SINCE_GESTALT(0x0700, "7.0", "'ppc '") pascal OSErr PPCKillAsync(void *pb);
+#endif
+
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

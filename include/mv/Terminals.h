@@ -11,6 +11,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     curTMVersion = 2,
@@ -247,7 +251,7 @@ typedef TerminalToolDefProcPtr TerminalToolDefUPP;
 #define DisposeTerminalToolDefProc(proc) DisposeTerminalToolDefUPP(proc)
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) TMErr InitTM(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) TMErr InitTM(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0301 };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -257,11 +261,11 @@ static __inline__ __attribute__((__always_inline__)) TMErr InitTM(void) {
     return (TMErr)_ret;
 }
 #else
-pascal TMErr InitTM(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal TMErr InitTM(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long TMGetRefCon(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long TMGetRefCon(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0322, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -271,11 +275,11 @@ static __inline__ __attribute__((__always_inline__)) long TMGetRefCon(TermHandle
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long TMGetRefCon(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long TMGetRefCon(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMSetRefCon(TermHandle hTerm, long refCon) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMSetRefCon(TermHandle hTerm, long refCon) {
     struct { short _sel; __typeof__(refCon) refCon; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0321, refCon, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -285,11 +289,11 @@ static __inline__ __attribute__((__always_inline__)) void TMSetRefCon(TermHandle
     (void)_ret;
 }
 #else
-pascal void TMSetRefCon(TermHandle hTerm, long refCon);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMSetRefCon(TermHandle hTerm, long refCon);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long TMGetUserData(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long TMGetUserData(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0324, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -299,11 +303,11 @@ static __inline__ __attribute__((__always_inline__)) long TMGetUserData(TermHand
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long TMGetUserData(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long TMGetUserData(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMSetUserData(TermHandle hTerm, long userData) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMSetUserData(TermHandle hTerm, long userData) {
     struct { short _sel; __typeof__(userData) userData; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0323, userData, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -313,11 +317,11 @@ static __inline__ __attribute__((__always_inline__)) void TMSetUserData(TermHand
     (void)_ret;
 }
 #else
-pascal void TMSetUserData(TermHandle hTerm, long userData);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMSetUserData(TermHandle hTerm, long userData);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMGetToolName(INTEGER id, Str255 name) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMGetToolName(INTEGER id, Str255 name) {
     struct { short _sel; __typeof__(name) name; __typeof__(id) id; } __attribute__((__packed__)) _pb = { 0x0320, name, id };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -327,11 +331,11 @@ static __inline__ __attribute__((__always_inline__)) void TMGetToolName(INTEGER 
     (void)_ret;
 }
 #else
-pascal void TMGetToolName(INTEGER id, Str255 name);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMGetToolName(INTEGER id, Str255 name);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER TMGetProcID(ConstStr255Param name) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER TMGetProcID(ConstStr255Param name) {
     struct { short _sel; __typeof__(name) name; } __attribute__((__packed__)) _pb = { 0x031F, name };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -341,11 +345,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER TMGetProcID(ConstSt
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER TMGetProcID(ConstStr255Param name);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER TMGetProcID(ConstStr255Param name);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) TermHandle TMNew(const Rect *termRect, const Rect *viewRect, TMFlags flags, INTEGER procID, WindowPtr owner, TerminalSendProcUPP sendProc, TerminalCacheProcUPP cacheProc, TerminalBreakProcUPP breakProc, TerminalClikLoopUPP clikLoop, TerminalEnvironsProcUPP environsProc, long refCon, long userData) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) TermHandle TMNew(const Rect *termRect, const Rect *viewRect, TMFlags flags, INTEGER procID, WindowPtr owner, TerminalSendProcUPP sendProc, TerminalCacheProcUPP cacheProc, TerminalBreakProcUPP breakProc, TerminalClikLoopUPP clikLoop, TerminalEnvironsProcUPP environsProc, long refCon, long userData) {
     struct { short _sel; __typeof__(userData) userData; __typeof__(refCon) refCon; __typeof__(environsProc) environsProc; __typeof__(clikLoop) clikLoop; __typeof__(breakProc) breakProc; __typeof__(cacheProc) cacheProc; __typeof__(sendProc) sendProc; __typeof__(owner) owner; __typeof__(procID) procID; __typeof__(flags) flags; __typeof__(viewRect) viewRect; __typeof__(termRect) termRect; } __attribute__((__packed__)) _pb = { 0x0302, userData, refCon, environsProc, clikLoop, breakProc, cacheProc, sendProc, owner, procID, flags, viewRect, termRect };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -355,11 +359,11 @@ static __inline__ __attribute__((__always_inline__)) TermHandle TMNew(const Rect
     { union { long l; TermHandle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal TermHandle TMNew(const Rect *termRect, const Rect *viewRect, TMFlags flags, INTEGER procID, WindowPtr owner, TerminalSendProcUPP sendProc, TerminalCacheProcUPP cacheProc, TerminalBreakProcUPP breakProc, TerminalClikLoopUPP clikLoop, TerminalEnvironsProcUPP environsProc, long refCon, long userData);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal TermHandle TMNew(const Rect *termRect, const Rect *viewRect, TMFlags flags, INTEGER procID, WindowPtr owner, TerminalSendProcUPP sendProc, TerminalCacheProcUPP cacheProc, TerminalBreakProcUPP breakProc, TerminalClikLoopUPP clikLoop, TerminalEnvironsProcUPP environsProc, long refCon, long userData);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMDispose(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMDispose(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0303, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -369,11 +373,11 @@ static __inline__ __attribute__((__always_inline__)) void TMDispose(TermHandle h
     (void)_ret;
 }
 #else
-pascal void TMDispose(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMDispose(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMKey(TermHandle hTerm, const EventRecord *theEvent) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMKey(TermHandle hTerm, const EventRecord *theEvent) {
     struct { short _sel; __typeof__(theEvent) theEvent; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0304, theEvent, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -383,11 +387,11 @@ static __inline__ __attribute__((__always_inline__)) void TMKey(TermHandle hTerm
     (void)_ret;
 }
 #else
-pascal void TMKey(TermHandle hTerm, const EventRecord *theEvent);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMKey(TermHandle hTerm, const EventRecord *theEvent);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMUpdate(TermHandle hTerm, RgnHandle visRgn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMUpdate(TermHandle hTerm, RgnHandle visRgn) {
     struct { short _sel; __typeof__(visRgn) visRgn; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0305, visRgn, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -397,11 +401,11 @@ static __inline__ __attribute__((__always_inline__)) void TMUpdate(TermHandle hT
     (void)_ret;
 }
 #else
-pascal void TMUpdate(TermHandle hTerm, RgnHandle visRgn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMUpdate(TermHandle hTerm, RgnHandle visRgn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMPaint(TermHandle hTerm, const TermDataBlock *theTermData, const Rect *theRect) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMPaint(TermHandle hTerm, const TermDataBlock *theTermData, const Rect *theRect) {
     struct { short _sel; __typeof__(theRect) theRect; __typeof__(theTermData) theTermData; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0306, theRect, theTermData, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -411,11 +415,11 @@ static __inline__ __attribute__((__always_inline__)) void TMPaint(TermHandle hTe
     (void)_ret;
 }
 #else
-pascal void TMPaint(TermHandle hTerm, const TermDataBlock *theTermData, const Rect *theRect);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMPaint(TermHandle hTerm, const TermDataBlock *theTermData, const Rect *theRect);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMActivate(TermHandle hTerm, Boolean activate) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMActivate(TermHandle hTerm, Boolean activate) {
     struct { short _sel; __typeof__(activate) activate; char _pad_activate; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0307, activate, 0, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -425,11 +429,11 @@ static __inline__ __attribute__((__always_inline__)) void TMActivate(TermHandle 
     (void)_ret;
 }
 #else
-pascal void TMActivate(TermHandle hTerm, Boolean activate);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMActivate(TermHandle hTerm, Boolean activate);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMResume(TermHandle hTerm, Boolean resume) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMResume(TermHandle hTerm, Boolean resume) {
     struct { short _sel; __typeof__(resume) resume; char _pad_resume; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0308, resume, 0, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -439,11 +443,11 @@ static __inline__ __attribute__((__always_inline__)) void TMResume(TermHandle hT
     (void)_ret;
 }
 #else
-pascal void TMResume(TermHandle hTerm, Boolean resume);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMResume(TermHandle hTerm, Boolean resume);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMClick(TermHandle hTerm, const EventRecord *theEvent) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMClick(TermHandle hTerm, const EventRecord *theEvent) {
     struct { short _sel; __typeof__(theEvent) theEvent; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0309, theEvent, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -453,11 +457,11 @@ static __inline__ __attribute__((__always_inline__)) void TMClick(TermHandle hTe
     (void)_ret;
 }
 #else
-pascal void TMClick(TermHandle hTerm, const EventRecord *theEvent);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMClick(TermHandle hTerm, const EventRecord *theEvent);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMIdle(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMIdle(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0313, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -467,11 +471,11 @@ static __inline__ __attribute__((__always_inline__)) void TMIdle(TermHandle hTer
     (void)_ret;
 }
 #else
-pascal void TMIdle(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMIdle(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long TMStream(TermHandle hTerm, void *theBuffer, long theLength, CMFlags flags) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long TMStream(TermHandle hTerm, void *theBuffer, long theLength, CMFlags flags) {
     struct { short _sel; __typeof__(flags) flags; __typeof__(theLength) theLength; __typeof__(theBuffer) theBuffer; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x030A, flags, theLength, theBuffer, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -481,11 +485,11 @@ static __inline__ __attribute__((__always_inline__)) long TMStream(TermHandle hT
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long TMStream(TermHandle hTerm, void *theBuffer, long theLength, CMFlags flags);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long TMStream(TermHandle hTerm, void *theBuffer, long theLength, CMFlags flags);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean TMMenu(TermHandle hTerm, INTEGER menuID, INTEGER item) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean TMMenu(TermHandle hTerm, INTEGER menuID, INTEGER item) {
     struct { short _sel; __typeof__(item) item; __typeof__(menuID) menuID; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x030B, item, menuID, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -495,11 +499,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean TMMenu(TermHandle h
     return (Boolean)_ret;
 }
 #else
-pascal Boolean TMMenu(TermHandle hTerm, INTEGER menuID, INTEGER item);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean TMMenu(TermHandle hTerm, INTEGER menuID, INTEGER item);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMReset(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMReset(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x030C, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -509,11 +513,11 @@ static __inline__ __attribute__((__always_inline__)) void TMReset(TermHandle hTe
     (void)_ret;
 }
 #else
-pascal void TMReset(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMReset(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMClear(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMClear(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x030D, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -523,11 +527,11 @@ static __inline__ __attribute__((__always_inline__)) void TMClear(TermHandle hTe
     (void)_ret;
 }
 #else
-pascal void TMClear(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMClear(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMResize(TermHandle hTerm, const Rect *newViewRect) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMResize(TermHandle hTerm, const Rect *newViewRect) {
     struct { short _sel; __typeof__(newViewRect) newViewRect; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x030E, newViewRect, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -537,11 +541,11 @@ static __inline__ __attribute__((__always_inline__)) void TMResize(TermHandle hT
     (void)_ret;
 }
 #else
-pascal void TMResize(TermHandle hTerm, const Rect *newViewRect);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMResize(TermHandle hTerm, const Rect *newViewRect);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long TMGetSelect(TermHandle hTerm, Handle theData, ResType *theType) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long TMGetSelect(TermHandle hTerm, Handle theData, ResType *theType) {
     struct { short _sel; __typeof__(theType) theType; __typeof__(theData) theData; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x030F, theType, theData, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -551,11 +555,11 @@ static __inline__ __attribute__((__always_inline__)) long TMGetSelect(TermHandle
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long TMGetSelect(TermHandle hTerm, Handle theData, ResType *theType);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long TMGetSelect(TermHandle hTerm, Handle theData, ResType *theType);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMGetLine(TermHandle hTerm, INTEGER lineNo, TermDataBlock *theTermData) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMGetLine(TermHandle hTerm, INTEGER lineNo, TermDataBlock *theTermData) {
     struct { short _sel; __typeof__(theTermData) theTermData; __typeof__(lineNo) lineNo; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0310, theTermData, lineNo, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -565,11 +569,11 @@ static __inline__ __attribute__((__always_inline__)) void TMGetLine(TermHandle h
     (void)_ret;
 }
 #else
-pascal void TMGetLine(TermHandle hTerm, INTEGER lineNo, TermDataBlock *theTermData);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMGetLine(TermHandle hTerm, INTEGER lineNo, TermDataBlock *theTermData);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMSetSelection(TermHandle hTerm, const TMSelection *theSelection, TMSelTypes selType) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMSetSelection(TermHandle hTerm, const TMSelection *theSelection, TMSelTypes selType) {
     struct { short _sel; __typeof__(selType) selType; __typeof__(theSelection) theSelection; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0311, selType, theSelection, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -579,11 +583,11 @@ static __inline__ __attribute__((__always_inline__)) void TMSetSelection(TermHan
     (void)_ret;
 }
 #else
-pascal void TMSetSelection(TermHandle hTerm, const TMSelection *theSelection, TMSelTypes selType);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMSetSelection(TermHandle hTerm, const TMSelection *theSelection, TMSelTypes selType);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMScroll(TermHandle hTerm, INTEGER dh, INTEGER dv) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMScroll(TermHandle hTerm, INTEGER dh, INTEGER dv) {
     struct { short _sel; __typeof__(dv) dv; __typeof__(dh) dh; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0312, dv, dh, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -593,11 +597,11 @@ static __inline__ __attribute__((__always_inline__)) void TMScroll(TermHandle hT
     (void)_ret;
 }
 #else
-pascal void TMScroll(TermHandle hTerm, INTEGER dh, INTEGER dv);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMScroll(TermHandle hTerm, INTEGER dh, INTEGER dv);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean TMValidate(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean TMValidate(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0314, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -607,11 +611,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean TMValidate(TermHand
     return (Boolean)_ret;
 }
 #else
-pascal Boolean TMValidate(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean TMValidate(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate) {
     struct { short _sel; __typeof__(allocate) allocate; char _pad_allocate; __typeof__(procID) procID; __typeof__(theConfig) theConfig; } __attribute__((__packed__)) _pb = { 0x0315, allocate, 0, procID, theConfig };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -621,11 +625,11 @@ static __inline__ __attribute__((__always_inline__)) void TMDefault(Ptr *theConf
     (void)_ret;
 }
 #else
-pascal void TMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle TMSetupPreflight(INTEGER procID, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Handle TMSetupPreflight(INTEGER procID, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0316, magicCookie, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -635,11 +639,11 @@ static __inline__ __attribute__((__always_inline__)) Handle TMSetupPreflight(INT
     { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Handle TMSetupPreflight(INTEGER procID, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Handle TMSetupPreflight(INTEGER procID, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean TMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean TMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theItem) theItem; __typeof__(theEvent) theEvent; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0318, magicCookie, theItem, theEvent, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -649,11 +653,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean TMSetupFilter(INTEG
     return (Boolean)_ret;
 }
 #else
-pascal Boolean TMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean TMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0317, magicCookie, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -663,11 +667,11 @@ static __inline__ __attribute__((__always_inline__)) void TMSetupSetup(INTEGER p
     (void)_ret;
 }
 #else
-pascal void TMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theItem) theItem; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0319, magicCookie, theItem, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -677,11 +681,11 @@ static __inline__ __attribute__((__always_inline__)) void TMSetupItem(INTEGER pr
     (void)_ret;
 }
 #else
-pascal void TMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(OKed) OKed; char _pad_OKed; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0334, magicCookie, OKed, 0, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -691,11 +695,11 @@ static __inline__ __attribute__((__always_inline__)) void TMSetupXCleanup(INTEGE
     (void)_ret;
 }
 #else
-pascal void TMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMSetupPostflight(INTEGER procID) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMSetupPostflight(INTEGER procID) {
     struct { short _sel; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0331, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -705,11 +709,11 @@ static __inline__ __attribute__((__always_inline__)) void TMSetupPostflight(INTE
     (void)_ret;
 }
 #else
-pascal void TMSetupPostflight(INTEGER procID);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMSetupPostflight(INTEGER procID);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Ptr TMGetConfig(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Ptr TMGetConfig(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x031B, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -719,11 +723,11 @@ static __inline__ __attribute__((__always_inline__)) Ptr TMGetConfig(TermHandle 
     { union { long l; Ptr r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Ptr TMGetConfig(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Ptr TMGetConfig(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER TMSetConfig(TermHandle hTerm, const void *thePtr) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER TMSetConfig(TermHandle hTerm, const void *thePtr) {
     struct { short _sel; __typeof__(thePtr) thePtr; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x031C, thePtr, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -733,11 +737,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER TMSetConfig(TermHan
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER TMSetConfig(TermHandle hTerm, const void *thePtr);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER TMSetConfig(TermHandle hTerm, const void *thePtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr TMIntlToEnglish(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) OSErr TMIntlToEnglish(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
     struct { short _sel; __typeof__(language) language; __typeof__(outputPtr) outputPtr; __typeof__(inputPtr) inputPtr; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x031D, language, outputPtr, inputPtr, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -747,11 +751,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr TMIntlToEnglish(TermH
     return (OSErr)_ret;
 }
 #else
-pascal OSErr TMIntlToEnglish(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal OSErr TMIntlToEnglish(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr TMEnglishToIntl(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) OSErr TMEnglishToIntl(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
     struct { short _sel; __typeof__(language) language; __typeof__(outputPtr) outputPtr; __typeof__(inputPtr) inputPtr; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x031E, language, outputPtr, inputPtr, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -761,11 +765,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr TMEnglishToIntl(TermH
     return (OSErr)_ret;
 }
 #else
-pascal OSErr TMEnglishToIntl(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal OSErr TMEnglishToIntl(TermHandle hTerm, const void *inputPtr, Ptr *outputPtr, INTEGER language);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle TMGetVersion(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Handle TMGetVersion(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0325, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -775,11 +779,11 @@ static __inline__ __attribute__((__always_inline__)) Handle TMGetVersion(TermHan
     { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Handle TMGetVersion(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Handle TMGetVersion(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER TMGetTMVersion(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER TMGetTMVersion(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0326 };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -789,11 +793,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER TMGetTMVersion(void
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER TMGetTMVersion(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER TMGetTMVersion(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER TMAddSearch(TermHandle hTerm, ConstStr255Param theString, const Rect *where, TMSearchTypes searchType, TerminalSearchCallBackUPP callBack) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER TMAddSearch(TermHandle hTerm, ConstStr255Param theString, const Rect *where, TMSearchTypes searchType, TerminalSearchCallBackUPP callBack) {
     struct { short _sel; __typeof__(callBack) callBack; __typeof__(searchType) searchType; __typeof__(where) where; __typeof__(theString) theString; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0327, callBack, searchType, where, theString, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -803,11 +807,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER TMAddSearch(TermHan
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER TMAddSearch(TermHandle hTerm, ConstStr255Param theString, const Rect *where, TMSearchTypes searchType, TerminalSearchCallBackUPP callBack);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER TMAddSearch(TermHandle hTerm, ConstStr255Param theString, const Rect *where, TMSearchTypes searchType, TerminalSearchCallBackUPP callBack);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMRemoveSearch(TermHandle hTerm, INTEGER refnum) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMRemoveSearch(TermHandle hTerm, INTEGER refnum) {
     struct { short _sel; __typeof__(refnum) refnum; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0328, refnum, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -817,11 +821,11 @@ static __inline__ __attribute__((__always_inline__)) void TMRemoveSearch(TermHan
     (void)_ret;
 }
 #else
-pascal void TMRemoveSearch(TermHandle hTerm, INTEGER refnum);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMRemoveSearch(TermHandle hTerm, INTEGER refnum);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMClearSearch(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMClearSearch(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0329, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -831,11 +835,11 @@ static __inline__ __attribute__((__always_inline__)) void TMClearSearch(TermHand
     (void)_ret;
 }
 #else
-pascal void TMClearSearch(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMClearSearch(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Point TMGetCursor(TermHandle hTerm, TMCursorTypes cursType) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Point TMGetCursor(TermHandle hTerm, TMCursorTypes cursType) {
     struct { short _sel; __typeof__(cursType) cursType; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x032A, cursType, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -845,11 +849,11 @@ static __inline__ __attribute__((__always_inline__)) Point TMGetCursor(TermHandl
     { union { long l; Point r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Point TMGetCursor(TermHandle hTerm, TMCursorTypes cursType);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Point TMGetCursor(TermHandle hTerm, TMCursorTypes cursType);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) TMErr TMGetTermEnvirons(TermHandle hTerm, TermEnvironRec *theEnvirons) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) TMErr TMGetTermEnvirons(TermHandle hTerm, TermEnvironRec *theEnvirons) {
     struct { short _sel; __typeof__(theEnvirons) theEnvirons; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x032B, theEnvirons, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -859,11 +863,11 @@ static __inline__ __attribute__((__always_inline__)) TMErr TMGetTermEnvirons(Ter
     return (TMErr)_ret;
 }
 #else
-pascal TMErr TMGetTermEnvirons(TermHandle hTerm, TermEnvironRec *theEnvirons);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal TMErr TMGetTermEnvirons(TermHandle hTerm, TermEnvironRec *theEnvirons);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER TMChoose(TermHandle *hTerm, Point where, TerminalChooseIdleUPP idle) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER TMChoose(TermHandle *hTerm, Point where, TerminalChooseIdleUPP idle) {
     struct { short _sel; __typeof__(idle) idle; __typeof__(where) where; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x032C, idle, where, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -873,11 +877,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER TMChoose(TermHandle
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER TMChoose(TermHandle *hTerm, Point where, TerminalChooseIdleUPP idle);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER TMChoose(TermHandle *hTerm, Point where, TerminalChooseIdleUPP idle);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMEvent(TermHandle hTerm, const EventRecord *theEvent) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMEvent(TermHandle hTerm, const EventRecord *theEvent) {
     struct { short _sel; __typeof__(theEvent) theEvent; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x032D, theEvent, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -887,11 +891,11 @@ static __inline__ __attribute__((__always_inline__)) void TMEvent(TermHandle hTe
     (void)_ret;
 }
 #else
-pascal void TMEvent(TermHandle hTerm, const EventRecord *theEvent);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMEvent(TermHandle hTerm, const EventRecord *theEvent);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean TMDoTermKey(TermHandle hTerm, ConstStr255Param theKey) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean TMDoTermKey(TermHandle hTerm, ConstStr255Param theKey) {
     struct { short _sel; __typeof__(theKey) theKey; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x032E, theKey, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -901,11 +905,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean TMDoTermKey(TermHan
     return (Boolean)_ret;
 }
 #else
-pascal Boolean TMDoTermKey(TermHandle hTerm, ConstStr255Param theKey);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean TMDoTermKey(TermHandle hTerm, ConstStr255Param theKey);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER TMCountTermKeys(TermHandle hTerm) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER TMCountTermKeys(TermHandle hTerm) {
     struct { short _sel; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x032F, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -915,11 +919,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER TMCountTermKeys(Ter
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER TMCountTermKeys(TermHandle hTerm);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER TMCountTermKeys(TermHandle hTerm);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMGetIndTermKey(TermHandle hTerm, INTEGER id, Str255 theKey) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMGetIndTermKey(TermHandle hTerm, INTEGER id, Str255 theKey) {
     struct { short _sel; __typeof__(theKey) theKey; __typeof__(id) id; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0330, theKey, id, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -929,11 +933,11 @@ static __inline__ __attribute__((__always_inline__)) void TMGetIndTermKey(TermHa
     (void)_ret;
 }
 #else
-pascal void TMGetIndTermKey(TermHandle hTerm, INTEGER id, Str255 theKey);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMGetIndTermKey(TermHandle hTerm, INTEGER id, Str255 theKey);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void TMGetErrorString(TermHandle hTerm, INTEGER id, Str255 errMsg) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void TMGetErrorString(TermHandle hTerm, INTEGER id, Str255 errMsg) {
     struct { short _sel; __typeof__(errMsg) errMsg; __typeof__(id) id; __typeof__(hTerm) hTerm; } __attribute__((__packed__)) _pb = { 0x0335, errMsg, id, hTerm };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -943,9 +947,10 @@ static __inline__ __attribute__((__always_inline__)) void TMGetErrorString(TermH
     (void)_ret;
 }
 #else
-pascal void TMGetErrorString(TermHandle hTerm, INTEGER id, Str255 errMsg);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void TMGetErrorString(TermHandle hTerm, INTEGER id, Str255 errMsg);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

@@ -8,6 +8,10 @@
 #include "PPC.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     evtNotEnb = 1,
@@ -190,11 +194,11 @@ enum {
     bufferIsSmall = -608,
 };
 
-pascal OSErr AcceptHighLevelEvent(TargetID *sender_id_return, long *refcon_return, Ptr msg_buf, long *msg_length_return) M68K_INLINE(0x3F3C, 0x0033, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr AcceptHighLevelEvent(TargetID *sender_id_return, long *refcon_return, Ptr msg_buf, long *msg_length_return) M68K_INLINE(0x3F3C, 0x0033, 0xA88F);
 
-pascal Boolean GetSpecificHighLevelEvent(GetSpecificFilterUPP fn, Ptr data, OSErr *err_return) M68K_INLINE(0x3F3C, 0x0045, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal Boolean GetSpecificHighLevelEvent(GetSpecificFilterUPP fn, Ptr data, OSErr *err_return) M68K_INLINE(0x3F3C, 0x0045, 0xA88F);
 
-pascal OSErr PostHighLevelEvent(EventRecord *evt, Ptr receiver_id, long refcon, Ptr msg_buf, long msg_length, long post_options) M68K_INLINE(0x3F3C, 0x0034, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr PostHighLevelEvent(EventRecord *evt, Ptr receiver_id, long refcon, Ptr msg_buf, long msg_length, long post_options) M68K_INLINE(0x3F3C, 0x0034, 0xA88F);
 
 enum { _PostEvent = 0xA02F };
 #if TARGET_CPU_68K
@@ -233,6 +237,7 @@ static __inline__ QHdrPtr GetEvQHdr(void) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

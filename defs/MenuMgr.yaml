@@ -698,6 +698,7 @@
       - type: INTEGER
     trap: 0xAA60
     executor: C_
+    old_name: DelMCEntries
 
 # ####
 
@@ -724,6 +725,7 @@
       - type: MCTableHandle
     trap: 0xAA63
     executor: C_
+    old_name: DispMCInfo
 
 # ####
 

@@ -8,6 +8,10 @@
 #include "SANE.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct SndCommand SndCommand;
 struct SndCommand {
@@ -243,126 +247,126 @@ typedef Ptr CompressionInfoPtr;
 
 enum { _SoundDispatch = 0xA800 };
 
-pascal void SndGetSysBeepState(INTEGER *statep) M68K_INLINE(0x203C, 0x0218, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void SndGetSysBeepState(INTEGER *statep) M68K_INLINE(0x203C, 0x0218, 0x0008, 0xA800);
 
-pascal OSErr SndSetSysBeepState(INTEGER state) M68K_INLINE(0x203C, 0x011C, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndSetSysBeepState(INTEGER state) M68K_INLINE(0x203C, 0x011C, 0x0008, 0xA800);
 
-pascal OSErr SndChannelStatus(SndChannelPtr chanp, INTEGER length, SCStatusPtr statusp) M68K_INLINE(0x203C, 0x0510, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndChannelStatus(SndChannelPtr chanp, INTEGER length, SCStatusPtr statusp) M68K_INLINE(0x203C, 0x0510, 0x0008, 0xA800);
 
-pascal OSErr SndManagerStatus(INTEGER length, SMStatusPtr statusp) M68K_INLINE(0x203C, 0x0314, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndManagerStatus(INTEGER length, SMStatusPtr statusp) M68K_INLINE(0x203C, 0x0314, 0x0008, 0xA800);
 
-pascal NumVersion SndSoundManagerVersion(void) M68K_INLINE(0x203C, 0x000C, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal NumVersion SndSoundManagerVersion(void) M68K_INLINE(0x203C, 0x000C, 0x0008, 0xA800);
 
-pascal NumVersion MACEVersion(void) M68K_INLINE(0x7010, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal NumVersion MACEVersion(void) M68K_INLINE(0x7010, 0xA800);
 
-pascal NumVersion SPBVersion(void) M68K_INLINE(0x7014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal NumVersion SPBVersion(void) M68K_INLINE(0x7014, 0xA800);
 
-pascal OSErr SndStartFilePlay(SndChannelPtr chanp, INTEGER refnum, INTEGER resnum, LONGINT buffersize, Ptr bufferp, AudioSelectionPtr theselectionp, ProcPtr completionp, Boolean async) M68K_INLINE(0x203C, 0x0D00, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndStartFilePlay(SndChannelPtr chanp, INTEGER refnum, INTEGER resnum, LONGINT buffersize, Ptr bufferp, AudioSelectionPtr theselectionp, ProcPtr completionp, Boolean async) M68K_INLINE(0x203C, 0x0D00, 0x0008, 0xA800);
 
-pascal OSErr SndPauseFilePlay(SndChannelPtr chanp) M68K_INLINE(0x203C, 0x0204, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndPauseFilePlay(SndChannelPtr chanp) M68K_INLINE(0x203C, 0x0204, 0x0008, 0xA800);
 
-pascal OSErr SndStopFilePlay(SndChannelPtr chanp, Boolean async) M68K_INLINE(0x203C, 0x0308, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndStopFilePlay(SndChannelPtr chanp, Boolean async) M68K_INLINE(0x203C, 0x0308, 0x0008, 0xA800);
 
-pascal OSErr SndPlayDoubleBuffer(SndChannelPtr chanp, SndDoubleBufferHeaderPtr paramp) M68K_INLINE(0x203C, 0x0420, 0x0008, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndPlayDoubleBuffer(SndChannelPtr chanp, SndDoubleBufferHeaderPtr paramp) M68K_INLINE(0x203C, 0x0420, 0x0008, 0xA800);
 
-pascal void Comp3to1(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x0004, 0x0010, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void Comp3to1(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x0004, 0x0010, 0xA800);
 
-pascal void Comp6to1(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x000C, 0x0010, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void Comp6to1(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x000C, 0x0010, 0xA800);
 
-pascal void Exp1to3(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x0008, 0x0010, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void Exp1to3(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x0008, 0x0010, 0xA800);
 
-pascal void Exp1to6(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x0010, 0x0010, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void Exp1to6(Ptr inp, Ptr outp, LONGINT cnt, Ptr instatep, Ptr outstatep, LONGINT numchannels, LONGINT whichchannel) M68K_INLINE(0x203C, 0x0010, 0x0010, 0xA800);
 
-pascal OSErr SndRecord(ProcPtr filterp, Point corner, OSType quality, Handle *sndhandlep) M68K_INLINE(0x203C, 0x0804, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndRecord(ProcPtr filterp, Point corner, OSType quality, Handle *sndhandlep) M68K_INLINE(0x203C, 0x0804, 0x0014, 0xA800);
 
-pascal OSErr SndRecordToFile(ProcPtr filterp, Point corner, OSType quality, INTEGER refnum) M68K_INLINE(0x203C, 0x0708, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndRecordToFile(ProcPtr filterp, Point corner, OSType quality, INTEGER refnum) M68K_INLINE(0x203C, 0x0708, 0x0014, 0xA800);
 
-pascal OSErr SPBOpenDevice(ConstStringPtr name, INTEGER permission, LONGINT *inrefnump) M68K_INLINE(0x203C, 0x0518, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBOpenDevice(ConstStringPtr name, INTEGER permission, LONGINT *inrefnump) M68K_INLINE(0x203C, 0x0518, 0x0014, 0xA800);
 
-pascal OSErr SPBCloseDevice(LONGINT inrefnum) M68K_INLINE(0x203C, 0x021C, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBCloseDevice(LONGINT inrefnum) M68K_INLINE(0x203C, 0x021C, 0x0014, 0xA800);
 
-pascal OSErr SPBRecord(SPBPtr inparamp, Boolean async) M68K_INLINE(0x203C, 0x0320, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBRecord(SPBPtr inparamp, Boolean async) M68K_INLINE(0x203C, 0x0320, 0x0014, 0xA800);
 
-pascal OSErr SPBRecordToFile(INTEGER refnum, SPBPtr inparamp, Boolean async) M68K_INLINE(0x203C, 0x0424, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBRecordToFile(INTEGER refnum, SPBPtr inparamp, Boolean async) M68K_INLINE(0x203C, 0x0424, 0x0014, 0xA800);
 
-pascal OSErr SPBPauseRecording(LONGINT refnum) M68K_INLINE(0x203C, 0x0228, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBPauseRecording(LONGINT refnum) M68K_INLINE(0x203C, 0x0228, 0x0014, 0xA800);
 
-pascal OSErr SPBResumeRecording(LONGINT refnum) M68K_INLINE(0x203C, 0x022C, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBResumeRecording(LONGINT refnum) M68K_INLINE(0x203C, 0x022C, 0x0014, 0xA800);
 
-pascal OSErr SPBStopRecording(LONGINT refnum) M68K_INLINE(0x203C, 0x0230, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBStopRecording(LONGINT refnum) M68K_INLINE(0x203C, 0x0230, 0x0014, 0xA800);
 
-pascal OSErr SPBGetRecordingStatus(LONGINT refnum, INTEGER *recordingstatus, INTEGER *meterlevel, LONGINT *totalsampstorecord, LONGINT *numsampsrecorded, LONGINT *totalmsecstorecord, LONGINT *numbermsecsrecorded) M68K_INLINE(0x203C, 0x0E34, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBGetRecordingStatus(LONGINT refnum, INTEGER *recordingstatus, INTEGER *meterlevel, LONGINT *totalsampstorecord, LONGINT *numsampsrecorded, LONGINT *totalmsecstorecord, LONGINT *numbermsecsrecorded) M68K_INLINE(0x203C, 0x0E34, 0x0014, 0xA800);
 
-pascal OSErr SPBGetDeviceInfo(LONGINT refnum, OSType info, Ptr infop) M68K_INLINE(0x203C, 0x0638, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBGetDeviceInfo(LONGINT refnum, OSType info, Ptr infop) M68K_INLINE(0x203C, 0x0638, 0x0014, 0xA800);
 
-pascal OSErr SPBSetDeviceInfo(LONGINT refnum, OSType info, Ptr infop) M68K_INLINE(0x203C, 0x063C, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBSetDeviceInfo(LONGINT refnum, OSType info, Ptr infop) M68K_INLINE(0x203C, 0x063C, 0x0014, 0xA800);
 
-pascal OSErr SetupSndHeader(Handle sndhandle, INTEGER numchannels, Fixed rate, INTEGER size, OSType compresion, INTEGER basefreq, LONGINT numbytes, INTEGER *headerlenp) M68K_INLINE(0x203C, 0x0D48, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SetupSndHeader(Handle sndhandle, INTEGER numchannels, Fixed rate, INTEGER size, OSType compresion, INTEGER basefreq, LONGINT numbytes, INTEGER *headerlenp) M68K_INLINE(0x203C, 0x0D48, 0x0014, 0xA800);
 
-pascal OSErr SetupAIFFHeader(INTEGER refnum, INTEGER numchannels, Fixed samplerate, INTEGER samplesize, OSType compression, LONGINT numbytes, LONGINT numframes) M68K_INLINE(0x203C, 0x0B4C, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SetupAIFFHeader(INTEGER refnum, INTEGER numchannels, Fixed samplerate, INTEGER samplesize, OSType compression, LONGINT numbytes, LONGINT numframes) M68K_INLINE(0x203C, 0x0B4C, 0x0014, 0xA800);
 
-pascal OSErr SPBSignInDevice(INTEGER refnum, ConstStringPtr name) M68K_INLINE(0x203C, 0x030C, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBSignInDevice(INTEGER refnum, ConstStringPtr name) M68K_INLINE(0x203C, 0x030C, 0x0014, 0xA800);
 
-pascal OSErr SPBSignOutDevice(INTEGER refnum) M68K_INLINE(0x203C, 0x0110, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBSignOutDevice(INTEGER refnum) M68K_INLINE(0x203C, 0x0110, 0x0014, 0xA800);
 
-pascal OSErr SPBGetIndexedDevice(INTEGER count, ConstStringPtr name, Handle *deviceiconhandlep) M68K_INLINE(0x203C, 0x0514, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBGetIndexedDevice(INTEGER count, ConstStringPtr name, Handle *deviceiconhandlep) M68K_INLINE(0x203C, 0x0514, 0x0014, 0xA800);
 
-pascal OSErr SPBMillisecondsToBytes(LONGINT refnum, LONGINT *millip) M68K_INLINE(0x203C, 0x0440, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBMillisecondsToBytes(LONGINT refnum, LONGINT *millip) M68K_INLINE(0x203C, 0x0440, 0x0014, 0xA800);
 
-pascal OSErr SPBBytesToMilliseconds(LONGINT refnum, LONGINT *bytecountp) M68K_INLINE(0x203C, 0x0444, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SPBBytesToMilliseconds(LONGINT refnum, LONGINT *bytecountp) M68K_INLINE(0x203C, 0x0444, 0x0014, 0xA800);
 
-pascal OSErr GetSysBeepVolume(LONGINT *levelp) M68K_INLINE(0x203C, 0x0224, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr GetSysBeepVolume(LONGINT *levelp) M68K_INLINE(0x203C, 0x0224, 0x0018, 0xA800);
 
-pascal OSErr SetSysBeepVolume(LONGINT level) M68K_INLINE(0x203C, 0x0228, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SetSysBeepVolume(LONGINT level) M68K_INLINE(0x203C, 0x0228, 0x0018, 0xA800);
 
-pascal OSErr GetDefaultOutputVolume(LONGINT *levelp) M68K_INLINE(0x203C, 0x022C, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr GetDefaultOutputVolume(LONGINT *levelp) M68K_INLINE(0x203C, 0x022C, 0x0018, 0xA800);
 
-pascal OSErr SetDefaultOutputVolume(LONGINT level) M68K_INLINE(0x203C, 0x0230, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SetDefaultOutputVolume(LONGINT level) M68K_INLINE(0x203C, 0x0230, 0x0018, 0xA800);
 
-pascal OSErr GetSoundHeaderOffset(Handle sndHandle, LONGINT *offset) M68K_INLINE(0x203C, 0x0404, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr GetSoundHeaderOffset(Handle sndHandle, LONGINT *offset) M68K_INLINE(0x203C, 0x0404, 0x0018, 0xA800);
 
-pascal UnsignedFixed UnsignedFixedMulDiv(UnsignedFixed value, UnsignedFixed multiplier, UnsignedFixed divisor) M68K_INLINE(0x203C, 0x060C, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal UnsignedFixed UnsignedFixedMulDiv(UnsignedFixed value, UnsignedFixed multiplier, UnsignedFixed divisor) M68K_INLINE(0x203C, 0x060C, 0x0018, 0xA800);
 
-pascal OSErr GetCompressionInfo(INTEGER compressionID, OSType format, INTEGER numChannels, INTEGER sampleSize, CompressionInfoPtr cp) M68K_INLINE(0x203C, 0x0710, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr GetCompressionInfo(INTEGER compressionID, OSType format, INTEGER numChannels, INTEGER sampleSize, CompressionInfoPtr cp) M68K_INLINE(0x203C, 0x0710, 0x0018, 0xA800);
 
-pascal OSErr SetSoundPreference(OSType theType, ConstStringPtr name, Handle settings) M68K_INLINE(0x203C, 0x0634, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SetSoundPreference(OSType theType, ConstStringPtr name, Handle settings) M68K_INLINE(0x203C, 0x0634, 0x0018, 0xA800);
 
-pascal OSErr GetSoundPreference(OSType theType, ConstStringPtr name, Handle settings) M68K_INLINE(0x203C, 0x0638, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr GetSoundPreference(OSType theType, ConstStringPtr name, Handle settings) M68K_INLINE(0x203C, 0x0638, 0x0018, 0xA800);
 
-pascal OSErr SndGetInfo(SndChannelPtr chan, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x063C, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndGetInfo(SndChannelPtr chan, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x063C, 0x0018, 0xA800);
 
-pascal OSErr SndSetInfo(SndChannelPtr chan, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0640, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SndSetInfo(SndChannelPtr chan, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0640, 0x0018, 0xA800);
 
 enum { _SndPlay = 0xA805 };
-pascal OSErr SndPlay(SndChannelPtr chanp, Handle sndh, Boolean async) M68K_INLINE(0xA805);
+MAC_SINCE(0x0600, "6.0") pascal OSErr SndPlay(SndChannelPtr chanp, Handle sndh, Boolean async) M68K_INLINE(0xA805);
 
 enum { _SndNewChannel = 0xA807 };
-pascal OSErr SndNewChannel(SndChannelPtr *chanpp, INTEGER synth, LONGINT init, SndCallbackUPP userroutinep) M68K_INLINE(0xA807);
+MAC_SINCE(0x0600, "6.0") pascal OSErr SndNewChannel(SndChannelPtr *chanpp, INTEGER synth, LONGINT init, SndCallbackUPP userroutinep) M68K_INLINE(0xA807);
 
 enum { _SndAddModifier = 0xA802 };
-pascal OSErr SndAddModifier(SndChannelPtr chanp, ProcPtr mod, INTEGER id, LONGINT init) M68K_INLINE(0xA802);
+MAC_SINCE(0x0600, "6.0") pascal OSErr SndAddModifier(SndChannelPtr chanp, ProcPtr mod, INTEGER id, LONGINT init) M68K_INLINE(0xA802);
 
 enum { _SndDoCommand = 0xA803 };
-pascal OSErr SndDoCommand(SndChannelPtr chanp, SndCommand *cmdp, Boolean nowait) M68K_INLINE(0xA803);
+MAC_SINCE(0x0600, "6.0") pascal OSErr SndDoCommand(SndChannelPtr chanp, SndCommand *cmdp, Boolean nowait) M68K_INLINE(0xA803);
 
 enum { _SndDoImmediate = 0xA804 };
-pascal OSErr SndDoImmediate(SndChannelPtr chanp, SndCommand *cmdp) M68K_INLINE(0xA804);
+MAC_SINCE(0x0600, "6.0") pascal OSErr SndDoImmediate(SndChannelPtr chanp, SndCommand *cmdp) M68K_INLINE(0xA804);
 
 enum { _SndControl = 0xA806 };
-pascal OSErr SndControl(INTEGER id, SndCommand *cmdp) M68K_INLINE(0xA806);
+MAC_SINCE(0x0600, "6.0") pascal OSErr SndControl(INTEGER id, SndCommand *cmdp) M68K_INLINE(0xA806);
 
 enum { _SndDisposeChannel = 0xA801 };
-pascal OSErr SndDisposeChannel(SndChannelPtr chanp, Boolean quitnow) M68K_INLINE(0xA801);
+MAC_SINCE(0x0600, "6.0") pascal OSErr SndDisposeChannel(SndChannelPtr chanp, Boolean quitnow) M68K_INLINE(0xA801);
 
-pascal void FinaleUnknown1(void) M68K_INLINE(0x7000, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void FinaleUnknown1(void) M68K_INLINE(0x7000, 0xA800);
 
-pascal OSErr FinaleUnknown2(ResType arg0, LONGINT arg1, Ptr arg2, Ptr arg3) M68K_INLINE(0x203C, 0x0004, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr FinaleUnknown2(ResType arg0, LONGINT arg1, Ptr arg2, Ptr arg3) M68K_INLINE(0x203C, 0x0004, 0x0004, 0xA800);
 
-pascal LONGINT DirectorUnknown3(void) M68K_INLINE(0x7004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal LONGINT DirectorUnknown3(void) M68K_INLINE(0x7004, 0xA800);
 
-pascal INTEGER DirectorUnknown4(ResType arg0, INTEGER arg1, Ptr arg2, Ptr arg3) M68K_INLINE(0x203C, 0x001C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal INTEGER DirectorUnknown4(ResType arg0, INTEGER arg1, Ptr arg2, Ptr arg3) M68K_INLINE(0x203C, 0x001C, 0x0004, 0xA800);
 
-pascal long SndDispVersion(INTEGER dispatchID) M68K_INLINE(0x7000, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal long SndDispVersion(INTEGER dispatchID) M68K_INLINE(0x7000, 0xA800);
 
 // Sound Manager 3.x: the format of a buffer of sound, for sound components and converters.
 typedef struct SoundComponentData SoundComponentData;
@@ -425,42 +429,43 @@ enum {
 };
 
 // Sound Manager 3.1 to 3.6: output devices, converters, parsing sound headers
-pascal OSErr GetSoundOutputInfo(Component outputDevice, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0644, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr GetSoundOutputInfo(Component outputDevice, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0644, 0x0018, 0xA800);
 
-pascal OSErr SetSoundOutputInfo(Component outputDevice, OSType selector, const void *infoPtr) M68K_INLINE(0x203C, 0x0648, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SetSoundOutputInfo(Component outputDevice, OSType selector, const void *infoPtr) M68K_INLINE(0x203C, 0x0648, 0x0018, 0xA800);
 
-pascal OSErr GetCompressionName(OSType compressionType, Str255 compressionName) M68K_INLINE(0x203C, 0x044C, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr GetCompressionName(OSType compressionType, Str255 compressionName) M68K_INLINE(0x203C, 0x044C, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterOpen(const SoundComponentData *inputFormat, const SoundComponentData *outputFormat, SoundConverter *sc) M68K_INLINE(0x203C, 0x0650, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterOpen(const SoundComponentData *inputFormat, const SoundComponentData *outputFormat, SoundConverter *sc) M68K_INLINE(0x203C, 0x0650, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterClose(SoundConverter sc) M68K_INLINE(0x203C, 0x0254, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterClose(SoundConverter sc) M68K_INLINE(0x203C, 0x0254, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterGetBufferSizes(SoundConverter sc, unsigned long inputBytesTarget, unsigned long *inputFrames, unsigned long *inputBytes, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0A58, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterGetBufferSizes(SoundConverter sc, unsigned long inputBytesTarget, unsigned long *inputFrames, unsigned long *inputBytes, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0A58, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterBeginConversion(SoundConverter sc) M68K_INLINE(0x203C, 0x025C, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterBeginConversion(SoundConverter sc) M68K_INLINE(0x203C, 0x025C, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterConvertBuffer(SoundConverter sc, const void *inputPtr, unsigned long inputFrames, void *outputPtr, unsigned long *outputFrames, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0C60, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterConvertBuffer(SoundConverter sc, const void *inputPtr, unsigned long inputFrames, void *outputPtr, unsigned long *outputFrames, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0C60, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterEndConversion(SoundConverter sc, void *outputPtr, unsigned long *outputFrames, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0864, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterEndConversion(SoundConverter sc, void *outputPtr, unsigned long *outputFrames, unsigned long *outputBytes) M68K_INLINE(0x203C, 0x0864, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterGetInfo(SoundConverter sc, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0668, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterGetInfo(SoundConverter sc, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x0668, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterSetInfo(SoundConverter sc, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x066C, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterSetInfo(SoundConverter sc, OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x066C, 0x0018, 0xA800);
 
-pascal OSErr SoundConverterFillBuffer(SoundConverter sc, SoundConverterFillBufferDataUPP fillBufferDataUPP, void *fillBufferDataRefCon, void *outputBuffer, unsigned long outputBufferByteSize, unsigned long *bytesWritten, unsigned long *framesWritten, unsigned long *outputFlags) M68K_INLINE(0x203C, 0x1078, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundConverterFillBuffer(SoundConverter sc, SoundConverterFillBufferDataUPP fillBufferDataUPP, void *fillBufferDataRefCon, void *outputBuffer, unsigned long outputBufferByteSize, unsigned long *bytesWritten, unsigned long *framesWritten, unsigned long *outputFlags) M68K_INLINE(0x203C, 0x1078, 0x0018, 0xA800);
 
-pascal OSErr SoundManagerGetInfo(OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x047C, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundManagerGetInfo(OSType selector, void *infoPtr) M68K_INLINE(0x203C, 0x047C, 0x0018, 0xA800);
 
-pascal OSErr SoundManagerSetInfo(OSType selector, const void *infoPtr) M68K_INLINE(0x203C, 0x0480, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr SoundManagerSetInfo(OSType selector, const void *infoPtr) M68K_INLINE(0x203C, 0x0480, 0x0018, 0xA800);
 
-pascal OSErr ParseAIFFHeader(INTEGER refNum, SoundComponentData *sndInfo, unsigned long *numFrames, unsigned long *dataOffset) M68K_INLINE(0x203C, 0x0758, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr ParseAIFFHeader(INTEGER refNum, SoundComponentData *sndInfo, unsigned long *numFrames, unsigned long *dataOffset) M68K_INLINE(0x203C, 0x0758, 0x0014, 0xA800);
 
-pascal OSErr ParseSndHeader(Handle sndHandle, SoundComponentData *sndInfo, unsigned long *numFrames, unsigned long *dataOffset) M68K_INLINE(0x203C, 0x085C, 0x0014, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr ParseSndHeader(Handle sndHandle, SoundComponentData *sndInfo, unsigned long *numFrames, unsigned long *dataOffset) M68K_INLINE(0x203C, 0x085C, 0x0014, 0xA800);
 
-pascal OSErr OpenMixerSoundComponent(SoundComponentDataPtr outputDescription, long outputFlags, ComponentInstance *mixerComponent) M68K_INLINE(0x203C, 0x0614, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr OpenMixerSoundComponent(SoundComponentDataPtr outputDescription, long outputFlags, ComponentInstance *mixerComponent) M68K_INLINE(0x203C, 0x0614, 0x0018, 0xA800);
 
-pascal OSErr CloseMixerSoundComponent(ComponentInstance ci) M68K_INLINE(0x203C, 0x0218, 0x0018, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr CloseMixerSoundComponent(ComponentInstance ci) M68K_INLINE(0x203C, 0x0218, 0x0018, 0xA800);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

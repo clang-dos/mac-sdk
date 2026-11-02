@@ -392,6 +392,7 @@
         type: Handle
     trap: 0xA9A5
     executor: C_
+    old_name: SizeResource
 
 # ####
 
@@ -443,6 +444,7 @@
         type: Handle
     trap: 0xA821
     executor: C_
+    old_name: MaxSizeRsrc
 
 # ####
 
@@ -575,6 +577,7 @@
         type: Handle
     trap: 0xA9AD
     executor: C_
+    old_name: RmveResource
 
 # ####
 

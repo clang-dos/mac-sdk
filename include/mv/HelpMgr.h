@@ -10,6 +10,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct HMStringResType HMStringResType;
 struct HMStringResType {
@@ -49,48 +53,49 @@ enum {
 // & 0xFF ? ###
 enum { _Pack14 = 0xA830 };
 
-pascal Boolean HMGetBalloons(void) M68K_INLINE(0x7003, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal Boolean HMGetBalloons(void) M68K_INLINE(0x7003, 0xA830);
 
-pascal OSErr HMSetBalloons(Boolean flag) M68K_INLINE(0x303C, 0x0104, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMSetBalloons(Boolean flag) M68K_INLINE(0x303C, 0x0104, 0xA830);
 
-pascal Boolean HMIsBalloon(void) M68K_INLINE(0x7007, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal Boolean HMIsBalloon(void) M68K_INLINE(0x7007, 0xA830);
 
-pascal OSErr HMShowBalloon(HMMessageRecord *msgp, Point tip, RectPtr alternaterectp, Ptr tipprocptr, INTEGER proc, INTEGER variant, INTEGER method) M68K_INLINE(0x303C, 0x0B01, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMShowBalloon(HMMessageRecord *msgp, Point tip, RectPtr alternaterectp, Ptr tipprocptr, INTEGER proc, INTEGER variant, INTEGER method) M68K_INLINE(0x303C, 0x0B01, 0xA830);
 
-pascal OSErr HMShowMenuBalloon(INTEGER item, INTEGER menuid, LONGINT flags, LONGINT itemreserved, Point tip, RectPtr alternaterectp, Ptr tipproc, INTEGER proc, INTEGER variant) M68K_INLINE(0x303C, 0x0E05, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMShowMenuBalloon(INTEGER item, INTEGER menuid, LONGINT flags, LONGINT itemreserved, Point tip, RectPtr alternaterectp, Ptr tipproc, INTEGER proc, INTEGER variant) M68K_INLINE(0x303C, 0x0E05, 0xA830);
 
-pascal OSErr HMRemoveBalloon(void) M68K_INLINE(0x7002, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMRemoveBalloon(void) M68K_INLINE(0x7002, 0xA830);
 
-pascal OSErr HMGetHelpMenuHandle(MenuHandle *mhp) M68K_INLINE(0x303C, 0x0200, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMGetHelpMenuHandle(MenuHandle *mhp) M68K_INLINE(0x303C, 0x0200, 0xA830);
 
-pascal OSErr HMGetFont(INTEGER *fontp) M68K_INLINE(0x303C, 0x020A, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMGetFont(INTEGER *fontp) M68K_INLINE(0x303C, 0x020A, 0xA830);
 
-pascal OSErr HMGetFontSize(INTEGER *sizep) M68K_INLINE(0x303C, 0x020B, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMGetFontSize(INTEGER *sizep) M68K_INLINE(0x303C, 0x020B, 0xA830);
 
-pascal OSErr HMSetFont(INTEGER font) M68K_INLINE(0x303C, 0x0108, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMSetFont(INTEGER font) M68K_INLINE(0x303C, 0x0108, 0xA830);
 
-pascal OSErr HMSetFontSize(INTEGER size) M68K_INLINE(0x303C, 0x0109, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMSetFontSize(INTEGER size) M68K_INLINE(0x303C, 0x0109, 0xA830);
 
-pascal OSErr HMSetDialogResID(INTEGER resid) M68K_INLINE(0x303C, 0x010C, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMSetDialogResID(INTEGER resid) M68K_INLINE(0x303C, 0x010C, 0xA830);
 
-pascal OSErr HMGetDialogResID(INTEGER *residp) M68K_INLINE(0x303C, 0x0213, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMGetDialogResID(INTEGER *residp) M68K_INLINE(0x303C, 0x0213, 0xA830);
 
-pascal OSErr HMSetMenuResID(INTEGER menuid, INTEGER resid) M68K_INLINE(0x303C, 0x020D, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMSetMenuResID(INTEGER menuid, INTEGER resid) M68K_INLINE(0x303C, 0x020D, 0xA830);
 
-pascal OSErr HMGetMenuResID(INTEGER menuID, INTEGER *residp) M68K_INLINE(0x303C, 0x0314, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMGetMenuResID(INTEGER menuID, INTEGER *residp) M68K_INLINE(0x303C, 0x0314, 0xA830);
 
-pascal OSErr HMScanTemplateItems(INTEGER whichid, INTEGER whicresfile, ResType whictype) M68K_INLINE(0x303C, 0x0410, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMScanTemplateItems(INTEGER whichid, INTEGER whicresfile, ResType whictype) M68K_INLINE(0x303C, 0x0410, 0xA830);
 
-pascal OSErr HMBalloonRect(HMMessageRecord *messp, Rect *rectp) M68K_INLINE(0x303C, 0x040E, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMBalloonRect(HMMessageRecord *messp, Rect *rectp) M68K_INLINE(0x303C, 0x040E, 0xA830);
 
-pascal OSErr HMBalloonPict(HMMessageRecord *messp, PicHandle *pictp) M68K_INLINE(0x303C, 0x040F, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMBalloonPict(HMMessageRecord *messp, PicHandle *pictp) M68K_INLINE(0x303C, 0x040F, 0xA830);
 
-pascal OSErr HMGetBalloonWindow(WindowPtr *windowpp) M68K_INLINE(0x303C, 0x0215, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMGetBalloonWindow(WindowPtr *windowpp) M68K_INLINE(0x303C, 0x0215, 0xA830);
 
-pascal OSErr HMExtractHelpMsg(ResType type, INTEGER resid, INTEGER msg, INTEGER state, HMMessageRecord *helpmsgp) M68K_INLINE(0x303C, 0x0711, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMExtractHelpMsg(ResType type, INTEGER resid, INTEGER msg, INTEGER state, HMMessageRecord *helpmsgp) M68K_INLINE(0x303C, 0x0711, 0xA830);
 
-pascal OSErr HMGetIndHelpMsg(ResType type, INTEGER resid, INTEGER msg, INTEGER state, LONGINT *options, Point tip, Rect *altrectp, INTEGER *theprocp, INTEGER *variantp, HMMessageRecord *helpmsgp, INTEGER *count) M68K_INLINE(0x303C, 0x1306, 0xA830);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'help'") pascal OSErr HMGetIndHelpMsg(ResType type, INTEGER resid, INTEGER msg, INTEGER state, LONGINT *options, Point tip, Rect *altrectp, INTEGER *theprocp, INTEGER *variantp, HMMessageRecord *helpmsgp, INTEGER *count) M68K_INLINE(0x303C, 0x1306, 0xA830);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

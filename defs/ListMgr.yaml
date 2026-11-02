@@ -186,6 +186,7 @@
     dispatcher: Pack0
     selector: 0x0034
     executor: C_
+    old_name: LFind
 
 # ####
 
@@ -381,6 +382,7 @@
     dispatcher: Pack0
     selector: 0x002C
     executor: C_
+    old_name: LDoDraw
 
 # ####
 

@@ -8,6 +8,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     curCMVersion = 2,
@@ -263,7 +267,7 @@ struct CMIOPB {
 typedef CMIOPB *CMIOPBPtr;
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr InitCM(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr InitCM(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0101 };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -273,11 +277,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr InitCM(void) {
     return (CMErr)_ret;
 }
 #else
-pascal CMErr InitCM(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr InitCM(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long CMGetRefCon(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long CMGetRefCon(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0103, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -287,11 +291,11 @@ static __inline__ __attribute__((__always_inline__)) long CMGetRefCon(ConnHandle
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long CMGetRefCon(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long CMGetRefCon(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMSetRefCon(ConnHandle hConn, long refCon) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMSetRefCon(ConnHandle hConn, long refCon) {
     struct { short _sel; __typeof__(refCon) refCon; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0102, refCon, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -301,11 +305,11 @@ static __inline__ __attribute__((__always_inline__)) void CMSetRefCon(ConnHandle
     (void)_ret;
 }
 #else
-pascal void CMSetRefCon(ConnHandle hConn, long refCon);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMSetRefCon(ConnHandle hConn, long refCon);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long CMGetUserData(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long CMGetUserData(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0105, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -315,11 +319,11 @@ static __inline__ __attribute__((__always_inline__)) long CMGetUserData(ConnHand
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long CMGetUserData(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long CMGetUserData(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMSetUserData(ConnHandle hConn, long userData) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMSetUserData(ConnHandle hConn, long userData) {
     struct { short _sel; __typeof__(userData) userData; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0104, userData, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -329,11 +333,11 @@ static __inline__ __attribute__((__always_inline__)) void CMSetUserData(ConnHand
     (void)_ret;
 }
 #else
-pascal void CMSetUserData(ConnHandle hConn, long userData);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMSetUserData(ConnHandle hConn, long userData);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMGetToolName(INTEGER procID, Str255 name) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMGetToolName(INTEGER procID, Str255 name) {
     struct { short _sel; __typeof__(name) name; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0106, name, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -343,11 +347,11 @@ static __inline__ __attribute__((__always_inline__)) void CMGetToolName(INTEGER 
     (void)_ret;
 }
 #else
-pascal void CMGetToolName(INTEGER procID, Str255 name);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMGetToolName(INTEGER procID, Str255 name);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CMGetProcID(ConstStr255Param name) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER CMGetProcID(ConstStr255Param name) {
     struct { short _sel; __typeof__(name) name; } __attribute__((__packed__)) _pb = { 0x0107, name };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -357,11 +361,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CMGetProcID(ConstSt
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER CMGetProcID(ConstStr255Param name);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER CMGetProcID(ConstStr255Param name);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) ConnHandle CMNew(INTEGER procID, CMRecFlags flags, ConstCMBufferSizesParam desiredSizes, long refCon, long userData) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) ConnHandle CMNew(INTEGER procID, CMRecFlags flags, ConstCMBufferSizesParam desiredSizes, long refCon, long userData) {
     struct { short _sel; __typeof__(userData) userData; __typeof__(refCon) refCon; __typeof__(desiredSizes) desiredSizes; __typeof__(flags) flags; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0108, userData, refCon, desiredSizes, flags, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -371,11 +375,11 @@ static __inline__ __attribute__((__always_inline__)) ConnHandle CMNew(INTEGER pr
     { union { long l; ConnHandle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal ConnHandle CMNew(INTEGER procID, CMRecFlags flags, ConstCMBufferSizesParam desiredSizes, long refCon, long userData);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal ConnHandle CMNew(INTEGER procID, CMRecFlags flags, ConstCMBufferSizesParam desiredSizes, long refCon, long userData);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMDispose(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMDispose(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0109, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -385,11 +389,11 @@ static __inline__ __attribute__((__always_inline__)) void CMDispose(ConnHandle h
     (void)_ret;
 }
 #else
-pascal void CMDispose(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMDispose(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMIdle(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMIdle(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x010A, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -399,11 +403,11 @@ static __inline__ __attribute__((__always_inline__)) void CMIdle(ConnHandle hCon
     (void)_ret;
 }
 #else
-pascal void CMIdle(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMIdle(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMOpen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMOpen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout) {
     struct { short _sel; __typeof__(timeout) timeout; __typeof__(completor) completor; __typeof__(async) async; char _pad_async; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x010B, timeout, completor, async, 0, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -413,11 +417,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMOpen(ConnHandle hCo
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMOpen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMOpen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMListen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMListen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout) {
     struct { short _sel; __typeof__(timeout) timeout; __typeof__(completor) completor; __typeof__(async) async; char _pad_async; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x010C, timeout, completor, async, 0, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -427,11 +431,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMListen(ConnHandle h
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMListen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMListen(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMAccept(ConnHandle hConn, Boolean accept) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMAccept(ConnHandle hConn, Boolean accept) {
     struct { short _sel; __typeof__(accept) accept; char _pad_accept; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x010D, accept, 0, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -441,11 +445,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMAccept(ConnHandle h
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMAccept(ConnHandle hConn, Boolean accept);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMAccept(ConnHandle hConn, Boolean accept);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMClose(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout, Boolean now) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMClose(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout, Boolean now) {
     struct { short _sel; __typeof__(now) now; char _pad_now; __typeof__(timeout) timeout; __typeof__(completor) completor; __typeof__(async) async; char _pad_async; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x010E, now, 0, timeout, completor, async, 0, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -455,11 +459,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMClose(ConnHandle hC
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMClose(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout, Boolean now);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMClose(ConnHandle hConn, Boolean async, ConnectionCompletionUPP completor, long timeout, Boolean now);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMAbort(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMAbort(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x010F, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -469,11 +473,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMAbort(ConnHandle hC
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMAbort(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMAbort(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMStatus(ConnHandle hConn, CMBufferSizes sizes, CMStatFlags *flags) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMStatus(ConnHandle hConn, CMBufferSizes sizes, CMStatFlags *flags) {
     struct { short _sel; __typeof__(flags) flags; __typeof__(sizes) sizes; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0110, flags, sizes, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -483,11 +487,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMStatus(ConnHandle h
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMStatus(ConnHandle hConn, CMBufferSizes sizes, CMStatFlags *flags);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMStatus(ConnHandle hConn, CMBufferSizes sizes, CMStatFlags *flags);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMRead(ConnHandle hConn, void *theBuffer, long *toRead, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags *flags) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMRead(ConnHandle hConn, void *theBuffer, long *toRead, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags *flags) {
     struct { short _sel; __typeof__(flags) flags; __typeof__(timeout) timeout; __typeof__(completor) completor; __typeof__(async) async; char _pad_async; __typeof__(theChannel) theChannel; __typeof__(toRead) toRead; __typeof__(theBuffer) theBuffer; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0111, flags, timeout, completor, async, 0, theChannel, toRead, theBuffer, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -497,11 +501,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMRead(ConnHandle hCo
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMRead(ConnHandle hConn, void *theBuffer, long *toRead, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags *flags);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMRead(ConnHandle hConn, void *theBuffer, long *toRead, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags *flags);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMWrite(ConnHandle hConn, const void *theBuffer, long *toWrite, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags flags) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMWrite(ConnHandle hConn, const void *theBuffer, long *toWrite, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags flags) {
     struct { short _sel; __typeof__(flags) flags; __typeof__(timeout) timeout; __typeof__(completor) completor; __typeof__(async) async; char _pad_async; __typeof__(theChannel) theChannel; __typeof__(toWrite) toWrite; __typeof__(theBuffer) theBuffer; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0112, flags, timeout, completor, async, 0, theChannel, toWrite, theBuffer, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -511,11 +515,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMWrite(ConnHandle hC
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMWrite(ConnHandle hConn, const void *theBuffer, long *toWrite, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags flags);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMWrite(ConnHandle hConn, const void *theBuffer, long *toWrite, CMChannel theChannel, Boolean async, ConnectionCompletionUPP completor, long timeout, CMFlags flags);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMActivate(ConnHandle hConn, Boolean activate) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMActivate(ConnHandle hConn, Boolean activate) {
     struct { short _sel; __typeof__(activate) activate; char _pad_activate; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0113, activate, 0, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -525,11 +529,11 @@ static __inline__ __attribute__((__always_inline__)) void CMActivate(ConnHandle 
     (void)_ret;
 }
 #else
-pascal void CMActivate(ConnHandle hConn, Boolean activate);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMActivate(ConnHandle hConn, Boolean activate);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMResume(ConnHandle hConn, Boolean resume) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMResume(ConnHandle hConn, Boolean resume) {
     struct { short _sel; __typeof__(resume) resume; char _pad_resume; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0114, resume, 0, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -539,11 +543,11 @@ static __inline__ __attribute__((__always_inline__)) void CMResume(ConnHandle hC
     (void)_ret;
 }
 #else
-pascal void CMResume(ConnHandle hConn, Boolean resume);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMResume(ConnHandle hConn, Boolean resume);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean CMMenu(ConnHandle hConn, INTEGER menuID, INTEGER item) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean CMMenu(ConnHandle hConn, INTEGER menuID, INTEGER item) {
     struct { short _sel; __typeof__(item) item; __typeof__(menuID) menuID; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0115, item, menuID, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -553,11 +557,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean CMMenu(ConnHandle h
     return (Boolean)_ret;
 }
 #else
-pascal Boolean CMMenu(ConnHandle hConn, INTEGER menuID, INTEGER item);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean CMMenu(ConnHandle hConn, INTEGER menuID, INTEGER item);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMReset(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMReset(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0116, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -567,11 +571,11 @@ static __inline__ __attribute__((__always_inline__)) void CMReset(ConnHandle hCo
     (void)_ret;
 }
 #else
-pascal void CMReset(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMReset(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean CMValidate(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean CMValidate(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0117, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -581,11 +585,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean CMValidate(ConnHand
     return (Boolean)_ret;
 }
 #else
-pascal Boolean CMValidate(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean CMValidate(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate) {
     struct { short _sel; __typeof__(allocate) allocate; char _pad_allocate; __typeof__(procID) procID; __typeof__(theConfig) theConfig; } __attribute__((__packed__)) _pb = { 0x0118, allocate, 0, procID, theConfig };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -595,11 +599,11 @@ static __inline__ __attribute__((__always_inline__)) void CMDefault(Ptr *theConf
     (void)_ret;
 }
 #else
-pascal void CMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMDefault(Ptr *theConfig, INTEGER procID, Boolean allocate);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle CMSetupPreflight(INTEGER procID, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Handle CMSetupPreflight(INTEGER procID, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0123, magicCookie, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -609,11 +613,11 @@ static __inline__ __attribute__((__always_inline__)) Handle CMSetupPreflight(INT
     { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Handle CMSetupPreflight(INTEGER procID, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Handle CMSetupPreflight(INTEGER procID, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean CMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean CMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theItem) theItem; __typeof__(theEvent) theEvent; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0122, magicCookie, theItem, theEvent, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -623,11 +627,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean CMSetupFilter(INTEG
     return (Boolean)_ret;
 }
 #else
-pascal Boolean CMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean CMSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0119, magicCookie, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -637,11 +641,11 @@ static __inline__ __attribute__((__always_inline__)) void CMSetupSetup(INTEGER p
     (void)_ret;
 }
 #else
-pascal void CMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theItem) theItem; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x011A, magicCookie, theItem, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -651,11 +655,11 @@ static __inline__ __attribute__((__always_inline__)) void CMSetupItem(INTEGER pr
     (void)_ret;
 }
 #else
-pascal void CMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(OKed) OKed; char _pad_OKed; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x012E, magicCookie, OKed, 0, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -665,11 +669,11 @@ static __inline__ __attribute__((__always_inline__)) void CMSetupXCleanup(INTEGE
     (void)_ret;
 }
 #else
-pascal void CMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMSetupPostflight(INTEGER procID) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMSetupPostflight(INTEGER procID) {
     struct { short _sel; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x012B, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -679,11 +683,11 @@ static __inline__ __attribute__((__always_inline__)) void CMSetupPostflight(INTE
     (void)_ret;
 }
 #else
-pascal void CMSetupPostflight(INTEGER procID);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMSetupPostflight(INTEGER procID);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Ptr CMGetConfig(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Ptr CMGetConfig(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x011C, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -693,11 +697,11 @@ static __inline__ __attribute__((__always_inline__)) Ptr CMGetConfig(ConnHandle 
     { union { long l; Ptr r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Ptr CMGetConfig(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Ptr CMGetConfig(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CMSetConfig(ConnHandle hConn, const void *thePtr) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER CMSetConfig(ConnHandle hConn, const void *thePtr) {
     struct { short _sel; __typeof__(thePtr) thePtr; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x011D, thePtr, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -707,11 +711,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CMSetConfig(ConnHan
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER CMSetConfig(ConnHandle hConn, const void *thePtr);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER CMSetConfig(ConnHandle hConn, const void *thePtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr CMIntlToEnglish(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) OSErr CMIntlToEnglish(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
     struct { short _sel; __typeof__(language) language; __typeof__(outputPtr) outputPtr; __typeof__(inputPtr) inputPtr; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x011E, language, outputPtr, inputPtr, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -721,11 +725,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr CMIntlToEnglish(ConnH
     return (OSErr)_ret;
 }
 #else
-pascal OSErr CMIntlToEnglish(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal OSErr CMIntlToEnglish(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr CMEnglishToIntl(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) OSErr CMEnglishToIntl(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
     struct { short _sel; __typeof__(language) language; __typeof__(outputPtr) outputPtr; __typeof__(inputPtr) inputPtr; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x011F, language, outputPtr, inputPtr, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -735,11 +739,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr CMEnglishToIntl(ConnH
     return (OSErr)_ret;
 }
 #else
-pascal OSErr CMEnglishToIntl(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal OSErr CMEnglishToIntl(ConnHandle hConn, const void *inputPtr, Ptr *outputPtr, INTEGER language);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long CMAddSearch(ConnHandle hConn, ConstStr255Param theString, CMSearchFlags flags, ConnectionSearchCallBackUPP callBack) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long CMAddSearch(ConnHandle hConn, ConstStr255Param theString, CMSearchFlags flags, ConnectionSearchCallBackUPP callBack) {
     struct { short _sel; __typeof__(callBack) callBack; __typeof__(flags) flags; __typeof__(theString) theString; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0126, callBack, flags, theString, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -749,11 +753,11 @@ static __inline__ __attribute__((__always_inline__)) long CMAddSearch(ConnHandle
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long CMAddSearch(ConnHandle hConn, ConstStr255Param theString, CMSearchFlags flags, ConnectionSearchCallBackUPP callBack);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long CMAddSearch(ConnHandle hConn, ConstStr255Param theString, CMSearchFlags flags, ConnectionSearchCallBackUPP callBack);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMRemoveSearch(ConnHandle hConn, long refnum) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMRemoveSearch(ConnHandle hConn, long refnum) {
     struct { short _sel; __typeof__(refnum) refnum; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0127, refnum, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -763,11 +767,11 @@ static __inline__ __attribute__((__always_inline__)) void CMRemoveSearch(ConnHan
     (void)_ret;
 }
 #else
-pascal void CMRemoveSearch(ConnHandle hConn, long refnum);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMRemoveSearch(ConnHandle hConn, long refnum);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMClearSearch(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMClearSearch(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0128, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -777,11 +781,11 @@ static __inline__ __attribute__((__always_inline__)) void CMClearSearch(ConnHand
     (void)_ret;
 }
 #else
-pascal void CMClearSearch(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMClearSearch(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMGetConnEnvirons(ConnHandle hConn, ConnEnvironRec *theEnvirons) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMGetConnEnvirons(ConnHandle hConn, ConnEnvironRec *theEnvirons) {
     struct { short _sel; __typeof__(theEnvirons) theEnvirons; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x012C, theEnvirons, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -791,11 +795,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMGetConnEnvirons(Con
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMGetConnEnvirons(ConnHandle hConn, ConnEnvironRec *theEnvirons);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMGetConnEnvirons(ConnHandle hConn, ConnEnvironRec *theEnvirons);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CMChoose(ConnHandle *hConn, Point where, ConnectionChooseIdleUPP idle) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER CMChoose(ConnHandle *hConn, Point where, ConnectionChooseIdleUPP idle) {
     struct { short _sel; __typeof__(idle) idle; __typeof__(where) where; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0124, idle, where, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -805,11 +809,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CMChoose(ConnHandle
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER CMChoose(ConnHandle *hConn, Point where, ConnectionChooseIdleUPP idle);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER CMChoose(ConnHandle *hConn, Point where, ConnectionChooseIdleUPP idle);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMEvent(ConnHandle hConn, const EventRecord *theEvent) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMEvent(ConnHandle hConn, const EventRecord *theEvent) {
     struct { short _sel; __typeof__(theEvent) theEvent; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x012A, theEvent, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -819,11 +823,11 @@ static __inline__ __attribute__((__always_inline__)) void CMEvent(ConnHandle hCo
     (void)_ret;
 }
 #else
-pascal void CMEvent(ConnHandle hConn, const EventRecord *theEvent);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMEvent(ConnHandle hConn, const EventRecord *theEvent);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMGetErrorString(ConnHandle hConn, INTEGER id, Str255 errMsg) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMGetErrorString(ConnHandle hConn, INTEGER id, Str255 errMsg) {
     struct { short _sel; __typeof__(errMsg) errMsg; __typeof__(id) id; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x012F, errMsg, id, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -833,11 +837,11 @@ static __inline__ __attribute__((__always_inline__)) void CMGetErrorString(ConnH
     (void)_ret;
 }
 #else
-pascal void CMGetErrorString(ConnHandle hConn, INTEGER id, Str255 errMsg);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMGetErrorString(ConnHandle hConn, INTEGER id, Str255 errMsg);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMNewIOPB(ConnHandle hConn, CMIOPBPtr *theIOPB) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMNewIOPB(ConnHandle hConn, CMIOPBPtr *theIOPB) {
     struct { short _sel; __typeof__(theIOPB) theIOPB; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0130, theIOPB, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -847,11 +851,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMNewIOPB(ConnHandle 
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMNewIOPB(ConnHandle hConn, CMIOPBPtr *theIOPB);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMNewIOPB(ConnHandle hConn, CMIOPBPtr *theIOPB);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMDisposeIOPB(ConnHandle hConn, CMIOPBPtr theIOPB) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMDisposeIOPB(ConnHandle hConn, CMIOPBPtr theIOPB) {
     struct { short _sel; __typeof__(theIOPB) theIOPB; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0131, theIOPB, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -861,11 +865,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMDisposeIOPB(ConnHan
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMDisposeIOPB(ConnHandle hConn, CMIOPBPtr theIOPB);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMDisposeIOPB(ConnHandle hConn, CMIOPBPtr theIOPB);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMPBRead(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMPBRead(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async) {
     struct { short _sel; __typeof__(async) async; char _pad_async; __typeof__(theIOPB) theIOPB; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0132, async, 0, theIOPB, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -875,11 +879,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMPBRead(ConnHandle h
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMPBRead(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMPBRead(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMPBWrite(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMPBWrite(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async) {
     struct { short _sel; __typeof__(async) async; char _pad_async; __typeof__(theIOPB) theIOPB; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0133, async, 0, theIOPB, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -889,11 +893,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMPBWrite(ConnHandle 
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMPBWrite(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMPBWrite(ConnHandle hConn, CMIOPBPtr theIOPB, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMPBIOKill(ConnHandle hConn, CMIOPBPtr theIOPB) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMPBIOKill(ConnHandle hConn, CMIOPBPtr theIOPB) {
     struct { short _sel; __typeof__(theIOPB) theIOPB; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0134, theIOPB, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -903,11 +907,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMPBIOKill(ConnHandle
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMPBIOKill(ConnHandle hConn, CMIOPBPtr theIOPB);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMPBIOKill(ConnHandle hConn, CMIOPBPtr theIOPB);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void CMBreak(ConnHandle hConn, long duration, Boolean async, ConnectionCompletionUPP completor) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void CMBreak(ConnHandle hConn, long duration, Boolean async, ConnectionCompletionUPP completor) {
     struct { short _sel; __typeof__(completor) completor; __typeof__(async) async; char _pad_async; __typeof__(duration) duration; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0125, completor, async, 0, duration, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -917,11 +921,11 @@ static __inline__ __attribute__((__always_inline__)) void CMBreak(ConnHandle hCo
     (void)_ret;
 }
 #else
-pascal void CMBreak(ConnHandle hConn, long duration, Boolean async, ConnectionCompletionUPP completor);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void CMBreak(ConnHandle hConn, long duration, Boolean async, ConnectionCompletionUPP completor);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CMErr CMIOKill(ConnHandle hConn, INTEGER which) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CMErr CMIOKill(ConnHandle hConn, INTEGER which) {
     struct { short _sel; __typeof__(which) which; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0129, which, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -931,11 +935,11 @@ static __inline__ __attribute__((__always_inline__)) CMErr CMIOKill(ConnHandle h
     return (CMErr)_ret;
 }
 #else
-pascal CMErr CMIOKill(ConnHandle hConn, INTEGER which);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CMErr CMIOKill(ConnHandle hConn, INTEGER which);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle CMGetVersion(ConnHandle hConn) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Handle CMGetVersion(ConnHandle hConn) {
     struct { short _sel; __typeof__(hConn) hConn; } __attribute__((__packed__)) _pb = { 0x0120, hConn };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -945,11 +949,11 @@ static __inline__ __attribute__((__always_inline__)) Handle CMGetVersion(ConnHan
     { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Handle CMGetVersion(ConnHandle hConn);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Handle CMGetVersion(ConnHandle hConn);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CMGetCMVersion(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER CMGetCMVersion(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0121 };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -959,9 +963,10 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CMGetCMVersion(void
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER CMGetCMVersion(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER CMGetCMVersion(void);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

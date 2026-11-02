@@ -443,6 +443,7 @@
     dispatcher: ScriptUtil
     selector: 0x8008FFF2
     executor: C_
+    old_name: LongDate2Secs
 
 # ####
 
@@ -456,6 +457,7 @@
     dispatcher: ScriptUtil
     selector: 0x8008FFF0
     executor: C_
+    old_name: LongSecs2Date
 
 # ####
 
@@ -468,6 +470,7 @@
     dispatcher: ScriptUtil
     selector: 0x84020008
     executor: C_
+    old_name: GetEnvirons
 
 # ####
 
@@ -482,6 +485,7 @@
     dispatcher: ScriptUtil
     selector: 0x8206000A
     executor: C_
+    old_name: SetEnvirons
 
 # ####
 
@@ -524,6 +528,7 @@
     dispatcher: ScriptUtil
     selector: 0x82020006
     executor: C_
+    old_name: Font2Script
 
 # ####
 
@@ -717,6 +722,7 @@
     dispatcher: ScriptUtil
     selector: 0x8214FFF4
     executor: C_
+    old_name: String2Time
 
 # ####
 
@@ -781,6 +787,7 @@
     dispatcher: ScriptUtil
     selector: 0x8214FFF6
     executor: C_
+    old_name: String2Date
 
 # ####
 
@@ -904,6 +911,7 @@
     dispatcher: ScriptUtil
     selector: 0x8210FFE6
     executor: C_
+    old_name: FormatStr2X
 
 # ####
 
@@ -922,6 +930,7 @@
     dispatcher: ScriptUtil
     selector: 0x8210FFE8
     executor: C_
+    old_name: FormatX2Str
 
 # ####
 
@@ -938,6 +947,7 @@
     dispatcher: ScriptUtil
     selector: 0x820CFFEC
     executor: C_
+    old_name: Str2Format
 
 # ####
 
@@ -1968,6 +1978,7 @@
       type: TripleInt
     dispatcher: ScriptUtil
     selector: 2182152170
+    old_name: Format2Str
 
 # ####
 
@@ -2041,6 +2052,8 @@
       type: Point
     - name: denom
       type: Point
+    dispatcher: ScriptUtil
+    selector: 0x8222002E
 
 # ####
 
@@ -2064,6 +2077,8 @@
       type: Point
     - name: denom
       type: Point
+    dispatcher: ScriptUtil
+    selector: 0x821C0030
 
 # ####
 
@@ -2082,6 +2097,8 @@
       type: Point
     - name: denom
       type: Point
+    dispatcher: ScriptUtil
+    selector: 0x80160032
 
 # ####
 
@@ -2102,6 +2119,8 @@
       type: Point
     - name: denom
       type: Point
+    dispatcher: ScriptUtil
+    selector: 0x801A0034
 
 # ####
 
@@ -2119,6 +2138,8 @@
       type: Point
     - name: denom
       type: Point
+    dispatcher: ScriptUtil
+    selector: 0x84120036
 
 # ####
 

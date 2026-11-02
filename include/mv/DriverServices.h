@@ -7,6 +7,10 @@
 #include "SoundMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // The low 16 bits are an OSErr; the high 16 are its sign extension.
 typedef SInt32 OSStatus;
@@ -376,6 +380,7 @@ struct DriverDescription {
 
 typedef DriverDescription *DriverDescriptionPtr;
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

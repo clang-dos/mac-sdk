@@ -471,6 +471,7 @@
         type: DialogPtr
     trap: 0xA983
     executor: C_
+    old_name: DisposDialog
 
 # ####
 
@@ -517,6 +518,7 @@
         type: Point
     trap: 0xA984
     executor: C_
+    old_name: FindDItem
 
 # ####
 
@@ -529,6 +531,7 @@
         type: RgnHandle
     trap: 0xA978
     executor: C_
+    old_name: UpdtDialog
 
 # ####
 
@@ -656,6 +659,7 @@
         type: Rect*
     trap: 0xA98D
     executor: C_
+    old_name: GetDItem
 
 # ####
 
@@ -674,6 +678,7 @@
         type: const Rect*
     trap: 0xA98E
     executor: C_
+    old_name: SetDItem
 
 # ####
 
@@ -686,6 +691,7 @@
         type: StringPtr
     trap: 0xA990
     executor: C_
+    old_name: GetIText
 
 # ####
 
@@ -698,6 +704,7 @@
         type: ConstStringPtr
     trap: 0xA98F
     executor: C_
+    old_name: SetIText
 
 # ####
 
@@ -714,6 +721,7 @@
         type: INTEGER
     trap: 0xA97E
     executor: C_
+    old_name: SelIText
 
 # ####
 
@@ -741,6 +749,7 @@
         type: INTEGER
     trap: 0xA827
     executor: C_
+    old_name: HideDItem
 
 # ####
 
@@ -753,6 +762,7 @@
         type: INTEGER
     trap: 0xA828
     executor: C_
+    old_name: ShowDItem
 
 # ####
 
@@ -771,6 +781,7 @@
       - type: Handle
     trap: 0xAA4B
     executor: C_
+    old_name: NewCDialog
 
 # ####
 

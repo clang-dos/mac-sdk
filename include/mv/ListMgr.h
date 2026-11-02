@@ -8,6 +8,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef Point Cell;
 
@@ -106,58 +110,65 @@ enum {
 
 enum { _Pack0 = 0xA9E7 };
 
-pascal void LGetCellDataLocation(INTEGER *offsetp, INTEGER *lenp, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0034, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LGetCellDataLocation(INTEGER *offsetp, INTEGER *lenp, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0034, 0xA9E7);
+#if OLDROUTINENAMES
+#define LFind(offsetp, lenp, cell, list) LGetCellDataLocation(offsetp, lenp, cell, list)
+#endif
 
-pascal Boolean LNextCell(Boolean hnext, Boolean vnext, Cell *cellp, ListHandle list) M68K_INLINE(0x3F3C, 0x0048, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal Boolean LNextCell(Boolean hnext, Boolean vnext, Cell *cellp, ListHandle list) M68K_INLINE(0x3F3C, 0x0048, 0xA9E7);
 
-pascal void LRect(Rect *cellrect, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x004C, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LRect(Rect *cellrect, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x004C, 0xA9E7);
 
-pascal Boolean LSearch(Ptr dp, INTEGER dl, Ptr proc, Cell *cellp, ListHandle list) M68K_INLINE(0x3F3C, 0x0054, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal Boolean LSearch(Ptr dp, INTEGER dl, Ptr proc, Cell *cellp, ListHandle list) M68K_INLINE(0x3F3C, 0x0054, 0xA9E7);
 
-pascal void LSize(INTEGER width, INTEGER height, ListHandle list) M68K_INLINE(0x3F3C, 0x0060, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LSize(INTEGER width, INTEGER height, ListHandle list) M68K_INLINE(0x3F3C, 0x0060, 0xA9E7);
 
-pascal INTEGER LAddColumn(INTEGER count, INTEGER coln, ListHandle list) M68K_INLINE(0x3F3C, 0x0004, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal INTEGER LAddColumn(INTEGER count, INTEGER coln, ListHandle list) M68K_INLINE(0x3F3C, 0x0004, 0xA9E7);
 
-pascal INTEGER LAddRow(INTEGER count, INTEGER rown, ListHandle list) M68K_INLINE(0x3F3C, 0x0008, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal INTEGER LAddRow(INTEGER count, INTEGER rown, ListHandle list) M68K_INLINE(0x3F3C, 0x0008, 0xA9E7);
 
-pascal void LDelColumn(INTEGER count, INTEGER coln, ListHandle list) M68K_INLINE(0x3F3C, 0x0020, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LDelColumn(INTEGER count, INTEGER coln, ListHandle list) M68K_INLINE(0x3F3C, 0x0020, 0xA9E7);
 
-pascal void LDelRow(INTEGER count, INTEGER rown, ListHandle list) M68K_INLINE(0x3F3C, 0x0024, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LDelRow(INTEGER count, INTEGER rown, ListHandle list) M68K_INLINE(0x3F3C, 0x0024, 0xA9E7);
 
-pascal ListHandle LNew(const Rect *rview, const Rect *bounds, Point csize, INTEGER proc, WindowPtr wind, Boolean draw, Boolean grow, Boolean scrollh, Boolean scrollv) M68K_INLINE(0x3F3C, 0x0044, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal ListHandle LNew(const Rect *rview, const Rect *bounds, Point csize, INTEGER proc, WindowPtr wind, Boolean draw, Boolean grow, Boolean scrollh, Boolean scrollv) M68K_INLINE(0x3F3C, 0x0044, 0xA9E7);
 
-pascal void LDispose(ListHandle list) M68K_INLINE(0x3F3C, 0x0028, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LDispose(ListHandle list) M68K_INLINE(0x3F3C, 0x0028, 0xA9E7);
 
-pascal void LDraw(Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0030, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LDraw(Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0030, 0xA9E7);
 
-pascal void LSetDrawingMode(Boolean draw, ListHandle list) M68K_INLINE(0x3F3C, 0x002C, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LSetDrawingMode(Boolean draw, ListHandle list) M68K_INLINE(0x3F3C, 0x002C, 0xA9E7);
+#if OLDROUTINENAMES
+#define LDoDraw(draw, list) LSetDrawingMode(draw, list)
+#endif
 
-pascal void LScroll(INTEGER ncol, INTEGER nrow, ListHandle list) M68K_INLINE(0x3F3C, 0x0050, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LScroll(INTEGER ncol, INTEGER nrow, ListHandle list) M68K_INLINE(0x3F3C, 0x0050, 0xA9E7);
 
-pascal void LAutoScroll(ListHandle list) M68K_INLINE(0x3F3C, 0x0010, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LAutoScroll(ListHandle list) M68K_INLINE(0x3F3C, 0x0010, 0xA9E7);
 
-pascal void LUpdate(RgnHandle rgn, ListHandle list) M68K_INLINE(0x3F3C, 0x0064, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LUpdate(RgnHandle rgn, ListHandle list) M68K_INLINE(0x3F3C, 0x0064, 0xA9E7);
 
-pascal void LActivate(Boolean act, ListHandle list) M68K_INLINE(0x3F3C, 0x0000, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LActivate(Boolean act, ListHandle list) M68K_INLINE(0x3F3C, 0x0000, 0xA9E7);
 
-pascal Boolean LClick(Point pt, INTEGER mods, ListHandle list) M68K_INLINE(0x3F3C, 0x0018, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal Boolean LClick(Point pt, INTEGER mods, ListHandle list) M68K_INLINE(0x3F3C, 0x0018, 0xA9E7);
 
-pascal LONGINT LLastClick(ListHandle list) M68K_INLINE(0x3F3C, 0x0040, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal LONGINT LLastClick(ListHandle list) M68K_INLINE(0x3F3C, 0x0040, 0xA9E7);
 
-pascal void LSetSelect(Boolean setit, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x005C, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LSetSelect(Boolean setit, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x005C, 0xA9E7);
 
-pascal void LAddToCell(Ptr dp, INTEGER dl, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x000C, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LAddToCell(Ptr dp, INTEGER dl, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x000C, 0xA9E7);
 
-pascal void LClrCell(Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x001C, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LClrCell(Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x001C, 0xA9E7);
 
-pascal void LGetCell(Ptr dp, INTEGER *dlp, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0038, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LGetCell(Ptr dp, INTEGER *dlp, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0038, 0xA9E7);
 
-pascal void LSetCell(Ptr dp, INTEGER dl, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0058, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LSetCell(Ptr dp, INTEGER dl, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0058, 0xA9E7);
 
-pascal void LCellSize(Point csize, ListHandle list) M68K_INLINE(0x3F3C, 0x0014, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal void LCellSize(Point csize, ListHandle list) M68K_INLINE(0x3F3C, 0x0014, 0xA9E7);
 
-pascal Boolean LGetSelect(Boolean next, Cell *cellp, ListHandle list) M68K_INLINE(0x3F3C, 0x003C, 0xA9E7);
+MAC_SINCE(0x0100, "1.0") pascal Boolean LGetSelect(Boolean next, Cell *cellp, ListHandle list) M68K_INLINE(0x3F3C, 0x003C, 0xA9E7);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct NMRec NMRec;
 struct NMRec {
@@ -28,7 +32,7 @@ typedef NMRec *NMRecPtr;
 
 enum { _NMInstall = 0xA05E };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr NMInstall(NMRecPtr nmptr) {
+MAC_SINCE(0x0600, "6.0") static __inline__ __attribute__((__always_inline__)) OSErr NMInstall(NMRecPtr nmptr) {
     register OSErr _ret __asm__("d0");
     register NMRecPtr _nmptr __asm__("a0") = nmptr;
     __asm__ __volatile__(".short 0xA05E"
@@ -38,12 +42,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr NMInstall(NMRecPtr nm
     return _ret;
 }
 #else
-pascal OSErr NMInstall(NMRecPtr nmptr);
+MAC_SINCE(0x0600, "6.0") pascal OSErr NMInstall(NMRecPtr nmptr);
 #endif
 
 enum { _NMRemove = 0xA05F };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr NMRemove(NMRecPtr nmptr) {
+MAC_SINCE(0x0600, "6.0") static __inline__ __attribute__((__always_inline__)) OSErr NMRemove(NMRecPtr nmptr) {
     register OSErr _ret __asm__("d0");
     register NMRecPtr _nmptr __asm__("a0") = nmptr;
     __asm__ __volatile__(".short 0xA05F"
@@ -53,9 +57,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr NMRemove(NMRecPtr nmp
     return _ret;
 }
 #else
-pascal OSErr NMRemove(NMRecPtr nmptr);
+MAC_SINCE(0x0600, "6.0") pascal OSErr NMRemove(NMRecPtr nmptr);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

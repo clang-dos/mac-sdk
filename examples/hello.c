@@ -38,7 +38,10 @@ int main(void) {
   SetPort(w);
 
   long sysv = 0;
-  OSErr err = Gestalt(gestaltSystemVersion, &sysv);
+  OSErr err = -1;
+  /* Gestalt arrived in System 6.0.4; before that its trap is unimplemented. */
+  if (TrapAvailable(_Gestalt))
+    err = Gestalt(gestaltSystemVersion, &sysv);
   Ptr p = NewPtr(1000);               /* register-based traps */
   long ticks;
   Delay(2, &ticks);
@@ -48,8 +51,12 @@ int main(void) {
   DrawString(TARGET_CPU_68K ? "\pHello from 68k, using the SDK headers"
                             : "\pHello from PowerPC, using the SDK headers");
   MoveTo(20, 60);
-  PStr(line, "Gestalt system version: $", err ? 0xFFFFFFFF : sysv);
-  DrawString(line);
+  if (err == -1)
+    DrawString("\pNo Gestalt: this System predates 6.0.4");
+  else {
+    PStr(line, "Gestalt system version: $", err ? 0xFFFFFFFF : sysv);
+    DrawString(line);
+  }
   MoveTo(20, 90);
   PStr(line, "NewPtr(1000) worked: ", p != nil && MemError() == noErr);
   DrawString(line);

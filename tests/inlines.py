@@ -19,7 +19,7 @@ for f in sorted(os.listdir(root)):
         elif line.startswith("#endif"):
             stack.pop()
         else:
-            m = pat.match(line)
+            m = pat.match(re.sub(r"^(MAC_SINCE(?:_GESTALT)?\([^()]*\) |MAC_COLOR_QD )+", "", line))
             if m:
                 conds = [c for c in stack if c]
                 names.append((m.group(1), conds[-1] if conds else None))

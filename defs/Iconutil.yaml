@@ -402,6 +402,7 @@
         type: CIconHandle
     trap: 0xAA25
     executor: C_
+    old_name: DisposCIcon
 
 # ####
 

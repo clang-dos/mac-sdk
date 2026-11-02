@@ -41,6 +41,26 @@
 #  define pascal
 #endif
 
+/* Opt-in checks against the oldest System a program supports: build with
+   -DMAC_MIN_SYSTEM=0x0605 (for example) to get a warning at each call whose
+   trap no measured System older than that implements, and add
+   -DMAC_NO_COLOR_QD to also warn about calls only Color QuickDraw Macs
+   have. docs/systems.md lists the measurements. Calls you guard with
+   TrapAvailable() or Gestalt still warn; silence those with
+   #pragma clang diagnostic ignored "-Wuser-defined-warnings". */
+#if defined(MAC_MIN_SYSTEM)
+#  define MAC_SINCE(v, s) __attribute__((__diagnose_if__(MAC_MIN_SYSTEM < (v),        "needs System " s " or later", "warning")))
+#  define MAC_SINCE_GESTALT(v, s, g) __attribute__((__diagnose_if__(MAC_MIN_SYSTEM < (v),        "needs a manager Gestalt selector " g " reports; the oldest measured System that had it is " s,        "warning")))
+#else
+#  define MAC_SINCE(v, s)
+#  define MAC_SINCE_GESTALT(v, s, g)
+#endif
+#if defined(MAC_NO_COLOR_QD)
+#  define MAC_COLOR_QD __attribute__((__diagnose_if__(1,        "needs a Color QuickDraw Mac (Mac II or later)", "warning")))
+#else
+#  define MAC_COLOR_QD
+#endif
+
 #define nil NULL
 typedef struct RoutineDescriptor *ProcPtr;
 

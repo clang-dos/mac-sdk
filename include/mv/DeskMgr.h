@@ -8,6 +8,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     undoCmd = 0,
@@ -53,6 +57,7 @@ pascal Boolean SystemEvent(EventRecord *evp) M68K_INLINE(0xA9B2);
 enum { _SystemMenu = 0xA9B5 };
 pascal void SystemMenu(LONGINT menu) M68K_INLINE(0xA9B5);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

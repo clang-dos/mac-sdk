@@ -940,3 +940,31 @@
       type: ConstStr32Param
     dispatcher: Pack9
     selector: 3328
+
+# ####
+
+- function:
+    name: PPCKillSync
+    return: OSErr
+    args:
+    - name: pb
+      type: void*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 0x700B
+    - 0xA0DD
+
+# ####
+
+- function:
+    name: PPCKillAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: void*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 0x700B
+    - 0xA4DD

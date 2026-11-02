@@ -20,7 +20,7 @@ def words_by_function():
     out = {}
     inc = os.path.join(ROOT, "include", "mv")
     for f in sorted(os.listdir(inc)):
-        text = open(os.path.join(inc, f)).read()
+        text = re.sub(r"MAC_SINCE(?:_GESTALT)?\([^()]*\) |MAC_COLOR_QD ", "", open(os.path.join(inc, f)).read())
         for m in re.finditer(r"\b(\w+)\([^;{\n]*\)\s*M68K_INLINE\(([^)]*)\);", text):
             out[m.group(1)] = [int(w, 16) for w in m.group(2).split(",")]
         for m in re.finditer(

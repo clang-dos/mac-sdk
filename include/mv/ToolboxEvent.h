@@ -8,6 +8,10 @@
 #include "QuickDraw.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // ToolboxEvent IMI-246 (true);
 #define LMGetKeyThresh() (*(INTEGER *)0x0000018E)
@@ -38,13 +42,16 @@
 #define LMSetJournalRef(val) ((*(INTEGER *)0x000008E8) = (val))
 
 enum { _KeyTranslate = 0xA9C3 };
-pascal unsigned long KeyTranslate(Ptr mapp, uint16_t code, unsigned long *state) M68K_INLINE(0xA9C3);
+MAC_SINCE(0x0200, "2.0") pascal unsigned long KeyTranslate(Ptr mapp, uint16_t code, unsigned long *state) M68K_INLINE(0xA9C3);
+#if OLDROUTINENAMES
+#define KeyTrans(mapp, code, state) KeyTranslate(mapp, code, state)
+#endif
 
 enum { _GetNextEvent = 0xA970 };
 pascal Boolean GetNextEvent(INTEGER em, EventRecord *evt) M68K_INLINE(0xA970);
 
 enum { _WaitNextEvent = 0xA860 };
-pascal Boolean WaitNextEvent(INTEGER mask, EventRecord *evp, LONGINT sleep, RgnHandle mousergn) M68K_INLINE(0xA860);
+MAC_SINCE(0x0600, "6.0") pascal Boolean WaitNextEvent(INTEGER mask, EventRecord *evp, LONGINT sleep, RgnHandle mousergn) M68K_INLINE(0xA860);
 
 enum { _EventAvail = 0xA971 };
 pascal Boolean EventAvail(INTEGER em, EventRecord *evt) M68K_INLINE(0xA971);
@@ -90,6 +97,7 @@ static __inline__ LONGINT GetCaretTime(void) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

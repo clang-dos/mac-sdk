@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Big-endian 64 bit "comp" data type.  Note that this has a NaN value!
 // typedef union {
@@ -151,6 +155,7 @@ enum { _Pack7 = 0xA9EE };
 
 
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

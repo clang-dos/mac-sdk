@@ -8,6 +8,10 @@
 #include "SoundMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct VoiceSpec VoiceSpec;
 struct VoiceSpec {
@@ -80,56 +84,57 @@ struct DelimiterInfo {
     Byte endDelimiter[2];
 };
 
-pascal NumVersion SpeechManagerVersion(void) M68K_INLINE(0x700C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal NumVersion SpeechManagerVersion(void) M68K_INLINE(0x700C, 0xA800);
 
-pascal int16_t SpeechBusy(void) M68K_INLINE(0x203C, 0x003C, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal int16_t SpeechBusy(void) M68K_INLINE(0x203C, 0x003C, 0x000C, 0xA800);
 
-pascal int16_t SpeechBusySystemWide(void) M68K_INLINE(0x203C, 0x0040, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal int16_t SpeechBusySystemWide(void) M68K_INLINE(0x203C, 0x0040, 0x000C, 0xA800);
 
-pascal OSErr CountVoices(int16_t *numVoices) M68K_INLINE(0x203C, 0x0108, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr CountVoices(int16_t *numVoices) M68K_INLINE(0x203C, 0x0108, 0x000C, 0xA800);
 
-pascal OSErr DisposeSpeechChannel(SpeechChannel chan) M68K_INLINE(0x203C, 0x021C, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr DisposeSpeechChannel(SpeechChannel chan) M68K_INLINE(0x203C, 0x021C, 0x000C, 0xA800);
 
-pascal OSErr SpeakString(ConstStringPtr textToBeSpoken) M68K_INLINE(0x203C, 0x0220, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr SpeakString(ConstStringPtr textToBeSpoken) M68K_INLINE(0x203C, 0x0220, 0x000C, 0xA800);
 
-pascal OSErr StopSpeech(SpeechChannel chan) M68K_INLINE(0x203C, 0x022C, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr StopSpeech(SpeechChannel chan) M68K_INLINE(0x203C, 0x022C, 0x000C, 0xA800);
 
-pascal OSErr ContinueSpeech(SpeechChannel chan) M68K_INLINE(0x203C, 0x0238, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr ContinueSpeech(SpeechChannel chan) M68K_INLINE(0x203C, 0x0238, 0x000C, 0xA800);
 
-pascal OSErr GetIndVoice(int16_t index, VoiceSpec *voice) M68K_INLINE(0x203C, 0x030C, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr GetIndVoice(int16_t index, VoiceSpec *voice) M68K_INLINE(0x203C, 0x030C, 0x000C, 0xA800);
 
-pascal OSErr NewSpeechChannel(VoiceSpec *voice, SpeechChannel *chan) M68K_INLINE(0x203C, 0x0418, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr NewSpeechChannel(VoiceSpec *voice, SpeechChannel *chan) M68K_INLINE(0x203C, 0x0418, 0x000C, 0xA800);
 
-pascal OSErr StopSpeechAt(SpeechChannel chan, long whereToStop) M68K_INLINE(0x203C, 0x0430, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr StopSpeechAt(SpeechChannel chan, long whereToStop) M68K_INLINE(0x203C, 0x0430, 0x000C, 0xA800);
 
-pascal OSErr PauseSpeechAt(SpeechChannel chan, long whereToPause) M68K_INLINE(0x203C, 0x0434, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr PauseSpeechAt(SpeechChannel chan, long whereToPause) M68K_INLINE(0x203C, 0x0434, 0x000C, 0xA800);
 
-pascal OSErr SetSpeechRate(SpeechChannel chan, Fixed rate) M68K_INLINE(0x203C, 0x0444, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr SetSpeechRate(SpeechChannel chan, Fixed rate) M68K_INLINE(0x203C, 0x0444, 0x000C, 0xA800);
 
-pascal OSErr GetSpeechRate(SpeechChannel chan, Fixed *rate) M68K_INLINE(0x203C, 0x0448, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr GetSpeechRate(SpeechChannel chan, Fixed *rate) M68K_INLINE(0x203C, 0x0448, 0x000C, 0xA800);
 
-pascal OSErr SetSpeechPitch(SpeechChannel chan, Fixed pitch) M68K_INLINE(0x203C, 0x044C, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr SetSpeechPitch(SpeechChannel chan, Fixed pitch) M68K_INLINE(0x203C, 0x044C, 0x000C, 0xA800);
 
-pascal OSErr GetSpeechPitch(SpeechChannel chan, Fixed *pitch) M68K_INLINE(0x203C, 0x0450, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr GetSpeechPitch(SpeechChannel chan, Fixed *pitch) M68K_INLINE(0x203C, 0x0450, 0x000C, 0xA800);
 
-pascal OSErr UseDictionary(SpeechChannel chan, Handle dictionary) M68K_INLINE(0x203C, 0x0460, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr UseDictionary(SpeechChannel chan, Handle dictionary) M68K_INLINE(0x203C, 0x0460, 0x000C, 0xA800);
 
-pascal OSErr MakeVoiceSpec(OSType creator, OSType id, VoiceSpec *voice) M68K_INLINE(0x203C, 0x0604, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr MakeVoiceSpec(OSType creator, OSType id, VoiceSpec *voice) M68K_INLINE(0x203C, 0x0604, 0x000C, 0xA800);
 
-pascal OSErr GetVoiceDescription(const VoiceSpec *voice, VoiceDescription *info, LONGINT infoLength) M68K_INLINE(0x203C, 0x0610, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr GetVoiceDescription(const VoiceSpec *voice, VoiceDescription *info, LONGINT infoLength) M68K_INLINE(0x203C, 0x0610, 0x000C, 0xA800);
 
-pascal OSErr GetVoiceInfo(const VoiceSpec *voice, OSType selector, void *voiceInfo) M68K_INLINE(0x203C, 0x0614, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr GetVoiceInfo(const VoiceSpec *voice, OSType selector, void *voiceInfo) M68K_INLINE(0x203C, 0x0614, 0x000C, 0xA800);
 
-pascal OSErr SpeakText(SpeechChannel chan, const void *textBuf, ULONGINT textBytes) M68K_INLINE(0x203C, 0x0624, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr SpeakText(SpeechChannel chan, const void *textBuf, ULONGINT textBytes) M68K_INLINE(0x203C, 0x0624, 0x000C, 0xA800);
 
-pascal OSErr SetSpeechInfo(SpeechChannel chan, OSType selector, const void *speechInfo) M68K_INLINE(0x203C, 0x0654, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr SetSpeechInfo(SpeechChannel chan, OSType selector, const void *speechInfo) M68K_INLINE(0x203C, 0x0654, 0x000C, 0xA800);
 
-pascal OSErr GetSpeechInfo(SpeechChannel chan, OSType selector, void *speechInfo) M68K_INLINE(0x203C, 0x0658, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr GetSpeechInfo(SpeechChannel chan, OSType selector, void *speechInfo) M68K_INLINE(0x203C, 0x0658, 0x000C, 0xA800);
 
-pascal OSErr SpeakBuffer(SpeechChannel chan, const void *textBuf, ULONGINT textBytes, long controlFlags) M68K_INLINE(0x203C, 0x0828, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr SpeakBuffer(SpeechChannel chan, const void *textBuf, ULONGINT textBytes, long controlFlags) M68K_INLINE(0x203C, 0x0828, 0x000C, 0xA800);
 
-pascal OSErr TextToPhonemes(SpeechChannel chan, const void *textBuf, ULONGINT textBytes, Handle phonemeBuf, LONGINT *phonemeBytes) M68K_INLINE(0x203C, 0x0A5C, 0x000C, 0xA800);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'ttsc'") pascal OSErr TextToPhonemes(SpeechChannel chan, const void *textBuf, ULONGINT textBytes, Handle phonemeBuf, LONGINT *phonemeBytes) M68K_INLINE(0x203C, 0x0A5C, 0x000C, 0xA800);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

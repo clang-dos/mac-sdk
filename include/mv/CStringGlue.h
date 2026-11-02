@@ -26,6 +26,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // C-string forms of Toolbox calls (C calling convention; they take C
 // strings, and Points by address). On 68k they need MPW-style glue.
@@ -1457,6 +1461,7 @@ static __inline__ void P2CStr(StringPtr pString) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

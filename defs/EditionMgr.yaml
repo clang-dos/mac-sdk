@@ -378,6 +378,7 @@
     dispatcher: Pack11
     selector: 0x0100
     executor: C_
+    old_name: InitEditionPack
 
 # ####
 

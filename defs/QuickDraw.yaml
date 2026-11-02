@@ -157,6 +157,18 @@
 
 # ####
 
+- typedef:
+    name: BitMapPtr
+    type: BitMap*
+
+# ####
+
+- typedef:
+    name: BitMapHandle
+    type: BitMap**
+
+# ####
+
 - struct:
     name: Pattern
     members:

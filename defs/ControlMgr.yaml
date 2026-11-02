@@ -269,6 +269,7 @@
         type: ConstStringPtr
     trap: 0xA95F
     executor: C_
+    old_name: SetCTitle
 
 # ####
 
@@ -281,6 +282,7 @@
         type: StringPtr
     trap: 0xA95E
     executor: C_
+    old_name: GetCTitle
 
 # ####
 
@@ -345,6 +347,7 @@
         type: RgnHandle
     trap: 0xA953
     executor: C_
+    old_name: UpdtControl
 
 # ####
 
@@ -417,6 +420,7 @@
         type: LONGINT
     trap: 0xA95B
     executor: C_
+    old_name: SetCRefCon
 
 # ####
 
@@ -428,6 +432,7 @@
         type: ControlHandle
     trap: 0xA95A
     executor: C_
+    old_name: GetCRefCon
 
 # ####
 
@@ -440,6 +445,7 @@
         type: ControlActionUPP
     trap: 0xA96B
     executor: C_
+    old_name: SetCtlAction
 
 # ####
 
@@ -451,6 +457,7 @@
         type: ControlHandle
     trap: 0xA96A
     executor: C_
+    old_name: GetCtlAction
 
 # ####
 
@@ -462,6 +469,7 @@
         type: ControlHandle
     trap: 0xA809
     executor: C_
+    old_name: GetCVariant
 
 # ####
 
@@ -475,6 +483,7 @@
         type: AuxCtlHandle*
     trap: 0xAA44
     executor: C_
+    old_name: GetAuxCtl
 
 # ####
 
@@ -530,6 +539,7 @@
         type: INTEGER
     trap: 0xA963
     executor: C_
+    old_name: SetCtlValue
 
 # ####
 
@@ -541,6 +551,7 @@
         type: ControlHandle
     trap: 0xA960
     executor: C_
+    old_name: GetCtlValue
 
 # ####
 
@@ -553,6 +564,7 @@
         type: INTEGER
     trap: 0xA964
     executor: C_
+    old_name: SetCtlMin
 
 # ####
 
@@ -564,6 +576,7 @@
         type: ControlHandle
     trap: 0xA961
     executor: C_
+    old_name: GetCtlMin
 
 # ####
 
@@ -576,6 +589,7 @@
         type: INTEGER
     trap: 0xA965
     executor: C_
+    old_name: SetCtlMax
 
 # ####
 
@@ -587,6 +601,7 @@
         type: ControlHandle
     trap: 0xA962
     executor: C_
+    old_name: GetCtlMax
 
 # ####
 
@@ -645,6 +660,7 @@
         type: CCTabHandle
     trap: 0xAA43
     executor: C_
+    old_name: SetCtlColor
 
 # ####
 

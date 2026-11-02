@@ -8,6 +8,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     putDlgID = -3999,
@@ -196,6 +200,7 @@ pascal void CustomPutFile(ConstStringPtr prompt, ConstStringPtr defaultName, Sta
 
 pascal void CustomGetFile(FileFilterYDUPP filefilter, INTEGER numtypes, SFTypeList typelist, StandardFileReply *replyp, INTEGER dlgid, Point where, DlgHookYDUPP dlghook, ModalFilterYDUPP filterproc, Ptr activeList, ActivateYDUPP activateproc, void *yourdatap) M68K_INLINE(0x3F3C, 0x0008, 0xA9EA);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

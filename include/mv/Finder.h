@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct DTPBRec DTPBRec;
 struct DTPBRec {
@@ -41,7 +45,7 @@ typedef DTPBRec *DTPBRecPtr;
 typedef DTPBRec *DTPBPtr;
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetPath(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetPath(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7020, 0xA260"
@@ -51,11 +55,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetPath(DTPBPtr d
     return _ret;
 }
 #else
-pascal OSErr PBDTGetPath(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetPath(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTCloseDown(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTCloseDown(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7021, 0xA260"
@@ -65,11 +69,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTCloseDown(DTPBPtr
     return _ret;
 }
 #else
-pascal OSErr PBDTCloseDown(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTCloseDown(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7022, 0xA260"
@@ -79,10 +83,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconSync(DTPBP
     return _ret;
 }
 #else
-pascal OSErr PBDTAddIconSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTAddIconSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7022, 0xA660"
@@ -92,11 +96,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconAsync(DTPB
     return _ret;
 }
 #else
-pascal OSErr PBDTAddIconAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTAddIconAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7023, 0xA260"
@@ -106,10 +110,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconSync(DTPBP
     return _ret;
 }
 #else
-pascal OSErr PBDTGetIconSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetIconSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7023, 0xA660"
@@ -119,11 +123,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconAsync(DTPB
     return _ret;
 }
 #else
-pascal OSErr PBDTGetIconAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetIconAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7024, 0xA260"
@@ -133,10 +137,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoSync(D
     return _ret;
 }
 #else
-pascal OSErr PBDTGetIconInfoSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetIconInfoSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7024, 0xA660"
@@ -146,11 +150,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoAsync(
     return _ret;
 }
 #else
-pascal OSErr PBDTGetIconInfoAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetIconInfoAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7025, 0xA260"
@@ -160,10 +164,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLSync(DTPBP
     return _ret;
 }
 #else
-pascal OSErr PBDTAddAPPLSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTAddAPPLSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7025, 0xA660"
@@ -173,11 +177,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLAsync(DTPB
     return _ret;
 }
 #else
-pascal OSErr PBDTAddAPPLAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTAddAPPLAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7026, 0xA260"
@@ -187,10 +191,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLSync(DT
     return _ret;
 }
 #else
-pascal OSErr PBDTRemoveAPPLSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTRemoveAPPLSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7026, 0xA660"
@@ -200,11 +204,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLAsync(D
     return _ret;
 }
 #else
-pascal OSErr PBDTRemoveAPPLAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTRemoveAPPLAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7027, 0xA260"
@@ -214,10 +218,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLSync(DTPBP
     return _ret;
 }
 #else
-pascal OSErr PBDTGetAPPLSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetAPPLSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7027, 0xA660"
@@ -227,11 +231,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLAsync(DTPB
     return _ret;
 }
 #else
-pascal OSErr PBDTGetAPPLAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetAPPLAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7028, 0xA260"
@@ -241,10 +245,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentSync(DT
     return _ret;
 }
 #else
-pascal OSErr PBDTSetCommentSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTSetCommentSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7028, 0xA660"
@@ -254,11 +258,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentAsync(D
     return _ret;
 }
 #else
-pascal OSErr PBDTSetCommentAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTSetCommentAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7029, 0xA260"
@@ -268,10 +272,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentSync
     return _ret;
 }
 #else
-pascal OSErr PBDTRemoveCommentSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTRemoveCommentSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7029, 0xA660"
@@ -281,11 +285,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentAsyn
     return _ret;
 }
 #else
-pascal OSErr PBDTRemoveCommentAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTRemoveCommentAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702A, 0xA260"
@@ -295,10 +299,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentSync(DT
     return _ret;
 }
 #else
-pascal OSErr PBDTGetCommentSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetCommentSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702A, 0xA660"
@@ -308,11 +312,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentAsync(D
     return _ret;
 }
 #else
-pascal OSErr PBDTGetCommentAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetCommentAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702B, 0xA260"
@@ -322,10 +326,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushSync(DTPBPtr
     return _ret;
 }
 #else
-pascal OSErr PBDTFlushSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTFlushSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702B, 0xA660"
@@ -335,11 +339,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushAsync(DTPBPt
     return _ret;
 }
 #else
-pascal OSErr PBDTFlushAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTFlushAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702C, 0xA260"
@@ -349,10 +353,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetSync(DTPBPtr
     return _ret;
 }
 #else
-pascal OSErr PBDTResetSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTResetSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702C, 0xA660"
@@ -362,11 +366,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetAsync(DTPBPt
     return _ret;
 }
 #else
-pascal OSErr PBDTResetAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTResetAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702D, 0xA260"
@@ -376,10 +380,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoSync(DTPBP
     return _ret;
 }
 #else
-pascal OSErr PBDTGetInfoSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetInfoSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702D, 0xA660"
@@ -389,11 +393,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoAsync(DTPB
     return _ret;
 }
 #else
-pascal OSErr PBDTGetInfoAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTGetInfoAsync(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTOpenInform(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTOpenInform(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702E, 0xA060"
@@ -403,11 +407,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTOpenInform(DTPBPt
     return _ret;
 }
 #else
-pascal OSErr PBDTOpenInform(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTOpenInform(DTPBPtr dtp);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteSync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702F, 0xA060"
@@ -417,10 +421,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteSync(DTPBPt
     return _ret;
 }
 #else
-pascal OSErr PBDTDeleteSync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTDeleteSync(DTPBPtr dtp);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteAsync(DTPBPtr dtp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702F, 0xA460"
@@ -430,9 +434,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteAsync(DTPBP
     return _ret;
 }
 #else
-pascal OSErr PBDTDeleteAsync(DTPBPtr dtp);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDTDeleteAsync(DTPBPtr dtp);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

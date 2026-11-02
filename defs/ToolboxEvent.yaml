@@ -73,6 +73,7 @@
         type: uint32_t*
     trap: 0xA9C3
     executor: C_
+    old_name: KeyTrans
 
 # ####
 

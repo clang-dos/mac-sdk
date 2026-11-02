@@ -8,6 +8,10 @@
 #include "NotifyMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef long AEEventClass;
 
@@ -261,19 +265,19 @@ enum { _Pack8 = 0xA816 };
 // expected number of entries (not a hard limit).  imports is a pointer to
 // a four-entry vector of manager routines, or 0.  Every observed caller
 // uses sizes == 0x00080008 and imports == 0.
-pascal OSErr _AE_hdlr_table_alloc(AE_hdlr_table_h *table_return, uint8_t system_zone, const void *imports, long sizes, long capacity_hint) M68K_INLINE(0x303C, 0x092E, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr _AE_hdlr_table_alloc(AE_hdlr_table_h *table_return, uint8_t system_zone, const void *imports, long sizes, long capacity_hint) M68K_INLINE(0x303C, 0x092E, 0xA816);
 
-pascal OSErr _AE_hdlr_table_free(const void *imports, AE_hdlr_table_h *table) M68K_INLINE(0x303C, 0x042F, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr _AE_hdlr_table_free(const void *imports, AE_hdlr_table_h *table) M68K_INLINE(0x303C, 0x042F, 0xA816);
 
-pascal OSErr _AE_hdlr_install_unique(AE_hdlr_t *hdlr, AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0830, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr _AE_hdlr_install_unique(AE_hdlr_t *hdlr, AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0830, 0xA816);
 
-pascal OSErr _AE_hdlr_install(AE_hdlr_t *hdlr, AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0831, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr _AE_hdlr_install(AE_hdlr_t *hdlr, AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0831, 0xA816);
 
-pascal OSErr _AE_hdlr_delete(AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0632, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr _AE_hdlr_delete(AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0632, 0xA816);
 
-pascal OSErr _AE_hdlr_lookup(AE_hdlr_t *result, AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0833, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr _AE_hdlr_lookup(AE_hdlr_t *result, AE_hdlr_selector_t *key, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0833, 0xA816);
 
-pascal OSErr _AE_hdlr_get_key(AE_hdlr_selector_t *key, long index, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0834, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr _AE_hdlr_get_key(AE_hdlr_selector_t *key, long index, const void *imports, AE_hdlr_table_h table) M68K_INLINE(0x303C, 0x0834, 0xA816);
 
 enum {
     invalidConnection = -609,
@@ -415,21 +419,33 @@ enum {
 #define LMSetAE_info(val) ((*(AE_info_ptr *)0x000002B6) = (val))
 
 // prototypes go here
-pascal OSErr AEGetCoercionHandler(DescType from_type, DescType to_type, AECoerceDescUPP *hdlr_out, long *refcon_out, Boolean *from_type_is_desc_p_out, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0B24, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetCoercionHandler(DescType from_type, DescType to_type, AECoerceDescUPP *hdlr_out, long *refcon_out, Boolean *from_type_is_desc_p_out, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0B24, 0xA816);
 
-pascal OSErr AECreateDesc(DescType type, const void *data, Size data_size, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0825, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AECreateDesc(DescType type, const void *data, Size data_size, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0825, 0xA816);
 
-pascal OSErr AEDisposeDesc(AEDesc *desc) M68K_INLINE(0x303C, 0x0204, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEDisposeDesc(AEDesc *desc) M68K_INLINE(0x303C, 0x0204, 0xA816);
 
-pascal OSErr AECoerceDesc(AEDesc *desc, DescType result_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0603, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AECoerceDesc(AEDesc *desc, DescType result_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0603, 0xA816);
 
-pascal OSErr AEGetParamPtr(AERecord *record, AEKeyword keyword, DescType desired_type, DescType *type_out, Ptr data, Size max_size, Size *size_out) M68K_INLINE(0x303C, 0x0E11, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetParamPtr(AERecord *record, AEKeyword keyword, DescType desired_type, DescType *type_out, Ptr data, Size max_size, Size *size_out) M68K_INLINE(0x303C, 0x0E11, 0xA816);
+#if OLDROUTINENAMES
+#define AEGetKeyPtr(record, keyword, desired_type, type_out, data, max_size, size_out) AEGetParamPtr(record, keyword, desired_type, type_out, data, max_size, size_out)
+#endif
 
-pascal OSErr AEGetParamDesc(AERecord *record, AEKeyword keyword, DescType desired_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0812, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetParamDesc(AERecord *record, AEKeyword keyword, DescType desired_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0812, 0xA816);
+#if OLDROUTINENAMES
+#define AEGetKeyDesc(record, keyword, desired_type, desc_out) AEGetParamDesc(record, keyword, desired_type, desc_out)
+#endif
 
-pascal OSErr AEPutParamPtr(AERecord *record, AEKeyword keyword, DescType type, const void *data, Size data_size) M68K_INLINE(0x303C, 0x0A0F, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEPutParamPtr(AERecord *record, AEKeyword keyword, DescType type, const void *data, Size data_size) M68K_INLINE(0x303C, 0x0A0F, 0xA816);
+#if OLDROUTINENAMES
+#define AEPutKeyPtr(record, keyword, type, data, data_size) AEPutParamPtr(record, keyword, type, data, data_size)
+#endif
 
-pascal OSErr AEPutParamDesc(AERecord *record, AEKeyword keyword, AEDesc *desc) M68K_INLINE(0x303C, 0x0610, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEPutParamDesc(AERecord *record, AEKeyword keyword, AEDesc *desc) M68K_INLINE(0x303C, 0x0610, 0xA816);
+#if OLDROUTINENAMES
+#define AEPutKeyDesc(record, keyword, desc) AEPutParamDesc(record, keyword, desc)
+#endif
 
 // extern OSErr C_AEDeleteParam(AppleEvent *evt, AEKeyword keyword);
 // PASCAL_SUBTRAP(AEDeleteParam, 0xA816, 0x0413, Pack8);
@@ -437,102 +453,109 @@ pascal OSErr AEPutParamDesc(AERecord *record, AEKeyword keyword, AEDesc *desc) M
 // extern OSErr C_AEDeleteAttribute(AppleEvent *evt,
 //                                              AEKeyword keyword);
 // PASCAL_SUBTRAP_UNKNOWN(AEDeleteAttribute, 0xA816, Pack8);
-pascal OSErr AESizeOfParam(AERecord *record, AEKeyword keyword, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x0829, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESizeOfParam(AERecord *record, AEKeyword keyword, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x0829, 0xA816);
+#if OLDROUTINENAMES
+#define AESizeOfKeyDesc(record, keyword, type_out, size_out) AESizeOfParam(record, keyword, type_out, size_out)
+#endif
 
-pascal OSErr AESetInteractionAllowed(AEInteractionAllowed level) M68K_INLINE(0x303C, 0x011E, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESetInteractionAllowed(AEInteractionAllowed level) M68K_INLINE(0x303C, 0x011E, 0xA816);
 
-pascal OSErr AEResetTimer(AppleEvent *evt) M68K_INLINE(0x303C, 0x0219, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEResetTimer(AppleEvent *evt) M68K_INLINE(0x303C, 0x0219, 0xA816);
 
-pascal OSErr AEGetTheCurrentEvent(AppleEvent *return_evt) M68K_INLINE(0x303C, 0x021A, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetTheCurrentEvent(AppleEvent *return_evt) M68K_INLINE(0x303C, 0x021A, 0xA816);
 
-pascal OSErr AESetTheCurrentEvent(AppleEvent *evt) M68K_INLINE(0x303C, 0x022C, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESetTheCurrentEvent(AppleEvent *evt) M68K_INLINE(0x303C, 0x022C, 0xA816);
 
-pascal OSErr AESuspendTheCurrentEvent(AppleEvent *evt) M68K_INLINE(0x303C, 0x022B, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESuspendTheCurrentEvent(AppleEvent *evt) M68K_INLINE(0x303C, 0x022B, 0xA816);
 
-pascal OSErr AEResumeTheCurrentEvent(AppleEvent *evt, AppleEvent *reply, AEEventHandlerUPP dispatcher, long refcon) M68K_INLINE(0x303C, 0x0818, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEResumeTheCurrentEvent(AppleEvent *evt, AppleEvent *reply, AEEventHandlerUPP dispatcher, long refcon) M68K_INLINE(0x303C, 0x0818, 0xA816);
 
-pascal OSErr AEGetInteractionAllowed(AEInteractionAllowed *return_level) M68K_INLINE(0x303C, 0x021D, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetInteractionAllowed(AEInteractionAllowed *return_level) M68K_INLINE(0x303C, 0x021D, 0xA816);
 
-pascal OSErr AEDuplicateDesc(AEDesc *src, AEDesc *dst) M68K_INLINE(0x303C, 0x0405, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEDuplicateDesc(AEDesc *src, AEDesc *dst) M68K_INLINE(0x303C, 0x0405, 0xA816);
 
-pascal OSErr AECountItems(AEDescList *list, long *count_out) M68K_INLINE(0x303C, 0x0407, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AECountItems(AEDescList *list, long *count_out) M68K_INLINE(0x303C, 0x0407, 0xA816);
 
-pascal OSErr AEDeleteItem(AEDescList *list, long index) M68K_INLINE(0x303C, 0x040E, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEDeleteItem(AEDescList *list, long index) M68K_INLINE(0x303C, 0x040E, 0xA816);
 
-pascal OSErr AEDeleteParam(AERecord *record, AEKeyword keyword) M68K_INLINE(0x303C, 0x0413, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEDeleteParam(AERecord *record, AEKeyword keyword) M68K_INLINE(0x303C, 0x0413, 0xA816);
+#if OLDROUTINENAMES
+#define AEDeleteKeyDesc(record, keyword) AEDeleteParam(record, keyword)
+#endif
 
-pascal OSErr AEInstallSpecialHandler(AEKeyword function_class, AEEventHandlerUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0500, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEInstallSpecialHandler(AEKeyword function_class, AEEventHandlerUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0500, 0xA816);
 
-pascal OSErr AERemoveSpecialHandler(AEKeyword function_class, AEEventHandlerUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0501, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AERemoveSpecialHandler(AEKeyword function_class, AEEventHandlerUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0501, 0xA816);
 
-pascal OSErr AEGetSpecialHandler(AEKeyword function_class, AEEventHandlerUPP *hdlr_out, Boolean system_handler_p) M68K_INLINE(0x303C, 0x052D, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetSpecialHandler(AEKeyword function_class, AEEventHandlerUPP *hdlr_out, Boolean system_handler_p) M68K_INLINE(0x303C, 0x052D, 0xA816);
 
-pascal OSErr AESend(AppleEvent *evt, AppleEvent *reply, AESendMode send_mode, AESendPriority send_priority, long timeout, IdleUPP idle_proc, EventFilterUPP filter_proc) M68K_INLINE(0x303C, 0x0D17, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESend(AppleEvent *evt, AppleEvent *reply, AESendMode send_mode, AESendPriority send_priority, long timeout, IdleUPP idle_proc, EventFilterUPP filter_proc) M68K_INLINE(0x303C, 0x0D17, 0xA816);
 
-pascal OSErr AECoercePtr(DescType data_type, Ptr data, Size data_size, DescType result_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0A02, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AECoercePtr(DescType data_type, Ptr data, Size data_size, DescType result_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0A02, 0xA816);
 
-pascal OSErr AEGetEventHandler(AEEventClass event_class, AEEventID event_id, AEEventHandlerUPP *hdlr, long *refcon, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0921, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetEventHandler(AEEventClass event_class, AEEventID event_id, AEEventHandlerUPP *hdlr, long *refcon, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0921, 0xA816);
 
-pascal OSErr AERemoveEventHandler(AEEventClass event_class, AEEventID event_id, AEEventHandlerUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0720, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AERemoveEventHandler(AEEventClass event_class, AEEventID event_id, AEEventHandlerUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0720, 0xA816);
 
-pascal OSErr AEProcessAppleEvent(EventRecord *evt) M68K_INLINE(0x303C, 0x021B, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEProcessAppleEvent(EventRecord *evt) M68K_INLINE(0x303C, 0x021B, 0xA816);
 
-pascal OSErr AEPutDesc(AEDescList *list, long index, AEDesc *desc) M68K_INLINE(0x303C, 0x0609, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEPutDesc(AEDescList *list, long index, AEDesc *desc) M68K_INLINE(0x303C, 0x0609, 0xA816);
 
-pascal OSErr AEPutAttributePtr(AppleEvent *evt, AEKeyword keyword, DescType type, const void *data, Size size) M68K_INLINE(0x303C, 0x0A16, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEPutAttributePtr(AppleEvent *evt, AEKeyword keyword, DescType type, const void *data, Size size) M68K_INLINE(0x303C, 0x0A16, 0xA816);
 
-pascal OSErr AEPutAttributeDesc(AppleEvent *evt, AEKeyword keyword, AEDesc *desc) M68K_INLINE(0x303C, 0x0627, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEPutAttributeDesc(AppleEvent *evt, AEKeyword keyword, AEDesc *desc) M68K_INLINE(0x303C, 0x0627, 0xA816);
 
-pascal OSErr AEGetNthPtr(AEDescList *list, long index, DescType desired_type, AEKeyword *keyword_out, DescType *type_out, void *data, long max_size, long *size_out) M68K_INLINE(0x303C, 0x100A, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetNthPtr(AEDescList *list, long index, DescType desired_type, AEKeyword *keyword_out, DescType *type_out, void *data, long max_size, long *size_out) M68K_INLINE(0x303C, 0x100A, 0xA816);
 
-pascal OSErr AEGetAttributePtr(AppleEvent *evt, AEKeyword keyword, DescType desired_type, DescType *type_out, void *data, Size max_size, Size *size_out) M68K_INLINE(0x303C, 0x0E15, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetAttributePtr(AppleEvent *evt, AEKeyword keyword, DescType desired_type, DescType *type_out, void *data, Size max_size, Size *size_out) M68K_INLINE(0x303C, 0x0E15, 0xA816);
 
-pascal OSErr AEGetArray(AEDescList *list, AEArrayType array_type, AEArrayDataPointer array_ptr, Size max_size, DescType *return_item_type, Size *return_item_size, long *return_item_count) M68K_INLINE(0x303C, 0x0D0C, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetArray(AEDescList *list, AEArrayType array_type, AEArrayDataPointer array_ptr, Size max_size, DescType *return_item_type, Size *return_item_size, long *return_item_count) M68K_INLINE(0x303C, 0x0D0C, 0xA816);
 
-pascal OSErr AECreateAppleEvent(AEEventClass event_class, AEEventID event_id, AEAddressDesc *target, int16_t return_id, long transaction_id, AppleEvent *evt) M68K_INLINE(0x303C, 0x0B14, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AECreateAppleEvent(AEEventClass event_class, AEEventID event_id, AEAddressDesc *target, int16_t return_id, long transaction_id, AppleEvent *evt) M68K_INLINE(0x303C, 0x0B14, 0xA816);
 
-pascal OSErr AEInstallCoercionHandler(DescType from_type, DescType to_type, AECoerceDescUPP hdlr, long refcon, Boolean from_type_is_desc_p, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0A22, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEInstallCoercionHandler(DescType from_type, DescType to_type, AECoerceDescUPP hdlr, long refcon, Boolean from_type_is_desc_p, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0A22, 0xA816);
 
-pascal OSErr AEInstallEventHandler(AEEventClass event_class, AEEventID event_id, AEEventHandlerUPP hdlr, long refcon, Boolean system_handler_p) M68K_INLINE(0x303C, 0x091F, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEInstallEventHandler(AEEventClass event_class, AEEventID event_id, AEEventHandlerUPP hdlr, long refcon, Boolean system_handler_p) M68K_INLINE(0x303C, 0x091F, 0xA816);
 
-pascal OSErr AERemoveCoercionHandler(DescType from_type, DescType to_type, AECoerceDescUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0723, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AERemoveCoercionHandler(DescType from_type, DescType to_type, AECoerceDescUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0723, 0xA816);
 
-pascal OSErr AEPutArray(AEDescList *list, AEArrayType type, AEArrayDataPointer array_data, DescType item_type, Size item_size, long item_count) M68K_INLINE(0x303C, 0x0B0D, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEPutArray(AEDescList *list, AEArrayType type, AEArrayDataPointer array_data, DescType item_type, Size item_size, long item_count) M68K_INLINE(0x303C, 0x0B0D, 0xA816);
 
-pascal OSErr AECreateList(Ptr list_elt_prefix, Size list_elt_prefix_size, Boolean is_record_p, AEDescList *list_out) M68K_INLINE(0x303C, 0x0706, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AECreateList(Ptr list_elt_prefix, Size list_elt_prefix_size, Boolean is_record_p, AEDescList *list_out) M68K_INLINE(0x303C, 0x0706, 0xA816);
 
-pascal OSErr AEGetAttributeDesc(AppleEvent *evt, AEKeyword keyword, DescType desired_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0826, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetAttributeDesc(AppleEvent *evt, AEKeyword keyword, DescType desired_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0826, 0xA816);
 
-pascal OSErr AESizeOfAttribute(AppleEvent *evt, AEKeyword keyword, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x0828, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESizeOfAttribute(AppleEvent *evt, AEKeyword keyword, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x0828, 0xA816);
 
-pascal OSErr AEGetNthDesc(AEDescList *list, long index, DescType desired_type, AEKeyword *keyword_out, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0A0B, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetNthDesc(AEDescList *list, long index, DescType desired_type, AEKeyword *keyword_out, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0A0B, 0xA816);
 
-pascal OSErr AESizeOfNthItem(AEDescList *list, long index, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x082A, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESizeOfNthItem(AEDescList *list, long index, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x082A, 0xA816);
 
-pascal OSErr AEPutPtr(AEDescList *list, long index, DescType type, const void *data, Size data_size) M68K_INLINE(0x303C, 0x0A08, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEPutPtr(AEDescList *list, long index, DescType type, const void *data, Size data_size) M68K_INLINE(0x303C, 0x0A08, 0xA816);
 
-pascal OSErr AEInteractWithUser(long timeout, NMRecPtr nm_req, IdleUPP idle_proc) M68K_INLINE(0x303C, 0x061C, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEInteractWithUser(long timeout, NMRecPtr nm_req, IdleUPP idle_proc) M68K_INLINE(0x303C, 0x061C, 0xA816);
 
-pascal OSErr AEManagerInfo(AEKeyword keyword, LONGINT *resultp) M68K_INLINE(0x303C, 0x0441, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEManagerInfo(AEKeyword keyword, LONGINT *resultp) M68K_INLINE(0x303C, 0x0441, 0xA816);
 
-pascal OSErr AEDisposeToken(AEDesc *theToken) M68K_INLINE(0x303C, 0x023A, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEDisposeToken(AEDesc *theToken) M68K_INLINE(0x303C, 0x023A, 0xA816);
 
-pascal OSErr AEResolve(AEDesc *objectSpecifier, INTEGER callbackFlags, AEDesc *theToken) M68K_INLINE(0x303C, 0x0536, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEResolve(AEDesc *objectSpecifier, INTEGER callbackFlags, AEDesc *theToken) M68K_INLINE(0x303C, 0x0536, 0xA816);
 
-pascal OSErr AERemoveObjectAccessor(DescType desiredClass, DescType containerType, ProcPtr theAccessor, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0738, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AERemoveObjectAccessor(DescType desiredClass, DescType containerType, ProcPtr theAccessor, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0738, 0xA816);
 
-pascal OSErr AEInstallObjectAccessor(DescType desiredClass, DescType containerType, ProcPtr theAccessor, LONGINT refcon, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0937, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEInstallObjectAccessor(DescType desiredClass, DescType containerType, ProcPtr theAccessor, LONGINT refcon, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0937, 0xA816);
 
-pascal OSErr AEGetObjectAccessor(DescType desiredClass, DescType containerType, ProcPtr *theAccessor, LONGINT *accessorRefcon, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0939, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AEGetObjectAccessor(DescType desiredClass, DescType containerType, ProcPtr *theAccessor, LONGINT *accessorRefcon, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0939, 0xA816);
 
-pascal OSErr AECallObjectAccessor(DescType desiredClass, AEDesc *containerToken, DescType containerClass, DescType keyForm, AEDesc *keyData, AEDesc *theToken) M68K_INLINE(0x303C, 0x0C3B, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AECallObjectAccessor(DescType desiredClass, AEDesc *containerToken, DescType containerClass, DescType keyForm, AEDesc *keyData, AEDesc *theToken) M68K_INLINE(0x303C, 0x0C3B, 0xA816);
 
-pascal OSErr AESetObjectCallbacks(ProcPtr myCompareProc, ProcPtr myCountProc, ProcPtr myDisposeTokenProc, ProcPtr myGetMarkTokenProc, ProcPtr myMarkProc, ProcPtr myAdjustMarksProc, ProcPtr myGetErrDescProc) M68K_INLINE(0x303C, 0x0E35, 0xA816);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'evnt'") pascal OSErr AESetObjectCallbacks(ProcPtr myCompareProc, ProcPtr myCountProc, ProcPtr myDisposeTokenProc, ProcPtr myGetMarkTokenProc, ProcPtr myMarkProc, ProcPtr myAdjustMarksProc, ProcPtr myGetErrDescProc) M68K_INLINE(0x303C, 0x0E35, 0xA816);
 
 typedef IdleUPP AEIdleUPP;
 
 typedef EventFilterUPP AEFilterUPP;
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

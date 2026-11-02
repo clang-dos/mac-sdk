@@ -802,6 +802,7 @@
       - type: PixMapHandle
     trap: 0xAA04
     executor: C_
+    old_name: DisposPixMap
 
 # ####
 
@@ -829,6 +830,7 @@
       - type: PixPatHandle
     trap: 0xAA08
     executor: C_
+    old_name: DisposPixPat
 
 # ####
 
@@ -899,6 +901,7 @@
       - type: GDHandle
     trap: 0xAA30
     executor: C_
+    old_name: DisposGDevice
 
 # ####
 
@@ -1368,6 +1371,7 @@
       - type: CTabHandle
     trap: 0xAA24
     executor: C_
+    old_name: DisposCTable
 
 # ####
 
@@ -1576,6 +1580,7 @@
       - type: CCrsrHandle
     trap: 0xAA26
     executor: C_
+    old_name: DisposCCursor
 
 # ####
 
@@ -2028,6 +2033,7 @@
     dispatcher: Pack15
     selector: 0x0206
     executor: C_
+    old_name: DisposPictInfo
 
 # ####
 

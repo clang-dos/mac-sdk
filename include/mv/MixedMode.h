@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef uint8_t ISAType;
 
@@ -127,20 +131,21 @@ typedef RoutineDescriptor *UniversalProcPtr;
 
 enum { _MixedModeDispatch = 0xAA59 };
 
-pascal UniversalProcPtr NewRoutineDescriptor(ProcPtr proc, ProcInfoType info, ISAType isa) M68K_INLINE(0x7000, 0xAA59);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'alis'") pascal UniversalProcPtr NewRoutineDescriptor(ProcPtr proc, ProcInfoType info, ISAType isa) M68K_INLINE(0x7000, 0xAA59);
 
-pascal void DisposeRoutineDescriptor(UniversalProcPtr ptr) M68K_INLINE(0x7001, 0xAA59);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'alis'") pascal void DisposeRoutineDescriptor(UniversalProcPtr ptr) M68K_INLINE(0x7001, 0xAA59);
 
-pascal UniversalProcPtr NewFatRoutineDescriptor(ProcPtr m68k, ProcPtr ppc, ProcInfoType info) M68K_INLINE(0x7002, 0xAA59);
+MAC_SINCE(0x0761, "7.6.1") pascal UniversalProcPtr NewFatRoutineDescriptor(ProcPtr m68k, ProcPtr ppc, ProcInfoType info) M68K_INLINE(0x7002, 0xAA59);
 
-pascal OSErr SaveMixedModeState(void *statep, unsigned long vers) M68K_INLINE(0x7003, 0xAA59);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr SaveMixedModeState(void *statep, unsigned long vers) M68K_INLINE(0x7003, 0xAA59);
 
-pascal OSErr RestoreMixedModeState(void *statep, unsigned long vers) M68K_INLINE(0x7004, 0xAA59);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr RestoreMixedModeState(void *statep, unsigned long vers) M68K_INLINE(0x7004, 0xAA59);
 
 LONGINT CallUniversalProc(UniversalProcPtr theProcPtr, ProcInfoType procInfo, ...);
 
 long CallOSTrapUniversalProc(UniversalProcPtr theProc, ProcInfoType procInfo, ...);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

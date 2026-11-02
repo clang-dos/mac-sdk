@@ -506,6 +506,7 @@
         type: TEHandle
     trap: 0xA9DF
     executor: C_
+    old_name: TESetJust
 
 # ####
 
@@ -534,6 +535,7 @@
         type: INTEGER
     trap: 0xA9CE
     executor: C_
+    old_name: TextBox
 
 # ####
 
@@ -663,6 +665,7 @@
         type: const Rect*
     trap: 0xA83E
     executor: C_
+    old_name: TEStylNew
 
 # ####
 
@@ -676,6 +679,7 @@
     dispatcher: TEDispatch
     selector: 0x0005
     executor: C_
+    old_name: [SetStylHandle, SetStyleHandle]
 
 # ####
 
@@ -688,6 +692,7 @@
     dispatcher: TEDispatch
     selector: 0x0004
     executor: C_
+    old_name: [GetStylHandle, GetStyleHandle]
 
 # ####
 
@@ -700,6 +705,7 @@
     dispatcher: TEDispatch
     selector: 0x0006
     executor: C_
+    old_name: [GetStylScrap, GetStyleScrap]
 
 # ####
 
@@ -717,6 +723,7 @@
     dispatcher: TEDispatch
     selector: 0x0007
     executor: C_
+    old_name: TEStylInsert
 
 # ####
 
@@ -790,6 +797,7 @@
     dispatcher: TEDispatch
     selector: 0x0000
     executor: C_
+    old_name: TEStylPaste
 
 # ####
 
@@ -861,6 +869,7 @@
     dispatcher: TEDispatch
     selector: 0x000B
     executor: C_
+    old_name: [SetStylScrap, SetStyleScrap]
 
 # ####
 

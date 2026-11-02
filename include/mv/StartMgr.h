@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef union DefStartRec DefStartRec;
 union DefStartRec {
@@ -58,7 +62,7 @@ typedef DefOSRec *DefOSPtr;
 
 enum { _GetDefaultStartup = 0xA07D };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void GetDefaultStartup(DefStartPtr paramBlock) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void GetDefaultStartup(DefStartPtr paramBlock) {
     register DefStartPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA07D"
         : "+r"(_paramBlock)
@@ -66,12 +70,12 @@ static __inline__ __attribute__((__always_inline__)) void GetDefaultStartup(DefS
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void GetDefaultStartup(DefStartPtr paramBlock);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void GetDefaultStartup(DefStartPtr paramBlock);
 #endif
 
 enum { _SetDefaultStartup = 0xA07E };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetDefaultStartup(DefStartPtr paramBlock) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void SetDefaultStartup(DefStartPtr paramBlock) {
     register DefStartPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA07E"
         : "+r"(_paramBlock)
@@ -79,12 +83,12 @@ static __inline__ __attribute__((__always_inline__)) void SetDefaultStartup(DefS
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void SetDefaultStartup(DefStartPtr paramBlock);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetDefaultStartup(DefStartPtr paramBlock);
 #endif
 
 enum { _GetVideoDefault = 0xA080 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void GetVideoDefault(DefVideoPtr paramBlock) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void GetVideoDefault(DefVideoPtr paramBlock) {
     register DefVideoPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA080"
         : "+r"(_paramBlock)
@@ -92,12 +96,12 @@ static __inline__ __attribute__((__always_inline__)) void GetVideoDefault(DefVid
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void GetVideoDefault(DefVideoPtr paramBlock);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void GetVideoDefault(DefVideoPtr paramBlock);
 #endif
 
 enum { _SetVideoDefault = 0xA081 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetVideoDefault(DefVideoPtr paramBlock) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void SetVideoDefault(DefVideoPtr paramBlock) {
     register DefVideoPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA081"
         : "+r"(_paramBlock)
@@ -105,12 +109,12 @@ static __inline__ __attribute__((__always_inline__)) void SetVideoDefault(DefVid
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void SetVideoDefault(DefVideoPtr paramBlock);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetVideoDefault(DefVideoPtr paramBlock);
 #endif
 
 enum { _GetOSDefault = 0xA084 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void GetOSDefault(DefOSPtr paramBlock) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void GetOSDefault(DefOSPtr paramBlock) {
     register DefOSPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA084"
         : "+r"(_paramBlock)
@@ -118,12 +122,12 @@ static __inline__ __attribute__((__always_inline__)) void GetOSDefault(DefOSPtr 
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void GetOSDefault(DefOSPtr paramBlock);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void GetOSDefault(DefOSPtr paramBlock);
 #endif
 
 enum { _SetOSDefault = 0xA083 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetOSDefault(DefOSPtr paramBlock) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void SetOSDefault(DefOSPtr paramBlock) {
     register DefOSPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA083"
         : "+r"(_paramBlock)
@@ -131,9 +135,10 @@ static __inline__ __attribute__((__always_inline__)) void SetOSDefault(DefOSPtr 
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void SetOSDefault(DefOSPtr paramBlock);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetOSDefault(DefOSPtr paramBlock);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

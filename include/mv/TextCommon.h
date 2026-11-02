@@ -7,6 +7,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Text Encoding basics shared by the Text Encoding Converter and the Unicode Converter (TextCommon, Mac OS 8.5 and later).
 typedef SInt16 RegionCode;
@@ -204,6 +208,7 @@ pascal OSStatus NearestMacTextEncodings(TextEncoding generalEncoding, TextEncodi
 pascal OSStatus UCGetCharProperty(const UniChar *charPtr, UniCharCount textLength, UCCharPropertyType propType, UCCharPropertyValue *propValue);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

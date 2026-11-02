@@ -8,6 +8,10 @@
 #include "QuickDraw.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     systemFont = 0,
@@ -301,13 +305,13 @@ enum { _FMSwapFont = 0xA901 };
 pascal FMOutPtr FMSwapFont(FMInput *fmip) M68K_INLINE(0xA901);
 
 enum { _FontMetrics = 0xA835 };
-pascal void FontMetrics(FMetricRec *metrp) M68K_INLINE(0xA835);
+MAC_SINCE(0x0070, "0.7") pascal void FontMetrics(FMetricRec *metrp) M68K_INLINE(0xA835);
 
 enum { _SetFScaleDisable = 0xA834 };
-pascal void SetFScaleDisable(Boolean disable) M68K_INLINE(0xA834);
+MAC_SINCE(0x0070, "0.7") pascal void SetFScaleDisable(Boolean disable) M68K_INLINE(0xA834);
 
 enum { _SetFractEnable = 0xA814 };
-pascal void SetFractEnable(Boolean enable) M68K_INLINE(0xA814);
+MAC_SINCE(0x0200, "2.0") pascal void SetFractEnable(Boolean enable) M68K_INLINE(0xA814);
 
 pascal void SetOutlinePreferred(Boolean _outline_perferred_p) M68K_INLINE(0x7001, 0xA854);
 
@@ -351,6 +355,7 @@ pascal void QDTextBounds(INTEGER byteCount, const void *textAddr, Rect *bounds) 
 
 pascal OSErr FetchFontInfo(SInt16 fontID, SInt16 fontSize, SInt16 fontStyle, FontInfo *info) M68K_INLINE(0x7014, 0xA854);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

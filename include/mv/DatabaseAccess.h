@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef OSType DBType;
 
@@ -59,50 +63,51 @@ enum {
 enum { _Pack13 = 0xA82F };
 
 // Data Access Manager
-pascal OSErr InitDBPack(void) M68K_INLINE(0x3F3C, 0x0004, 0x303C, 0x0100, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr InitDBPack(void) M68K_INLINE(0x3F3C, 0x0004, 0x303C, 0x0100, 0xA82F);
 
-pascal OSErr DBInit(long *sessID, ConstStr63Param DSType, ConstStr255Param host, ConstStr255Param user, ConstStr255Param passwd, ConstStr255Param connStr, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0E02, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBInit(long *sessID, ConstStr63Param DSType, ConstStr255Param host, ConstStr255Param user, ConstStr255Param passwd, ConstStr255Param connStr, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0E02, 0xA82F);
 
-pascal OSErr DBEnd(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0403, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBEnd(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0403, 0xA82F);
 
-pascal OSErr DBGetConnInfo(long sessID, INTEGER sessNum, long *returnedID, long *version, Str63 DSType, Str255 host, Str255 user, Str255 network, Str255 connStr, long *start, OSErr *state, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x1704, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBGetConnInfo(long sessID, INTEGER sessNum, long *returnedID, long *version, Str63 DSType, Str255 host, Str255 user, Str255 network, Str255 connStr, long *start, OSErr *state, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x1704, 0xA82F);
 
-pascal OSErr DBGetSessionNum(long sessID, INTEGER *sessNum, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0605, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBGetSessionNum(long sessID, INTEGER *sessNum, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0605, 0xA82F);
 
-pascal OSErr DBSend(long sessID, Ptr text, INTEGER len, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0706, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBSend(long sessID, Ptr text, INTEGER len, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0706, 0xA82F);
 
-pascal OSErr DBSendItem(long sessID, DBType dataType, INTEGER len, INTEGER places, INTEGER flags, void *buffer, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0B07, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBSendItem(long sessID, DBType dataType, INTEGER len, INTEGER places, INTEGER flags, void *buffer, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0B07, 0xA82F);
 
-pascal OSErr DBExec(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0408, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBExec(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0408, 0xA82F);
 
-pascal OSErr DBState(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0409, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBState(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0409, 0xA82F);
 
-pascal OSErr DBGetErr(long sessID, long *err1, long *err2, Str255 item1, Str255 item2, Str255 errorMsg, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0E0A, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBGetErr(long sessID, long *err1, long *err2, Str255 item1, Str255 item2, Str255 errorMsg, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0E0A, 0xA82F);
 
-pascal OSErr DBBreak(long sessID, Boolean abort, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x050B, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBBreak(long sessID, Boolean abort, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x050B, 0xA82F);
 
-pascal OSErr DBGetItem(long sessID, long timeout, DBType *dataType, INTEGER *len, INTEGER *places, INTEGER *flags, void *buffer, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x100C, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBGetItem(long sessID, long timeout, DBType *dataType, INTEGER *len, INTEGER *places, INTEGER *flags, void *buffer, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x100C, 0xA82F);
 
-pascal OSErr DBUnGetItem(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x040D, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBUnGetItem(long sessID, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x040D, 0xA82F);
 
-pascal OSErr DBKill(DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x020E, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBKill(DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x020E, 0xA82F);
 
-pascal OSErr DBGetNewQuery(INTEGER queryID, QueryHandle *query) M68K_INLINE(0x303C, 0x030F, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBGetNewQuery(INTEGER queryID, QueryHandle *query) M68K_INLINE(0x303C, 0x030F, 0xA82F);
 
-pascal OSErr DBDisposeQuery(QueryHandle query) M68K_INLINE(0x303C, 0x0210, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBDisposeQuery(QueryHandle query) M68K_INLINE(0x303C, 0x0210, 0xA82F);
 
-pascal OSErr DBStartQuery(long *sessID, QueryHandle query, DBStatusUPP statusProc, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0811, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBStartQuery(long *sessID, QueryHandle query, DBStatusUPP statusProc, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0811, 0xA82F);
 
-pascal OSErr DBGetQueryResults(long sessID, ResultsRecord *results, long timeout, DBStatusUPP statusProc, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0A12, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBGetQueryResults(long sessID, ResultsRecord *results, long timeout, DBStatusUPP statusProc, DBAsyncParmBlkPtr asyncPB) M68K_INLINE(0x303C, 0x0A12, 0xA82F);
 
-pascal OSErr DBResultsToText(ResultsRecord *results, Handle *theText) M68K_INLINE(0x303C, 0x0413, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBResultsToText(ResultsRecord *results, Handle *theText) M68K_INLINE(0x303C, 0x0413, 0xA82F);
 
-pascal OSErr DBInstallResultHandler(DBType dataType, DBResultHandlerUPP theHandler, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0514, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBInstallResultHandler(DBType dataType, DBResultHandlerUPP theHandler, Boolean isSysHandler) M68K_INLINE(0x303C, 0x0514, 0xA82F);
 
-pascal OSErr DBRemoveResultHandler(DBType dataType) M68K_INLINE(0x303C, 0x0215, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBRemoveResultHandler(DBType dataType) M68K_INLINE(0x303C, 0x0215, 0xA82F);
 
-pascal OSErr DBGetResultHandler(DBType dataType, DBResultHandlerUPP *theHandler, Boolean getSysHandler) M68K_INLINE(0x303C, 0x0516, 0xA82F);
+MAC_SINCE(0x0701, "7.0.1") pascal OSErr DBGetResultHandler(DBType dataType, DBResultHandlerUPP *theHandler, Boolean getSysHandler) M68K_INLINE(0x303C, 0x0516, 0xA82F);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

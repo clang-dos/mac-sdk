@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Thread Manager (System 7 with the Thread Manager extension, built in from System 7.5).
 typedef UInt16 ThreadState;
@@ -125,25 +129,25 @@ typedef DebuggerDisposeThreadUPP DebuggerDisposeThreadTPP;
 typedef DebuggerThreadSchedulerUPP DebuggerThreadSchedulerTPP;
 
 // Thread Manager, trap 0xABF2 with the selector in D0
-pascal OSErr CreateThreadPool(ThreadStyle threadStyle, SInt16 numToCreate, Size stackSize) M68K_INLINE(0x303C, 0x0501, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr CreateThreadPool(ThreadStyle threadStyle, SInt16 numToCreate, Size stackSize) M68K_INLINE(0x303C, 0x0501, 0xABF2);
 
-pascal OSErr GetFreeThreadCount(ThreadStyle threadStyle, SInt16 *freeCount) M68K_INLINE(0x303C, 0x0402, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr GetFreeThreadCount(ThreadStyle threadStyle, SInt16 *freeCount) M68K_INLINE(0x303C, 0x0402, 0xABF2);
 
-pascal OSErr GetSpecificFreeThreadCount(ThreadStyle threadStyle, Size stackSize, SInt16 *freeCount) M68K_INLINE(0x303C, 0x0615, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr GetSpecificFreeThreadCount(ThreadStyle threadStyle, Size stackSize, SInt16 *freeCount) M68K_INLINE(0x303C, 0x0615, 0xABF2);
 
-pascal OSErr GetDefaultThreadStackSize(ThreadStyle threadStyle, Size *stackSize) M68K_INLINE(0x303C, 0x0413, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr GetDefaultThreadStackSize(ThreadStyle threadStyle, Size *stackSize) M68K_INLINE(0x303C, 0x0413, 0xABF2);
 
-pascal OSErr ThreadCurrentStackSpace(ThreadID thread, UInt32 *freeStack) M68K_INLINE(0x303C, 0x0414, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr ThreadCurrentStackSpace(ThreadID thread, UInt32 *freeStack) M68K_INLINE(0x303C, 0x0414, 0xABF2);
 
-pascal OSErr NewThread(ThreadStyle threadStyle, ThreadEntryTPP threadEntry, void *threadParam, Size stackSize, ThreadOptions options, void **threadResult, ThreadID *threadMade) M68K_INLINE(0x303C, 0x0E03, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr NewThread(ThreadStyle threadStyle, ThreadEntryTPP threadEntry, void *threadParam, Size stackSize, ThreadOptions options, void **threadResult, ThreadID *threadMade) M68K_INLINE(0x303C, 0x0E03, 0xABF2);
 
-pascal OSErr SetThreadScheduler(ThreadSchedulerTPP threadScheduler) M68K_INLINE(0x303C, 0x0209, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr SetThreadScheduler(ThreadSchedulerTPP threadScheduler) M68K_INLINE(0x303C, 0x0209, 0xABF2);
 
-pascal OSErr SetThreadSwitcher(ThreadID thread, ThreadSwitchTPP threadSwitcher, void *switchProcParam, Boolean inOrOut) M68K_INLINE(0x303C, 0x070A, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr SetThreadSwitcher(ThreadID thread, ThreadSwitchTPP threadSwitcher, void *switchProcParam, Boolean inOrOut) M68K_INLINE(0x303C, 0x070A, 0xABF2);
 
-pascal OSErr SetThreadTerminator(ThreadID thread, ThreadTerminationTPP threadTerminator, void *terminationProcParam) M68K_INLINE(0x303C, 0x0611, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr SetThreadTerminator(ThreadID thread, ThreadTerminationTPP threadTerminator, void *terminationProcParam) M68K_INLINE(0x303C, 0x0611, 0xABF2);
 
-pascal OSErr DisposeThread(ThreadID threadToDump, void *threadResult, Boolean recycleThread) M68K_INLINE(0x303C, 0x0504, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr DisposeThread(ThreadID threadToDump, void *threadResult, Boolean recycleThread) M68K_INLINE(0x303C, 0x0504, 0xABF2);
 
 #if TARGET_CPU_68K
 static __inline__ OSErr YieldToAnyThread(void);
@@ -151,27 +155,27 @@ static __inline__ OSErr YieldToAnyThread(void);
 pascal OSErr YieldToAnyThread(void);
 #endif
 
-pascal OSErr YieldToThread(ThreadID suggestedThread) M68K_INLINE(0x303C, 0x0205, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr YieldToThread(ThreadID suggestedThread) M68K_INLINE(0x303C, 0x0205, 0xABF2);
 
-pascal OSErr GetCurrentThread(ThreadID *currentThreadID) M68K_INLINE(0x303C, 0x0206, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr GetCurrentThread(ThreadID *currentThreadID) M68K_INLINE(0x303C, 0x0206, 0xABF2);
 
-pascal OSErr GetThreadState(ThreadID threadToGet, ThreadState *threadState) M68K_INLINE(0x303C, 0x0407, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr GetThreadState(ThreadID threadToGet, ThreadState *threadState) M68K_INLINE(0x303C, 0x0407, 0xABF2);
 
-pascal OSErr SetThreadState(ThreadID threadToSet, ThreadState newState, ThreadID suggestedThread) M68K_INLINE(0x303C, 0x0508, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr SetThreadState(ThreadID threadToSet, ThreadState newState, ThreadID suggestedThread) M68K_INLINE(0x303C, 0x0508, 0xABF2);
 
-pascal OSErr SetThreadStateEndCritical(ThreadID threadToSet, ThreadState newState, ThreadID suggestedThread) M68K_INLINE(0x303C, 0x0512, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr SetThreadStateEndCritical(ThreadID threadToSet, ThreadState newState, ThreadID suggestedThread) M68K_INLINE(0x303C, 0x0512, 0xABF2);
 
-pascal OSErr ThreadBeginCritical(void) M68K_INLINE(0x700B, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr ThreadBeginCritical(void) M68K_INLINE(0x700B, 0xABF2);
 
-pascal OSErr ThreadEndCritical(void) M68K_INLINE(0x700C, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr ThreadEndCritical(void) M68K_INLINE(0x700C, 0xABF2);
 
-pascal OSErr SetDebuggerNotificationProcs(DebuggerNewThreadTPP notifyNewThread, DebuggerDisposeThreadTPP notifyDisposeThread, DebuggerThreadSchedulerTPP notifyThreadScheduler) M68K_INLINE(0x303C, 0x060D, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr SetDebuggerNotificationProcs(DebuggerNewThreadTPP notifyNewThread, DebuggerDisposeThreadTPP notifyDisposeThread, DebuggerThreadSchedulerTPP notifyThreadScheduler) M68K_INLINE(0x303C, 0x060D, 0xABF2);
 
-pascal OSErr GetThreadCurrentTaskRef(ThreadTaskRef *threadTRef) M68K_INLINE(0x303C, 0x020E, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr GetThreadCurrentTaskRef(ThreadTaskRef *threadTRef) M68K_INLINE(0x303C, 0x020E, 0xABF2);
 
-pascal OSErr GetThreadStateGivenTaskRef(ThreadTaskRef threadTRef, ThreadID threadToGet, ThreadState *threadState) M68K_INLINE(0x303C, 0x060F, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr GetThreadStateGivenTaskRef(ThreadTaskRef threadTRef, ThreadID threadToGet, ThreadState *threadState) M68K_INLINE(0x303C, 0x060F, 0xABF2);
 
-pascal OSErr SetThreadReadyGivenTaskRef(ThreadTaskRef threadTRef, ThreadID threadToSet) M68K_INLINE(0x303C, 0x0410, 0xABF2);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'thds'") pascal OSErr SetThreadReadyGivenTaskRef(ThreadTaskRef threadTRef, ThreadID threadToSet) M68K_INLINE(0x303C, 0x0410, 0xABF2);
 
 enum { _ThreadDispatch = 0xABF2 };
 
@@ -182,6 +186,7 @@ static __inline__ OSErr YieldToAnyThread(void) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

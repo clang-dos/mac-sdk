@@ -13,6 +13,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Appearance Manager (Mac OS 8). Gestalt selectors.
 enum {
@@ -649,65 +653,65 @@ typedef WindowPaintProcPtr WindowPaintUPP;
 #define DisposeWindowPaintProc(proc) DisposeWindowPaintUPP(proc)
 
 // Appearance Manager 1.0 (Mac OS 8)
-pascal OSStatus RegisterAppearanceClient(void) M68K_INLINE(0x7015, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus RegisterAppearanceClient(void) M68K_INLINE(0x7015, 0xAA74);
 
-pascal OSStatus UnregisterAppearanceClient(void) M68K_INLINE(0x7016, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus UnregisterAppearanceClient(void) M68K_INLINE(0x7016, 0xAA74);
 
-pascal OSStatus SetThemePen(ThemeBrush inBrush, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7001, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus SetThemePen(ThemeBrush inBrush, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7001, 0xAA74);
 
-pascal OSStatus SetThemeBackground(ThemeBrush inBrush, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7002, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus SetThemeBackground(ThemeBrush inBrush, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7002, 0xAA74);
 
-pascal OSStatus SetThemeTextColor(ThemeTextColor inColor, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7003, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus SetThemeTextColor(ThemeTextColor inColor, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7003, 0xAA74);
 
-pascal OSStatus SetThemeWindowBackground(WindowRef inWindow, ThemeBrush inBrush, Boolean inUpdate) M68K_INLINE(0x7004, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus SetThemeWindowBackground(WindowRef inWindow, ThemeBrush inBrush, Boolean inUpdate) M68K_INLINE(0x7004, 0xAA74);
 
-pascal OSStatus DrawThemeWindowHeader(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7005, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeWindowHeader(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7005, 0xAA74);
 
-pascal OSStatus DrawThemeWindowListViewHeader(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7006, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeWindowListViewHeader(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7006, 0xAA74);
 
-pascal OSStatus DrawThemePlacard(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7007, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemePlacard(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7007, 0xAA74);
 
-pascal OSStatus DrawThemeEditTextFrame(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7009, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeEditTextFrame(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7009, 0xAA74);
 
-pascal OSStatus DrawThemeListBoxFrame(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700A, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeListBoxFrame(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700A, 0xAA74);
 
-pascal OSStatus DrawThemeFocusRect(const Rect *inRect, Boolean inHasFocus) M68K_INLINE(0x700B, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeFocusRect(const Rect *inRect, Boolean inHasFocus) M68K_INLINE(0x700B, 0xAA74);
 
-pascal OSStatus DrawThemePrimaryGroup(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700C, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemePrimaryGroup(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700C, 0xAA74);
 
-pascal OSStatus DrawThemeSecondaryGroup(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700D, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeSecondaryGroup(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700D, 0xAA74);
 
-pascal OSStatus DrawThemeSeparator(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700E, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeSeparator(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x700E, 0xAA74);
 
-pascal OSStatus DrawThemeModelessDialogFrame(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7008, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeModelessDialogFrame(const Rect *inRect, ThemeDrawState inState) M68K_INLINE(0x7008, 0xAA74);
 
-pascal OSStatus DrawThemeGenericWell(const Rect *inRect, ThemeDrawState inState, Boolean inFillCenter) M68K_INLINE(0x7022, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeGenericWell(const Rect *inRect, ThemeDrawState inState, Boolean inFillCenter) M68K_INLINE(0x7022, 0xAA74);
 
-pascal OSStatus DrawThemeFocusRegion(RgnHandle inRegion, Boolean inHasFocus) M68K_INLINE(0x7023, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeFocusRegion(RgnHandle inRegion, Boolean inHasFocus) M68K_INLINE(0x7023, 0xAA74);
 
-pascal Boolean IsThemeInColor(SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7024, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal Boolean IsThemeInColor(SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x7024, 0xAA74);
 
-pascal OSStatus GetThemeAccentColors(CTabHandle *outColors) M68K_INLINE(0x7025, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus GetThemeAccentColors(CTabHandle *outColors) M68K_INLINE(0x7025, 0xAA74);
 
-pascal OSStatus DrawThemeMenuBarBackground(const Rect *inBounds, ThemeMenuBarState inState, UInt32 inAttributes) M68K_INLINE(0x7018, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeMenuBarBackground(const Rect *inBounds, ThemeMenuBarState inState, UInt32 inAttributes) M68K_INLINE(0x7018, 0xAA74);
 
-pascal OSStatus DrawThemeMenuTitle(const Rect *inMenuBarRect, const Rect *inTitleRect, ThemeMenuState inState, UInt32 inAttributes, MenuTitleDrawingUPP inTitleProc, UInt32 inTitleData) M68K_INLINE(0x7019, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeMenuTitle(const Rect *inMenuBarRect, const Rect *inTitleRect, ThemeMenuState inState, UInt32 inAttributes, MenuTitleDrawingUPP inTitleProc, UInt32 inTitleData) M68K_INLINE(0x7019, 0xAA74);
 
-pascal OSStatus GetThemeMenuBarHeight(SInt16 *outHeight) M68K_INLINE(0x701A, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus GetThemeMenuBarHeight(SInt16 *outHeight) M68K_INLINE(0x701A, 0xAA74);
 
-pascal OSStatus DrawThemeMenuBackground(const Rect *inMenuRect, ThemeMenuType inMenuType) M68K_INLINE(0x701B, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeMenuBackground(const Rect *inMenuRect, ThemeMenuType inMenuType) M68K_INLINE(0x701B, 0xAA74);
 
-pascal OSStatus GetThemeMenuBackgroundRegion(const Rect *inMenuRect, ThemeMenuType menuType, RgnHandle region) M68K_INLINE(0x701C, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus GetThemeMenuBackgroundRegion(const Rect *inMenuRect, ThemeMenuType menuType, RgnHandle region) M68K_INLINE(0x701C, 0xAA74);
 
-pascal OSStatus DrawThemeMenuItem(const Rect *inMenuRect, const Rect *inItemRect, SInt16 inVirtualMenuTop, SInt16 inVirtualMenuBottom, ThemeMenuState inState, ThemeMenuItemType inItemType, MenuItemDrawingUPP inDrawProc, UInt32 inUserData) M68K_INLINE(0x701D, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeMenuItem(const Rect *inMenuRect, const Rect *inItemRect, SInt16 inVirtualMenuTop, SInt16 inVirtualMenuBottom, ThemeMenuState inState, ThemeMenuItemType inItemType, MenuItemDrawingUPP inDrawProc, UInt32 inUserData) M68K_INLINE(0x701D, 0xAA74);
 
-pascal OSStatus DrawThemeMenuSeparator(const Rect *inItemRect) M68K_INLINE(0x701E, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus DrawThemeMenuSeparator(const Rect *inItemRect) M68K_INLINE(0x701E, 0xAA74);
 
-pascal OSStatus GetThemeMenuSeparatorHeight(SInt16 *outHeight) M68K_INLINE(0x701F, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus GetThemeMenuSeparatorHeight(SInt16 *outHeight) M68K_INLINE(0x701F, 0xAA74);
 
-pascal OSStatus GetThemeMenuItemExtra(ThemeMenuItemType inItemType, SInt16 *outHeight, SInt16 *outWidth) M68K_INLINE(0x7020, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus GetThemeMenuItemExtra(ThemeMenuItemType inItemType, SInt16 *outHeight, SInt16 *outWidth) M68K_INLINE(0x7020, 0xAA74);
 
-pascal OSStatus GetThemeMenuTitleExtra(SInt16 *outWidth, Boolean inIsSquished) M68K_INLINE(0x7021, 0xAA74);
+MAC_SINCE_GESTALT(0x0810, "8.1", "'appr'") pascal OSStatus GetThemeMenuTitleExtra(SInt16 *outWidth, Boolean inIsSquished) M68K_INLINE(0x7021, 0xAA74);
 
 // Appearance Manager 1.1 (Mac OS 8.5)
 #if !TARGET_CPU_68K
@@ -927,6 +931,7 @@ pascal OSStatus SetTheme(Collection ioCollection);
 pascal OSStatus InstallWindowContentPaintProc(WindowRef window, WindowPaintUPP paintProc, WindowPaintProcOptions options, void *refCon);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

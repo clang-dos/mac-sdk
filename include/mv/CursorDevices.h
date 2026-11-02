@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // The record's fields are not declared here yet.
 typedef struct CursorDevice *CursorDevicePtr;
@@ -23,63 +27,64 @@ enum {
 enum { _CursorDeviceDispatch = 0xAADB };
 
 // Cursor Device Manager
-pascal OSErr CrsrDevMove(CursorDevicePtr ourDevice, long deltaX, long deltaY) M68K_INLINE(0x7000, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevMove(CursorDevicePtr ourDevice, long deltaX, long deltaY) M68K_INLINE(0x7000, 0xAADB);
 
-pascal OSErr CrsrDevMoveTo(CursorDevicePtr ourDevice, long absX, long absY) M68K_INLINE(0x7001, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevMoveTo(CursorDevicePtr ourDevice, long absX, long absY) M68K_INLINE(0x7001, 0xAADB);
 
-pascal OSErr CrsrDevFlush(CursorDevicePtr ourDevice) M68K_INLINE(0x7002, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevFlush(CursorDevicePtr ourDevice) M68K_INLINE(0x7002, 0xAADB);
 
-pascal OSErr CrsrDevButtons(CursorDevicePtr ourDevice, INTEGER buttons) M68K_INLINE(0x7003, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevButtons(CursorDevicePtr ourDevice, INTEGER buttons) M68K_INLINE(0x7003, 0xAADB);
 
-pascal OSErr CrsrDevButtonDown(CursorDevicePtr ourDevice) M68K_INLINE(0x7004, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevButtonDown(CursorDevicePtr ourDevice) M68K_INLINE(0x7004, 0xAADB);
 
-pascal OSErr CrsrDevButtonUp(CursorDevicePtr ourDevice) M68K_INLINE(0x7005, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevButtonUp(CursorDevicePtr ourDevice) M68K_INLINE(0x7005, 0xAADB);
 
-pascal OSErr CrsrDevButtonOp(CursorDevicePtr ourDevice, INTEGER buttonNumber, ButtonOpcode opcode, long data) M68K_INLINE(0x7006, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevButtonOp(CursorDevicePtr ourDevice, INTEGER buttonNumber, ButtonOpcode opcode, long data) M68K_INLINE(0x7006, 0xAADB);
 
-pascal OSErr CrsrDevSetButtons(CursorDevicePtr ourDevice, INTEGER numberOfButtons) M68K_INLINE(0x7007, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevSetButtons(CursorDevicePtr ourDevice, INTEGER numberOfButtons) M68K_INLINE(0x7007, 0xAADB);
 
-pascal OSErr CrsrDevSetAcceleration(CursorDevicePtr ourDevice, Fixed acceleration) M68K_INLINE(0x7008, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevSetAcceleration(CursorDevicePtr ourDevice, Fixed acceleration) M68K_INLINE(0x7008, 0xAADB);
 
-pascal OSErr CrsrDevDoubleTime(CursorDevicePtr ourDevice, long durationTicks) M68K_INLINE(0x7009, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevDoubleTime(CursorDevicePtr ourDevice, long durationTicks) M68K_INLINE(0x7009, 0xAADB);
 
-pascal OSErr CrsrDevUnitsPerInch(CursorDevicePtr ourDevice, Fixed resolution) M68K_INLINE(0x700A, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevUnitsPerInch(CursorDevicePtr ourDevice, Fixed resolution) M68K_INLINE(0x700A, 0xAADB);
 
-pascal OSErr CrsrDevNextDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700B, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevNextDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700B, 0xAADB);
 
-pascal OSErr CrsrDevNewDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700C, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevNewDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700C, 0xAADB);
 
-pascal OSErr CrsrDevDisposeDevice(CursorDevicePtr ourDevice) M68K_INLINE(0x700D, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CrsrDevDisposeDevice(CursorDevicePtr ourDevice) M68K_INLINE(0x700D, 0xAADB);
 
 // The same calls under their later names.
-pascal OSErr CursorDeviceMove(CursorDevicePtr ourDevice, long deltaX, long deltaY) M68K_INLINE(0x7000, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceMove(CursorDevicePtr ourDevice, long deltaX, long deltaY) M68K_INLINE(0x7000, 0xAADB);
 
-pascal OSErr CursorDeviceMoveTo(CursorDevicePtr ourDevice, long absX, long absY) M68K_INLINE(0x7001, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceMoveTo(CursorDevicePtr ourDevice, long absX, long absY) M68K_INLINE(0x7001, 0xAADB);
 
-pascal OSErr CursorDeviceFlush(CursorDevicePtr ourDevice) M68K_INLINE(0x7002, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceFlush(CursorDevicePtr ourDevice) M68K_INLINE(0x7002, 0xAADB);
 
-pascal OSErr CursorDeviceButtons(CursorDevicePtr ourDevice, INTEGER buttons) M68K_INLINE(0x7003, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceButtons(CursorDevicePtr ourDevice, INTEGER buttons) M68K_INLINE(0x7003, 0xAADB);
 
-pascal OSErr CursorDeviceButtonDown(CursorDevicePtr ourDevice) M68K_INLINE(0x7004, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceButtonDown(CursorDevicePtr ourDevice) M68K_INLINE(0x7004, 0xAADB);
 
-pascal OSErr CursorDeviceButtonUp(CursorDevicePtr ourDevice) M68K_INLINE(0x7005, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceButtonUp(CursorDevicePtr ourDevice) M68K_INLINE(0x7005, 0xAADB);
 
-pascal OSErr CursorDeviceButtonOp(CursorDevicePtr ourDevice, INTEGER buttonNumber, ButtonOpcode opcode, long data) M68K_INLINE(0x7006, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceButtonOp(CursorDevicePtr ourDevice, INTEGER buttonNumber, ButtonOpcode opcode, long data) M68K_INLINE(0x7006, 0xAADB);
 
-pascal OSErr CursorDeviceSetButtons(CursorDevicePtr ourDevice, INTEGER numberOfButtons) M68K_INLINE(0x7007, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceSetButtons(CursorDevicePtr ourDevice, INTEGER numberOfButtons) M68K_INLINE(0x7007, 0xAADB);
 
-pascal OSErr CursorDeviceSetAcceleration(CursorDevicePtr ourDevice, Fixed acceleration) M68K_INLINE(0x7008, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceSetAcceleration(CursorDevicePtr ourDevice, Fixed acceleration) M68K_INLINE(0x7008, 0xAADB);
 
-pascal OSErr CursorDeviceDoubleTime(CursorDevicePtr ourDevice, long durationTicks) M68K_INLINE(0x7009, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceDoubleTime(CursorDevicePtr ourDevice, long durationTicks) M68K_INLINE(0x7009, 0xAADB);
 
-pascal OSErr CursorDeviceUnitsPerInch(CursorDevicePtr ourDevice, Fixed resolution) M68K_INLINE(0x700A, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceUnitsPerInch(CursorDevicePtr ourDevice, Fixed resolution) M68K_INLINE(0x700A, 0xAADB);
 
-pascal OSErr CursorDeviceNextDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700B, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceNextDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700B, 0xAADB);
 
-pascal OSErr CursorDeviceNewDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700C, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceNewDevice(CursorDevicePtr *ourDevice) M68K_INLINE(0x700C, 0xAADB);
 
-pascal OSErr CursorDeviceDisposeDevice(CursorDevicePtr ourDevice) M68K_INLINE(0x700D, 0xAADB);
+MAC_SINCE(0x0710, "7.1") pascal OSErr CursorDeviceDisposeDevice(CursorDevicePtr ourDevice) M68K_INLINE(0x700D, 0xAADB);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // number of bytes InitGraf needs
 enum {
@@ -87,6 +91,10 @@ struct BitMap {
     INTEGER rowBytes;
     Rect bounds;
 };
+
+typedef BitMap *BitMapPtr;
+
+typedef BitMap **BitMapHandle;
 
 typedef struct Pattern Pattern;
 struct Pattern {
@@ -815,22 +823,22 @@ enum { _BackPat = 0xA87C };
 pascal void BackPat(const Pattern *pp) M68K_INLINE(0xA87C);
 
 enum { _SeedFill = 0xA839 };
-pascal void SeedFill(Ptr srcp, Ptr dstp, INTEGER srcr, INTEGER dstr, INTEGER height, INTEGER width, INTEGER seedh, INTEGER seedv) M68K_INLINE(0xA839);
+MAC_SINCE(0x0070, "0.7") pascal void SeedFill(Ptr srcp, Ptr dstp, INTEGER srcr, INTEGER dstr, INTEGER height, INTEGER width, INTEGER seedh, INTEGER seedv) M68K_INLINE(0xA839);
 
 enum { _CalcMask = 0xA838 };
-pascal void CalcMask(Ptr srcp, Ptr dstp, INTEGER srcr, INTEGER dstr, INTEGER height, INTEGER width) M68K_INLINE(0xA838);
+MAC_SINCE(0x0070, "0.7") pascal void CalcMask(Ptr srcp, Ptr dstp, INTEGER srcr, INTEGER dstr, INTEGER height, INTEGER width) M68K_INLINE(0xA838);
 
 enum { _CopyMask = 0xA817 };
-pascal void CopyMask(BitMap *srcbp, BitMap *mskbp, BitMap *dstbp, const Rect *srcrp, const Rect *mskrp, const Rect *dstrp) M68K_INLINE(0xA817);
+MAC_SINCE(0x0070, "0.7") pascal void CopyMask(BitMap *srcbp, BitMap *mskbp, BitMap *dstbp, const Rect *srcrp, const Rect *mskrp, const Rect *dstrp) M68K_INLINE(0xA817);
 
 enum { _GetMaskTable = 0xA836 };
-pascal INTEGER* GetMaskTable(void) M68K_INLINE(0xA836);
+MAC_SINCE(0x0070, "0.7") pascal INTEGER* GetMaskTable(void) M68K_INLINE(0xA836);
 
 enum { _CharExtra = 0xAA23 };
-pascal void CharExtra(Fixed Extra) M68K_INLINE(0xAA23);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void CharExtra(Fixed Extra) M68K_INLINE(0xAA23);
 
 enum { _MakeRGBPat = 0xAA0D };
-pascal void MakeRGBPat(PixPatHandle ph, RGBColor *colorp) M68K_INLINE(0xAA0D);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void MakeRGBPat(PixPatHandle ph, RGBColor *colorp) M68K_INLINE(0xAA0D);
 
 enum { _Random = 0xA861 };
 pascal INTEGER Random(void) M68K_INLINE(0xA861);
@@ -1157,7 +1165,7 @@ enum { _StdTxMeas = 0xA8ED };
 pascal INTEGER StdTxMeas(INTEGER n, Ptr p, Point *nump, Point *denp, FontInfo *finfop) M68K_INLINE(0xA8ED);
 
 enum { _MeasureText = 0xA837 };
-pascal void MeasureText(INTEGER n, Ptr text, Ptr chars) M68K_INLINE(0xA837);
+MAC_SINCE(0x0070, "0.7") pascal void MeasureText(INTEGER n, Ptr text, Ptr chars) M68K_INLINE(0xA837);
 
 enum { _TextFont = 0xA887 };
 pascal void TextFont(INTEGER f) M68K_INLINE(0xA887);
@@ -1196,19 +1204,19 @@ enum { _GetFontInfo = 0xA88B };
 pascal void GetFontInfo(FontInfo *ip) M68K_INLINE(0xA88B);
 
 enum { _GetCPixel = 0xAA17 };
-pascal void GetCPixel(INTEGER h, INTEGER v, RGBColor *colorp) M68K_INLINE(0xAA17);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void GetCPixel(INTEGER h, INTEGER v, RGBColor *colorp) M68K_INLINE(0xAA17);
 
 enum { _SetCPixel = 0xAA16 };
-pascal void SetCPixel(INTEGER h, INTEGER v, RGBColor *colorp) M68K_INLINE(0xAA16);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetCPixel(INTEGER h, INTEGER v, RGBColor *colorp) M68K_INLINE(0xAA16);
 
 enum { _SeedCFill = 0xAA50 };
-pascal void SeedCFill(BitMap *srcbp, BitMap *dstbp, const Rect *srcrp, const Rect *dstrp, INTEGER seedh, INTEGER seedv, ProcPtr matchprocp, LONGINT matchdata) M68K_INLINE(0xAA50);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SeedCFill(BitMap *srcbp, BitMap *dstbp, const Rect *srcrp, const Rect *dstrp, INTEGER seedh, INTEGER seedv, ProcPtr matchprocp, LONGINT matchdata) M68K_INLINE(0xAA50);
 
 enum { _CalcCMask = 0xAA4F };
-pascal void CalcCMask(BitMap *srcbp, BitMap *dstbp, const Rect *srcrp, const Rect *dstrp, RGBColor *seedrgbp, ProcPtr matchprocp, LONGINT matchdata) M68K_INLINE(0xAA4F);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void CalcCMask(BitMap *srcbp, BitMap *dstbp, const Rect *srcrp, const Rect *dstrp, RGBColor *seedrgbp, ProcPtr matchprocp, LONGINT matchdata) M68K_INLINE(0xAA4F);
 
 enum { _CopyDeepMask = 0xAA51 };
-pascal void CopyDeepMask(BitMap *srcBits, BitMap *maskBits, BitMap *dstBits, const Rect *srcRect, const Rect *maskRect, const Rect *dstRect, INTEGER mode, RgnHandle maskRgn) M68K_INLINE(0xAA51);
+MAC_SINCE(0x0700, "7.0") MAC_COLOR_QD pascal void CopyDeepMask(BitMap *srcBits, BitMap *maskBits, BitMap *dstBits, const Rect *srcRect, const Rect *maskRect, const Rect *dstRect, INTEGER mode, RgnHandle maskRgn) M68K_INLINE(0xAA51);
 
 #if TARGET_API_MAC_CARBON
 #if TARGET_CPU_68K
@@ -1342,6 +1350,7 @@ static __inline__ void GetQDGlobalsScreenBits(BitMap *bm) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

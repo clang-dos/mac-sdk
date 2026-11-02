@@ -8,6 +8,10 @@
 #include "TextCommon.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Text Encoding Converter (Mac OS 8.5 and later; an extension for 7.6 and 8.1).
 typedef struct OpaqueTECObjectRef *TECObjectRef;
@@ -147,6 +151,7 @@ pascal OSStatus TECDisposeSniffer(TECSnifferObjectRef encodingSniffer);
 pascal OSStatus TECClearSnifferContextInfo(TECSnifferObjectRef encodingSniffer);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

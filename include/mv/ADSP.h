@@ -7,6 +7,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Connection states (TRCCB.state)
 enum {
@@ -180,6 +184,7 @@ union {
 
 typedef DSPParamBlock *DSPPBPtr;
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

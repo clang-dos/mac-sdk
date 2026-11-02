@@ -969,3 +969,28 @@
       type: Handle
     dispatcher: ComponentDispatch
     selector: 1
+
+# ####
+
+- typedef: {name: ComponentRoutine, type: ComponentRoutineProcPtr}
+
+# ####
+
+- typedef: {name: ComponentFunction, type: ComponentFunctionUPP}
+
+# ####
+
+- enum:
+    values:
+    - {name: invalidComponentID, value: -3000}
+    - {name: validInstancesExist, value: -3001}
+    - {name: componentNotCaptured, value: -3002}
+    - {name: componentDontRegister, value: -3003}
+
+# ####
+
+- enum:
+    values:
+    - {name: gestaltComponentMgr, value: '''cpnt'''}
+    - {name: badComponentInstance, value: 2147516417}
+    - {name: badComponentSelector, value: 2147516418}

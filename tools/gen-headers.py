@@ -30,6 +30,8 @@ import sys
 
 import yaml
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 FILTER = "cincludes"
 BUILTIN = {"uint8_t", "uint16_t", "uint32_t", "uint64_t", "int8_t",
            "int16_t", "int32_t", "int64_t", "char", "ProcPtr", "void",
@@ -45,6 +47,7 @@ APPLE_NAMES = [
     "AppleEvents", "Aliases", "CodeFragments", "Components", "CursorDevices", "DatabaseAccess",
     "ConditionalMacros", "Connections", "CommResources", "CTBUtilities", "Displays", "ADSP", "ENET", "FileTransfers", "Terminals", "AppleTalk", "Dictionary", "MIDI", "Power", "PPCToolbox", "SCSI", "Slots", "TextServices",
     "Appearance", "Collections", "ControlDefinitions", "ContextualMenu", "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices", "Multiprocessing", "Threads", "TextCommon", "TextEncodingConverter", "UnicodeConverter", "URLAccess", "Keychain",
+    "Movies", "ImageCompression", "QuickTimeComponents", "MediaHandler", "ImageCodec", "MoviesFormat",
     "Errors", "Events", "Files", "Finder", "FixMath", "Folders", "Fonts",
     "Gestalt", "Icons", "Interrupts", "Kernel", "Lists", "LowMem",
     "MacErrors", "MacMemory", "MacTypes", "MacWindows", "Memory", "Menus",
@@ -214,9 +217,9 @@ class Generator:
                 line += " /* " + " ".join(
                     str(val["comment"]).split()).replace("*/", "* /") + " */"
             out.append(line)
-            if val.get("old_name"):
+            for old in listify(val.get("old_name")):
                 out.append("#if OLDROUTINENAMES")
-                out.append(f"#define {val['old_name']} {val['name']}")
+                out.append(f"#define {old} {val['name']}")
                 out.append("#endif")
         out.append(f"}} {v['name']};" if v.get("name") else "};")
 
@@ -349,7 +352,7 @@ class Generator:
         rsz = self.size_of(fun["return"]) if fun.get("return") else 0
         if rsz not in (0, 1, 2, 4):
             raise ValueError(f"{name}: result has size {rsz}")
-        out.append(f"static __inline__ __attribute__((__always_inline__)) "
+        out.append(f"{getattr(self, 'pre', '')}static __inline__ __attribute__((__always_inline__)) "
                    f"{ret} {name}({params}) {{")
         out.append(f"    struct {{ {' '.join(fields)} }} __attribute__((__packed__))"
                    f" _pb = {{ {', '.join(inits)} }};")
@@ -415,7 +418,11 @@ class Generator:
                 return False
             if reg in clobbers:
                 clobbers.remove(reg)
-        out.append(f"static __inline__ __attribute__((__always_inline__)) "
+        if fun.get("m68k-memerr"):
+            # The 64K ROM leaves MemErr alone (MPW's Pascal glue stored D0
+            # there); later ROMs store the same D0 themselves.
+            words = list(words) + [0x31C0, 0x0220]     # move.w d0,MemErr
+        out.append(f"{getattr(self, 'pre', '')}static __inline__ __attribute__((__always_inline__)) "
                    f"{ret} {name}({params}) {{")
         out += ["    " + b for b in body]
         out.append(f"    __asm__ __volatile__(\".short "
@@ -461,7 +468,9 @@ class Generator:
         # Variadic functions (CallUniversalProc) use the C convention.
         cc = "" if any(a["type"] == "..." for a in args) or \
             fun.get("callconv") == "C" else "pascal "
-        proto = f"{cc}{ret} {name}({params})"
+        pre = AVAIL.get(name, "")
+        self.pre = pre
+        proto = f"{pre}{cc}{ret} {name}({params})"
 
         if fun.get("m68k") == "none":
             # A library that never ran on 68k Macs (Mac OS 8.5 and later).
@@ -481,7 +490,7 @@ class Generator:
             # The body may call functions declared later in the header,
             # so only the prototype goes here; the definition goes last.
             head = f"static __inline__ {ret} {name}({params})"
-            out += ["#if TARGET_CPU_68K", head + ";", "#else", proto + ";",
+            out += ["#if TARGET_CPU_68K", pre + head + ";", "#else", proto + ";",
                     "#endif"]
             body = [head + " {"]
             body += ["    " + l for l in fun["m68k-body"].rstrip().splitlines()]
@@ -502,10 +511,10 @@ class Generator:
         else:
             out.append(proto + ";")
             self.glue.append(name)
-        if fun.get("old_name"):
+        for old in listify(fun.get("old_name")):
             names = ", ".join(a["name"] for a in args)
             out += ["#if OLDROUTINENAMES",
-                    f"#define {fun['old_name']}({names}) {name}({names})",
+                    f"#define {old}({names}) {name}({names})",
                     "#endif"]
 
     # -- files ---------------------------------------------------------
@@ -518,7 +527,11 @@ class Generator:
                '#include "../ConditionalMacros.h"']
         for inc in sorted(h.includes):
             out.append(f'#include "{inc}.h"')
-        out += ["", "#pragma options align=mac68k", ""]
+        out += ["", "#pragma options align=mac68k",
+                "/* The headers' own inline code may call newer calls behind a",
+                "   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */",
+                "#pragma clang diagnostic push",
+                '#pragma clang diagnostic ignored "-Wuser-defined-warnings"', ""]
         self.deferred = []
         for item in h.items:
             key, v = main_elem(item)
@@ -560,8 +573,39 @@ class Generator:
                 out += ([f"#if {cond}"] if cond else []) + body + \
                     (["#endif"] if cond else []) + [""]
             out += ["#endif", ""]
-        out += ["#pragma options align=reset", "", "#endif", ""]
+        out += ["#pragma clang diagnostic pop", "#pragma options align=reset", "", "#endif", ""]
         return "\n".join(out)
+
+
+def load_availability():
+    """call -> 'MAC_SINCE(...) ' prefix, from data/availability.tsv."""
+    path = os.path.join(ROOT, "data", "availability.tsv")
+    out = {}
+    if not os.path.exists(path):
+        return out
+    for line in open(path):
+        if line.startswith("#"):
+            continue
+        name, _hdr, _trap, _sel, since, cls, _disp, gest = line.rstrip("\n").split("\t")[:8]
+        if since == "-":
+            continue
+        v = int(since, 16)
+        pre = ""
+        if v > 0x0010 or cls not in ("64K",):
+            if v > 0x0010:
+                text = f"{v >> 8}.{(v >> 4) & 15}" + (f".{v & 15}" if v & 15 else "")
+                if gest:
+                    pre += f"MAC_SINCE_GESTALT(0x{v:04X}, \"{text}\", \"'{gest}'\") "
+                else:
+                    pre += f"MAC_SINCE(0x{v:04X}, \"{text}\") "
+            if cls == "II":
+                pre += "MAC_COLOR_QD "
+        if pre:
+            out[name] = pre
+    return out
+
+
+AVAIL = {}
 
 
 def topsort(headers):
@@ -625,6 +669,30 @@ CONDITIONAL_MACROS = """\
 #  define pascal
 #endif
 
+/* Opt-in checks against the oldest System a program supports: build with
+   -DMAC_MIN_SYSTEM=0x0605 (for example) to get a warning at each call whose
+   trap no measured System older than that implements, and add
+   -DMAC_NO_COLOR_QD to also warn about calls only Color QuickDraw Macs
+   have. docs/systems.md lists the measurements. Calls you guard with
+   TrapAvailable() or Gestalt still warn; silence those with
+   #pragma clang diagnostic ignored "-Wuser-defined-warnings". */
+#if defined(MAC_MIN_SYSTEM)
+#  define MAC_SINCE(v, s) __attribute__((__diagnose_if__(MAC_MIN_SYSTEM < (v), \
+       "needs System " s " or later", "warning")))
+#  define MAC_SINCE_GESTALT(v, s, g) __attribute__((__diagnose_if__(MAC_MIN_SYSTEM < (v), \
+       "needs a manager Gestalt selector " g " reports; the oldest measured System that had it is " s, \
+       "warning")))
+#else
+#  define MAC_SINCE(v, s)
+#  define MAC_SINCE_GESTALT(v, s, g)
+#endif
+#if defined(MAC_NO_COLOR_QD)
+#  define MAC_COLOR_QD __attribute__((__diagnose_if__(1, \
+       "needs a Color QuickDraw Mac (Mac II or later)", "warning")))
+#else
+#  define MAC_COLOR_QD
+#endif
+
 #define nil NULL
 typedef struct RoutineDescriptor *ProcPtr;
 
@@ -637,6 +705,7 @@ def main():
     ap.add_argument("--defs", default="defs")
     ap.add_argument("--out", default="include")
     a = ap.parse_args()
+    AVAIL.update(load_availability())
 
     headers = {}
     for f in sorted(os.listdir(a.defs)):

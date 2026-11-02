@@ -8,6 +8,10 @@
 #include "NameRegistry.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // configAddr is typed as an address but carries a register offset in
 // configuration space, 0 to 255.  The word and long routines swap
@@ -24,6 +28,7 @@ pascal OSErr ExpMgrConfigWriteWord(RegEntryIDPtr node, LogicalAddress configAddr
 
 pascal OSErr ExpMgrConfigWriteLong(RegEntryIDPtr node, LogicalAddress configAddr, UInt32 value);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

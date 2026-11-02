@@ -666,6 +666,7 @@
     executor: true
     trap: 0xA9C6
     executor_extras: SaveA1D1D2
+    old_name: Secs2Date
 
 # ####
 
@@ -1428,3 +1429,63 @@
       type: ExceptionHandler
     comment: |
       PowerPC only.
+
+# ####
+
+- function:
+    name: Translate24To32
+    return: Ptr
+    args:
+      - name: addr24
+        type: void*
+        register: D0
+    trap: 0xA091
+    returnreg: D0
+    comment: Converts a 24-bit address to a 32-bit one (MPW 3.2 interfaces).
+
+# ####
+
+- verbatim: |
+    /* clang-dos SDK: true when the trap is implemented on this Mac. Works on
+       every ROM from the Mac 128K's 64K ROM on; Apple's sample-code
+       TrapAvailable needs the 128K ROM, because on the 64K ROM
+       NGetTrapAddress is plain GetTrapAddress and OS and Toolbox traps share
+       one 512-entry table (OS traps in entries 0-0x4F, Toolbox traps
+       A850-A9FF in 0x50-0x1FF). Toolbox traps above A9FF need a 0x400-entry
+       table (Mac II and later, System 7 on any Mac). */
+    static __inline__ Boolean TrapAvailable(uint16_t trap) {
+    #if TARGET_CPU_68K
+        if (*(volatile INTEGER *)0x28E < 0) {      /* ROM85: the 64K ROM */
+            uint16_t i = (trap & 0x0800) ? (trap & 0x1FF) : (trap & 0xFF);
+            if ((trap & 0x0800) ? i < 0x50 : i >= 0x50)
+                return false;
+            return GetTrapAddress(i) != GetTrapAddress(0x9F);
+        }
+    #endif
+        if (trap & 0x0800) {
+            trap &= 0x03FF;
+            if (trap >= 0x200 && NGetTrapAddress(0xA86E, kToolboxTrapType) ==
+                                     NGetTrapAddress(0xAA6E, kToolboxTrapType))
+                return false;
+    #if TARGET_CPU_68K
+            /* Before System 6.0 the Toolbox entries A800-A84F that the ROM
+               does not use hold copies of the OS entries' addresses, not
+               _Unimplemented's. These are the ones that were real, as
+               measured on the Mac Plus and Mac II ROMs (docs/systems.md). */
+            if (trap < 0x50 && *(volatile INTEGER *)0x15A < 0x0600) {   /* SysVersion */
+                static const unsigned char plus[10] =
+                    {0x00, 0xFF, 0xFF, 0xC9, 0xC3, 0x9F, 0xDF, 0xFF, 0xFF, 0xF7};
+                static const unsigned char macii[10] =
+                    {0x7F, 0xFF, 0xFF, 0xC9, 0xC3, 0x9F, 0xDF, 0xFF, 0xFF, 0xFF};
+                const unsigned char *real =
+                    (*(volatile INTEGER *)0x28E & 0x4000) ? plus : macii;   /* ROM85 */
+                if (!(real[trap >> 3] & (0x80 >> (trap & 7))))
+                    return false;
+            }
+    #endif
+            return NGetTrapAddress(0xA800 | trap, kToolboxTrapType) !=
+                   NGetTrapAddress(0xA89F, kToolboxTrapType);
+        }
+        return NGetTrapAddress(0xA000 | (trap & 0xFF), kOSTrapType) !=
+               NGetTrapAddress(0xA89F, kToolboxTrapType);
+    }

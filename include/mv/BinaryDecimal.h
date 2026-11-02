@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void NumToString(LONGINT l, StringPtr s) {
@@ -34,6 +38,7 @@ static __inline__ __attribute__((__always_inline__)) void StringToNum(ConstStrin
 pascal void StringToNum(ConstStringPtr s, LONGINT *lp);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

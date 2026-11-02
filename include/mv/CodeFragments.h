@@ -7,6 +7,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct cfrg_resource_t cfrg_resource_t;
 struct cfrg_resource_t {
@@ -124,22 +128,23 @@ typedef CFragClosure *CFragClosureID;
 
 enum { _CodeFragmentDispatch = 0xAA5A };
 
-pascal OSErr GetDiskFragment(FSSpecPtr fsp, LONGINT offset, LONGINT length, ConstStr63Param fragname, LoadFlags flags, ConnectionID *connp, Ptr *mainAddrp, Str255 errname) M68K_INLINE(0x3F3C, 0x0002, 0xAA5A);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'cfrg'") pascal OSErr GetDiskFragment(FSSpecPtr fsp, LONGINT offset, LONGINT length, ConstStr63Param fragname, LoadFlags flags, ConnectionID *connp, Ptr *mainAddrp, Str255 errname) M68K_INLINE(0x3F3C, 0x0002, 0xAA5A);
 
 typedef uint8_t SymClass;
 
-pascal OSErr FindSymbol(ConnectionID connID, ConstStr255Param symName, Ptr *symAddr, SymClass *symClass) M68K_INLINE(0x3F3C, 0x0005, 0xAA5A);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'cfrg'") pascal OSErr FindSymbol(ConnectionID connID, ConstStr255Param symName, Ptr *symAddr, SymClass *symClass) M68K_INLINE(0x3F3C, 0x0005, 0xAA5A);
 
-pascal OSErr CloseConnection(ConnectionID *cidp) M68K_INLINE(0x3F3C, 0x0004, 0xAA5A);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'cfrg'") pascal OSErr CloseConnection(ConnectionID *cidp) M68K_INLINE(0x3F3C, 0x0004, 0xAA5A);
 
-pascal OSErr GetSharedLibrary(ConstStr63Param library, OSType arch, LoadFlags loadflags, ConnectionID *cidp, Ptr *mainaddrp, Str255 errName) M68K_INLINE(0x3F3C, 0x0001, 0xAA5A);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'cfrg'") pascal OSErr GetSharedLibrary(ConstStr63Param library, OSType arch, LoadFlags loadflags, ConnectionID *cidp, Ptr *mainaddrp, Str255 errName) M68K_INLINE(0x3F3C, 0x0001, 0xAA5A);
 
-pascal OSErr GetMemFragment(void *addr, unsigned long length, ConstStr63Param fragname, LoadFlags flags, ConnectionID *connp, Ptr *mainAddrp, Str255 errname) M68K_INLINE(0x3F3C, 0x0003, 0xAA5A);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'cfrg'") pascal OSErr GetMemFragment(void *addr, unsigned long length, ConstStr63Param fragname, LoadFlags flags, ConnectionID *connp, Ptr *mainAddrp, Str255 errname) M68K_INLINE(0x3F3C, 0x0003, 0xAA5A);
 
-pascal OSErr CountSymbols(ConnectionID id, LONGINT *countp) M68K_INLINE(0x3F3C, 0x0006, 0xAA5A);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'cfrg'") pascal OSErr CountSymbols(ConnectionID id, LONGINT *countp) M68K_INLINE(0x3F3C, 0x0006, 0xAA5A);
 
-pascal OSErr GetIndSymbol(ConnectionID id, LONGINT index, Str255 name, Ptr *addrp, SymClass *classp) M68K_INLINE(0x3F3C, 0x0007, 0xAA5A);
+MAC_SINCE_GESTALT(0x0761, "7.6.1", "'cfrg'") pascal OSErr GetIndSymbol(ConnectionID id, LONGINT index, Str255 name, Ptr *addrp, SymClass *classp) M68K_INLINE(0x3F3C, 0x0007, 0xAA5A);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

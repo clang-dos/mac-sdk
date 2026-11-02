@@ -17,7 +17,7 @@ pat = re.compile(r"static __inline__ __attribute__\(\(__always_inline__\)\) "
 print("#include <Multiverse.h>")
 seen = 0
 for f in sorted(os.listdir(root)):
-    for ret, name, params, fields, sel in pat.findall(open(os.path.join(root, f)).read()):
+    for ret, name, params, fields, sel in pat.findall(re.sub(r"MAC_SINCE(?:_GESTALT)?\([^()]*\) |MAC_COLOR_QD ", "", open(os.path.join(root, f)).read())):
         r = rom.get(name)
         if r is None:
             print(f"#error {name}: not in data/blockinfo.json")

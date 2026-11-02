@@ -6539,3 +6539,45 @@
 - typedef:
     name: DrvQElPtr
     type: DrvQEl*
+
+# ####
+
+- function:
+    name: PBGetAltAccess
+    return: OSErr
+    args:
+      - name: paramBlock
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    trap: 0xA060
+    dispatcher: FSDispatch
+    selector: 0x0060
+    returnreg: D0
+    comment: AppleShare alternate access privileges (MPW 3.2 interfaces).
+    variants:
+      - PBGetAltAccessSync
+      - PBGetAltAccessAsync
+
+# ####
+
+- function:
+    name: PBSetAltAccess
+    return: OSErr
+    args:
+      - name: paramBlock
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    trap: 0xA060
+    dispatcher: FSDispatch
+    selector: 0x0061
+    returnreg: D0
+    comment: AppleShare alternate access privileges (MPW 3.2 interfaces).
+    variants:
+      - PBSetAltAccessSync
+      - PBSetAltAccessAsync

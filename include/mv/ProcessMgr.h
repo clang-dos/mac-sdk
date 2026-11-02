@@ -8,6 +8,10 @@
 #include "PPC.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef INTEGER LaunchFlags;
 
@@ -106,21 +110,21 @@ enum {
     procNotFound = -600,
 };
 
-pascal OSErr GetCurrentProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0037, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetCurrentProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0037, 0xA88F);
 
-pascal OSErr GetNextProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0038, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetNextProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0038, 0xA88F);
 
-pascal OSErr GetProcessInformation(ProcessSerialNumber *serial_number, ProcessInfoPtr info) M68K_INLINE(0x3F3C, 0x003A, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetProcessInformation(ProcessSerialNumber *serial_number, ProcessInfoPtr info) M68K_INLINE(0x3F3C, 0x003A, 0xA88F);
 
-pascal OSErr SameProcess(ProcessSerialNumber *serial_number0, ProcessSerialNumber *serial_number1, Boolean *same_out) M68K_INLINE(0x3F3C, 0x003D, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SameProcess(ProcessSerialNumber *serial_number0, ProcessSerialNumber *serial_number1, Boolean *same_out) M68K_INLINE(0x3F3C, 0x003D, 0xA88F);
 
-pascal OSErr SetFrontProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x003B, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetFrontProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x003B, 0xA88F);
 
-pascal OSErr WakeUpProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x003C, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr WakeUpProcess(ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x003C, 0xA88F);
 
-pascal OSErr GetProcessSerialNumberFromPortName(PPCPortPtr port_name, ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0035, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetProcessSerialNumberFromPortName(PPCPortPtr port_name, ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0035, 0xA88F);
 
-pascal OSErr GetPortNameFromProcessSerialNumber(PPCPortPtr port_name, ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0046, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetPortNameFromProcessSerialNumber(PPCPortPtr port_name, ProcessSerialNumber *serial_number) M68K_INLINE(0x3F3C, 0x0046, 0xA88F);
 
 enum { _LaunchApplication = 0xA9F2 };
 #if TARGET_CPU_68K
@@ -137,12 +141,13 @@ static __inline__ __attribute__((__always_inline__)) OSErr LaunchApplication(Lau
 pascal OSErr LaunchApplication(LaunchParamBlockRec *params);
 #endif
 
-pascal OSErr LaunchDeskAccessory(const FSSpec *pFileSpec, ConstStr255Param pDAName) M68K_INLINE(0x3F3C, 0x0036, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr LaunchDeskAccessory(const FSSpec *pFileSpec, ConstStr255Param pDAName) M68K_INLINE(0x3F3C, 0x0036, 0xA88F);
 
-pascal OSErr GetFrontProcess(ProcessSerialNumber *PSN) M68K_INLINE(0x70FF, 0x2F00, 0x3F3C, 0x0039, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetFrontProcess(ProcessSerialNumber *PSN) M68K_INLINE(0x70FF, 0x2F00, 0x3F3C, 0x0039, 0xA88F);
 
 pascal OSErr KillProcess(const ProcessSerialNumber *inProcess);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif
