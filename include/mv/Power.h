@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef UniversalProcPtr SleepQUPP;
 
@@ -53,18 +57,18 @@ enum {
 };
 
 // Power Manager
-pascal void AOn(void) M68K_INLINE(0x7004, 0xA685);
+MAC_SINCE(0x0921, "9.2.1") pascal void AOn(void) M68K_INLINE(0x7004, 0xA685);
 
-pascal void AOnIgnoreModem(void) M68K_INLINE(0x7005, 0xA685);
+MAC_SINCE(0x0921, "9.2.1") pascal void AOnIgnoreModem(void) M68K_INLINE(0x7005, 0xA685);
 
-pascal void BOn(void) M68K_INLINE(0x7000, 0xA685);
+MAC_SINCE(0x0921, "9.2.1") pascal void BOn(void) M68K_INLINE(0x7000, 0xA685);
 
-pascal void AOff(void) M68K_INLINE(0x7084, 0xA685);
+MAC_SINCE(0x0921, "9.2.1") pascal void AOff(void) M68K_INLINE(0x7084, 0xA685);
 
-pascal void BOff(void) M68K_INLINE(0x7080, 0xA685);
+MAC_SINCE(0x0921, "9.2.1") pascal void BOff(void) M68K_INLINE(0x7080, 0xA685);
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long GetCPUSpeed(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) long GetCPUSpeed(void) {
     register long _ret __asm__("d0");
     __asm__ __volatile__(".short 0x70FF, 0xA485"
         : "=r"(_ret)
@@ -73,12 +77,12 @@ static __inline__ __attribute__((__always_inline__)) long GetCPUSpeed(void) {
     return _ret;
 }
 #else
-pascal long GetCPUSpeed(void);
+MAC_SINCE(0x0921, "9.2.1") pascal long GetCPUSpeed(void);
 #endif
 
 enum { _IdleUpdate = 0xA285 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long IdleUpdate(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) long IdleUpdate(void) {
     register long _ret __asm__("d0");
     __asm__ __volatile__(".short 0xA285"
         : "=r"(_ret)
@@ -87,16 +91,16 @@ static __inline__ __attribute__((__always_inline__)) long IdleUpdate(void) {
     return _ret;
 }
 #else
-pascal long IdleUpdate(void);
+MAC_SINCE(0x0921, "9.2.1") pascal long IdleUpdate(void);
 #endif
 
-pascal void EnableIdle(void) M68K_INLINE(0x7000, 0xA485);
+MAC_SINCE(0x0921, "9.2.1") pascal void EnableIdle(void) M68K_INLINE(0x7000, 0xA485);
 
-pascal void DisableIdle(void) M68K_INLINE(0x7001, 0xA485);
+MAC_SINCE(0x0921, "9.2.1") pascal void DisableIdle(void) M68K_INLINE(0x7001, 0xA485);
 
 enum { _SleepQInstall = 0xA28A };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SleepQInstall(SleepQRecPtr qRecPtr) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SleepQInstall(SleepQRecPtr qRecPtr) {
     register SleepQRecPtr _qRecPtr __asm__("a0") = qRecPtr;
     __asm__ __volatile__(".short 0xA28A"
         : "+r"(_qRecPtr)
@@ -104,12 +108,12 @@ static __inline__ __attribute__((__always_inline__)) void SleepQInstall(SleepQRe
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void SleepQInstall(SleepQRecPtr qRecPtr);
+MAC_SINCE(0x0921, "9.2.1") pascal void SleepQInstall(SleepQRecPtr qRecPtr);
 #endif
 
 enum { _SleepQRemove = 0xA48A };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SleepQRemove(SleepQRecPtr qRecPtr) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SleepQRemove(SleepQRecPtr qRecPtr) {
     register SleepQRecPtr _qRecPtr __asm__("a0") = qRecPtr;
     __asm__ __volatile__(".short 0xA48A"
         : "+r"(_qRecPtr)
@@ -117,11 +121,11 @@ static __inline__ __attribute__((__always_inline__)) void SleepQRemove(SleepQRec
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void SleepQRemove(SleepQRecPtr qRecPtr);
+MAC_SINCE(0x0921, "9.2.1") pascal void SleepQRemove(SleepQRecPtr qRecPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetTimeout(INTEGER count) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void SetTimeout(INTEGER count) {
     register INTEGER _count __asm__("d0") = count;
     __asm__ __volatile__(".short 0x207C, 0x0000, 0x0001, 0xA07F"
         : "+r"(_count)
@@ -129,11 +133,11 @@ static __inline__ __attribute__((__always_inline__)) void SetTimeout(INTEGER cou
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetTimeout(INTEGER count);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetTimeout(INTEGER count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void GetTimeout(INTEGER *count) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) void GetTimeout(INTEGER *count) {
     register INTEGER _count __asm__("d0");
     __asm__ __volatile__(".short 0x207C, 0x0000, 0x0000, 0xA07F"
         : "=r"(_count)
@@ -142,7 +146,7 @@ static __inline__ __attribute__((__always_inline__)) void GetTimeout(INTEGER *co
     if (count) *count = _count;
 }
 #else
-pascal void GetTimeout(INTEGER *count);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void GetTimeout(INTEGER *count);
 #endif
 
 // Power Manager extras (PowerPC)
@@ -277,7 +281,7 @@ enum {
 
 // Power Manager 2 (System 7.5 and later), trap 0xA09E with the selector in D0
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER PMSelectorCount(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) INTEGER PMSelectorCount(void) {
     register INTEGER _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7000, 0xA09E"
         : "=r"(_ret)
@@ -286,11 +290,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER PMSelectorCount(voi
     return _ret;
 }
 #else
-pascal INTEGER PMSelectorCount(void);
+MAC_SINCE(0x0921, "9.2.1") pascal INTEGER PMSelectorCount(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) UInt32 PMFeatures(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) UInt32 PMFeatures(void) {
     register UInt32 _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7001, 0xA09E"
         : "=r"(_ret)
@@ -299,11 +303,11 @@ static __inline__ __attribute__((__always_inline__)) UInt32 PMFeatures(void) {
     return _ret;
 }
 #else
-pascal UInt32 PMFeatures(void);
+MAC_SINCE(0x0921, "9.2.1") pascal UInt32 PMFeatures(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) UInt8 GetSleepTimeout(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) UInt8 GetSleepTimeout(void) {
     register UInt8 _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7002, 0xA09E"
         : "=r"(_ret)
@@ -312,11 +316,11 @@ static __inline__ __attribute__((__always_inline__)) UInt8 GetSleepTimeout(void)
     return _ret;
 }
 #else
-pascal UInt8 GetSleepTimeout(void);
+MAC_SINCE(0x0921, "9.2.1") pascal UInt8 GetSleepTimeout(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) UInt8 GetHardDiskTimeout(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) UInt8 GetHardDiskTimeout(void) {
     register UInt8 _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7004, 0xA09E"
         : "=r"(_ret)
@@ -325,11 +329,11 @@ static __inline__ __attribute__((__always_inline__)) UInt8 GetHardDiskTimeout(vo
     return _ret;
 }
 #else
-pascal UInt8 GetHardDiskTimeout(void);
+MAC_SINCE(0x0921, "9.2.1") pascal UInt8 GetHardDiskTimeout(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean HardDiskPowered(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean HardDiskPowered(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7006, 0xA09E"
         : "=r"(_ret)
@@ -338,13 +342,13 @@ static __inline__ __attribute__((__always_inline__)) Boolean HardDiskPowered(voi
     return _ret;
 }
 #else
-pascal Boolean HardDiskPowered(void);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean HardDiskPowered(void);
 #endif
 
-pascal void SpinDownHardDisk(void) M68K_INLINE(0x7007, 0xA09E);
+MAC_SINCE(0x0921, "9.2.1") pascal void SpinDownHardDisk(void) M68K_INLINE(0x7007, 0xA09E);
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean IsSpindownDisabled(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean IsSpindownDisabled(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7008, 0xA09E"
         : "=r"(_ret)
@@ -353,11 +357,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean IsSpindownDisabled(
     return _ret;
 }
 #else
-pascal Boolean IsSpindownDisabled(void);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean IsSpindownDisabled(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQInstall(HDQueueElement *theElement) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQInstall(HDQueueElement *theElement) {
     register OSErr _ret __asm__("d0");
     register HDQueueElement* _theElement __asm__("a0") = theElement;
     __asm__ __volatile__(".short 0x700A, 0xA09E"
@@ -367,11 +371,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQInstall(HDQu
     return _ret;
 }
 #else
-pascal OSErr HardDiskQInstall(HDQueueElement *theElement);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr HardDiskQInstall(HDQueueElement *theElement);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQRemove(HDQueueElement *theElement) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQRemove(HDQueueElement *theElement) {
     register OSErr _ret __asm__("d0");
     register HDQueueElement* _theElement __asm__("a0") = theElement;
     __asm__ __volatile__(".short 0x700B, 0xA09E"
@@ -381,11 +385,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQRemove(HDQue
     return _ret;
 }
 #else
-pascal OSErr HardDiskQRemove(HDQueueElement *theElement);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr HardDiskQRemove(HDQueueElement *theElement);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) UInt32 GetIntModemInfo(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) UInt32 GetIntModemInfo(void) {
     register UInt32 _ret __asm__("d0");
     __asm__ __volatile__(".short 0x700E, 0xA09E"
         : "=r"(_ret)
@@ -394,11 +398,11 @@ static __inline__ __attribute__((__always_inline__)) UInt32 GetIntModemInfo(void
     return _ret;
 }
 #else
-pascal UInt32 GetIntModemInfo(void);
+MAC_SINCE(0x0921, "9.2.1") pascal UInt32 GetIntModemInfo(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER MaximumProcessorSpeed(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) INTEGER MaximumProcessorSpeed(void) {
     register INTEGER _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7010, 0xA09E"
         : "=r"(_ret)
@@ -407,11 +411,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER MaximumProcessorSpe
     return _ret;
 }
 #else
-pascal INTEGER MaximumProcessorSpeed(void);
+MAC_SINCE(0x0921, "9.2.1") pascal INTEGER MaximumProcessorSpeed(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CurrentProcessorSpeed(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) INTEGER CurrentProcessorSpeed(void) {
     register INTEGER _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7011, 0xA09E"
         : "=r"(_ret)
@@ -420,11 +424,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CurrentProcessorSpe
     return _ret;
 }
 #else
-pascal INTEGER CurrentProcessorSpeed(void);
+MAC_SINCE(0x0921, "9.2.1") pascal INTEGER CurrentProcessorSpeed(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean FullProcessorSpeed(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean FullProcessorSpeed(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7012, 0xA09E"
         : "=r"(_ret)
@@ -433,11 +437,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean FullProcessorSpeed(
     return _ret;
 }
 #else
-pascal Boolean FullProcessorSpeed(void);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean FullProcessorSpeed(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER GetSCSIDiskModeAddress(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) INTEGER GetSCSIDiskModeAddress(void) {
     register INTEGER _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7014, 0xA09E"
         : "=r"(_ret)
@@ -446,11 +450,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER GetSCSIDiskModeAddr
     return _ret;
 }
 #else
-pascal INTEGER GetSCSIDiskModeAddress(void);
+MAC_SINCE(0x0921, "9.2.1") pascal INTEGER GetSCSIDiskModeAddress(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void GetWakeupTimer(WakeupTime *theTime) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void GetWakeupTimer(WakeupTime *theTime) {
     register WakeupTime* _theTime __asm__("a0") = theTime;
     __asm__ __volatile__(".short 0x7016, 0xA09E"
         : "+r"(_theTime)
@@ -458,11 +462,11 @@ static __inline__ __attribute__((__always_inline__)) void GetWakeupTimer(WakeupT
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void GetWakeupTimer(WakeupTime *theTime);
+MAC_SINCE(0x0921, "9.2.1") pascal void GetWakeupTimer(WakeupTime *theTime);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetWakeupTimer(WakeupTime *theTime) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetWakeupTimer(WakeupTime *theTime) {
     register WakeupTime* _theTime __asm__("a0") = theTime;
     __asm__ __volatile__(".short 0x7017, 0xA09E"
         : "+r"(_theTime)
@@ -470,11 +474,11 @@ static __inline__ __attribute__((__always_inline__)) void SetWakeupTimer(WakeupT
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void SetWakeupTimer(WakeupTime *theTime);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetWakeupTimer(WakeupTime *theTime);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean IsProcessorCyclingEnabled(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean IsProcessorCyclingEnabled(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7018, 0xA09E"
         : "=r"(_ret)
@@ -483,11 +487,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean IsProcessorCyclingE
     return _ret;
 }
 #else
-pascal Boolean IsProcessorCyclingEnabled(void);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean IsProcessorCyclingEnabled(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER BatteryCount(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) INTEGER BatteryCount(void) {
     register INTEGER _ret __asm__("d0");
     __asm__ __volatile__(".short 0x701A, 0xA09E"
         : "=r"(_ret)
@@ -496,11 +500,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER BatteryCount(void) 
     return _ret;
 }
 #else
-pascal INTEGER BatteryCount(void);
+MAC_SINCE(0x0921, "9.2.1") pascal INTEGER BatteryCount(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) UInt8 GetDimmingTimeout(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) UInt8 GetDimmingTimeout(void) {
     register UInt8 _ret __asm__("d0");
     __asm__ __volatile__(".short 0x701D, 0xA09E"
         : "=r"(_ret)
@@ -509,11 +513,11 @@ static __inline__ __attribute__((__always_inline__)) UInt8 GetDimmingTimeout(voi
     return _ret;
 }
 #else
-pascal UInt8 GetDimmingTimeout(void);
+MAC_SINCE(0x0921, "9.2.1") pascal UInt8 GetDimmingTimeout(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean IsDimmingControlDisabled(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean IsDimmingControlDisabled(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7020, 0xA09E"
         : "=r"(_ret)
@@ -522,11 +526,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean IsDimmingControlDis
     return _ret;
 }
 #else
-pascal Boolean IsDimmingControlDisabled(void);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean IsDimmingControlDisabled(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean IsAutoSlpControlDisabled(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean IsAutoSlpControlDisabled(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7021, 0xA09E"
         : "=r"(_ret)
@@ -535,11 +539,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean IsAutoSlpControlDis
     return _ret;
 }
 #else
-pascal Boolean IsAutoSlpControlDisabled(void);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean IsAutoSlpControlDisabled(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQInstall(PMgrQueueElement *theElement) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQInstall(PMgrQueueElement *theElement) {
     register OSErr _ret __asm__("d0");
     register PMgrQueueElement* _theElement __asm__("a0") = theElement;
     __asm__ __volatile__(".short 0x7022, 0xA09E"
@@ -549,11 +553,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQInstall(PMg
     return _ret;
 }
 #else
-pascal OSErr PMgrStateQInstall(PMgrQueueElement *theElement);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr PMgrStateQInstall(PMgrQueueElement *theElement);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQRemove(PMgrQueueElement *theElement) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQRemove(PMgrQueueElement *theElement) {
     register OSErr _ret __asm__("d0");
     register PMgrQueueElement* _theElement __asm__("a0") = theElement;
     __asm__ __volatile__(".short 0x7023, 0xA09E"
@@ -563,11 +567,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQRemove(PMgr
     return _ret;
 }
 #else
-pascal OSErr PMgrStateQRemove(PMgrQueueElement *theElement);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr PMgrStateQRemove(PMgrQueueElement *theElement);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DelaySystemIdle(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr DelaySystemIdle(void) {
     register OSErr _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7025, 0xA09E"
         : "=r"(_ret)
@@ -576,11 +580,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr DelaySystemIdle(void)
     return _ret;
 }
 #else
-pascal OSErr DelaySystemIdle(void);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr DelaySystemIdle(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr GetStartupTimer(StartupTime *theTime) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr GetStartupTimer(StartupTime *theTime) {
     register OSErr _ret __asm__("d0");
     register StartupTime* _theTime __asm__("a0") = theTime;
     __asm__ __volatile__(".short 0x7026, 0xA09E"
@@ -590,11 +594,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr GetStartupTimer(Start
     return _ret;
 }
 #else
-pascal OSErr GetStartupTimer(StartupTime *theTime);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr GetStartupTimer(StartupTime *theTime);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SetStartupTimer(StartupTime *theTime) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr SetStartupTimer(StartupTime *theTime) {
     register OSErr _ret __asm__("d0");
     register StartupTime* _theTime __asm__("a0") = theTime;
     __asm__ __volatile__(".short 0x7027, 0xA09E"
@@ -604,11 +608,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SetStartupTimer(Start
     return _ret;
 }
 #else
-pascal OSErr SetStartupTimer(StartupTime *theTime);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr SetStartupTimer(StartupTime *theTime);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr GetLastActivity(ActivityInfo *theActivity) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr GetLastActivity(ActivityInfo *theActivity) {
     register OSErr _ret __asm__("d0");
     register ActivityInfo* _theActivity __asm__("a0") = theActivity;
     __asm__ __volatile__(".short 0x7028, 0xA09E"
@@ -618,11 +622,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr GetLastActivity(Activ
     return _ret;
 }
 #else
-pascal OSErr GetLastActivity(ActivityInfo *theActivity);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr GetLastActivity(ActivityInfo *theActivity);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr GetSoundMixerState(SoundMixerByte *theSoundMixerByte) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr GetSoundMixerState(SoundMixerByte *theSoundMixerByte) {
     register OSErr _ret __asm__("d0");
     register SoundMixerByte* _theSoundMixerByte __asm__("a0") = theSoundMixerByte;
     __asm__ __volatile__(".short 0x7029, 0xA09E"
@@ -632,11 +636,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr GetSoundMixerState(So
     return _ret;
 }
 #else
-pascal OSErr GetSoundMixerState(SoundMixerByte *theSoundMixerByte);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr GetSoundMixerState(SoundMixerByte *theSoundMixerByte);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SetSoundMixerState(SoundMixerByte *theSoundMixerByte) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr SetSoundMixerState(SoundMixerByte *theSoundMixerByte) {
     register OSErr _ret __asm__("d0");
     register SoundMixerByte* _theSoundMixerByte __asm__("a0") = theSoundMixerByte;
     __asm__ __volatile__(".short 0x702A, 0xA09E"
@@ -646,11 +650,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SetSoundMixerState(So
     return _ret;
 }
 #else
-pascal OSErr SetSoundMixerState(SoundMixerByte *theSoundMixerByte);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr SetSoundMixerState(SoundMixerByte *theSoundMixerByte);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean GetDimSuspendState(void) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean GetDimSuspendState(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x702B, 0xA09E"
         : "=r"(_ret)
@@ -659,11 +663,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean GetDimSuspendState(
     return _ret;
 }
 #else
-pascal Boolean GetDimSuspendState(void);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean GetDimSuspendState(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetSleepTimeout(UInt8 timeout) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetSleepTimeout(UInt8 timeout) {
     register UInt8 _timeout __asm__("d0") = timeout;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x0003, 0xA09E"
         : "+r"(_timeout)
@@ -671,11 +675,11 @@ static __inline__ __attribute__((__always_inline__)) void SetSleepTimeout(UInt8 
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetSleepTimeout(UInt8 timeout);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetSleepTimeout(UInt8 timeout);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetHardDiskTimeout(UInt8 timeout) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetHardDiskTimeout(UInt8 timeout) {
     register UInt8 _timeout __asm__("d0") = timeout;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x0005, 0xA09E"
         : "+r"(_timeout)
@@ -683,11 +687,11 @@ static __inline__ __attribute__((__always_inline__)) void SetHardDiskTimeout(UIn
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetHardDiskTimeout(UInt8 timeout);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetHardDiskTimeout(UInt8 timeout);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetSpindownDisable(Boolean setDisable) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetSpindownDisable(Boolean setDisable) {
     register Boolean _setDisable __asm__("d0") = setDisable;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x0009, 0xA09E"
         : "+r"(_setDisable)
@@ -695,11 +699,11 @@ static __inline__ __attribute__((__always_inline__)) void SetSpindownDisable(Boo
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetSpindownDisable(Boolean setDisable);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetSpindownDisable(Boolean setDisable);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void AutoSleepControl(Boolean enableSleep) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void AutoSleepControl(Boolean enableSleep) {
     register Boolean _enableSleep __asm__("d0") = enableSleep;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x000D, 0xA09E"
         : "+r"(_enableSleep)
@@ -707,11 +711,11 @@ static __inline__ __attribute__((__always_inline__)) void AutoSleepControl(Boole
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void AutoSleepControl(Boolean enableSleep);
+MAC_SINCE(0x0921, "9.2.1") pascal void AutoSleepControl(Boolean enableSleep);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetIntModemState(INTEGER theState) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetIntModemState(INTEGER theState) {
     register INTEGER _theState __asm__("d0") = theState;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x000F, 0xA09E"
         : "+r"(_theState)
@@ -719,11 +723,11 @@ static __inline__ __attribute__((__always_inline__)) void SetIntModemState(INTEG
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetIntModemState(INTEGER theState);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetIntModemState(INTEGER theState);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean SetProcessorSpeed(Boolean fullSpeed) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Boolean SetProcessorSpeed(Boolean fullSpeed) {
     register Boolean _ret __asm__("d0");
     register Boolean _fullSpeed __asm__("d0") = fullSpeed;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x0013, 0xA09E"
@@ -733,11 +737,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean SetProcessorSpeed(B
     return _ret;
 }
 #else
-pascal Boolean SetProcessorSpeed(Boolean fullSpeed);
+MAC_SINCE(0x0921, "9.2.1") pascal Boolean SetProcessorSpeed(Boolean fullSpeed);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetSCSIDiskModeAddress(INTEGER scsiAddress) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetSCSIDiskModeAddress(INTEGER scsiAddress) {
     register INTEGER _scsiAddress __asm__("d0") = scsiAddress;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x0015, 0xA09E"
         : "+r"(_scsiAddress)
@@ -745,11 +749,11 @@ static __inline__ __attribute__((__always_inline__)) void SetSCSIDiskModeAddress
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetSCSIDiskModeAddress(INTEGER scsiAddress);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetSCSIDiskModeAddress(INTEGER scsiAddress);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void EnableProcessorCycling(Boolean enable) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void EnableProcessorCycling(Boolean enable) {
     register Boolean _enable __asm__("d0") = enable;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x0019, 0xA09E"
         : "+r"(_enable)
@@ -757,11 +761,11 @@ static __inline__ __attribute__((__always_inline__)) void EnableProcessorCycling
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void EnableProcessorCycling(Boolean enable);
+MAC_SINCE(0x0921, "9.2.1") pascal void EnableProcessorCycling(Boolean enable);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetDimmingTimeout(UInt8 timeout) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetDimmingTimeout(UInt8 timeout) {
     register UInt8 _timeout __asm__("d0") = timeout;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x001E, 0xA09E"
         : "+r"(_timeout)
@@ -769,11 +773,11 @@ static __inline__ __attribute__((__always_inline__)) void SetDimmingTimeout(UInt
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetDimmingTimeout(UInt8 timeout);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetDimmingTimeout(UInt8 timeout);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void DimmingControl(Boolean enableSleep) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void DimmingControl(Boolean enableSleep) {
     register Boolean _enableSleep __asm__("d0") = enableSleep;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x001F, 0xA09E"
         : "+r"(_enableSleep)
@@ -781,11 +785,11 @@ static __inline__ __attribute__((__always_inline__)) void DimmingControl(Boolean
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void DimmingControl(Boolean enableSleep);
+MAC_SINCE(0x0921, "9.2.1") pascal void DimmingControl(Boolean enableSleep);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr UpdateSystemActivity(UInt8 activity) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr UpdateSystemActivity(UInt8 activity) {
     register OSErr _ret __asm__("d0");
     register UInt8 _activity __asm__("d0") = activity;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x0024, 0xA09E"
@@ -795,11 +799,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr UpdateSystemActivity(
     return _ret;
 }
 #else
-pascal OSErr UpdateSystemActivity(UInt8 activity);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr UpdateSystemActivity(UInt8 activity);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetDimSuspendState(Boolean dimSuspendState) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void SetDimSuspendState(Boolean dimSuspendState) {
     register Boolean _dimSuspendState __asm__("d0") = dimSuspendState;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x002C, 0xA09E"
         : "+r"(_dimSuspendState)
@@ -807,7 +811,7 @@ static __inline__ __attribute__((__always_inline__)) void SetDimSuspendState(Boo
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
-pascal void SetDimSuspendState(Boolean dimSuspendState);
+MAC_SINCE(0x0921, "9.2.1") pascal void SetDimSuspendState(Boolean dimSuspendState);
 #endif
 
 #if !TARGET_CPU_68K
@@ -815,7 +819,7 @@ pascal void GetScaledBatteryInfo(INTEGER whichBattery, BatteryInfo *theInfo);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Fixed GetBatteryVoltage(INTEGER whichBattery) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) Fixed GetBatteryVoltage(INTEGER whichBattery) {
     register Fixed _ret __asm__("d0");
     register INTEGER _whichBattery __asm__("d0") = whichBattery;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x001B, 0xA09E"
@@ -825,11 +829,11 @@ static __inline__ __attribute__((__always_inline__)) Fixed GetBatteryVoltage(INT
     return _ret;
 }
 #else
-pascal Fixed GetBatteryVoltage(INTEGER whichBattery);
+MAC_SINCE(0x0921, "9.2.1") pascal Fixed GetBatteryVoltage(INTEGER whichBattery);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void GetBatteryTimes(INTEGER whichBattery, BatteryTimeRec *theTimes) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void GetBatteryTimes(INTEGER whichBattery, BatteryTimeRec *theTimes) {
     register INTEGER _whichBattery __asm__("d0") = whichBattery;
     register BatteryTimeRec* _theTimes __asm__("a0") = theTimes;
     __asm__ __volatile__(".short 0x4840, 0x303C, 0x001C, 0xA09E"
@@ -838,9 +842,10 @@ static __inline__ __attribute__((__always_inline__)) void GetBatteryTimes(INTEGE
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void GetBatteryTimes(INTEGER whichBattery, BatteryTimeRec *theTimes);
+MAC_SINCE(0x0921, "9.2.1") pascal void GetBatteryTimes(INTEGER whichBattery, BatteryTimeRec *theTimes);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

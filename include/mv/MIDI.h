@@ -7,6 +7,10 @@
 #include "SoundMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct MIDIPacket MIDIPacket;
 struct MIDIPacket {
@@ -95,86 +99,87 @@ enum {
 };
 
 // MIDI Manager
-pascal NumVersion MIDIVersion(void) M68K_INLINE(0x7004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal NumVersion MIDIVersion(void) M68K_INLINE(0x7004, 0xA800);
 
-pascal OSErr MIDISignIn(OSType clientID, long refCon, Handle icon, ConstStr255Param name) M68K_INLINE(0x203C, 0x0004, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr MIDISignIn(OSType clientID, long refCon, Handle icon, ConstStr255Param name) M68K_INLINE(0x203C, 0x0004, 0x0004, 0xA800);
 
-pascal void MIDISignOut(OSType clientID) M68K_INLINE(0x203C, 0x0008, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISignOut(OSType clientID) M68K_INLINE(0x203C, 0x0008, 0x0004, 0xA800);
 
-pascal MIDIIDListHdl MIDIGetClients(void) M68K_INLINE(0x203C, 0x000C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal MIDIIDListHdl MIDIGetClients(void) M68K_INLINE(0x203C, 0x000C, 0x0004, 0xA800);
 
-pascal void MIDIGetClientName(OSType clientID, Str255 name) M68K_INLINE(0x203C, 0x0010, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIGetClientName(OSType clientID, Str255 name) M68K_INLINE(0x203C, 0x0010, 0x0004, 0xA800);
 
-pascal void MIDISetClientName(OSType clientID, ConstStr255Param name) M68K_INLINE(0x203C, 0x0014, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetClientName(OSType clientID, ConstStr255Param name) M68K_INLINE(0x203C, 0x0014, 0x0004, 0xA800);
 
-pascal MIDIIDListHdl MIDIGetPorts(OSType clientID) M68K_INLINE(0x203C, 0x0018, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal MIDIIDListHdl MIDIGetPorts(OSType clientID) M68K_INLINE(0x203C, 0x0018, 0x0004, 0xA800);
 
-pascal OSErr MIDIAddPort(OSType clientID, INTEGER BufSize, INTEGER *refnum, MIDIPortParamsPtr init) M68K_INLINE(0x203C, 0x001C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr MIDIAddPort(OSType clientID, INTEGER BufSize, INTEGER *refnum, MIDIPortParamsPtr init) M68K_INLINE(0x203C, 0x001C, 0x0004, 0xA800);
 
-pascal MIDIPortInfoHdl MIDIGetPortInfo(OSType clientID, OSType portID) M68K_INLINE(0x203C, 0x0020, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal MIDIPortInfoHdl MIDIGetPortInfo(OSType clientID, OSType portID) M68K_INLINE(0x203C, 0x0020, 0x0004, 0xA800);
 
-pascal OSErr MIDIConnectData(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x0024, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr MIDIConnectData(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x0024, 0x0004, 0xA800);
 
-pascal OSErr MIDIUnConnectData(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x0028, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr MIDIUnConnectData(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x0028, 0x0004, 0xA800);
 
-pascal OSErr MIDIConnectTime(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x002C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr MIDIConnectTime(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x002C, 0x0004, 0xA800);
 
-pascal OSErr MIDIUnConnectTime(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x0030, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr MIDIUnConnectTime(OSType srcClID, OSType srcPortID, OSType dstClID, OSType dstPortID) M68K_INLINE(0x203C, 0x0030, 0x0004, 0xA800);
 
-pascal void MIDIFlush(INTEGER refnum) M68K_INLINE(0x203C, 0x0034, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIFlush(INTEGER refnum) M68K_INLINE(0x203C, 0x0034, 0x0004, 0xA800);
 
-pascal ProcPtr MIDIGetReadHook(INTEGER refnum) M68K_INLINE(0x203C, 0x0038, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal ProcPtr MIDIGetReadHook(INTEGER refnum) M68K_INLINE(0x203C, 0x0038, 0x0004, 0xA800);
 
-pascal void MIDISetReadHook(INTEGER refnum, ProcPtr hook) M68K_INLINE(0x203C, 0x003C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetReadHook(INTEGER refnum, ProcPtr hook) M68K_INLINE(0x203C, 0x003C, 0x0004, 0xA800);
 
-pascal void MIDIGetPortName(OSType clientID, OSType portID, Str255 name) M68K_INLINE(0x203C, 0x0040, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIGetPortName(OSType clientID, OSType portID, Str255 name) M68K_INLINE(0x203C, 0x0040, 0x0004, 0xA800);
 
-pascal void MIDISetPortName(OSType clientID, OSType portID, ConstStr255Param name) M68K_INLINE(0x203C, 0x0044, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetPortName(OSType clientID, OSType portID, ConstStr255Param name) M68K_INLINE(0x203C, 0x0044, 0x0004, 0xA800);
 
-pascal void MIDIWakeUp(INTEGER refnum, long time, long period, MIDITimeProcPtr timeProc) M68K_INLINE(0x203C, 0x0048, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIWakeUp(INTEGER refnum, long time, long period, MIDITimeProcPtr timeProc) M68K_INLINE(0x203C, 0x0048, 0x0004, 0xA800);
 
-pascal void MIDIRemovePort(INTEGER refnum) M68K_INLINE(0x203C, 0x004C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIRemovePort(INTEGER refnum) M68K_INLINE(0x203C, 0x004C, 0x0004, 0xA800);
 
-pascal INTEGER MIDIGetSync(INTEGER refnum) M68K_INLINE(0x203C, 0x0050, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal INTEGER MIDIGetSync(INTEGER refnum) M68K_INLINE(0x203C, 0x0050, 0x0004, 0xA800);
 
-pascal void MIDISetSync(INTEGER refnum, INTEGER sync) M68K_INLINE(0x203C, 0x0054, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetSync(INTEGER refnum, INTEGER sync) M68K_INLINE(0x203C, 0x0054, 0x0004, 0xA800);
 
-pascal long MIDIGetCurTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0058, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal long MIDIGetCurTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0058, 0x0004, 0xA800);
 
-pascal void MIDISetCurTime(INTEGER refnum, long time) M68K_INLINE(0x203C, 0x005C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetCurTime(INTEGER refnum, long time) M68K_INLINE(0x203C, 0x005C, 0x0004, 0xA800);
 
-pascal void MIDIStartTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0060, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIStartTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0060, 0x0004, 0xA800);
 
-pascal void MIDIStopTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0064, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIStopTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0064, 0x0004, 0xA800);
 
-pascal void MIDIPoll(INTEGER refnum, long offsetTime) M68K_INLINE(0x203C, 0x0068, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDIPoll(INTEGER refnum, long offsetTime) M68K_INLINE(0x203C, 0x0068, 0x0004, 0xA800);
 
-pascal OSErr MIDIWritePacket(INTEGER refnum, MIDIPacketPtr packet) M68K_INLINE(0x203C, 0x006C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal OSErr MIDIWritePacket(INTEGER refnum, MIDIPacketPtr packet) M68K_INLINE(0x203C, 0x006C, 0x0004, 0xA800);
 
-pascal Boolean MIDIWorldChanged(OSType clientID) M68K_INLINE(0x203C, 0x0070, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal Boolean MIDIWorldChanged(OSType clientID) M68K_INLINE(0x203C, 0x0070, 0x0004, 0xA800);
 
-pascal long MIDIGetOffsetTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0074, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal long MIDIGetOffsetTime(INTEGER refnum) M68K_INLINE(0x203C, 0x0074, 0x0004, 0xA800);
 
-pascal void MIDISetOffsetTime(INTEGER refnum, long offsetTime) M68K_INLINE(0x203C, 0x0078, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetOffsetTime(INTEGER refnum, long offsetTime) M68K_INLINE(0x203C, 0x0078, 0x0004, 0xA800);
 
-pascal long MIDIConvertTime(INTEGER srcFormat, INTEGER dstFormat, long time) M68K_INLINE(0x203C, 0x007C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal long MIDIConvertTime(INTEGER srcFormat, INTEGER dstFormat, long time) M68K_INLINE(0x203C, 0x007C, 0x0004, 0xA800);
 
-pascal long MIDIGetRefCon(INTEGER refnum) M68K_INLINE(0x203C, 0x0080, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal long MIDIGetRefCon(INTEGER refnum) M68K_INLINE(0x203C, 0x0080, 0x0004, 0xA800);
 
-pascal void MIDISetRefCon(INTEGER refnum, long refCon) M68K_INLINE(0x203C, 0x0084, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetRefCon(INTEGER refnum, long refCon) M68K_INLINE(0x203C, 0x0084, 0x0004, 0xA800);
 
-pascal long MIDIGetClRefCon(OSType clientID) M68K_INLINE(0x203C, 0x0088, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal long MIDIGetClRefCon(OSType clientID) M68K_INLINE(0x203C, 0x0088, 0x0004, 0xA800);
 
-pascal void MIDISetClRefCon(OSType clientID, long refCon) M68K_INLINE(0x203C, 0x008C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetClRefCon(OSType clientID, long refCon) M68K_INLINE(0x203C, 0x008C, 0x0004, 0xA800);
 
-pascal INTEGER MIDIGetTCFormat(INTEGER refnum) M68K_INLINE(0x203C, 0x0090, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal INTEGER MIDIGetTCFormat(INTEGER refnum) M68K_INLINE(0x203C, 0x0090, 0x0004, 0xA800);
 
-pascal void MIDISetTCFormat(INTEGER refnum, INTEGER format) M68K_INLINE(0x203C, 0x0094, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetTCFormat(INTEGER refnum, INTEGER format) M68K_INLINE(0x203C, 0x0094, 0x0004, 0xA800);
 
-pascal void MIDISetRunRate(INTEGER refnum, INTEGER rate, long period) M68K_INLINE(0x203C, 0x0098, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal void MIDISetRunRate(INTEGER refnum, INTEGER rate, long period) M68K_INLINE(0x203C, 0x0098, 0x0004, 0xA800);
 
-pascal Handle MIDIGetClientIcon(OSType clientID) M68K_INLINE(0x203C, 0x009C, 0x0004, 0xA800);
+MAC_SINCE(0x0608, "6.0.8") pascal Handle MIDIGetClientIcon(OSType clientID) M68K_INLINE(0x203C, 0x009C, 0x0004, 0xA800);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

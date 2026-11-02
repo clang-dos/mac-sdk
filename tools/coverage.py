@@ -40,7 +40,7 @@ def declared_names():
     names = set()
     inc = os.path.join(ROOT, "include", "mv")
     for f in os.listdir(inc):
-        t = open(os.path.join(inc, f)).read()
+        t = re.sub(r"MAC_SINCE(?:_GESTALT)?\([^()]*\) |MAC_COLOR_QD ", "", open(os.path.join(inc, f)).read())
         names.update(re.findall(r"\b([A-Za-z_]\w*)\s*\(", t))
         names.update(re.findall(r"^#define (\w+)", t, re.M))
         names.update(re.findall(r"\b(\w+)\s*(?:=[^,;]*)?[,;]", t))
@@ -51,7 +51,7 @@ def has_68k_code():
     inc = os.path.join(ROOT, "include", "mv")
     out = set()
     for f in os.listdir(inc):
-        t = open(os.path.join(inc, f)).read()
+        t = re.sub(r"MAC_SINCE(?:_GESTALT)?\([^()]*\) |MAC_COLOR_QD ", "", open(os.path.join(inc, f)).read())
         out.update(re.findall(r"\b(\w+)\([^;{\n]*\)\s*M68K_INLINE\(", t))
         out.update(re.findall(r"__always_inline__\)\) [^(]*?\b(\w+)\(", t))
         out.update(re.findall(r"^#define (\w+)\(", t, re.M))
@@ -91,7 +91,7 @@ def main():
                        capture_output=True, text=True)
     summary = r.stderr.strip().splitlines()[-1].replace("check-traps: ", "")
     funcs = set(re.findall(r"\b(\w+)\(", "".join(
-        open(os.path.join(ROOT, "include", "mv", f)).read()
+        re.sub(r"MAC_SINCE(?:_GESTALT)?\([^()]*\) |MAC_COLOR_QD ", "", open(os.path.join(ROOT, "include", "mv", f)).read())
         for f in os.listdir(os.path.join(ROOT, "include", "mv")))))
 
     pct = 100 * (len(exports) - len(missing)) / len(exports)

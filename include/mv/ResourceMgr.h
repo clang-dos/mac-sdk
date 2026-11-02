@@ -7,6 +7,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // resource attribute masks
 enum {
@@ -106,25 +110,25 @@ enum { _CountResources = 0xA99C };
 pascal INTEGER CountResources(ResType typ) M68K_INLINE(0xA99C);
 
 enum { _Count1Resources = 0xA80D };
-pascal INTEGER Count1Resources(ResType typ) M68K_INLINE(0xA80D);
+MAC_SINCE(0x0070, "0.7") pascal INTEGER Count1Resources(ResType typ) M68K_INLINE(0xA80D);
 
 enum { _GetIndResource = 0xA99D };
 pascal Handle GetIndResource(ResType typ, INTEGER indx) M68K_INLINE(0xA99D);
 
 enum { _Get1IndResource = 0xA80E };
-pascal Handle Get1IndResource(ResType typ, INTEGER i) M68K_INLINE(0xA80E);
+MAC_SINCE(0x0070, "0.7") pascal Handle Get1IndResource(ResType typ, INTEGER i) M68K_INLINE(0xA80E);
 
 enum { _GetResource = 0xA9A0 };
 pascal Handle GetResource(ResType typ, INTEGER id) M68K_INLINE(0xA9A0);
 
 enum { _Get1Resource = 0xA81F };
-pascal Handle Get1Resource(ResType typ, INTEGER id) M68K_INLINE(0xA81F);
+MAC_SINCE(0x0070, "0.7") pascal Handle Get1Resource(ResType typ, INTEGER id) M68K_INLINE(0xA81F);
 
 enum { _GetNamedResource = 0xA9A1 };
 pascal Handle GetNamedResource(ResType typ, ConstStringPtr nam) M68K_INLINE(0xA9A1);
 
 enum { _Get1NamedResource = 0xA820 };
-pascal Handle Get1NamedResource(ResType typ, ConstStringPtr s) M68K_INLINE(0xA820);
+MAC_SINCE(0x0070, "0.7") pascal Handle Get1NamedResource(ResType typ, ConstStringPtr s) M68K_INLINE(0xA820);
 
 enum { _LoadResource = 0xA9A2 };
 pascal void LoadResource(Handle res) M68K_INLINE(0xA9A2);
@@ -139,7 +143,7 @@ enum { _UniqueID = 0xA9C1 };
 pascal INTEGER UniqueID(ResType typ) M68K_INLINE(0xA9C1);
 
 enum { _Unique1ID = 0xA810 };
-pascal INTEGER Unique1ID(ResType typ) M68K_INLINE(0xA810);
+MAC_SINCE(0x0070, "0.7") pascal INTEGER Unique1ID(ResType typ) M68K_INLINE(0xA810);
 
 enum { _GetResInfo = 0xA9A8 };
 pascal void GetResInfo(Handle res, INTEGER *id1, ResType *typ, StringPtr name) M68K_INLINE(0xA9A8);
@@ -157,25 +161,25 @@ enum { _CountTypes = 0xA99E };
 pascal INTEGER CountTypes(void) M68K_INLINE(0xA99E);
 
 enum { _Count1Types = 0xA81C };
-pascal INTEGER Count1Types(void) M68K_INLINE(0xA81C);
+MAC_SINCE(0x0070, "0.7") pascal INTEGER Count1Types(void) M68K_INLINE(0xA81C);
 
 enum { _GetIndType = 0xA99F };
 pascal void GetIndType(ResType *typ, INTEGER indx) M68K_INLINE(0xA99F);
 
 enum { _Get1IndType = 0xA80F };
-pascal void Get1IndType(ResType *typ, INTEGER indx) M68K_INLINE(0xA80F);
+MAC_SINCE(0x0070, "0.7") pascal void Get1IndType(ResType *typ, INTEGER indx) M68K_INLINE(0xA80F);
 
 enum { _GetMaxResourceSize = 0xA821 };
-pascal LONGINT GetMaxResourceSize(Handle h) M68K_INLINE(0xA821);
+MAC_SINCE(0x0070, "0.7") pascal LONGINT GetMaxResourceSize(Handle h) M68K_INLINE(0xA821);
 #if OLDROUTINENAMES
 #define MaxSizeRsrc(h) GetMaxResourceSize(h)
 #endif
 
 enum { _RsrcMapEntry = 0xA9C5 };
-pascal LONGINT RsrcMapEntry(Handle h) M68K_INLINE(0xA9C5);
+MAC_SINCE(0x0070, "0.7") pascal LONGINT RsrcMapEntry(Handle h) M68K_INLINE(0xA9C5);
 
 enum { _RGetResource = 0xA80C };
-pascal Handle RGetResource(ResType typ, INTEGER id) M68K_INLINE(0xA80C);
+MAC_SINCE(0x0200, "2.0") pascal Handle RGetResource(ResType typ, INTEGER id) M68K_INLINE(0xA80C);
 
 enum { _InitResources = 0xA995 };
 pascal INTEGER InitResources(void) M68K_INLINE(0xA995);
@@ -223,7 +227,7 @@ enum { _CreateResFile = 0xA9B1 };
 pascal void CreateResFile(ConstStringPtr fn) M68K_INLINE(0xA9B1);
 
 enum { _OpenRFPerm = 0xA9C4 };
-pascal INTEGER OpenRFPerm(ConstStringPtr fn, INTEGER vref, Byte perm) M68K_INLINE(0xA9C4);
+MAC_SINCE(0x0070, "0.7") pascal INTEGER OpenRFPerm(ConstStringPtr fn, INTEGER vref, Byte perm) M68K_INLINE(0xA9C4);
 
 enum { _OpenResFile = 0xA997 };
 pascal INTEGER OpenResFile(ConstStringPtr fn) M68K_INLINE(0xA997);
@@ -240,18 +244,18 @@ pascal INTEGER HomeResFile(Handle res) M68K_INLINE(0xA9A4);
 enum { _UseResFile = 0xA998 };
 pascal void UseResFile(INTEGER rn) M68K_INLINE(0xA998);
 
-pascal void ReadPartialResource(Handle resource, long offset, Ptr buffer, long count) M68K_INLINE(0x7001, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal void ReadPartialResource(Handle resource, long offset, Ptr buffer, long count) M68K_INLINE(0x7001, 0xA822);
 
-pascal void WritePartialResource(Handle resource, long offset, Ptr buffer, long count) M68K_INLINE(0x7002, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal void WritePartialResource(Handle resource, long offset, Ptr buffer, long count) M68K_INLINE(0x7002, 0xA822);
 
-pascal void SetResourceSize(Handle resource, long size) M68K_INLINE(0x7003, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal void SetResourceSize(Handle resource, long size) M68K_INLINE(0x7003, 0xA822);
 
-pascal Handle GetNextFOND(Handle fondHandle) M68K_INLINE(0x700A, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal Handle GetNextFOND(Handle fondHandle) M68K_INLINE(0x700A, 0xA822);
 
 // Opening resource files by FSRef (Mac OS 9 and later)
-pascal INTEGER FSOpenResFile(const FSRef *ref, SInt8 permission) M68K_INLINE(0x7013, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal INTEGER FSOpenResFile(const FSRef *ref, SInt8 permission) M68K_INLINE(0x7013, 0xA822);
 
-pascal void FSCreateResFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec) M68K_INLINE(0x7014, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal void FSCreateResFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec) M68K_INLINE(0x7014, 0xA822);
 
 pascal OSErr FSCreateResourceFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, UniCharCount forkNameLength, const UniChar *forkName, FSRef *newRef, FSSpec *newSpec);
 
@@ -260,10 +264,11 @@ pascal OSErr FSOpenResourceFile(const FSRef *ref, UniCharCount forkNameLength, c
 pascal void TempInsertROMMap(Boolean tempResLoad);
 
 // Is a resource file already open? (Mac OS 9)
-pascal Boolean FSpResourceFileAlreadyOpen(const FSSpec *resourceFile, Boolean *inChain, SInt16 *refNum) M68K_INLINE(0x7010, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal Boolean FSpResourceFileAlreadyOpen(const FSSpec *resourceFile, Boolean *inChain, SInt16 *refNum) M68K_INLINE(0x7010, 0xA822);
 
-pascal Boolean FSResourceFileAlreadyOpen(const FSRef *resourceFileRef, Boolean *inChain, SInt16 *refNum) M68K_INLINE(0x7015, 0xA822);
+MAC_SINCE(0x0700, "7.0") pascal Boolean FSResourceFileAlreadyOpen(const FSRef *resourceFileRef, Boolean *inChain, SInt16 *refNum) M68K_INLINE(0x7015, 0xA822);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

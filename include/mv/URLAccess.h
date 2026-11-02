@@ -9,6 +9,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // URL Access Manager (Mac OS 9; an extension for 8.6): HTTP, HTTPS and FTP transfers.
 typedef struct OpaqueURLReference *URLReference;
@@ -209,6 +213,7 @@ pascal OSStatus URLIdle(void);
 pascal OSStatus URLGetFileInfo(StringPtr fName, OSType *fType, OSType *fCreator);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

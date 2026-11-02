@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     nullEvent = 0,
@@ -87,6 +91,7 @@ struct EventRecord {
 // A set of event kinds, one bit each (everyEvent and friends).
 typedef UInt16 EventMask;
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

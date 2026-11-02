@@ -5,6 +5,10 @@
 #include "../ConditionalMacros.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef enum {
     EXIST_YES = 0,
@@ -30,6 +34,7 @@ typedef enum {
 enum { _SysError = 0xA9C9 };
 pascal void SysError(int16_t errorcode) M68K_INLINE(0xA9C9);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

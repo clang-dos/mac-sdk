@@ -7,6 +7,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef INTEGER DictionaryDataInsertMode;
 
@@ -30,19 +34,19 @@ enum {
 
 enum { _DictionaryDispatch = 0xAA53 };
 
-pascal OSErr OpenDictionary(const FSSpec *theFsspecPtr, SInt8 accessPermission, SInt32 *dictionaryReference) M68K_INLINE(0x303C, 0x0501, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr OpenDictionary(const FSSpec *theFsspecPtr, SInt8 accessPermission, SInt32 *dictionaryReference) M68K_INLINE(0x303C, 0x0501, 0xAA53);
 
-pascal OSErr CloseDictionary(SInt32 dictionaryReference) M68K_INLINE(0x303C, 0x0202, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr CloseDictionary(SInt32 dictionaryReference) M68K_INLINE(0x303C, 0x0202, 0xAA53);
 
-pascal OSErr InsertRecordToDictionary(SInt32 dictionaryReference, ConstStr255Param key, Handle recordDataHandle, DictionaryDataInsertMode whichMode) M68K_INLINE(0x303C, 0x0703, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr InsertRecordToDictionary(SInt32 dictionaryReference, ConstStr255Param key, Handle recordDataHandle, DictionaryDataInsertMode whichMode) M68K_INLINE(0x303C, 0x0703, 0xAA53);
 
-pascal OSErr DeleteRecordFromDictionary(SInt32 dictionaryReference, ConstStr255Param key) M68K_INLINE(0x303C, 0x0404, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr DeleteRecordFromDictionary(SInt32 dictionaryReference, ConstStr255Param key) M68K_INLINE(0x303C, 0x0404, 0xAA53);
 
-pascal OSErr FindRecordInDictionary(SInt32 dictionaryReference, ConstStr255Param key, SInt32 *requestedAttributeTablePointer, Handle recordDataHandle) M68K_INLINE(0x303C, 0x0805, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr FindRecordInDictionary(SInt32 dictionaryReference, ConstStr255Param key, SInt32 *requestedAttributeTablePointer, Handle recordDataHandle) M68K_INLINE(0x303C, 0x0805, 0xAA53);
 
-pascal OSErr FindRecordByIndexInDictionary(SInt32 dictionaryReference, SInt32 recordIndex, SInt32 *requestedAttributeTablePointer, Str255 recordKey, Handle recordDataHandle) M68K_INLINE(0x303C, 0x0A06, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr FindRecordByIndexInDictionary(SInt32 dictionaryReference, SInt32 recordIndex, SInt32 *requestedAttributeTablePointer, Str255 recordKey, Handle recordDataHandle) M68K_INLINE(0x303C, 0x0A06, 0xAA53);
 
-pascal OSErr CompactDictionary(SInt32 dictionaryReference) M68K_INLINE(0x303C, 0x0208, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr CompactDictionary(SInt32 dictionaryReference) M68K_INLINE(0x303C, 0x0208, 0xAA53);
 
 typedef struct DictionaryInformation DictionaryInformation;
 struct DictionaryInformation {
@@ -54,10 +58,11 @@ struct DictionaryInformation {
     INTEGER keyAttributes;
 };
 
-pascal OSErr InitializeDictionary(const FSSpec *theFsspecPtr, SInt16 maximumKeyLength, SInt8 keyAttributes, ScriptCode script) M68K_INLINE(0x303C, 0x0500, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr InitializeDictionary(const FSSpec *theFsspecPtr, SInt16 maximumKeyLength, SInt8 keyAttributes, ScriptCode script) M68K_INLINE(0x303C, 0x0500, 0xAA53);
 
-pascal OSErr GetDictionaryInformation(SInt32 dictionaryReference, DictionaryInformation *theDictionaryInformation) M68K_INLINE(0x303C, 0x0407, 0xAA53);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'dict'") MAC_COLOR_QD pascal OSErr GetDictionaryInformation(SInt32 dictionaryReference, DictionaryInformation *theDictionaryInformation) M68K_INLINE(0x303C, 0x0407, 0xAA53);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

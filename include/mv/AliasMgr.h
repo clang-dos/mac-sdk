@@ -8,6 +8,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef ProcPtr AliasFilterUPP;
 
@@ -32,50 +36,50 @@ enum {
 
 enum { _AliasDispatch = 0xA823 };
 
-pascal OSErr FindFolder(int16_t vRefNum, OSType folderType, Boolean createFolder, int16_t *foundVRefNum, long *foundDirID) M68K_INLINE(0x7000, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FindFolder(int16_t vRefNum, OSType folderType, Boolean createFolder, int16_t *foundVRefNum, long *foundDirID) M68K_INLINE(0x7000, 0xA823);
 
-pascal OSErr NewAlias(FSSpecPtr fromFile, FSSpecPtr target, AliasHandle *alias) M68K_INLINE(0x7002, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr NewAlias(FSSpecPtr fromFile, FSSpecPtr target, AliasHandle *alias) M68K_INLINE(0x7002, 0xA823);
 
-pascal OSErr NewAliasMinimal(FSSpecPtr target, AliasHandle *alias) M68K_INLINE(0x7008, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr NewAliasMinimal(FSSpecPtr target, AliasHandle *alias) M68K_INLINE(0x7008, 0xA823);
 
-pascal OSErr NewAliasMinimalFromFullPath(int16_t fullpathLength, Ptr fullpath, Str32 zoneName, Str31 serverName, AliasHandle *alias) M68K_INLINE(0x7009, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr NewAliasMinimalFromFullPath(int16_t fullpathLength, Ptr fullpath, Str32 zoneName, Str31 serverName, AliasHandle *alias) M68K_INLINE(0x7009, 0xA823);
 
-pascal OSErr UpdateAlias(FSSpecPtr fromFile, FSSpecPtr target, AliasHandle alias, Boolean *wasChanged) M68K_INLINE(0x7006, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr UpdateAlias(FSSpecPtr fromFile, FSSpecPtr target, AliasHandle alias, Boolean *wasChanged) M68K_INLINE(0x7006, 0xA823);
 
-pascal OSErr ResolveAlias(FSSpecPtr fromFile, AliasHandle alias, FSSpecPtr target, Boolean *wasAliased) M68K_INLINE(0x7003, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr ResolveAlias(FSSpecPtr fromFile, AliasHandle alias, FSSpecPtr target, Boolean *wasAliased) M68K_INLINE(0x7003, 0xA823);
 
-pascal OSErr ResolveAliasFile(FSSpecPtr theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased) M68K_INLINE(0x700C, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr ResolveAliasFile(FSSpecPtr theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased) M68K_INLINE(0x700C, 0xA823);
 
-pascal OSErr MatchAlias(FSSpecPtr fromFile, long rulesMask, AliasHandle alias, int16_t *aliasCount, FSSpecArrayPtr aliasList, Boolean *needsUpdate, AliasFilterUPP aliasFilter, Ptr yourDataPtr) M68K_INLINE(0x7005, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr MatchAlias(FSSpecPtr fromFile, long rulesMask, AliasHandle alias, int16_t *aliasCount, FSSpecArrayPtr aliasList, Boolean *needsUpdate, AliasFilterUPP aliasFilter, Ptr yourDataPtr) M68K_INLINE(0x7005, 0xA823);
 
-pascal OSErr GetAliasInfo(AliasHandle alias, AliasTypeInfo index, Str63 theString) M68K_INLINE(0x7007, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr GetAliasInfo(AliasHandle alias, AliasTypeInfo index, Str63 theString) M68K_INLINE(0x7007, 0xA823);
 
-pascal OSErr FollowFinderAlias(const FSSpec *fromFile, AliasHandle alias, Boolean logon, FSSpec *target, Boolean *wasChanged) M68K_INLINE(0x700F, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FollowFinderAlias(const FSSpec *fromFile, AliasHandle alias, Boolean logon, FSSpec *target, Boolean *wasChanged) M68K_INLINE(0x700F, 0xA823);
 
-pascal OSErr IsAliasFile(const FSSpec *fileFSSpec, Boolean *aliasFileFlag, Boolean *folderFlag) M68K_INLINE(0x702A, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr IsAliasFile(const FSSpec *fileFSSpec, Boolean *aliasFileFlag, Boolean *folderFlag) M68K_INLINE(0x702A, 0xA823);
 
-pascal OSErr ResolveAliasFileWithMountFlags(FSSpec *theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags) M68K_INLINE(0x7029, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr ResolveAliasFileWithMountFlags(FSSpec *theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags) M68K_INLINE(0x7029, 0xA823);
 
 // Aliases by FSRef (Mac OS 9 and later)
-pascal OSErr FSNewAlias(const FSRef *fromFile, const FSRef *target, AliasHandle *inAlias) M68K_INLINE(0x7036, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSNewAlias(const FSRef *fromFile, const FSRef *target, AliasHandle *inAlias) M68K_INLINE(0x7036, 0xA823);
 
-pascal OSErr FSNewAliasMinimal(const FSRef *target, AliasHandle *inAlias) M68K_INLINE(0x7037, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSNewAliasMinimal(const FSRef *target, AliasHandle *inAlias) M68K_INLINE(0x7037, 0xA823);
 
-pascal OSErr FSIsAliasFile(const FSRef *fileRef, Boolean *aliasFileFlag, Boolean *folderFlag) M68K_INLINE(0x7038, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSIsAliasFile(const FSRef *fileRef, Boolean *aliasFileFlag, Boolean *folderFlag) M68K_INLINE(0x7038, 0xA823);
 
-pascal OSErr FSResolveAliasWithMountFlags(const FSRef *fromFile, AliasHandle inAlias, FSRef *target, Boolean *wasChanged, unsigned long mountFlags) M68K_INLINE(0x7039, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSResolveAliasWithMountFlags(const FSRef *fromFile, AliasHandle inAlias, FSRef *target, Boolean *wasChanged, unsigned long mountFlags) M68K_INLINE(0x7039, 0xA823);
 
-pascal OSErr FSResolveAlias(const FSRef *fromFile, AliasHandle alias, FSRef *target, Boolean *wasChanged) M68K_INLINE(0x703A, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSResolveAlias(const FSRef *fromFile, AliasHandle alias, FSRef *target, Boolean *wasChanged) M68K_INLINE(0x703A, 0xA823);
 
-pascal OSErr FSResolveAliasFileWithMountFlags(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags) M68K_INLINE(0x703B, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSResolveAliasFileWithMountFlags(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags) M68K_INLINE(0x703B, 0xA823);
 
-pascal OSErr FSResolveAliasFile(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased) M68K_INLINE(0x703C, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSResolveAliasFile(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased) M68K_INLINE(0x703C, 0xA823);
 
-pascal OSErr FSFollowFinderAlias(FSRef *fromFile, AliasHandle alias, Boolean logon, FSRef *target, Boolean *wasChanged) M68K_INLINE(0x703D, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSFollowFinderAlias(FSRef *fromFile, AliasHandle alias, Boolean logon, FSRef *target, Boolean *wasChanged) M68K_INLINE(0x703D, 0xA823);
 
-pascal OSErr FSUpdateAlias(const FSRef *fromFile, const FSRef *target, AliasHandle alias, Boolean *wasChanged) M68K_INLINE(0x703E, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSUpdateAlias(const FSRef *fromFile, const FSRef *target, AliasHandle alias, Boolean *wasChanged) M68K_INLINE(0x703E, 0xA823);
 
-pascal OSErr FSFindFolder(INTEGER vRefNum, OSType folderType, Boolean createFolder, FSRef *foundRef) M68K_INLINE(0x7034, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSFindFolder(INTEGER vRefNum, OSType folderType, Boolean createFolder, FSRef *foundRef) M68K_INLINE(0x7034, 0xA823);
 
 // Folder Manager 9: folder descriptors, routing and notifications.
 typedef OSType FolderType;
@@ -168,40 +172,40 @@ typedef FolderManagerNotificationProcPtr FolderManagerNotificationUPP;
 #define DisposeFolderManagerNotificationProc(proc) DisposeFolderManagerNotificationUPP(proc)
 
 // Folder Manager 9 (Mac OS 8.5 to 9)
-pascal OSErr FindFolderExtended(INTEGER vol, OSType foldType, Boolean createFolder, UInt32 flags, void *data, INTEGER *vRefNum, long *dirID) M68K_INLINE(0x303C, 0x0B2C, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FindFolderExtended(INTEGER vol, OSType foldType, Boolean createFolder, UInt32 flags, void *data, INTEGER *vRefNum, long *dirID) M68K_INLINE(0x303C, 0x0B2C, 0xA823);
 
-pascal OSErr FSFindFolderExtended(INTEGER vol, OSType foldType, Boolean createFolder, UInt32 flags, void *data, FSRef *foundRef) M68K_INLINE(0x7035, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FSFindFolderExtended(INTEGER vol, OSType foldType, Boolean createFolder, UInt32 flags, void *data, FSRef *foundRef) M68K_INLINE(0x7035, 0xA823);
 
-pascal OSErr ReleaseFolder(INTEGER vRefNum, OSType folderType) M68K_INLINE(0x700B, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr ReleaseFolder(INTEGER vRefNum, OSType folderType) M68K_INLINE(0x700B, 0xA823);
 
-pascal OSErr GetFolderName(INTEGER vRefNum, OSType foldType, INTEGER *foundVRefNum, StringPtr name) M68K_INLINE(0x700E, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr GetFolderName(INTEGER vRefNum, OSType foldType, INTEGER *foundVRefNum, StringPtr name) M68K_INLINE(0x700E, 0xA823);
 
-pascal OSErr AddFolderDescriptor(FolderType foldType, FolderDescFlags flags, FolderClass foldClass, FolderLocation foldLocation, OSType badgeSignature, OSType badgeType, ConstStr63Param name, Boolean replaceFlag) M68K_INLINE(0x7020, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr AddFolderDescriptor(FolderType foldType, FolderDescFlags flags, FolderClass foldClass, FolderLocation foldLocation, OSType badgeSignature, OSType badgeType, ConstStr63Param name, Boolean replaceFlag) M68K_INLINE(0x7020, 0xA823);
 
-pascal OSErr GetFolderDescriptor(FolderType foldType, Size descSize, FolderDesc *foldDesc) M68K_INLINE(0x7023, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr GetFolderDescriptor(FolderType foldType, Size descSize, FolderDesc *foldDesc) M68K_INLINE(0x7023, 0xA823);
 
-pascal OSErr GetFolderTypes(UInt32 requestedTypeCount, UInt32 *totalTypeCount, FolderType *theTypes) M68K_INLINE(0x7024, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr GetFolderTypes(UInt32 requestedTypeCount, UInt32 *totalTypeCount, FolderType *theTypes) M68K_INLINE(0x7024, 0xA823);
 
-pascal OSErr RemoveFolderDescriptor(FolderType foldType) M68K_INLINE(0x7021, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr RemoveFolderDescriptor(FolderType foldType) M68K_INLINE(0x7021, 0xA823);
 
-pascal OSErr InvalidateFolderDescriptorCache(INTEGER vRefNum, long dirID) M68K_INLINE(0x7025, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr InvalidateFolderDescriptorCache(INTEGER vRefNum, long dirID) M68K_INLINE(0x7025, 0xA823);
 
-pascal OSErr IdentifyFolder(INTEGER vRefNum, long dirID, FolderType *foldType) M68K_INLINE(0x701F, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr IdentifyFolder(INTEGER vRefNum, long dirID, FolderType *foldType) M68K_INLINE(0x701F, 0xA823);
 
-pascal OSErr AddFolderRouting(OSType fileType, FolderType routeFromFolder, FolderType routeToFolder, RoutingFlags flags, Boolean replaceFlag) M68K_INLINE(0x7026, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr AddFolderRouting(OSType fileType, FolderType routeFromFolder, FolderType routeToFolder, RoutingFlags flags, Boolean replaceFlag) M68K_INLINE(0x7026, 0xA823);
 
-pascal OSErr RemoveFolderRouting(OSType fileType, FolderType routeFromFolder) M68K_INLINE(0x7027, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr RemoveFolderRouting(OSType fileType, FolderType routeFromFolder) M68K_INLINE(0x7027, 0xA823);
 
-pascal OSErr FindFolderRouting(OSType fileType, FolderType routeFromFolder, FolderType *routeToFolder, RoutingFlags *flags) M68K_INLINE(0x7022, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FindFolderRouting(OSType fileType, FolderType routeFromFolder, FolderType *routeToFolder, RoutingFlags *flags) M68K_INLINE(0x7022, 0xA823);
 
-pascal OSErr GetFolderRoutings(UInt32 requestedRoutingCount, UInt32 *totalRoutingCount, Size routingSize, FolderRouting *theRoutings) M68K_INLINE(0x701E, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr GetFolderRoutings(UInt32 requestedRoutingCount, UInt32 *totalRoutingCount, Size routingSize, FolderRouting *theRoutings) M68K_INLINE(0x701E, 0xA823);
 
-pascal OSErr FolderManagerRegisterNotificationProc(FolderManagerNotificationUPP notificationProc, void *refCon, UInt32 options) M68K_INLINE(0x303C, 0x062F, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FolderManagerRegisterNotificationProc(FolderManagerNotificationUPP notificationProc, void *refCon, UInt32 options) M68K_INLINE(0x303C, 0x062F, 0xA823);
 
-pascal OSErr FolderManagerUnregisterNotificationProc(FolderManagerNotificationUPP notificationProc, void *refCon) M68K_INLINE(0x303C, 0x0430, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr FolderManagerUnregisterNotificationProc(FolderManagerNotificationUPP notificationProc, void *refCon) M68K_INLINE(0x303C, 0x0430, 0xA823);
 
 // Alias Manager: resolve without mounting volumes (Mac OS 8.5)
-pascal OSErr ResolveAliasWithMountFlags(const FSSpec *fromFile, AliasHandle alias, FSSpec *target, Boolean *wasChanged, unsigned long mountFlags) M68K_INLINE(0x702B, 0xA823);
+MAC_SINCE_GESTALT(0x0700, "7.0", "'alis'") pascal OSErr ResolveAliasWithMountFlags(const FSSpec *fromFile, AliasHandle alias, FSSpec *target, Boolean *wasChanged, unsigned long mountFlags) M68K_INLINE(0x702B, 0xA823);
 
 // Folder Manager volume and creation arguments.
 enum {
@@ -211,6 +215,7 @@ enum {
     kDontCreateFolder = 0,
 };
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

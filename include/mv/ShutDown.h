@@ -5,6 +5,10 @@
 #include "../ConditionalMacros.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     sdOnPowerOff = 1,
@@ -16,14 +20,15 @@ enum {
 
 enum { _ShutDown = 0xA895 };
 
-pascal void ShutDwnPower(void) M68K_INLINE(0x3F3C, 0x0001, 0xA895);
+MAC_SINCE(0x0200, "2.0") pascal void ShutDwnPower(void) M68K_INLINE(0x3F3C, 0x0001, 0xA895);
 
-pascal void ShutDwnStart(void) M68K_INLINE(0x3F3C, 0x0002, 0xA895);
+MAC_SINCE(0x0200, "2.0") pascal void ShutDwnStart(void) M68K_INLINE(0x3F3C, 0x0002, 0xA895);
 
-pascal void ShutDwnInstall(ProcPtr shutdown_proc, int16_t flags) M68K_INLINE(0x3F3C, 0x0003, 0xA895);
+MAC_SINCE(0x0200, "2.0") pascal void ShutDwnInstall(ProcPtr shutdown_proc, int16_t flags) M68K_INLINE(0x3F3C, 0x0003, 0xA895);
 
-pascal void ShutDwnRemove(ProcPtr shutdown_proc) M68K_INLINE(0x3F3C, 0x0004, 0xA895);
+MAC_SINCE(0x0200, "2.0") pascal void ShutDwnRemove(ProcPtr shutdown_proc) M68K_INLINE(0x3F3C, 0x0004, 0xA895);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

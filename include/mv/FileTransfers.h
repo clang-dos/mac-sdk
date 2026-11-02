@@ -12,6 +12,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     curFTVersion = 2,
@@ -209,7 +213,7 @@ typedef FileTransferChooseIdleProcPtr FileTransferChooseIdleUPP;
 #define DisposeFileTransferChooseIdleProc(proc) DisposeFileTransferChooseIdleUPP(proc)
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) FTErr InitFT(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) FTErr InitFT(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0201 };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -219,11 +223,11 @@ static __inline__ __attribute__((__always_inline__)) FTErr InitFT(void) {
     return (FTErr)_ret;
 }
 #else
-pascal FTErr InitFT(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal FTErr InitFT(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long FTGetRefCon(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long FTGetRefCon(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0203, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -233,11 +237,11 @@ static __inline__ __attribute__((__always_inline__)) long FTGetRefCon(FTHandle h
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long FTGetRefCon(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long FTGetRefCon(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTSetRefCon(FTHandle hFT, long refCon) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTSetRefCon(FTHandle hFT, long refCon) {
     struct { short _sel; __typeof__(refCon) refCon; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0202, refCon, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -247,11 +251,11 @@ static __inline__ __attribute__((__always_inline__)) void FTSetRefCon(FTHandle h
     (void)_ret;
 }
 #else
-pascal void FTSetRefCon(FTHandle hFT, long refCon);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTSetRefCon(FTHandle hFT, long refCon);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long FTGetUserData(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) long FTGetUserData(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0205, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -261,11 +265,11 @@ static __inline__ __attribute__((__always_inline__)) long FTGetUserData(FTHandle
     { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal long FTGetUserData(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal long FTGetUserData(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTSetUserData(FTHandle hFT, long userData) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTSetUserData(FTHandle hFT, long userData) {
     struct { short _sel; __typeof__(userData) userData; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0204, userData, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -275,11 +279,11 @@ static __inline__ __attribute__((__always_inline__)) void FTSetUserData(FTHandle
     (void)_ret;
 }
 #else
-pascal void FTSetUserData(FTHandle hFT, long userData);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTSetUserData(FTHandle hFT, long userData);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTGetToolName(INTEGER procID, Str255 name) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTGetToolName(INTEGER procID, Str255 name) {
     struct { short _sel; __typeof__(name) name; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0206, name, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -289,11 +293,11 @@ static __inline__ __attribute__((__always_inline__)) void FTGetToolName(INTEGER 
     (void)_ret;
 }
 #else
-pascal void FTGetToolName(INTEGER procID, Str255 name);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTGetToolName(INTEGER procID, Str255 name);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER FTGetProcID(ConstStr255Param name) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER FTGetProcID(ConstStr255Param name) {
     struct { short _sel; __typeof__(name) name; } __attribute__((__packed__)) _pb = { 0x0207, name };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -303,11 +307,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER FTGetProcID(ConstSt
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER FTGetProcID(ConstStr255Param name);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER FTGetProcID(ConstStr255Param name);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) FTHandle FTNew(INTEGER procID, FTFlags flags, FileTransferSendProcUPP sendProc, FileTransferReceiveProcUPP recvProc, FileTransferReadProcUPP readProc, FileTransferWriteProcUPP writeProc, FileTransferEnvironsProcUPP environsProc, WindowPtr owner, long refCon, long userData) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) FTHandle FTNew(INTEGER procID, FTFlags flags, FileTransferSendProcUPP sendProc, FileTransferReceiveProcUPP recvProc, FileTransferReadProcUPP readProc, FileTransferWriteProcUPP writeProc, FileTransferEnvironsProcUPP environsProc, WindowPtr owner, long refCon, long userData) {
     struct { short _sel; __typeof__(userData) userData; __typeof__(refCon) refCon; __typeof__(owner) owner; __typeof__(environsProc) environsProc; __typeof__(writeProc) writeProc; __typeof__(readProc) readProc; __typeof__(recvProc) recvProc; __typeof__(sendProc) sendProc; __typeof__(flags) flags; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0208, userData, refCon, owner, environsProc, writeProc, readProc, recvProc, sendProc, flags, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -317,11 +321,11 @@ static __inline__ __attribute__((__always_inline__)) FTHandle FTNew(INTEGER proc
     { union { long l; FTHandle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal FTHandle FTNew(INTEGER procID, FTFlags flags, FileTransferSendProcUPP sendProc, FileTransferReceiveProcUPP recvProc, FileTransferReadProcUPP readProc, FileTransferWriteProcUPP writeProc, FileTransferEnvironsProcUPP environsProc, WindowPtr owner, long refCon, long userData);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal FTHandle FTNew(INTEGER procID, FTFlags flags, FileTransferSendProcUPP sendProc, FileTransferReceiveProcUPP recvProc, FileTransferReadProcUPP readProc, FileTransferWriteProcUPP writeProc, FileTransferEnvironsProcUPP environsProc, WindowPtr owner, long refCon, long userData);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTDispose(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTDispose(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0209, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -331,11 +335,11 @@ static __inline__ __attribute__((__always_inline__)) void FTDispose(FTHandle hFT
     (void)_ret;
 }
 #else
-pascal void FTDispose(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTDispose(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) FTErr FTStart(FTHandle hFT, FTDirection direction, const SFReply *fileInfo) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) FTErr FTStart(FTHandle hFT, FTDirection direction, const SFReply *fileInfo) {
     struct { short _sel; __typeof__(fileInfo) fileInfo; __typeof__(direction) direction; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x020B, fileInfo, direction, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -345,11 +349,11 @@ static __inline__ __attribute__((__always_inline__)) FTErr FTStart(FTHandle hFT,
     return (FTErr)_ret;
 }
 #else
-pascal FTErr FTStart(FTHandle hFT, FTDirection direction, const SFReply *fileInfo);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal FTErr FTStart(FTHandle hFT, FTDirection direction, const SFReply *fileInfo);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) FTErr FTAbort(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) FTErr FTAbort(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x020D, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -359,11 +363,11 @@ static __inline__ __attribute__((__always_inline__)) FTErr FTAbort(FTHandle hFT)
     return (FTErr)_ret;
 }
 #else
-pascal FTErr FTAbort(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal FTErr FTAbort(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) FTErr FTSend(FTHandle hFT, INTEGER numFiles, FSSpecArrayPtr pFSSpec, FileTransferNotificationUPP notifyProc) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) FTErr FTSend(FTHandle hFT, INTEGER numFiles, FSSpecArrayPtr pFSSpec, FileTransferNotificationUPP notifyProc) {
     struct { short _sel; __typeof__(notifyProc) notifyProc; __typeof__(pFSSpec) pFSSpec; __typeof__(numFiles) numFiles; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0224, notifyProc, pFSSpec, numFiles, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -373,11 +377,11 @@ static __inline__ __attribute__((__always_inline__)) FTErr FTSend(FTHandle hFT, 
     return (FTErr)_ret;
 }
 #else
-pascal FTErr FTSend(FTHandle hFT, INTEGER numFiles, FSSpecArrayPtr pFSSpec, FileTransferNotificationUPP notifyProc);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal FTErr FTSend(FTHandle hFT, INTEGER numFiles, FSSpecArrayPtr pFSSpec, FileTransferNotificationUPP notifyProc);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) FTErr FTReceive(FTHandle hFT, FSSpecPtr pFSSpec, FileTransferNotificationUPP notifyProc) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) FTErr FTReceive(FTHandle hFT, FSSpecPtr pFSSpec, FileTransferNotificationUPP notifyProc) {
     struct { short _sel; __typeof__(notifyProc) notifyProc; __typeof__(pFSSpec) pFSSpec; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0225, notifyProc, pFSSpec, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -387,11 +391,11 @@ static __inline__ __attribute__((__always_inline__)) FTErr FTReceive(FTHandle hF
     return (FTErr)_ret;
 }
 #else
-pascal FTErr FTReceive(FTHandle hFT, FSSpecPtr pFSSpec, FileTransferNotificationUPP notifyProc);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal FTErr FTReceive(FTHandle hFT, FSSpecPtr pFSSpec, FileTransferNotificationUPP notifyProc);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTExec(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTExec(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x020A, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -401,11 +405,11 @@ static __inline__ __attribute__((__always_inline__)) void FTExec(FTHandle hFT) {
     (void)_ret;
 }
 #else
-pascal void FTExec(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTExec(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTActivate(FTHandle hFT, Boolean activate) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTActivate(FTHandle hFT, Boolean activate) {
     struct { short _sel; __typeof__(activate) activate; char _pad_activate; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0220, activate, 0, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -415,11 +419,11 @@ static __inline__ __attribute__((__always_inline__)) void FTActivate(FTHandle hF
     (void)_ret;
 }
 #else
-pascal void FTActivate(FTHandle hFT, Boolean activate);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTActivate(FTHandle hFT, Boolean activate);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTResume(FTHandle hFT, Boolean resume) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTResume(FTHandle hFT, Boolean resume) {
     struct { short _sel; __typeof__(resume) resume; char _pad_resume; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x020E, resume, 0, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -429,11 +433,11 @@ static __inline__ __attribute__((__always_inline__)) void FTResume(FTHandle hFT,
     (void)_ret;
 }
 #else
-pascal void FTResume(FTHandle hFT, Boolean resume);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTResume(FTHandle hFT, Boolean resume);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean FTMenu(FTHandle hFT, INTEGER menuID, INTEGER item) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean FTMenu(FTHandle hFT, INTEGER menuID, INTEGER item) {
     struct { short _sel; __typeof__(item) item; __typeof__(menuID) menuID; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x021F, item, menuID, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -443,11 +447,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean FTMenu(FTHandle hFT
     return (Boolean)_ret;
 }
 #else
-pascal Boolean FTMenu(FTHandle hFT, INTEGER menuID, INTEGER item);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean FTMenu(FTHandle hFT, INTEGER menuID, INTEGER item);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER FTChoose(FTHandle *hFT, Point where, FileTransferChooseIdleUPP idle) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER FTChoose(FTHandle *hFT, Point where, FileTransferChooseIdleUPP idle) {
     struct { short _sel; __typeof__(idle) idle; __typeof__(where) where; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x021C, idle, where, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -457,11 +461,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER FTChoose(FTHandle *
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER FTChoose(FTHandle *hFT, Point where, FileTransferChooseIdleUPP idle);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER FTChoose(FTHandle *hFT, Point where, FileTransferChooseIdleUPP idle);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTEvent(FTHandle hFT, const EventRecord *theEvent) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTEvent(FTHandle hFT, const EventRecord *theEvent) {
     struct { short _sel; __typeof__(theEvent) theEvent; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x021D, theEvent, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -471,11 +475,11 @@ static __inline__ __attribute__((__always_inline__)) void FTEvent(FTHandle hFT, 
     (void)_ret;
 }
 #else
-pascal void FTEvent(FTHandle hFT, const EventRecord *theEvent);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTEvent(FTHandle hFT, const EventRecord *theEvent);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean FTValidate(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean FTValidate(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x020F, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -485,11 +489,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean FTValidate(FTHandle
     return (Boolean)_ret;
 }
 #else
-pascal Boolean FTValidate(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean FTValidate(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTDefault(Ptr *theConfig, INTEGER procID, Boolean allocate) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTDefault(Ptr *theConfig, INTEGER procID, Boolean allocate) {
     struct { short _sel; __typeof__(allocate) allocate; char _pad_allocate; __typeof__(procID) procID; __typeof__(theConfig) theConfig; } __attribute__((__packed__)) _pb = { 0x0210, allocate, 0, procID, theConfig };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -499,11 +503,11 @@ static __inline__ __attribute__((__always_inline__)) void FTDefault(Ptr *theConf
     (void)_ret;
 }
 #else
-pascal void FTDefault(Ptr *theConfig, INTEGER procID, Boolean allocate);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTDefault(Ptr *theConfig, INTEGER procID, Boolean allocate);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle FTSetupPreflight(INTEGER procID, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Handle FTSetupPreflight(INTEGER procID, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0211, magicCookie, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -513,11 +517,11 @@ static __inline__ __attribute__((__always_inline__)) Handle FTSetupPreflight(INT
     { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Handle FTSetupPreflight(INTEGER procID, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Handle FTSetupPreflight(INTEGER procID, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0212, magicCookie, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -527,11 +531,11 @@ static __inline__ __attribute__((__always_inline__)) void FTSetupSetup(INTEGER p
     (void)_ret;
 }
 #else
-pascal void FTSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTSetupSetup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theItem) theItem; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0214, magicCookie, theItem, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -541,11 +545,11 @@ static __inline__ __attribute__((__always_inline__)) void FTSetupItem(INTEGER pr
     (void)_ret;
 }
 #else
-pascal void FTSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTSetupItem(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, INTEGER *theItem, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean FTSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Boolean FTSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(theItem) theItem; __typeof__(theEvent) theEvent; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0213, magicCookie, theItem, theEvent, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -555,11 +559,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean FTSetupFilter(INTEG
     return (Boolean)_ret;
 }
 #else
-pascal Boolean FTSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Boolean FTSetupFilter(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, EventRecord *theEvent, INTEGER *theItem, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie) {
     struct { short _sel; __typeof__(magicCookie) magicCookie; __typeof__(OKed) OKed; char _pad_OKed; __typeof__(theDialog) theDialog; __typeof__(count) count; __typeof__(theConfig) theConfig; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0222, magicCookie, OKed, 0, theDialog, count, theConfig, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -569,11 +573,11 @@ static __inline__ __attribute__((__always_inline__)) void FTSetupXCleanup(INTEGE
     (void)_ret;
 }
 #else
-pascal void FTSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTSetupXCleanup(INTEGER procID, const void *theConfig, INTEGER count, DialogPtr theDialog, Boolean OKed, long *magicCookie);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTSetupPostflight(INTEGER procID) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTSetupPostflight(INTEGER procID) {
     struct { short _sel; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x021E, procID };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -583,11 +587,11 @@ static __inline__ __attribute__((__always_inline__)) void FTSetupPostflight(INTE
     (void)_ret;
 }
 #else
-pascal void FTSetupPostflight(INTEGER procID);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTSetupPostflight(INTEGER procID);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Ptr FTGetConfig(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Ptr FTGetConfig(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0216, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -597,11 +601,11 @@ static __inline__ __attribute__((__always_inline__)) Ptr FTGetConfig(FTHandle hF
     { union { long l; Ptr r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Ptr FTGetConfig(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Ptr FTGetConfig(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER FTSetConfig(FTHandle hFT, const void *thePtr) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER FTSetConfig(FTHandle hFT, const void *thePtr) {
     struct { short _sel; __typeof__(thePtr) thePtr; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0217, thePtr, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -611,11 +615,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER FTSetConfig(FTHandl
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER FTSetConfig(FTHandle hFT, const void *thePtr);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER FTSetConfig(FTHandle hFT, const void *thePtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr FTIntlToEnglish(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) OSErr FTIntlToEnglish(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
     struct { short _sel; __typeof__(language) language; __typeof__(outputPtr) outputPtr; __typeof__(inputPtr) inputPtr; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0218, language, outputPtr, inputPtr, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -625,11 +629,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr FTIntlToEnglish(FTHan
     return (OSErr)_ret;
 }
 #else
-pascal OSErr FTIntlToEnglish(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal OSErr FTIntlToEnglish(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr FTEnglishToIntl(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) OSErr FTEnglishToIntl(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language) {
     struct { short _sel; __typeof__(language) language; __typeof__(outputPtr) outputPtr; __typeof__(inputPtr) inputPtr; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0219, language, outputPtr, inputPtr, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -639,11 +643,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr FTEnglishToIntl(FTHan
     return (OSErr)_ret;
 }
 #else
-pascal OSErr FTEnglishToIntl(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal OSErr FTEnglishToIntl(FTHandle hFT, const void *inputPtr, Ptr *outputPtr, INTEGER language);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle FTGetVersion(FTHandle hFT) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) Handle FTGetVersion(FTHandle hFT) {
     struct { short _sel; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x021A, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -653,11 +657,11 @@ static __inline__ __attribute__((__always_inline__)) Handle FTGetVersion(FTHandl
     { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
 }
 #else
-pascal Handle FTGetVersion(FTHandle hFT);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal Handle FTGetVersion(FTHandle hFT);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER FTGetFTVersion(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER FTGetFTVersion(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x021B };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -667,11 +671,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER FTGetFTVersion(void
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER FTGetFTVersion(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER FTGetFTVersion(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void FTGetErrorString(FTHandle hFT, INTEGER id, Str255 errMsg) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) void FTGetErrorString(FTHandle hFT, INTEGER id, Str255 errMsg) {
     struct { short _sel; __typeof__(errMsg) errMsg; __typeof__(id) id; __typeof__(hFT) hFT; } __attribute__((__packed__)) _pb = { 0x0223, errMsg, id, hFT };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -681,9 +685,10 @@ static __inline__ __attribute__((__always_inline__)) void FTGetErrorString(FTHan
     (void)_ret;
 }
 #else
-pascal void FTGetErrorString(FTHandle hFT, INTEGER id, Str255 errMsg);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal void FTGetErrorString(FTHandle hFT, INTEGER id, Str255 errMsg);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

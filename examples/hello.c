@@ -39,11 +39,8 @@ int main(void) {
 
   long sysv = 0;
   OSErr err = -1;
-#if TARGET_CPU_68K
   /* Gestalt arrived in System 6.0.4; before that its trap is unimplemented. */
-  if (NGetTrapAddress(_Gestalt, kOSTrapType) !=
-      NGetTrapAddress(_Unimplemented, kToolboxTrapType))
-#endif
+  if (TrapAvailable(_Gestalt))
     err = Gestalt(gestaltSystemVersion, &sysv);
   Ptr p = NewPtr(1000);               /* register-based traps */
   long ticks;

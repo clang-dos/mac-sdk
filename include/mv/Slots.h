@@ -7,6 +7,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum { _SlotManager = 0xA06E };
 
@@ -68,7 +72,7 @@ enum {
 // Slot Manager
 enum { _SReadByte = 0xA06E };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadByte(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadByte(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7000, 0xA06E"
@@ -78,11 +82,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadByte(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SReadByte(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadByte(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadWord(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadWord(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7001, 0xA06E"
@@ -92,11 +96,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadWord(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SReadWord(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadWord(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadLong(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadLong(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7002, 0xA06E"
@@ -106,11 +110,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadLong(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SReadLong(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadLong(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SGetCString(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SGetCString(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7003, 0xA06E"
@@ -120,11 +124,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetCString(SpBlockPt
     return _ret;
 }
 #else
-pascal OSErr SGetCString(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SGetCString(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SGetBlock(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SGetBlock(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7005, 0xA06E"
@@ -134,11 +138,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetBlock(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SGetBlock(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SGetBlock(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SFindStruct(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SFindStruct(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7006, 0xA06E"
@@ -148,11 +152,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindStruct(SpBlockPt
     return _ret;
 }
 #else
-pascal OSErr SFindStruct(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SFindStruct(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadStruct(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadStruct(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7007, 0xA06E"
@@ -162,11 +166,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadStruct(SpBlockPt
     return _ret;
 }
 #else
-pascal OSErr SReadStruct(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadStruct(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SVersion(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SVersion(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7008, 0xA06E"
@@ -176,11 +180,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SVersion(SpBlockPtr s
     return _ret;
 }
 #else
-pascal OSErr SVersion(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SVersion(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SetSRsrcState(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SetSRsrcState(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7009, 0xA06E"
@@ -190,11 +194,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SetSRsrcState(SpBlock
     return _ret;
 }
 #else
-pascal OSErr SetSRsrcState(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SetSRsrcState(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr InsertSRTRec(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr InsertSRTRec(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x700A, 0xA06E"
@@ -204,11 +208,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr InsertSRTRec(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr InsertSRTRec(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr InsertSRTRec(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrc(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrc(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x700B, 0xA06E"
@@ -218,11 +222,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrc(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SGetSRsrc(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SGetSRsrc(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SGetTypeSRsrc(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SGetTypeSRsrc(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x700C, 0xA06E"
@@ -232,11 +236,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetTypeSRsrc(SpBlock
     return _ret;
 }
 #else
-pascal OSErr SGetTypeSRsrc(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SGetTypeSRsrc(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrcPtr(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrcPtr(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x701D, 0xA06E"
@@ -246,11 +250,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrcPtr(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr SGetSRsrcPtr(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SGetSRsrcPtr(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadInfo(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadInfo(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7010, 0xA06E"
@@ -260,11 +264,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadInfo(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SReadInfo(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadInfo(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadPRAMRec(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadPRAMRec(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7011, 0xA06E"
@@ -274,11 +278,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadPRAMRec(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr SReadPRAMRec(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadPRAMRec(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SPutPRAMRec(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SPutPRAMRec(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7012, 0xA06E"
@@ -288,11 +292,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SPutPRAMRec(SpBlockPt
     return _ret;
 }
 #else
-pascal OSErr SPutPRAMRec(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SPutPRAMRec(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadFHeader(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadFHeader(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7013, 0xA06E"
@@ -302,11 +306,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadFHeader(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr SReadFHeader(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadFHeader(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SNextSRsrc(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SNextSRsrc(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7014, 0xA06E"
@@ -316,11 +320,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SNextSRsrc(SpBlockPtr
     return _ret;
 }
 #else
-pascal OSErr SNextSRsrc(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SNextSRsrc(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SNextTypeSRsrc(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SNextTypeSRsrc(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7015, 0xA06E"
@@ -330,11 +334,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SNextTypeSRsrc(SpBloc
     return _ret;
 }
 #else
-pascal OSErr SNextTypeSRsrc(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SNextTypeSRsrc(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SRsrcInfo(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SRsrcInfo(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7016, 0xA06E"
@@ -344,11 +348,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SRsrcInfo(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SRsrcInfo(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SRsrcInfo(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCkCardStat(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SCkCardStat(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7018, 0xA06E"
@@ -358,11 +362,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCkCardStat(SpBlockPt
     return _ret;
 }
 #else
-pascal OSErr SCkCardStat(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SCkCardStat(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadDrvrName(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadDrvrName(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7019, 0xA06E"
@@ -372,11 +376,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadDrvrName(SpBlock
     return _ret;
 }
 #else
-pascal OSErr SReadDrvrName(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadDrvrName(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SFindDevBase(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SFindDevBase(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x701B, 0xA06E"
@@ -386,11 +390,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindDevBase(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr SFindDevBase(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SFindDevBase(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SFindBigDevBase(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SFindBigDevBase(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x701C, 0xA06E"
@@ -400,11 +404,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindBigDevBase(SpBlo
     return _ret;
 }
 #else
-pascal OSErr SFindBigDevBase(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SFindBigDevBase(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr InitSDeclMgr(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr InitSDeclMgr(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7020, 0xA06E"
@@ -414,11 +418,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr InitSDeclMgr(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr InitSDeclMgr(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr InitSDeclMgr(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SPrimaryInit(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SPrimaryInit(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7021, 0xA06E"
@@ -428,11 +432,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SPrimaryInit(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr SPrimaryInit(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SPrimaryInit(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCardChanged(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SCardChanged(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7022, 0xA06E"
@@ -442,11 +446,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCardChanged(SpBlockP
     return _ret;
 }
 #else
-pascal OSErr SCardChanged(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SCardChanged(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SExec(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SExec(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7023, 0xA06E"
@@ -456,11 +460,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SExec(SpBlockPtr spBl
     return _ret;
 }
 #else
-pascal OSErr SExec(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SExec(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SOffsetData(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SOffsetData(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7024, 0xA06E"
@@ -470,11 +474,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SOffsetData(SpBlockPt
     return _ret;
 }
 #else
-pascal OSErr SOffsetData(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SOffsetData(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SInitPRAMRecs(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SInitPRAMRecs(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7025, 0xA06E"
@@ -484,11 +488,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SInitPRAMRecs(SpBlock
     return _ret;
 }
 #else
-pascal OSErr SInitPRAMRecs(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SInitPRAMRecs(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SReadPBSize(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SReadPBSize(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7026, 0xA06E"
@@ -498,11 +502,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadPBSize(SpBlockPt
     return _ret;
 }
 #else
-pascal OSErr SReadPBSize(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SReadPBSize(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCalcStep(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SCalcStep(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7028, 0xA06E"
@@ -512,11 +516,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCalcStep(SpBlockPtr 
     return _ret;
 }
 #else
-pascal OSErr SCalcStep(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SCalcStep(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SInitSRsrcTable(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SInitSRsrcTable(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7029, 0xA06E"
@@ -526,11 +530,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SInitSRsrcTable(SpBlo
     return _ret;
 }
 #else
-pascal OSErr SInitSRsrcTable(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SInitSRsrcTable(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SSearchSRT(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SSearchSRT(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702A, 0xA06E"
@@ -540,11 +544,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SSearchSRT(SpBlockPtr
     return _ret;
 }
 #else
-pascal OSErr SSearchSRT(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SSearchSRT(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SUpdateSRT(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SUpdateSRT(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702B, 0xA06E"
@@ -554,11 +558,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SUpdateSRT(SpBlockPtr
     return _ret;
 }
 #else
-pascal OSErr SUpdateSRT(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SUpdateSRT(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCalcSPointer(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SCalcSPointer(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702C, 0xA06E"
@@ -568,11 +572,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCalcSPointer(SpBlock
     return _ret;
 }
 #else
-pascal OSErr SCalcSPointer(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SCalcSPointer(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SGetDriver(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SGetDriver(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702D, 0xA06E"
@@ -582,11 +586,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetDriver(SpBlockPtr
     return _ret;
 }
 #else
-pascal OSErr SGetDriver(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SGetDriver(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SPtrToSlot(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SPtrToSlot(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702E, 0xA06E"
@@ -596,11 +600,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SPtrToSlot(SpBlockPtr
     return _ret;
 }
 #else
-pascal OSErr SPtrToSlot(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SPtrToSlot(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SFindSInfoRecPtr(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SFindSInfoRecPtr(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702F, 0xA06E"
@@ -610,11 +614,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindSInfoRecPtr(SpBl
     return _ret;
 }
 #else
-pascal OSErr SFindSInfoRecPtr(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SFindSInfoRecPtr(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SFindSRsrcPtr(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SFindSRsrcPtr(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7030, 0xA06E"
@@ -624,11 +628,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindSRsrcPtr(SpBlock
     return _ret;
 }
 #else
-pascal OSErr SFindSRsrcPtr(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SFindSRsrcPtr(SpBlockPtr spBlkPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SDeleteSRTRec(SpBlockPtr spBlkPtr) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SDeleteSRTRec(SpBlockPtr spBlkPtr) {
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7031, 0xA06E"
@@ -638,12 +642,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr SDeleteSRTRec(SpBlock
     return _ret;
 }
 #else
-pascal OSErr SDeleteSRTRec(SpBlockPtr spBlkPtr);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SDeleteSRTRec(SpBlockPtr spBlkPtr);
 #endif
 
 enum { _SIntInstall = 0xA075 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SIntInstall(SQElemPtr sIntQElemPtr, INTEGER theSlot) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SIntInstall(SQElemPtr sIntQElemPtr, INTEGER theSlot) {
     register OSErr _ret __asm__("d0");
     register SQElemPtr _sIntQElemPtr __asm__("a0") = sIntQElemPtr;
     register INTEGER _theSlot __asm__("d0") = theSlot;
@@ -654,12 +658,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr SIntInstall(SQElemPtr
     return _ret;
 }
 #else
-pascal OSErr SIntInstall(SQElemPtr sIntQElemPtr, INTEGER theSlot);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SIntInstall(SQElemPtr sIntQElemPtr, INTEGER theSlot);
 #endif
 
 enum { _SIntRemove = 0xA076 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SIntRemove(SQElemPtr sIntQElemPtr, INTEGER theSlot) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SIntRemove(SQElemPtr sIntQElemPtr, INTEGER theSlot) {
     register OSErr _ret __asm__("d0");
     register SQElemPtr _sIntQElemPtr __asm__("a0") = sIntQElemPtr;
     register INTEGER _theSlot __asm__("d0") = theSlot;
@@ -670,7 +674,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr SIntRemove(SQElemPtr 
     return _ret;
 }
 #else
-pascal OSErr SIntRemove(SQElemPtr sIntQElemPtr, INTEGER theSlot);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SIntRemove(SQElemPtr sIntQElemPtr, INTEGER theSlot);
 #endif
 
 enum { _OpenSlotSync = 0xA200 };
@@ -716,6 +720,7 @@ static __inline__ OSErr OpenSlot(ParmBlkPtr paramBlock, Boolean async) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

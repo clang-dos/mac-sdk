@@ -14,6 +14,10 @@
 #include "QuickDraw.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     documentProc = 0,
@@ -302,10 +306,10 @@ enum { _CloseWindow = 0xA92D };
 pascal void CloseWindow(WindowPtr w) M68K_INLINE(0xA92D);
 
 enum { _NewCWindow = 0xAA45 };
-pascal WindowPtr NewCWindow(void *storage, const Rect *arg1, ConstStringPtr arg2, Boolean arg3, INTEGER arg4, WindowPtr arg5, Boolean arg6, LONGINT arg7) M68K_INLINE(0xAA45);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal WindowPtr NewCWindow(void *storage, const Rect *arg1, ConstStringPtr arg2, Boolean arg3, INTEGER arg4, WindowPtr arg5, Boolean arg6, LONGINT arg7) M68K_INLINE(0xAA45);
 
 enum { _GetNewCWindow = 0xAA46 };
-pascal WindowPtr GetNewCWindow(INTEGER arg0, void *arg1, WindowPtr arg2) M68K_INLINE(0xAA46);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal WindowPtr GetNewCWindow(INTEGER arg0, void *arg1, WindowPtr arg2) M68K_INLINE(0xAA46);
 
 enum { _DisposeWindow = 0xA914 };
 pascal void DisposeWindow(WindowPtr w) M68K_INLINE(0xA914);
@@ -356,19 +360,19 @@ enum { _DrawNew = 0xA90F };
 pascal void DrawNew(WindowPeek w, Boolean flag) M68K_INLINE(0xA90F);
 
 enum { _GetWVariant = 0xA80A };
-pascal INTEGER GetWVariant(WindowPtr w) M68K_INLINE(0xA80A);
+MAC_SINCE(0x0200, "2.0") pascal INTEGER GetWVariant(WindowPtr w) M68K_INLINE(0xA80A);
 
 enum { _FindWindow = 0xA92C };
 pascal INTEGER FindWindow(Point p, WindowPtr *wpp) M68K_INLINE(0xA92C);
 
 enum { _TrackBox = 0xA83B };
-pascal Boolean TrackBox(WindowPtr wp, Point pt, INTEGER part) M68K_INLINE(0xA83B);
+MAC_SINCE(0x0070, "0.7") pascal Boolean TrackBox(WindowPtr wp, Point pt, INTEGER part) M68K_INLINE(0xA83B);
 
 enum { _TrackGoAway = 0xA91E };
 pascal Boolean TrackGoAway(WindowPtr w, Point p) M68K_INLINE(0xA91E);
 
 enum { _ZoomWindow = 0xA83A };
-pascal void ZoomWindow(WindowPtr wp, INTEGER part, Boolean front) M68K_INLINE(0xA83A);
+MAC_SINCE(0x0070, "0.7") pascal void ZoomWindow(WindowPtr wp, INTEGER part, Boolean front) M68K_INLINE(0xA83A);
 
 enum { _MoveWindow = 0xA91B };
 pascal void MoveWindow(WindowPtr wp, INTEGER h, INTEGER v, Boolean front) M68K_INLINE(0xA91B);
@@ -401,13 +405,13 @@ enum { _EndUpdate = 0xA923 };
 pascal void EndUpdate(WindowPtr w) M68K_INLINE(0xA923);
 
 enum { _SetWinColor = 0xAA41 };
-pascal void SetWinColor(WindowPtr w, CTabHandle new_w_ctab) M68K_INLINE(0xAA41);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetWinColor(WindowPtr w, CTabHandle new_w_ctab) M68K_INLINE(0xAA41);
 
 enum { _SetDeskCPat = 0xAA47 };
-pascal void SetDeskCPat(PixPatHandle arg0) M68K_INLINE(0xAA47);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetDeskCPat(PixPatHandle arg0) M68K_INLINE(0xAA47);
 
 enum { _GetAuxWin = 0xAA42 };
-pascal Boolean GetAuxWin(WindowPtr arg0, AuxWinHandle *arg1) M68K_INLINE(0xAA42);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal Boolean GetAuxWin(WindowPtr arg0, AuxWinHandle *arg1) M68K_INLINE(0xAA42);
 
 typedef WindowPtr WindowRef;
 
@@ -609,17 +613,17 @@ enum {
 enum { _AppearanceDispatch = 0xAA74 };
 
 // Window Manager 8: collapsing (window shade) and regions, from the Appearance Manager
-pascal Boolean IsWindowCollapsable(WindowRef inWindow) M68K_INLINE(0x700F, 0xAA74);
+MAC_SINCE(0x0810, "8.1") pascal Boolean IsWindowCollapsable(WindowRef inWindow) M68K_INLINE(0x700F, 0xAA74);
 
-pascal Boolean IsWindowCollapsed(WindowRef inWindow) M68K_INLINE(0x7010, 0xAA74);
+MAC_SINCE(0x0810, "8.1") pascal Boolean IsWindowCollapsed(WindowRef inWindow) M68K_INLINE(0x7010, 0xAA74);
 
-pascal OSStatus CollapseWindow(WindowRef inWindow, Boolean inCollapseIt) M68K_INLINE(0x7011, 0xAA74);
+MAC_SINCE(0x0810, "8.1") pascal OSStatus CollapseWindow(WindowRef inWindow, Boolean inCollapseIt) M68K_INLINE(0x7011, 0xAA74);
 
-pascal OSStatus CollapseAllWindows(Boolean inCollapseEm) M68K_INLINE(0x7012, 0xAA74);
+MAC_SINCE(0x0810, "8.1") pascal OSStatus CollapseAllWindows(Boolean inCollapseEm) M68K_INLINE(0x7012, 0xAA74);
 
-pascal OSStatus GetWindowFeatures(WindowRef inWindow, UInt32 *outFeatures) M68K_INLINE(0x7013, 0xAA74);
+MAC_SINCE(0x0810, "8.1") pascal OSStatus GetWindowFeatures(WindowRef inWindow, UInt32 *outFeatures) M68K_INLINE(0x7013, 0xAA74);
 
-pascal OSStatus GetWindowRegion(WindowRef inWindow, WindowRegionCode inRegionCode, RgnHandle ioWinRgn) M68K_INLINE(0x7014, 0xAA74);
+MAC_SINCE(0x0810, "8.1") pascal OSStatus GetWindowRegion(WindowRef inWindow, WindowRegionCode inRegionCode, RgnHandle ioWinRgn) M68K_INLINE(0x7014, 0xAA74);
 
 // Window Manager 2.0 (Mac OS 8.5, WindowsLib)
 #if !TARGET_CPU_68K
@@ -833,6 +837,7 @@ static __inline__ void InvalWindowRect(WindowRef w, const Rect *r) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

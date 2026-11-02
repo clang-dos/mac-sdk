@@ -9,6 +9,10 @@
 #include "QuickDraw.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     noMark = 0,
@@ -141,7 +145,7 @@ pascal void AppendResMenu(MenuHandle mh, ResType restype) M68K_INLINE(0xA94D);
 #endif
 
 enum { _DeleteMenuItem = 0xA952 };
-pascal void DeleteMenuItem(MenuHandle mh, INTEGER item) M68K_INLINE(0xA952);
+MAC_SINCE(0x0070, "0.7") pascal void DeleteMenuItem(MenuHandle mh, INTEGER item) M68K_INLINE(0xA952);
 #if OLDROUTINENAMES
 #define DelMenuItem(mh, item) DeleteMenuItem(mh, item)
 #endif
@@ -150,7 +154,7 @@ enum { _InsertResMenu = 0xA951 };
 pascal void InsertResMenu(MenuHandle mh, ResType restype, INTEGER after) M68K_INLINE(0xA951);
 
 enum { _InsertMenuItem = 0xA826 };
-pascal void InsertMenuItem(MenuHandle mh, ConstStringPtr str, INTEGER after) M68K_INLINE(0xA826);
+MAC_SINCE(0x0070, "0.7") pascal void InsertMenuItem(MenuHandle mh, ConstStringPtr str, INTEGER after) M68K_INLINE(0xA826);
 #if OLDROUTINENAMES
 #define InsMenuItem(mh, str, after) InsertMenuItem(mh, str, after)
 #endif
@@ -234,46 +238,46 @@ enum { _SetMenuFlash = 0xA94A };
 pascal void SetMenuFlash(INTEGER i) M68K_INLINE(0xA94A);
 
 enum { _InitProcMenu = 0xA808 };
-pascal void InitProcMenu(INTEGER mbid) M68K_INLINE(0xA808);
+MAC_SINCE(0x0200, "2.0") pascal void InitProcMenu(INTEGER mbid) M68K_INLINE(0xA808);
 
 enum { _MenuChoice = 0xAA66 };
-pascal LONGINT MenuChoice(void) M68K_INLINE(0xAA66);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal LONGINT MenuChoice(void) M68K_INLINE(0xAA66);
 
 enum { _GetItemCmd = 0xA84E };
-pascal void GetItemCmd(MenuHandle mh, INTEGER item, CharParameter *cmdp) M68K_INLINE(0xA84E);
+MAC_SINCE(0x0200, "2.0") pascal void GetItemCmd(MenuHandle mh, INTEGER item, CharParameter *cmdp) M68K_INLINE(0xA84E);
 
 enum { _SetItemCmd = 0xA84F };
-pascal void SetItemCmd(MenuHandle mh, INTEGER item, CharParameter cmd) M68K_INLINE(0xA84F);
+MAC_SINCE(0x0200, "2.0") pascal void SetItemCmd(MenuHandle mh, INTEGER item, CharParameter cmd) M68K_INLINE(0xA84F);
 
 enum { _PopUpMenuSelect = 0xA80B };
-pascal LONGINT PopUpMenuSelect(MenuHandle mh, INTEGER top, INTEGER left, INTEGER item) M68K_INLINE(0xA80B);
+MAC_SINCE(0x0200, "2.0") pascal LONGINT PopUpMenuSelect(MenuHandle mh, INTEGER top, INTEGER left, INTEGER item) M68K_INLINE(0xA80B);
 
 enum { _DeleteMCEntries = 0xAA60 };
-pascal void DeleteMCEntries(INTEGER arg0, INTEGER arg1) M68K_INLINE(0xAA60);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void DeleteMCEntries(INTEGER arg0, INTEGER arg1) M68K_INLINE(0xAA60);
 #if OLDROUTINENAMES
 #define DelMCEntries(arg0, arg1) DeleteMCEntries(arg0, arg1)
 #endif
 
 enum { _GetMCInfo = 0xAA61 };
-pascal MCTableHandle GetMCInfo(void) M68K_INLINE(0xAA61);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal MCTableHandle GetMCInfo(void) M68K_INLINE(0xAA61);
 
 enum { _SetMCInfo = 0xAA62 };
-pascal void SetMCInfo(MCTableHandle arg0) M68K_INLINE(0xAA62);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetMCInfo(MCTableHandle arg0) M68K_INLINE(0xAA62);
 
 enum { _DisposeMCInfo = 0xAA63 };
-pascal void DisposeMCInfo(MCTableHandle arg0) M68K_INLINE(0xAA63);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void DisposeMCInfo(MCTableHandle arg0) M68K_INLINE(0xAA63);
 #if OLDROUTINENAMES
 #define DispMCInfo(arg0) DisposeMCInfo(arg0)
 #endif
 
 enum { _GetMCEntry = 0xAA64 };
-pascal MCEntryPtr GetMCEntry(INTEGER arg0, INTEGER arg1) M68K_INLINE(0xAA64);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal MCEntryPtr GetMCEntry(INTEGER arg0, INTEGER arg1) M68K_INLINE(0xAA64);
 
 enum { _SetMCEntries = 0xAA65 };
-pascal void SetMCEntries(INTEGER arg0, MCTablePtr arg1) M68K_INLINE(0xAA65);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetMCEntries(INTEGER arg0, MCTablePtr arg1) M68K_INLINE(0xAA65);
 
 enum { _InvalMenuBar = 0xA81D };
-pascal void InvalMenuBar(void) M68K_INLINE(0xA81D);
+MAC_SINCE(0x0700, "7.0") pascal void InvalMenuBar(void) M68K_INLINE(0xA81D);
 
 typedef MenuHandle MenuRef;
 
@@ -331,9 +335,9 @@ pascal void DisableMenuItem(MenuHandle mh, INTEGER item);
 
 enum { _MenuDispatch = 0xA825 };
 
-pascal void InsertFontResMenu(MenuHandle theMenu, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0400, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal void InsertFontResMenu(MenuHandle theMenu, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0400, 0xA825);
 
-pascal void InsertIntlResMenu(MenuHandle theMenu, ResType theType, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0601, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal void InsertIntlResMenu(MenuHandle theMenu, ResType theType, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0601, 0xA825);
 
 // Menu Manager 8: item modifiers, icon types, keyboard glyphs.
 typedef UInt32 MenuCommand;
@@ -415,43 +419,43 @@ enum {
 };
 
 // Menu Manager 8 (Appearance Manager)
-pascal UInt32 MenuEvent(const EventRecord *inEvent) M68K_INLINE(0x303C, 0x020C, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal UInt32 MenuEvent(const EventRecord *inEvent) M68K_INLINE(0x303C, 0x020C, 0xA825);
 
-pascal OSErr SetMenuItemCommandID(MenuRef inMenu, SInt16 inItem, UInt32 inCommandID) M68K_INLINE(0x303C, 0x0502, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemCommandID(MenuRef inMenu, SInt16 inItem, UInt32 inCommandID) M68K_INLINE(0x303C, 0x0502, 0xA825);
 
-pascal OSErr GetMenuItemCommandID(MenuRef inMenu, SInt16 inItem, UInt32 *outCommandID) M68K_INLINE(0x303C, 0x0503, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemCommandID(MenuRef inMenu, SInt16 inItem, UInt32 *outCommandID) M68K_INLINE(0x303C, 0x0503, 0xA825);
 
-pascal OSErr SetMenuItemModifiers(MenuRef inMenu, SInt16 inItem, UInt8 inModifiers) M68K_INLINE(0x303C, 0x0404, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemModifiers(MenuRef inMenu, SInt16 inItem, UInt8 inModifiers) M68K_INLINE(0x303C, 0x0404, 0xA825);
 
-pascal OSErr GetMenuItemModifiers(MenuRef inMenu, SInt16 inItem, UInt8 *outModifiers) M68K_INLINE(0x303C, 0x0505, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemModifiers(MenuRef inMenu, SInt16 inItem, UInt8 *outModifiers) M68K_INLINE(0x303C, 0x0505, 0xA825);
 
-pascal OSErr SetMenuItemIconHandle(MenuRef inMenu, SInt16 inItem, UInt8 inIconType, Handle inIconHandle) M68K_INLINE(0x303C, 0x0606, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemIconHandle(MenuRef inMenu, SInt16 inItem, UInt8 inIconType, Handle inIconHandle) M68K_INLINE(0x303C, 0x0606, 0xA825);
 
-pascal OSErr GetMenuItemIconHandle(MenuRef inMenu, SInt16 inItem, UInt8 *outIconType, Handle *outIconHandle) M68K_INLINE(0x303C, 0x0707, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemIconHandle(MenuRef inMenu, SInt16 inItem, UInt8 *outIconType, Handle *outIconHandle) M68K_INLINE(0x303C, 0x0707, 0xA825);
 
-pascal OSErr SetMenuItemTextEncoding(MenuRef inMenu, SInt16 inItem, TextEncoding inScriptID) M68K_INLINE(0x303C, 0x0508, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemTextEncoding(MenuRef inMenu, SInt16 inItem, TextEncoding inScriptID) M68K_INLINE(0x303C, 0x0508, 0xA825);
 
-pascal OSErr GetMenuItemTextEncoding(MenuRef inMenu, SInt16 inItem, TextEncoding *outScriptID) M68K_INLINE(0x303C, 0x0509, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemTextEncoding(MenuRef inMenu, SInt16 inItem, TextEncoding *outScriptID) M68K_INLINE(0x303C, 0x0509, 0xA825);
 
-pascal OSErr SetMenuItemHierarchicalID(MenuRef inMenu, SInt16 inItem, SInt16 inHierID) M68K_INLINE(0x303C, 0x040D, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemHierarchicalID(MenuRef inMenu, SInt16 inItem, SInt16 inHierID) M68K_INLINE(0x303C, 0x040D, 0xA825);
 
-pascal OSErr GetMenuItemHierarchicalID(MenuRef inMenu, SInt16 inItem, SInt16 *outHierID) M68K_INLINE(0x303C, 0x050E, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemHierarchicalID(MenuRef inMenu, SInt16 inItem, SInt16 *outHierID) M68K_INLINE(0x303C, 0x050E, 0xA825);
 
-pascal OSErr SetMenuItemFontID(MenuRef inMenu, SInt16 inItem, SInt16 inFontID) M68K_INLINE(0x303C, 0x040F, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemFontID(MenuRef inMenu, SInt16 inItem, SInt16 inFontID) M68K_INLINE(0x303C, 0x040F, 0xA825);
 
-pascal OSErr GetMenuItemFontID(MenuRef inMenu, SInt16 inItem, SInt16 *outFontID) M68K_INLINE(0x303C, 0x0510, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemFontID(MenuRef inMenu, SInt16 inItem, SInt16 *outFontID) M68K_INLINE(0x303C, 0x0510, 0xA825);
 
-pascal OSErr SetMenuItemRefCon(MenuRef inMenu, SInt16 inItem, UInt32 inRefCon) M68K_INLINE(0x303C, 0x050A, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemRefCon(MenuRef inMenu, SInt16 inItem, UInt32 inRefCon) M68K_INLINE(0x303C, 0x050A, 0xA825);
 
-pascal OSErr GetMenuItemRefCon(MenuRef inMenu, SInt16 inItem, UInt32 *outRefCon) M68K_INLINE(0x303C, 0x050B, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemRefCon(MenuRef inMenu, SInt16 inItem, UInt32 *outRefCon) M68K_INLINE(0x303C, 0x050B, 0xA825);
 
-pascal OSErr SetMenuItemRefCon2(MenuRef inMenu, SInt16 inItem, UInt32 inRefCon2) M68K_INLINE(0x303C, 0x0511, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemRefCon2(MenuRef inMenu, SInt16 inItem, UInt32 inRefCon2) M68K_INLINE(0x303C, 0x0511, 0xA825);
 
-pascal OSErr GetMenuItemRefCon2(MenuRef inMenu, SInt16 inItem, UInt32 *outRefCon2) M68K_INLINE(0x303C, 0x0512, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemRefCon2(MenuRef inMenu, SInt16 inItem, UInt32 *outRefCon2) M68K_INLINE(0x303C, 0x0512, 0xA825);
 
-pascal OSErr SetMenuItemKeyGlyph(MenuRef inMenu, SInt16 inItem, SInt16 inGlyph) M68K_INLINE(0x303C, 0x0513, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr SetMenuItemKeyGlyph(MenuRef inMenu, SInt16 inItem, SInt16 inGlyph) M68K_INLINE(0x303C, 0x0513, 0xA825);
 
-pascal OSErr GetMenuItemKeyGlyph(MenuRef inMenu, SInt16 inItem, SInt16 *outGlyph) M68K_INLINE(0x303C, 0x0514, 0xA825);
+MAC_SINCE(0x0700, "7.0") pascal OSErr GetMenuItemKeyGlyph(MenuRef inMenu, SInt16 inItem, SInt16 *outGlyph) M68K_INLINE(0x303C, 0x0514, 0xA825);
 
 // Menu Manager in Mac OS 8.5 (MenusLib)
 #if !TARGET_CPU_68K
@@ -537,6 +541,7 @@ static __inline__ void DisableMenuItem(MenuHandle mh, INTEGER item) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

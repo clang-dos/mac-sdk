@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum { _Pack2 = 0xA9E9 };
 
@@ -21,6 +25,7 @@ pascal OSErr DIVerify(INTEGER dn) M68K_INLINE(0x3F3C, 0x0008, 0xA9E9);
 
 pascal OSErr DIZero(INTEGER dn, StringPtr vname) M68K_INLINE(0x3F3C, 0x000A, 0xA9E9);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

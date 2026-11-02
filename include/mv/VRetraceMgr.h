@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     qErr = -1,
@@ -69,7 +73,7 @@ pascal QHdrPtr GetVBLQHdr(void);
 
 enum { _SlotVInstall = 0xA06F };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SlotVInstall(VBLTaskPtr vtaskp, INTEGER slot) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SlotVInstall(VBLTaskPtr vtaskp, INTEGER slot) {
     register OSErr _ret __asm__("d0");
     register VBLTaskPtr _vtaskp __asm__("a0") = vtaskp;
     register INTEGER _slot __asm__("d0") = slot;
@@ -80,12 +84,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr SlotVInstall(VBLTaskP
     return _ret;
 }
 #else
-pascal OSErr SlotVInstall(VBLTaskPtr vtaskp, INTEGER slot);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SlotVInstall(VBLTaskPtr vtaskp, INTEGER slot);
 #endif
 
 enum { _SlotVRemove = 0xA070 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SlotVRemove(VBLTaskPtr vtaskp, INTEGER slot) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SlotVRemove(VBLTaskPtr vtaskp, INTEGER slot) {
     register OSErr _ret __asm__("d0");
     register VBLTaskPtr _vtaskp __asm__("a0") = vtaskp;
     register INTEGER _slot __asm__("d0") = slot;
@@ -96,7 +100,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr SlotVRemove(VBLTaskPt
     return _ret;
 }
 #else
-pascal OSErr SlotVRemove(VBLTaskPtr vtaskp, INTEGER slot);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SlotVRemove(VBLTaskPtr vtaskp, INTEGER slot);
 #endif
 
 #if TARGET_CPU_68K
@@ -106,6 +110,7 @@ static __inline__ QHdrPtr GetVBLQHdr(void) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

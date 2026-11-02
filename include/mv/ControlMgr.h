@@ -13,6 +13,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     pushButProc = 0,
@@ -181,10 +185,10 @@ enum { _DrawControls = 0xA969 };
 pascal void DrawControls(WindowPtr w) M68K_INLINE(0xA969);
 
 enum { _Draw1Control = 0xA96D };
-pascal void Draw1Control(ControlHandle c) M68K_INLINE(0xA96D);
+MAC_SINCE(0x0070, "0.7") pascal void Draw1Control(ControlHandle c) M68K_INLINE(0xA96D);
 
 enum { _UpdateControls = 0xA953 };
-pascal void UpdateControls(WindowPtr wp, RgnHandle rh) M68K_INLINE(0xA953);
+MAC_SINCE(0x0070, "0.7") pascal void UpdateControls(WindowPtr wp, RgnHandle rh) M68K_INLINE(0xA953);
 #if OLDROUTINENAMES
 #define UpdtControl(wp, rh) UpdateControls(wp, rh)
 #endif
@@ -226,13 +230,13 @@ pascal ControlActionUPP GetControlAction(ControlHandle c) M68K_INLINE(0xA96A);
 #endif
 
 enum { _GetControlVariant = 0xA809 };
-pascal INTEGER GetControlVariant(ControlHandle c) M68K_INLINE(0xA809);
+MAC_SINCE(0x0200, "2.0") pascal INTEGER GetControlVariant(ControlHandle c) M68K_INLINE(0xA809);
 #if OLDROUTINENAMES
 #define GetCVariant(c) GetControlVariant(c)
 #endif
 
 enum { _GetAuxiliaryControlRecord = 0xAA44 };
-pascal Boolean GetAuxiliaryControlRecord(ControlHandle c, AuxCtlHandle *acHndl) M68K_INLINE(0xAA44);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal Boolean GetAuxiliaryControlRecord(ControlHandle c, AuxCtlHandle *acHndl) M68K_INLINE(0xAA44);
 #if OLDROUTINENAMES
 #define GetAuxCtl(c, acHndl) GetAuxiliaryControlRecord(c, acHndl)
 #endif
@@ -292,7 +296,7 @@ enum { _SizeControl = 0xA95C };
 pascal void SizeControl(ControlHandle c, INTEGER width, INTEGER height) M68K_INLINE(0xA95C);
 
 enum { _SetControlColor = 0xAA43 };
-pascal void SetControlColor(ControlHandle ctl, CCTabHandle ctab) M68K_INLINE(0xAA43);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void SetControlColor(ControlHandle ctl, CCTabHandle ctab) M68K_INLINE(0xAA43);
 #if OLDROUTINENAMES
 #define SetCtlColor(ctl, ctab) SetControlColor(ctl, ctab)
 #endif
@@ -808,69 +812,69 @@ struct ControlID {
 enum { _ControlDispatch = 0xAA73 };
 
 // Control Manager 8: embedding, keyboard focus, control data (Appearance Manager)
-pascal OSErr CreateRootControl(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x7001, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr CreateRootControl(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x7001, 0xAA73);
 
-pascal OSErr GetRootControl(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x7002, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetRootControl(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x7002, 0xAA73);
 
-pascal OSErr EmbedControl(ControlRef inControl, ControlRef inContainer) M68K_INLINE(0x7003, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr EmbedControl(ControlRef inControl, ControlRef inContainer) M68K_INLINE(0x7003, 0xAA73);
 
-pascal OSErr AutoEmbedControl(ControlRef inControl, WindowRef inWindow) M68K_INLINE(0x7004, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr AutoEmbedControl(ControlRef inControl, WindowRef inWindow) M68K_INLINE(0x7004, 0xAA73);
 
-pascal Boolean IsControlActive(ControlRef inControl) M68K_INLINE(0x7005, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal Boolean IsControlActive(ControlRef inControl) M68K_INLINE(0x7005, 0xAA73);
 
-pascal Boolean IsControlVisible(ControlRef inControl) M68K_INLINE(0x7006, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal Boolean IsControlVisible(ControlRef inControl) M68K_INLINE(0x7006, 0xAA73);
 
-pascal OSErr ActivateControl(ControlRef inControl) M68K_INLINE(0x7007, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr ActivateControl(ControlRef inControl) M68K_INLINE(0x7007, 0xAA73);
 
-pascal OSErr DeactivateControl(ControlRef inControl) M68K_INLINE(0x7008, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr DeactivateControl(ControlRef inControl) M68K_INLINE(0x7008, 0xAA73);
 
-pascal ControlRef FindControlUnderMouse(Point inWhere, WindowRef inWindow, SInt16 *outPart) M68K_INLINE(0x7009, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal ControlRef FindControlUnderMouse(Point inWhere, WindowRef inWindow, SInt16 *outPart) M68K_INLINE(0x7009, 0xAA73);
 
-pascal ControlPartCode HandleControlClick(ControlRef inControl, Point inWhere, EventModifiers inModifiers, ControlActionUPP inAction) M68K_INLINE(0x700A, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal ControlPartCode HandleControlClick(ControlRef inControl, Point inWhere, EventModifiers inModifiers, ControlActionUPP inAction) M68K_INLINE(0x700A, 0xAA73);
 
-pascal SInt16 HandleControlKey(ControlRef inControl, SInt16 inKeyCode, SInt16 inCharCode, EventModifiers inModifiers) M68K_INLINE(0x700B, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal SInt16 HandleControlKey(ControlRef inControl, SInt16 inKeyCode, SInt16 inCharCode, EventModifiers inModifiers) M68K_INLINE(0x700B, 0xAA73);
 
-pascal void IdleControls(WindowRef inWindow) M68K_INLINE(0x700C, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal void IdleControls(WindowRef inWindow) M68K_INLINE(0x700C, 0xAA73);
 
-pascal OSErr GetKeyboardFocus(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x700D, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetKeyboardFocus(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x700D, 0xAA73);
 
-pascal OSErr SetKeyboardFocus(WindowRef inWindow, ControlRef inControl, ControlFocusPart inPart) M68K_INLINE(0x700E, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetKeyboardFocus(WindowRef inWindow, ControlRef inControl, ControlFocusPart inPart) M68K_INLINE(0x700E, 0xAA73);
 
-pascal OSErr AdvanceKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x700F, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr AdvanceKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x700F, 0xAA73);
 
-pascal OSErr ReverseKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x7010, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr ReverseKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x7010, 0xAA73);
 
-pascal OSErr GetControlFeatures(ControlRef inControl, UInt32 *outFeatures) M68K_INLINE(0x7011, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetControlFeatures(ControlRef inControl, UInt32 *outFeatures) M68K_INLINE(0x7011, 0xAA73);
 
-pascal OSErr SetControlData(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size inSize, Ptr inData) M68K_INLINE(0x7012, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetControlData(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size inSize, Ptr inData) M68K_INLINE(0x7012, 0xAA73);
 
-pascal OSErr GetControlData(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size inBufferSize, Ptr inBuffer, Size *outActualSize) M68K_INLINE(0x7013, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetControlData(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size inBufferSize, Ptr inBuffer, Size *outActualSize) M68K_INLINE(0x7013, 0xAA73);
 
-pascal OSErr GetControlDataSize(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size *outMaxSize) M68K_INLINE(0x7014, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetControlDataSize(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size *outMaxSize) M68K_INLINE(0x7014, 0xAA73);
 
-pascal OSErr GetSuperControl(ControlRef inControl, ControlRef *outParent) M68K_INLINE(0x7015, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetSuperControl(ControlRef inControl, ControlRef *outParent) M68K_INLINE(0x7015, 0xAA73);
 
-pascal OSErr CountSubControls(ControlRef inControl, UInt16 *outNumChildren) M68K_INLINE(0x7016, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr CountSubControls(ControlRef inControl, UInt16 *outNumChildren) M68K_INLINE(0x7016, 0xAA73);
 
-pascal OSErr GetIndexedSubControl(ControlRef inControl, UInt16 inIndex, ControlRef *outSubControl) M68K_INLINE(0x7017, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetIndexedSubControl(ControlRef inControl, UInt16 inIndex, ControlRef *outSubControl) M68K_INLINE(0x7017, 0xAA73);
 
-pascal void DrawControlInCurrentPort(ControlRef inControl) M68K_INLINE(0x7018, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal void DrawControlInCurrentPort(ControlRef inControl) M68K_INLINE(0x7018, 0xAA73);
 
-pascal OSErr ClearKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x7019, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr ClearKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x7019, 0xAA73);
 
-pascal OSErr SetControlSupervisor(ControlRef inControl, ControlRef inBoss) M68K_INLINE(0x701A, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetControlSupervisor(ControlRef inControl, ControlRef inBoss) M68K_INLINE(0x701A, 0xAA73);
 
-pascal OSErr GetBestControlRect(ControlRef inControl, Rect *outRect, SInt16 *outBaseLineOffset) M68K_INLINE(0x701B, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetBestControlRect(ControlRef inControl, Rect *outRect, SInt16 *outBaseLineOffset) M68K_INLINE(0x701B, 0xAA73);
 
-pascal OSErr SetControlFontStyle(ControlRef inControl, const ControlFontStyleRec *inStyle) M68K_INLINE(0x701C, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetControlFontStyle(ControlRef inControl, const ControlFontStyleRec *inStyle) M68K_INLINE(0x701C, 0xAA73);
 
-pascal OSErr SetUpControlBackground(ControlRef inControl, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x701D, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetUpControlBackground(ControlRef inControl, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x701D, 0xAA73);
 
-pascal OSErr SetControlVisibility(ControlRef inControl, Boolean inIsVisible, Boolean inDoDraw) M68K_INLINE(0x701E, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetControlVisibility(ControlRef inControl, Boolean inIsVisible, Boolean inDoDraw) M68K_INLINE(0x701E, 0xAA73);
 
-pascal SInt32 SendControlMessage(ControlRef inControl, SInt16 inMessage, void *inParam) M68K_INLINE(0x303C, 0xFFFE, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal SInt32 SendControlMessage(ControlRef inControl, SInt16 inMessage, void *inParam) M68K_INLINE(0x303C, 0xFFFE, 0xAA73);
 
-pascal OSErr DumpControlHierarchy(WindowRef inWindow, const FSSpec *inDumpFile) M68K_INLINE(0x303C, 0xFFFF, 0xAA73);
+MAC_SINCE(0x0810, "8.1") pascal OSErr DumpControlHierarchy(WindowRef inWindow, const FSSpec *inDumpFile) M68K_INLINE(0x303C, 0xFFFF, 0xAA73);
 
 // Control Manager in Mac OS 8.5 (ControlsLib)
 #if !TARGET_CPU_68K
@@ -1148,6 +1152,7 @@ static __inline__ OSErr SetDisclosureTriangleLastValue(ControlRef inTabControl, 
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

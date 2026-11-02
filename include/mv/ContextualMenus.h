@@ -11,6 +11,10 @@
 #include "ProcessMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Contextual Menu Manager: what ContextualMenuSelect returns, and help types.
 enum {
@@ -28,14 +32,15 @@ enum {
 enum { _ContextualMenuDispatch = 0xAA72 };
 
 // Contextual Menu Manager (Mac OS 8). Trap 0xAA72 with the selector in D0, as installed by the Contextual Menu Extension.
-pascal OSStatus InitContextualMenus(void) M68K_INLINE(0x7001, 0xAA72);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'cmnu'") pascal OSStatus InitContextualMenus(void) M68K_INLINE(0x7001, 0xAA72);
 
-pascal Boolean IsShowContextualMenuClick(const EventRecord *inEvent) M68K_INLINE(0x7002, 0xAA72);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'cmnu'") pascal Boolean IsShowContextualMenuClick(const EventRecord *inEvent) M68K_INLINE(0x7002, 0xAA72);
 
-pascal OSStatus ContextualMenuSelect(MenuHandle inMenu, Point inGlobalLocation, Boolean inReserved, UInt32 inHelpType, ConstStr255Param inHelpItemString, const AEDesc *inSelection, UInt32 *outUserSelectionType, SInt16 *outMenuID, UInt16 *outMenuItem) M68K_INLINE(0x7003, 0xAA72);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'cmnu'") pascal OSStatus ContextualMenuSelect(MenuHandle inMenu, Point inGlobalLocation, Boolean inReserved, UInt32 inHelpType, ConstStr255Param inHelpItemString, const AEDesc *inSelection, UInt32 *outUserSelectionType, SInt16 *outMenuID, UInt16 *outMenuItem) M68K_INLINE(0x7003, 0xAA72);
 
-pascal OSStatus ProcessIsContextualMenuClient(ProcessSerialNumber *inPSN, Boolean *outIsClient) M68K_INLINE(0x7004, 0xAA72);
+MAC_SINCE_GESTALT(0x0921, "9.2.1", "'cmnu'") pascal OSStatus ProcessIsContextualMenuClient(ProcessSerialNumber *inPSN, Boolean *outIsClient) M68K_INLINE(0x7004, 0xAA72);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

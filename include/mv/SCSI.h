@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct SCSIInstr SCSIInstr;
 struct SCSIInstr {
@@ -40,31 +44,31 @@ enum {
 enum { _SCSIDispatch = 0xA815 };
 
 // Original SCSI Manager
-pascal OSErr SCSIReset(void) M68K_INLINE(0x3F3C, 0x0000, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIReset(void) M68K_INLINE(0x3F3C, 0x0000, 0xA815);
 
-pascal OSErr SCSIGet(void) M68K_INLINE(0x3F3C, 0x0001, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIGet(void) M68K_INLINE(0x3F3C, 0x0001, 0xA815);
 
-pascal OSErr SCSISelect(INTEGER targetID) M68K_INLINE(0x3F3C, 0x0002, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSISelect(INTEGER targetID) M68K_INLINE(0x3F3C, 0x0002, 0xA815);
 
-pascal OSErr SCSICmd(Ptr buffer, INTEGER count) M68K_INLINE(0x3F3C, 0x0003, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSICmd(Ptr buffer, INTEGER count) M68K_INLINE(0x3F3C, 0x0003, 0xA815);
 
-pascal OSErr SCSIRead(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0005, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIRead(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0005, 0xA815);
 
-pascal OSErr SCSIRBlind(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0008, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIRBlind(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0008, 0xA815);
 
-pascal OSErr SCSIWrite(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0006, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIWrite(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0006, 0xA815);
 
-pascal OSErr SCSIWBlind(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0009, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIWBlind(Ptr tibPtr) M68K_INLINE(0x3F3C, 0x0009, 0xA815);
 
-pascal OSErr SCSIComplete(INTEGER *stat, INTEGER *message, unsigned long wait) M68K_INLINE(0x3F3C, 0x0004, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIComplete(INTEGER *stat, INTEGER *message, unsigned long wait) M68K_INLINE(0x3F3C, 0x0004, 0xA815);
 
-pascal INTEGER SCSIStat(void) M68K_INLINE(0x3F3C, 0x000A, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal INTEGER SCSIStat(void) M68K_INLINE(0x3F3C, 0x000A, 0xA815);
 
-pascal OSErr SCSISelAtn(INTEGER targetID) M68K_INLINE(0x3F3C, 0x000B, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSISelAtn(INTEGER targetID) M68K_INLINE(0x3F3C, 0x000B, 0xA815);
 
-pascal OSErr SCSIMsgIn(INTEGER *message) M68K_INLINE(0x3F3C, 0x000C, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIMsgIn(INTEGER *message) M68K_INLINE(0x3F3C, 0x000C, 0xA815);
 
-pascal OSErr SCSIMsgOut(INTEGER message) M68K_INLINE(0x3F3C, 0x000D, 0xA815);
+MAC_SINCE(0x0070, "0.7") pascal OSErr SCSIMsgOut(INTEGER message) M68K_INLINE(0x3F3C, 0x000D, 0xA815);
 
 // SCSI Manager 4.3
 enum {
@@ -195,7 +199,7 @@ typedef SCSIExecIOPB SCSI_IO;
 typedef struct SIMInitInfo SIMInitInfo;
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCSIAction(SCSI_PB *parameterBlock) {
+MAC_SINCE(0x0761, "7.6.1") static __inline__ __attribute__((__always_inline__)) OSErr SCSIAction(SCSI_PB *parameterBlock) {
     register OSErr _ret __asm__("d0");
     register SCSI_PB* _parameterBlock __asm__("a0") = parameterBlock;
     __asm__ __volatile__(".short 0x7001, 0xA089"
@@ -205,11 +209,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIAction(SCSI_PB *p
     return _ret;
 }
 #else
-pascal OSErr SCSIAction(SCSI_PB *parameterBlock);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr SCSIAction(SCSI_PB *parameterBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCSIRegisterBus(SIMInitInfo *SIMinfoPtr) {
+MAC_SINCE(0x0761, "7.6.1") static __inline__ __attribute__((__always_inline__)) OSErr SCSIRegisterBus(SIMInitInfo *SIMinfoPtr) {
     register OSErr _ret __asm__("d0");
     register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
     __asm__ __volatile__(".short 0x7002, 0xA089"
@@ -219,11 +223,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIRegisterBus(SIMIn
     return _ret;
 }
 #else
-pascal OSErr SCSIRegisterBus(SIMInitInfo *SIMinfoPtr);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr SCSIRegisterBus(SIMInitInfo *SIMinfoPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCSIDeregisterBus(SCSI_PB *parameterBlock) {
+MAC_SINCE(0x0761, "7.6.1") static __inline__ __attribute__((__always_inline__)) OSErr SCSIDeregisterBus(SCSI_PB *parameterBlock) {
     register OSErr _ret __asm__("d0");
     register SCSI_PB* _parameterBlock __asm__("a0") = parameterBlock;
     __asm__ __volatile__(".short 0x7003, 0xA089"
@@ -233,11 +237,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIDeregisterBus(SCS
     return _ret;
 }
 #else
-pascal OSErr SCSIDeregisterBus(SCSI_PB *parameterBlock);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr SCSIDeregisterBus(SCSI_PB *parameterBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCSIReregisterBus(SIMInitInfo *SIMinfoPtr) {
+MAC_SINCE(0x0761, "7.6.1") static __inline__ __attribute__((__always_inline__)) OSErr SCSIReregisterBus(SIMInitInfo *SIMinfoPtr) {
     register OSErr _ret __asm__("d0");
     register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
     __asm__ __volatile__(".short 0x7004, 0xA089"
@@ -247,11 +251,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIReregisterBus(SIM
     return _ret;
 }
 #else
-pascal OSErr SCSIReregisterBus(SIMInitInfo *SIMinfoPtr);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr SCSIReregisterBus(SIMInitInfo *SIMinfoPtr);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SCSIKillXPT(SIMInitInfo *SIMinfoPtr) {
+MAC_SINCE(0x0761, "7.6.1") static __inline__ __attribute__((__always_inline__)) OSErr SCSIKillXPT(SIMInitInfo *SIMinfoPtr) {
     register OSErr _ret __asm__("d0");
     register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
     __asm__ __volatile__(".short 0x7005, 0xA089"
@@ -261,9 +265,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIKillXPT(SIMInitIn
     return _ret;
 }
 #else
-pascal OSErr SCSIKillXPT(SIMInitInfo *SIMinfoPtr);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr SCSIKillXPT(SIMInitInfo *SIMinfoPtr);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

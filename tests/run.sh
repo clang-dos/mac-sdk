@@ -21,6 +21,11 @@ for t in m68k-apple-macos powerpc-apple-macos9; do
   $CLANG --target=$t -fsyntax-only -Wall -Werror -Iinclude tests/all.c
   # The pre-1993 names (GetCtlValue, DisposPtr, ...) that old code uses.
   $CLANG --target=$t -fsyntax-only -Wall -Werror -DOLDROUTINENAMES=1 -Iinclude tests/all.c
+  # The headers themselves must not trip the opt-in availability warnings,
+  # and a call newer than MAC_MIN_SYSTEM must.
+  $CLANG --target=$t -fsyntax-only -Wall -Werror -DMAC_MIN_SYSTEM=0x0010 -DMAC_NO_COLOR_QD -Iinclude tests/all.c
+  $CLANG --target=$t -fsyntax-only -DMAC_MIN_SYSTEM=0x0603 -Iinclude examples/hello.c 2>&1 |
+    grep -q "needs System 6.0.4 or later"
   $CLANG --target=$t -fsyntax-only -Iinclude tests/sizes.c
   $CLANG --target=$t -fsyntax-only -Iinclude -x c "$SIZES"
   $CLANG --target=$t -x c++ -std=c++17 -fsyntax-only -Werror -Iinclude tests/all.c

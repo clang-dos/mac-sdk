@@ -18,6 +18,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct MovieRecord MovieRecord;
 struct MovieRecord {
@@ -30,47 +34,47 @@ typedef LONGINT TimeValue;
 
 enum { _QuickTime = 0xAAAA };
 
-pascal OSErr EnterMovies(void) M68K_INLINE(0x7001, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr EnterMovies(void) M68K_INLINE(0x7001, 0xAAAA);
 
-pascal void ExitMovies(void) M68K_INLINE(0x7002, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ExitMovies(void) M68K_INLINE(0x7002, 0xAAAA);
 
-pascal void MoviesTask(Movie movie, LONGINT maxmillisecs) M68K_INLINE(0x7005, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void MoviesTask(Movie movie, LONGINT maxmillisecs) M68K_INLINE(0x7005, 0xAAAA);
 
-pascal OSErr PrerollMovie(Movie movie, TimeValue time, Fixed rate) M68K_INLINE(0x7006, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr PrerollMovie(Movie movie, TimeValue time, Fixed rate) M68K_INLINE(0x7006, 0xAAAA);
 
-pascal void SetMovieActive(Movie movie, Boolean active) M68K_INLINE(0x7009, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieActive(Movie movie, Boolean active) M68K_INLINE(0x7009, 0xAAAA);
 
-pascal void StartMovie(Movie movie) M68K_INLINE(0x700B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void StartMovie(Movie movie) M68K_INLINE(0x700B, 0xAAAA);
 
-pascal void StopMovie(Movie movie) M68K_INLINE(0x700C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void StopMovie(Movie movie) M68K_INLINE(0x700C, 0xAAAA);
 
-pascal void GoToBeginningOfMovie(Movie movie) M68K_INLINE(0x700D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GoToBeginningOfMovie(Movie movie) M68K_INLINE(0x700D, 0xAAAA);
 
-pascal void SetMovieGWorld(Movie movie, CGrafPtr cgrafp, GDHandle gdh) M68K_INLINE(0x7016, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieGWorld(Movie movie, CGrafPtr cgrafp, GDHandle gdh) M68K_INLINE(0x7016, 0xAAAA);
 
-pascal OSErr UpdateMovie(Movie movie) M68K_INLINE(0x701F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr UpdateMovie(Movie movie) M68K_INLINE(0x701F, 0xAAAA);
 
-pascal void DisposeMovie(Movie movie) M68K_INLINE(0x7023, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DisposeMovie(Movie movie) M68K_INLINE(0x7023, 0xAAAA);
 
-pascal INTEGER GetMovieVolume(Movie movie) M68K_INLINE(0x702E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetMovieVolume(Movie movie) M68K_INLINE(0x702E, 0xAAAA);
 
-pascal OSErr CloseMovieFile(INTEGER refnum) M68K_INLINE(0x303C, 0x00D5, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CloseMovieFile(INTEGER refnum) M68K_INLINE(0x303C, 0x00D5, 0xAAAA);
 
-pascal Boolean IsMovieDone(Movie movie) M68K_INLINE(0x303C, 0x00DD, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean IsMovieDone(Movie movie) M68K_INLINE(0x303C, 0x00DD, 0xAAAA);
 
-pascal OSErr NewMovieFromFile(Movie *moviep, INTEGER refnum, INTEGER *residp, StringPtr resnamep, INTEGER flags, Boolean *datarefwaschangedp) M68K_INLINE(0x303C, 0x00F0, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr NewMovieFromFile(Movie *moviep, INTEGER refnum, INTEGER *residp, StringPtr resnamep, INTEGER flags, Boolean *datarefwaschangedp) M68K_INLINE(0x303C, 0x00F0, 0xAAAA);
 
-pascal Fixed GetMoviePreferredRate(Movie movie) M68K_INLINE(0x303C, 0x00F3, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Fixed GetMoviePreferredRate(Movie movie) M68K_INLINE(0x303C, 0x00F3, 0xAAAA);
 
-pascal void GetMovieBox(Movie movie, Rect *boxp) M68K_INLINE(0x303C, 0x00F9, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMovieBox(Movie movie, Rect *boxp) M68K_INLINE(0x303C, 0x00F9, 0xAAAA);
 
-pascal void SetMovieBox(Movie movie, const Rect *boxp) M68K_INLINE(0x303C, 0x00FA, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieBox(Movie movie, const Rect *boxp) M68K_INLINE(0x303C, 0x00FA, 0xAAAA);
 
-pascal ComponentInstance NewMovieController(Movie movie, const Rect *mrectp, LONGINT flags) M68K_INLINE(0x303C, 0x018A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentInstance NewMovieController(Movie movie, const Rect *mrectp, LONGINT flags) M68K_INLINE(0x303C, 0x018A, 0xAAAA);
 
-pascal void DisposeMovieController(ComponentInstance cntrller) M68K_INLINE(0x303C, 0x018B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DisposeMovieController(ComponentInstance cntrller) M68K_INLINE(0x303C, 0x018B, 0xAAAA);
 
-pascal OSErr OpenMovieFile(const FSSpec *filespecp, INTEGER *refnump, uint8_t perm) M68K_INLINE(0x303C, 0x0192, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr OpenMovieFile(const FSSpec *filespecp, INTEGER *refnump, uint8_t perm) M68K_INLINE(0x303C, 0x0192, 0xAAAA);
 
 typedef struct MatrixRecord MatrixRecord;
 struct MatrixRecord {
@@ -308,135 +312,135 @@ struct CodecNameSpecList {
 
 typedef CodecNameSpecList *CodecNameSpecListPtr;
 
-pascal OSErr CodecManagerVersion(long *version) M68K_INLINE(0x7000, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CodecManagerVersion(long *version) M68K_INLINE(0x7000, 0xAAA3);
 
-pascal OSErr GetCodecNameList(CodecNameSpecListPtr *list, INTEGER showAll) M68K_INLINE(0x7001, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCodecNameList(CodecNameSpecListPtr *list, INTEGER showAll) M68K_INLINE(0x7001, 0xAAA3);
 
-pascal OSErr DisposeCodecNameList(CodecNameSpecListPtr list) M68K_INLINE(0x700F, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DisposeCodecNameList(CodecNameSpecListPtr list) M68K_INLINE(0x700F, 0xAAA3);
 
-pascal OSErr GetCodecInfo(CodecInfo *info, CodecType cType, CodecComponent codec) M68K_INLINE(0x7003, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCodecInfo(CodecInfo *info, CodecType cType, CodecComponent codec) M68K_INLINE(0x7003, 0xAAA3);
 
-pascal OSErr GetMaxCompressionSize(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecQ quality, CodecType cType, CompressorComponent codec, long *size) M68K_INLINE(0x7004, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMaxCompressionSize(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecQ quality, CodecType cType, CompressorComponent codec, long *size) M68K_INLINE(0x7004, 0xAAA3);
 
-pascal OSErr GetCompressionTime(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecType cType, CompressorComponent codec, CodecQ *spatialQuality, CodecQ *temporalQuality, unsigned long *compressTime) M68K_INLINE(0x7005, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCompressionTime(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecType cType, CompressorComponent codec, CodecQ *spatialQuality, CodecQ *temporalQuality, unsigned long *compressTime) M68K_INLINE(0x7005, 0xAAA3);
 
-pascal OSErr CompressImage(PixMapHandle src, const Rect *srcRect, CodecQ quality, CodecType cType, ImageDescriptionHandle desc, Ptr data) M68K_INLINE(0x7006, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CompressImage(PixMapHandle src, const Rect *srcRect, CodecQ quality, CodecType cType, ImageDescriptionHandle desc, Ptr data) M68K_INLINE(0x7006, 0xAAA3);
 
-pascal OSErr FCompressImage(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecQ quality, CodecType cType, CompressorComponent codec, CTabHandle clut, CodecFlags flags, long bufferSize, FlushProcRecordPtr flushProc, ProgressProcRecordPtr progressProc, ImageDescriptionHandle desc, Ptr data) M68K_INLINE(0x7007, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr FCompressImage(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecQ quality, CodecType cType, CompressorComponent codec, CTabHandle clut, CodecFlags flags, long bufferSize, FlushProcRecordPtr flushProc, ProgressProcRecordPtr progressProc, ImageDescriptionHandle desc, Ptr data) M68K_INLINE(0x7007, 0xAAA3);
 
-pascal OSErr DecompressImage(Ptr data, ImageDescriptionHandle desc, PixMapHandle dst, const Rect *srcRect, const Rect *dstRect, INTEGER mode, RgnHandle mask) M68K_INLINE(0x7008, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DecompressImage(Ptr data, ImageDescriptionHandle desc, PixMapHandle dst, const Rect *srcRect, const Rect *dstRect, INTEGER mode, RgnHandle mask) M68K_INLINE(0x7008, 0xAAA3);
 
-pascal OSErr FDecompressImage(Ptr data, ImageDescriptionHandle desc, PixMapHandle dst, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, PixMapHandle matte, const Rect *matteRect, CodecQ accuracy, DecompressorComponent codec, long bufferSize, DataProcRecordPtr dataProc, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7009, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr FDecompressImage(Ptr data, ImageDescriptionHandle desc, PixMapHandle dst, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, PixMapHandle matte, const Rect *matteRect, CodecQ accuracy, DecompressorComponent codec, long bufferSize, DataProcRecordPtr dataProc, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7009, 0xAAA3);
 
-pascal OSErr CompressSequenceBegin(ImageSequence *seqID, PixMapHandle src, PixMapHandle prev, const Rect *srcRect, const Rect *prevRect, INTEGER colorDepth, CodecType cType, CompressorComponent codec, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate, CTabHandle clut, CodecFlags flags, ImageDescriptionHandle desc) M68K_INLINE(0x700A, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CompressSequenceBegin(ImageSequence *seqID, PixMapHandle src, PixMapHandle prev, const Rect *srcRect, const Rect *prevRect, INTEGER colorDepth, CodecType cType, CompressorComponent codec, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate, CTabHandle clut, CodecFlags flags, ImageDescriptionHandle desc) M68K_INLINE(0x700A, 0xAAA3);
 
-pascal OSErr CompressSequenceFrame(ImageSequence seqID, PixMapHandle src, const Rect *srcRect, CodecFlags flags, Ptr data, long *dataSize, uint8_t *similarity, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x700B, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CompressSequenceFrame(ImageSequence seqID, PixMapHandle src, const Rect *srcRect, CodecFlags flags, Ptr data, long *dataSize, uint8_t *similarity, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x700B, 0xAAA3);
 
-pascal OSErr DecompressSequenceBegin(ImageSequence *seqID, ImageDescriptionHandle desc, CGrafPtr port, GDHandle gdh, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, CodecFlags flags, CodecQ accuracy, DecompressorComponent codec) M68K_INLINE(0x700D, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DecompressSequenceBegin(ImageSequence *seqID, ImageDescriptionHandle desc, CGrafPtr port, GDHandle gdh, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, CodecFlags flags, CodecQ accuracy, DecompressorComponent codec) M68K_INLINE(0x700D, 0xAAA3);
 
-pascal OSErr DecompressSequenceFrame(ImageSequence seqID, Ptr data, CodecFlags inFlags, CodecFlags *outFlags, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x700E, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DecompressSequenceFrame(ImageSequence seqID, Ptr data, CodecFlags inFlags, CodecFlags *outFlags, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x700E, 0xAAA3);
 
-pascal OSErr DecompressSequenceFrameS(ImageSequence seqID, Ptr data, long dataSize, CodecFlags inFlags, CodecFlags *outFlags, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x203C, 0x0016, 0x0047, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DecompressSequenceFrameS(ImageSequence seqID, Ptr data, long dataSize, CodecFlags inFlags, CodecFlags *outFlags, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x203C, 0x0016, 0x0047, 0xAAA3);
 
-pascal OSErr SetDSequenceMatrix(ImageSequence seqID, MatrixRecordPtr matrix) M68K_INLINE(0x7010, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetDSequenceMatrix(ImageSequence seqID, MatrixRecordPtr matrix) M68K_INLINE(0x7010, 0xAAA3);
 
-pascal OSErr SetDSequenceMatte(ImageSequence seqID, PixMapHandle matte, const Rect *matteRect) M68K_INLINE(0x7011, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetDSequenceMatte(ImageSequence seqID, PixMapHandle matte, const Rect *matteRect) M68K_INLINE(0x7011, 0xAAA3);
 
-pascal OSErr SetDSequenceMask(ImageSequence seqID, RgnHandle mask) M68K_INLINE(0x7012, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetDSequenceMask(ImageSequence seqID, RgnHandle mask) M68K_INLINE(0x7012, 0xAAA3);
 
-pascal OSErr SetDSequenceTransferMode(ImageSequence seqID, INTEGER mode, const RGBColor *opColor) M68K_INLINE(0x7013, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetDSequenceTransferMode(ImageSequence seqID, INTEGER mode, const RGBColor *opColor) M68K_INLINE(0x7013, 0xAAA3);
 
-pascal OSErr SetDSequenceDataProc(ImageSequence seqID, DataProcRecordPtr dataProc, long bufferSize) M68K_INLINE(0x7014, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetDSequenceDataProc(ImageSequence seqID, DataProcRecordPtr dataProc, long bufferSize) M68K_INLINE(0x7014, 0xAAA3);
 
-pascal OSErr SetDSequenceAccuracy(ImageSequence seqID, CodecQ accuracy) M68K_INLINE(0x7034, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetDSequenceAccuracy(ImageSequence seqID, CodecQ accuracy) M68K_INLINE(0x7034, 0xAAA3);
 
-pascal OSErr SetDSequenceSrcRect(ImageSequence seqID, const Rect *srcRect) M68K_INLINE(0x7035, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetDSequenceSrcRect(ImageSequence seqID, const Rect *srcRect) M68K_INLINE(0x7035, 0xAAA3);
 
-pascal OSErr GetDSequenceImageBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7015, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetDSequenceImageBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7015, 0xAAA3);
 
-pascal OSErr GetDSequenceScreenBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7016, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetDSequenceScreenBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7016, 0xAAA3);
 
-pascal OSErr SetCSequenceQuality(ImageSequence seqID, CodecQ spatialQuality, CodecQ temporalQuality) M68K_INLINE(0x7017, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetCSequenceQuality(ImageSequence seqID, CodecQ spatialQuality, CodecQ temporalQuality) M68K_INLINE(0x7017, 0xAAA3);
 
-pascal OSErr SetCSequencePrev(ImageSequence seqID, PixMapHandle prev, const Rect *prevRect) M68K_INLINE(0x7018, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetCSequencePrev(ImageSequence seqID, PixMapHandle prev, const Rect *prevRect) M68K_INLINE(0x7018, 0xAAA3);
 
-pascal OSErr SetCSequenceFlushProc(ImageSequence seqID, FlushProcRecordPtr flushProc, long bufferSize) M68K_INLINE(0x7033, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetCSequenceFlushProc(ImageSequence seqID, FlushProcRecordPtr flushProc, long bufferSize) M68K_INLINE(0x7033, 0xAAA3);
 
-pascal OSErr SetCSequenceKeyFrameRate(ImageSequence seqID, long keyframerate) M68K_INLINE(0x7036, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetCSequenceKeyFrameRate(ImageSequence seqID, long keyframerate) M68K_INLINE(0x7036, 0xAAA3);
 
-pascal OSErr GetCSequenceKeyFrameRate(ImageSequence seqID, long *keyframerate) M68K_INLINE(0x203C, 0x0008, 0x004B, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCSequenceKeyFrameRate(ImageSequence seqID, long *keyframerate) M68K_INLINE(0x203C, 0x0008, 0x004B, 0xAAA3);
 
-pascal OSErr GetCSequencePrevBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7019, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCSequencePrevBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7019, 0xAAA3);
 
-pascal OSErr CDSequenceBusy(ImageSequence seqID) M68K_INLINE(0x701A, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CDSequenceBusy(ImageSequence seqID) M68K_INLINE(0x701A, 0xAAA3);
 
-pascal OSErr CDSequenceEnd(ImageSequence seqID) M68K_INLINE(0x701B, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CDSequenceEnd(ImageSequence seqID) M68K_INLINE(0x701B, 0xAAA3);
 
-pascal OSErr GetCompressedImageSize(ImageDescriptionHandle desc, Ptr data, long bufferSize, DataProcRecordPtr dataProc, long *dataSize) M68K_INLINE(0x701C, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCompressedImageSize(ImageDescriptionHandle desc, Ptr data, long bufferSize, DataProcRecordPtr dataProc, long *dataSize) M68K_INLINE(0x701C, 0xAAA3);
 
-pascal OSErr GetSimilarity(PixMapHandle src, const Rect *srcRect, ImageDescriptionHandle desc, Ptr data, Fixed *similarity) M68K_INLINE(0x701D, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetSimilarity(PixMapHandle src, const Rect *srcRect, ImageDescriptionHandle desc, Ptr data, Fixed *similarity) M68K_INLINE(0x701D, 0xAAA3);
 
-pascal OSErr GetImageDescriptionCTable(ImageDescriptionHandle desc, CTabHandle *ctable) M68K_INLINE(0x701E, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetImageDescriptionCTable(ImageDescriptionHandle desc, CTabHandle *ctable) M68K_INLINE(0x701E, 0xAAA3);
 
-pascal OSErr SetImageDescriptionCTable(ImageDescriptionHandle desc, CTabHandle ctable) M68K_INLINE(0x701F, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetImageDescriptionCTable(ImageDescriptionHandle desc, CTabHandle ctable) M68K_INLINE(0x701F, 0xAAA3);
 
-pascal OSErr GetImageDescriptionExtension(ImageDescriptionHandle desc, Handle *extension, long type, long index) M68K_INLINE(0x7020, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetImageDescriptionExtension(ImageDescriptionHandle desc, Handle *extension, long type, long index) M68K_INLINE(0x7020, 0xAAA3);
 
-pascal OSErr SetImageDescriptionExtension(ImageDescriptionHandle desc, Handle extension, long type) M68K_INLINE(0x7021, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetImageDescriptionExtension(ImageDescriptionHandle desc, Handle extension, long type) M68K_INLINE(0x7021, 0xAAA3);
 
-pascal OSErr RemoveImageDescriptionExtension(ImageDescription **desc, long type, long index) M68K_INLINE(0x203C, 0x000C, 0x003A, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr RemoveImageDescriptionExtension(ImageDescription **desc, long type, long index) M68K_INLINE(0x203C, 0x000C, 0x003A, 0xAAA3);
 
-pascal OSErr CountImageDescriptionExtensionType(ImageDescription **desc, long type, long *count) M68K_INLINE(0x203C, 0x000C, 0x003B, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CountImageDescriptionExtensionType(ImageDescription **desc, long type, long *count) M68K_INLINE(0x203C, 0x000C, 0x003B, 0xAAA3);
 
-pascal OSErr GetNextImageDescriptionExtensionType(ImageDescription **desc, long *type) M68K_INLINE(0x203C, 0x0008, 0x003C, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetNextImageDescriptionExtensionType(ImageDescription **desc, long *type) M68K_INLINE(0x203C, 0x0008, 0x003C, 0xAAA3);
 
-pascal OSErr FindCodec(CodecType cType, CodecComponent specCodec, CompressorComponent *compressor, DecompressorComponent *decompressor) M68K_INLINE(0x7023, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr FindCodec(CodecType cType, CodecComponent specCodec, CompressorComponent *compressor, DecompressorComponent *decompressor) M68K_INLINE(0x7023, 0xAAA3);
 
-pascal OSErr CompressPicture(PicHandle srcPicture, PicHandle dstPicture, CodecQ quality, CodecType cType) M68K_INLINE(0x7024, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CompressPicture(PicHandle srcPicture, PicHandle dstPicture, CodecQ quality, CodecType cType) M68K_INLINE(0x7024, 0xAAA3);
 
-pascal OSErr FCompressPicture(PicHandle srcPicture, PicHandle dstPicture, INTEGER colorDepth, CTabHandle clut, CodecQ quality, INTEGER doDither, INTEGER compressAgain, ProgressProcRecordPtr progressProc, CodecType cType, CompressorComponent codec) M68K_INLINE(0x7025, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr FCompressPicture(PicHandle srcPicture, PicHandle dstPicture, INTEGER colorDepth, CTabHandle clut, CodecQ quality, INTEGER doDither, INTEGER compressAgain, ProgressProcRecordPtr progressProc, CodecType cType, CompressorComponent codec) M68K_INLINE(0x7025, 0xAAA3);
 
-pascal OSErr CompressPictureFile(INTEGER srcRefNum, INTEGER dstRefNum, CodecQ quality, CodecType cType) M68K_INLINE(0x7026, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CompressPictureFile(INTEGER srcRefNum, INTEGER dstRefNum, CodecQ quality, CodecType cType) M68K_INLINE(0x7026, 0xAAA3);
 
-pascal OSErr FCompressPictureFile(INTEGER srcRefNum, INTEGER dstRefNum, INTEGER colorDepth, CTabHandle clut, CodecQ quality, INTEGER doDither, INTEGER compressAgain, ProgressProcRecordPtr progressProc, CodecType cType, CompressorComponent codec) M68K_INLINE(0x7027, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr FCompressPictureFile(INTEGER srcRefNum, INTEGER dstRefNum, INTEGER colorDepth, CTabHandle clut, CodecQ quality, INTEGER doDither, INTEGER compressAgain, ProgressProcRecordPtr progressProc, CodecType cType, CompressorComponent codec) M68K_INLINE(0x7027, 0xAAA3);
 
-pascal OSErr GetPictureFileHeader(INTEGER refNum, Rect *frame, OpenCPicParams *header) M68K_INLINE(0x7028, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetPictureFileHeader(INTEGER refNum, Rect *frame, OpenCPicParams *header) M68K_INLINE(0x7028, 0xAAA3);
 
-pascal OSErr DrawPictureFile(INTEGER refNum, const Rect *frame, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7029, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DrawPictureFile(INTEGER refNum, const Rect *frame, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7029, 0xAAA3);
 
-pascal OSErr DrawTrimmedPicture(PicHandle srcPicture, const Rect *frame, RgnHandle trimMask, INTEGER doDither, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702E, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DrawTrimmedPicture(PicHandle srcPicture, const Rect *frame, RgnHandle trimMask, INTEGER doDither, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702E, 0xAAA3);
 
-pascal OSErr DrawTrimmedPictureFile(INTEGER srcRefnum, const Rect *frame, RgnHandle trimMask, INTEGER doDither, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702F, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DrawTrimmedPictureFile(INTEGER srcRefnum, const Rect *frame, RgnHandle trimMask, INTEGER doDither, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702F, 0xAAA3);
 
-pascal OSErr MakeThumbnailFromPicture(PicHandle picture, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702A, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr MakeThumbnailFromPicture(PicHandle picture, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702A, 0xAAA3);
 
-pascal OSErr MakeThumbnailFromPictureFile(INTEGER refNum, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702B, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr MakeThumbnailFromPictureFile(INTEGER refNum, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702B, 0xAAA3);
 
-pascal OSErr MakeThumbnailFromPixMap(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702C, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr MakeThumbnailFromPixMap(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702C, 0xAAA3);
 
-pascal OSErr TrimImage(ImageDescriptionHandle desc, Ptr inData, long inBufferSize, DataProcRecordPtr dataProc, Ptr outData, long outBufferSize, FlushProcRecordPtr flushProc, Rect *trimRect, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702D, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr TrimImage(ImageDescriptionHandle desc, Ptr inData, long inBufferSize, DataProcRecordPtr dataProc, Ptr outData, long outBufferSize, FlushProcRecordPtr flushProc, Rect *trimRect, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702D, 0xAAA3);
 
-pascal OSErr ConvertImage(ImageDescriptionHandle srcDD, Ptr srcData, INTEGER colorDepth, CTabHandle clut, CodecQ accuracy, CodecQ quality, CodecType cType, CodecComponent codec, ImageDescriptionHandle dstDD, Ptr dstData) M68K_INLINE(0x7030, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr ConvertImage(ImageDescriptionHandle srcDD, Ptr srcData, INTEGER colorDepth, CTabHandle clut, CodecQ accuracy, CodecQ quality, CodecType cType, CodecComponent codec, ImageDescriptionHandle dstDD, Ptr dstData) M68K_INLINE(0x7030, 0xAAA3);
 
-pascal OSErr GetCompressedPixMapInfo(PixMapPtr pix, ImageDescriptionHandle *desc, Ptr *data, long *bufferSize, DataProcRecord *dataProc, ProgressProcRecord *progressProc) M68K_INLINE(0x7037, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCompressedPixMapInfo(PixMapPtr pix, ImageDescriptionHandle *desc, Ptr *data, long *bufferSize, DataProcRecord *dataProc, ProgressProcRecord *progressProc) M68K_INLINE(0x7037, 0xAAA3);
 
-pascal OSErr SetCompressedPixMapInfo(PixMapPtr pix, ImageDescriptionHandle desc, Ptr data, long bufferSize, DataProcRecordPtr dataProc, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7038, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetCompressedPixMapInfo(PixMapPtr pix, ImageDescriptionHandle desc, Ptr data, long bufferSize, DataProcRecordPtr dataProc, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7038, 0xAAA3);
 
-pascal void StdPix(PixMapPtr src, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, PixMapPtr matte, const Rect *matteRect, INTEGER flags) M68K_INLINE(0x700C, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void StdPix(PixMapPtr src, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, PixMapPtr matte, const Rect *matteRect, INTEGER flags) M68K_INLINE(0x700C, 0xAAA3);
 
-pascal OSErr TransformRgn(MatrixRecordPtr matrix, RgnHandle rgn) M68K_INLINE(0x7039, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr TransformRgn(MatrixRecordPtr matrix, RgnHandle rgn) M68K_INLINE(0x7039, 0xAAA3);
 
-pascal void SFGetFilePreview(Point where, ConstStr255Param prompt, FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, DlgHookProcPtr dlgHook, SFReply *reply) M68K_INLINE(0x303C, 0x0041, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SFGetFilePreview(Point where, ConstStr255Param prompt, FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, DlgHookProcPtr dlgHook, SFReply *reply) M68K_INLINE(0x303C, 0x0041, 0xAAA3);
 
-pascal void SFPGetFilePreview(Point where, ConstStr255Param prompt, FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, DlgHookProcPtr dlgHook, SFReply *reply, INTEGER dlgID, ModalFilterProcPtr filterProc) M68K_INLINE(0x303C, 0x0042, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SFPGetFilePreview(Point where, ConstStr255Param prompt, FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, DlgHookProcPtr dlgHook, SFReply *reply, INTEGER dlgID, ModalFilterProcPtr filterProc) M68K_INLINE(0x303C, 0x0042, 0xAAA3);
 
-pascal void StandardGetFilePreview(FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, StandardFileReply *reply) M68K_INLINE(0x303C, 0x0043, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void StandardGetFilePreview(FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, StandardFileReply *reply) M68K_INLINE(0x303C, 0x0043, 0xAAA3);
 
-pascal void CustomGetFilePreview(FileFilterYDProcPtr fileFilter, INTEGER numTypes, OSType *typeList, StandardFileReply *reply, INTEGER dlgID, Point where, DlgHookYDProcPtr dlgHook, ModalFilterYDProcPtr filterProc, INTEGER *activeList, ActivateYDProcPtr activateProc, void *yourDataPtr) M68K_INLINE(0x303C, 0x0044, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void CustomGetFilePreview(FileFilterYDProcPtr fileFilter, INTEGER numTypes, OSType *typeList, StandardFileReply *reply, INTEGER dlgID, Point where, DlgHookYDProcPtr dlgHook, ModalFilterYDProcPtr filterProc, INTEGER *activeList, ActivateYDProcPtr activateProc, void *yourDataPtr) M68K_INLINE(0x303C, 0x0044, 0xAAA3);
 
-pascal OSErr MakeFilePreview(INTEGER resRefNum, ProgressProcRecordPtr progress) M68K_INLINE(0x303C, 0x0045, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr MakeFilePreview(INTEGER resRefNum, ProgressProcRecordPtr progress) M68K_INLINE(0x303C, 0x0045, 0xAAA3);
 
-pascal OSErr AddFilePreview(INTEGER resRefNum, OSType previewType, Handle previewData) M68K_INLINE(0x303C, 0x0046, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddFilePreview(INTEGER resRefNum, OSType previewType, Handle previewData) M68K_INLINE(0x303C, 0x0046, 0xAAA3);
 
 enum {
     sfpItemPreviewAreaUser = 11,
@@ -458,25 +462,25 @@ typedef PreviewResourceRecord *PreviewResourcePtr;
 
 typedef PreviewResourceRecord **PreviewResource;
 
-pascal void AlignScreenRect(Rect *rp, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x0008, 0x004C, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void AlignScreenRect(Rect *rp, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x0008, 0x004C, 0xAAA3);
 
-pascal void AlignWindow(WindowPtr wp, Boolean front, const Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x000E, 0x004D, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void AlignWindow(WindowPtr wp, Boolean front, const Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x000E, 0x004D, 0xAAA3);
 
-pascal void DragAlignedWindow(WindowPtr wp, Point startPt, Rect *boundsRect, Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x0014, 0x004E, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DragAlignedWindow(WindowPtr wp, Point startPt, Rect *boundsRect, Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x0014, 0x004E, 0xAAA3);
 
-pascal long DragAlignedGrayRgn(RgnHandle theRgn, Point startPt, Rect *boundsRect, Rect *slopRect, INTEGER axis, ProcPtr actionProc, Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x001E, 0x004F, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long DragAlignedGrayRgn(RgnHandle theRgn, Point startPt, Rect *boundsRect, Rect *slopRect, INTEGER axis, ProcPtr actionProc, Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x001E, 0x004F, 0xAAA3);
 
-pascal OSErr SetCSequenceDataRateParams(ImageSequence seqID, DataRateParamsPtr params) M68K_INLINE(0x203C, 0x0008, 0x0050, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetCSequenceDataRateParams(ImageSequence seqID, DataRateParamsPtr params) M68K_INLINE(0x203C, 0x0008, 0x0050, 0xAAA3);
 
-pascal OSErr SetCSequenceFrameNumber(ImageSequence seqID, long frameNumber) M68K_INLINE(0x203C, 0x0008, 0x0051, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetCSequenceFrameNumber(ImageSequence seqID, long frameNumber) M68K_INLINE(0x203C, 0x0008, 0x0051, 0xAAA3);
 
-pascal QDErr NewImageGWorld(GWorldPtr *gworld, ImageDescription **idh, GWorldFlags flags) M68K_INLINE(0x203C, 0x000C, 0x0052, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal QDErr NewImageGWorld(GWorldPtr *gworld, ImageDescription **idh, GWorldFlags flags) M68K_INLINE(0x203C, 0x000C, 0x0052, 0xAAA3);
 
-pascal OSErr GetCSequenceDataRateParams(ImageSequence seqID, DataRateParamsPtr params) M68K_INLINE(0x203C, 0x0008, 0x0053, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCSequenceDataRateParams(ImageSequence seqID, DataRateParamsPtr params) M68K_INLINE(0x203C, 0x0008, 0x0053, 0xAAA3);
 
-pascal OSErr GetCSequenceFrameNumber(ImageSequence seqID, long *frameNumber) M68K_INLINE(0x203C, 0x0008, 0x0054, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetCSequenceFrameNumber(ImageSequence seqID, long *frameNumber) M68K_INLINE(0x203C, 0x0008, 0x0054, 0xAAA3);
 
-pascal OSErr GetBestDeviceRect(GDHandle *gdh, Rect *rp) M68K_INLINE(0x203C, 0x0008, 0x0055, 0xAAA3);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetBestDeviceRect(GDHandle *gdh, Rect *rp) M68K_INLINE(0x203C, 0x0008, 0x0055, 0xAAA3);
 
 enum {
     identityMatrixType = 0,
@@ -490,37 +494,37 @@ enum {
 
 typedef uint16_t MatrixFlags;
 
-pascal INTEGER GetMatrixType(MatrixRecord *m) M68K_INLINE(0x7014, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetMatrixType(MatrixRecord *m) M68K_INLINE(0x7014, 0xABC2);
 
-pascal void CopyMatrix(MatrixRecord *m1, MatrixRecord *m2) M68K_INLINE(0x7020, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void CopyMatrix(MatrixRecord *m1, MatrixRecord *m2) M68K_INLINE(0x7020, 0xABC2);
 
-pascal Boolean EqualMatrix(const MatrixRecord *m1, const MatrixRecord *m2) M68K_INLINE(0x7021, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean EqualMatrix(const MatrixRecord *m1, const MatrixRecord *m2) M68K_INLINE(0x7021, 0xABC2);
 
-pascal void SetIdentityMatrix(MatrixRecord *matrix) M68K_INLINE(0x7015, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetIdentityMatrix(MatrixRecord *matrix) M68K_INLINE(0x7015, 0xABC2);
 
-pascal void TranslateMatrix(MatrixRecord *m, Fixed deltaH, Fixed deltaV) M68K_INLINE(0x7019, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void TranslateMatrix(MatrixRecord *m, Fixed deltaH, Fixed deltaV) M68K_INLINE(0x7019, 0xABC2);
 
-pascal void RotateMatrix(MatrixRecord *m, Fixed degrees, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7016, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void RotateMatrix(MatrixRecord *m, Fixed degrees, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7016, 0xABC2);
 
-pascal void ScaleMatrix(MatrixRecord *m, Fixed scaleX, Fixed scaleY, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7017, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ScaleMatrix(MatrixRecord *m, Fixed scaleX, Fixed scaleY, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7017, 0xABC2);
 
-pascal void SkewMatrix(MatrixRecord *m, Fixed skewX, Fixed skewY, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7018, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SkewMatrix(MatrixRecord *m, Fixed skewX, Fixed skewY, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7018, 0xABC2);
 
-pascal OSErr TransformFixedPoints(MatrixRecord *m, FixedPoint *fpt, long count) M68K_INLINE(0x7022, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr TransformFixedPoints(MatrixRecord *m, FixedPoint *fpt, long count) M68K_INLINE(0x7022, 0xABC2);
 
-pascal OSErr TransformPoints(MatrixRecord *mp, Point *pt1, long count) M68K_INLINE(0x7023, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr TransformPoints(MatrixRecord *mp, Point *pt1, long count) M68K_INLINE(0x7023, 0xABC2);
 
-pascal Boolean TransformFixedRect(MatrixRecord *m, FixedRect *fr, FixedPoint *fpp) M68K_INLINE(0x7024, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean TransformFixedRect(MatrixRecord *m, FixedRect *fr, FixedPoint *fpp) M68K_INLINE(0x7024, 0xABC2);
 
-pascal Boolean TransformRect(MatrixRecord *m, Rect *r, FixedPoint *fpp) M68K_INLINE(0x7025, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean TransformRect(MatrixRecord *m, Rect *r, FixedPoint *fpp) M68K_INLINE(0x7025, 0xABC2);
 
-pascal Boolean InverseMatrix(MatrixRecord *m, MatrixRecord *im) M68K_INLINE(0x701C, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean InverseMatrix(MatrixRecord *m, MatrixRecord *im) M68K_INLINE(0x701C, 0xABC2);
 
-pascal void ConcatMatrix(MatrixRecord *a, MatrixRecord *b) M68K_INLINE(0x701B, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ConcatMatrix(MatrixRecord *a, MatrixRecord *b) M68K_INLINE(0x701B, 0xABC2);
 
-pascal void RectMatrix(MatrixRecord *matrix, Rect *srcRect, Rect *dstRect) M68K_INLINE(0x701E, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void RectMatrix(MatrixRecord *matrix, Rect *srcRect, Rect *dstRect) M68K_INLINE(0x701E, 0xABC2);
 
-pascal void MapMatrix(MatrixRecord *matrix, Rect *fromRect, Rect *toRect) M68K_INLINE(0x701D, 0xABC2);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void MapMatrix(MatrixRecord *matrix, Rect *fromRect, Rect *toRect) M68K_INLINE(0x701D, 0xABC2);
 
 typedef struct TrackRecord TrackRecord;
 struct TrackRecord {
@@ -915,395 +919,395 @@ typedef ErrorProcPtr ErrorUPP;
 #define NewErrorProc(proc) NewErrorUPP(proc)
 #define DisposeErrorProc(proc) DisposeErrorUPP(proc)
 
-pascal OSErr GetMoviesError(void) M68K_INLINE(0x303C, 0x0003, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMoviesError(void) M68K_INLINE(0x303C, 0x0003, 0xAAAA);
 
-pascal void ClearMoviesStickyError(void) M68K_INLINE(0x303C, 0x00DE, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ClearMoviesStickyError(void) M68K_INLINE(0x303C, 0x00DE, 0xAAAA);
 
-pascal OSErr GetMoviesStickyError(void) M68K_INLINE(0x303C, 0x0004, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMoviesStickyError(void) M68K_INLINE(0x303C, 0x0004, 0xAAAA);
 
-pascal void SetMoviesErrorProc(ErrorProcPtr errProc, long refcon) M68K_INLINE(0x303C, 0x00EF, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMoviesErrorProc(ErrorProcPtr errProc, long refcon) M68K_INLINE(0x303C, 0x00EF, 0xAAAA);
 
-pascal OSErr LoadMovieIntoRam(Movie theMovie, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x0007, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr LoadMovieIntoRam(Movie theMovie, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x0007, 0xAAAA);
 
-pascal OSErr LoadTrackIntoRam(Track theTrack, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x016E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr LoadTrackIntoRam(Track theTrack, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x016E, 0xAAAA);
 
-pascal OSErr LoadMediaIntoRam(Media theMedia, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x0008, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr LoadMediaIntoRam(Media theMedia, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x0008, 0xAAAA);
 
-pascal Boolean GetMovieActive(Movie theMovie) M68K_INLINE(0x303C, 0x000A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean GetMovieActive(Movie theMovie) M68K_INLINE(0x303C, 0x000A, 0xAAAA);
 
-pascal void GoToEndOfMovie(Movie theMovie) M68K_INLINE(0x303C, 0x000E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GoToEndOfMovie(Movie theMovie) M68K_INLINE(0x303C, 0x000E, 0xAAAA);
 
-pascal Boolean GetMoviePreviewMode(Movie theMovie) M68K_INLINE(0x303C, 0x000F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean GetMoviePreviewMode(Movie theMovie) M68K_INLINE(0x303C, 0x000F, 0xAAAA);
 
-pascal void SetMoviePreviewMode(Movie theMovie, Boolean usePreview) M68K_INLINE(0x303C, 0x0010, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMoviePreviewMode(Movie theMovie, Boolean usePreview) M68K_INLINE(0x303C, 0x0010, 0xAAAA);
 
-pascal void ShowMoviePoster(Movie theMovie) M68K_INLINE(0x303C, 0x0011, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ShowMoviePoster(Movie theMovie) M68K_INLINE(0x303C, 0x0011, 0xAAAA);
 
-pascal void PlayMoviePreview(Movie theMovie, MoviePreviewCallOutProc callOutProc, long refcon) M68K_INLINE(0x303C, 0x00F2, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void PlayMoviePreview(Movie theMovie, MoviePreviewCallOutProc callOutProc, long refcon) M68K_INLINE(0x303C, 0x00F2, 0xAAAA);
 
-pascal TimeBase GetMovieTimeBase(Movie theMovie) M68K_INLINE(0x303C, 0x0012, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeBase GetMovieTimeBase(Movie theMovie) M68K_INLINE(0x303C, 0x0012, 0xAAAA);
 
-pascal void SetMovieMasterTimeBase(Movie theMovie, TimeBase tb, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x0167, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieMasterTimeBase(Movie theMovie, TimeBase tb, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x0167, 0xAAAA);
 
-pascal void SetMovieMasterClock(Movie theMovie, Component clockMeister, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x0168, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieMasterClock(Movie theMovie, Component clockMeister, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x0168, 0xAAAA);
 
-pascal void GetMovieGWorld(Movie theMovie, CGrafPtr *port, GDHandle *gdh) M68K_INLINE(0x303C, 0x0015, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMovieGWorld(Movie theMovie, CGrafPtr *port, GDHandle *gdh) M68K_INLINE(0x303C, 0x0015, 0xAAAA);
 
-pascal PicHandle GetMoviePict(Movie theMovie, TimeValue time) M68K_INLINE(0x303C, 0x001D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal PicHandle GetMoviePict(Movie theMovie, TimeValue time) M68K_INLINE(0x303C, 0x001D, 0xAAAA);
 
-pascal PicHandle GetTrackPict(Track theTrack, TimeValue time) M68K_INLINE(0x303C, 0x001E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal PicHandle GetTrackPict(Track theTrack, TimeValue time) M68K_INLINE(0x303C, 0x001E, 0xAAAA);
 
-pascal PicHandle GetMoviePosterPict(Movie theMovie) M68K_INLINE(0x303C, 0x00F7, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal PicHandle GetMoviePosterPict(Movie theMovie) M68K_INLINE(0x303C, 0x00F7, 0xAAAA);
 
-pascal RgnHandle GetMovieDisplayClipRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FC, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetMovieDisplayClipRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FC, 0xAAAA);
 
-pascal void SetMovieDisplayClipRgn(Movie theMovie, RgnHandle theClip) M68K_INLINE(0x303C, 0x00FD, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieDisplayClipRgn(Movie theMovie, RgnHandle theClip) M68K_INLINE(0x303C, 0x00FD, 0xAAAA);
 
-pascal RgnHandle GetMovieClipRgn(Movie theMovie) M68K_INLINE(0x303C, 0x0100, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetMovieClipRgn(Movie theMovie) M68K_INLINE(0x303C, 0x0100, 0xAAAA);
 
-pascal void SetMovieClipRgn(Movie theMovie, RgnHandle theClip) M68K_INLINE(0x303C, 0x0101, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieClipRgn(Movie theMovie, RgnHandle theClip) M68K_INLINE(0x303C, 0x0101, 0xAAAA);
 
-pascal RgnHandle GetTrackClipRgn(Track theTrack) M68K_INLINE(0x303C, 0x0102, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetTrackClipRgn(Track theTrack) M68K_INLINE(0x303C, 0x0102, 0xAAAA);
 
-pascal void SetTrackClipRgn(Track theTrack, RgnHandle theClip) M68K_INLINE(0x303C, 0x0103, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackClipRgn(Track theTrack, RgnHandle theClip) M68K_INLINE(0x303C, 0x0103, 0xAAAA);
 
-pascal RgnHandle GetMovieDisplayBoundsRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FB, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetMovieDisplayBoundsRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FB, 0xAAAA);
 
-pascal RgnHandle GetTrackDisplayBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x0112, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetTrackDisplayBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x0112, 0xAAAA);
 
-pascal RgnHandle GetMovieBoundsRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FE, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetMovieBoundsRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FE, 0xAAAA);
 
-pascal RgnHandle GetTrackMovieBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x00FF, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetTrackMovieBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x00FF, 0xAAAA);
 
-pascal RgnHandle GetTrackBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x0111, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetTrackBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x0111, 0xAAAA);
 
-pascal PixMapHandle GetTrackMatte(Track theTrack) M68K_INLINE(0x303C, 0x0115, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal PixMapHandle GetTrackMatte(Track theTrack) M68K_INLINE(0x303C, 0x0115, 0xAAAA);
 
-pascal void SetTrackMatte(Track theTrack, PixMapHandle theMatte) M68K_INLINE(0x303C, 0x0116, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackMatte(Track theTrack, PixMapHandle theMatte) M68K_INLINE(0x303C, 0x0116, 0xAAAA);
 
-pascal void DisposeMatte(PixMapHandle theMatte) M68K_INLINE(0x303C, 0x014A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DisposeMatte(PixMapHandle theMatte) M68K_INLINE(0x303C, 0x014A, 0xAAAA);
 
-pascal Movie NewMovie(long flags) M68K_INLINE(0x303C, 0x0187, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie NewMovie(long flags) M68K_INLINE(0x303C, 0x0187, 0xAAAA);
 
-pascal OSErr PutMovieIntoHandle(Movie theMovie, Handle publicMovie) M68K_INLINE(0x303C, 0x0022, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr PutMovieIntoHandle(Movie theMovie, Handle publicMovie) M68K_INLINE(0x303C, 0x0022, 0xAAAA);
 
-pascal OSErr PutMovieIntoDataFork(Movie theMovie, INTEGER fRefNum, long offset, long maxSize) M68K_INLINE(0x303C, 0x01B4, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr PutMovieIntoDataFork(Movie theMovie, INTEGER fRefNum, long offset, long maxSize) M68K_INLINE(0x303C, 0x01B4, 0xAAAA);
 
-pascal unsigned long GetMovieCreationTime(Movie theMovie) M68K_INLINE(0x303C, 0x0026, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal unsigned long GetMovieCreationTime(Movie theMovie) M68K_INLINE(0x303C, 0x0026, 0xAAAA);
 
-pascal unsigned long GetMovieModificationTime(Movie theMovie) M68K_INLINE(0x303C, 0x0027, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal unsigned long GetMovieModificationTime(Movie theMovie) M68K_INLINE(0x303C, 0x0027, 0xAAAA);
 
-pascal TimeScale GetMovieTimeScale(Movie theMovie) M68K_INLINE(0x303C, 0x0029, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeScale GetMovieTimeScale(Movie theMovie) M68K_INLINE(0x303C, 0x0029, 0xAAAA);
 
-pascal void SetMovieTimeScale(Movie theMovie, TimeScale timeScale) M68K_INLINE(0x303C, 0x002A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieTimeScale(Movie theMovie, TimeScale timeScale) M68K_INLINE(0x303C, 0x002A, 0xAAAA);
 
-pascal TimeValue GetMovieDuration(Movie theMovie) M68K_INLINE(0x303C, 0x002B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetMovieDuration(Movie theMovie) M68K_INLINE(0x303C, 0x002B, 0xAAAA);
 
-pascal Fixed GetMovieRate(Movie theMovie) M68K_INLINE(0x303C, 0x002C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Fixed GetMovieRate(Movie theMovie) M68K_INLINE(0x303C, 0x002C, 0xAAAA);
 
-pascal void SetMovieRate(Movie theMovie, Fixed rate) M68K_INLINE(0x303C, 0x002D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieRate(Movie theMovie, Fixed rate) M68K_INLINE(0x303C, 0x002D, 0xAAAA);
 
-pascal void SetMoviePreferredRate(Movie theMovie, Fixed rate) M68K_INLINE(0x303C, 0x00F4, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMoviePreferredRate(Movie theMovie, Fixed rate) M68K_INLINE(0x303C, 0x00F4, 0xAAAA);
 
-pascal INTEGER GetMoviePreferredVolume(Movie theMovie) M68K_INLINE(0x303C, 0x00F5, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetMoviePreferredVolume(Movie theMovie) M68K_INLINE(0x303C, 0x00F5, 0xAAAA);
 
-pascal void SetMoviePreferredVolume(Movie theMovie, INTEGER volume) M68K_INLINE(0x303C, 0x00F6, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMoviePreferredVolume(Movie theMovie, INTEGER volume) M68K_INLINE(0x303C, 0x00F6, 0xAAAA);
 
-pascal void SetMovieVolume(Movie theMovie, INTEGER volume) M68K_INLINE(0x303C, 0x002F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieVolume(Movie theMovie, INTEGER volume) M68K_INLINE(0x303C, 0x002F, 0xAAAA);
 
-pascal void GetMovieMatrix(Movie theMovie, MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0031, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMovieMatrix(Movie theMovie, MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0031, 0xAAAA);
 
-pascal void SetMovieMatrix(Movie theMovie, const MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0032, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieMatrix(Movie theMovie, const MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0032, 0xAAAA);
 
-pascal void GetMoviePreviewTime(Movie theMovie, TimeValue *previewTime, TimeValue *previewDuration) M68K_INLINE(0x303C, 0x0033, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMoviePreviewTime(Movie theMovie, TimeValue *previewTime, TimeValue *previewDuration) M68K_INLINE(0x303C, 0x0033, 0xAAAA);
 
-pascal void SetMoviePreviewTime(Movie theMovie, TimeValue previewTime, TimeValue previewDuration) M68K_INLINE(0x303C, 0x0034, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMoviePreviewTime(Movie theMovie, TimeValue previewTime, TimeValue previewDuration) M68K_INLINE(0x303C, 0x0034, 0xAAAA);
 
-pascal TimeValue GetMoviePosterTime(Movie theMovie) M68K_INLINE(0x303C, 0x0035, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetMoviePosterTime(Movie theMovie) M68K_INLINE(0x303C, 0x0035, 0xAAAA);
 
-pascal void SetMoviePosterTime(Movie theMovie, TimeValue posterTime) M68K_INLINE(0x303C, 0x0036, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMoviePosterTime(Movie theMovie, TimeValue posterTime) M68K_INLINE(0x303C, 0x0036, 0xAAAA);
 
-pascal void GetMovieSelection(Movie theMovie, TimeValue *selectionTime, TimeValue *selectionDuration) M68K_INLINE(0x303C, 0x0037, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMovieSelection(Movie theMovie, TimeValue *selectionTime, TimeValue *selectionDuration) M68K_INLINE(0x303C, 0x0037, 0xAAAA);
 
-pascal void SetMovieSelection(Movie theMovie, TimeValue selectionTime, TimeValue selectionDuration) M68K_INLINE(0x303C, 0x0038, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieSelection(Movie theMovie, TimeValue selectionTime, TimeValue selectionDuration) M68K_INLINE(0x303C, 0x0038, 0xAAAA);
 
-pascal void SetMovieActiveSegment(Movie theMovie, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x015C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieActiveSegment(Movie theMovie, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x015C, 0xAAAA);
 
-pascal void GetMovieActiveSegment(Movie theMovie, TimeValue *startTime, TimeValue *duration) M68K_INLINE(0x303C, 0x015D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMovieActiveSegment(Movie theMovie, TimeValue *startTime, TimeValue *duration) M68K_INLINE(0x303C, 0x015D, 0xAAAA);
 
-pascal TimeValue GetMovieTime(Movie theMovie, TimeRecord *currentTime) M68K_INLINE(0x303C, 0x0039, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetMovieTime(Movie theMovie, TimeRecord *currentTime) M68K_INLINE(0x303C, 0x0039, 0xAAAA);
 
-pascal void SetMovieTime(Movie theMovie, const TimeRecord *newtime) M68K_INLINE(0x303C, 0x003C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieTime(Movie theMovie, const TimeRecord *newtime) M68K_INLINE(0x303C, 0x003C, 0xAAAA);
 
-pascal void SetMovieTimeValue(Movie theMovie, TimeValue newtime) M68K_INLINE(0x303C, 0x003D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieTimeValue(Movie theMovie, TimeValue newtime) M68K_INLINE(0x303C, 0x003D, 0xAAAA);
 
-pascal UserData GetMovieUserData(Movie theMovie) M68K_INLINE(0x303C, 0x003E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal UserData GetMovieUserData(Movie theMovie) M68K_INLINE(0x303C, 0x003E, 0xAAAA);
 
-pascal long GetMovieTrackCount(Movie theMovie) M68K_INLINE(0x303C, 0x003F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetMovieTrackCount(Movie theMovie) M68K_INLINE(0x303C, 0x003F, 0xAAAA);
 
-pascal Track GetMovieTrack(Movie theMovie, long trackID) M68K_INLINE(0x303C, 0x0040, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Track GetMovieTrack(Movie theMovie, long trackID) M68K_INLINE(0x303C, 0x0040, 0xAAAA);
 
-pascal Track GetMovieIndTrack(Movie theMovie, long index) M68K_INLINE(0x303C, 0x0117, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Track GetMovieIndTrack(Movie theMovie, long index) M68K_INLINE(0x303C, 0x0117, 0xAAAA);
 
-pascal long GetTrackID(Track theTrack) M68K_INLINE(0x303C, 0x0127, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetTrackID(Track theTrack) M68K_INLINE(0x303C, 0x0127, 0xAAAA);
 
-pascal Movie GetTrackMovie(Track theTrack) M68K_INLINE(0x303C, 0x00D0, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie GetTrackMovie(Track theTrack) M68K_INLINE(0x303C, 0x00D0, 0xAAAA);
 
-pascal Track NewMovieTrack(Movie theMovie, Fixed width, Fixed height, INTEGER trackVolume) M68K_INLINE(0x303C, 0x0188, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Track NewMovieTrack(Movie theMovie, Fixed width, Fixed height, INTEGER trackVolume) M68K_INLINE(0x303C, 0x0188, 0xAAAA);
 
-pascal void DisposeMovieTrack(Track theTrack) M68K_INLINE(0x303C, 0x0042, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DisposeMovieTrack(Track theTrack) M68K_INLINE(0x303C, 0x0042, 0xAAAA);
 
-pascal unsigned long GetTrackCreationTime(Track theTrack) M68K_INLINE(0x303C, 0x0043, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal unsigned long GetTrackCreationTime(Track theTrack) M68K_INLINE(0x303C, 0x0043, 0xAAAA);
 
-pascal unsigned long GetTrackModificationTime(Track theTrack) M68K_INLINE(0x303C, 0x0044, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal unsigned long GetTrackModificationTime(Track theTrack) M68K_INLINE(0x303C, 0x0044, 0xAAAA);
 
-pascal Boolean GetTrackEnabled(Track theTrack) M68K_INLINE(0x303C, 0x0045, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean GetTrackEnabled(Track theTrack) M68K_INLINE(0x303C, 0x0045, 0xAAAA);
 
-pascal void SetTrackEnabled(Track theTrack, Boolean isEnabled) M68K_INLINE(0x303C, 0x0046, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackEnabled(Track theTrack, Boolean isEnabled) M68K_INLINE(0x303C, 0x0046, 0xAAAA);
 
-pascal long GetTrackUsage(Track theTrack) M68K_INLINE(0x303C, 0x0047, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetTrackUsage(Track theTrack) M68K_INLINE(0x303C, 0x0047, 0xAAAA);
 
-pascal void SetTrackUsage(Track theTrack, long usage) M68K_INLINE(0x303C, 0x0048, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackUsage(Track theTrack, long usage) M68K_INLINE(0x303C, 0x0048, 0xAAAA);
 
-pascal TimeValue GetTrackDuration(Track theTrack) M68K_INLINE(0x303C, 0x004B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetTrackDuration(Track theTrack) M68K_INLINE(0x303C, 0x004B, 0xAAAA);
 
-pascal TimeValue GetTrackOffset(Track theTrack) M68K_INLINE(0x303C, 0x004C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetTrackOffset(Track theTrack) M68K_INLINE(0x303C, 0x004C, 0xAAAA);
 
-pascal void SetTrackOffset(Track theTrack, TimeValue movieOffsetTime) M68K_INLINE(0x303C, 0x004D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackOffset(Track theTrack, TimeValue movieOffsetTime) M68K_INLINE(0x303C, 0x004D, 0xAAAA);
 
-pascal INTEGER GetTrackLayer(Track theTrack) M68K_INLINE(0x303C, 0x0050, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetTrackLayer(Track theTrack) M68K_INLINE(0x303C, 0x0050, 0xAAAA);
 
-pascal void SetTrackLayer(Track theTrack, INTEGER layer) M68K_INLINE(0x303C, 0x0051, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackLayer(Track theTrack, INTEGER layer) M68K_INLINE(0x303C, 0x0051, 0xAAAA);
 
-pascal Track GetTrackAlternate(Track theTrack) M68K_INLINE(0x303C, 0x0052, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Track GetTrackAlternate(Track theTrack) M68K_INLINE(0x303C, 0x0052, 0xAAAA);
 
-pascal void SetTrackAlternate(Track theTrack, Track alternateT) M68K_INLINE(0x303C, 0x0053, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackAlternate(Track theTrack, Track alternateT) M68K_INLINE(0x303C, 0x0053, 0xAAAA);
 
-pascal void SetAutoTrackAlternatesEnabled(Movie theMovie, Boolean enable) M68K_INLINE(0x303C, 0x015E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetAutoTrackAlternatesEnabled(Movie theMovie, Boolean enable) M68K_INLINE(0x303C, 0x015E, 0xAAAA);
 
-pascal void SelectMovieAlternates(Movie theMovie) M68K_INLINE(0x303C, 0x015F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SelectMovieAlternates(Movie theMovie) M68K_INLINE(0x303C, 0x015F, 0xAAAA);
 
-pascal INTEGER GetTrackVolume(Track theTrack) M68K_INLINE(0x303C, 0x0054, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetTrackVolume(Track theTrack) M68K_INLINE(0x303C, 0x0054, 0xAAAA);
 
-pascal void SetTrackVolume(Track theTrack, INTEGER volume) M68K_INLINE(0x303C, 0x0055, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackVolume(Track theTrack, INTEGER volume) M68K_INLINE(0x303C, 0x0055, 0xAAAA);
 
-pascal void GetTrackMatrix(Track theTrack, MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0056, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetTrackMatrix(Track theTrack, MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0056, 0xAAAA);
 
-pascal void SetTrackMatrix(Track theTrack, const MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0057, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackMatrix(Track theTrack, const MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0057, 0xAAAA);
 
-pascal void GetTrackDimensions(Track theTrack, Fixed *width, Fixed *height) M68K_INLINE(0x303C, 0x005D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetTrackDimensions(Track theTrack, Fixed *width, Fixed *height) M68K_INLINE(0x303C, 0x005D, 0xAAAA);
 
-pascal void SetTrackDimensions(Track theTrack, Fixed width, Fixed height) M68K_INLINE(0x303C, 0x005E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTrackDimensions(Track theTrack, Fixed width, Fixed height) M68K_INLINE(0x303C, 0x005E, 0xAAAA);
 
-pascal UserData GetTrackUserData(Track theTrack) M68K_INLINE(0x303C, 0x005F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal UserData GetTrackUserData(Track theTrack) M68K_INLINE(0x303C, 0x005F, 0xAAAA);
 
-pascal Media NewTrackMedia(Track theTrack, OSType mediaType, TimeScale timeScale, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x018E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Media NewTrackMedia(Track theTrack, OSType mediaType, TimeScale timeScale, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x018E, 0xAAAA);
 
-pascal void DisposeTrackMedia(Media theMedia) M68K_INLINE(0x303C, 0x0061, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DisposeTrackMedia(Media theMedia) M68K_INLINE(0x303C, 0x0061, 0xAAAA);
 
-pascal Media GetTrackMedia(Track theTrack) M68K_INLINE(0x303C, 0x0062, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Media GetTrackMedia(Track theTrack) M68K_INLINE(0x303C, 0x0062, 0xAAAA);
 
-pascal Track GetMediaTrack(Media theMedia) M68K_INLINE(0x303C, 0x00C5, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Track GetMediaTrack(Media theMedia) M68K_INLINE(0x303C, 0x00C5, 0xAAAA);
 
-pascal unsigned long GetMediaCreationTime(Media theMedia) M68K_INLINE(0x303C, 0x0066, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal unsigned long GetMediaCreationTime(Media theMedia) M68K_INLINE(0x303C, 0x0066, 0xAAAA);
 
-pascal unsigned long GetMediaModificationTime(Media theMedia) M68K_INLINE(0x303C, 0x0067, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal unsigned long GetMediaModificationTime(Media theMedia) M68K_INLINE(0x303C, 0x0067, 0xAAAA);
 
-pascal TimeScale GetMediaTimeScale(Media theMedia) M68K_INLINE(0x303C, 0x0068, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeScale GetMediaTimeScale(Media theMedia) M68K_INLINE(0x303C, 0x0068, 0xAAAA);
 
-pascal void SetMediaTimeScale(Media theMedia, TimeScale timeScale) M68K_INLINE(0x303C, 0x0069, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMediaTimeScale(Media theMedia, TimeScale timeScale) M68K_INLINE(0x303C, 0x0069, 0xAAAA);
 
-pascal TimeValue GetMediaDuration(Media theMedia) M68K_INLINE(0x303C, 0x006A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetMediaDuration(Media theMedia) M68K_INLINE(0x303C, 0x006A, 0xAAAA);
 
-pascal INTEGER GetMediaLanguage(Media theMedia) M68K_INLINE(0x303C, 0x006B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetMediaLanguage(Media theMedia) M68K_INLINE(0x303C, 0x006B, 0xAAAA);
 
-pascal void SetMediaLanguage(Media theMedia, INTEGER language) M68K_INLINE(0x303C, 0x006C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMediaLanguage(Media theMedia, INTEGER language) M68K_INLINE(0x303C, 0x006C, 0xAAAA);
 
-pascal INTEGER GetMediaQuality(Media theMedia) M68K_INLINE(0x303C, 0x006D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetMediaQuality(Media theMedia) M68K_INLINE(0x303C, 0x006D, 0xAAAA);
 
-pascal void SetMediaQuality(Media theMedia, INTEGER quality) M68K_INLINE(0x303C, 0x006E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMediaQuality(Media theMedia, INTEGER quality) M68K_INLINE(0x303C, 0x006E, 0xAAAA);
 
-pascal void GetMediaHandlerDescription(Media theMedia, OSType *mediaType, uint8_t *creatorName, OSType *creatorManufacturer) M68K_INLINE(0x303C, 0x006F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMediaHandlerDescription(Media theMedia, OSType *mediaType, uint8_t *creatorName, OSType *creatorManufacturer) M68K_INLINE(0x303C, 0x006F, 0xAAAA);
 
-pascal UserData GetMediaUserData(Media theMedia) M68K_INLINE(0x303C, 0x0070, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal UserData GetMediaUserData(Media theMedia) M68K_INLINE(0x303C, 0x0070, 0xAAAA);
 
-pascal MediaHandler GetMediaHandler(Media theMedia) M68K_INLINE(0x303C, 0x0071, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal MediaHandler GetMediaHandler(Media theMedia) M68K_INLINE(0x303C, 0x0071, 0xAAAA);
 
-pascal OSErr SetMediaHandler(Media theMedia, MediaHandlerComponent mH) M68K_INLINE(0x303C, 0x0190, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetMediaHandler(Media theMedia, MediaHandlerComponent mH) M68K_INLINE(0x303C, 0x0190, 0xAAAA);
 
-pascal OSErr BeginMediaEdits(Media theMedia) M68K_INLINE(0x303C, 0x0072, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr BeginMediaEdits(Media theMedia) M68K_INLINE(0x303C, 0x0072, 0xAAAA);
 
-pascal OSErr EndMediaEdits(Media theMedia) M68K_INLINE(0x303C, 0x0073, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr EndMediaEdits(Media theMedia) M68K_INLINE(0x303C, 0x0073, 0xAAAA);
 
-pascal void GetMediaDataHandlerDescription(Media theMedia, INTEGER index, OSType *dhType, uint8_t *creatorName, OSType *creatorManufacturer) M68K_INLINE(0x303C, 0x019E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMediaDataHandlerDescription(Media theMedia, INTEGER index, OSType *dhType, uint8_t *creatorName, OSType *creatorManufacturer) M68K_INLINE(0x303C, 0x019E, 0xAAAA);
 
-pascal DataHandler GetMediaDataHandler(Media theMedia, INTEGER index) M68K_INLINE(0x303C, 0x019F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal DataHandler GetMediaDataHandler(Media theMedia, INTEGER index) M68K_INLINE(0x303C, 0x019F, 0xAAAA);
 
-pascal OSErr SetMediaDataHandler(Media theMedia, INTEGER index, DataHandlerComponent dataHandler) M68K_INLINE(0x303C, 0x01A0, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetMediaDataHandler(Media theMedia, INTEGER index, DataHandlerComponent dataHandler) M68K_INLINE(0x303C, 0x01A0, 0xAAAA);
 
-pascal long GetMediaSampleDescriptionCount(Media theMedia) M68K_INLINE(0x303C, 0x0077, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetMediaSampleDescriptionCount(Media theMedia) M68K_INLINE(0x303C, 0x0077, 0xAAAA);
 
-pascal void GetMediaSampleDescription(Media theMedia, long index, SampleDescriptionHandle descH) M68K_INLINE(0x303C, 0x0078, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMediaSampleDescription(Media theMedia, long index, SampleDescriptionHandle descH) M68K_INLINE(0x303C, 0x0078, 0xAAAA);
 
-pascal OSErr SetMediaSampleDescription(Media theMedia, long index, SampleDescriptionHandle descH) M68K_INLINE(0x303C, 0x01D0, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetMediaSampleDescription(Media theMedia, long index, SampleDescriptionHandle descH) M68K_INLINE(0x303C, 0x01D0, 0xAAAA);
 
-pascal long GetMediaSampleCount(Media theMedia) M68K_INLINE(0x303C, 0x0079, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetMediaSampleCount(Media theMedia) M68K_INLINE(0x303C, 0x0079, 0xAAAA);
 
-pascal void SampleNumToMediaTime(Media theMedia, long logicalSampleNum, TimeValue *sampleTime, TimeValue *sampleDuration) M68K_INLINE(0x303C, 0x007A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SampleNumToMediaTime(Media theMedia, long logicalSampleNum, TimeValue *sampleTime, TimeValue *sampleDuration) M68K_INLINE(0x303C, 0x007A, 0xAAAA);
 
-pascal void MediaTimeToSampleNum(Media theMedia, TimeValue time, long *sampleNum, TimeValue *sampleTime, TimeValue *sampleDuration) M68K_INLINE(0x303C, 0x007B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void MediaTimeToSampleNum(Media theMedia, TimeValue time, long *sampleNum, TimeValue *sampleTime, TimeValue *sampleDuration) M68K_INLINE(0x303C, 0x007B, 0xAAAA);
 
-pascal OSErr AddMediaSample(Media theMedia, Handle dataIn, long inOffset, unsigned long size, TimeValue durationPerSample, SampleDescriptionHandle sampleDescriptionH, long numberOfSamples, INTEGER sampleFlags, TimeValue *sampleTime) M68K_INLINE(0x303C, 0x007C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddMediaSample(Media theMedia, Handle dataIn, long inOffset, unsigned long size, TimeValue durationPerSample, SampleDescriptionHandle sampleDescriptionH, long numberOfSamples, INTEGER sampleFlags, TimeValue *sampleTime) M68K_INLINE(0x303C, 0x007C, 0xAAAA);
 
-pascal OSErr AddMediaSampleReference(Media theMedia, long dataOffset, unsigned long size, TimeValue durationPerSample, SampleDescriptionHandle sampleDescriptionH, long numberOfSamples, INTEGER sampleFlags, TimeValue *sampleTime) M68K_INLINE(0x303C, 0x007D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddMediaSampleReference(Media theMedia, long dataOffset, unsigned long size, TimeValue durationPerSample, SampleDescriptionHandle sampleDescriptionH, long numberOfSamples, INTEGER sampleFlags, TimeValue *sampleTime) M68K_INLINE(0x303C, 0x007D, 0xAAAA);
 
-pascal OSErr GetMediaSample(Media theMedia, Handle dataOut, long maxSizeToGrow, long *size, TimeValue time, TimeValue *sampleTime, TimeValue *durationPerSample, SampleDescriptionHandle sampleDescriptionH, long *sampleDescriptionIndex, long maxNumberOfSamples, long *numberOfSamples, INTEGER *sampleFlags) M68K_INLINE(0x303C, 0x007E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMediaSample(Media theMedia, Handle dataOut, long maxSizeToGrow, long *size, TimeValue time, TimeValue *sampleTime, TimeValue *durationPerSample, SampleDescriptionHandle sampleDescriptionH, long *sampleDescriptionIndex, long maxNumberOfSamples, long *numberOfSamples, INTEGER *sampleFlags) M68K_INLINE(0x303C, 0x007E, 0xAAAA);
 
-pascal OSErr GetMediaSampleReference(Media theMedia, long *dataOffset, long *size, TimeValue time, TimeValue *sampleTime, TimeValue *durationPerSample, SampleDescriptionHandle sampleDescriptionH, long *sampleDescriptionIndex, long maxNumberOfSamples, long *numberOfSamples, INTEGER *sampleFlags) M68K_INLINE(0x303C, 0x007F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMediaSampleReference(Media theMedia, long *dataOffset, long *size, TimeValue time, TimeValue *sampleTime, TimeValue *durationPerSample, SampleDescriptionHandle sampleDescriptionH, long *sampleDescriptionIndex, long maxNumberOfSamples, long *numberOfSamples, INTEGER *sampleFlags) M68K_INLINE(0x303C, 0x007F, 0xAAAA);
 
-pascal OSErr SetMediaShadowSync(Media theMedia, long frameDiffSampleNum, long syncSampleNum) M68K_INLINE(0x303C, 0x0121, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetMediaShadowSync(Media theMedia, long frameDiffSampleNum, long syncSampleNum) M68K_INLINE(0x303C, 0x0121, 0xAAAA);
 
-pascal OSErr GetMediaShadowSync(Media theMedia, long frameDiffSampleNum, long *syncSampleNum) M68K_INLINE(0x303C, 0x0122, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMediaShadowSync(Media theMedia, long frameDiffSampleNum, long *syncSampleNum) M68K_INLINE(0x303C, 0x0122, 0xAAAA);
 
-pascal OSErr InsertMediaIntoTrack(Track theTrack, TimeValue trackStart, TimeValue mediaTime, TimeValue mediaDuration, Fixed mediaRate) M68K_INLINE(0x303C, 0x0183, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr InsertMediaIntoTrack(Track theTrack, TimeValue trackStart, TimeValue mediaTime, TimeValue mediaDuration, Fixed mediaRate) M68K_INLINE(0x303C, 0x0183, 0xAAAA);
 
-pascal OSErr InsertTrackSegment(Track srcTrack, Track dstTrack, TimeValue srcIn, TimeValue srcDuration, TimeValue dstIn) M68K_INLINE(0x303C, 0x0085, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr InsertTrackSegment(Track srcTrack, Track dstTrack, TimeValue srcIn, TimeValue srcDuration, TimeValue dstIn) M68K_INLINE(0x303C, 0x0085, 0xAAAA);
 
-pascal OSErr InsertMovieSegment(Movie srcMovie, Movie dstMovie, TimeValue srcIn, TimeValue srcDuration, TimeValue dstIn) M68K_INLINE(0x303C, 0x0086, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr InsertMovieSegment(Movie srcMovie, Movie dstMovie, TimeValue srcIn, TimeValue srcDuration, TimeValue dstIn) M68K_INLINE(0x303C, 0x0086, 0xAAAA);
 
-pascal OSErr InsertEmptyTrackSegment(Track dstTrack, TimeValue dstIn, TimeValue dstDuration) M68K_INLINE(0x303C, 0x0087, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr InsertEmptyTrackSegment(Track dstTrack, TimeValue dstIn, TimeValue dstDuration) M68K_INLINE(0x303C, 0x0087, 0xAAAA);
 
-pascal OSErr InsertEmptyMovieSegment(Movie dstMovie, TimeValue dstIn, TimeValue dstDuration) M68K_INLINE(0x303C, 0x0088, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr InsertEmptyMovieSegment(Movie dstMovie, TimeValue dstIn, TimeValue dstDuration) M68K_INLINE(0x303C, 0x0088, 0xAAAA);
 
-pascal OSErr DeleteTrackSegment(Track theTrack, TimeValue in, TimeValue duration) M68K_INLINE(0x303C, 0x0089, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DeleteTrackSegment(Track theTrack, TimeValue in, TimeValue duration) M68K_INLINE(0x303C, 0x0089, 0xAAAA);
 
-pascal OSErr DeleteMovieSegment(Movie theMovie, TimeValue in, TimeValue duration) M68K_INLINE(0x303C, 0x008A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DeleteMovieSegment(Movie theMovie, TimeValue in, TimeValue duration) M68K_INLINE(0x303C, 0x008A, 0xAAAA);
 
-pascal OSErr ScaleTrackSegment(Track theTrack, TimeValue in, TimeValue oldDuration, TimeValue newDuration) M68K_INLINE(0x303C, 0x008B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr ScaleTrackSegment(Track theTrack, TimeValue in, TimeValue oldDuration, TimeValue newDuration) M68K_INLINE(0x303C, 0x008B, 0xAAAA);
 
-pascal OSErr ScaleMovieSegment(Movie theMovie, TimeValue in, TimeValue oldDuration, TimeValue newDuration) M68K_INLINE(0x303C, 0x008C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr ScaleMovieSegment(Movie theMovie, TimeValue in, TimeValue oldDuration, TimeValue newDuration) M68K_INLINE(0x303C, 0x008C, 0xAAAA);
 
-pascal Movie CutMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x008D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie CutMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x008D, 0xAAAA);
 
-pascal Movie CopyMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x008E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie CopyMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x008E, 0xAAAA);
 
-pascal void PasteMovieSelection(Movie theMovie, Movie src) M68K_INLINE(0x303C, 0x008F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void PasteMovieSelection(Movie theMovie, Movie src) M68K_INLINE(0x303C, 0x008F, 0xAAAA);
 
-pascal void AddMovieSelection(Movie theMovie, Movie src) M68K_INLINE(0x303C, 0x0152, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void AddMovieSelection(Movie theMovie, Movie src) M68K_INLINE(0x303C, 0x0152, 0xAAAA);
 
-pascal void ClearMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x00E1, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ClearMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x00E1, 0xAAAA);
 
-pascal OSErr PasteHandleIntoMovie(Handle h, OSType handleType, Movie theMovie, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x00CB, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr PasteHandleIntoMovie(Handle h, OSType handleType, Movie theMovie, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x00CB, 0xAAAA);
 
-pascal OSErr PutMovieIntoTypedHandle(Movie theMovie, Track targetTrack, OSType handleType, Handle publicMovie, TimeValue start, TimeValue dur, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x01CD, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr PutMovieIntoTypedHandle(Movie theMovie, Track targetTrack, OSType handleType, Handle publicMovie, TimeValue start, TimeValue dur, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x01CD, 0xAAAA);
 
-pascal Component IsScrapMovie(Track targetTrack) M68K_INLINE(0x303C, 0x00CC, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Component IsScrapMovie(Track targetTrack) M68K_INLINE(0x303C, 0x00CC, 0xAAAA);
 
-pascal OSErr CopyTrackSettings(Track srcTrack, Track dstTrack) M68K_INLINE(0x303C, 0x0153, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CopyTrackSettings(Track srcTrack, Track dstTrack) M68K_INLINE(0x303C, 0x0153, 0xAAAA);
 
-pascal OSErr CopyMovieSettings(Movie srcMovie, Movie dstMovie) M68K_INLINE(0x303C, 0x0154, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CopyMovieSettings(Movie srcMovie, Movie dstMovie) M68K_INLINE(0x303C, 0x0154, 0xAAAA);
 
-pascal MovieEditState NewMovieEditState(Movie theMovie) M68K_INLINE(0x303C, 0x0104, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal MovieEditState NewMovieEditState(Movie theMovie) M68K_INLINE(0x303C, 0x0104, 0xAAAA);
 
-pascal OSErr UseMovieEditState(Movie theMovie, MovieEditState toState) M68K_INLINE(0x303C, 0x0105, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr UseMovieEditState(Movie theMovie, MovieEditState toState) M68K_INLINE(0x303C, 0x0105, 0xAAAA);
 
-pascal OSErr DisposeMovieEditState(MovieEditState state) M68K_INLINE(0x303C, 0x0106, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DisposeMovieEditState(MovieEditState state) M68K_INLINE(0x303C, 0x0106, 0xAAAA);
 
-pascal TrackEditState NewTrackEditState(Track theTrack) M68K_INLINE(0x303C, 0x0107, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TrackEditState NewTrackEditState(Track theTrack) M68K_INLINE(0x303C, 0x0107, 0xAAAA);
 
-pascal OSErr UseTrackEditState(Track theTrack, TrackEditState state) M68K_INLINE(0x303C, 0x0108, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr UseTrackEditState(Track theTrack, TrackEditState state) M68K_INLINE(0x303C, 0x0108, 0xAAAA);
 
-pascal OSErr DisposeTrackEditState(TrackEditState state) M68K_INLINE(0x303C, 0x0109, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DisposeTrackEditState(TrackEditState state) M68K_INLINE(0x303C, 0x0109, 0xAAAA);
 
-pascal OSErr ConvertFileToMovieFile(const FSSpec *inputFile, const FSSpec *outputFile, OSType creator, ScriptCode scriptTag, INTEGER *resID, long flags, ComponentInstance userComp, MovieProgressProcPtr proc, long refCon) M68K_INLINE(0x303C, 0x01CB, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr ConvertFileToMovieFile(const FSSpec *inputFile, const FSSpec *outputFile, OSType creator, ScriptCode scriptTag, INTEGER *resID, long flags, ComponentInstance userComp, MovieProgressProcPtr proc, long refCon) M68K_INLINE(0x303C, 0x01CB, 0xAAAA);
 
-pascal OSErr ConvertMovieToFile(Movie theMovie, Track onlyTrack, const FSSpec *outputFile, OSType fileType, OSType creator, ScriptCode scriptTag, INTEGER *resID, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x01CC, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr ConvertMovieToFile(Movie theMovie, Track onlyTrack, const FSSpec *outputFile, OSType fileType, OSType creator, ScriptCode scriptTag, INTEGER *resID, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x01CC, 0xAAAA);
 
-pascal TimeValue TrackTimeToMediaTime(TimeValue value, Track theTrack) M68K_INLINE(0x303C, 0x0096, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue TrackTimeToMediaTime(TimeValue value, Track theTrack) M68K_INLINE(0x303C, 0x0096, 0xAAAA);
 
-pascal Fixed GetTrackEditRate(Track theTrack, TimeValue atTime) M68K_INLINE(0x303C, 0x0123, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Fixed GetTrackEditRate(Track theTrack, TimeValue atTime) M68K_INLINE(0x303C, 0x0123, 0xAAAA);
 
-pascal long GetMovieDataSize(Movie theMovie, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0098, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetMovieDataSize(Movie theMovie, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0098, 0xAAAA);
 
-pascal long GetTrackDataSize(Track theTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0149, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetTrackDataSize(Track theTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0149, 0xAAAA);
 
-pascal long GetMediaDataSize(Media theMedia, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0099, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetMediaDataSize(Media theMedia, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0099, 0xAAAA);
 
-pascal Boolean PtInMovie(Movie theMovie, Point pt) M68K_INLINE(0x303C, 0x009A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean PtInMovie(Movie theMovie, Point pt) M68K_INLINE(0x303C, 0x009A, 0xAAAA);
 
-pascal Boolean PtInTrack(Track theTrack, Point pt) M68K_INLINE(0x303C, 0x009B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean PtInTrack(Track theTrack, Point pt) M68K_INLINE(0x303C, 0x009B, 0xAAAA);
 
-pascal void SetMovieLanguage(Movie theMovie, long language) M68K_INLINE(0x303C, 0x009C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieLanguage(Movie theMovie, long language) M68K_INLINE(0x303C, 0x009C, 0xAAAA);
 
-pascal OSErr GetUserData(UserData theUserData, Handle data, OSType udType, long index) M68K_INLINE(0x303C, 0x009E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetUserData(UserData theUserData, Handle data, OSType udType, long index) M68K_INLINE(0x303C, 0x009E, 0xAAAA);
 
-pascal OSErr AddUserData(UserData theUserData, Handle data, OSType udType) M68K_INLINE(0x303C, 0x009F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddUserData(UserData theUserData, Handle data, OSType udType) M68K_INLINE(0x303C, 0x009F, 0xAAAA);
 
-pascal OSErr RemoveUserData(UserData theUserData, OSType udType, long index) M68K_INLINE(0x303C, 0x00A0, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr RemoveUserData(UserData theUserData, OSType udType, long index) M68K_INLINE(0x303C, 0x00A0, 0xAAAA);
 
-pascal INTEGER CountUserDataType(UserData theUserData, OSType udType) M68K_INLINE(0x303C, 0x014B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER CountUserDataType(UserData theUserData, OSType udType) M68K_INLINE(0x303C, 0x014B, 0xAAAA);
 
-pascal long GetNextUserDataType(UserData theUserData, OSType udType) M68K_INLINE(0x303C, 0x01A5, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetNextUserDataType(UserData theUserData, OSType udType) M68K_INLINE(0x303C, 0x01A5, 0xAAAA);
 
-pascal OSErr GetUserDataItem(UserData theUserData, void *data, long size, OSType udType, long index) M68K_INLINE(0x303C, 0x0126, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetUserDataItem(UserData theUserData, void *data, long size, OSType udType, long index) M68K_INLINE(0x303C, 0x0126, 0xAAAA);
 
-pascal OSErr SetUserDataItem(UserData theUserData, void *data, long size, OSType udType, long index) M68K_INLINE(0x303C, 0x012E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetUserDataItem(UserData theUserData, void *data, long size, OSType udType, long index) M68K_INLINE(0x303C, 0x012E, 0xAAAA);
 
-pascal OSErr AddUserDataText(UserData theUserData, Handle data, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddUserDataText(UserData theUserData, Handle data, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014C, 0xAAAA);
 
-pascal OSErr GetUserDataText(UserData theUserData, Handle data, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetUserDataText(UserData theUserData, Handle data, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014D, 0xAAAA);
 
-pascal OSErr RemoveUserDataText(UserData theUserData, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr RemoveUserDataText(UserData theUserData, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014E, 0xAAAA);
 
-pascal OSErr NewUserData(UserData *theUserData) M68K_INLINE(0x303C, 0x012F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr NewUserData(UserData *theUserData) M68K_INLINE(0x303C, 0x012F, 0xAAAA);
 
-pascal OSErr DisposeUserData(UserData theUserData) M68K_INLINE(0x303C, 0x0130, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DisposeUserData(UserData theUserData) M68K_INLINE(0x303C, 0x0130, 0xAAAA);
 
-pascal OSErr NewUserDataFromHandle(Handle h, UserData *theUserData) M68K_INLINE(0x303C, 0x0131, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr NewUserDataFromHandle(Handle h, UserData *theUserData) M68K_INLINE(0x303C, 0x0131, 0xAAAA);
 
-pascal OSErr PutUserDataIntoHandle(UserData theUserData, Handle h) M68K_INLINE(0x303C, 0x0132, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr PutUserDataIntoHandle(UserData theUserData, Handle h) M68K_INLINE(0x303C, 0x0132, 0xAAAA);
 
-pascal void GetMediaNextInterestingTime(Media theMedia, INTEGER interestingTimeFlags, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x016D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMediaNextInterestingTime(Media theMedia, INTEGER interestingTimeFlags, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x016D, 0xAAAA);
 
-pascal void GetTrackNextInterestingTime(Track theTrack, INTEGER interestingTimeFlags, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x00E2, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetTrackNextInterestingTime(Track theTrack, INTEGER interestingTimeFlags, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x00E2, 0xAAAA);
 
-pascal void GetMovieNextInterestingTime(Movie theMovie, INTEGER interestingTimeFlags, INTEGER numMediaTypes, const OSType *whichMediaTypes, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x010E, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetMovieNextInterestingTime(Movie theMovie, INTEGER interestingTimeFlags, INTEGER numMediaTypes, const OSType *whichMediaTypes, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x010E, 0xAAAA);
 
-pascal OSErr CreateMovieFile(const FSSpec *fileSpec, OSType creator, ScriptCode scriptTag, long createMovieFileFlags, INTEGER *resRefNum, Movie *newmovie) M68K_INLINE(0x303C, 0x0191, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CreateMovieFile(const FSSpec *fileSpec, OSType creator, ScriptCode scriptTag, long createMovieFileFlags, INTEGER *resRefNum, Movie *newmovie) M68K_INLINE(0x303C, 0x0191, 0xAAAA);
 
-pascal OSErr DeleteMovieFile(const FSSpec *fileSpec) M68K_INLINE(0x303C, 0x0175, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr DeleteMovieFile(const FSSpec *fileSpec) M68K_INLINE(0x303C, 0x0175, 0xAAAA);
 
-pascal OSErr NewMovieFromHandle(Movie *theMovie, Handle h, INTEGER newMovieFlags, Boolean *dataRefWasChanged) M68K_INLINE(0x303C, 0x00F1, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr NewMovieFromHandle(Movie *theMovie, Handle h, INTEGER newMovieFlags, Boolean *dataRefWasChanged) M68K_INLINE(0x303C, 0x00F1, 0xAAAA);
 
-pascal OSErr NewMovieFromDataFork(Movie *theMovie, INTEGER fRefNum, long fileOffset, INTEGER newMovieFlags, Boolean *dataRefWasChanged) M68K_INLINE(0x303C, 0x01B3, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr NewMovieFromDataFork(Movie *theMovie, INTEGER fRefNum, long fileOffset, INTEGER newMovieFlags, Boolean *dataRefWasChanged) M68K_INLINE(0x303C, 0x01B3, 0xAAAA);
 
-pascal OSErr AddMovieResource(Movie theMovie, INTEGER resRefNum, INTEGER *resId, const StringPtr resName) M68K_INLINE(0x303C, 0x00D7, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddMovieResource(Movie theMovie, INTEGER resRefNum, INTEGER *resId, const StringPtr resName) M68K_INLINE(0x303C, 0x00D7, 0xAAAA);
 
-pascal OSErr UpdateMovieResource(Movie theMovie, INTEGER resRefNum, INTEGER resId, const StringPtr resName) M68K_INLINE(0x303C, 0x00D8, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr UpdateMovieResource(Movie theMovie, INTEGER resRefNum, INTEGER resId, const StringPtr resName) M68K_INLINE(0x303C, 0x00D8, 0xAAAA);
 
-pascal OSErr RemoveMovieResource(INTEGER resRefNum, INTEGER resId) M68K_INLINE(0x303C, 0x0176, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr RemoveMovieResource(INTEGER resRefNum, INTEGER resId) M68K_INLINE(0x303C, 0x0176, 0xAAAA);
 
-pascal Boolean HasMovieChanged(Movie theMovie) M68K_INLINE(0x303C, 0x00D9, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Boolean HasMovieChanged(Movie theMovie) M68K_INLINE(0x303C, 0x00D9, 0xAAAA);
 
-pascal void ClearMovieChanged(Movie theMovie) M68K_INLINE(0x303C, 0x0113, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ClearMovieChanged(Movie theMovie) M68K_INLINE(0x303C, 0x0113, 0xAAAA);
 
-pascal OSErr SetMovieDefaultDataRef(Movie theMovie, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x01C1, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetMovieDefaultDataRef(Movie theMovie, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x01C1, 0xAAAA);
 
-pascal OSErr GetMovieDefaultDataRef(Movie theMovie, Handle *dataRef, OSType *dataRefType) M68K_INLINE(0x303C, 0x01D2, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMovieDefaultDataRef(Movie theMovie, Handle *dataRef, OSType *dataRefType) M68K_INLINE(0x303C, 0x01D2, 0xAAAA);
 
-pascal void FlattenMovie(Movie theMovie, long movieFlattenFlags, const FSSpec *theFile, OSType creator, ScriptCode scriptTag, long createMovieFileFlags, INTEGER *resId, const StringPtr resName) M68K_INLINE(0x303C, 0x019B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void FlattenMovie(Movie theMovie, long movieFlattenFlags, const FSSpec *theFile, OSType creator, ScriptCode scriptTag, long createMovieFileFlags, INTEGER *resId, const StringPtr resName) M68K_INLINE(0x303C, 0x019B, 0xAAAA);
 
-pascal Movie FlattenMovieData(Movie theMovie, long movieFlattenFlags, const FSSpec *theFile, OSType creator, ScriptCode scriptTag, long createMovieFileFlags) M68K_INLINE(0x303C, 0x019C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie FlattenMovieData(Movie theMovie, long movieFlattenFlags, const FSSpec *theFile, OSType creator, ScriptCode scriptTag, long createMovieFileFlags) M68K_INLINE(0x303C, 0x019C, 0xAAAA);
 
-pascal void SetMovieProgressProc(Movie theMovie, MovieProgressProcPtr p, long refcon) M68K_INLINE(0x303C, 0x019A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieProgressProc(Movie theMovie, MovieProgressProcPtr p, long refcon) M68K_INLINE(0x303C, 0x019A, 0xAAAA);
 
-pascal HandlerError GetVideoMediaGraphicsMode(MediaHandler mh, long *graphicsMode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0101, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal HandlerError GetVideoMediaGraphicsMode(MediaHandler mh, long *graphicsMode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0101, 0x7000, 0xA82A);
 
-pascal HandlerError SetVideoMediaGraphicsMode(MediaHandler mh, long graphicsMode, const RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0102, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal HandlerError SetVideoMediaGraphicsMode(MediaHandler mh, long graphicsMode, const RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0102, 0x7000, 0xA82A);
 
-pascal HandlerError GetSoundMediaBalance(MediaHandler mh, INTEGER *balance) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal HandlerError GetSoundMediaBalance(MediaHandler mh, INTEGER *balance) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
 
-pascal HandlerError SetSoundMediaBalance(MediaHandler mh, INTEGER balance) M68K_INLINE(0x2F3C, 0x0002, 0x0102, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal HandlerError SetSoundMediaBalance(MediaHandler mh, INTEGER balance) M68K_INLINE(0x2F3C, 0x0002, 0x0102, 0x7000, 0xA82A);
 
 enum {
     txtProcDefaultDisplay = 0,
@@ -1325,13 +1329,13 @@ typedef TextMediaProcPtr TextMediaUPP;
 #define NewTextMediaProc(proc) NewTextMediaUPP(proc)
 #define DisposeTextMediaProc(proc) DisposeTextMediaUPP(proc)
 
-pascal ComponentResult SetTextProc(MediaHandler mh, TextMediaProcPtr TextProc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0101, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SetTextProc(MediaHandler mh, TextMediaProcPtr TextProc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0101, 0x7000, 0xA82A);
 
-pascal ComponentResult AddTextSample(MediaHandler mh, Ptr text, unsigned long size, INTEGER fontNumber, INTEGER fontSize, Style textFace, RGBColor *textColor, RGBColor *backColor, INTEGER textJustification, Rect *textBox, long displayFlags, TimeValue scrollDelay, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0034, 0x0102, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult AddTextSample(MediaHandler mh, Ptr text, unsigned long size, INTEGER fontNumber, INTEGER fontSize, Style textFace, RGBColor *textColor, RGBColor *backColor, INTEGER textJustification, Rect *textBox, long displayFlags, TimeValue scrollDelay, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0034, 0x0102, 0x7000, 0xA82A);
 
-pascal ComponentResult AddTESample(MediaHandler mh, TEHandle hTE, RGBColor *backColor, INTEGER textJustification, Rect *textBox, long displayFlags, TimeValue scrollDelay, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0026, 0x0103, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult AddTESample(MediaHandler mh, TEHandle hTE, RGBColor *backColor, INTEGER textJustification, Rect *textBox, long displayFlags, TimeValue scrollDelay, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0026, 0x0103, 0x7000, 0xA82A);
 
-pascal ComponentResult AddHiliteSample(MediaHandler mh, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0010, 0x0104, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult AddHiliteSample(MediaHandler mh, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0010, 0x0104, 0x7000, 0xA82A);
 
 enum {
     findTextEdgeOK = 1,
@@ -1340,41 +1344,41 @@ enum {
     findTextWrapAround = 8,
 };
 
-pascal ComponentResult FindNextText(MediaHandler mh, Ptr text, long size, INTEGER findFlags, TimeValue startTime, TimeValue *foundTime, TimeValue *foundDuration, long *offset) M68K_INLINE(0x2F3C, 0x001A, 0x0105, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult FindNextText(MediaHandler mh, Ptr text, long size, INTEGER findFlags, TimeValue startTime, TimeValue *foundTime, TimeValue *foundDuration, long *offset) M68K_INLINE(0x2F3C, 0x001A, 0x0105, 0x7000, 0xA82A);
 
-pascal ComponentResult HiliteTextSample(MediaHandler mh, TimeValue sampleTime, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor) M68K_INLINE(0x2F3C, 0x000C, 0x0106, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult HiliteTextSample(MediaHandler mh, TimeValue sampleTime, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor) M68K_INLINE(0x2F3C, 0x000C, 0x0106, 0x7000, 0xA82A);
 
-pascal void GetPosterBox(Movie theMovie, Rect *boxRect) M68K_INLINE(0x303C, 0x016F, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void GetPosterBox(Movie theMovie, Rect *boxRect) M68K_INLINE(0x303C, 0x016F, 0xAAAA);
 
-pascal void SetPosterBox(Movie theMovie, const Rect *boxRect) M68K_INLINE(0x303C, 0x0170, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetPosterBox(Movie theMovie, const Rect *boxRect) M68K_INLINE(0x303C, 0x0170, 0xAAAA);
 
-pascal RgnHandle GetMovieSegmentDisplayBoundsRgn(Movie theMovie, TimeValue time, TimeValue duration) M68K_INLINE(0x303C, 0x016C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetMovieSegmentDisplayBoundsRgn(Movie theMovie, TimeValue time, TimeValue duration) M68K_INLINE(0x303C, 0x016C, 0xAAAA);
 
-pascal RgnHandle GetTrackSegmentDisplayBoundsRgn(Track theTrack, TimeValue time, TimeValue duration) M68K_INLINE(0x303C, 0x016B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle GetTrackSegmentDisplayBoundsRgn(Track theTrack, TimeValue time, TimeValue duration) M68K_INLINE(0x303C, 0x016B, 0xAAAA);
 
-pascal void SetMovieCoverProcs(Movie theMovie, MovieRgnCoverProc uncoverProc, MovieRgnCoverProc coverProc, long refcon) M68K_INLINE(0x303C, 0x0179, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMovieCoverProcs(Movie theMovie, MovieRgnCoverProc uncoverProc, MovieRgnCoverProc coverProc, long refcon) M68K_INLINE(0x303C, 0x0179, 0xAAAA);
 
-pascal ComponentResult GetTrackStatus(Track theTrack) M68K_INLINE(0x303C, 0x0172, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult GetTrackStatus(Track theTrack) M68K_INLINE(0x303C, 0x0172, 0xAAAA);
 
-pascal ComponentResult GetMovieStatus(Movie theMovie, Track *firstProblemTrack) M68K_INLINE(0x303C, 0x0173, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult GetMovieStatus(Movie theMovie, Track *firstProblemTrack) M68K_INLINE(0x303C, 0x0173, 0xAAAA);
 
-pascal OSErr PutMovieOnScrap(Movie theMovie, long movieScrapFlags) M68K_INLINE(0x303C, 0x018C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr PutMovieOnScrap(Movie theMovie, long movieScrapFlags) M68K_INLINE(0x303C, 0x018C, 0xAAAA);
 
-pascal Movie NewMovieFromScrap(long newMovieFlags) M68K_INLINE(0x303C, 0x018D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie NewMovieFromScrap(long newMovieFlags) M68K_INLINE(0x303C, 0x018D, 0xAAAA);
 
-pascal OSErr GetMediaDataRef(Media theMedia, INTEGER index, Handle *dataRef, OSType *dataRefType, long *dataRefAttributes) M68K_INLINE(0x303C, 0x0197, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMediaDataRef(Media theMedia, INTEGER index, Handle *dataRef, OSType *dataRefType, long *dataRefAttributes) M68K_INLINE(0x303C, 0x0197, 0xAAAA);
 
-pascal OSErr SetMediaDataRef(Media theMedia, INTEGER index, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x01C9, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetMediaDataRef(Media theMedia, INTEGER index, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x01C9, 0xAAAA);
 
-pascal OSErr SetMediaDataRefAttributes(Media theMedia, INTEGER index, long dataRefAttributes) M68K_INLINE(0x303C, 0x01CA, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr SetMediaDataRefAttributes(Media theMedia, INTEGER index, long dataRefAttributes) M68K_INLINE(0x303C, 0x01CA, 0xAAAA);
 
-pascal OSErr AddMediaDataRef(Media theMedia, INTEGER *index, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x0198, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddMediaDataRef(Media theMedia, INTEGER *index, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x0198, 0xAAAA);
 
-pascal OSErr GetMediaDataRefCount(Media theMedia, INTEGER *count) M68K_INLINE(0x303C, 0x0199, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr GetMediaDataRefCount(Media theMedia, INTEGER *count) M68K_INLINE(0x303C, 0x0199, 0xAAAA);
 
-pascal void SetMoviePlayHints(Movie theMovie, long flags, long flagsMask) M68K_INLINE(0x303C, 0x01A1, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMoviePlayHints(Movie theMovie, long flags, long flagsMask) M68K_INLINE(0x303C, 0x01A1, 0xAAAA);
 
-pascal void SetMediaPlayHints(Media theMedia, long flags, long flagsMask) M68K_INLINE(0x303C, 0x01A2, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetMediaPlayHints(Media theMedia, long flags, long flagsMask) M68K_INLINE(0x303C, 0x01A2, 0xAAAA);
 
 enum {
     firstMoviesError = -2000,
@@ -1555,85 +1559,85 @@ enum {
     badControllerHeight = -9994,
 };
 
-pascal ComponentResult MCSetMovie(MovieController mc, Movie m, WindowPtr movieWindow, Point where) M68K_INLINE(0x2F3C, 0x000C, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetMovie(MovieController mc, Movie m, WindowPtr movieWindow, Point where) M68K_INLINE(0x2F3C, 0x000C, 0x0002, 0x7000, 0xA82A);
 
-pascal Movie MCGetMovie(MovieController mc) M68K_INLINE(0x4267, 0x2F3C, 0x0002, 0x0005, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie MCGetMovie(MovieController mc) M68K_INLINE(0x4267, 0x2F3C, 0x0002, 0x0005, 0x7000, 0xA82A);
 
-pascal ComponentResult MCRemoveMovie(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0006, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCRemoveMovie(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0006, 0x7000, 0xA82A);
 
-pascal ComponentResult MCIsPlayerEvent(MovieController mc, const EventRecord *e) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCIsPlayerEvent(MovieController mc, const EventRecord *e) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetActionFilter(MovieController mc, MCActionFilter blob) M68K_INLINE(0x2F3C, 0x0004, 0x0008, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetActionFilter(MovieController mc, MCActionFilter blob) M68K_INLINE(0x2F3C, 0x0004, 0x0008, 0x7000, 0xA82A);
 
-pascal ComponentResult MCDoAction(MovieController mc, INTEGER action, void *params) M68K_INLINE(0x2F3C, 0x0006, 0x0009, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCDoAction(MovieController mc, INTEGER action, void *params) M68K_INLINE(0x2F3C, 0x0006, 0x0009, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetControllerAttached(MovieController mc, Boolean attach) M68K_INLINE(0x2F3C, 0x0002, 0x000A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetControllerAttached(MovieController mc, Boolean attach) M68K_INLINE(0x2F3C, 0x0002, 0x000A, 0x7000, 0xA82A);
 
-pascal ComponentResult MCIsControllerAttached(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCIsControllerAttached(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000B, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetControllerPort(MovieController mc, CGrafPtr gp) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetControllerPort(MovieController mc, CGrafPtr gp) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
 
-pascal CGrafPtr MCGetControllerPort(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal CGrafPtr MCGetControllerPort(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000D, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetVisible(MovieController mc, Boolean visible) M68K_INLINE(0x2F3C, 0x0002, 0x000E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetVisible(MovieController mc, Boolean visible) M68K_INLINE(0x2F3C, 0x0002, 0x000E, 0x7000, 0xA82A);
 
-pascal ComponentResult MCGetVisible(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCGetVisible(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000F, 0x7000, 0xA82A);
 
-pascal ComponentResult MCGetControllerBoundsRect(MovieController mc, Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0010, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCGetControllerBoundsRect(MovieController mc, Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0010, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetControllerBoundsRect(MovieController mc, const Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0011, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetControllerBoundsRect(MovieController mc, const Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0011, 0x7000, 0xA82A);
 
-pascal RgnHandle MCGetControllerBoundsRgn(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0012, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle MCGetControllerBoundsRgn(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0012, 0x7000, 0xA82A);
 
-pascal RgnHandle MCGetWindowRgn(MovieController mc, WindowPtr w) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal RgnHandle MCGetWindowRgn(MovieController mc, WindowPtr w) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
 
-pascal ComponentResult MCMovieChanged(MovieController mc, Movie m) M68K_INLINE(0x2F3C, 0x0004, 0x0014, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCMovieChanged(MovieController mc, Movie m) M68K_INLINE(0x2F3C, 0x0004, 0x0014, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetDuration(MovieController mc, TimeValue duration) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetDuration(MovieController mc, TimeValue duration) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
 
-pascal TimeValue MCGetCurrentTime(MovieController mc, TimeScale *scale) M68K_INLINE(0x2F3C, 0x0004, 0x0016, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue MCGetCurrentTime(MovieController mc, TimeScale *scale) M68K_INLINE(0x2F3C, 0x0004, 0x0016, 0x7000, 0xA82A);
 
-pascal ComponentResult MCNewAttachedController(MovieController mc, Movie m, WindowPtr w, Point where) M68K_INLINE(0x2F3C, 0x000C, 0x0017, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCNewAttachedController(MovieController mc, Movie m, WindowPtr w, Point where) M68K_INLINE(0x2F3C, 0x000C, 0x0017, 0x7000, 0xA82A);
 
-pascal ComponentResult MCDraw(MovieController mc, WindowPtr w) M68K_INLINE(0x2F3C, 0x0004, 0x0018, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCDraw(MovieController mc, WindowPtr w) M68K_INLINE(0x2F3C, 0x0004, 0x0018, 0x7000, 0xA82A);
 
-pascal ComponentResult MCActivate(MovieController mc, WindowPtr w, Boolean activate) M68K_INLINE(0x2F3C, 0x0006, 0x0019, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCActivate(MovieController mc, WindowPtr w, Boolean activate) M68K_INLINE(0x2F3C, 0x0006, 0x0019, 0x7000, 0xA82A);
 
-pascal ComponentResult MCIdle(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCIdle(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001A, 0x7000, 0xA82A);
 
-pascal ComponentResult MCKey(MovieController mc, char key, long modifiers) M68K_INLINE(0x2F3C, 0x0006, 0x001B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCKey(MovieController mc, char key, long modifiers) M68K_INLINE(0x2F3C, 0x0006, 0x001B, 0x7000, 0xA82A);
 
-pascal ComponentResult MCClick(MovieController mc, WindowPtr w, Point where, long when, long modifiers) M68K_INLINE(0x2F3C, 0x0010, 0x001C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCClick(MovieController mc, WindowPtr w, Point where, long when, long modifiers) M68K_INLINE(0x2F3C, 0x0010, 0x001C, 0x7000, 0xA82A);
 
-pascal ComponentResult MCEnableEditing(MovieController mc, Boolean enabled) M68K_INLINE(0x2F3C, 0x0002, 0x001D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCEnableEditing(MovieController mc, Boolean enabled) M68K_INLINE(0x2F3C, 0x0002, 0x001D, 0x7000, 0xA82A);
 
-pascal long MCIsEditingEnabled(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long MCIsEditingEnabled(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001E, 0x7000, 0xA82A);
 
-pascal Movie MCCopy(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie MCCopy(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001F, 0x7000, 0xA82A);
 
-pascal Movie MCCut(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0020, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie MCCut(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0020, 0x7000, 0xA82A);
 
-pascal ComponentResult MCPaste(MovieController mc, Movie srcMovie) M68K_INLINE(0x2F3C, 0x0004, 0x0021, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCPaste(MovieController mc, Movie srcMovie) M68K_INLINE(0x2F3C, 0x0004, 0x0021, 0x7000, 0xA82A);
 
-pascal ComponentResult MCClear(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0022, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCClear(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0022, 0x7000, 0xA82A);
 
-pascal ComponentResult MCUndo(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0023, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCUndo(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0023, 0x7000, 0xA82A);
 
-pascal ComponentResult MCPositionController(MovieController mc, const Rect *movieRect, const Rect *controllerRect, long someFlags) M68K_INLINE(0x2F3C, 0x000C, 0x0024, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCPositionController(MovieController mc, const Rect *movieRect, const Rect *controllerRect, long someFlags) M68K_INLINE(0x2F3C, 0x000C, 0x0024, 0x7000, 0xA82A);
 
-pascal ComponentResult MCGetControllerInfo(MovieController mc, long *someFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0025, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCGetControllerInfo(MovieController mc, long *someFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0025, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetClip(MovieController mc, RgnHandle theClip, RgnHandle movieClip) M68K_INLINE(0x2F3C, 0x0008, 0x0028, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetClip(MovieController mc, RgnHandle theClip, RgnHandle movieClip) M68K_INLINE(0x2F3C, 0x0008, 0x0028, 0x7000, 0xA82A);
 
-pascal ComponentResult MCGetClip(MovieController mc, RgnHandle *theClip, RgnHandle *movieClip) M68K_INLINE(0x2F3C, 0x0008, 0x0029, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCGetClip(MovieController mc, RgnHandle *theClip, RgnHandle *movieClip) M68K_INLINE(0x2F3C, 0x0008, 0x0029, 0x7000, 0xA82A);
 
-pascal ComponentResult MCDrawBadge(MovieController mc, RgnHandle movieRgn, RgnHandle *badgeRgn) M68K_INLINE(0x2F3C, 0x0008, 0x002A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCDrawBadge(MovieController mc, RgnHandle movieRgn, RgnHandle *badgeRgn) M68K_INLINE(0x2F3C, 0x0008, 0x002A, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetUpEditMenu(MovieController mc, long modifiers, MenuHandle mh) M68K_INLINE(0x2F3C, 0x0008, 0x002B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetUpEditMenu(MovieController mc, long modifiers, MenuHandle mh) M68K_INLINE(0x2F3C, 0x0008, 0x002B, 0x7000, 0xA82A);
 
-pascal ComponentResult MCGetMenuString(MovieController mc, long modifiers, INTEGER item, uint8_t *aString) M68K_INLINE(0x2F3C, 0x000A, 0x002C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCGetMenuString(MovieController mc, long modifiers, INTEGER item, uint8_t *aString) M68K_INLINE(0x2F3C, 0x000A, 0x002C, 0x7000, 0xA82A);
 
-pascal ComponentResult MCSetActionFilterWithRefCon(MovieController mc, MCActionFilterWithRefCon blob, long refCon) M68K_INLINE(0x2F3C, 0x0008, 0x002D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MCSetActionFilterWithRefCon(MovieController mc, MCActionFilterWithRefCon blob, long refCon) M68K_INLINE(0x2F3C, 0x0008, 0x002D, 0x7000, 0xA82A);
 
 enum {
     kMCSetMovieSelect = 2,
@@ -1677,75 +1681,75 @@ enum {
     kMCSetActionFilterWithRefConSelect = 45,
 };
 
-pascal TimeBase NewTimeBase(void) M68K_INLINE(0x303C, 0x00A5, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeBase NewTimeBase(void) M68K_INLINE(0x303C, 0x00A5, 0xAAAA);
 
-pascal void DisposeTimeBase(TimeBase tb) M68K_INLINE(0x303C, 0x00B6, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DisposeTimeBase(TimeBase tb) M68K_INLINE(0x303C, 0x00B6, 0xAAAA);
 
-pascal TimeValue GetTimeBaseTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00A6, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetTimeBaseTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00A6, 0xAAAA);
 
-pascal void SetTimeBaseTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00A7, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00A7, 0xAAAA);
 
-pascal void SetTimeBaseValue(TimeBase tb, TimeValue t, TimeScale s) M68K_INLINE(0x303C, 0x00A8, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseValue(TimeBase tb, TimeValue t, TimeScale s) M68K_INLINE(0x303C, 0x00A8, 0xAAAA);
 
-pascal Fixed GetTimeBaseRate(TimeBase tb) M68K_INLINE(0x303C, 0x00A9, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Fixed GetTimeBaseRate(TimeBase tb) M68K_INLINE(0x303C, 0x00A9, 0xAAAA);
 
-pascal void SetTimeBaseRate(TimeBase tb, Fixed r) M68K_INLINE(0x303C, 0x00AA, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseRate(TimeBase tb, Fixed r) M68K_INLINE(0x303C, 0x00AA, 0xAAAA);
 
-pascal TimeValue GetTimeBaseStartTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00AB, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetTimeBaseStartTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00AB, 0xAAAA);
 
-pascal void SetTimeBaseStartTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00AC, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseStartTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00AC, 0xAAAA);
 
-pascal TimeValue GetTimeBaseStopTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00AD, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeValue GetTimeBaseStopTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00AD, 0xAAAA);
 
-pascal void SetTimeBaseStopTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00AE, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseStopTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00AE, 0xAAAA);
 
-pascal long GetTimeBaseFlags(TimeBase tb) M68K_INLINE(0x303C, 0x00B1, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetTimeBaseFlags(TimeBase tb) M68K_INLINE(0x303C, 0x00B1, 0xAAAA);
 
-pascal void SetTimeBaseFlags(TimeBase tb, long timeBaseFlags) M68K_INLINE(0x303C, 0x00B2, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseFlags(TimeBase tb, long timeBaseFlags) M68K_INLINE(0x303C, 0x00B2, 0xAAAA);
 
-pascal void SetTimeBaseMasterTimeBase(TimeBase slave, TimeBase master, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x00B4, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseMasterTimeBase(TimeBase slave, TimeBase master, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x00B4, 0xAAAA);
 
-pascal TimeBase GetTimeBaseMasterTimeBase(TimeBase tb) M68K_INLINE(0x303C, 0x00AF, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeBase GetTimeBaseMasterTimeBase(TimeBase tb) M68K_INLINE(0x303C, 0x00AF, 0xAAAA);
 
-pascal void SetTimeBaseMasterClock(TimeBase slave, Component clockMeister, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x00B3, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseMasterClock(TimeBase slave, Component clockMeister, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x00B3, 0xAAAA);
 
-pascal ComponentInstance GetTimeBaseMasterClock(TimeBase tb) M68K_INLINE(0x303C, 0x00B0, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentInstance GetTimeBaseMasterClock(TimeBase tb) M68K_INLINE(0x303C, 0x00B0, 0xAAAA);
 
-pascal void ConvertTime(TimeRecord *inout, TimeBase newBase) M68K_INLINE(0x303C, 0x00B5, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ConvertTime(TimeRecord *inout, TimeBase newBase) M68K_INLINE(0x303C, 0x00B5, 0xAAAA);
 
-pascal void ConvertTimeScale(TimeRecord *inout, TimeScale newScale) M68K_INLINE(0x303C, 0x00B7, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ConvertTimeScale(TimeRecord *inout, TimeScale newScale) M68K_INLINE(0x303C, 0x00B7, 0xAAAA);
 
-pascal void AddTime(TimeRecord *dst, const TimeRecord *src) M68K_INLINE(0x303C, 0x010C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void AddTime(TimeRecord *dst, const TimeRecord *src) M68K_INLINE(0x303C, 0x010C, 0xAAAA);
 
-pascal void SubtractTime(TimeRecord *dst, const TimeRecord *src) M68K_INLINE(0x303C, 0x010D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SubtractTime(TimeRecord *dst, const TimeRecord *src) M68K_INLINE(0x303C, 0x010D, 0xAAAA);
 
-pascal long GetTimeBaseStatus(TimeBase tb, TimeRecord *unpinnedTime) M68K_INLINE(0x303C, 0x010B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long GetTimeBaseStatus(TimeBase tb, TimeRecord *unpinnedTime) M68K_INLINE(0x303C, 0x010B, 0xAAAA);
 
-pascal void SetTimeBaseZero(TimeBase tb, TimeRecord *zero) M68K_INLINE(0x303C, 0x0128, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void SetTimeBaseZero(TimeBase tb, TimeRecord *zero) M68K_INLINE(0x303C, 0x0128, 0xAAAA);
 
-pascal Fixed GetTimeBaseEffectiveRate(TimeBase tb) M68K_INLINE(0x303C, 0x0124, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Fixed GetTimeBaseEffectiveRate(TimeBase tb) M68K_INLINE(0x303C, 0x0124, 0xAAAA);
 
-pascal QTCallBack NewCallBack(TimeBase tb, INTEGER cbType) M68K_INLINE(0x303C, 0x00EB, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal QTCallBack NewCallBack(TimeBase tb, INTEGER cbType) M68K_INLINE(0x303C, 0x00EB, 0xAAAA);
 
-pascal void DisposeCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x00EC, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void DisposeCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x00EC, 0xAAAA);
 
-pascal INTEGER GetCallBackType(QTCallBack cb) M68K_INLINE(0x303C, 0x00ED, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal INTEGER GetCallBackType(QTCallBack cb) M68K_INLINE(0x303C, 0x00ED, 0xAAAA);
 
-pascal TimeBase GetCallBackTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x00EE, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal TimeBase GetCallBackTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x00EE, 0xAAAA);
 
-pascal OSErr CallMeWhen(QTCallBack cb, QTCallBackProc callBackProc, long refCon, long param1, long param2, long param3) M68K_INLINE(0x303C, 0x00B8, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr CallMeWhen(QTCallBack cb, QTCallBackProc callBackProc, long refCon, long param1, long param2, long param3) M68K_INLINE(0x303C, 0x00B8, 0xAAAA);
 
-pascal void CancelCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x00B9, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void CancelCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x00B9, 0xAAAA);
 
-pascal OSErr AddCallBackToTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x0129, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr AddCallBackToTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x0129, 0xAAAA);
 
-pascal OSErr RemoveCallBackFromTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x012A, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal OSErr RemoveCallBackFromTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x012A, 0xAAAA);
 
-pascal QTCallBack GetFirstCallBack(TimeBase tb) M68K_INLINE(0x303C, 0x012B, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal QTCallBack GetFirstCallBack(TimeBase tb) M68K_INLINE(0x303C, 0x012B, 0xAAAA);
 
-pascal QTCallBack GetNextCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x012C, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal QTCallBack GetNextCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x012C, 0xAAAA);
 
-pascal void ExecuteCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x012D, 0xAAAA);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal void ExecuteCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x012D, 0xAAAA);
 
 typedef struct MoviesUserData MoviesUserData;
 struct MoviesUserData {
@@ -2110,23 +2114,23 @@ enum {
     kClockImplementsCallBacks = 2,
 };
 
-pascal QTCallBack ClockNewCallBack(ComponentInstance aClock, TimeBase tb, INTEGER callBackType) M68K_INLINE(0x2F3C, 0x0006, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal QTCallBack ClockNewCallBack(ComponentInstance aClock, TimeBase tb, INTEGER callBackType) M68K_INLINE(0x2F3C, 0x0006, 0x0002, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockDisposeCallBack(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0003, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockDisposeCallBack(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0003, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockCallMeWhen(ComponentInstance aClock, QTCallBack cb, long param1, long param2, long param3) M68K_INLINE(0x2F3C, 0x0010, 0x0004, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockCallMeWhen(ComponentInstance aClock, QTCallBack cb, long param1, long param2, long param3) M68K_INLINE(0x2F3C, 0x0010, 0x0004, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockCancelCallBack(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0005, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockCancelCallBack(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0005, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockRateChanged(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0006, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockRateChanged(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0006, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockTimeChanged(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockTimeChanged(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockSetTimeBase(ComponentInstance aClock, TimeBase tb) M68K_INLINE(0x2F3C, 0x0004, 0x0008, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockSetTimeBase(ComponentInstance aClock, TimeBase tb) M68K_INLINE(0x2F3C, 0x0004, 0x0008, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockStartStopChanged(ComponentInstance aClock, QTCallBack cb, Boolean startChanged, Boolean stopChanged) M68K_INLINE(0x2F3C, 0x0008, 0x0009, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockStartStopChanged(ComponentInstance aClock, QTCallBack cb, Boolean startChanged, Boolean stopChanged) M68K_INLINE(0x2F3C, 0x0008, 0x0009, 0x7000, 0xA82A);
 
-pascal ComponentResult ClockGetRate(ComponentInstance aClock, Fixed *rate) M68K_INLINE(0x2F3C, 0x0004, 0x000A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult ClockGetRate(ComponentInstance aClock, Fixed *rate) M68K_INLINE(0x2F3C, 0x0004, 0x000A, 0x7000, 0xA82A);
 
 enum {
     kClockGetTimeSelect = 1,
@@ -2259,163 +2263,163 @@ enum {
     sgPanelFlagForPanel = 1,
 };
 
-pascal ComponentResult SGInitialize(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0001, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGInitialize(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0001, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetDataOutput(SeqGrabComponent s, FSSpec *movieFile, long whereFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetDataOutput(SeqGrabComponent s, FSSpec *movieFile, long whereFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0002, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetDataOutput(SeqGrabComponent s, FSSpec *movieFile, long *whereFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0003, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetDataOutput(SeqGrabComponent s, FSSpec *movieFile, long *whereFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0003, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetGWorld(SeqGrabComponent s, CGrafPtr gp, GDHandle gd) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetGWorld(SeqGrabComponent s, CGrafPtr gp, GDHandle gd) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetGWorld(SeqGrabComponent s, CGrafPtr *gp, GDHandle *gd) M68K_INLINE(0x2F3C, 0x0008, 0x0005, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetGWorld(SeqGrabComponent s, CGrafPtr *gp, GDHandle *gd) M68K_INLINE(0x2F3C, 0x0008, 0x0005, 0x7000, 0xA82A);
 
-pascal ComponentResult SGNewChannel(SeqGrabComponent s, OSType channelType, SGChannel *ref) M68K_INLINE(0x2F3C, 0x0008, 0x0006, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGNewChannel(SeqGrabComponent s, OSType channelType, SGChannel *ref) M68K_INLINE(0x2F3C, 0x0008, 0x0006, 0x7000, 0xA82A);
 
-pascal ComponentResult SGDisposeChannel(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGDisposeChannel(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
 
-pascal ComponentResult SGStartPreview(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0010, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGStartPreview(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0010, 0x7000, 0xA82A);
 
-pascal ComponentResult SGStartRecord(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0011, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGStartRecord(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0011, 0x7000, 0xA82A);
 
-pascal ComponentResult SGIdle(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0012, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGIdle(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0012, 0x7000, 0xA82A);
 
-pascal ComponentResult SGStop(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0013, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGStop(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0013, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPause(SeqGrabComponent s, Byte pause) M68K_INLINE(0x2F3C, 0x0002, 0x0014, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPause(SeqGrabComponent s, Byte pause) M68K_INLINE(0x2F3C, 0x0002, 0x0014, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPrepare(SeqGrabComponent s, Boolean prepareForPreview, Boolean prepareForRecord) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPrepare(SeqGrabComponent s, Boolean prepareForPreview, Boolean prepareForRecord) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
 
-pascal ComponentResult SGRelease(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0016, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGRelease(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0016, 0x7000, 0xA82A);
 
-pascal Movie SGGetMovie(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0017, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Movie SGGetMovie(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0017, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetMaximumRecordTime(SeqGrabComponent s, unsigned long ticks) M68K_INLINE(0x2F3C, 0x0004, 0x0018, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetMaximumRecordTime(SeqGrabComponent s, unsigned long ticks) M68K_INLINE(0x2F3C, 0x0004, 0x0018, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetMaximumRecordTime(SeqGrabComponent s, unsigned long *ticks) M68K_INLINE(0x2F3C, 0x0004, 0x0019, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetMaximumRecordTime(SeqGrabComponent s, unsigned long *ticks) M68K_INLINE(0x2F3C, 0x0004, 0x0019, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetStorageSpaceRemaining(SeqGrabComponent s, unsigned long *bytes) M68K_INLINE(0x2F3C, 0x0004, 0x001A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetStorageSpaceRemaining(SeqGrabComponent s, unsigned long *bytes) M68K_INLINE(0x2F3C, 0x0004, 0x001A, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetTimeRemaining(SeqGrabComponent s, long *ticksLeft) M68K_INLINE(0x2F3C, 0x0004, 0x001B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetTimeRemaining(SeqGrabComponent s, long *ticksLeft) M68K_INLINE(0x2F3C, 0x0004, 0x001B, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGrabPict(SeqGrabComponent s, PicHandle *p, const Rect *bounds, INTEGER offscreenDepth, long grabPictFlags) M68K_INLINE(0x2F3C, 0x000E, 0x001C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGrabPict(SeqGrabComponent s, PicHandle *p, const Rect *bounds, INTEGER offscreenDepth, long grabPictFlags) M68K_INLINE(0x2F3C, 0x000E, 0x001C, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetLastMovieResID(SeqGrabComponent s, INTEGER *resID) M68K_INLINE(0x2F3C, 0x0004, 0x001D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetLastMovieResID(SeqGrabComponent s, INTEGER *resID) M68K_INLINE(0x2F3C, 0x0004, 0x001D, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetFlags(SeqGrabComponent s, long sgFlags) M68K_INLINE(0x2F3C, 0x0004, 0x001E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetFlags(SeqGrabComponent s, long sgFlags) M68K_INLINE(0x2F3C, 0x0004, 0x001E, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetFlags(SeqGrabComponent s, long *sgFlags) M68K_INLINE(0x2F3C, 0x0004, 0x001F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetFlags(SeqGrabComponent s, long *sgFlags) M68K_INLINE(0x2F3C, 0x0004, 0x001F, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetDataProc(SeqGrabComponent s, SGDataProc proc, long refCon) M68K_INLINE(0x2F3C, 0x0008, 0x0020, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetDataProc(SeqGrabComponent s, SGDataProc proc, long refCon) M68K_INLINE(0x2F3C, 0x0008, 0x0020, 0x7000, 0xA82A);
 
-pascal ComponentResult SGNewChannelFromComponent(SeqGrabComponent s, SGChannel *newChannel, Component sgChannelComponent) M68K_INLINE(0x2F3C, 0x0008, 0x0021, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGNewChannelFromComponent(SeqGrabComponent s, SGChannel *newChannel, Component sgChannelComponent) M68K_INLINE(0x2F3C, 0x0008, 0x0021, 0x7000, 0xA82A);
 
-pascal ComponentResult SGDisposeDeviceList(SeqGrabComponent s, SGDeviceList list) M68K_INLINE(0x2F3C, 0x0004, 0x0022, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGDisposeDeviceList(SeqGrabComponent s, SGDeviceList list) M68K_INLINE(0x2F3C, 0x0004, 0x0022, 0x7000, 0xA82A);
 
-pascal ComponentResult SGAppendDeviceListToMenu(SeqGrabComponent s, SGDeviceList list, MenuHandle mh) M68K_INLINE(0x2F3C, 0x0008, 0x0023, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGAppendDeviceListToMenu(SeqGrabComponent s, SGDeviceList list, MenuHandle mh) M68K_INLINE(0x2F3C, 0x0008, 0x0023, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetSettings(SeqGrabComponent s, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x0008, 0x0024, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetSettings(SeqGrabComponent s, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x0008, 0x0024, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetSettings(SeqGrabComponent s, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x0008, 0x0025, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetSettings(SeqGrabComponent s, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x0008, 0x0025, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetIndChannel(SeqGrabComponent s, INTEGER index, SGChannel *ref, OSType *chanType) M68K_INLINE(0x2F3C, 0x000A, 0x0026, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetIndChannel(SeqGrabComponent s, INTEGER index, SGChannel *ref, OSType *chanType) M68K_INLINE(0x2F3C, 0x000A, 0x0026, 0x7000, 0xA82A);
 
-pascal ComponentResult SGUpdate(SeqGrabComponent s, RgnHandle updateRgn) M68K_INLINE(0x2F3C, 0x0004, 0x0027, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGUpdate(SeqGrabComponent s, RgnHandle updateRgn) M68K_INLINE(0x2F3C, 0x0004, 0x0027, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetPause(SeqGrabComponent s, Byte *paused) M68K_INLINE(0x2F3C, 0x0004, 0x0028, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetPause(SeqGrabComponent s, Byte *paused) M68K_INLINE(0x2F3C, 0x0004, 0x0028, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSettingsDialog(SeqGrabComponent s, SGChannel c, INTEGER numPanels, Component *panelList, long flags, SGModalFilterProcPtr proc, long procRefNum) M68K_INLINE(0x2F3C, 0x0016, 0x0029, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSettingsDialog(SeqGrabComponent s, SGChannel c, INTEGER numPanels, Component *panelList, long flags, SGModalFilterProcPtr proc, long procRefNum) M68K_INLINE(0x2F3C, 0x0016, 0x0029, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetAlignmentProc(SeqGrabComponent s, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x2F3C, 0x0004, 0x002A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetAlignmentProc(SeqGrabComponent s, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x2F3C, 0x0004, 0x002A, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelSettings(SeqGrabComponent s, SGChannel c, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x002B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelSettings(SeqGrabComponent s, SGChannel c, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x002B, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelSettings(SeqGrabComponent s, SGChannel c, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x002C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelSettings(SeqGrabComponent s, SGChannel c, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x002C, 0x7000, 0xA82A);
 
-pascal ComponentResult SGWriteMovieData(SeqGrabComponent s, SGChannel c, Ptr p, long len, long *offset) M68K_INLINE(0x2F3C, 0x0010, 0x0100, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGWriteMovieData(SeqGrabComponent s, SGChannel c, Ptr p, long len, long *offset) M68K_INLINE(0x2F3C, 0x0010, 0x0100, 0x7000, 0xA82A);
 
-pascal ComponentResult SGAddFrameReference(SeqGrabComponent s, seqGrabFrameInfo *frameInfo) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGAddFrameReference(SeqGrabComponent s, seqGrabFrameInfo *frameInfo) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetNextFrameReference(SeqGrabComponent s, seqGrabFrameInfo *frameInfo, TimeValue *frameDuration, long *frameNumber) M68K_INLINE(0x2F3C, 0x000C, 0x0102, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetNextFrameReference(SeqGrabComponent s, seqGrabFrameInfo *frameInfo, TimeValue *frameDuration, long *frameNumber) M68K_INLINE(0x2F3C, 0x000C, 0x0102, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetTimeBase(SeqGrabComponent s, TimeBase *tb) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetTimeBase(SeqGrabComponent s, TimeBase *tb) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSortDeviceList(SeqGrabComponent s, SGDeviceList list) M68K_INLINE(0x2F3C, 0x0004, 0x0104, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSortDeviceList(SeqGrabComponent s, SGDeviceList list) M68K_INLINE(0x2F3C, 0x0004, 0x0104, 0x7000, 0xA82A);
 
-pascal ComponentResult SGAddMovieData(SeqGrabComponent s, SGChannel c, Ptr p, long len, long *offset, long chRefCon, TimeValue time, INTEGER writeType) M68K_INLINE(0x2F3C, 0x001A, 0x0105, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGAddMovieData(SeqGrabComponent s, SGChannel c, Ptr p, long len, long *offset, long chRefCon, TimeValue time, INTEGER writeType) M68K_INLINE(0x2F3C, 0x001A, 0x0105, 0x7000, 0xA82A);
 
-pascal ComponentResult SGChangedSource(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0106, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGChangedSource(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0106, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelUsage(SGChannel c, long usage) M68K_INLINE(0x2F3C, 0x0004, 0x0080, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelUsage(SGChannel c, long usage) M68K_INLINE(0x2F3C, 0x0004, 0x0080, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelUsage(SGChannel c, long *usage) M68K_INLINE(0x2F3C, 0x0004, 0x0081, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelUsage(SGChannel c, long *usage) M68K_INLINE(0x2F3C, 0x0004, 0x0081, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelBounds(SGChannel c, const Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0082, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelBounds(SGChannel c, const Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0082, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelBounds(SGChannel c, Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0083, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelBounds(SGChannel c, Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0083, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelVolume(SGChannel c, INTEGER volume) M68K_INLINE(0x2F3C, 0x0002, 0x0084, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelVolume(SGChannel c, INTEGER volume) M68K_INLINE(0x2F3C, 0x0002, 0x0084, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelVolume(SGChannel c, INTEGER *volume) M68K_INLINE(0x2F3C, 0x0004, 0x0085, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelVolume(SGChannel c, INTEGER *volume) M68K_INLINE(0x2F3C, 0x0004, 0x0085, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelInfo(SGChannel c, long *channelInfo) M68K_INLINE(0x2F3C, 0x0004, 0x0086, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelInfo(SGChannel c, long *channelInfo) M68K_INLINE(0x2F3C, 0x0004, 0x0086, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelPlayFlags(SGChannel c, long playFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0087, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelPlayFlags(SGChannel c, long playFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0087, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelPlayFlags(SGChannel c, long *playFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0088, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelPlayFlags(SGChannel c, long *playFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0088, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelMaxFrames(SGChannel c, long frameCount) M68K_INLINE(0x2F3C, 0x0004, 0x0089, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelMaxFrames(SGChannel c, long frameCount) M68K_INLINE(0x2F3C, 0x0004, 0x0089, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelMaxFrames(SGChannel c, long *frameCount) M68K_INLINE(0x2F3C, 0x0004, 0x008A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelMaxFrames(SGChannel c, long *frameCount) M68K_INLINE(0x2F3C, 0x0004, 0x008A, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelRefCon(SGChannel c, long refCon) M68K_INLINE(0x2F3C, 0x0004, 0x008B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelRefCon(SGChannel c, long refCon) M68K_INLINE(0x2F3C, 0x0004, 0x008B, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelClip(SGChannel c, RgnHandle theClip) M68K_INLINE(0x2F3C, 0x0004, 0x008C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelClip(SGChannel c, RgnHandle theClip) M68K_INLINE(0x2F3C, 0x0004, 0x008C, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelClip(SGChannel c, RgnHandle *theClip) M68K_INLINE(0x2F3C, 0x0004, 0x008D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelClip(SGChannel c, RgnHandle *theClip) M68K_INLINE(0x2F3C, 0x0004, 0x008D, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelSampleDescription(SGChannel c, Handle sampleDesc) M68K_INLINE(0x2F3C, 0x0004, 0x008E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelSampleDescription(SGChannel c, Handle sampleDesc) M68K_INLINE(0x2F3C, 0x0004, 0x008E, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelDeviceList(SGChannel c, long selectionFlags, SGDeviceList *list) M68K_INLINE(0x2F3C, 0x0008, 0x008F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelDeviceList(SGChannel c, long selectionFlags, SGDeviceList *list) M68K_INLINE(0x2F3C, 0x0008, 0x008F, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelDevice(SGChannel c, StringPtr name) M68K_INLINE(0x2F3C, 0x0004, 0x0090, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelDevice(SGChannel c, StringPtr name) M68K_INLINE(0x2F3C, 0x0004, 0x0090, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetChannelMatrix(SGChannel c, const MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0004, 0x0091, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetChannelMatrix(SGChannel c, const MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0004, 0x0091, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelMatrix(SGChannel c, MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0004, 0x0092, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelMatrix(SGChannel c, MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0004, 0x0092, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetChannelTimeScale(SGChannel c, TimeScale *scale) M68K_INLINE(0x2F3C, 0x0004, 0x0093, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetChannelTimeScale(SGChannel c, TimeScale *scale) M68K_INLINE(0x2F3C, 0x0004, 0x0093, 0x7000, 0xA82A);
 
-pascal ComponentResult SGInitChannel(SGChannel c, SeqGrabComponent owner) M68K_INLINE(0x2F3C, 0x0004, 0x0180, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGInitChannel(SGChannel c, SeqGrabComponent owner) M68K_INLINE(0x2F3C, 0x0004, 0x0180, 0x7000, 0xA82A);
 
-pascal ComponentResult SGWriteSamples(SGChannel c, Movie m, AliasHandle theFile) M68K_INLINE(0x2F3C, 0x0008, 0x0181, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGWriteSamples(SGChannel c, Movie m, AliasHandle theFile) M68K_INLINE(0x2F3C, 0x0008, 0x0181, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetDataRate(SGChannel c, long *bytesPerSecond) M68K_INLINE(0x2F3C, 0x0004, 0x0182, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetDataRate(SGChannel c, long *bytesPerSecond) M68K_INLINE(0x2F3C, 0x0004, 0x0182, 0x7000, 0xA82A);
 
-pascal ComponentResult SGAlignChannelRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0183, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGAlignChannelRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0183, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelGetDitl(SeqGrabComponent s, Handle *ditl) M68K_INLINE(0x2F3C, 0x0004, 0x0200, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelGetDitl(SeqGrabComponent s, Handle *ditl) M68K_INLINE(0x2F3C, 0x0004, 0x0200, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelGetTitle(SeqGrabComponent s, uint8_t *title) M68K_INLINE(0x2F3C, 0x0004, 0x0201, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelGetTitle(SeqGrabComponent s, uint8_t *title) M68K_INLINE(0x2F3C, 0x0004, 0x0201, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelCanRun(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0202, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelCanRun(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0202, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelInstall(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset) M68K_INLINE(0x2F3C, 0x000A, 0x0203, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelInstall(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset) M68K_INLINE(0x2F3C, 0x000A, 0x0203, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelEvent(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset, EventRecord *theEvent, INTEGER *itemHit, Boolean *handled) M68K_INLINE(0x2F3C, 0x0016, 0x0204, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelEvent(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset, EventRecord *theEvent, INTEGER *itemHit, Boolean *handled) M68K_INLINE(0x2F3C, 0x0016, 0x0204, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelItem(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset, INTEGER itemNum) M68K_INLINE(0x2F3C, 0x000C, 0x0205, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelItem(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset, INTEGER itemNum) M68K_INLINE(0x2F3C, 0x000C, 0x0205, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelRemove(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset) M68K_INLINE(0x2F3C, 0x000A, 0x0206, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelRemove(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset) M68K_INLINE(0x2F3C, 0x000A, 0x0206, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelSetGrabber(SeqGrabComponent s, SeqGrabComponent sg) M68K_INLINE(0x2F3C, 0x0004, 0x0207, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelSetGrabber(SeqGrabComponent s, SeqGrabComponent sg) M68K_INLINE(0x2F3C, 0x0004, 0x0207, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelSetResFile(SeqGrabComponent s, INTEGER resRef) M68K_INLINE(0x2F3C, 0x0002, 0x0208, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelSetResFile(SeqGrabComponent s, INTEGER resRef) M68K_INLINE(0x2F3C, 0x0002, 0x0208, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelGetSettings(SeqGrabComponent s, SGChannel c, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x0209, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelGetSettings(SeqGrabComponent s, SGChannel c, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x0209, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelSetSettings(SeqGrabComponent s, SGChannel c, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x020A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelSetSettings(SeqGrabComponent s, SGChannel c, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x020A, 0x7000, 0xA82A);
 
-pascal ComponentResult SGPanelValidateInput(SeqGrabComponent s, Boolean *ok) M68K_INLINE(0x2F3C, 0x0004, 0x020B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGPanelValidateInput(SeqGrabComponent s, Boolean *ok) M68K_INLINE(0x2F3C, 0x0004, 0x020B, 0x7000, 0xA82A);
 
 typedef struct SGCompressInfo SGCompressInfo;
 struct SGCompressInfo {
@@ -2583,79 +2587,79 @@ struct VideoBottles {
     DisplayCompressProc displayCompressProc;
 };
 
-pascal ComponentResult SGGetSrcVideoBounds(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0100, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetSrcVideoBounds(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0100, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetVideoRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetVideoRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetVideoRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0102, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetVideoRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0102, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetVideoCompressorType(SGChannel c, OSType *compressorType) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetVideoCompressorType(SGChannel c, OSType *compressorType) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetVideoCompressorType(SGChannel c, OSType compressorType) M68K_INLINE(0x2F3C, 0x0004, 0x0104, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetVideoCompressorType(SGChannel c, OSType compressorType) M68K_INLINE(0x2F3C, 0x0004, 0x0104, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetVideoCompressor(SGChannel c, INTEGER depth, CompressorComponent compressor, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate) M68K_INLINE(0x2F3C, 0x0012, 0x0105, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetVideoCompressor(SGChannel c, INTEGER depth, CompressorComponent compressor, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate) M68K_INLINE(0x2F3C, 0x0012, 0x0105, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetVideoCompressor(SGChannel c, INTEGER *depth, CompressorComponent *compressor, CodecQ *spatialQuality, CodecQ *temporalQuality, long *keyFrameRate) M68K_INLINE(0x2F3C, 0x0014, 0x0106, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetVideoCompressor(SGChannel c, INTEGER *depth, CompressorComponent *compressor, CodecQ *spatialQuality, CodecQ *temporalQuality, long *keyFrameRate) M68K_INLINE(0x2F3C, 0x0014, 0x0106, 0x7000, 0xA82A);
 
-pascal ComponentInstance SGGetVideoDigitizerComponent(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0107, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentInstance SGGetVideoDigitizerComponent(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0107, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetVideoDigitizerComponent(SGChannel c, ComponentInstance vdig) M68K_INLINE(0x2F3C, 0x0004, 0x0108, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetVideoDigitizerComponent(SGChannel c, ComponentInstance vdig) M68K_INLINE(0x2F3C, 0x0004, 0x0108, 0x7000, 0xA82A);
 
-pascal ComponentResult SGVideoDigitizerChanged(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0109, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGVideoDigitizerChanged(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0109, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetVideoBottlenecks(SGChannel c, VideoBottles *vb) M68K_INLINE(0x2F3C, 0x0004, 0x010A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetVideoBottlenecks(SGChannel c, VideoBottles *vb) M68K_INLINE(0x2F3C, 0x0004, 0x010A, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetVideoBottlenecks(SGChannel c, VideoBottles *vb) M68K_INLINE(0x2F3C, 0x0004, 0x010B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetVideoBottlenecks(SGChannel c, VideoBottles *vb) M68K_INLINE(0x2F3C, 0x0004, 0x010B, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGrabFrame(SGChannel c, INTEGER bufferNum) M68K_INLINE(0x2F3C, 0x0002, 0x010C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGrabFrame(SGChannel c, INTEGER bufferNum) M68K_INLINE(0x2F3C, 0x0002, 0x010C, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGrabFrameComplete(SGChannel c, INTEGER bufferNum, Boolean *done) M68K_INLINE(0x2F3C, 0x0006, 0x010D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGrabFrameComplete(SGChannel c, INTEGER bufferNum, Boolean *done) M68K_INLINE(0x2F3C, 0x0006, 0x010D, 0x7000, 0xA82A);
 
-pascal ComponentResult SGDisplayFrame(SGChannel c, INTEGER bufferNum, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x000A, 0x010E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGDisplayFrame(SGChannel c, INTEGER bufferNum, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x000A, 0x010E, 0x7000, 0xA82A);
 
-pascal ComponentResult SGCompressFrame(SGChannel c, INTEGER bufferNum) M68K_INLINE(0x2F3C, 0x0002, 0x010F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGCompressFrame(SGChannel c, INTEGER bufferNum) M68K_INLINE(0x2F3C, 0x0002, 0x010F, 0x7000, 0xA82A);
 
-pascal ComponentResult SGCompressFrameComplete(SGChannel c, INTEGER bufferNum, Boolean *done, SGCompressInfo *ci) M68K_INLINE(0x2F3C, 0x000A, 0x0110, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGCompressFrameComplete(SGChannel c, INTEGER bufferNum, Boolean *done, SGCompressInfo *ci) M68K_INLINE(0x2F3C, 0x000A, 0x0110, 0x7000, 0xA82A);
 
-pascal ComponentResult SGAddFrame(SGChannel c, INTEGER bufferNum, TimeValue atTime, TimeScale scale, const SGCompressInfo *ci) M68K_INLINE(0x2F3C, 0x000E, 0x0111, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGAddFrame(SGChannel c, INTEGER bufferNum, TimeValue atTime, TimeScale scale, const SGCompressInfo *ci) M68K_INLINE(0x2F3C, 0x000E, 0x0111, 0x7000, 0xA82A);
 
-pascal ComponentResult SGTransferFrameForCompress(SGChannel c, INTEGER bufferNum, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x000A, 0x0112, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGTransferFrameForCompress(SGChannel c, INTEGER bufferNum, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x000A, 0x0112, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetCompressBuffer(SGChannel c, INTEGER depth, const Rect *compressSize) M68K_INLINE(0x2F3C, 0x0006, 0x0113, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetCompressBuffer(SGChannel c, INTEGER depth, const Rect *compressSize) M68K_INLINE(0x2F3C, 0x0006, 0x0113, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetCompressBuffer(SGChannel c, INTEGER *depth, Rect *compressSize) M68K_INLINE(0x2F3C, 0x0008, 0x0114, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetCompressBuffer(SGChannel c, INTEGER *depth, Rect *compressSize) M68K_INLINE(0x2F3C, 0x0008, 0x0114, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetBufferInfo(SGChannel c, INTEGER bufferNum, PixMapHandle *bufferPM, Rect *bufferRect, GWorldPtr *compressBuffer, Rect *compressBufferRect) M68K_INLINE(0x2F3C, 0x0012, 0x0115, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetBufferInfo(SGChannel c, INTEGER bufferNum, PixMapHandle *bufferPM, Rect *bufferRect, GWorldPtr *compressBuffer, Rect *compressBufferRect) M68K_INLINE(0x2F3C, 0x0012, 0x0115, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetUseScreenBuffer(SGChannel c, Boolean useScreenBuffer) M68K_INLINE(0x2F3C, 0x0002, 0x0116, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetUseScreenBuffer(SGChannel c, Boolean useScreenBuffer) M68K_INLINE(0x2F3C, 0x0002, 0x0116, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetUseScreenBuffer(SGChannel c, Boolean *useScreenBuffer) M68K_INLINE(0x2F3C, 0x0004, 0x0117, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetUseScreenBuffer(SGChannel c, Boolean *useScreenBuffer) M68K_INLINE(0x2F3C, 0x0004, 0x0117, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGrabCompressComplete(SGChannel c, Boolean *done, SGCompressInfo *ci, TimeRecord *tr) M68K_INLINE(0x2F3C, 0x000C, 0x0118, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGrabCompressComplete(SGChannel c, Boolean *done, SGCompressInfo *ci, TimeRecord *tr) M68K_INLINE(0x2F3C, 0x000C, 0x0118, 0x7000, 0xA82A);
 
-pascal ComponentResult SGDisplayCompress(SGChannel c, Ptr dataPtr, ImageDescriptionHandle desc, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x0010, 0x0119, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGDisplayCompress(SGChannel c, Ptr dataPtr, ImageDescriptionHandle desc, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x0010, 0x0119, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetFrameRate(SGChannel c, Fixed frameRate) M68K_INLINE(0x2F3C, 0x0004, 0x011A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetFrameRate(SGChannel c, Fixed frameRate) M68K_INLINE(0x2F3C, 0x0004, 0x011A, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetFrameRate(SGChannel c, Fixed *frameRate) M68K_INLINE(0x2F3C, 0x0004, 0x011B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetFrameRate(SGChannel c, Fixed *frameRate) M68K_INLINE(0x2F3C, 0x0004, 0x011B, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetSoundInputDriver(SGChannel c, const uint8_t *driverName) M68K_INLINE(0x2F3C, 0x0004, 0x0100, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetSoundInputDriver(SGChannel c, const uint8_t *driverName) M68K_INLINE(0x2F3C, 0x0004, 0x0100, 0x7000, 0xA82A);
 
-pascal long SGGetSoundInputDriver(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0101, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long SGGetSoundInputDriver(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0101, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSoundInputDriverChanged(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0102, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSoundInputDriverChanged(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0102, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetSoundRecordChunkSize(SGChannel c, long seconds) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetSoundRecordChunkSize(SGChannel c, long seconds) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
 
-pascal long SGGetSoundRecordChunkSize(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0104, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal long SGGetSoundRecordChunkSize(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0104, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetSoundInputRate(SGChannel c, Fixed rate) M68K_INLINE(0x2F3C, 0x0004, 0x0105, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetSoundInputRate(SGChannel c, Fixed rate) M68K_INLINE(0x2F3C, 0x0004, 0x0105, 0x7000, 0xA82A);
 
-pascal Fixed SGGetSoundInputRate(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0106, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal Fixed SGGetSoundInputRate(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0106, 0x7000, 0xA82A);
 
-pascal ComponentResult SGSetSoundInputParameters(SGChannel c, INTEGER sampleSize, INTEGER numChannels, OSType compressionType) M68K_INLINE(0x2F3C, 0x0008, 0x0107, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGSetSoundInputParameters(SGChannel c, INTEGER sampleSize, INTEGER numChannels, OSType compressionType) M68K_INLINE(0x2F3C, 0x0008, 0x0107, 0x7000, 0xA82A);
 
-pascal ComponentResult SGGetSoundInputParameters(SGChannel c, INTEGER *sampleSize, INTEGER *numChannels, OSType *compressionType) M68K_INLINE(0x2F3C, 0x000C, 0x0108, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SGGetSoundInputParameters(SGChannel c, INTEGER *sampleSize, INTEGER *numChannels, OSType *compressionType) M68K_INLINE(0x2F3C, 0x000C, 0x0108, 0x7000, 0xA82A);
 
 enum {
     noDeviceForChannel = -9400,
@@ -2888,163 +2892,163 @@ enum {
     kvdigSelectors = 82,
 };
 
-pascal VideoDigitizerError VDGetMaxSrcRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *maxSrcRect) M68K_INLINE(0x2F3C, 0x0006, 0x0001, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetMaxSrcRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *maxSrcRect) M68K_INLINE(0x2F3C, 0x0006, 0x0001, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetActiveSrcRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *activeSrcRect) M68K_INLINE(0x2F3C, 0x0006, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetActiveSrcRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *activeSrcRect) M68K_INLINE(0x2F3C, 0x0006, 0x0002, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetDigitizerRect(VideoDigitizerComponent ci, Rect *digitizerRect) M68K_INLINE(0x2F3C, 0x0004, 0x0003, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetDigitizerRect(VideoDigitizerComponent ci, Rect *digitizerRect) M68K_INLINE(0x2F3C, 0x0004, 0x0003, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetDigitizerRect(VideoDigitizerComponent ci, Rect *digitizerRect) M68K_INLINE(0x2F3C, 0x0004, 0x0004, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetDigitizerRect(VideoDigitizerComponent ci, Rect *digitizerRect) M68K_INLINE(0x2F3C, 0x0004, 0x0004, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetVBlankRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *vBlankRect) M68K_INLINE(0x2F3C, 0x0006, 0x0005, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetVBlankRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *vBlankRect) M68K_INLINE(0x2F3C, 0x0006, 0x0005, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetMaskPixMap(VideoDigitizerComponent ci, PixMapHandle maskPixMap) M68K_INLINE(0x2F3C, 0x0004, 0x0006, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetMaskPixMap(VideoDigitizerComponent ci, PixMapHandle maskPixMap) M68K_INLINE(0x2F3C, 0x0004, 0x0006, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetPlayThruDestination(VideoDigitizerComponent ci, PixMapHandle *dest, Rect *destRect, MatrixRecord *m, RgnHandle *mask) M68K_INLINE(0x2F3C, 0x0010, 0x0008, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetPlayThruDestination(VideoDigitizerComponent ci, PixMapHandle *dest, Rect *destRect, MatrixRecord *m, RgnHandle *mask) M68K_INLINE(0x2F3C, 0x0010, 0x0008, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDUseThisCLUT(VideoDigitizerComponent ci, CTabHandle colorTableHandle) M68K_INLINE(0x2F3C, 0x0004, 0x0009, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDUseThisCLUT(VideoDigitizerComponent ci, CTabHandle colorTableHandle) M68K_INLINE(0x2F3C, 0x0004, 0x0009, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetInputGammaValue(VideoDigitizerComponent ci, Fixed channel1, Fixed channel2, Fixed channel3) M68K_INLINE(0x2F3C, 0x000C, 0x000A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetInputGammaValue(VideoDigitizerComponent ci, Fixed channel1, Fixed channel2, Fixed channel3) M68K_INLINE(0x2F3C, 0x000C, 0x000A, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetInputGammaValue(VideoDigitizerComponent ci, Fixed *channel1, Fixed *channel2, Fixed *channel3) M68K_INLINE(0x2F3C, 0x000C, 0x000B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetInputGammaValue(VideoDigitizerComponent ci, Fixed *channel1, Fixed *channel2, Fixed *channel3) M68K_INLINE(0x2F3C, 0x000C, 0x000B, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetBrightness(VideoDigitizerComponent ci, uint16_t *brightness) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetBrightness(VideoDigitizerComponent ci, uint16_t *brightness) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetBrightness(VideoDigitizerComponent ci, uint16_t *brightness) M68K_INLINE(0x2F3C, 0x0004, 0x000D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetBrightness(VideoDigitizerComponent ci, uint16_t *brightness) M68K_INLINE(0x2F3C, 0x0004, 0x000D, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetContrast(VideoDigitizerComponent ci, uint16_t *contrast) M68K_INLINE(0x2F3C, 0x0004, 0x000E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetContrast(VideoDigitizerComponent ci, uint16_t *contrast) M68K_INLINE(0x2F3C, 0x0004, 0x000E, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetHue(VideoDigitizerComponent ci, uint16_t *hue) M68K_INLINE(0x2F3C, 0x0004, 0x000F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetHue(VideoDigitizerComponent ci, uint16_t *hue) M68K_INLINE(0x2F3C, 0x0004, 0x000F, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetSharpness(VideoDigitizerComponent ci, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x0004, 0x0010, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetSharpness(VideoDigitizerComponent ci, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x0004, 0x0010, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetSaturation(VideoDigitizerComponent ci, uint16_t *saturation) M68K_INLINE(0x2F3C, 0x0004, 0x0011, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetSaturation(VideoDigitizerComponent ci, uint16_t *saturation) M68K_INLINE(0x2F3C, 0x0004, 0x0011, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetContrast(VideoDigitizerComponent ci, uint16_t *contrast) M68K_INLINE(0x2F3C, 0x0004, 0x0012, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetContrast(VideoDigitizerComponent ci, uint16_t *contrast) M68K_INLINE(0x2F3C, 0x0004, 0x0012, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetHue(VideoDigitizerComponent ci, uint16_t *hue) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetHue(VideoDigitizerComponent ci, uint16_t *hue) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetSharpness(VideoDigitizerComponent ci, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x0004, 0x0014, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetSharpness(VideoDigitizerComponent ci, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x0004, 0x0014, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetSaturation(VideoDigitizerComponent ci, uint16_t *saturation) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetSaturation(VideoDigitizerComponent ci, uint16_t *saturation) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGrabOneFrame(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0016, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGrabOneFrame(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0016, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetMaxAuxBuffer(VideoDigitizerComponent ci, PixMapHandle *pm, Rect *r) M68K_INLINE(0x2F3C, 0x0008, 0x0017, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetMaxAuxBuffer(VideoDigitizerComponent ci, PixMapHandle *pm, Rect *r) M68K_INLINE(0x2F3C, 0x0008, 0x0017, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetDigitizerInfo(VideoDigitizerComponent ci, DigitizerInfo *info) M68K_INLINE(0x2F3C, 0x0004, 0x0019, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetDigitizerInfo(VideoDigitizerComponent ci, DigitizerInfo *info) M68K_INLINE(0x2F3C, 0x0004, 0x0019, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetCurrentFlags(VideoDigitizerComponent ci, long *inputCurrentFlag, long *outputCurrentFlag) M68K_INLINE(0x2F3C, 0x0008, 0x001A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetCurrentFlags(VideoDigitizerComponent ci, long *inputCurrentFlag, long *outputCurrentFlag) M68K_INLINE(0x2F3C, 0x0008, 0x001A, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetKeyColor(VideoDigitizerComponent ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x001B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetKeyColor(VideoDigitizerComponent ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x001B, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetKeyColor(VideoDigitizerComponent ci, long *index) M68K_INLINE(0x2F3C, 0x0004, 0x001C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetKeyColor(VideoDigitizerComponent ci, long *index) M68K_INLINE(0x2F3C, 0x0004, 0x001C, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDAddKeyColor(VideoDigitizerComponent ci, long *index) M68K_INLINE(0x2F3C, 0x0004, 0x001D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDAddKeyColor(VideoDigitizerComponent ci, long *index) M68K_INLINE(0x2F3C, 0x0004, 0x001D, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetNextKeyColor(VideoDigitizerComponent ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x001E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetNextKeyColor(VideoDigitizerComponent ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x001E, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetKeyColorRange(VideoDigitizerComponent ci, RGBColor *minRGB, RGBColor *maxRGB) M68K_INLINE(0x2F3C, 0x0008, 0x001F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetKeyColorRange(VideoDigitizerComponent ci, RGBColor *minRGB, RGBColor *maxRGB) M68K_INLINE(0x2F3C, 0x0008, 0x001F, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetKeyColorRange(VideoDigitizerComponent ci, RGBColor *minRGB, RGBColor *maxRGB) M68K_INLINE(0x2F3C, 0x0008, 0x0020, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetKeyColorRange(VideoDigitizerComponent ci, RGBColor *minRGB, RGBColor *maxRGB) M68K_INLINE(0x2F3C, 0x0008, 0x0020, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetDigitizerUserInterrupt(VideoDigitizerComponent ci, long flags, VdigIntProc userInterruptProc, long refcon) M68K_INLINE(0x2F3C, 0x000C, 0x0021, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetDigitizerUserInterrupt(VideoDigitizerComponent ci, long flags, VdigIntProc userInterruptProc, long refcon) M68K_INLINE(0x2F3C, 0x000C, 0x0021, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetInputColorSpaceMode(VideoDigitizerComponent ci, INTEGER colorSpaceMode) M68K_INLINE(0x2F3C, 0x0002, 0x0022, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetInputColorSpaceMode(VideoDigitizerComponent ci, INTEGER colorSpaceMode) M68K_INLINE(0x2F3C, 0x0002, 0x0022, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetInputColorSpaceMode(VideoDigitizerComponent ci, INTEGER *colorSpaceMode) M68K_INLINE(0x2F3C, 0x0004, 0x0023, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetInputColorSpaceMode(VideoDigitizerComponent ci, INTEGER *colorSpaceMode) M68K_INLINE(0x2F3C, 0x0004, 0x0023, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetClipState(VideoDigitizerComponent ci, INTEGER clipEnable) M68K_INLINE(0x2F3C, 0x0002, 0x0024, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetClipState(VideoDigitizerComponent ci, INTEGER clipEnable) M68K_INLINE(0x2F3C, 0x0002, 0x0024, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetClipState(VideoDigitizerComponent ci, INTEGER *clipEnable) M68K_INLINE(0x2F3C, 0x0004, 0x0025, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetClipState(VideoDigitizerComponent ci, INTEGER *clipEnable) M68K_INLINE(0x2F3C, 0x0004, 0x0025, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetClipRgn(VideoDigitizerComponent ci, RgnHandle clipRegion) M68K_INLINE(0x2F3C, 0x0004, 0x0026, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetClipRgn(VideoDigitizerComponent ci, RgnHandle clipRegion) M68K_INLINE(0x2F3C, 0x0004, 0x0026, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDClearClipRgn(VideoDigitizerComponent ci, RgnHandle clipRegion) M68K_INLINE(0x2F3C, 0x0004, 0x0027, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDClearClipRgn(VideoDigitizerComponent ci, RgnHandle clipRegion) M68K_INLINE(0x2F3C, 0x0004, 0x0027, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetCLUTInUse(VideoDigitizerComponent ci, CTabHandle *colorTableHandle) M68K_INLINE(0x2F3C, 0x0004, 0x0028, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetCLUTInUse(VideoDigitizerComponent ci, CTabHandle *colorTableHandle) M68K_INLINE(0x2F3C, 0x0004, 0x0028, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetPLLFilterType(VideoDigitizerComponent ci, INTEGER pllType) M68K_INLINE(0x2F3C, 0x0002, 0x0029, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetPLLFilterType(VideoDigitizerComponent ci, INTEGER pllType) M68K_INLINE(0x2F3C, 0x0002, 0x0029, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetPLLFilterType(VideoDigitizerComponent ci, INTEGER *pllType) M68K_INLINE(0x2F3C, 0x0004, 0x002A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetPLLFilterType(VideoDigitizerComponent ci, INTEGER *pllType) M68K_INLINE(0x2F3C, 0x0004, 0x002A, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetMaskandValue(VideoDigitizerComponent ci, uint16_t blendLevel, long *mask, long *value) M68K_INLINE(0x2F3C, 0x000A, 0x002B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetMaskandValue(VideoDigitizerComponent ci, uint16_t blendLevel, long *mask, long *value) M68K_INLINE(0x2F3C, 0x000A, 0x002B, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetMasterBlendLevel(VideoDigitizerComponent ci, uint16_t *blendLevel) M68K_INLINE(0x2F3C, 0x0004, 0x002C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetMasterBlendLevel(VideoDigitizerComponent ci, uint16_t *blendLevel) M68K_INLINE(0x2F3C, 0x0004, 0x002C, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetPlayThruDestination(VideoDigitizerComponent ci, PixMapHandle dest, Rect *destRect, MatrixRecord *m, RgnHandle mask) M68K_INLINE(0x2F3C, 0x0010, 0x002D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetPlayThruDestination(VideoDigitizerComponent ci, PixMapHandle dest, Rect *destRect, MatrixRecord *m, RgnHandle mask) M68K_INLINE(0x2F3C, 0x0010, 0x002D, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetPlayThruOnOff(VideoDigitizerComponent ci, INTEGER state) M68K_INLINE(0x2F3C, 0x0002, 0x002E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetPlayThruOnOff(VideoDigitizerComponent ci, INTEGER state) M68K_INLINE(0x2F3C, 0x0002, 0x002E, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetFieldPreference(VideoDigitizerComponent ci, INTEGER fieldFlag) M68K_INLINE(0x2F3C, 0x0002, 0x002F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetFieldPreference(VideoDigitizerComponent ci, INTEGER fieldFlag) M68K_INLINE(0x2F3C, 0x0002, 0x002F, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetFieldPreference(VideoDigitizerComponent ci, INTEGER *fieldFlag) M68K_INLINE(0x2F3C, 0x0004, 0x0030, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetFieldPreference(VideoDigitizerComponent ci, INTEGER *fieldFlag) M68K_INLINE(0x2F3C, 0x0004, 0x0030, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDPreflightDestination(VideoDigitizerComponent ci, Rect *digitizerRect, PixMap **dest, Rect *destRect, MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0010, 0x0032, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDPreflightDestination(VideoDigitizerComponent ci, Rect *digitizerRect, PixMap **dest, Rect *destRect, MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0010, 0x0032, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDPreflightGlobalRect(VideoDigitizerComponent ci, GrafPtr theWindow, Rect *globalRect) M68K_INLINE(0x2F3C, 0x0008, 0x0033, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDPreflightGlobalRect(VideoDigitizerComponent ci, GrafPtr theWindow, Rect *globalRect) M68K_INLINE(0x2F3C, 0x0008, 0x0033, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetPlayThruGlobalRect(VideoDigitizerComponent ci, GrafPtr theWindow, Rect *globalRect) M68K_INLINE(0x2F3C, 0x0008, 0x0034, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetPlayThruGlobalRect(VideoDigitizerComponent ci, GrafPtr theWindow, Rect *globalRect) M68K_INLINE(0x2F3C, 0x0008, 0x0034, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetInputGammaRecord(VideoDigitizerComponent ci, VDGamRecPtr inputGammaPtr) M68K_INLINE(0x2F3C, 0x0004, 0x0035, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetInputGammaRecord(VideoDigitizerComponent ci, VDGamRecPtr inputGammaPtr) M68K_INLINE(0x2F3C, 0x0004, 0x0035, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetInputGammaRecord(VideoDigitizerComponent ci, VDGamRecPtr *inputGammaPtr) M68K_INLINE(0x2F3C, 0x0004, 0x0036, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetInputGammaRecord(VideoDigitizerComponent ci, VDGamRecPtr *inputGammaPtr) M68K_INLINE(0x2F3C, 0x0004, 0x0036, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetBlackLevelValue(VideoDigitizerComponent ci, uint16_t *blackLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0037, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetBlackLevelValue(VideoDigitizerComponent ci, uint16_t *blackLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0037, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetBlackLevelValue(VideoDigitizerComponent ci, uint16_t *blackLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0038, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetBlackLevelValue(VideoDigitizerComponent ci, uint16_t *blackLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0038, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetWhiteLevelValue(VideoDigitizerComponent ci, uint16_t *whiteLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0039, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetWhiteLevelValue(VideoDigitizerComponent ci, uint16_t *whiteLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0039, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetWhiteLevelValue(VideoDigitizerComponent ci, uint16_t *whiteLevel) M68K_INLINE(0x2F3C, 0x0004, 0x003A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetWhiteLevelValue(VideoDigitizerComponent ci, uint16_t *whiteLevel) M68K_INLINE(0x2F3C, 0x0004, 0x003A, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetVideoDefaults(VideoDigitizerComponent ci, uint16_t *blackLevel, uint16_t *whiteLevel, uint16_t *brightness, uint16_t *hue, uint16_t *saturation, uint16_t *contrast, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x001C, 0x003B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetVideoDefaults(VideoDigitizerComponent ci, uint16_t *blackLevel, uint16_t *whiteLevel, uint16_t *brightness, uint16_t *hue, uint16_t *saturation, uint16_t *contrast, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x001C, 0x003B, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetNumberOfInputs(VideoDigitizerComponent ci, INTEGER *inputs) M68K_INLINE(0x2F3C, 0x0004, 0x003C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetNumberOfInputs(VideoDigitizerComponent ci, INTEGER *inputs) M68K_INLINE(0x2F3C, 0x0004, 0x003C, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetInputFormat(VideoDigitizerComponent ci, INTEGER input, INTEGER *format) M68K_INLINE(0x2F3C, 0x0006, 0x003D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetInputFormat(VideoDigitizerComponent ci, INTEGER input, INTEGER *format) M68K_INLINE(0x2F3C, 0x0006, 0x003D, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetInput(VideoDigitizerComponent ci, INTEGER input) M68K_INLINE(0x2F3C, 0x0002, 0x003E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetInput(VideoDigitizerComponent ci, INTEGER input) M68K_INLINE(0x2F3C, 0x0002, 0x003E, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetInput(VideoDigitizerComponent ci, INTEGER *input) M68K_INLINE(0x2F3C, 0x0004, 0x003F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetInput(VideoDigitizerComponent ci, INTEGER *input) M68K_INLINE(0x2F3C, 0x0004, 0x003F, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetInputStandard(VideoDigitizerComponent ci, INTEGER inputStandard) M68K_INLINE(0x2F3C, 0x0002, 0x0040, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetInputStandard(VideoDigitizerComponent ci, INTEGER inputStandard) M68K_INLINE(0x2F3C, 0x0002, 0x0040, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetupBuffers(VideoDigitizerComponent ci, VdigBufferRecListHandle bufferList) M68K_INLINE(0x2F3C, 0x0004, 0x0041, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetupBuffers(VideoDigitizerComponent ci, VdigBufferRecListHandle bufferList) M68K_INLINE(0x2F3C, 0x0004, 0x0041, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGrabOneFrameAsync(VideoDigitizerComponent ci, INTEGER buffer) M68K_INLINE(0x2F3C, 0x0002, 0x0042, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGrabOneFrameAsync(VideoDigitizerComponent ci, INTEGER buffer) M68K_INLINE(0x2F3C, 0x0002, 0x0042, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDDone(VideoDigitizerComponent ci, INTEGER buffer) M68K_INLINE(0x2F3C, 0x0002, 0x0043, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDDone(VideoDigitizerComponent ci, INTEGER buffer) M68K_INLINE(0x2F3C, 0x0002, 0x0043, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetCompression(VideoDigitizerComponent ci, OSType compressType, INTEGER depth, Rect *bounds, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate) M68K_INLINE(0x2F3C, 0x0016, 0x0044, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetCompression(VideoDigitizerComponent ci, OSType compressType, INTEGER depth, Rect *bounds, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate) M68K_INLINE(0x2F3C, 0x0016, 0x0044, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDCompressOneFrameAsync(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0045, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDCompressOneFrameAsync(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0045, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDCompressDone(VideoDigitizerComponent ci, Boolean *done, Ptr *theData, long *dataSize, uint8_t *similarity, TimeRecord *t) M68K_INLINE(0x2F3C, 0x0014, 0x0046, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDCompressDone(VideoDigitizerComponent ci, Boolean *done, Ptr *theData, long *dataSize, uint8_t *similarity, TimeRecord *t) M68K_INLINE(0x2F3C, 0x0014, 0x0046, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDReleaseCompressBuffer(VideoDigitizerComponent ci, Ptr bufferAddr) M68K_INLINE(0x2F3C, 0x0004, 0x0047, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDReleaseCompressBuffer(VideoDigitizerComponent ci, Ptr bufferAddr) M68K_INLINE(0x2F3C, 0x0004, 0x0047, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetImageDescription(VideoDigitizerComponent ci, ImageDescriptionHandle desc) M68K_INLINE(0x2F3C, 0x0004, 0x0048, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetImageDescription(VideoDigitizerComponent ci, ImageDescriptionHandle desc) M68K_INLINE(0x2F3C, 0x0004, 0x0048, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDResetCompressSequence(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0049, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDResetCompressSequence(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0049, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetCompressionOnOff(VideoDigitizerComponent ci, Boolean state) M68K_INLINE(0x2F3C, 0x0002, 0x004A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetCompressionOnOff(VideoDigitizerComponent ci, Boolean state) M68K_INLINE(0x2F3C, 0x0002, 0x004A, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetCompressionTypes(VideoDigitizerComponent ci, VDCompressionListHandle h) M68K_INLINE(0x2F3C, 0x0004, 0x004B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetCompressionTypes(VideoDigitizerComponent ci, VDCompressionListHandle h) M68K_INLINE(0x2F3C, 0x0004, 0x004B, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetTimeBase(VideoDigitizerComponent ci, TimeBase t) M68K_INLINE(0x2F3C, 0x0004, 0x004C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetTimeBase(VideoDigitizerComponent ci, TimeBase t) M68K_INLINE(0x2F3C, 0x0004, 0x004C, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDSetFrameRate(VideoDigitizerComponent ci, Fixed framesPerSecond) M68K_INLINE(0x2F3C, 0x0004, 0x004D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDSetFrameRate(VideoDigitizerComponent ci, Fixed framesPerSecond) M68K_INLINE(0x2F3C, 0x0004, 0x004D, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetDataRate(VideoDigitizerComponent ci, long *milliSecPerFrame, Fixed *framesPerSecond, long *bytesPerSecond) M68K_INLINE(0x2F3C, 0x000C, 0x004E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetDataRate(VideoDigitizerComponent ci, long *milliSecPerFrame, Fixed *framesPerSecond, long *bytesPerSecond) M68K_INLINE(0x2F3C, 0x000C, 0x004E, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetSoundInputDriver(VideoDigitizerComponent ci, uint8_t *soundDriverName) M68K_INLINE(0x2F3C, 0x0004, 0x004F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetSoundInputDriver(VideoDigitizerComponent ci, uint8_t *soundDriverName) M68K_INLINE(0x2F3C, 0x0004, 0x004F, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetDMADepths(VideoDigitizerComponent ci, long *depthArray, long *preferredDepth) M68K_INLINE(0x2F3C, 0x0008, 0x0050, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetDMADepths(VideoDigitizerComponent ci, long *depthArray, long *preferredDepth) M68K_INLINE(0x2F3C, 0x0008, 0x0050, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDGetPreferredTimeScale(VideoDigitizerComponent ci, TimeScale *preferred) M68K_INLINE(0x2F3C, 0x0004, 0x0051, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDGetPreferredTimeScale(VideoDigitizerComponent ci, TimeScale *preferred) M68K_INLINE(0x2F3C, 0x0004, 0x0051, 0x7000, 0xA82A);
 
-pascal VideoDigitizerError VDReleaseAsyncBuffers(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0052, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal VideoDigitizerError VDReleaseAsyncBuffers(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0052, 0x7000, 0xA82A);
 
 enum {
     kSelectVDGetMaxSrcRect = 1,
@@ -3187,45 +3191,45 @@ struct SCExtendedProcs {
     Str31 customName;
 };
 
-pascal ComponentResult SCPositionRect(ComponentInstance ci, Rect *rp, Point *where) M68K_INLINE(0x2F3C, 0x0008, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCPositionRect(ComponentInstance ci, Rect *rp, Point *where) M68K_INLINE(0x2F3C, 0x0008, 0x0002, 0x7000, 0xA82A);
 
-pascal ComponentResult SCPositionDialog(ComponentInstance ci, INTEGER id, Point *where) M68K_INLINE(0x2F3C, 0x0006, 0x0003, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCPositionDialog(ComponentInstance ci, INTEGER id, Point *where) M68K_INLINE(0x2F3C, 0x0006, 0x0003, 0x7000, 0xA82A);
 
-pascal ComponentResult SCSetTestImagePictHandle(ComponentInstance ci, PicHandle testPict, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x000A, 0x0004, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCSetTestImagePictHandle(ComponentInstance ci, PicHandle testPict, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x000A, 0x0004, 0x7000, 0xA82A);
 
-pascal ComponentResult SCSetTestImagePictFile(ComponentInstance ci, INTEGER testFileRef, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0005, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCSetTestImagePictFile(ComponentInstance ci, INTEGER testFileRef, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0005, 0x7000, 0xA82A);
 
-pascal ComponentResult SCSetTestImagePixMap(ComponentInstance ci, PixMapHandle testPixMap, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x000A, 0x0006, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCSetTestImagePixMap(ComponentInstance ci, PixMapHandle testPixMap, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x000A, 0x0006, 0x7000, 0xA82A);
 
-pascal ComponentResult SCGetBestDeviceRect(ComponentInstance ci, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCGetBestDeviceRect(ComponentInstance ci, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
 
-pascal ComponentResult SCRequestImageSettings(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x000A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCRequestImageSettings(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x000A, 0x7000, 0xA82A);
 
-pascal ComponentResult SCCompressImage(ComponentInstance ci, PixMapHandle src, Rect *srcRect, ImageDescriptionHandle *desc, Handle *data) M68K_INLINE(0x2F3C, 0x0010, 0x000B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCCompressImage(ComponentInstance ci, PixMapHandle src, Rect *srcRect, ImageDescriptionHandle *desc, Handle *data) M68K_INLINE(0x2F3C, 0x0010, 0x000B, 0x7000, 0xA82A);
 
-pascal ComponentResult SCCompressPicture(ComponentInstance ci, PicHandle srcPicture, PicHandle dstPicture) M68K_INLINE(0x2F3C, 0x0008, 0x000C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCCompressPicture(ComponentInstance ci, PicHandle srcPicture, PicHandle dstPicture) M68K_INLINE(0x2F3C, 0x0008, 0x000C, 0x7000, 0xA82A);
 
-pascal ComponentResult SCCompressPictureFile(ComponentInstance ci, INTEGER srcRefNum, INTEGER dstRefNum) M68K_INLINE(0x2F3C, 0x0004, 0x000D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCCompressPictureFile(ComponentInstance ci, INTEGER srcRefNum, INTEGER dstRefNum) M68K_INLINE(0x2F3C, 0x0004, 0x000D, 0x7000, 0xA82A);
 
-pascal ComponentResult SCRequestSequenceSettings(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x000E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCRequestSequenceSettings(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x000E, 0x7000, 0xA82A);
 
-pascal ComponentResult SCCompressSequenceBegin(ComponentInstance ci, PixMapHandle src, Rect *srcRect, ImageDescriptionHandle *desc) M68K_INLINE(0x2F3C, 0x000C, 0x000F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCCompressSequenceBegin(ComponentInstance ci, PixMapHandle src, Rect *srcRect, ImageDescriptionHandle *desc) M68K_INLINE(0x2F3C, 0x000C, 0x000F, 0x7000, 0xA82A);
 
-pascal ComponentResult SCCompressSequenceFrame(ComponentInstance ci, PixMapHandle src, Rect *srcRect, Handle *data, long *dataSize, INTEGER *notSyncFlag) M68K_INLINE(0x2F3C, 0x0014, 0x0010, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCCompressSequenceFrame(ComponentInstance ci, PixMapHandle src, Rect *srcRect, Handle *data, long *dataSize, INTEGER *notSyncFlag) M68K_INLINE(0x2F3C, 0x0014, 0x0010, 0x7000, 0xA82A);
 
-pascal ComponentResult SCCompressSequenceEnd(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x0011, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCCompressSequenceEnd(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x0011, 0x7000, 0xA82A);
 
-pascal ComponentResult SCDefaultPictHandleSettings(ComponentInstance ci, PicHandle srcPicture, INTEGER motion) M68K_INLINE(0x2F3C, 0x0006, 0x0012, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCDefaultPictHandleSettings(ComponentInstance ci, PicHandle srcPicture, INTEGER motion) M68K_INLINE(0x2F3C, 0x0006, 0x0012, 0x7000, 0xA82A);
 
-pascal ComponentResult SCDefaultPictFileSettings(ComponentInstance ci, INTEGER srcRef, INTEGER motion) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCDefaultPictFileSettings(ComponentInstance ci, INTEGER srcRef, INTEGER motion) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
 
-pascal ComponentResult SCDefaultPixMapSettings(ComponentInstance ci, PixMapHandle src, INTEGER motion) M68K_INLINE(0x2F3C, 0x0006, 0x0014, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCDefaultPixMapSettings(ComponentInstance ci, PixMapHandle src, INTEGER motion) M68K_INLINE(0x2F3C, 0x0006, 0x0014, 0x7000, 0xA82A);
 
-pascal ComponentResult SCGetInfo(ComponentInstance ci, OSType type, void *info) M68K_INLINE(0x2F3C, 0x0008, 0x0015, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCGetInfo(ComponentInstance ci, OSType type, void *info) M68K_INLINE(0x2F3C, 0x0008, 0x0015, 0x7000, 0xA82A);
 
-pascal ComponentResult SCSetInfo(ComponentInstance ci, OSType type, void *info) M68K_INLINE(0x2F3C, 0x0008, 0x0016, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCSetInfo(ComponentInstance ci, OSType type, void *info) M68K_INLINE(0x2F3C, 0x0008, 0x0016, 0x7000, 0xA82A);
 
-pascal ComponentResult SCNewGWorld(ComponentInstance ci, GWorldPtr *gwp, Rect *rp, GWorldFlags flags) M68K_INLINE(0x2F3C, 0x000C, 0x0017, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCNewGWorld(ComponentInstance ci, GWorldPtr *gwp, Rect *rp, GWorldFlags flags) M68K_INLINE(0x2F3C, 0x000C, 0x0017, 0x7000, 0xA82A);
 
 typedef struct SCParams SCParams;
 struct SCParams {
@@ -3241,9 +3245,9 @@ struct SCParams {
     long reserved2;
 };
 
-pascal ComponentResult SCGetCompressionExtended(ComponentInstance ci, SCParams *params, Point where, SCModalFilterProcPtr filterProc, SCModalHookProcPtr hookProc, long refcon, StringPtr customName) M68K_INLINE(0x2F3C, 0x0018, 0x0001, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCGetCompressionExtended(ComponentInstance ci, SCParams *params, Point where, SCModalFilterProcPtr filterProc, SCModalHookProcPtr hookProc, long refcon, StringPtr customName) M68K_INLINE(0x2F3C, 0x0018, 0x0001, 0x7000, 0xA82A);
 
-pascal ComponentResult SCGetCompression(ComponentInstance ci, SCParams *params, Point where) M68K_INLINE(0x42A7, 0x42A7, 0x42A7, 0x42A7, 0x2F3C, 0x0018, 0x0001, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult SCGetCompression(ComponentInstance ci, SCParams *params, Point where) M68K_INLINE(0x42A7, 0x42A7, 0x42A7, 0x42A7, 0x2F3C, 0x0018, 0x0001, 0x7000, 0xA82A);
 
 typedef ComponentInstance MovieImportComponent;
 
@@ -3293,39 +3297,39 @@ enum {
     movieImportResultUsedMultipleTracks = 8,
 };
 
-pascal ComponentResult MovieImportHandle(MovieImportComponent ci, Handle dataH, Movie theMovie, Track targetTrack, Track *usedTrack, TimeValue atTime, TimeValue *addedDuration, long inFlags, long *outFlags) M68K_INLINE(0x2F3C, 0x0020, 0x0001, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportHandle(MovieImportComponent ci, Handle dataH, Movie theMovie, Track targetTrack, Track *usedTrack, TimeValue atTime, TimeValue *addedDuration, long inFlags, long *outFlags) M68K_INLINE(0x2F3C, 0x0020, 0x0001, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportFile(MovieImportComponent ci, const FSSpec *theFile, Movie theMovie, Track targetTrack, Track *usedTrack, TimeValue atTime, TimeValue *addedDuration, long inFlags, long *outFlags) M68K_INLINE(0x2F3C, 0x0020, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportFile(MovieImportComponent ci, const FSSpec *theFile, Movie theMovie, Track targetTrack, Track *usedTrack, TimeValue atTime, TimeValue *addedDuration, long inFlags, long *outFlags) M68K_INLINE(0x2F3C, 0x0020, 0x0002, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetSampleDuration(MovieImportComponent ci, TimeValue duration, TimeScale scale) M68K_INLINE(0x2F3C, 0x0008, 0x0003, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetSampleDuration(MovieImportComponent ci, TimeValue duration, TimeScale scale) M68K_INLINE(0x2F3C, 0x0008, 0x0003, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetSampleDescription(MovieImportComponent ci, SampleDescriptionHandle desc, OSType mediaType) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetSampleDescription(MovieImportComponent ci, SampleDescriptionHandle desc, OSType mediaType) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetMediaFile(MovieImportComponent ci, AliasHandle alias) M68K_INLINE(0x2F3C, 0x0004, 0x0005, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetMediaFile(MovieImportComponent ci, AliasHandle alias) M68K_INLINE(0x2F3C, 0x0004, 0x0005, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetDimensions(MovieImportComponent ci, Fixed width, Fixed height) M68K_INLINE(0x2F3C, 0x0008, 0x0006, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetDimensions(MovieImportComponent ci, Fixed width, Fixed height) M68K_INLINE(0x2F3C, 0x0008, 0x0006, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetChunkSize(MovieImportComponent ci, long chunkSize) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetChunkSize(MovieImportComponent ci, long chunkSize) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetProgressProc(MovieImportComponent ci, MovieProgressProcPtr proc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0008, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetProgressProc(MovieImportComponent ci, MovieProgressProcPtr proc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0008, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetAuxiliaryData(MovieImportComponent ci, Handle data, OSType handleType) M68K_INLINE(0x2F3C, 0x0008, 0x0009, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetAuxiliaryData(MovieImportComponent ci, Handle data, OSType handleType) M68K_INLINE(0x2F3C, 0x0008, 0x0009, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetFromScrap(MovieImportComponent ci, Boolean fromScrap) M68K_INLINE(0x2F3C, 0x0002, 0x000A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetFromScrap(MovieImportComponent ci, Boolean fromScrap) M68K_INLINE(0x2F3C, 0x0002, 0x000A, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportDoUserDialog(MovieImportComponent ci, const FSSpec *theFile, Handle theData, Boolean *canceled) M68K_INLINE(0x2F3C, 0x000C, 0x000B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportDoUserDialog(MovieImportComponent ci, const FSSpec *theFile, Handle theData, Boolean *canceled) M68K_INLINE(0x2F3C, 0x000C, 0x000B, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieImportSetDuration(MovieImportComponent ci, TimeValue duration) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieImportSetDuration(MovieImportComponent ci, TimeValue duration) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieExportToHandle(MovieExportComponent ci, Handle dataH, Movie theMovie, Track onlyThisTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x2F3C, 0x0014, 0x0080, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieExportToHandle(MovieExportComponent ci, Handle dataH, Movie theMovie, Track onlyThisTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x2F3C, 0x0014, 0x0080, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieExportToFile(MovieExportComponent ci, const FSSpec *theFile, Movie theMovie, Track onlyThisTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x2F3C, 0x0014, 0x0081, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieExportToFile(MovieExportComponent ci, const FSSpec *theFile, Movie theMovie, Track onlyThisTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x2F3C, 0x0014, 0x0081, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieExportDoUserDialog(MovieExportComponent ci, const FSSpec *theFile, Handle theData, Boolean *canceled) M68K_INLINE(0x2F3C, 0x000C, 0x0082, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieExportDoUserDialog(MovieExportComponent ci, const FSSpec *theFile, Handle theData, Boolean *canceled) M68K_INLINE(0x2F3C, 0x000C, 0x0082, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieExportGetAuxiliaryData(MovieExportComponent ci, Handle dataH, OSType *handleType) M68K_INLINE(0x2F3C, 0x0008, 0x0083, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieExportGetAuxiliaryData(MovieExportComponent ci, Handle dataH, OSType *handleType) M68K_INLINE(0x2F3C, 0x0008, 0x0083, 0x7000, 0xA82A);
 
-pascal ComponentResult MovieExportSetProgressProc(MovieExportComponent ci, MovieProgressProcPtr proc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0084, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MovieExportSetProgressProc(MovieExportComponent ci, MovieProgressProcPtr proc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0084, 0x7000, 0xA82A);
 
 typedef ComponentInstance pnotComponent;
 
@@ -3345,13 +3349,13 @@ enum {
     kPreviewEventSelector = 4,
 };
 
-pascal ComponentResult PreviewShowData(pnotComponent p, OSType dataType, Handle data, const Rect *inHere) M68K_INLINE(0x2F3C, 0x000C, 0x0001, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult PreviewShowData(pnotComponent p, OSType dataType, Handle data, const Rect *inHere) M68K_INLINE(0x2F3C, 0x000C, 0x0001, 0x7000, 0xA82A);
 
-pascal ComponentResult PreviewMakePreview(pnotComponent p, OSType *previewType, Handle *previewResult, const FSSpec *sourceFile, ProgressProcRecordPtr progress) M68K_INLINE(0x2F3C, 0x0010, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult PreviewMakePreview(pnotComponent p, OSType *previewType, Handle *previewResult, const FSSpec *sourceFile, ProgressProcRecordPtr progress) M68K_INLINE(0x2F3C, 0x0010, 0x0002, 0x7000, 0xA82A);
 
-pascal ComponentResult PreviewMakePreviewReference(pnotComponent p, OSType *previewType, INTEGER *resID, const FSSpec *sourceFile) M68K_INLINE(0x2F3C, 0x000C, 0x0003, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult PreviewMakePreviewReference(pnotComponent p, OSType *previewType, INTEGER *resID, const FSSpec *sourceFile) M68K_INLINE(0x2F3C, 0x000C, 0x0003, 0x7000, 0xA82A);
 
-pascal ComponentResult PreviewEvent(pnotComponent p, EventRecord *e, Boolean *handledEvent) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult PreviewEvent(pnotComponent p, EventRecord *e, Boolean *handledEvent) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
 
 enum {
     handlerHasSpatial = 1,
@@ -3425,57 +3429,57 @@ enum {
     kMediaPrerollSelect = 1304,
 };
 
-pascal ComponentResult MediaInitialize(ComponentInstance ci, GetMovieCompleteParams *gmc) M68K_INLINE(0x2F3C, 0x0004, 0x0501, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaInitialize(ComponentInstance ci, GetMovieCompleteParams *gmc) M68K_INLINE(0x2F3C, 0x0004, 0x0501, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetHandlerCapabilities(ComponentInstance ci, long flags, long flagsMask) M68K_INLINE(0x2F3C, 0x0008, 0x0502, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetHandlerCapabilities(ComponentInstance ci, long flags, long flagsMask) M68K_INLINE(0x2F3C, 0x0008, 0x0502, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaIdle(ComponentInstance ci, TimeValue atMediaTime, long flagsIn, long *flagsOut, const TimeRecord *movieTime) M68K_INLINE(0x2F3C, 0x0010, 0x0503, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaIdle(ComponentInstance ci, TimeValue atMediaTime, long flagsIn, long *flagsOut, const TimeRecord *movieTime) M68K_INLINE(0x2F3C, 0x0010, 0x0503, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGetMediaInfo(ComponentInstance ci, Handle h) M68K_INLINE(0x2F3C, 0x0004, 0x0504, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGetMediaInfo(ComponentInstance ci, Handle h) M68K_INLINE(0x2F3C, 0x0004, 0x0504, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaPutMediaInfo(ComponentInstance ci, Handle h) M68K_INLINE(0x2F3C, 0x0004, 0x0505, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaPutMediaInfo(ComponentInstance ci, Handle h) M68K_INLINE(0x2F3C, 0x0004, 0x0505, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetActive(ComponentInstance ci, Boolean enableMedia) M68K_INLINE(0x2F3C, 0x0002, 0x0506, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetActive(ComponentInstance ci, Boolean enableMedia) M68K_INLINE(0x2F3C, 0x0002, 0x0506, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetRate(ComponentInstance ci, Fixed rate) M68K_INLINE(0x2F3C, 0x0004, 0x0507, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetRate(ComponentInstance ci, Fixed rate) M68K_INLINE(0x2F3C, 0x0004, 0x0507, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGGetStatus(ComponentInstance ci, ComponentResult *statusErr) M68K_INLINE(0x2F3C, 0x0004, 0x0508, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGGetStatus(ComponentInstance ci, ComponentResult *statusErr) M68K_INLINE(0x2F3C, 0x0004, 0x0508, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaTrackEdited(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x0509, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaTrackEdited(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x0509, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetMediaTimeScale(ComponentInstance ci, TimeScale newTimeScale) M68K_INLINE(0x2F3C, 0x0004, 0x050A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetMediaTimeScale(ComponentInstance ci, TimeScale newTimeScale) M68K_INLINE(0x2F3C, 0x0004, 0x050A, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetMovieTimeScale(ComponentInstance ci, TimeScale newTimeScale) M68K_INLINE(0x2F3C, 0x0004, 0x050B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetMovieTimeScale(ComponentInstance ci, TimeScale newTimeScale) M68K_INLINE(0x2F3C, 0x0004, 0x050B, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetGWorld(ComponentInstance ci, CGrafPtr aPort, GDHandle aGD) M68K_INLINE(0x2F3C, 0x0008, 0x050C, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetGWorld(ComponentInstance ci, CGrafPtr aPort, GDHandle aGD) M68K_INLINE(0x2F3C, 0x0008, 0x050C, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetDimensions(ComponentInstance ci, Fixed width, Fixed height) M68K_INLINE(0x2F3C, 0x0008, 0x050D, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetDimensions(ComponentInstance ci, Fixed width, Fixed height) M68K_INLINE(0x2F3C, 0x0008, 0x050D, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetClip(ComponentInstance ci, RgnHandle theClip) M68K_INLINE(0x2F3C, 0x0004, 0x050E, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetClip(ComponentInstance ci, RgnHandle theClip) M68K_INLINE(0x2F3C, 0x0004, 0x050E, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetMatrix(ComponentInstance ci, MatrixRecord *trackMovieMatrix) M68K_INLINE(0x2F3C, 0x0004, 0x050F, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetMatrix(ComponentInstance ci, MatrixRecord *trackMovieMatrix) M68K_INLINE(0x2F3C, 0x0004, 0x050F, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGetTrackOpaque(ComponentInstance ci, Boolean *trackIsOpaque) M68K_INLINE(0x2F3C, 0x0004, 0x0510, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGetTrackOpaque(ComponentInstance ci, Boolean *trackIsOpaque) M68K_INLINE(0x2F3C, 0x0004, 0x0510, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetGraphicsMode(ComponentInstance ci, long mode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0511, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetGraphicsMode(ComponentInstance ci, long mode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0511, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGetGraphicsMode(ComponentInstance ci, long *mode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0512, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGetGraphicsMode(ComponentInstance ci, long *mode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0512, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGSetVolume(ComponentInstance ci, INTEGER volume) M68K_INLINE(0x2F3C, 0x0002, 0x0513, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGSetVolume(ComponentInstance ci, INTEGER volume) M68K_INLINE(0x2F3C, 0x0002, 0x0513, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSetSoundBalance(ComponentInstance ci, INTEGER balance) M68K_INLINE(0x2F3C, 0x0002, 0x0514, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSetSoundBalance(ComponentInstance ci, INTEGER balance) M68K_INLINE(0x2F3C, 0x0002, 0x0514, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGetSoundBalance(ComponentInstance ci, INTEGER *balance) M68K_INLINE(0x2F3C, 0x0004, 0x0515, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGetSoundBalance(ComponentInstance ci, INTEGER *balance) M68K_INLINE(0x2F3C, 0x0004, 0x0515, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGetNextBoundsChange(ComponentInstance ci, TimeValue *when) M68K_INLINE(0x2F3C, 0x0004, 0x0516, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGetNextBoundsChange(ComponentInstance ci, TimeValue *when) M68K_INLINE(0x2F3C, 0x0004, 0x0516, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaGetSrcRgn(ComponentInstance ci, RgnHandle rgn, TimeValue atMediaTime) M68K_INLINE(0x2F3C, 0x0008, 0x0517, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaGetSrcRgn(ComponentInstance ci, RgnHandle rgn, TimeValue atMediaTime) M68K_INLINE(0x2F3C, 0x0008, 0x0517, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaPreroll(ComponentInstance ci, TimeValue time, Fixed rate) M68K_INLINE(0x2F3C, 0x0008, 0x0518, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaPreroll(ComponentInstance ci, TimeValue time, Fixed rate) M68K_INLINE(0x2F3C, 0x0008, 0x0518, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaSampleDescriptionChanged(ComponentInstance ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x0519, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaSampleDescriptionChanged(ComponentInstance ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x0519, 0x7000, 0xA82A);
 
-pascal ComponentResult MediaHasCharacteristic(ComponentInstance ci, OSType characteristic, Boolean *hasIt) M68K_INLINE(0x2F3C, 0x0008, 0x051A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'qtim'") pascal ComponentResult MediaHasCharacteristic(ComponentInstance ci, OSType characteristic, Boolean *hasIt) M68K_INLINE(0x2F3C, 0x0008, 0x051A, 0x7000, 0xA82A);
 
 typedef struct CodecCapabilities CodecCapabilities;
 struct CodecCapabilities {
@@ -3839,6 +3843,7 @@ enum {
     codecInterfaceVersion = 1,
 };
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

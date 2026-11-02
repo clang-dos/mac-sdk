@@ -9,6 +9,10 @@
 #include "StdFilePkg.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     curCTBUVersion = 2,
@@ -110,7 +114,7 @@ typedef ZoneFilterProcPtr ZoneFilterUPP;
 #define DisposeZoneFilterProc(proc) DisposeZoneFilterUPP(proc)
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) CTBUErr InitCTBUtilities(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) CTBUErr InitCTBUtilities(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0401 };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -120,11 +124,11 @@ static __inline__ __attribute__((__always_inline__)) CTBUErr InitCTBUtilities(vo
     return (CTBUErr)_ret;
 }
 #else
-pascal CTBUErr InitCTBUtilities(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal CTBUErr InitCTBUtilities(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CTBGetCTBVersion(void) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER CTBGetCTBVersion(void) {
     struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0405 };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -134,11 +138,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CTBGetCTBVersion(vo
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER CTBGetCTBVersion(void);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER CTBGetCTBVersion(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER StandardNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, NBPReply *theReply) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER StandardNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, NBPReply *theReply) {
     struct { short _sel; __typeof__(theReply) theReply; __typeof__(hook) hook; __typeof__(zoneFilter) zoneFilter; __typeof__(nameFilter) nameFilter; __typeof__(typeList) typeList; __typeof__(numTypes) numTypes; __typeof__(prompt) prompt; __typeof__(where) where; } __attribute__((__packed__)) _pb = { 0x0406, theReply, hook, zoneFilter, nameFilter, typeList, numTypes, prompt, where };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -148,11 +152,11 @@ static __inline__ __attribute__((__always_inline__)) INTEGER StandardNBP(Point w
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER StandardNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, NBPReply *theReply);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER StandardNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, NBPReply *theReply);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CustomNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, long userData, INTEGER dialogID, ModalFilterUPP filter, NBPReply *theReply) {
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") static __inline__ __attribute__((__always_inline__)) INTEGER CustomNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, long userData, INTEGER dialogID, ModalFilterUPP filter, NBPReply *theReply) {
     struct { short _sel; __typeof__(theReply) theReply; __typeof__(filter) filter; __typeof__(dialogID) dialogID; __typeof__(userData) userData; __typeof__(hook) hook; __typeof__(zoneFilter) zoneFilter; __typeof__(nameFilter) nameFilter; __typeof__(typeList) typeList; __typeof__(numTypes) numTypes; __typeof__(prompt) prompt; __typeof__(where) where; } __attribute__((__packed__)) _pb = { 0x0407, theReply, filter, dialogID, userData, hook, zoneFilter, nameFilter, typeList, numTypes, prompt, where };
     register long _ret __asm__("d0");
     register void *_a0 __asm__("a0") = &_pb;
@@ -162,9 +166,10 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CustomNBP(Point whe
     return (INTEGER)_ret;
 }
 #else
-pascal INTEGER CustomNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, long userData, INTEGER dialogID, ModalFilterUPP filter, NBPReply *theReply);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'ctbv'") pascal INTEGER CustomNBP(Point where, ConstStr255Param prompt, INTEGER numTypes, NLType typeList, NameFilterUPP nameFilter, ZoneFilterUPP zoneFilter, DlgHookUPP hook, long userData, INTEGER dialogID, ModalFilterUPP filter, NBPReply *theReply);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

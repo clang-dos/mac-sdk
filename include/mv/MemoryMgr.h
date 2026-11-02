@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     memFullErr = -108,
@@ -169,29 +173,29 @@ typedef Zone *THz;
 
 enum { _NewEmptyHandle = 0xA166 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle NewEmptyHandle(void) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) Handle NewEmptyHandle(void) {
     register Handle _ret __asm__("a0");
-    __asm__ __volatile__(".short 0xA166"
+    __asm__ __volatile__(".short 0xA166, 0x31C0, 0x0220"
         : "=r"(_ret)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
 #else
-pascal Handle NewEmptyHandle(void);
+MAC_SINCE(0x0070, "0.7") pascal Handle NewEmptyHandle(void);
 #endif
 enum { _NewEmptyHandleSys = 0xA566 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Handle NewEmptyHandleSys(void) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) Handle NewEmptyHandleSys(void) {
     register Handle _ret __asm__("a0");
-    __asm__ __volatile__(".short 0xA566"
+    __asm__ __volatile__(".short 0xA566, 0x31C0, 0x0220"
         : "=r"(_ret)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
 #else
-pascal Handle NewEmptyHandleSys(void);
+MAC_SINCE(0x0070, "0.7") pascal Handle NewEmptyHandleSys(void);
 #endif
 
 enum { _NewHandle = 0xA122 };
@@ -199,7 +203,7 @@ enum { _NewHandle = 0xA122 };
 static __inline__ __attribute__((__always_inline__)) Handle NewHandle(Size size) {
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA122"
+    __asm__ __volatile__(".short 0xA122, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -213,7 +217,7 @@ enum { _NewHandleClear = 0xA322 };
 static __inline__ __attribute__((__always_inline__)) Handle NewHandleClear(Size size) {
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA322"
+    __asm__ __volatile__(".short 0xA322, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -227,7 +231,7 @@ enum { _NewHandleSys = 0xA522 };
 static __inline__ __attribute__((__always_inline__)) Handle NewHandleSys(Size size) {
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA522"
+    __asm__ __volatile__(".short 0xA522, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -241,7 +245,7 @@ enum { _NewHandleSysClear = 0xA722 };
 static __inline__ __attribute__((__always_inline__)) Handle NewHandleSysClear(Size size) {
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA722"
+    __asm__ __volatile__(".short 0xA722, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -285,7 +289,7 @@ enum { _NewPtr = 0xA11E };
 static __inline__ __attribute__((__always_inline__)) Ptr NewPtr(Size size) {
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA11E"
+    __asm__ __volatile__(".short 0xA11E, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -299,7 +303,7 @@ enum { _NewPtrClear = 0xA31E };
 static __inline__ __attribute__((__always_inline__)) Ptr NewPtrClear(Size size) {
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA31E"
+    __asm__ __volatile__(".short 0xA31E, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -313,7 +317,7 @@ enum { _NewPtrSys = 0xA51E };
 static __inline__ __attribute__((__always_inline__)) Ptr NewPtrSys(Size size) {
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA51E"
+    __asm__ __volatile__(".short 0xA51E, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -327,7 +331,7 @@ enum { _NewPtrSysClear = 0xA71E };
 static __inline__ __attribute__((__always_inline__)) Ptr NewPtrSysClear(Size size) {
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA71E"
+    __asm__ __volatile__(".short 0xA71E, 0x31C0, 0x0220"
         : "=r"(_ret), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -428,7 +432,7 @@ enum { _ReserveMem = 0xA040 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void ReserveMem(Size needed) {
     register Size _needed __asm__("d0") = needed;
-    __asm__ __volatile__(".short 0xA040"
+    __asm__ __volatile__(".short 0xA040, 0x31C0, 0x0220"
         : "+r"(_needed)
         : 
         : "d1", "d2", "a0", "a1", "cc", "memory");
@@ -440,7 +444,7 @@ enum { _ReserveMemSys = 0xA440 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void ReserveMemSys(Size needed) {
     register Size _needed __asm__("d0") = needed;
-    __asm__ __volatile__(".short 0xA440"
+    __asm__ __volatile__(".short 0xA440, 0x31C0, 0x0220"
         : "+r"(_needed)
         : 
         : "d1", "d2", "a0", "a1", "cc", "memory");
@@ -453,7 +457,7 @@ enum { _PurgeMem = 0xA04D };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void PurgeMem(Size needed) {
     register Size _needed __asm__("d0") = needed;
-    __asm__ __volatile__(".short 0xA04D"
+    __asm__ __volatile__(".short 0xA04D, 0x31C0, 0x0220"
         : "+r"(_needed)
         : 
         : "d1", "d2", "a0", "a1", "cc", "memory");
@@ -465,7 +469,7 @@ enum { _PurgeMemSys = 0xA44D };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void PurgeMemSys(Size needed) {
     register Size _needed __asm__("d0") = needed;
-    __asm__ __volatile__(".short 0xA44D"
+    __asm__ __volatile__(".short 0xA44D, 0x31C0, 0x0220"
         : "+r"(_needed)
         : 
         : "d1", "d2", "a0", "a1", "cc", "memory");
@@ -476,7 +480,7 @@ pascal void PurgeMemSys(Size needed);
 
 enum { _MaxBlock = 0xA061 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Size MaxBlock(void) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) Size MaxBlock(void) {
     register Size _ret __asm__("d0");
     __asm__ __volatile__(".short 0xA061"
         : "=r"(_ret)
@@ -485,11 +489,11 @@ static __inline__ __attribute__((__always_inline__)) Size MaxBlock(void) {
     return _ret;
 }
 #else
-pascal Size MaxBlock(void);
+MAC_SINCE(0x0070, "0.7") pascal Size MaxBlock(void);
 #endif
 enum { _MaxBlockSys = 0xA461 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Size MaxBlockSys(void) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) Size MaxBlockSys(void) {
     register Size _ret __asm__("d0");
     __asm__ __volatile__(".short 0xA461"
         : "=r"(_ret)
@@ -498,12 +502,12 @@ static __inline__ __attribute__((__always_inline__)) Size MaxBlockSys(void) {
     return _ret;
 }
 #else
-pascal Size MaxBlockSys(void);
+MAC_SINCE(0x0070, "0.7") pascal Size MaxBlockSys(void);
 #endif
 
 enum { _PurgeSpace = 0xA162 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PurgeSpace(Size *totalp, Size *contigp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PurgeSpace(Size *totalp, Size *contigp) {
     register Size _totalp __asm__("d0");
     register Size _contigp __asm__("a0");
     __asm__ __volatile__(".short 0xA162"
@@ -514,11 +518,11 @@ static __inline__ __attribute__((__always_inline__)) void PurgeSpace(Size *total
     if (contigp) *contigp = _contigp;
 }
 #else
-pascal void PurgeSpace(Size *totalp, Size *contigp);
+MAC_SINCE(0x0070, "0.7") pascal void PurgeSpace(Size *totalp, Size *contigp);
 #endif
 enum { _PurgeSpaceSys = 0xA562 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PurgeSpaceSys(Size *totalp, Size *contigp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PurgeSpaceSys(Size *totalp, Size *contigp) {
     register Size _totalp __asm__("d0");
     register Size _contigp __asm__("a0");
     __asm__ __volatile__(".short 0xA562"
@@ -529,14 +533,14 @@ static __inline__ __attribute__((__always_inline__)) void PurgeSpaceSys(Size *to
     if (contigp) *contigp = _contigp;
 }
 #else
-pascal void PurgeSpaceSys(Size *totalp, Size *contigp);
+MAC_SINCE(0x0070, "0.7") pascal void PurgeSpaceSys(Size *totalp, Size *contigp);
 #endif
 
 #define MemError() (*(INTEGER *)0x0220)
 
 enum { _HGetState = 0xA069 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) SignedByte HGetState(Handle h) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) SignedByte HGetState(Handle h) {
     register SignedByte _ret __asm__("d0");
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA069"
@@ -546,28 +550,28 @@ static __inline__ __attribute__((__always_inline__)) SignedByte HGetState(Handle
     return _ret;
 }
 #else
-pascal SignedByte HGetState(Handle h);
+MAC_SINCE(0x0070, "0.7") pascal SignedByte HGetState(Handle h);
 #endif
 
 enum { _HSetState = 0xA06A };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void HSetState(Handle h, SignedByte flags) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void HSetState(Handle h, SignedByte flags) {
     register Handle _h __asm__("a0") = h;
     register SignedByte _flags __asm__("d0") = flags;
-    __asm__ __volatile__(".short 0xA06A"
+    __asm__ __volatile__(".short 0xA06A, 0x31C0, 0x0220"
         : "+r"(_h), "+r"(_flags)
         : 
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void HSetState(Handle h, SignedByte flags);
+MAC_SINCE(0x0070, "0.7") pascal void HSetState(Handle h, SignedByte flags);
 #endif
 
 enum { _HLock = 0xA029 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void HLock(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA029"
+    __asm__ __volatile__(".short 0xA029, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -580,7 +584,7 @@ enum { _HUnlock = 0xA02A };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void HUnlock(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA02A"
+    __asm__ __volatile__(".short 0xA02A, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -593,7 +597,7 @@ enum { _HPurge = 0xA049 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void HPurge(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA049"
+    __asm__ __volatile__(".short 0xA049, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -606,7 +610,7 @@ enum { _HNoPurge = 0xA04A };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void HNoPurge(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA04A"
+    __asm__ __volatile__(".short 0xA04A, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -617,28 +621,28 @@ pascal void HNoPurge(Handle h);
 
 enum { _HSetRBit = 0xA067 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void HSetRBit(Handle h) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void HSetRBit(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA067"
+    __asm__ __volatile__(".short 0xA067, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void HSetRBit(Handle h);
+MAC_SINCE(0x0070, "0.7") pascal void HSetRBit(Handle h);
 #endif
 
 enum { _HClrRBit = 0xA068 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void HClrRBit(Handle h) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void HClrRBit(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA068"
+    __asm__ __volatile__(".short 0xA068, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void HClrRBit(Handle h);
+MAC_SINCE(0x0070, "0.7") pascal void HClrRBit(Handle h);
 #endif
 
 enum { _InitApplZone = 0xA02C };
@@ -646,7 +650,7 @@ pascal void InitApplZone(void) M68K_INLINE(0xA02C);
 
 enum { _SetApplBase = 0xA057 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SetApplBase(Ptr newbase) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void SetApplBase(Ptr newbase) {
     register Ptr _newbase __asm__("a0") = newbase;
     __asm__ __volatile__(".short 0xA057"
         : "+r"(_newbase)
@@ -654,7 +658,7 @@ static __inline__ __attribute__((__always_inline__)) void SetApplBase(Ptr newbas
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void SetApplBase(Ptr newbase);
+MAC_SINCE(0x0070, "0.7") pascal void SetApplBase(Ptr newbase);
 #endif
 
 enum { _MoreMasters = 0xA036 };
@@ -697,7 +701,7 @@ enum { _DisposeHandle = 0xA023 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void DisposeHandle(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA023"
+    __asm__ __volatile__(".short 0xA023, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -729,7 +733,7 @@ enum { _SetHandleSize = 0xA024 };
 static __inline__ __attribute__((__always_inline__)) void SetHandleSize(Handle h, Size newsize) {
     register Handle _h __asm__("a0") = h;
     register Size _newsize __asm__("d0") = newsize;
-    __asm__ __volatile__(".short 0xA024"
+    __asm__ __volatile__(".short 0xA024, 0x31C0, 0x0220"
         : "+r"(_h), "+r"(_newsize)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -743,7 +747,7 @@ enum { _HandleZone = 0xA126 };
 static __inline__ __attribute__((__always_inline__)) THz HandleZone(Handle h) {
     register THz _ret __asm__("a0");
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA126"
+    __asm__ __volatile__(".short 0xA126, 0x31C0, 0x0220"
         : "=r"(_ret)
         : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -758,7 +762,7 @@ enum { _ReallocateHandle = 0xA027 };
 static __inline__ __attribute__((__always_inline__)) void ReallocateHandle(Handle h, Size size) {
     register Handle _h __asm__("a0") = h;
     register Size _size __asm__("d0") = size;
-    __asm__ __volatile__(".short 0xA027"
+    __asm__ __volatile__(".short 0xA027, 0x31C0, 0x0220"
         : "+r"(_h), "+r"(_size)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -774,7 +778,7 @@ enum { _DisposePtr = 0xA01F };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void DisposePtr(Ptr p) {
     register Ptr _p __asm__("a0") = p;
-    __asm__ __volatile__(".short 0xA01F"
+    __asm__ __volatile__(".short 0xA01F, 0x31C0, 0x0220"
         : "+r"(_p)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -806,7 +810,7 @@ enum { _SetPtrSize = 0xA020 };
 static __inline__ __attribute__((__always_inline__)) void SetPtrSize(Ptr p, Size newsize) {
     register Ptr _p __asm__("a0") = p;
     register Size _newsize __asm__("d0") = newsize;
-    __asm__ __volatile__(".short 0xA020"
+    __asm__ __volatile__(".short 0xA020, 0x31C0, 0x0220"
         : "+r"(_p), "+r"(_newsize)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -820,7 +824,7 @@ enum { _PtrZone = 0xA148 };
 static __inline__ __attribute__((__always_inline__)) THz PtrZone(Ptr p) {
     register THz _ret __asm__("a0");
     register Ptr _p __asm__("a0") = p;
-    __asm__ __volatile__(".short 0xA148"
+    __asm__ __volatile__(".short 0xA148, 0x31C0, 0x0220"
         : "=r"(_ret)
         : "r"(_p)
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -836,7 +840,7 @@ static __inline__ __attribute__((__always_inline__)) void BlockMove(const void *
     register const void* _src __asm__("a0") = src;
     register void* _dst __asm__("a1") = dst;
     register Size _cnt __asm__("d0") = cnt;
-    __asm__ __volatile__(".short 0xA02E"
+    __asm__ __volatile__(".short 0xA02E, 0x31C0, 0x0220"
         : "+r"(_src), "+r"(_dst), "+r"(_cnt)
         : 
         : "d1", "d2", "cc", "memory");
@@ -850,7 +854,7 @@ static __inline__ __attribute__((__always_inline__)) void BlockMoveData(const vo
     register const void* _src __asm__("a0") = src;
     register void* _dst __asm__("a1") = dst;
     register Size _cnt __asm__("d0") = cnt;
-    __asm__ __volatile__(".short 0xA22E"
+    __asm__ __volatile__(".short 0xA22E, 0x31C0, 0x0220"
         : "+r"(_src), "+r"(_dst), "+r"(_cnt)
         : 
         : "d1", "d2", "cc", "memory");
@@ -860,26 +864,26 @@ pascal void BlockMoveData(const void *src, void *dst, Size cnt);
 #endif
 
 enum { _MaxApplZone = 0xA063 };
-pascal void MaxApplZone(void) M68K_INLINE(0xA063);
+MAC_SINCE(0x0070, "0.7") pascal void MaxApplZone(void) M68K_INLINE(0xA063);
 
 enum { _MoveHHi = 0xA064 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void MoveHHi(Handle h) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void MoveHHi(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA064"
+    __asm__ __volatile__(".short 0xA064, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void MoveHHi(Handle h);
+MAC_SINCE(0x0070, "0.7") pascal void MoveHHi(Handle h);
 #endif
 
 enum { _SetApplLimit = 0xA02D };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void SetApplLimit(Ptr newlimit) {
     register Ptr _newlimit __asm__("a0") = newlimit;
-    __asm__ __volatile__(".short 0xA02D"
+    __asm__ __volatile__(".short 0xA02D, 0x31C0, 0x0220"
         : "+r"(_newlimit)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -905,7 +909,7 @@ enum { _EmptyHandle = 0xA02B };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void EmptyHandle(Handle h) {
     register Handle _h __asm__("a0") = h;
-    __asm__ __volatile__(".short 0xA02B"
+    __asm__ __volatile__(".short 0xA02B, 0x31C0, 0x0220"
         : "+r"(_h)
         : 
         : "d0", "d1", "d2", "a1", "cc", "memory");
@@ -941,7 +945,7 @@ pascal THz ApplicationZone(void);
 
 enum { _StackSpace = 0xA065 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Size StackSpace(void) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) Size StackSpace(void) {
     register Size _ret __asm__("d0");
     __asm__ __volatile__(".short 0xA065"
         : "=r"(_ret)
@@ -950,7 +954,7 @@ static __inline__ __attribute__((__always_inline__)) Size StackSpace(void) {
     return _ret;
 }
 #else
-pascal Size StackSpace(void);
+MAC_SINCE(0x0070, "0.7") pascal Size StackSpace(void);
 #endif
 
 #if TARGET_CPU_68K
@@ -974,44 +978,44 @@ pascal Handle GZSaveHnd(void);
 enum { _OSDispatch = 0xA88F };
 
 // temporary memory functions; see tempmem.c
-pascal long TempFreeMem(void) M68K_INLINE(0x3F3C, 0x0018, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal long TempFreeMem(void) M68K_INLINE(0x3F3C, 0x0018, 0xA88F);
 #if OLDROUTINENAMES
 #define MFFreeMem() TempFreeMem()
 #endif
 
-pascal Size TempMaxMem(Size *grow) M68K_INLINE(0x3F3C, 0x0015, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal Size TempMaxMem(Size *grow) M68K_INLINE(0x3F3C, 0x0015, 0xA88F);
 #if OLDROUTINENAMES
 #define MFMaxMem(grow) TempMaxMem(grow)
 #endif
 
-pascal Ptr TempTopMem(void) M68K_INLINE(0x3F3C, 0x0016, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal Ptr TempTopMem(void) M68K_INLINE(0x3F3C, 0x0016, 0xA88F);
 #if OLDROUTINENAMES
 #define MFTopMem() TempTopMem()
 #endif
 
-pascal Handle TempNewHandle(Size logical_size, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001D, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal Handle TempNewHandle(Size logical_size, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001D, 0xA88F);
 #if OLDROUTINENAMES
 #define MFTempNewHandle(logical_size, result_code) TempNewHandle(logical_size, result_code)
 #endif
 
-pascal void TempHLock(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001E, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal void TempHLock(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001E, 0xA88F);
 #if OLDROUTINENAMES
 #define MFTempHLock(h, result_code) TempHLock(h, result_code)
 #endif
 
-pascal void TempHUnlock(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001F, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal void TempHUnlock(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001F, 0xA88F);
 #if OLDROUTINENAMES
 #define MFTempHUnlock(h, result_code) TempHUnlock(h, result_code)
 #endif
 
-pascal void TempDisposeHandle(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x0020, 0xA88F);
+MAC_SINCE(0x0700, "7.0") pascal void TempDisposeHandle(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x0020, 0xA88F);
 #if OLDROUTINENAMES
 #define MFTempDisposHandle(h, result_code) TempDisposeHandle(h, result_code)
 #endif
 
 // Virtual memory
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr HoldMemory(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr HoldMemory(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1022,11 +1026,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr HoldMemory(void *addr
     return _ret;
 }
 #else
-pascal OSErr HoldMemory(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr HoldMemory(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr UnholdMemory(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr UnholdMemory(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1037,11 +1041,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr UnholdMemory(void *ad
     return _ret;
 }
 #else
-pascal OSErr UnholdMemory(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr UnholdMemory(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr LockMemory(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr LockMemory(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1052,11 +1056,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr LockMemory(void *addr
     return _ret;
 }
 #else
-pascal OSErr LockMemory(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr LockMemory(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryContiguous(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryContiguous(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1067,11 +1071,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryContiguous(
     return _ret;
 }
 #else
-pascal OSErr LockMemoryContiguous(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr LockMemoryContiguous(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr UnlockMemory(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr UnlockMemory(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1082,7 +1086,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr UnlockMemory(void *ad
     return _ret;
 }
 #else
-pascal OSErr UnlockMemory(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr UnlockMemory(void *address, unsigned long count);
 #endif
 
 typedef INTEGER PageState;
@@ -1095,7 +1099,7 @@ enum {
 
 // Debugger support (for debugger writers)
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) long DebuggerGetMax(void) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) long DebuggerGetMax(void) {
     register long _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7000, 0xA08D"
         : "=r"(_ret)
@@ -1104,17 +1108,17 @@ static __inline__ __attribute__((__always_inline__)) long DebuggerGetMax(void) {
     return _ret;
 }
 #else
-pascal long DebuggerGetMax(void);
+MAC_SINCE(0x0710, "7.1") pascal long DebuggerGetMax(void);
 #endif
 
-pascal void DebuggerEnter(void) M68K_INLINE(0x7001, 0xA08D);
+MAC_SINCE(0x0710, "7.1") pascal void DebuggerEnter(void) M68K_INLINE(0x7001, 0xA08D);
 
-pascal void DebuggerExit(void) M68K_INLINE(0x7002, 0xA08D);
+MAC_SINCE(0x0710, "7.1") pascal void DebuggerExit(void) M68K_INLINE(0x7002, 0xA08D);
 
-pascal void DebuggerPoll(void) M68K_INLINE(0x7003, 0xA08D);
+MAC_SINCE(0x0710, "7.1") pascal void DebuggerPoll(void) M68K_INLINE(0x7003, 0xA08D);
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) PageState GetPageState(const void *address) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) PageState GetPageState(const void *address) {
     register PageState _ret __asm__("d0");
     register const void* _address __asm__("a0") = address;
     __asm__ __volatile__(".short 0x7004, 0xA08D"
@@ -1124,11 +1128,11 @@ static __inline__ __attribute__((__always_inline__)) PageState GetPageState(cons
     return _ret;
 }
 #else
-pascal PageState GetPageState(const void *address);
+MAC_SINCE(0x0710, "7.1") pascal PageState GetPageState(const void *address);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Boolean PageFaultFatal(void) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) Boolean PageFaultFatal(void) {
     register Boolean _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7005, 0xA08D"
         : "=r"(_ret)
@@ -1137,11 +1141,11 @@ static __inline__ __attribute__((__always_inline__)) Boolean PageFaultFatal(void
     return _ret;
 }
 #else
-pascal Boolean PageFaultFatal(void);
+MAC_SINCE(0x0710, "7.1") pascal Boolean PageFaultFatal(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DebuggerLockMemory(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr DebuggerLockMemory(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1152,11 +1156,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr DebuggerLockMemory(vo
     return _ret;
 }
 #else
-pascal OSErr DebuggerLockMemory(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr DebuggerLockMemory(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DebuggerUnlockMemory(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr DebuggerUnlockMemory(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1167,7 +1171,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr DebuggerUnlockMemory(
     return _ret;
 }
 #else
-pascal OSErr DebuggerUnlockMemory(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr DebuggerUnlockMemory(void *address, unsigned long count);
 #endif
 
 // Memory (PowerPC)
@@ -1214,7 +1218,7 @@ struct LogicalToPhysicalTable {
 };
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DisposeZone(THz zone) {
+MAC_SINCE(0x0761, "7.6.1") static __inline__ __attribute__((__always_inline__)) OSErr DisposeZone(THz zone) {
     register OSErr _ret __asm__("d0");
     register THz _zone __asm__("a0") = zone;
     __asm__ __volatile__(".short 0x701D, 0xA0A4"
@@ -1224,7 +1228,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr DisposeZone(THz zone)
     return _ret;
 }
 #else
-pascal OSErr DisposeZone(THz zone);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DisposeZone(THz zone);
 #endif
 
 enum { _InlineGetHandleSize = 0xA025 };
@@ -1245,14 +1249,14 @@ pascal Size InlineGetHandleSize(Handle h);
 // _MemoryDispatch selector 5: A0 is the table and A1 the entry count,
 // which comes back in A1.
 #if TARGET_CPU_68K
-static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
+MAC_SINCE(0x0710, "7.1") static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
 #else
-pascal OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
+MAC_SINCE(0x0710, "7.1") pascal OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
 #endif
 
 // Virtual memory: control paging of a range (Mac OS 8.5)
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryForOutput(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryForOutput(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1263,11 +1267,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryForOutput(v
     return _ret;
 }
 #else
-pascal OSErr LockMemoryForOutput(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr LockMemoryForOutput(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryResident(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryResident(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1278,11 +1282,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryResident(vo
     return _ret;
 }
 #else
-pascal OSErr MakeMemoryResident(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr MakeMemoryResident(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr ReleaseMemoryData(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr ReleaseMemoryData(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1293,11 +1297,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr ReleaseMemoryData(voi
     return _ret;
 }
 #else
-pascal OSErr ReleaseMemoryData(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr ReleaseMemoryData(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryNonResident(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryNonResident(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1308,11 +1312,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryNonResident
     return _ret;
 }
 #else
-pascal OSErr MakeMemoryNonResident(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr MakeMemoryNonResident(void *address, unsigned long count);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr FlushMemory(void *address, unsigned long count) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) OSErr FlushMemory(void *address, unsigned long count) {
     register OSErr _ret __asm__("d0");
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
@@ -1323,7 +1327,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr FlushMemory(void *add
     return _ret;
 }
 #else
-pascal OSErr FlushMemory(void *address, unsigned long count);
+MAC_SINCE(0x0710, "7.1") pascal OSErr FlushMemory(void *address, unsigned long count);
 #endif
 
 enum { _ReallocateHandleSys = 0xA427 };
@@ -1331,7 +1335,7 @@ enum { _ReallocateHandleSys = 0xA427 };
 static __inline__ __attribute__((__always_inline__)) void ReallocateHandleSys(Handle h, Size byteCount) {
     register Handle _h __asm__("a0") = h;
     register Size _byteCount __asm__("d0") = byteCount;
-    __asm__ __volatile__(".short 0xA427"
+    __asm__ __volatile__(".short 0xA427, 0x31C0, 0x0220"
         : "+r"(_h), "+r"(_byteCount)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -1415,6 +1419,7 @@ static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned 
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

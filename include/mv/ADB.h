@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct ADBDataBlock ADBDataBlock;
 struct ADBDataBlock {
@@ -30,17 +34,17 @@ struct ADBSetInfoBlock {
 #define LMSetKbdType(val) ((*(Byte *)0x0000021E) = (val))
 
 enum { _ADBReInit = 0xA07B };
-pascal void ADBReInit(void) M68K_INLINE(0xA07B);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal void ADBReInit(void) M68K_INLINE(0xA07B);
 
 #if TARGET_CPU_68K
-static __inline__ OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER command);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER command);
 #else
-pascal OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER command);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER command);
 #endif
 
 enum { _CountADBs = 0xA077 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) INTEGER CountADBs(void) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) INTEGER CountADBs(void) {
     register INTEGER _ret __asm__("d0");
     __asm__ __volatile__(".short 0xA077"
         : "=r"(_ret)
@@ -49,12 +53,12 @@ static __inline__ __attribute__((__always_inline__)) INTEGER CountADBs(void) {
     return _ret;
 }
 #else
-pascal INTEGER CountADBs(void);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal INTEGER CountADBs(void);
 #endif
 
 enum { _GetIndADB = 0xA078 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr GetIndADB(ADBDataBlock *adbp, INTEGER index) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr GetIndADB(ADBDataBlock *adbp, INTEGER index) {
     register OSErr _ret __asm__("d0");
     register ADBDataBlock* _adbp __asm__("a0") = adbp;
     register INTEGER _index __asm__("d0") = index;
@@ -65,12 +69,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr GetIndADB(ADBDataBloc
     return _ret;
 }
 #else
-pascal OSErr GetIndADB(ADBDataBlock *adbp, INTEGER index);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr GetIndADB(ADBDataBlock *adbp, INTEGER index);
 #endif
 
 enum { _GetADBInfo = 0xA079 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr GetADBInfo(ADBDataBlock *adbp, INTEGER address) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr GetADBInfo(ADBDataBlock *adbp, INTEGER address) {
     register OSErr _ret __asm__("d0");
     register ADBDataBlock* _adbp __asm__("a0") = adbp;
     register INTEGER _address __asm__("d0") = address;
@@ -81,12 +85,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr GetADBInfo(ADBDataBlo
     return _ret;
 }
 #else
-pascal OSErr GetADBInfo(ADBDataBlock *adbp, INTEGER address);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr GetADBInfo(ADBDataBlock *adbp, INTEGER address);
 #endif
 
 enum { _SetADBInfo = 0xA07A };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SetADBInfo(ADBSetInfoBlock *adbp, INTEGER address) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr SetADBInfo(ADBSetInfoBlock *adbp, INTEGER address) {
     register OSErr _ret __asm__("d0");
     register ADBSetInfoBlock* _adbp __asm__("a0") = adbp;
     register INTEGER _address __asm__("d0") = address;
@@ -97,7 +101,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr SetADBInfo(ADBSetInfo
     return _ret;
 }
 #else
-pascal OSErr SetADBInfo(ADBSetInfoBlock *adbp, INTEGER address);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr SetADBInfo(ADBSetInfoBlock *adbp, INTEGER address);
 #endif
 
 #if TARGET_CPU_68K
@@ -115,6 +119,7 @@ static __inline__ OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER comma
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

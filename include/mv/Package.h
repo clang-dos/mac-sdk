@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     dskInit = 2,
@@ -26,6 +30,7 @@ pascal void InitPack(INTEGER packid) M68K_INLINE(0xA9E5);
 enum { _InitAllPacks = 0xA9E6 };
 pascal void InitAllPacks(void) M68K_INLINE(0xA9E6);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

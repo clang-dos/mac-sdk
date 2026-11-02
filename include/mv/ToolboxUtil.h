@@ -10,6 +10,10 @@
 #include "SANE.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     sysPatListID = 0,
@@ -33,16 +37,16 @@ typedef Pattern *PatPtr;
 typedef PatPtr *PatHandle;
 
 enum { _FracSqrt = 0xA849 };
-pascal Fract FracSqrt(Fract x) M68K_INLINE(0xA849);
+MAC_SINCE(0x0070, "0.7") pascal Fract FracSqrt(Fract x) M68K_INLINE(0xA849);
 
 enum { _FracSin = 0xA848 };
-pascal Fract FracSin(Fixed x) M68K_INLINE(0xA848);
+MAC_SINCE(0x0070, "0.7") pascal Fract FracSin(Fixed x) M68K_INLINE(0xA848);
 
 enum { _FixATan2 = 0xA818 };
-pascal Fixed FixATan2(LONGINT x, LONGINT y) M68K_INLINE(0xA818);
+MAC_SINCE(0x0070, "0.7") pascal Fixed FixATan2(LONGINT x, LONGINT y) M68K_INLINE(0xA818);
 
 enum { _FracCos = 0xA847 };
-pascal Fract FracCos(Fixed x) M68K_INLINE(0xA847);
+MAC_SINCE(0x0070, "0.7") pascal Fract FracCos(Fixed x) M68K_INLINE(0xA847);
 
 enum { _FixRatio = 0xA869 };
 pascal Fixed FixRatio(INTEGER n, INTEGER d) M68K_INLINE(0xA869);
@@ -135,31 +139,31 @@ enum { _AngleFromSlope = 0xA8C4 };
 pascal INTEGER AngleFromSlope(Fixed s) M68K_INLINE(0xA8C4);
 
 enum { _FracMul = 0xA84A };
-pascal Fract FracMul(Fract x, Fract y) M68K_INLINE(0xA84A);
+MAC_SINCE(0x0070, "0.7") pascal Fract FracMul(Fract x, Fract y) M68K_INLINE(0xA84A);
 
 enum { _FixDiv = 0xA84D };
-pascal Fixed FixDiv(Fixed x, Fixed y) M68K_INLINE(0xA84D);
+MAC_SINCE(0x0070, "0.7") pascal Fixed FixDiv(Fixed x, Fixed y) M68K_INLINE(0xA84D);
 
 enum { _FracDiv = 0xA84B };
-pascal Fract FracDiv(Fract x, Fract y) M68K_INLINE(0xA84B);
+MAC_SINCE(0x0070, "0.7") pascal Fract FracDiv(Fract x, Fract y) M68K_INLINE(0xA84B);
 
 enum { _Long2Fix = 0xA83F };
-pascal Fixed Long2Fix(LONGINT x) M68K_INLINE(0xA83F);
+MAC_SINCE(0x0070, "0.7") pascal Fixed Long2Fix(LONGINT x) M68K_INLINE(0xA83F);
 
 enum { _Fix2Long = 0xA840 };
-pascal LONGINT Fix2Long(Fixed x) M68K_INLINE(0xA840);
+MAC_SINCE(0x0070, "0.7") pascal LONGINT Fix2Long(Fixed x) M68K_INLINE(0xA840);
 
 enum { _Fix2Frac = 0xA841 };
-pascal Fract Fix2Frac(Fixed x) M68K_INLINE(0xA841);
+MAC_SINCE(0x0070, "0.7") pascal Fract Fix2Frac(Fixed x) M68K_INLINE(0xA841);
 
 enum { _Frac2Fix = 0xA842 };
-pascal Fixed Frac2Fix(Fract x) M68K_INLINE(0xA842);
+MAC_SINCE(0x0070, "0.7") pascal Fixed Frac2Fix(Fract x) M68K_INLINE(0xA842);
 
 enum { _R_X2Fix = 0xA844 };
-pascal Fixed R_X2Fix(extended80 *x) M68K_INLINE(0xA844);
+MAC_SINCE(0x0070, "0.7") pascal Fixed R_X2Fix(extended80 *x) M68K_INLINE(0xA844);
 
 enum { _R_X2Frac = 0xA846 };
-pascal Fract R_X2Frac(extended80 *x) M68K_INLINE(0xA846);
+MAC_SINCE(0x0070, "0.7") pascal Fract R_X2Frac(extended80 *x) M68K_INLINE(0xA846);
 
 // Conversions to floating point (68k needs SANE glue for these)
 pascal double Fix2X(Fixed x);
@@ -218,6 +222,7 @@ static __inline__ void GetIndPattern(Byte *op, INTEGER plistid, INTEGER index) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

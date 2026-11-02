@@ -1,7 +1,7 @@
 # mac-sdk
 
 A redistributable SDK for classic Mac OS applications built with clang
-(clang-dos/llvm): System 6 to Mac OS 9, on 68k and PowerPC.
+(clang-dos/llvm): System 0.1 to Mac OS 9, on 68k and PowerPC.
 
 ## Headers
 
@@ -27,11 +27,28 @@ clang --target=powerpc-apple-macos9 -O2 -Iinclude -c hello.c   # PowerPC
   passes `long *` compiles unchanged.
 
 `examples/hello.c` uses them; built as a fat application it runs on
-System 7.1 and 7.6.1 (68k) and Mac OS 8.1 (PowerPC). Its 68k build also
-runs on a Mac Plus (in MAME) under Systems 2.0, 2.0.1, 5.0, 5.1, 6.0,
-6.0.3, 6.0.4, 6.0.5 and 6.0.8. It checks that the Gestalt trap exists
-before calling it, since Gestalt arrived in System 6.0.4; 6.0.8 reports
-itself to Gestalt as 6.0.7.
+every System we have, from System 0.1 on the Mac 128K to Mac OS 9.2.1
+on PowerPC, in emulators (MAME, QEMU and SheepShaver).
+
+### Which System has which call
+
+`docs/systems.md` lists, for every call in the headers, the oldest
+System that provides it, measured by booting each System we have (29
+System and machine pairs, from 0.1 to 9.2.1) and recording its trap
+tables, packages and Gestalt selectors (`tools/probe/trapprobe.c`,
+`tools/availability.py`, data in `data/availability.tsv`).
+
+- `TrapAvailable(trap)` (OSUtils.h) says at run time whether a trap
+  exists, on every ROM from the 64K ROM on. Check it before calling a
+  trap newer than the oldest System you support, for example
+  `if (TrapAvailable(_Gestalt)) Gestalt(...)`.
+- `-DMAC_MIN_SYSTEM=0x0605` makes clang warn at each call that needs a
+  newer System than 6.0.5 (or a manager Gestalt must report, such as
+  QuickTime). `-DMAC_NO_COLOR_QD` warns at each Color QuickDraw call,
+  for the Mac Plus and SE. Without them the headers warn about nothing.
+- On the 64K ROM the Memory Manager does not set `MemErr`, so the
+  68k calls store D0 there themselves and `MemError()` works on every
+  System.
 
 ### Mac OS 8
 

@@ -5,6 +5,10 @@
 #include "../ConditionalMacros.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Declarations of low memory globals which haven't been put anywhere else
 // yet follow. Whenever a low memory global clearly belongs to one manager/module,
@@ -160,6 +164,7 @@
 #define LMGetABusGlobals() (*(Ptr *)0x000002D8)
 #define LMSetABusGlobals(val) ((*(Ptr *)0x000002D8) = (val))
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

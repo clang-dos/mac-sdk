@@ -361,6 +361,7 @@
         register: TrapBit<SYSBIT>
     executor: _NewEmptyHandle_flags
     trap: 0xA166
+    m68k-memerr: true
     returnreg: A0
     variants:
       - NewEmptyHandle
@@ -384,6 +385,7 @@
         register: TrapBit<CLRBIT>
     executor: _NewHandle_flags
     trap: 0xA122
+    m68k-memerr: true
     returnreg: A0
     variants:
       - NewHandle
@@ -429,6 +431,7 @@
         register: TrapBit<CLRBIT>
     executor: _NewPtr_flags
     trap: 0xA11E
+    m68k-memerr: true
     returnreg: A0
     variants:
       - NewPtr
@@ -504,6 +507,7 @@
         register: TrapBit<SYSBIT>
     executor: _ResrvMem_flags
     trap: 0xA040
+    m68k-memerr: true
     variants:
       - ReserveMem
       - ReserveMemSys
@@ -522,6 +526,7 @@
         register: TrapBit<SYSBIT>
     executor: _PurgeMem_flags
     trap: 0xA04D
+    m68k-memerr: true
     variants:
       - PurgeMem
       - PurgeMemSys
@@ -597,6 +602,7 @@
         register: D0
     executor: true
     trap: 0xA06A
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -609,6 +615,7 @@
         register: A0
     executor: true
     trap: 0xA029
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -621,6 +628,7 @@
         register: A0
     executor: true
     trap: 0xA02A
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -633,6 +641,7 @@
         register: A0
     executor: true
     trap: 0xA049
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -645,6 +654,7 @@
         register: A0
     executor: true
     trap: 0xA04A
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -657,6 +667,7 @@
         register: A0
     executor: true
     trap: 0xA067
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -669,6 +680,7 @@
         register: A0
     executor: true
     trap: 0xA068
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -760,6 +772,7 @@
         register: A0
     executor: true
     trap: 0xA023
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
     old_name: DisposHandle
 
@@ -790,6 +803,7 @@
         register: D0
     executor: true
     trap: 0xA024
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -803,6 +817,7 @@
         register: A0
     executor: true
     trap: 0xA126
+    m68k-memerr: true
     returnreg: A0
     executor_extras: ReturnMemErr<D0>
 
@@ -819,6 +834,7 @@
         register: D0
     executor: true
     trap: 0xA027
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
     old_name: ReallocHandle
 
@@ -832,6 +848,7 @@
         register: A0
     executor: true
     trap: 0xA01F
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
     old_name: DisposPtr
 
@@ -862,6 +879,7 @@
         register: D0
     executor: true
     trap: 0xA020
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -875,6 +893,7 @@
         register: A0
     executor: true
     trap: 0xA148
+    m68k-memerr: true
     returnreg: A0
     executor_extras: ReturnMemErr<D0>
 
@@ -897,6 +916,7 @@
         register: TrapBit<0x200>
     executor: _BlockMove_flags
     trap: 0xA02E
+    m68k-memerr: true
     variants:
       - BlockMove
       - BlockMoveData
@@ -908,6 +928,7 @@
     name: MaxApplZone
     executor: true
     trap: 0xA063
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -920,6 +941,7 @@
         register: A0
     executor: true
     trap: 0xA064
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -932,6 +954,7 @@
         register: A0
     executor: true
     trap: 0xA02D
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -956,6 +979,7 @@
         register: A0
     executor: true
     trap: 0xA02B
+    m68k-memerr: true
     executor_extras: ReturnMemErr<D0>
 
 # ####
@@ -1572,6 +1596,7 @@
       type: Size
       register: D0
     trap: 42023
+    m68k-memerr: true
 
 # ####
 

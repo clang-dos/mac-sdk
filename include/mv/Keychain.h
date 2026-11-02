@@ -9,6 +9,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Keychain Manager (Mac OS 9; Keychain 1.0 was an extension for 8.6).
 typedef struct OpaqueKCRef *KCRef;
@@ -277,6 +281,7 @@ pascal OSStatus KCFindNextItem(KCSearchRef search, KCItemRef *item);
 pascal OSStatus KCReleaseSearch(KCSearchRef *search);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

@@ -124,7 +124,7 @@ def sdk_inlines():
     """name -> words for every SDK function with 68k code."""
     out = {}
     for f in glob.glob(os.path.join(ROOT, "include", "mv", "*.h")):
-        src = open(f).read()
+        src = re.sub(r"MAC_SINCE(?:_GESTALT)?\([^()]*\) |MAC_COLOR_QD ", "", open(f).read())
         for m in re.finditer(r"\b(\w+)\s*\([^;{\n]*\)\s*M68K_INLINE\(([^)]*)\)", src):
             out[m.group(1)] = words_of(m.group(2))
         # register-based traps: static inline functions with .short words

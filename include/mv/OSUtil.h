@@ -11,6 +11,10 @@
 #include "VRetraceMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     macXLMachine = 0,
@@ -298,9 +302,9 @@ pascal OSErr PtrAndHand(const void *p, Handle h, LONGINT s1);
 
 
 #if TARGET_CPU_68K
-static __inline__ INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
+MAC_SINCE(0x0070, "0.7") static __inline__ INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
 #else
-pascal INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
+MAC_SINCE(0x0070, "0.7") pascal INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
 #endif
 
 #if TARGET_CPU_68K
@@ -311,9 +315,9 @@ pascal Boolean EqualString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig
 
 
 #if TARGET_CPU_68K
-static __inline__ void UpperString(StringPtr s, Boolean diac);
+MAC_SINCE(0x0070, "0.7") static __inline__ void UpperString(StringPtr s, Boolean diac);
 #else
-pascal void UpperString(StringPtr s, Boolean diac);
+MAC_SINCE(0x0070, "0.7") pascal void UpperString(StringPtr s, Boolean diac);
 #endif
 
 #define GetDateTime(mactimepointer) (*(mactimepointer) = *(ULONGINT*)0x020C)
@@ -615,7 +619,7 @@ pascal void Environs(INTEGER *rom, INTEGER *machine);
 
 enum { _SysEnvirons = 0xA090 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr SysEnvirons(INTEGER vers, SysEnvRecPtr p) {
+MAC_SINCE(0x0200, "2.0") static __inline__ __attribute__((__always_inline__)) OSErr SysEnvirons(INTEGER vers, SysEnvRecPtr p) {
     register OSErr _ret __asm__("d0");
     register INTEGER _vers __asm__("d0") = vers;
     register SysEnvRecPtr _p __asm__("a0") = p;
@@ -626,7 +630,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr SysEnvirons(INTEGER v
     return _ret;
 }
 #else
-pascal OSErr SysEnvirons(INTEGER vers, SysEnvRecPtr p);
+MAC_SINCE(0x0200, "2.0") pascal OSErr SysEnvirons(INTEGER vers, SysEnvRecPtr p);
 #endif
 
 #if TARGET_CPU_68K
@@ -647,7 +651,7 @@ pascal Byte GetMMUMode(void);
 
 enum { _SwapMMUMode = 0xA05D };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void SwapMMUMode(Byte *bp) {
+MAC_SINCE(0x0700, "7.0") static __inline__ __attribute__((__always_inline__)) void SwapMMUMode(Byte *bp) {
     register Byte _bp __asm__("d0");
     _bp = *bp;
     __asm__ __volatile__(".short 0xA05D"
@@ -657,12 +661,12 @@ static __inline__ __attribute__((__always_inline__)) void SwapMMUMode(Byte *bp) 
     if (bp) *bp = _bp;
 }
 #else
-pascal void SwapMMUMode(Byte *bp);
+MAC_SINCE(0x0700, "7.0") pascal void SwapMMUMode(Byte *bp);
 #endif
 
 enum { _StripAddress = 0xA055 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Ptr StripAddress(Ptr p) {
+MAC_SINCE(0x0200, "2.0") static __inline__ __attribute__((__always_inline__)) Ptr StripAddress(Ptr p) {
     register Ptr _ret __asm__("d0");
     register Ptr _p __asm__("d0") = p;
     __asm__ __volatile__(".short 0xA055"
@@ -672,23 +676,23 @@ static __inline__ __attribute__((__always_inline__)) Ptr StripAddress(Ptr p) {
     return _ret;
 }
 #else
-pascal Ptr StripAddress(Ptr p);
+MAC_SINCE(0x0200, "2.0") pascal Ptr StripAddress(Ptr p);
 #endif
 
 enum { _DebugStr = 0xABFF };
-pascal void DebugStr(ConstStringPtr p) M68K_INLINE(0xABFF);
+MAC_SINCE(0x0700, "7.0") pascal void DebugStr(ConstStringPtr p) M68K_INLINE(0xABFF);
 
 enum { _Debugger = 0xA9FF };
-pascal void Debugger(void) M68K_INLINE(0xA9FF);
+MAC_SINCE(0x0500, "5.0") pascal void Debugger(void) M68K_INLINE(0xA9FF);
 
 pascal void MakeDataExecutable(void *ptr, unsigned long sz);
 
 enum { _FlushCodeCache = 0xA0BD };
-pascal void FlushCodeCache(void) M68K_INLINE(0xA0BD);
+MAC_SINCE(0x0700, "7.0") pascal void FlushCodeCache(void) M68K_INLINE(0xA0BD);
 
 enum { _HWPriv = 0xA198 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void HWPriv(LONGINT d0, LONGINT a0) {
+MAC_SINCE(0x0700, "7.0") static __inline__ __attribute__((__always_inline__)) void HWPriv(LONGINT d0, LONGINT a0) {
     register LONGINT _d0 __asm__("d0") = d0;
     register LONGINT _a0 __asm__("a0") = a0;
     __asm__ __volatile__(".short 0xA198"
@@ -697,7 +701,7 @@ static __inline__ __attribute__((__always_inline__)) void HWPriv(LONGINT d0, LON
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void HWPriv(LONGINT d0, LONGINT a0);
+MAC_SINCE(0x0700, "7.0") pascal void HWPriv(LONGINT d0, LONGINT a0);
 #endif
 
 #if TARGET_CPU_68K
@@ -786,7 +790,7 @@ enum { _SysErrorDispatch = 0xA9C9 };
 
 // Machine location, deferred tasks, debugger
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void ReadLocation(MachineLocation *loc) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void ReadLocation(MachineLocation *loc) {
     register MachineLocation* _loc __asm__("a0") = loc;
     __asm__ __volatile__(".short 0x203C, 0x000C, 0x00E4, 0xA051"
         : "+r"(_loc)
@@ -794,11 +798,11 @@ static __inline__ __attribute__((__always_inline__)) void ReadLocation(MachineLo
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void ReadLocation(MachineLocation *loc);
+MAC_SINCE(0x0070, "0.7") pascal void ReadLocation(MachineLocation *loc);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void WriteLocation(const MachineLocation *loc) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void WriteLocation(const MachineLocation *loc) {
     register const MachineLocation* _loc __asm__("a0") = loc;
     __asm__ __volatile__(".short 0x203C, 0x000C, 0x00E4, 0xA052"
         : "+r"(_loc)
@@ -806,12 +810,12 @@ static __inline__ __attribute__((__always_inline__)) void WriteLocation(const Ma
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void WriteLocation(const MachineLocation *loc);
+MAC_SINCE(0x0070, "0.7") pascal void WriteLocation(const MachineLocation *loc);
 #endif
 
 enum { _DTInstall = 0xA082 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DTInstall(DeferredTaskPtr dtTaskPtr) {
+MAC_SINCE(0x0700, "7.0") static __inline__ __attribute__((__always_inline__)) OSErr DTInstall(DeferredTaskPtr dtTaskPtr) {
     register OSErr _ret __asm__("d0");
     register DeferredTaskPtr _dtTaskPtr __asm__("a0") = dtTaskPtr;
     __asm__ __volatile__(".short 0xA082"
@@ -821,12 +825,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr DTInstall(DeferredTas
     return _ret;
 }
 #else
-pascal OSErr DTInstall(DeferredTaskPtr dtTaskPtr);
+MAC_SINCE(0x0700, "7.0") pascal OSErr DTInstall(DeferredTaskPtr dtTaskPtr);
 #endif
 
 enum { _DeferUserFn = 0xA08F };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DeferUserFn(UserFnUPP userFunction, void *argument) {
+MAC_SINCE(0x0700, "7.0") static __inline__ __attribute__((__always_inline__)) OSErr DeferUserFn(UserFnUPP userFunction, void *argument) {
     register OSErr _ret __asm__("d0");
     register UserFnUPP _userFunction __asm__("a0") = userFunction;
     register void* _argument __asm__("d0") = argument;
@@ -837,7 +841,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr DeferUserFn(UserFnUPP
     return _ret;
 }
 #else
-pascal OSErr DeferUserFn(UserFnUPP userFunction, void *argument);
+MAC_SINCE(0x0700, "7.0") pascal OSErr DeferUserFn(UserFnUPP userFunction, void *argument);
 #endif
 
 pascal void SysBreak(void) M68K_INLINE(0x303C, 0xFE16, 0xA9C9);
@@ -848,7 +852,7 @@ pascal void SysBreakFunc(ConstStr255Param debuggerMsg) M68K_INLINE(0x303C, 0xFE1
 
 enum { _AttachVBL = 0xA071 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr AttachVBL(INTEGER netValue) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr AttachVBL(INTEGER netValue) {
     register OSErr _ret __asm__("d0");
     register INTEGER _netValue __asm__("d0") = netValue;
     __asm__ __volatile__(".short 0xA071"
@@ -858,12 +862,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr AttachVBL(INTEGER net
     return _ret;
 }
 #else
-pascal OSErr AttachVBL(INTEGER netValue);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr AttachVBL(INTEGER netValue);
 #endif
 
 enum { _DoVBLTask = 0xA072 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr DoVBLTask(INTEGER netValue) {
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) OSErr DoVBLTask(INTEGER netValue) {
     register OSErr _ret __asm__("d0");
     register INTEGER _netValue __asm__("d0") = netValue;
     __asm__ __volatile__(".short 0xA072"
@@ -873,11 +877,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr DoVBLTask(INTEGER net
     return _ret;
 }
 #else
-pascal OSErr DoVBLTask(INTEGER netValue);
+MAC_SINCE(0x0500, "5.0") MAC_COLOR_QD pascal OSErr DoVBLTask(INTEGER netValue);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) StatusRegisterContents EnterSupervisorMode(void) {
+MAC_SINCE(0x0710, "7.1") static __inline__ __attribute__((__always_inline__)) StatusRegisterContents EnterSupervisorMode(void) {
     register StatusRegisterContents _ret __asm__("d0");
     __asm__ __volatile__(".short 0x7008, 0xA08D"
         : "=r"(_ret)
@@ -886,7 +890,7 @@ static __inline__ __attribute__((__always_inline__)) StatusRegisterContents Ente
     return _ret;
 }
 #else
-pascal StatusRegisterContents EnterSupervisorMode(void);
+MAC_SINCE(0x0710, "7.1") pascal StatusRegisterContents EnterSupervisorMode(void);
 #endif
 
 // Enters the 68k debugger; on 68k this is Debugger.
@@ -921,7 +925,7 @@ pascal ExceptionHandler InstallExceptionHandler(ExceptionHandler theHandler);
 // Converts a 24-bit address to a 32-bit one (MPW 3.2 interfaces).
 enum { _Translate24To32 = 0xA091 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) Ptr Translate24To32(void *addr24) {
+MAC_SINCE(0x0700, "7.0") MAC_COLOR_QD static __inline__ __attribute__((__always_inline__)) Ptr Translate24To32(void *addr24) {
     register Ptr _ret __asm__("d0");
     register void* _addr24 __asm__("d0") = addr24;
     __asm__ __volatile__(".short 0xA091"
@@ -931,8 +935,52 @@ static __inline__ __attribute__((__always_inline__)) Ptr Translate24To32(void *a
     return _ret;
 }
 #else
-pascal Ptr Translate24To32(void *addr24);
+MAC_SINCE(0x0700, "7.0") MAC_COLOR_QD pascal Ptr Translate24To32(void *addr24);
 #endif
+
+/* clang-dos SDK: true when the trap is implemented on this Mac. Works on
+   every ROM from the Mac 128K's 64K ROM on; Apple's sample-code
+   TrapAvailable needs the 128K ROM, because on the 64K ROM
+   NGetTrapAddress is plain GetTrapAddress and OS and Toolbox traps share
+   one 512-entry table (OS traps in entries 0-0x4F, Toolbox traps
+   A850-A9FF in 0x50-0x1FF). Toolbox traps above A9FF need a 0x400-entry
+   table (Mac II and later, System 7 on any Mac). */
+static __inline__ Boolean TrapAvailable(uint16_t trap) {
+#if TARGET_CPU_68K
+    if (*(volatile INTEGER *)0x28E < 0) {      /* ROM85: the 64K ROM */
+        uint16_t i = (trap & 0x0800) ? (trap & 0x1FF) : (trap & 0xFF);
+        if ((trap & 0x0800) ? i < 0x50 : i >= 0x50)
+            return false;
+        return GetTrapAddress(i) != GetTrapAddress(0x9F);
+    }
+#endif
+    if (trap & 0x0800) {
+        trap &= 0x03FF;
+        if (trap >= 0x200 && NGetTrapAddress(0xA86E, kToolboxTrapType) ==
+                                 NGetTrapAddress(0xAA6E, kToolboxTrapType))
+            return false;
+#if TARGET_CPU_68K
+        /* Before System 6.0 the Toolbox entries A800-A84F that the ROM
+           does not use hold copies of the OS entries' addresses, not
+           _Unimplemented's. These are the ones that were real, as
+           measured on the Mac Plus and Mac II ROMs (docs/systems.md). */
+        if (trap < 0x50 && *(volatile INTEGER *)0x15A < 0x0600) {   /* SysVersion */
+            static const unsigned char plus[10] =
+                {0x00, 0xFF, 0xFF, 0xC9, 0xC3, 0x9F, 0xDF, 0xFF, 0xFF, 0xF7};
+            static const unsigned char macii[10] =
+                {0x7F, 0xFF, 0xFF, 0xC9, 0xC3, 0x9F, 0xDF, 0xFF, 0xFF, 0xFF};
+            const unsigned char *real =
+                (*(volatile INTEGER *)0x28E & 0x4000) ? plus : macii;   /* ROM85 */
+            if (!(real[trap >> 3] & (0x80 >> (trap & 7))))
+                return false;
+        }
+#endif
+        return NGetTrapAddress(0xA800 | trap, kToolboxTrapType) !=
+               NGetTrapAddress(0xA89F, kToolboxTrapType);
+    }
+    return NGetTrapAddress(0xA000 | (trap & 0xFF), kOSTrapType) !=
+           NGetTrapAddress(0xA89F, kToolboxTrapType);
+}
 
 #if TARGET_CPU_68K
 static __inline__ INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig) {
@@ -1080,6 +1128,7 @@ static __inline__ UniversalProcPtr* GetTrapVector(uint16_t trapNumber) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

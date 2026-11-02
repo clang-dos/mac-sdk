@@ -11,6 +11,10 @@
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef void *TSMDocumentID;
 
@@ -117,75 +121,76 @@ enum {
 enum { _TSMDispatch = 0xAA54 };
 
 // Text Services Manager
-pascal OSErr NewTSMDocument(INTEGER numOfInterface, InterfaceTypeList supportedInterfaceTypes, TSMDocumentID *idocID, long refcon) M68K_INLINE(0x7000, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr NewTSMDocument(INTEGER numOfInterface, InterfaceTypeList supportedInterfaceTypes, TSMDocumentID *idocID, long refcon) M68K_INLINE(0x7000, 0xAA54);
 
-pascal OSErr DeleteTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7001, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr DeleteTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7001, 0xAA54);
 
-pascal OSErr ActivateTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7002, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr ActivateTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7002, 0xAA54);
 
-pascal OSErr DeactivateTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7003, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr DeactivateTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7003, 0xAA54);
 
-pascal OSErr FixTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7007, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr FixTSMDocument(TSMDocumentID idocID) M68K_INLINE(0x7007, 0xAA54);
 
-pascal OSErr GetServiceList(INTEGER numOfInterface, OSType *supportedInterfaceTypes, TextServiceListHandle *serviceInfo, long *seedValue) M68K_INLINE(0x7008, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr GetServiceList(INTEGER numOfInterface, OSType *supportedInterfaceTypes, TextServiceListHandle *serviceInfo, long *seedValue) M68K_INLINE(0x7008, 0xAA54);
 
-pascal OSErr OpenTextService(TSMDocumentID idocID, Component aComponent, ComponentInstance *aComponentInstance) M68K_INLINE(0x7009, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr OpenTextService(TSMDocumentID idocID, Component aComponent, ComponentInstance *aComponentInstance) M68K_INLINE(0x7009, 0xAA54);
 
-pascal OSErr CloseTextService(TSMDocumentID idocID, ComponentInstance aComponentInstance) M68K_INLINE(0x700A, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr CloseTextService(TSMDocumentID idocID, ComponentInstance aComponentInstance) M68K_INLINE(0x700A, 0xAA54);
 
-pascal OSErr SendAEFromTSMComponent(const AppleEvent *theAppleEvent, AppleEvent *reply, AESendMode sendMode, AESendPriority sendPriority, long timeOutInTicks, AEIdleUPP idleProc, AEFilterUPP filterProc) M68K_INLINE(0x700B, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr SendAEFromTSMComponent(const AppleEvent *theAppleEvent, AppleEvent *reply, AESendMode sendMode, AESendPriority sendPriority, long timeOutInTicks, AEIdleUPP idleProc, AEFilterUPP filterProc) M68K_INLINE(0x700B, 0xAA54);
 
-pascal OSErr SetDefaultInputMethod(Component ts, ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700C, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr SetDefaultInputMethod(Component ts, ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700C, 0xAA54);
 
-pascal OSErr GetDefaultInputMethod(Component *ts, ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700D, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr GetDefaultInputMethod(Component *ts, ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700D, 0xAA54);
 
-pascal OSErr SetTextServiceLanguage(ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700E, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr SetTextServiceLanguage(ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700E, 0xAA54);
 
-pascal OSErr GetTextServiceLanguage(ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700F, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr GetTextServiceLanguage(ScriptLanguageRecord *slRecordPtr) M68K_INLINE(0x700F, 0xAA54);
 
-pascal OSErr UseInputWindow(TSMDocumentID idocID, Boolean useWindow) M68K_INLINE(0x7010, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr UseInputWindow(TSMDocumentID idocID, Boolean useWindow) M68K_INLINE(0x7010, 0xAA54);
 
-pascal OSErr NewServiceWindow(void *wStorage, const Rect *boundsRect, ConstStr255Param title, Boolean visible, INTEGER theProc, WindowPtr behind, Boolean goAwayFlag, ComponentInstance ts, WindowPtr *window) M68K_INLINE(0x7011, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr NewServiceWindow(void *wStorage, const Rect *boundsRect, ConstStr255Param title, Boolean visible, INTEGER theProc, WindowPtr behind, Boolean goAwayFlag, ComponentInstance ts, WindowPtr *window) M68K_INLINE(0x7011, 0xAA54);
 
-pascal OSErr CloseServiceWindow(WindowPtr window) M68K_INLINE(0x7012, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr CloseServiceWindow(WindowPtr window) M68K_INLINE(0x7012, 0xAA54);
 
-pascal OSErr GetFrontServiceWindow(WindowPtr *window) M68K_INLINE(0x7013, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr GetFrontServiceWindow(WindowPtr *window) M68K_INLINE(0x7013, 0xAA54);
 
-pascal INTEGER FindServiceWindow(Point thePoint, WindowPtr *theWindow) M68K_INLINE(0x7017, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal INTEGER FindServiceWindow(Point thePoint, WindowPtr *theWindow) M68K_INLINE(0x7017, 0xAA54);
 
-pascal OSErr InitTSMAwareApplication(void) M68K_INLINE(0x7014, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr InitTSMAwareApplication(void) M68K_INLINE(0x7014, 0xAA54);
 
-pascal OSErr CloseTSMAwareApplication(void) M68K_INLINE(0x7015, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal OSErr CloseTSMAwareApplication(void) M68K_INLINE(0x7015, 0xAA54);
 
-pascal Boolean TSMEvent(EventRecord *event) M68K_INLINE(0x7004, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal Boolean TSMEvent(EventRecord *event) M68K_INLINE(0x7004, 0xAA54);
 
-pascal Boolean TSMMenuSelect(long menuResult) M68K_INLINE(0x7005, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal Boolean TSMMenuSelect(long menuResult) M68K_INLINE(0x7005, 0xAA54);
 
-pascal Boolean SetTSMCursor(Point mousePos) M68K_INLINE(0x7006, 0xAA54);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal Boolean SetTSMCursor(Point mousePos) M68K_INLINE(0x7006, 0xAA54);
 
 // Calls into a text service component (for input method writers)
-pascal ComponentResult InitiateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0002, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult InitiateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0002, 0x7000, 0xA82A);
 
-pascal ComponentResult TerminateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0003, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult TerminateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0003, 0x7000, 0xA82A);
 
-pascal ComponentResult ActivateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0004, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult ActivateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0004, 0x7000, 0xA82A);
 
-pascal ComponentResult DeactivateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0005, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult DeactivateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0005, 0x7000, 0xA82A);
 
-pascal ComponentResult TextServiceEvent(ComponentInstance ts, INTEGER numOfEvents, EventRecord *event) M68K_INLINE(0x2F3C, 0x0006, 0x0006, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult TextServiceEvent(ComponentInstance ts, INTEGER numOfEvents, EventRecord *event) M68K_INLINE(0x2F3C, 0x0006, 0x0006, 0x7000, 0xA82A);
 
-pascal ComponentResult GetTextServiceMenu(ComponentInstance ts, MenuHandle *serviceMenu) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult GetTextServiceMenu(ComponentInstance ts, MenuHandle *serviceMenu) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
 
-pascal ComponentResult TextServiceMenuSelect(ComponentInstance ts, MenuHandle serviceMenu, INTEGER item) M68K_INLINE(0x2F3C, 0x0006, 0x0008, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult TextServiceMenuSelect(ComponentInstance ts, MenuHandle serviceMenu, INTEGER item) M68K_INLINE(0x2F3C, 0x0006, 0x0008, 0x7000, 0xA82A);
 
-pascal ComponentResult FixTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0009, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult FixTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0009, 0x7000, 0xA82A);
 
-pascal ComponentResult SetTextServiceCursor(ComponentInstance ts, Point mousePos) M68K_INLINE(0x2F3C, 0x0004, 0x000A, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult SetTextServiceCursor(ComponentInstance ts, Point mousePos) M68K_INLINE(0x2F3C, 0x0004, 0x000A, 0x7000, 0xA82A);
 
-pascal ComponentResult HidePaletteWindows(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x000B, 0x7000, 0xA82A);
+MAC_SINCE_GESTALT(0x0710, "7.1", "'tsmv'") MAC_COLOR_QD pascal ComponentResult HidePaletteWindows(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x000B, 0x7000, 0xA82A);
 
 pascal OSErr GetScriptLanguageSupport(ScriptLanguageSupportHandle *scriptHdl);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

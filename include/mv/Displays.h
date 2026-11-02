@@ -12,6 +12,10 @@
 #include "QuickDraw.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef pascal void (*DMNotificationProcPtr)(AppleEvent *theEvent);
 #if TARGET_RT_MAC_CFM
@@ -29,7 +33,7 @@ typedef DMNotificationProcPtr DMNotificationUPP;
 
 enum { _DisplayDispatch = 0xABEB };
 
-pascal OSErr DMRegisterNotifyProc(DMNotificationUPP proc, ProcessSerialNumber *psn) M68K_INLINE(0x303C, 0x0414, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMRegisterNotifyProc(DMNotificationUPP proc, ProcessSerialNumber *psn) M68K_INLINE(0x303C, 0x0414, 0xABEB);
 
 typedef unsigned long DisplayIDType;
 
@@ -78,79 +82,79 @@ enum {
 };
 
 // Display Manager
-pascal GDHandle DMGetFirstScreenDevice(Boolean activeOnly) M68K_INLINE(0x7000, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal GDHandle DMGetFirstScreenDevice(Boolean activeOnly) M68K_INLINE(0x7000, 0xABEB);
 
-pascal GDHandle DMGetNextScreenDevice(GDHandle theDevice, Boolean activeOnly) M68K_INLINE(0x7001, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal GDHandle DMGetNextScreenDevice(GDHandle theDevice, Boolean activeOnly) M68K_INLINE(0x7001, 0xABEB);
 
-pascal void DMDrawDesktopRect(Rect *globalRect) M68K_INLINE(0x7002, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal void DMDrawDesktopRect(Rect *globalRect) M68K_INLINE(0x7002, 0xABEB);
 
-pascal void DMDrawDesktopRegion(RgnHandle globalRgn) M68K_INLINE(0x7003, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal void DMDrawDesktopRegion(RgnHandle globalRgn) M68K_INLINE(0x7003, 0xABEB);
 
-pascal OSErr DMBeginConfigureDisplays(Handle *displayState) M68K_INLINE(0x303C, 0x0206, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMBeginConfigureDisplays(Handle *displayState) M68K_INLINE(0x303C, 0x0206, 0xABEB);
 
-pascal OSErr DMEndConfigureDisplays(Handle displayState) M68K_INLINE(0x303C, 0x0207, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMEndConfigureDisplays(Handle displayState) M68K_INLINE(0x303C, 0x0207, 0xABEB);
 
-pascal OSErr DMAddDisplay(GDHandle newDevice, INTEGER driver, unsigned long mode, unsigned long reserved, unsigned long displayID, Component displayComponent, Handle displayState) M68K_INLINE(0x303C, 0x0D08, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMAddDisplay(GDHandle newDevice, INTEGER driver, unsigned long mode, unsigned long reserved, unsigned long displayID, Component displayComponent, Handle displayState) M68K_INLINE(0x303C, 0x0D08, 0xABEB);
 
-pascal OSErr DMMoveDisplay(GDHandle moveDevice, INTEGER x, INTEGER y, Handle displayState) M68K_INLINE(0x303C, 0x0609, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMMoveDisplay(GDHandle moveDevice, INTEGER x, INTEGER y, Handle displayState) M68K_INLINE(0x303C, 0x0609, 0xABEB);
 
-pascal OSErr DMDisableDisplay(GDHandle disableDevice, Handle displayState) M68K_INLINE(0x303C, 0x040A, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMDisableDisplay(GDHandle disableDevice, Handle displayState) M68K_INLINE(0x303C, 0x040A, 0xABEB);
 
-pascal OSErr DMEnableDisplay(GDHandle enableDevice, Handle displayState) M68K_INLINE(0x303C, 0x040B, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMEnableDisplay(GDHandle enableDevice, Handle displayState) M68K_INLINE(0x303C, 0x040B, 0xABEB);
 
-pascal OSErr DMRemoveDisplay(GDHandle removeDevice, Handle displayState) M68K_INLINE(0x303C, 0x040C, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMRemoveDisplay(GDHandle removeDevice, Handle displayState) M68K_INLINE(0x303C, 0x040C, 0xABEB);
 
-pascal OSErr DMSetMainDisplay(GDHandle newMainDevice, Handle displayState) M68K_INLINE(0x303C, 0x0410, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSetMainDisplay(GDHandle newMainDevice, Handle displayState) M68K_INLINE(0x303C, 0x0410, 0xABEB);
 
-pascal OSErr DMSetDisplayMode(GDHandle theDevice, unsigned long mode, unsigned long *depthMode, unsigned long reserved, Handle displayState) M68K_INLINE(0x303C, 0x0A11, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSetDisplayMode(GDHandle theDevice, unsigned long mode, unsigned long *depthMode, unsigned long reserved, Handle displayState) M68K_INLINE(0x303C, 0x0A11, 0xABEB);
 
-pascal OSErr DMCheckDisplayMode(GDHandle theDevice, unsigned long mode, unsigned long depthMode, unsigned long *switchFlags, unsigned long reserved, Boolean *modeOk) M68K_INLINE(0x303C, 0x0C12, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMCheckDisplayMode(GDHandle theDevice, unsigned long mode, unsigned long depthMode, unsigned long *switchFlags, unsigned long reserved, Boolean *modeOk) M68K_INLINE(0x303C, 0x0C12, 0xABEB);
 
-pascal OSErr DMGetDeskRegion(RgnHandle *desktopRegion) M68K_INLINE(0x303C, 0x0213, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetDeskRegion(RgnHandle *desktopRegion) M68K_INLINE(0x303C, 0x0213, 0xABEB);
 
-pascal OSErr DMRemoveNotifyProc(DMNotificationUPP notificationProc, DMProcessInfoPtr whichPSN) M68K_INLINE(0x303C, 0x0415, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMRemoveNotifyProc(DMNotificationUPP notificationProc, DMProcessInfoPtr whichPSN) M68K_INLINE(0x303C, 0x0415, 0xABEB);
 
-pascal OSErr DMQDIsMirroringCapable(Boolean *qdIsMirroringCapable) M68K_INLINE(0x303C, 0x0216, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMQDIsMirroringCapable(Boolean *qdIsMirroringCapable) M68K_INLINE(0x303C, 0x0216, 0xABEB);
 
-pascal OSErr DMCanMirrorNow(Boolean *canMirrorNow) M68K_INLINE(0x303C, 0x0217, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMCanMirrorNow(Boolean *canMirrorNow) M68K_INLINE(0x303C, 0x0217, 0xABEB);
 
-pascal OSErr DMIsMirroringOn(Boolean *isMirroringOn) M68K_INLINE(0x303C, 0x0218, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMIsMirroringOn(Boolean *isMirroringOn) M68K_INLINE(0x303C, 0x0218, 0xABEB);
 
-pascal OSErr DMMirrorDevices(GDHandle gD1, GDHandle gD2, Handle displayState) M68K_INLINE(0x303C, 0x0619, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMMirrorDevices(GDHandle gD1, GDHandle gD2, Handle displayState) M68K_INLINE(0x303C, 0x0619, 0xABEB);
 
-pascal OSErr DMUnmirrorDevice(GDHandle gDevice, Handle displayState) M68K_INLINE(0x303C, 0x041A, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMUnmirrorDevice(GDHandle gDevice, Handle displayState) M68K_INLINE(0x303C, 0x041A, 0xABEB);
 
-pascal OSErr DMGetNextMirroredDevice(GDHandle gDevice, GDHandle *mirroredDevice) M68K_INLINE(0x303C, 0x041B, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetNextMirroredDevice(GDHandle gDevice, GDHandle *mirroredDevice) M68K_INLINE(0x303C, 0x041B, 0xABEB);
 
-pascal OSErr DMBlockMirroring(void) M68K_INLINE(0x701C, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMBlockMirroring(void) M68K_INLINE(0x701C, 0xABEB);
 
-pascal OSErr DMUnblockMirroring(void) M68K_INLINE(0x701D, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMUnblockMirroring(void) M68K_INLINE(0x701D, 0xABEB);
 
-pascal OSErr DMGetDisplayMgrA5World(Ptr *dmA5) M68K_INLINE(0x303C, 0x021E, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetDisplayMgrA5World(Ptr *dmA5) M68K_INLINE(0x303C, 0x021E, 0xABEB);
 
-pascal OSErr DMGetDisplayIDByGDevice(GDHandle displayDevice, DisplayIDType *displayID, Boolean failToMain) M68K_INLINE(0x303C, 0x051F, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetDisplayIDByGDevice(GDHandle displayDevice, DisplayIDType *displayID, Boolean failToMain) M68K_INLINE(0x303C, 0x051F, 0xABEB);
 
-pascal OSErr DMGetGDeviceByDisplayID(DisplayIDType displayID, GDHandle *displayDevice, Boolean failToMain) M68K_INLINE(0x303C, 0x0520, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetGDeviceByDisplayID(DisplayIDType displayID, GDHandle *displayDevice, Boolean failToMain) M68K_INLINE(0x303C, 0x0520, 0xABEB);
 
-pascal OSErr DMSetDisplayComponent(GDHandle theDevice, Component displayComponent) M68K_INLINE(0x303C, 0x0421, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSetDisplayComponent(GDHandle theDevice, Component displayComponent) M68K_INLINE(0x303C, 0x0421, 0xABEB);
 
-pascal OSErr DMGetDisplayComponent(GDHandle theDevice, Component *displayComponent) M68K_INLINE(0x303C, 0x0422, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetDisplayComponent(GDHandle theDevice, Component *displayComponent) M68K_INLINE(0x303C, 0x0422, 0xABEB);
 
-pascal OSErr DMNewDisplay(GDHandle *newDevice, INTEGER driverRefNum, unsigned long mode, unsigned long reserved, DisplayIDType displayID, Component displayComponent, Handle displayState) M68K_INLINE(0x303C, 0x0D23, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewDisplay(GDHandle *newDevice, INTEGER driverRefNum, unsigned long mode, unsigned long reserved, DisplayIDType displayID, Component displayComponent, Handle displayState) M68K_INLINE(0x303C, 0x0D23, 0xABEB);
 
-pascal OSErr DMDisposeDisplay(GDHandle disposeDevice, Handle displayState) M68K_INLINE(0x303C, 0x0424, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMDisposeDisplay(GDHandle disposeDevice, Handle displayState) M68K_INLINE(0x303C, 0x0424, 0xABEB);
 
-pascal OSErr DMResolveDisplayComponents(void) M68K_INLINE(0x7025, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMResolveDisplayComponents(void) M68K_INLINE(0x7025, 0xABEB);
 
-pascal OSErr DMGetGDeviceTablecloth(GDHandle displayDevice, Boolean *useTablecloth) M68K_INLINE(0x303C, 0x0404, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetGDeviceTablecloth(GDHandle displayDevice, Boolean *useTablecloth) M68K_INLINE(0x303C, 0x0404, 0xABEB);
 
-pascal OSErr DMGetNextAnimateTime(UInt32 *nextAnimateTime) M68K_INLINE(0x303C, 0x020F, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetNextAnimateTime(UInt32 *nextAnimateTime) M68K_INLINE(0x303C, 0x020F, 0xABEB);
 
-pascal OSErr DMGetComponentAnimateTicks(ComponentInstance animationComponent, UInt32 *animationTicks, UInt32 *nextAnimateTick) M68K_INLINE(0x303C, 0x060D, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetComponentAnimateTicks(ComponentInstance animationComponent, UInt32 *animationTicks, UInt32 *nextAnimateTick) M68K_INLINE(0x303C, 0x060D, 0xABEB);
 
-pascal OSErr DMSetComponentAnimateTicks(ComponentInstance animationComponent, UInt32 animationTicks, UInt32 *nextAnimateTick) M68K_INLINE(0x303C, 0x060E, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSetComponentAnimateTicks(ComponentInstance animationComponent, UInt32 animationTicks, UInt32 *nextAnimateTick) M68K_INLINE(0x303C, 0x060E, 0xABEB);
 
-pascal OSErr DMSetGDeviceTablecloth(GDHandle displayDevice, ComponentInstance tableclothInstance) M68K_INLINE(0x303C, 0x0405, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSetGDeviceTablecloth(GDHandle displayDevice, ComponentInstance tableclothInstance) M68K_INLINE(0x303C, 0x0405, 0xABEB);
 
 // Display Manager 2.0 (Mac OS 8): audio/video devices, ports and display modes.
 typedef UInt32 AVIDType;
@@ -192,46 +196,47 @@ enum {
 };
 
 // Display Manager 2.0 (Mac OS 8), on DisplayDispatch
-pascal OSErr DMRegisterExtendedNotifyProc(DMExtendedNotificationUPP notifyProc, void *notifyUserData, uint16_t nofificationFlags, ProcessSerialNumber *whichPSN) M68K_INLINE(0x303C, 0x07EF, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMRegisterExtendedNotifyProc(DMExtendedNotificationUPP notifyProc, void *notifyUserData, uint16_t nofificationFlags, ProcessSerialNumber *whichPSN) M68K_INLINE(0x303C, 0x07EF, 0xABEB);
 
-pascal OSErr DMRemoveExtendedNotifyProc(DMExtendedNotificationUPP notifyProc, void *notifyUserData, ProcessSerialNumber *whichPSN, uint16_t removeFlags) M68K_INLINE(0x303C, 0x0726, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMRemoveExtendedNotifyProc(DMExtendedNotificationUPP notifyProc, void *notifyUserData, ProcessSerialNumber *whichPSN, uint16_t removeFlags) M68K_INLINE(0x303C, 0x0726, 0xABEB);
 
-pascal OSErr DMNewAVPanelList(DisplayIDType displayID, ResType panelType, DMFidelityType minimumFidelity, unsigned long panelListFlags, unsigned long reserved, ItemCount *thePanelCount, DMListType *thePanelList) M68K_INLINE(0x303C, 0x0C27, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewAVPanelList(DisplayIDType displayID, ResType panelType, DMFidelityType minimumFidelity, unsigned long panelListFlags, unsigned long reserved, ItemCount *thePanelCount, DMListType *thePanelList) M68K_INLINE(0x303C, 0x0C27, 0xABEB);
 
-pascal OSErr DMNewAVEngineList(DisplayIDType displayID, ResType engineType, DMFidelityType minimumFidelity, unsigned long engineListFlags, unsigned long reserved, ItemCount *engineCount, DMListType *engineList) M68K_INLINE(0x303C, 0x0C28, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewAVEngineList(DisplayIDType displayID, ResType engineType, DMFidelityType minimumFidelity, unsigned long engineListFlags, unsigned long reserved, ItemCount *engineCount, DMListType *engineList) M68K_INLINE(0x303C, 0x0C28, 0xABEB);
 
-pascal OSErr DMNewAVDeviceList(ResType deviceType, unsigned long deviceListFlags, unsigned long reserved, ItemCount *deviceCount, DMListType *deviceList) M68K_INLINE(0x303C, 0x0A29, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewAVDeviceList(ResType deviceType, unsigned long deviceListFlags, unsigned long reserved, ItemCount *deviceCount, DMListType *deviceList) M68K_INLINE(0x303C, 0x0A29, 0xABEB);
 
-pascal OSErr DMNewAVPortListByPortType(ResType subType, unsigned long portListFlags, unsigned long reserved, ItemCount *devicePortCount, DMListType *theDevicePortList) M68K_INLINE(0x303C, 0x0A2A, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewAVPortListByPortType(ResType subType, unsigned long portListFlags, unsigned long reserved, ItemCount *devicePortCount, DMListType *theDevicePortList) M68K_INLINE(0x303C, 0x0A2A, 0xABEB);
 
-pascal OSErr DMNewAVPortListByDeviceAVID(AVIDType theID, DMFidelityType minimumFidelity, unsigned long portListFlags, unsigned long reserved, ItemCount *devicePortCount, DMListType *theDevicePortList) M68K_INLINE(0x303C, 0x0C34, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewAVPortListByDeviceAVID(AVIDType theID, DMFidelityType minimumFidelity, unsigned long portListFlags, unsigned long reserved, ItemCount *devicePortCount, DMListType *theDevicePortList) M68K_INLINE(0x303C, 0x0C34, 0xABEB);
 
-pascal OSErr DMNewDisplayModeList(DisplayIDType displayID, unsigned long modeListFlags, unsigned long reserved, ItemCount *thePanelCount, DMListType *thePanelList) M68K_INLINE(0x303C, 0x0A36, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewDisplayModeList(DisplayIDType displayID, unsigned long modeListFlags, unsigned long reserved, ItemCount *thePanelCount, DMListType *thePanelList) M68K_INLINE(0x303C, 0x0A36, 0xABEB);
 
-pascal OSErr DMDisposeList(DMListType panelList) M68K_INLINE(0x303C, 0x022C, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMDisposeList(DMListType panelList) M68K_INLINE(0x303C, 0x022C, 0xABEB);
 
-pascal OSErr DMGetNameByAVID(AVIDType theID, unsigned long nameFlags, Str255 name) M68K_INLINE(0x303C, 0x062D, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetNameByAVID(AVIDType theID, unsigned long nameFlags, Str255 name) M68K_INLINE(0x303C, 0x062D, 0xABEB);
 
-pascal OSErr DMNewAVIDByPortComponent(Component thePortComponent, ResType portKind, unsigned long reserved, AVIDType *newID) M68K_INLINE(0x303C, 0x082E, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewAVIDByPortComponent(Component thePortComponent, ResType portKind, unsigned long reserved, AVIDType *newID) M68K_INLINE(0x303C, 0x082E, 0xABEB);
 
-pascal OSErr DMNewAVIDByDeviceComponent(Component theDeviceComponent, ResType portKind, unsigned long reserved, DisplayIDType *newID) M68K_INLINE(0x303C, 0x0833, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMNewAVIDByDeviceComponent(Component theDeviceComponent, ResType portKind, unsigned long reserved, DisplayIDType *newID) M68K_INLINE(0x303C, 0x0833, 0xABEB);
 
-pascal OSErr DMGetPortComponentByAVID(DisplayIDType thePortID, Component *thePortComponent, ComponentDescription *theDesciption, ResType *thePortKind) M68K_INLINE(0x303C, 0x082F, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetPortComponentByAVID(DisplayIDType thePortID, Component *thePortComponent, ComponentDescription *theDesciption, ResType *thePortKind) M68K_INLINE(0x303C, 0x082F, 0xABEB);
 
-pascal OSErr DMGetDeviceComponentByAVID(AVIDType theDeviceID, Component *theDeviceComponent, ComponentDescription *theDesciption, ResType *theDeviceKind) M68K_INLINE(0x303C, 0x0835, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetDeviceComponentByAVID(AVIDType theDeviceID, Component *theDeviceComponent, ComponentDescription *theDesciption, ResType *theDeviceKind) M68K_INLINE(0x303C, 0x0835, 0xABEB);
 
-pascal OSErr DMSendDependentNotification(ResType notifyType, ResType notifyClass, AVIDType displayID, ComponentInstance notifyComponent) M68K_INLINE(0x303C, 0x0830, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSendDependentNotification(ResType notifyType, ResType notifyClass, AVIDType displayID, ComponentInstance notifyComponent) M68K_INLINE(0x303C, 0x0830, 0xABEB);
 
-pascal OSErr DMDisposeAVComponent(Component theAVComponent) M68K_INLINE(0x303C, 0x0231, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMDisposeAVComponent(Component theAVComponent) M68K_INLINE(0x303C, 0x0231, 0xABEB);
 
-pascal OSErr DMSaveScreenPrefs(unsigned long reserved1, unsigned long saveFlags, unsigned long reserved2) M68K_INLINE(0x303C, 0x0632, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSaveScreenPrefs(unsigned long reserved1, unsigned long saveFlags, unsigned long reserved2) M68K_INLINE(0x303C, 0x0632, 0xABEB);
 
-pascal OSErr DMGetDeviceAVIDByPortAVID(AVIDType portAVID, AVIDType *deviceAVID) M68K_INLINE(0x303C, 0x043B, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetDeviceAVIDByPortAVID(AVIDType portAVID, AVIDType *deviceAVID) M68K_INLINE(0x303C, 0x043B, 0xABEB);
 
-pascal OSErr DMGetEnableByAVID(AVIDType theAVID, Boolean *isAVIDEnabledNow, Boolean *canChangeEnableNow) M68K_INLINE(0x303C, 0x063C, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMGetEnableByAVID(AVIDType theAVID, Boolean *isAVIDEnabledNow, Boolean *canChangeEnableNow) M68K_INLINE(0x303C, 0x063C, 0xABEB);
 
-pascal OSErr DMSetEnableByAVID(AVIDType theAVID, Boolean doEnable, Handle displayState) M68K_INLINE(0x303C, 0x053D, 0xABEB);
+MAC_SINCE(0x0761, "7.6.1") pascal OSErr DMSetEnableByAVID(AVIDType theAVID, Boolean doEnable, Handle displayState) M68K_INLINE(0x303C, 0x053D, 0xABEB);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

@@ -8,6 +8,10 @@
 #include "MemoryMgr.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 enum {
     fOnDesk = 1,
@@ -1877,7 +1881,7 @@ pascal OSErr PBFlushFileAsync(ParmBlkPtr pb);
 enum { _FSDispatch = 0xA060 };
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDSync(WDPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDSync(WDPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA260"
@@ -1887,10 +1891,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDSync(WDPBPtr 
     return _ret;
 }
 #else
-pascal OSErr PBOpenWDSync(WDPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBOpenWDSync(WDPBPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDAsync(WDPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDAsync(WDPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA660"
@@ -1900,11 +1904,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDAsync(WDPBPtr
     return _ret;
 }
 #else
-pascal OSErr PBOpenWDAsync(WDPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBOpenWDAsync(WDPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDSync(WDPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDSync(WDPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA260"
@@ -1914,10 +1918,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDSync(WDPBPtr
     return _ret;
 }
 #else
-pascal OSErr PBCloseWDSync(WDPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCloseWDSync(WDPBPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDAsync(WDPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDAsync(WDPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA660"
@@ -1927,11 +1931,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDAsync(WDPBPt
     return _ret;
 }
 #else
-pascal OSErr PBCloseWDAsync(WDPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCloseWDAsync(WDPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveSync(CMovePBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveSync(CMovePBPtr pb) {
     register OSErr _ret __asm__("d0");
     register CMovePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA260"
@@ -1941,10 +1945,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveSync(CMovePB
     return _ret;
 }
 #else
-pascal OSErr PBCatMoveSync(CMovePBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCatMoveSync(CMovePBPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveAsync(CMovePBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveAsync(CMovePBPtr pb) {
     register OSErr _ret __asm__("d0");
     register CMovePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA660"
@@ -1954,11 +1958,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveAsync(CMoveP
     return _ret;
 }
 #else
-pascal OSErr PBCatMoveAsync(CMovePBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCatMoveAsync(CMovePBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA260"
@@ -1968,10 +1972,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateSync(HParm
     return _ret;
 }
 #else
-pascal OSErr PBDirCreateSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDirCreateSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA660"
@@ -1981,11 +1985,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateAsync(HPar
     return _ret;
 }
 #else
-pascal OSErr PBDirCreateAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDirCreateAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoSync(WDPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoSync(WDPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA260"
@@ -1995,10 +1999,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoSync(WDPBP
     return _ret;
 }
 #else
-pascal OSErr PBGetWDInfoSync(WDPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetWDInfoSync(WDPBPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoAsync(WDPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoAsync(WDPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA660"
@@ -2008,11 +2012,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoAsync(WDPB
     return _ret;
 }
 #else
-pascal OSErr PBGetWDInfoAsync(WDPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetWDInfoAsync(WDPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoSync(FCBPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoSync(FCBPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register FCBPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA260"
@@ -2022,10 +2026,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoSync(FCBP
     return _ret;
 }
 #else
-pascal OSErr PBGetFCBInfoSync(FCBPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetFCBInfoSync(FCBPBPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoAsync(FCBPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoAsync(FCBPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register FCBPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA660"
@@ -2035,11 +2039,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoAsync(FCB
     return _ret;
 }
 #else
-pascal OSErr PBGetFCBInfoAsync(FCBPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetFCBInfoAsync(FCBPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoSync(CInfoPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoSync(CInfoPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA260"
@@ -2049,10 +2053,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoSync(CInf
     return _ret;
 }
 #else
-pascal OSErr PBGetCatInfoSync(CInfoPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetCatInfoSync(CInfoPBPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoAsync(CInfoPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoAsync(CInfoPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA660"
@@ -2062,11 +2066,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoAsync(CIn
     return _ret;
 }
 #else
-pascal OSErr PBGetCatInfoAsync(CInfoPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetCatInfoAsync(CInfoPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoSync(CInfoPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoSync(CInfoPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA260"
@@ -2076,10 +2080,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoSync(CInf
     return _ret;
 }
 #else
-pascal OSErr PBSetCatInfoSync(CInfoPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetCatInfoSync(CInfoPBPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoAsync(CInfoPBPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoAsync(CInfoPBPtr pb) {
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA660"
@@ -2089,11 +2093,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoAsync(CIn
     return _ret;
 }
 #else
-pascal OSErr PBSetCatInfoAsync(CInfoPBPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetCatInfoAsync(CInfoPBPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700B, 0xA260"
@@ -2103,10 +2107,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoSync(HParmB
     return _ret;
 }
 #else
-pascal OSErr PBSetVInfoSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetVInfoSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700B, 0xA660"
@@ -2116,11 +2120,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoAsync(HParm
     return _ret;
 }
 #else
-pascal OSErr PBSetVInfoAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetVInfoAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7010, 0xA260"
@@ -2130,10 +2134,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeSync(ParmB
     return _ret;
 }
 #else
-pascal OSErr PBLockRangeSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBLockRangeSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7010, 0xA660"
@@ -2143,11 +2147,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeAsync(Parm
     return _ret;
 }
 #else
-pascal OSErr PBLockRangeAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBLockRangeAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7011, 0xA260"
@@ -2157,10 +2161,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeSync(Par
     return _ret;
 }
 #else
-pascal OSErr PBUnlockRangeSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBUnlockRangeSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7011, 0xA660"
@@ -2170,11 +2174,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeAsync(Pa
     return _ret;
 }
 #else
-pascal OSErr PBUnlockRangeAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBUnlockRangeAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7014, 0xA260"
@@ -2184,10 +2188,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefSync
     return _ret;
 }
 #else
-pascal OSErr PBCreateFileIDRefSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCreateFileIDRefSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7014, 0xA660"
@@ -2197,11 +2201,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefAsyn
     return _ret;
 }
 #else
-pascal OSErr PBCreateFileIDRefAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCreateFileIDRefAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7015, 0xA260"
@@ -2211,10 +2215,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefSync
     return _ret;
 }
 #else
-pascal OSErr PBDeleteFileIDRefSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDeleteFileIDRefSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7015, 0xA660"
@@ -2224,11 +2228,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefAsyn
     return _ret;
 }
 #else
-pascal OSErr PBDeleteFileIDRefAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDeleteFileIDRefAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7016, 0xA260"
@@ -2238,10 +2242,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefSyn
     return _ret;
 }
 #else
-pascal OSErr PBResolveFileIDRefSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBResolveFileIDRefSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7016, 0xA660"
@@ -2251,11 +2255,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefAsy
     return _ret;
 }
 #else
-pascal OSErr PBResolveFileIDRefAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBResolveFileIDRefAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7017, 0xA260"
@@ -2265,10 +2269,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesSync(P
     return _ret;
 }
 #else
-pascal OSErr PBExchangeFilesSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBExchangeFilesSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7017, 0xA660"
@@ -2278,11 +2282,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesAsync(
     return _ret;
 }
 #else
-pascal OSErr PBExchangeFilesAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBExchangeFilesAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7018, 0xA260"
@@ -2292,10 +2296,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchSync(ParmB
     return _ret;
 }
 #else
-pascal OSErr PBCatSearchSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCatSearchSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7018, 0xA660"
@@ -2305,11 +2309,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchAsync(Parm
     return _ret;
 }
 #else
-pascal OSErr PBCatSearchAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCatSearchAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFSync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFSync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA060"
@@ -2319,10 +2323,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFSync(ParmBlkP
     return _ret;
 }
 #else
-pascal OSErr PBOpenDFSync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBOpenDFSync(ParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFAsync(ParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFAsync(ParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA460"
@@ -2332,11 +2336,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFAsync(ParmBlk
     return _ret;
 }
 #else
-pascal OSErr PBOpenDFAsync(ParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBOpenDFAsync(ParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA260"
@@ -2346,10 +2350,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFSync(HParmBl
     return _ret;
 }
 #else
-pascal OSErr PBHOpenDFSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHOpenDFSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA660"
@@ -2359,7 +2363,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFAsync(HParmB
     return _ret;
 }
 #else
-pascal OSErr PBHOpenDFAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHOpenDFAsync(HParmBlkPtr pb);
 #endif
 
 typedef struct GetVolParmsInfoBuffer GetVolParmsInfoBuffer;
@@ -2378,7 +2382,7 @@ enum {
 };
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7030, 0xA260"
@@ -2388,10 +2392,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsSync(HP
     return _ret;
 }
 #else
-pascal OSErr PBHGetVolParmsSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHGetVolParmsSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7030, 0xA660"
@@ -2401,11 +2405,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsAsync(H
     return _ret;
 }
 #else
-pascal OSErr PBHGetVolParmsAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHGetVolParmsAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7031, 0xA260"
@@ -2415,10 +2419,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoSync(H
     return _ret;
 }
 #else
-pascal OSErr PBHGetLogInInfoSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHGetLogInInfoSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7031, 0xA660"
@@ -2428,11 +2432,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoAsync(
     return _ret;
 }
 #else
-pascal OSErr PBHGetLogInInfoAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHGetLogInInfoAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7032, 0xA260"
@@ -2442,10 +2446,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessSync(H
     return _ret;
 }
 #else
-pascal OSErr PBHGetDirAccessSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHGetDirAccessSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7032, 0xA660"
@@ -2455,11 +2459,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessAsync(
     return _ret;
 }
 #else
-pascal OSErr PBHGetDirAccessAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHGetDirAccessAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7033, 0xA260"
@@ -2469,10 +2473,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessSync(H
     return _ret;
 }
 #else
-pascal OSErr PBHSetDirAccessSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHSetDirAccessSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7033, 0xA660"
@@ -2482,11 +2486,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessAsync(
     return _ret;
 }
 #else
-pascal OSErr PBHSetDirAccessAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHSetDirAccessAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7034, 0xA260"
@@ -2496,10 +2500,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDSync(HParmBlk
     return _ret;
 }
 #else
-pascal OSErr PBHMapIDSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHMapIDSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7034, 0xA660"
@@ -2509,11 +2513,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDAsync(HParmBl
     return _ret;
 }
 #else
-pascal OSErr PBHMapIDAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHMapIDAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7035, 0xA260"
@@ -2523,10 +2527,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameSync(HParmB
     return _ret;
 }
 #else
-pascal OSErr PBHMapNameSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHMapNameSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7035, 0xA660"
@@ -2536,11 +2540,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameAsync(HParm
     return _ret;
 }
 #else
-pascal OSErr PBHMapNameAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHMapNameAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7036, 0xA260"
@@ -2550,10 +2554,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileSync(HParm
     return _ret;
 }
 #else
-pascal OSErr PBHCopyFileSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHCopyFileSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7036, 0xA660"
@@ -2563,11 +2567,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileAsync(HPar
     return _ret;
 }
 #else
-pascal OSErr PBHCopyFileAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHCopyFileAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameSync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameSync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7037, 0xA260"
@@ -2577,10 +2581,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameSync(HPa
     return _ret;
 }
 #else
-pascal OSErr PBHMoveRenameSync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHMoveRenameSync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7037, 0xA660"
@@ -2590,11 +2594,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameAsync(HP
     return _ret;
 }
 #else
-pascal OSErr PBHMoveRenameAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHMoveRenameAsync(HParmBlkPtr pb);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenySync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenySync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7038, 0xA260"
@@ -2604,10 +2608,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenySync(HParm
     return _ret;
 }
 #else
-pascal OSErr PBHOpenDenySync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHOpenDenySync(HParmBlkPtr pb);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenyAsync(HParmBlkPtr pb) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenyAsync(HParmBlkPtr pb) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7038, 0xA660"
@@ -2617,47 +2621,47 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenyAsync(HPar
     return _ret;
 }
 #else
-pascal OSErr PBHOpenDenyAsync(HParmBlkPtr pb);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHOpenDenyAsync(HParmBlkPtr pb);
 #endif
 
 // prototypes for the high level filesystem dispatch traps
 enum { _HighLevelFSDispatch = 0xAA52 };
 
-pascal OSErr FSMakeFSSpec(int16_t vRefNum, long dir_id, ConstStringPtr file_name, FSSpecPtr spec) M68K_INLINE(0x7001, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSMakeFSSpec(int16_t vRefNum, long dir_id, ConstStringPtr file_name, FSSpecPtr spec) M68K_INLINE(0x7001, 0xAA52);
 
-pascal OSErr FSpExchangeFiles(FSSpecPtr src, FSSpecPtr dst) M68K_INLINE(0x700F, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpExchangeFiles(FSSpecPtr src, FSSpecPtr dst) M68K_INLINE(0x700F, 0xAA52);
 
-pascal OSErr FSpOpenDF(FSSpecPtr spec, SignedByte perms, int16_t *refNum_out) M68K_INLINE(0x7002, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpOpenDF(FSSpecPtr spec, SignedByte perms, int16_t *refNum_out) M68K_INLINE(0x7002, 0xAA52);
 
-pascal OSErr FSpOpenRF(FSSpecPtr spec, SignedByte perms, int16_t *refNum_out) M68K_INLINE(0x7003, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpOpenRF(FSSpecPtr spec, SignedByte perms, int16_t *refNum_out) M68K_INLINE(0x7003, 0xAA52);
 
-pascal OSErr FSpCreate(FSSpecPtr spec, OSType creator, OSType file_type, ScriptCode script) M68K_INLINE(0x7004, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpCreate(FSSpecPtr spec, OSType creator, OSType file_type, ScriptCode script) M68K_INLINE(0x7004, 0xAA52);
 
-pascal OSErr FSpDirCreate(FSSpecPtr spec, ScriptCode script, long *created_dir_id) M68K_INLINE(0x7005, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpDirCreate(FSSpecPtr spec, ScriptCode script, long *created_dir_id) M68K_INLINE(0x7005, 0xAA52);
 
-pascal OSErr FSpDelete(FSSpecPtr spec) M68K_INLINE(0x7006, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpDelete(FSSpecPtr spec) M68K_INLINE(0x7006, 0xAA52);
 
-pascal OSErr FSpGetFInfo(FSSpecPtr spec, FInfo *fndr_info) M68K_INLINE(0x7007, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpGetFInfo(FSSpecPtr spec, FInfo *fndr_info) M68K_INLINE(0x7007, 0xAA52);
 
-pascal OSErr FSpSetFInfo(FSSpecPtr spec, FInfo *fndr_info) M68K_INLINE(0x7008, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpSetFInfo(FSSpecPtr spec, FInfo *fndr_info) M68K_INLINE(0x7008, 0xAA52);
 
-pascal OSErr FSpSetFLock(FSSpecPtr spec) M68K_INLINE(0x7009, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpSetFLock(FSSpecPtr spec) M68K_INLINE(0x7009, 0xAA52);
 
-pascal OSErr FSpRstFLock(FSSpecPtr spec) M68K_INLINE(0x700A, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpRstFLock(FSSpecPtr spec) M68K_INLINE(0x700A, 0xAA52);
 
-pascal OSErr FSpRename(FSSpecPtr spec, ConstStringPtr new_name) M68K_INLINE(0x700B, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpRename(FSSpecPtr spec, ConstStringPtr new_name) M68K_INLINE(0x700B, 0xAA52);
 
-pascal OSErr FSpCatMove(FSSpecPtr src, FSSpecPtr dst) M68K_INLINE(0x700C, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal OSErr FSpCatMove(FSSpecPtr src, FSSpecPtr dst) M68K_INLINE(0x700C, 0xAA52);
 
-pascal void FSpCreateResFile(FSSpecPtr spec, OSType creator, OSType file_type, ScriptCode script) M68K_INLINE(0x700E, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal void FSpCreateResFile(FSSpecPtr spec, OSType creator, OSType file_type, ScriptCode script) M68K_INLINE(0x700E, 0xAA52);
 
-pascal INTEGER FSpOpenResFile(FSSpecPtr spec, SignedByte perms) M68K_INLINE(0x700D, 0xAA52);
+MAC_SINCE(0x0700, "7.0") pascal INTEGER FSpOpenResFile(FSSpecPtr spec, SignedByte perms) M68K_INLINE(0x700D, 0xAA52);
 
 enum { _HOpenResFile = 0xA81A };
-pascal INTEGER HOpenResFile(INTEGER vref, LONGINT dirid, ConstStringPtr file_name, SignedByte perm) M68K_INLINE(0xA81A);
+MAC_SINCE(0x0700, "7.0") pascal INTEGER HOpenResFile(INTEGER vref, LONGINT dirid, ConstStringPtr file_name, SignedByte perm) M68K_INLINE(0xA81A);
 
 enum { _HCreateResFile = 0xA81B };
-pascal void HCreateResFile(INTEGER vrefnum, LONGINT parid, ConstStringPtr name) M68K_INLINE(0xA81B);
+MAC_SINCE(0x0700, "7.0") pascal void HCreateResFile(INTEGER vrefnum, LONGINT parid, ConstStringPtr name) M68K_INLINE(0xA81B);
 
 #if TARGET_CPU_68K
 static __inline__ OSErr HCreate(INTEGER vref, LONGINT dirid, ConstStringPtr name, OSType creator, OSType type);
@@ -2811,7 +2815,7 @@ pascal OSErr PBWriteImmed(ParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecSync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecSync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701B, 0xA260"
@@ -2821,10 +2825,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecSync(HPar
     return _ret;
 }
 #else
-pascal OSErr PBMakeFSSpecSync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBMakeFSSpecSync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701B, 0xA660"
@@ -2834,11 +2838,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecAsync(HPa
     return _ret;
 }
 #else
-pascal OSErr PBMakeFSSpecAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBMakeFSSpecAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBShareSync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBShareSync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7042, 0xA260"
@@ -2848,10 +2852,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBShareSync(HParmBlkP
     return _ret;
 }
 #else
-pascal OSErr PBShareSync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBShareSync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBShareAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBShareAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7042, 0xA660"
@@ -2861,11 +2865,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBShareAsync(HParmBlk
     return _ret;
 }
 #else
-pascal OSErr PBShareAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBShareAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareSync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareSync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7043, 0xA260"
@@ -2875,10 +2879,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareSync(HParmBl
     return _ret;
 }
 #else
-pascal OSErr PBUnshareSync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBUnshareSync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7043, 0xA660"
@@ -2888,11 +2892,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareAsync(HParmB
     return _ret;
 }
 #else
-pascal OSErr PBUnshareAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBUnshareAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntrySync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntrySync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7044, 0xA260"
@@ -2902,10 +2906,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntrySync(HPar
     return _ret;
 }
 #else
-pascal OSErr PBGetUGEntrySync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetUGEntrySync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntryAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntryAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7044, 0xA660"
@@ -2915,11 +2919,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntryAsync(HPa
     return _ret;
 }
 #else
-pascal OSErr PBGetUGEntryAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetUGEntryAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsSync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsSync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7060, 0xA260"
@@ -2929,10 +2933,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsSync
     return _ret;
 }
 #else
-pascal OSErr PBGetForeignPrivsSync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetForeignPrivsSync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7060, 0xA660"
@@ -2942,11 +2946,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsAsyn
     return _ret;
 }
 #else
-pascal OSErr PBGetForeignPrivsAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetForeignPrivsAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsSync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsSync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7061, 0xA260"
@@ -2956,10 +2960,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsSync
     return _ret;
 }
 #else
-pascal OSErr PBSetForeignPrivsSync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetForeignPrivsSync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7061, 0xA660"
@@ -2969,11 +2973,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsAsyn
     return _ret;
 }
 #else
-pascal OSErr PBSetForeignPrivsAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetForeignPrivsAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenySync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenySync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7039, 0xA260"
@@ -2983,10 +2987,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenySync(HPa
     return _ret;
 }
 #else
-pascal OSErr PBHOpenRFDenySync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHOpenRFDenySync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenyAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenyAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7039, 0xA660"
@@ -2996,11 +3000,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenyAsync(HP
     return _ret;
 }
 #else
-pascal OSErr PBHOpenRFDenyAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBHOpenRFDenyAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfoSize(ParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfoSize(ParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x703F, 0xA260"
@@ -3010,11 +3014,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfoSize
     return _ret;
 }
 #else
-pascal OSErr PBGetVolMountInfoSize(ParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetVolMountInfoSize(ParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfo(ParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfo(ParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7040, 0xA260"
@@ -3024,11 +3028,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfo(Par
     return _ret;
 }
 #else
-pascal OSErr PBGetVolMountInfo(ParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetVolMountInfo(ParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBVolumeMount(ParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBVolumeMount(ParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7041, 0xA260"
@@ -3038,7 +3042,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBVolumeMount(ParmBlk
     return _ret;
 }
 #else
-pascal OSErr PBVolumeMount(ParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBVolumeMount(ParmBlkPtr paramBlock);
 #endif
 
 // High-level calls built on the parameter block calls
@@ -3648,7 +3652,7 @@ pascal OSErr FSGetResourceForkName(HFSUniStr255 *resourceForkName);
 
 // Parameter block forms of the HFS Plus API
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x706E, 0xA260"
@@ -3658,11 +3662,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefSync(FSRef
     return _ret;
 }
 #else
-pascal OSErr PBMakeFSRefSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBMakeFSRefSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x706E, 0xA660"
         : "+r"(_paramBlock)
@@ -3670,11 +3674,11 @@ static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefAsync(FSRef
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBMakeFSRefAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBMakeFSRefAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefUnicodeSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefUnicodeSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707A, 0xA260"
@@ -3684,11 +3688,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSRefUnicodeSyn
     return _ret;
 }
 #else
-pascal OSErr PBMakeFSRefUnicodeSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBMakeFSRefUnicodeSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefUnicodeAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefUnicodeAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707A, 0xA660"
         : "+r"(_paramBlock)
@@ -3696,11 +3700,11 @@ static __inline__ __attribute__((__always_inline__)) void PBMakeFSRefUnicodeAsyn
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBMakeFSRefUnicodeAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBMakeFSRefUnicodeAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCompareFSRefsSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCompareFSRefsSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707C, 0xA260"
@@ -3710,11 +3714,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCompareFSRefsSync(F
     return _ret;
 }
 #else
-pascal OSErr PBCompareFSRefsSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCompareFSRefsSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBCompareFSRefsAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBCompareFSRefsAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707C, 0xA660"
         : "+r"(_paramBlock)
@@ -3722,11 +3726,11 @@ static __inline__ __attribute__((__always_inline__)) void PBCompareFSRefsAsync(F
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBCompareFSRefsAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBCompareFSRefsAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileUnicodeSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileUnicodeSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7070, 0xA260"
@@ -3736,11 +3740,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileUnicodeSy
     return _ret;
 }
 #else
-pascal OSErr PBCreateFileUnicodeSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCreateFileUnicodeSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBCreateFileUnicodeAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBCreateFileUnicodeAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7070, 0xA660"
         : "+r"(_paramBlock)
@@ -3748,11 +3752,11 @@ static __inline__ __attribute__((__always_inline__)) void PBCreateFileUnicodeAsy
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBCreateFileUnicodeAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBCreateFileUnicodeAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCreateDirectoryUnicodeSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCreateDirectoryUnicodeSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7071, 0xA260"
@@ -3762,11 +3766,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateDirectoryUnic
     return _ret;
 }
 #else
-pascal OSErr PBCreateDirectoryUnicodeSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCreateDirectoryUnicodeSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBCreateDirectoryUnicodeAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBCreateDirectoryUnicodeAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7071, 0xA660"
         : "+r"(_paramBlock)
@@ -3774,11 +3778,11 @@ static __inline__ __attribute__((__always_inline__)) void PBCreateDirectoryUnico
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBCreateDirectoryUnicodeAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBCreateDirectoryUnicodeAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteObjectSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteObjectSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7072, 0xA260"
@@ -3788,11 +3792,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteObjectSync(FS
     return _ret;
 }
 #else
-pascal OSErr PBDeleteObjectSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDeleteObjectSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBDeleteObjectAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBDeleteObjectAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7072, 0xA660"
         : "+r"(_paramBlock)
@@ -3800,11 +3804,11 @@ static __inline__ __attribute__((__always_inline__)) void PBDeleteObjectAsync(FS
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBDeleteObjectAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBDeleteObjectAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBMoveObjectSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBMoveObjectSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7073, 0xA260"
@@ -3814,11 +3818,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMoveObjectSync(FSRe
     return _ret;
 }
 #else
-pascal OSErr PBMoveObjectSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBMoveObjectSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBMoveObjectAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBMoveObjectAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7073, 0xA660"
         : "+r"(_paramBlock)
@@ -3826,11 +3830,11 @@ static __inline__ __attribute__((__always_inline__)) void PBMoveObjectAsync(FSRe
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBMoveObjectAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBMoveObjectAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeObjectsSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeObjectsSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7075, 0xA260"
@@ -3840,11 +3844,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeObjectsSync
     return _ret;
 }
 #else
-pascal OSErr PBExchangeObjectsSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBExchangeObjectsSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBExchangeObjectsAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBExchangeObjectsAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7075, 0xA660"
         : "+r"(_paramBlock)
@@ -3852,11 +3856,11 @@ static __inline__ __attribute__((__always_inline__)) void PBExchangeObjectsAsync
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBExchangeObjectsAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBExchangeObjectsAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBRenameUnicodeSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBRenameUnicodeSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7074, 0xA260"
@@ -3866,11 +3870,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBRenameUnicodeSync(F
     return _ret;
 }
 #else
-pascal OSErr PBRenameUnicodeSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBRenameUnicodeSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBRenameUnicodeAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBRenameUnicodeAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7074, 0xA660"
         : "+r"(_paramBlock)
@@ -3878,11 +3882,11 @@ static __inline__ __attribute__((__always_inline__)) void PBRenameUnicodeAsync(F
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBRenameUnicodeAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBRenameUnicodeAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7076, 0xA260"
@@ -3892,11 +3896,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoSync(
     return _ret;
 }
 #else
-pascal OSErr PBGetCatalogInfoSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetCatalogInfoSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7076, 0xA660"
         : "+r"(_paramBlock)
@@ -3904,11 +3908,11 @@ static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoAsync(
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBGetCatalogInfoAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBGetCatalogInfoAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatalogInfoSync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatalogInfoSync(FSRefParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7077, 0xA260"
@@ -3918,11 +3922,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatalogInfoSync(
     return _ret;
 }
 #else
-pascal OSErr PBSetCatalogInfoSync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetCatalogInfoSync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBSetCatalogInfoAsync(FSRefParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBSetCatalogInfoAsync(FSRefParam *paramBlock) {
     register FSRefParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7077, 0xA660"
         : "+r"(_paramBlock)
@@ -3930,11 +3934,11 @@ static __inline__ __attribute__((__always_inline__)) void PBSetCatalogInfoAsync(
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBSetCatalogInfoAsync(FSRefParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBSetCatalogInfoAsync(FSRefParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBOpenIteratorSync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBOpenIteratorSync(FSCatalogBulkParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7078, 0xA260"
@@ -3944,11 +3948,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenIteratorSync(FS
     return _ret;
 }
 #else
-pascal OSErr PBOpenIteratorSync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBOpenIteratorSync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBOpenIteratorAsync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBOpenIteratorAsync(FSCatalogBulkParam *paramBlock) {
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7078, 0xA660"
         : "+r"(_paramBlock)
@@ -3956,11 +3960,11 @@ static __inline__ __attribute__((__always_inline__)) void PBOpenIteratorAsync(FS
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBOpenIteratorAsync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBOpenIteratorAsync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCloseIteratorSync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCloseIteratorSync(FSCatalogBulkParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705B, 0xA260"
@@ -3970,11 +3974,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseIteratorSync(F
     return _ret;
 }
 #else
-pascal OSErr PBCloseIteratorSync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCloseIteratorSync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBCloseIteratorAsync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBCloseIteratorAsync(FSCatalogBulkParam *paramBlock) {
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705B, 0xA660"
         : "+r"(_paramBlock)
@@ -3982,11 +3986,11 @@ static __inline__ __attribute__((__always_inline__)) void PBCloseIteratorAsync(F
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBCloseIteratorAsync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBCloseIteratorAsync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoBulkSync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoBulkSync(FSCatalogBulkParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705C, 0xA260"
@@ -3996,11 +4000,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatalogInfoBulkS
     return _ret;
 }
 #else
-pascal OSErr PBGetCatalogInfoBulkSync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetCatalogInfoBulkSync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoBulkAsync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoBulkAsync(FSCatalogBulkParam *paramBlock) {
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705C, 0xA660"
         : "+r"(_paramBlock)
@@ -4008,11 +4012,11 @@ static __inline__ __attribute__((__always_inline__)) void PBGetCatalogInfoBulkAs
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBGetCatalogInfoBulkAsync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBGetCatalogInfoBulkAsync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCatalogSearchSync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCatalogSearchSync(FSCatalogBulkParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705D, 0xA260"
@@ -4022,11 +4026,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatalogSearchSync(F
     return _ret;
 }
 #else
-pascal OSErr PBCatalogSearchSync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCatalogSearchSync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBCatalogSearchAsync(FSCatalogBulkParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBCatalogSearchAsync(FSCatalogBulkParam *paramBlock) {
     register FSCatalogBulkParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705D, 0xA660"
         : "+r"(_paramBlock)
@@ -4034,11 +4038,11 @@ static __inline__ __attribute__((__always_inline__)) void PBCatalogSearchAsync(F
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBCatalogSearchAsync(FSCatalogBulkParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBCatalogSearchAsync(FSCatalogBulkParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCreateForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCreateForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707D, 0xA260"
@@ -4048,11 +4052,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateForkSync(FSFo
     return _ret;
 }
 #else
-pascal OSErr PBCreateForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCreateForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBCreateForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBCreateForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707D, 0xA660"
         : "+r"(_paramBlock)
@@ -4060,11 +4064,11 @@ static __inline__ __attribute__((__always_inline__)) void PBCreateForkAsync(FSFo
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBCreateForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBCreateForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707E, 0xA260"
@@ -4074,11 +4078,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteForkSync(FSFo
     return _ret;
 }
 #else
-pascal OSErr PBDeleteForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBDeleteForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBDeleteForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBDeleteForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707E, 0xA660"
         : "+r"(_paramBlock)
@@ -4086,11 +4090,11 @@ static __inline__ __attribute__((__always_inline__)) void PBDeleteForkAsync(FSFo
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBDeleteForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBDeleteForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBIterateForksSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBIterateForksSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707F, 0xA260"
@@ -4100,11 +4104,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBIterateForksSync(FS
     return _ret;
 }
 #else
-pascal OSErr PBIterateForksSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBIterateForksSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBIterateForksAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBIterateForksAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x707F, 0xA660"
         : "+r"(_paramBlock)
@@ -4112,11 +4116,11 @@ static __inline__ __attribute__((__always_inline__)) void PBIterateForksAsync(FS
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBIterateForksAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBIterateForksAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBOpenForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBOpenForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7079, 0xA260"
@@ -4126,11 +4130,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenForkSync(FSFork
     return _ret;
 }
 #else
-pascal OSErr PBOpenForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBOpenForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBOpenForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBOpenForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7079, 0xA660"
         : "+r"(_paramBlock)
@@ -4138,11 +4142,11 @@ static __inline__ __attribute__((__always_inline__)) void PBOpenForkAsync(FSFork
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBOpenForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBOpenForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBReadForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr PBReadForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7051, 0xA2A8"
@@ -4152,11 +4156,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBReadForkSync(FSFork
     return _ret;
 }
 #else
-pascal OSErr PBReadForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr PBReadForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBReadForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void PBReadForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7051, 0xA6A8"
         : "+r"(_paramBlock)
@@ -4164,11 +4168,11 @@ static __inline__ __attribute__((__always_inline__)) void PBReadForkAsync(FSFork
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBReadForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0921, "9.2.1") pascal void PBReadForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBWriteForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) OSErr PBWriteForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7052, 0xA2A8"
@@ -4178,11 +4182,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBWriteForkSync(FSFor
     return _ret;
 }
 #else
-pascal OSErr PBWriteForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0921, "9.2.1") pascal OSErr PBWriteForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBWriteForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0921, "9.2.1") static __inline__ __attribute__((__always_inline__)) void PBWriteForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7052, 0xA6A8"
         : "+r"(_paramBlock)
@@ -4190,11 +4194,11 @@ static __inline__ __attribute__((__always_inline__)) void PBWriteForkAsync(FSFor
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBWriteForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0921, "9.2.1") pascal void PBWriteForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkPositionSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkPositionSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7053, 0xA260"
@@ -4204,11 +4208,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkPositionSync
     return _ret;
 }
 #else
-pascal OSErr PBGetForkPositionSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetForkPositionSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBGetForkPositionAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBGetForkPositionAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7053, 0xA660"
         : "+r"(_paramBlock)
@@ -4216,11 +4220,11 @@ static __inline__ __attribute__((__always_inline__)) void PBGetForkPositionAsync
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBGetForkPositionAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBGetForkPositionAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkPositionSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkPositionSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7054, 0xA260"
@@ -4230,11 +4234,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkPositionSync
     return _ret;
 }
 #else
-pascal OSErr PBSetForkPositionSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetForkPositionSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBSetForkPositionAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBSetForkPositionAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7054, 0xA660"
         : "+r"(_paramBlock)
@@ -4242,11 +4246,11 @@ static __inline__ __attribute__((__always_inline__)) void PBSetForkPositionAsync
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBSetForkPositionAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBSetForkPositionAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkSizeSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkSizeSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7055, 0xA260"
@@ -4256,11 +4260,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkSizeSync(FSF
     return _ret;
 }
 #else
-pascal OSErr PBGetForkSizeSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetForkSizeSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBGetForkSizeAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBGetForkSizeAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7055, 0xA660"
         : "+r"(_paramBlock)
@@ -4268,11 +4272,11 @@ static __inline__ __attribute__((__always_inline__)) void PBGetForkSizeAsync(FSF
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBGetForkSizeAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBGetForkSizeAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkSizeSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkSizeSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7056, 0xA260"
@@ -4282,11 +4286,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetForkSizeSync(FSF
     return _ret;
 }
 #else
-pascal OSErr PBSetForkSizeSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetForkSizeSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBSetForkSizeAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBSetForkSizeAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7056, 0xA660"
         : "+r"(_paramBlock)
@@ -4294,11 +4298,11 @@ static __inline__ __attribute__((__always_inline__)) void PBSetForkSizeAsync(FSF
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBSetForkSizeAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBSetForkSizeAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBAllocateForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBAllocateForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7057, 0xA260"
@@ -4308,11 +4312,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBAllocateForkSync(FS
     return _ret;
 }
 #else
-pascal OSErr PBAllocateForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBAllocateForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBAllocateForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBAllocateForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7057, 0xA660"
         : "+r"(_paramBlock)
@@ -4320,11 +4324,11 @@ static __inline__ __attribute__((__always_inline__)) void PBAllocateForkAsync(FS
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBAllocateForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBAllocateForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBFlushForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBFlushForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7058, 0xA260"
@@ -4334,11 +4338,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBFlushForkSync(FSFor
     return _ret;
 }
 #else
-pascal OSErr PBFlushForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBFlushForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBFlushForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBFlushForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7058, 0xA660"
         : "+r"(_paramBlock)
@@ -4346,11 +4350,11 @@ static __inline__ __attribute__((__always_inline__)) void PBFlushForkAsync(FSFor
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBFlushForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBFlushForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBCloseForkSync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBCloseForkSync(FSForkIOParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7059, 0xA260"
@@ -4360,11 +4364,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseForkSync(FSFor
     return _ret;
 }
 #else
-pascal OSErr PBCloseForkSync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBCloseForkSync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBCloseForkAsync(FSForkIOParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBCloseForkAsync(FSForkIOParam *paramBlock) {
     register FSForkIOParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7059, 0xA660"
         : "+r"(_paramBlock)
@@ -4372,11 +4376,11 @@ static __inline__ __attribute__((__always_inline__)) void PBCloseForkAsync(FSFor
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBCloseForkAsync(FSForkIOParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBCloseForkAsync(FSForkIOParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkCBInfoSync(FSForkCBInfoParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkCBInfoSync(FSForkCBInfoParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSForkCBInfoParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705A, 0xA260"
@@ -4386,11 +4390,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetForkCBInfoSync(F
     return _ret;
 }
 #else
-pascal OSErr PBGetForkCBInfoSync(FSForkCBInfoParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetForkCBInfoSync(FSForkCBInfoParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBGetForkCBInfoAsync(FSForkCBInfoParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBGetForkCBInfoAsync(FSForkCBInfoParam *paramBlock) {
     register FSForkCBInfoParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x705A, 0xA660"
         : "+r"(_paramBlock)
@@ -4398,11 +4402,11 @@ static __inline__ __attribute__((__always_inline__)) void PBGetForkCBInfoAsync(F
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBGetForkCBInfoAsync(FSForkCBInfoParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBGetForkCBInfoAsync(FSForkCBInfoParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolumeInfoSync(FSVolumeInfoParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolumeInfoSync(FSVolumeInfoParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701D, 0xA260"
@@ -4412,11 +4416,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolumeInfoSync(F
     return _ret;
 }
 #else
-pascal OSErr PBGetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBGetVolumeInfoAsync(FSVolumeInfoParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBGetVolumeInfoAsync(FSVolumeInfoParam *paramBlock) {
     register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701D, 0xA660"
         : "+r"(_paramBlock)
@@ -4424,11 +4428,11 @@ static __inline__ __attribute__((__always_inline__)) void PBGetVolumeInfoAsync(F
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBGetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBGetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock) {
     register OSErr _ret __asm__("d0");
     register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701E, 0xA260"
@@ -4438,11 +4442,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetVolumeInfoSync(F
     return _ret;
 }
 #else
-pascal OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock) {
     register FSVolumeInfoParam* _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701E, 0xA660"
         : "+r"(_paramBlock)
@@ -4450,14 +4454,14 @@ static __inline__ __attribute__((__always_inline__)) void PBSetVolumeInfoAsync(F
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
 #endif
 
 typedef DrvQEl *DrvQElPtr;
 
 // AppleShare alternate access privileges (MPW 3.2 interfaces).
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessSync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessSync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7060, 0xA060"
@@ -4467,10 +4471,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessSync(HP
     return _ret;
 }
 #else
-pascal OSErr PBGetAltAccessSync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetAltAccessSync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7060, 0xA460"
@@ -4480,12 +4484,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessAsync(H
     return _ret;
 }
 #else
-pascal OSErr PBGetAltAccessAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBGetAltAccessAsync(HParmBlkPtr paramBlock);
 #endif
 
 // AppleShare alternate access privileges (MPW 3.2 interfaces).
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessSync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessSync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7061, 0xA060"
@@ -4495,10 +4499,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessSync(HP
     return _ret;
 }
 #else
-pascal OSErr PBSetAltAccessSync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetAltAccessSync(HParmBlkPtr paramBlock);
 #endif
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessAsync(HParmBlkPtr paramBlock) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessAsync(HParmBlkPtr paramBlock) {
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7061, 0xA460"
@@ -4508,7 +4512,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessAsync(H
     return _ret;
 }
 #else
-pascal OSErr PBSetAltAccessAsync(HParmBlkPtr paramBlock);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PBSetAltAccessAsync(HParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
@@ -5411,6 +5415,7 @@ static __inline__ OSErr FSGetResourceForkName(HFSUniStr255 *resourceForkName) {
 
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 // Collection Manager: an ordered list of tagged items, used by the Window and Appearance Managers to store settings.
 typedef struct OpaqueCollection *Collection;
@@ -65,84 +69,85 @@ typedef CollectionExceptionProcPtr CollectionExceptionUPP;
 
 enum { _CollectionMgr = 0xABF6 };
 
-pascal Collection NewCollection(void) M68K_INLINE(0x7000, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal Collection NewCollection(void) M68K_INLINE(0x7000, 0xABF6);
 
-pascal void DisposeCollection(Collection c) M68K_INLINE(0x7001, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal void DisposeCollection(Collection c) M68K_INLINE(0x7001, 0xABF6);
 
-pascal Collection CloneCollection(Collection c) M68K_INLINE(0x7002, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal Collection CloneCollection(Collection c) M68K_INLINE(0x7002, 0xABF6);
 
-pascal SInt32 CountCollectionOwners(Collection c) M68K_INLINE(0x7003, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal SInt32 CountCollectionOwners(Collection c) M68K_INLINE(0x7003, 0xABF6);
 
-pascal Collection CopyCollection(Collection srcCollection, Collection dstCollection) M68K_INLINE(0x7004, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal Collection CopyCollection(Collection srcCollection, Collection dstCollection) M68K_INLINE(0x7004, 0xABF6);
 
-pascal SInt32 GetCollectionDefaultAttributes(Collection c) M68K_INLINE(0x7005, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal SInt32 GetCollectionDefaultAttributes(Collection c) M68K_INLINE(0x7005, 0xABF6);
 
-pascal void SetCollectionDefaultAttributes(Collection c, SInt32 whichAttributes, SInt32 newAttributes) M68K_INLINE(0x7006, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal void SetCollectionDefaultAttributes(Collection c, SInt32 whichAttributes, SInt32 newAttributes) M68K_INLINE(0x7006, 0xABF6);
 
-pascal SInt32 CountCollectionItems(Collection c) M68K_INLINE(0x7007, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal SInt32 CountCollectionItems(Collection c) M68K_INLINE(0x7007, 0xABF6);
 
-pascal OSErr AddCollectionItem(Collection c, CollectionTag tag, SInt32 id, SInt32 itemSize, void *itemData) M68K_INLINE(0x7008, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr AddCollectionItem(Collection c, CollectionTag tag, SInt32 id, SInt32 itemSize, void *itemData) M68K_INLINE(0x7008, 0xABF6);
 
-pascal OSErr GetCollectionItem(Collection c, CollectionTag tag, SInt32 id, SInt32 *itemSize, void *itemData) M68K_INLINE(0x7009, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetCollectionItem(Collection c, CollectionTag tag, SInt32 id, SInt32 *itemSize, void *itemData) M68K_INLINE(0x7009, 0xABF6);
 
-pascal OSErr RemoveCollectionItem(Collection c, CollectionTag tag, SInt32 id) M68K_INLINE(0x700A, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr RemoveCollectionItem(Collection c, CollectionTag tag, SInt32 id) M68K_INLINE(0x700A, 0xABF6);
 
-pascal OSErr SetCollectionItemInfo(Collection c, CollectionTag tag, SInt32 id, SInt32 whichAttributes, SInt32 newAttributes) M68K_INLINE(0x700B, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetCollectionItemInfo(Collection c, CollectionTag tag, SInt32 id, SInt32 whichAttributes, SInt32 newAttributes) M68K_INLINE(0x700B, 0xABF6);
 
-pascal OSErr GetCollectionItemInfo(Collection c, CollectionTag tag, SInt32 id, SInt32 *index, SInt32 *itemSize, SInt32 *attributes) M68K_INLINE(0x700C, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetCollectionItemInfo(Collection c, CollectionTag tag, SInt32 id, SInt32 *index, SInt32 *itemSize, SInt32 *attributes) M68K_INLINE(0x700C, 0xABF6);
 
-pascal OSErr ReplaceIndexedCollectionItem(Collection c, SInt32 index, SInt32 itemSize, void *itemData) M68K_INLINE(0x700D, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr ReplaceIndexedCollectionItem(Collection c, SInt32 index, SInt32 itemSize, void *itemData) M68K_INLINE(0x700D, 0xABF6);
 
-pascal OSErr GetIndexedCollectionItem(Collection c, SInt32 index, SInt32 *itemSize, void *itemData) M68K_INLINE(0x700E, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetIndexedCollectionItem(Collection c, SInt32 index, SInt32 *itemSize, void *itemData) M68K_INLINE(0x700E, 0xABF6);
 
-pascal OSErr RemoveIndexedCollectionItem(Collection c, SInt32 index) M68K_INLINE(0x700F, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr RemoveIndexedCollectionItem(Collection c, SInt32 index) M68K_INLINE(0x700F, 0xABF6);
 
-pascal OSErr SetIndexedCollectionItemInfo(Collection c, SInt32 index, SInt32 whichAttributes, SInt32 newAttributes) M68K_INLINE(0x7010, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr SetIndexedCollectionItemInfo(Collection c, SInt32 index, SInt32 whichAttributes, SInt32 newAttributes) M68K_INLINE(0x7010, 0xABF6);
 
-pascal OSErr GetIndexedCollectionItemInfo(Collection c, SInt32 index, CollectionTag *tag, SInt32 *id, SInt32 *itemSize, SInt32 *attributes) M68K_INLINE(0x7011, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetIndexedCollectionItemInfo(Collection c, SInt32 index, CollectionTag *tag, SInt32 *id, SInt32 *itemSize, SInt32 *attributes) M68K_INLINE(0x7011, 0xABF6);
 
-pascal Boolean CollectionTagExists(Collection c, CollectionTag tag) M68K_INLINE(0x7012, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal Boolean CollectionTagExists(Collection c, CollectionTag tag) M68K_INLINE(0x7012, 0xABF6);
 
-pascal SInt32 CountCollectionTags(Collection c) M68K_INLINE(0x7013, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal SInt32 CountCollectionTags(Collection c) M68K_INLINE(0x7013, 0xABF6);
 
-pascal OSErr GetIndexedCollectionTag(Collection c, SInt32 tagIndex, CollectionTag *tag) M68K_INLINE(0x7014, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetIndexedCollectionTag(Collection c, SInt32 tagIndex, CollectionTag *tag) M68K_INLINE(0x7014, 0xABF6);
 
-pascal SInt32 CountTaggedCollectionItems(Collection c, CollectionTag tag) M68K_INLINE(0x7015, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal SInt32 CountTaggedCollectionItems(Collection c, CollectionTag tag) M68K_INLINE(0x7015, 0xABF6);
 
-pascal OSErr GetTaggedCollectionItem(Collection c, CollectionTag tag, SInt32 whichItem, SInt32 *itemSize, void *itemData) M68K_INLINE(0x7016, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetTaggedCollectionItem(Collection c, CollectionTag tag, SInt32 whichItem, SInt32 *itemSize, void *itemData) M68K_INLINE(0x7016, 0xABF6);
 
-pascal OSErr GetTaggedCollectionItemInfo(Collection c, CollectionTag tag, SInt32 whichItem, SInt32 *id, SInt32 *index, SInt32 *itemSize, SInt32 *attributes) M68K_INLINE(0x7017, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetTaggedCollectionItemInfo(Collection c, CollectionTag tag, SInt32 whichItem, SInt32 *id, SInt32 *index, SInt32 *itemSize, SInt32 *attributes) M68K_INLINE(0x7017, 0xABF6);
 
-pascal void PurgeCollection(Collection c, SInt32 whichAttributes, SInt32 matchingAttributes) M68K_INLINE(0x7018, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal void PurgeCollection(Collection c, SInt32 whichAttributes, SInt32 matchingAttributes) M68K_INLINE(0x7018, 0xABF6);
 
-pascal void PurgeCollectionTag(Collection c, CollectionTag tag) M68K_INLINE(0x7019, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal void PurgeCollectionTag(Collection c, CollectionTag tag) M68K_INLINE(0x7019, 0xABF6);
 
-pascal void EmptyCollection(Collection c) M68K_INLINE(0x701A, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal void EmptyCollection(Collection c) M68K_INLINE(0x701A, 0xABF6);
 
-pascal OSErr FlattenCollection(Collection c, CollectionFlattenUPP flattenProc, void *refCon) M68K_INLINE(0x701B, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr FlattenCollection(Collection c, CollectionFlattenUPP flattenProc, void *refCon) M68K_INLINE(0x701B, 0xABF6);
 
-pascal OSErr FlattenPartialCollection(Collection c, CollectionFlattenUPP flattenProc, void *refCon, SInt32 whichAttributes, SInt32 matchingAttributes) M68K_INLINE(0x701C, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr FlattenPartialCollection(Collection c, CollectionFlattenUPP flattenProc, void *refCon, SInt32 whichAttributes, SInt32 matchingAttributes) M68K_INLINE(0x701C, 0xABF6);
 
-pascal OSErr UnflattenCollection(Collection c, CollectionFlattenUPP flattenProc, void *refCon) M68K_INLINE(0x701D, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr UnflattenCollection(Collection c, CollectionFlattenUPP flattenProc, void *refCon) M68K_INLINE(0x701D, 0xABF6);
 
-pascal CollectionExceptionUPP GetCollectionExceptionProc(Collection c) M68K_INLINE(0x701E, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal CollectionExceptionUPP GetCollectionExceptionProc(Collection c) M68K_INLINE(0x701E, 0xABF6);
 
-pascal void SetCollectionExceptionProc(Collection c, CollectionExceptionUPP exceptionProc) M68K_INLINE(0x701F, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal void SetCollectionExceptionProc(Collection c, CollectionExceptionUPP exceptionProc) M68K_INLINE(0x701F, 0xABF6);
 
-pascal Collection GetNewCollection(SInt16 collectionID) M68K_INLINE(0x7020, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal Collection GetNewCollection(SInt16 collectionID) M68K_INLINE(0x7020, 0xABF6);
 
-pascal OSErr AddCollectionItemHdl(Collection aCollection, CollectionTag tag, SInt32 id, Handle itemData) M68K_INLINE(0x7021, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr AddCollectionItemHdl(Collection aCollection, CollectionTag tag, SInt32 id, Handle itemData) M68K_INLINE(0x7021, 0xABF6);
 
-pascal OSErr GetCollectionItemHdl(Collection aCollection, CollectionTag tag, SInt32 id, Handle itemData) M68K_INLINE(0x7022, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetCollectionItemHdl(Collection aCollection, CollectionTag tag, SInt32 id, Handle itemData) M68K_INLINE(0x7022, 0xABF6);
 
-pascal OSErr ReplaceIndexedCollectionItemHdl(Collection aCollection, SInt32 index, Handle itemData) M68K_INLINE(0x7023, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr ReplaceIndexedCollectionItemHdl(Collection aCollection, SInt32 index, Handle itemData) M68K_INLINE(0x7023, 0xABF6);
 
-pascal OSErr GetIndexedCollectionItemHdl(Collection aCollection, SInt32 index, Handle itemData) M68K_INLINE(0x7024, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr GetIndexedCollectionItemHdl(Collection aCollection, SInt32 index, Handle itemData) M68K_INLINE(0x7024, 0xABF6);
 
-pascal OSErr FlattenCollectionToHdl(Collection aCollection, Handle flattened) M68K_INLINE(0x7025, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr FlattenCollectionToHdl(Collection aCollection, Handle flattened) M68K_INLINE(0x7025, 0xABF6);
 
-pascal OSErr UnflattenCollectionFromHdl(Collection aCollection, Handle flattened) M68K_INLINE(0x7026, 0xABF6);
+MAC_SINCE(0x0810, "8.1") pascal OSErr UnflattenCollectionFromHdl(Collection aCollection, Handle flattened) M68K_INLINE(0x7026, 0xABF6);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

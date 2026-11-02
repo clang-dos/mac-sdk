@@ -6,6 +6,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef struct TMTask TMTask;
 struct TMTask {
@@ -19,7 +23,7 @@ struct TMTask {
 
 enum { _InsTime = 0xA058 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void InsTime(QElemPtr taskp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void InsTime(QElemPtr taskp) {
     register QElemPtr _taskp __asm__("a0") = taskp;
     __asm__ __volatile__(".short 0xA058"
         : "+r"(_taskp)
@@ -27,12 +31,12 @@ static __inline__ __attribute__((__always_inline__)) void InsTime(QElemPtr taskp
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void InsTime(QElemPtr taskp);
+MAC_SINCE(0x0070, "0.7") pascal void InsTime(QElemPtr taskp);
 #endif
 
 enum { _InsXTime = 0xA458 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void InsXTime(QElemPtr taskp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void InsXTime(QElemPtr taskp) {
     register QElemPtr _taskp __asm__("a0") = taskp;
     __asm__ __volatile__(".short 0xA458"
         : "+r"(_taskp)
@@ -40,12 +44,12 @@ static __inline__ __attribute__((__always_inline__)) void InsXTime(QElemPtr task
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void InsXTime(QElemPtr taskp);
+MAC_SINCE(0x0070, "0.7") pascal void InsXTime(QElemPtr taskp);
 #endif
 
 enum { _RmvTime = 0xA059 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void RmvTime(QElemPtr taskp) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void RmvTime(QElemPtr taskp) {
     register QElemPtr _taskp __asm__("a0") = taskp;
     __asm__ __volatile__(".short 0xA059"
         : "+r"(_taskp)
@@ -53,12 +57,12 @@ static __inline__ __attribute__((__always_inline__)) void RmvTime(QElemPtr taskp
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void RmvTime(QElemPtr taskp);
+MAC_SINCE(0x0070, "0.7") pascal void RmvTime(QElemPtr taskp);
 #endif
 
 enum { _PrimeTime = 0xA05A };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) void PrimeTime(QElemPtr taskp, LONGINT count) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) void PrimeTime(QElemPtr taskp, LONGINT count) {
     register QElemPtr _taskp __asm__("a0") = taskp;
     register LONGINT _count __asm__("d0") = count;
     __asm__ __volatile__(".short 0xA05A"
@@ -67,16 +71,16 @@ static __inline__ __attribute__((__always_inline__)) void PrimeTime(QElemPtr tas
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
-pascal void PrimeTime(QElemPtr taskp, LONGINT count);
+MAC_SINCE(0x0070, "0.7") pascal void PrimeTime(QElemPtr taskp, LONGINT count);
 #endif
 
 // The trap returns the high half in A0 and the low half in D0.
-pascal void Microseconds(UnsignedWide *microTickCount) M68K_INLINE(0xA193, 0x225F, 0x22C8, 0x2280);
+MAC_SINCE(0x0700, "7.0") pascal void Microseconds(UnsignedWide *microTickCount) M68K_INLINE(0xA193, 0x225F, 0x22C8, 0x2280);
 
 // Time Manager calls that return an error (Mac OS 8.6)
 enum { _InstallTimeTask = 0xA058 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr InstallTimeTask(QElemPtr tmTaskPtr) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr InstallTimeTask(QElemPtr tmTaskPtr) {
     register OSErr _ret __asm__("d0");
     register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
     __asm__ __volatile__(".short 0xA058"
@@ -86,12 +90,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr InstallTimeTask(QElem
     return _ret;
 }
 #else
-pascal OSErr InstallTimeTask(QElemPtr tmTaskPtr);
+MAC_SINCE(0x0070, "0.7") pascal OSErr InstallTimeTask(QElemPtr tmTaskPtr);
 #endif
 
 enum { _InstallXTimeTask = 0xA458 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr InstallXTimeTask(QElemPtr tmTaskPtr) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr InstallXTimeTask(QElemPtr tmTaskPtr) {
     register OSErr _ret __asm__("d0");
     register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
     __asm__ __volatile__(".short 0xA458"
@@ -101,12 +105,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr InstallXTimeTask(QEle
     return _ret;
 }
 #else
-pascal OSErr InstallXTimeTask(QElemPtr tmTaskPtr);
+MAC_SINCE(0x0070, "0.7") pascal OSErr InstallXTimeTask(QElemPtr tmTaskPtr);
 #endif
 
 enum { _PrimeTimeTask = 0xA05A };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr PrimeTimeTask(QElemPtr tmTaskPtr, long count) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr PrimeTimeTask(QElemPtr tmTaskPtr, long count) {
     register OSErr _ret __asm__("d0");
     register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
     register long _count __asm__("d0") = count;
@@ -117,12 +121,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr PrimeTimeTask(QElemPt
     return _ret;
 }
 #else
-pascal OSErr PrimeTimeTask(QElemPtr tmTaskPtr, long count);
+MAC_SINCE(0x0070, "0.7") pascal OSErr PrimeTimeTask(QElemPtr tmTaskPtr, long count);
 #endif
 
 enum { _RemoveTimeTask = 0xA059 };
 #if TARGET_CPU_68K
-static __inline__ __attribute__((__always_inline__)) OSErr RemoveTimeTask(QElemPtr tmTaskPtr) {
+MAC_SINCE(0x0070, "0.7") static __inline__ __attribute__((__always_inline__)) OSErr RemoveTimeTask(QElemPtr tmTaskPtr) {
     register OSErr _ret __asm__("d0");
     register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
     __asm__ __volatile__(".short 0xA059"
@@ -132,9 +136,10 @@ static __inline__ __attribute__((__always_inline__)) OSErr RemoveTimeTask(QElemP
     return _ret;
 }
 #else
-pascal OSErr RemoveTimeTask(QElemPtr tmTaskPtr);
+MAC_SINCE(0x0070, "0.7") pascal OSErr RemoveTimeTask(QElemPtr tmTaskPtr);
 #endif
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif

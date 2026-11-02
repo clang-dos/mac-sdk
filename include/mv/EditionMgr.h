@@ -8,6 +8,10 @@
 #include "MacTypes.h"
 
 #pragma options align=mac68k
+/* The headers' own inline code may call newer calls behind a
+   check; the MAC_MIN_SYSTEM warnings are for the program's calls. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-warnings"
 
 typedef long TimeStamp;
 
@@ -174,69 +178,70 @@ enum {
 
 enum { _Pack11 = 0xA82D };
 
-pascal OSErr InitEditionPackVersion(INTEGER unused) M68K_INLINE(0x303C, 0x0100, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr InitEditionPackVersion(INTEGER unused) M68K_INLINE(0x303C, 0x0100, 0xA82D);
 #if OLDROUTINENAMES
 #define InitEditionPack(unused) InitEditionPackVersion(unused)
 #endif
 
-pascal OSErr NewSection(EditionContainerSpecPtr container, FSSpecPtr section_doc, SectionType kind, long section_id, UpdateMode initial_mode, SectionHandle *section_out) M68K_INLINE(0x303C, 0x0A02, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr NewSection(EditionContainerSpecPtr container, FSSpecPtr section_doc, SectionType kind, long section_id, UpdateMode initial_mode, SectionHandle *section_out) M68K_INLINE(0x303C, 0x0A02, 0xA82D);
 
-pascal OSErr RegisterSection(FSSpecPtr section_doc, SectionHandle section, Boolean *alias_was_updated_p_out) M68K_INLINE(0x303C, 0x0604, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr RegisterSection(FSSpecPtr section_doc, SectionHandle section, Boolean *alias_was_updated_p_out) M68K_INLINE(0x303C, 0x0604, 0xA82D);
 
-pascal OSErr UnRegisterSection(SectionHandle section) M68K_INLINE(0x303C, 0x0206, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr UnRegisterSection(SectionHandle section) M68K_INLINE(0x303C, 0x0206, 0xA82D);
 
-pascal OSErr IsRegisteredSection(SectionHandle section) M68K_INLINE(0x303C, 0x0208, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr IsRegisteredSection(SectionHandle section) M68K_INLINE(0x303C, 0x0208, 0xA82D);
 
-pascal OSErr AssociateSection(SectionHandle section, FSSpecPtr new_section_doc) M68K_INLINE(0x303C, 0x040C, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr AssociateSection(SectionHandle section, FSSpecPtr new_section_doc) M68K_INLINE(0x303C, 0x040C, 0xA82D);
 
-pascal OSErr CreateEditionContainerFile(FSSpecPtr edition_file, OSType creator, ScriptCode edition_file_name_script) M68K_INLINE(0x303C, 0x050E, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr CreateEditionContainerFile(FSSpecPtr edition_file, OSType creator, ScriptCode edition_file_name_script) M68K_INLINE(0x303C, 0x050E, 0xA82D);
 
-pascal OSErr DeleteEditionContainerFile(FSSpecPtr edition_file) M68K_INLINE(0x303C, 0x0210, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr DeleteEditionContainerFile(FSSpecPtr edition_file) M68K_INLINE(0x303C, 0x0210, 0xA82D);
 
-pascal OSErr SetEditionFormatMark(EditionRefNum edition, FormatType format, long mark) M68K_INLINE(0x303C, 0x0620, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr SetEditionFormatMark(EditionRefNum edition, FormatType format, long mark) M68K_INLINE(0x303C, 0x0620, 0xA82D);
 
-pascal OSErr GetEditionFormatMark(EditionRefNum edition, FormatType format, long *currentMark) M68K_INLINE(0x303C, 0x061E, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr GetEditionFormatMark(EditionRefNum edition, FormatType format, long *currentMark) M68K_INLINE(0x303C, 0x061E, 0xA82D);
 
-pascal OSErr OpenEdition(SectionHandle subscriber_section, EditionRefNum *ref_num) M68K_INLINE(0x303C, 0x0412, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr OpenEdition(SectionHandle subscriber_section, EditionRefNum *ref_num) M68K_INLINE(0x303C, 0x0412, 0xA82D);
 
-pascal OSErr EditionHasFormat(EditionRefNum edition, FormatType format, Size *format_size) M68K_INLINE(0x303C, 0x0618, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr EditionHasFormat(EditionRefNum edition, FormatType format, Size *format_size) M68K_INLINE(0x303C, 0x0618, 0xA82D);
 
-pascal OSErr ReadEdition(EditionRefNum edition, FormatType format, Ptr buffer, Size buffer_size) M68K_INLINE(0x303C, 0x081A, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr ReadEdition(EditionRefNum edition, FormatType format, Ptr buffer, Size buffer_size) M68K_INLINE(0x303C, 0x081A, 0xA82D);
 
-pascal OSErr OpenNewEdition(SectionHandle publisher_section, OSType creator, FSSpecPtr publisher_section_doc, EditionRefNum *ref_num) M68K_INLINE(0x303C, 0x0814, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr OpenNewEdition(SectionHandle publisher_section, OSType creator, FSSpecPtr publisher_section_doc, EditionRefNum *ref_num) M68K_INLINE(0x303C, 0x0814, 0xA82D);
 
-pascal OSErr WriteEdition(EditionRefNum edition, FormatType format, Ptr buffer, Size buffer_size) M68K_INLINE(0x303C, 0x081C, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr WriteEdition(EditionRefNum edition, FormatType format, Ptr buffer, Size buffer_size) M68K_INLINE(0x303C, 0x081C, 0xA82D);
 
-pascal OSErr CloseEdition(EditionRefNum edition, Boolean success_p) M68K_INLINE(0x303C, 0x0316, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr CloseEdition(EditionRefNum edition, Boolean success_p) M68K_INLINE(0x303C, 0x0316, 0xA82D);
 
-pascal OSErr GetLastEditionContainerUsed(EditionContainerSpecPtr container) M68K_INLINE(0x303C, 0x0226, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr GetLastEditionContainerUsed(EditionContainerSpecPtr container) M68K_INLINE(0x303C, 0x0226, 0xA82D);
 
-pascal OSErr NewSubscriberDialog(NewSubscriberReplyPtr reply) M68K_INLINE(0x303C, 0x0232, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr NewSubscriberDialog(NewSubscriberReplyPtr reply) M68K_INLINE(0x303C, 0x0232, 0xA82D);
 
-pascal OSErr NewPublisherDialog(NewSubscriberReplyPtr reply) M68K_INLINE(0x303C, 0x0236, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr NewPublisherDialog(NewSubscriberReplyPtr reply) M68K_INLINE(0x303C, 0x0236, 0xA82D);
 
-pascal OSErr SectionOptionsDialog(SectionOptionsReply *reply) M68K_INLINE(0x303C, 0x023A, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr SectionOptionsDialog(SectionOptionsReply *reply) M68K_INLINE(0x303C, 0x023A, 0xA82D);
 
-pascal OSErr NewSubscriberExpDialog(NewSubscriberReplyPtr reply, Point where, int16_t expnasion_ditl_res_id, ExpDialogHookUPP dialog_hook, ExpModalFilterUPP filter_hook, Ptr data) M68K_INLINE(0x303C, 0x0B34, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr NewSubscriberExpDialog(NewSubscriberReplyPtr reply, Point where, int16_t expnasion_ditl_res_id, ExpDialogHookUPP dialog_hook, ExpModalFilterUPP filter_hook, Ptr data) M68K_INLINE(0x303C, 0x0B34, 0xA82D);
 
-pascal OSErr NewPublisherExpDialog(NewPublisherReplyPtr reply, Point where, int16_t expnasion_ditl_res_id, ExpDialogHookUPP dialog_hook, ExpModalFilterUPP filter_hook, Ptr data) M68K_INLINE(0x303C, 0x0B38, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr NewPublisherExpDialog(NewPublisherReplyPtr reply, Point where, int16_t expnasion_ditl_res_id, ExpDialogHookUPP dialog_hook, ExpModalFilterUPP filter_hook, Ptr data) M68K_INLINE(0x303C, 0x0B38, 0xA82D);
 
-pascal OSErr SectionOptionsExpDialog(SectionOptionsReply *reply, Point where, int16_t expnasion_ditl_res_id, ExpDialogHookUPP dialog_hook, ExpModalFilterUPP filter_hook, Ptr data) M68K_INLINE(0x303C, 0x0B3C, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr SectionOptionsExpDialog(SectionOptionsReply *reply, Point where, int16_t expnasion_ditl_res_id, ExpDialogHookUPP dialog_hook, ExpModalFilterUPP filter_hook, Ptr data) M68K_INLINE(0x303C, 0x0B3C, 0xA82D);
 
-pascal OSErr GetEditionInfo(SectionHandle section, EditionInfoPtr edition_info) M68K_INLINE(0x303C, 0x0422, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr GetEditionInfo(SectionHandle section, EditionInfoPtr edition_info) M68K_INLINE(0x303C, 0x0422, 0xA82D);
 
-pascal OSErr GoToPublisherSection(EditionContainerSpecPtr container) M68K_INLINE(0x303C, 0x0224, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr GoToPublisherSection(EditionContainerSpecPtr container) M68K_INLINE(0x303C, 0x0224, 0xA82D);
 
-pascal OSErr GetStandardFormats(EditionContainerSpecPtr container, FormatType *preview_format, Handle preview, Handle publisher_alias, Handle formats) M68K_INLINE(0x303C, 0x0A28, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr GetStandardFormats(EditionContainerSpecPtr container, FormatType *preview_format, Handle preview, Handle publisher_alias, Handle formats) M68K_INLINE(0x303C, 0x0A28, 0xA82D);
 
-pascal OSErr GetEditionOpenerProc(EditionOpenerUPP *opener) M68K_INLINE(0x303C, 0x022A, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr GetEditionOpenerProc(EditionOpenerUPP *opener) M68K_INLINE(0x303C, 0x022A, 0xA82D);
 
-pascal OSErr SetEditionOpenerProc(EditionOpenerUPP opener) M68K_INLINE(0x303C, 0x022C, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr SetEditionOpenerProc(EditionOpenerUPP opener) M68K_INLINE(0x303C, 0x022C, 0xA82D);
 
-pascal OSErr CallEditionOpenerProc(EditionOpenerVerb selector, EditionOpenerParamBlock *param_block, EditionOpenerUPP opener) M68K_INLINE(0x303C, 0x052E, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr CallEditionOpenerProc(EditionOpenerVerb selector, EditionOpenerParamBlock *param_block, EditionOpenerUPP opener) M68K_INLINE(0x303C, 0x052E, 0xA82D);
 
-pascal OSErr CallFormatIOProc(FormatIOVerb selector, FormatIOParamBlock *param_block, FormatIOUPP proc) M68K_INLINE(0x303C, 0x0530, 0xA82D);
+MAC_SINCE_GESTALT(0x0701, "7.0.1", "'edtn'") pascal OSErr CallFormatIOProc(FormatIOVerb selector, FormatIOParamBlock *param_block, FormatIOUPP proc) M68K_INLINE(0x303C, 0x0530, 0xA82D);
 
+#pragma clang diagnostic pop
 #pragma options align=reset
 
 #endif
