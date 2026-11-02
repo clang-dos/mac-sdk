@@ -1,0 +1,1535 @@
+
+# ####
+
+- function:
+    name: addpt
+    args:
+    - name: src
+      type: Point*
+    - name: dst
+      type: Point*
+    callconv: C
+    comment: 'C-string forms of Toolbox calls (C calling convention; they take C
+
+      strings, and Points by address). On 68k they need MPW-style glue.'
+
+# ####
+
+- function:
+    name: addresource
+    args:
+    - name: data
+      type: Handle
+    - name: typ
+      type: ResType
+    - name: id
+      type: INTEGER
+    - name: name
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: appendmenu
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: str
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: create
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: creator
+      type: OSType
+    - name: filtyp
+      type: OSType
+    callconv: C
+
+# ####
+
+- function:
+    name: createresfile
+    args:
+    - name: fn
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: debugstr
+    args:
+    - name: p
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: deltapoint
+    return: LONGINT
+    args:
+    - name: a
+      type: Point*
+    - name: b
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: dibadmount
+    return: INTEGER
+    args:
+    - name: pt
+      type: Point*
+    - name: evtmess
+      type: LONGINT
+    callconv: C
+
+# ####
+
+- function:
+    name: dizero
+    return: OSErr
+    args:
+    - name: dn
+      type: INTEGER
+    - name: vname
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: dragcontrol
+    args:
+    - name: c
+      type: ControlHandle
+    - name: p
+      type: Point*
+    - name: limit
+      type: const Rect*
+    - name: slop
+      type: const Rect*
+    - name: axis
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: draggrayrgn
+    return: LONGINT
+    args:
+    - name: rgn
+      type: RgnHandle
+    - name: startp
+      type: Point*
+    - name: limit
+      type: const Rect*
+    - name: slop
+      type: const Rect*
+    - name: axis
+      type: INTEGER
+    - name: proc
+      type: ProcPtr
+    callconv: C
+
+# ####
+
+- function:
+    name: dragwindow
+    args:
+    - name: wp
+      type: WindowPtr
+    - name: p
+      type: Point*
+    - name: rp
+      type: const Rect*
+    callconv: C
+
+# ####
+
+- function:
+    name: drawstring
+    args:
+    - name: s
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: eject
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: equalpt
+    return: Boolean
+    args:
+    - name: p1
+      type: Point*
+    - name: p2
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: equalstring
+    return: Boolean
+    args:
+    - name: s1
+      type: const char*
+    - name: s2
+      type: const char*
+    - name: casesig
+      type: Boolean
+    - name: diacsig
+      type: Boolean
+    callconv: C
+
+# ####
+
+- function:
+    name: findcontrol
+    return: INTEGER
+    args:
+    - name: p
+      type: Point*
+    - name: w
+      type: WindowPtr
+    - name: cp
+      type: ControlHandle*
+    callconv: C
+
+# ####
+
+- function:
+    name: finddialogitem
+    return: INTEGER
+    args:
+    - name: dp
+      type: DialogPtr
+    - name: pt
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: findwindow
+    return: INTEGER
+    args:
+    - name: p
+      type: Point*
+    - name: wpp
+      type: WindowPtr*
+    callconv: C
+
+# ####
+
+- function:
+    name: flushvol
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: fsdelete
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: fsopen
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: rn
+      type: INTEGER*
+    callconv: C
+
+# ####
+
+- function:
+    name: fsrename
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: newf
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: get1namedresource
+    return: Handle
+    args:
+    - name: typ
+      type: ResType
+    - name: s
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: getcontroltitle
+    args:
+    - name: c
+      type: ControlHandle
+    - name: t
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: getdialogitemtext
+    args:
+    - name: item
+      type: Handle
+    - name: text
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: getfinfo
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: fndrinfo
+      type: FInfo*
+    callconv: C
+
+# ####
+
+- function:
+    name: getfnum
+    args:
+    - name: fnam
+      type: const char*
+    - name: fnum
+      type: INTEGER*
+    callconv: C
+
+# ####
+
+- function:
+    name: getfontname
+    args:
+    - name: fnum
+      type: INTEGER
+    - name: fnam
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: getindstring
+    args:
+    - name: s
+      type: char*
+    - name: sid
+      type: INTEGER
+    - name: index
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: getmenuitemtext
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: item
+      type: INTEGER
+    - name: str
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: getnamedresource
+    return: Handle
+    args:
+    - name: typ
+      type: ResType
+    - name: nam
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: getresinfo
+    args:
+    - name: res
+      type: Handle
+    - name: id1
+      type: INTEGER*
+    - name: typ
+      type: ResType*
+    - name: name
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: getvinfo
+    return: OSErr
+    args:
+    - name: drv
+      type: INTEGER
+    - name: voln
+      type: char*
+    - name: vrn
+      type: INTEGER*
+    - name: freeb
+      type: LONGINT*
+    callconv: C
+
+# ####
+
+- function:
+    name: getvol
+    return: OSErr
+    args:
+    - name: voln
+      type: char*
+    - name: vrn
+      type: INTEGER*
+    callconv: C
+
+# ####
+
+- function:
+    name: getwtitle
+    args:
+    - name: w
+      type: WindowPtr
+    - name: t
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: growwindow
+    return: LONGINT
+    args:
+    - name: w
+      type: WindowPtr
+    - name: startp
+      type: Point*
+    - name: rp
+      type: const Rect*
+    callconv: C
+
+# ####
+
+- function:
+    name: insertmenuitem
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: str
+      type: const char*
+    - name: after
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: iucomppstring
+    return: INTEGER
+    args:
+    - name: aStr
+      type: const char*
+    - name: bStr
+      type: const char*
+    - name: itl2Handle
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: iucompstring
+    return: INTEGER
+    args:
+    - name: str1
+      type: const char*
+    - name: str2
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: iudatepstring
+    args:
+    - name: date
+      type: LONGINT
+    - name: form
+      type: DateForm
+    - name: p
+      type: char*
+    - name: h
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: iudatestring
+    args:
+    - name: date
+      type: LONGINT
+    - name: form
+      type: DateForm
+    - name: p
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: iuequalpstring
+    return: INTEGER
+    args:
+    - name: aStr
+      type: const char*
+    - name: bStr
+      type: const char*
+    - name: itl2Handle
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: iuequalstring
+    return: INTEGER
+    args:
+    - name: str1
+      type: const char*
+    - name: str2
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: iuldatestring
+    args:
+    - name: datetimep
+      type: LongDateTime*
+    - name: longflag
+      type: DateForm
+    - name: result
+      type: char*
+    - name: intlhand
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: iultimestring
+    args:
+    - name: datetimep
+      type: LongDateTime*
+    - name: wantseconds
+      type: Boolean
+    - name: result
+      type: char*
+    - name: intlhand
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: iustringorder
+    return: INTEGER
+    args:
+    - name: aStr
+      type: const char*
+    - name: bStr
+      type: const char*
+    - name: aScript
+      type: ScriptCode
+    - name: bScript
+      type: ScriptCode
+    - name: aLang
+      type: LangCode
+    - name: bLang
+      type: LangCode
+    callconv: C
+
+# ####
+
+- function:
+    name: iutimepstring
+    args:
+    - name: date
+      type: LONGINT
+    - name: secs
+      type: Boolean
+    - name: p
+      type: char*
+    - name: h
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: iutimestring
+    args:
+    - name: date
+      type: LONGINT
+    - name: secs
+      type: Boolean
+    - name: p
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: laddtocell
+    args:
+    - name: dp
+      type: Ptr
+    - name: dl
+      type: INTEGER
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lcellsize
+    args:
+    - name: csize
+      type: Point*
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lclick
+    return: Boolean
+    args:
+    - name: pt
+      type: Point*
+    - name: mods
+      type: INTEGER
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lclrcell
+    args:
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: ldraw
+    args:
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lgetcell
+    args:
+    - name: dp
+      type: Ptr
+    - name: dlp
+      type: INTEGER*
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lgetcelldatalocation
+    args:
+    - name: offsetp
+      type: INTEGER*
+    - name: lenp
+      type: INTEGER*
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lnew
+    return: ListHandle
+    args:
+    - name: rview
+      type: const Rect*
+    - name: bounds
+      type: const Rect*
+    - name: csize
+      type: Point*
+    - name: proc
+      type: INTEGER
+    - name: wind
+      type: WindowPtr
+    - name: draw
+      type: Boolean
+    - name: grow
+      type: Boolean
+    - name: scrollh
+      type: Boolean
+    - name: scrollv
+      type: Boolean
+    callconv: C
+
+# ####
+
+- function:
+    name: lrect
+    args:
+    - name: cellrect
+      type: Rect*
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lsetcell
+    args:
+    - name: dp
+      type: Ptr
+    - name: dl
+      type: INTEGER
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: lsetselect
+    args:
+    - name: setit
+      type: Boolean
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: menuselect
+    return: LONGINT
+    args:
+    - name: p
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: newcolordialog
+    return: DialogPtr
+    args:
+    - name: arg0
+      type: void*
+    - name: arg1
+      type: const Rect*
+    - name: arg2
+      type: const char*
+    - name: arg3
+      type: Boolean
+    - name: arg4
+      type: INTEGER
+    - name: arg5
+      type: WindowPtr
+    - name: arg6
+      type: Boolean
+    - name: arg7
+      type: LONGINT
+    - name: arg8
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: newcontrol
+    return: ControlHandle
+    args:
+    - name: wst
+      type: WindowPtr
+    - name: r
+      type: const Rect*
+    - name: title
+      type: const char*
+    - name: vis
+      type: Boolean
+    - name: value
+      type: INTEGER
+    - name: min
+      type: INTEGER
+    - name: max
+      type: INTEGER
+    - name: procid
+      type: INTEGER
+    - name: rc
+      type: LONGINT
+    callconv: C
+
+# ####
+
+- function:
+    name: newcwindow
+    return: WindowPtr
+    args:
+    - name: storage
+      type: void*
+    - name: arg1
+      type: const Rect*
+    - name: arg2
+      type: const char*
+    - name: arg3
+      type: Boolean
+    - name: arg4
+      type: INTEGER
+    - name: arg5
+      type: WindowPtr
+    - name: arg6
+      type: Boolean
+    - name: arg7
+      type: LONGINT
+    callconv: C
+
+# ####
+
+- function:
+    name: newdialog
+    return: DialogPtr
+    args:
+    - name: dst
+      type: void*
+    - name: r
+      type: const Rect*
+    - name: tit
+      type: const char*
+    - name: vis
+      type: Boolean
+    - name: procid
+      type: INTEGER
+    - name: behind
+      type: WindowPtr
+    - name: gaflag
+      type: Boolean
+    - name: rc
+      type: LONGINT
+    - name: items
+      type: Handle
+    callconv: C
+
+# ####
+
+- function:
+    name: newmenu
+    return: MenuHandle
+    args:
+    - name: mid
+      type: INTEGER
+    - name: str
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: newstring
+    return: StringHandle
+    args:
+    - name: s
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: newwindow
+    return: WindowPtr
+    args:
+    - name: wst
+      type: void*
+    - name: r
+      type: const Rect*
+    - name: title
+      type: const char*
+    - name: vis
+      type: Boolean
+    - name: procid
+      type: INTEGER
+    - name: behind
+      type: WindowPtr
+    - name: gaflag
+      type: Boolean
+    - name: rc
+      type: LONGINT
+    callconv: C
+
+# ####
+
+- function:
+    name: numtostring
+    args:
+    - name: l
+      type: LONGINT
+    - name: s
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: opendeskacc
+    return: INTEGER
+    args:
+    - name: acc
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: opendriver
+    return: OSErr
+    args:
+    - name: name
+      type: const char*
+    - name: rnp
+      type: INTEGER*
+    callconv: C
+
+# ####
+
+- function:
+    name: openresfile
+    return: INTEGER
+    args:
+    - name: fn
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: openrf
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: rn
+      type: INTEGER*
+    callconv: C
+
+# ####
+
+- function:
+    name: openrfperm
+    return: INTEGER
+    args:
+    - name: fn
+      type: const char*
+    - name: vref
+      type: INTEGER
+    - name: perm
+      type: Byte
+    callconv: C
+
+# ####
+
+- function:
+    name: paramtext
+    args:
+    - name: p0
+      type: const char*
+    - name: p1
+      type: const char*
+    - name: p2
+      type: const char*
+    - name: p3
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: pinrect
+    return: LONGINT
+    args:
+    - name: r
+      type: const Rect*
+    - name: p
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: pt2rect
+    args:
+    - name: p1
+      type: Point*
+    - name: p2
+      type: Point*
+    - name: dest
+      type: Rect*
+    callconv: C
+
+# ####
+
+- function:
+    name: ptinrect
+    return: Boolean
+    args:
+    - name: p
+      type: Point*
+    - name: r
+      type: const Rect*
+    callconv: C
+
+# ####
+
+- function:
+    name: ptinrgn
+    return: Boolean
+    args:
+    - name: p
+      type: Point*
+    - name: rh
+      type: RgnHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: pttoangle
+    args:
+    - name: rp
+      type: const Rect*
+    - name: p
+      type: Point*
+    - name: angle
+      type: INTEGER*
+    callconv: C
+
+# ####
+
+- function:
+    name: relstring
+    return: INTEGER
+    args:
+    - name: s1
+      type: const char*
+    - name: s2
+      type: const char*
+    - name: casesig
+      type: Boolean
+    - name: diacsig
+      type: Boolean
+    callconv: C
+
+# ####
+
+- function:
+    name: rstflock
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: setcontroltitle
+    args:
+    - name: c
+      type: ControlHandle
+    - name: t
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: setdialogitemtext
+    args:
+    - name: item
+      type: Handle
+    - name: text
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: setfinfo
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: fndrinfo
+      type: FInfo*
+    callconv: C
+
+# ####
+
+- function:
+    name: setflock
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: setmenuitemtext
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: item
+      type: INTEGER
+    - name: str
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: setresinfo
+    args:
+    - name: res
+      type: Handle
+    - name: id
+      type: INTEGER
+    - name: name
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: setstring
+    args:
+    - name: h
+      type: StringHandle
+    - name: s
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: setvol
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: setwtitle
+    args:
+    - name: w
+      type: WindowPtr
+    - name: t
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: sfgetfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: filef
+      type: FileFilterUPP
+    - name: numt
+      type: INTEGER
+    - name: tl
+      type: SFTypeList
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    callconv: C
+
+# ####
+
+- function:
+    name: sfpgetfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: filef
+      type: FileFilterUPP
+    - name: numt
+      type: INTEGER
+    - name: tl
+      type: SFTypeList
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    - name: dig
+      type: INTEGER
+    - name: fp
+      type: ModalFilterUPP
+    callconv: C
+
+# ####
+
+- function:
+    name: sfpputfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: name
+      type: const char*
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    - name: dig
+      type: INTEGER
+    - name: fp
+      type: ModalFilterUPP
+    callconv: C
+
+# ####
+
+- function:
+    name: sfputfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: name
+      type: const char*
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    callconv: C
+
+# ####
+
+- function:
+    name: shieldcursor
+    args:
+    - name: rp
+      type: Rect*
+    - name: p
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: stdline
+    args:
+    - name: p
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: stdtext
+    args:
+    - name: n
+      type: INTEGER
+    - name: textbufp
+      type: Ptr
+    - name: num
+      type: Point*
+    - name: den
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: stringtonum
+    args:
+    - name: s
+      type: const char*
+    - name: lp
+      type: LONGINT*
+    callconv: C
+
+# ####
+
+- function:
+    name: stringwidth
+    return: INTEGER
+    args:
+    - name: s
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: stuffhex
+    args:
+    - name: p
+      type: Ptr
+    - name: s
+      type: const char*
+    callconv: C
+
+# ####
+
+- function:
+    name: subpt
+    args:
+    - name: src
+      type: Point*
+    - name: dst
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: teclick
+    args:
+    - name: p
+      type: Point*
+    - name: ext
+      type: Boolean
+    - name: teh
+      type: TEHandle
+    callconv: C
+
+# ####
+
+- function:
+    name: testcontrol
+    return: INTEGER
+    args:
+    - name: c
+      type: ControlHandle
+    - name: p
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: trackbox
+    return: Boolean
+    args:
+    - name: wp
+      type: WindowPtr
+    - name: pt
+      type: Point*
+    - name: part
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: trackcontrol
+    return: INTEGER
+    args:
+    - name: c
+      type: ControlHandle
+    - name: p
+      type: Point*
+    - name: a
+      type: ControlActionUPP
+    callconv: C
+
+# ####
+
+- function:
+    name: trackgoaway
+    return: Boolean
+    args:
+    - name: w
+      type: WindowPtr
+    - name: p
+      type: Point*
+    callconv: C
+
+# ####
+
+- function:
+    name: unmountvol
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+
+# ####
+
+- function:
+    name: upperstring
+    args:
+    - name: s
+      type: char*
+    - name: diac
+      type: Boolean
+    callconv: C
+
+# ####
+
+- function:
+    name: p2cstr
+    return: char*
+    args:
+    - name: aStr
+      type: StringPtr
+    callconv: C
+
+# ####
+
+- function:
+    name: c2pstr
+    return: StringPtr
+    args:
+    - name: aStr
+      type: char*
+    callconv: C
+
+# ####
+
+- function:
+    name: C2PStr
+    args:
+    - name: cString
+      type: Ptr
+    callconv: C
+
+# ####
+
+- function:
+    name: P2CStr
+    args:
+    - name: pString
+      type: StringPtr
+    callconv: C
