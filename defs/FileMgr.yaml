@@ -1521,8 +1521,15 @@
     args:
       - name: pb
         type: ParmBlkPtr
+        register: A0
       - name: async
         type: Boolean
+        register: TrapBit<0x400>
+    trap: 0xA210
+    returnreg: D0
+    variants:
+      - PBAllocContigSync
+      - PBAllocContigAsync
 
 # ####
 
@@ -3327,3 +3334,393 @@
         type: SignedByte
       - name: ioACUser
         type: SignedByte
+
+# ####
+
+- function:
+    name: PBCloseImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41473
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBControlImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41476
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBKillIOImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41478
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBOpenImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41472
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBReadImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41474
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBStatusImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41477
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBWriteImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41475
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBMakeFSSpec
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 27
+    returnreg: D0
+    variants:
+    - PBMakeFSSpecSync
+    - PBMakeFSSpecAsync
+
+# ####
+
+- function:
+    name: PBShare
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 66
+    returnreg: D0
+    variants:
+    - PBShareSync
+    - PBShareAsync
+
+# ####
+
+- function:
+    name: PBUnshare
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 67
+    returnreg: D0
+    variants:
+    - PBUnshareSync
+    - PBUnshareAsync
+
+# ####
+
+- function:
+    name: PBGetUGEntry
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 68
+    returnreg: D0
+    variants:
+    - PBGetUGEntrySync
+    - PBGetUGEntryAsync
+
+# ####
+
+- function:
+    name: PBGetForeignPrivs
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 96
+    returnreg: D0
+    variants:
+    - PBGetForeignPrivsSync
+    - PBGetForeignPrivsAsync
+
+# ####
+
+- function:
+    name: PBSetForeignPrivs
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 97
+    returnreg: D0
+    variants:
+    - PBSetForeignPrivsSync
+    - PBSetForeignPrivsAsync
+
+# ####
+
+- function:
+    name: PBHOpenRFDeny
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 57
+    returnreg: D0
+    variants:
+    - PBHOpenRFDenySync
+    - PBHOpenRFDenyAsync
+
+# ####
+
+- function:
+    name: PBGetVolMountInfoSize
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 63
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBGetVolMountInfo
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 64
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBVolumeMount
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 65
+    returnreg: D0
+
+# ####
+
+- function:
+    name: HGetVol
+    return: OSErr
+    args:
+    - name: volName
+      type: StringPtr
+    - name: vRefNum
+      type: INTEGER*
+    - name: dirID
+      type: int32_t*
+    comment: High-level calls built on the parameter block calls
+
+# ####
+
+- function:
+    name: HSetVol
+    return: OSErr
+    args:
+    - name: volName
+      type: ConstStr63Param
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+
+# ####
+
+- function:
+    name: DirCreate
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: parentDirID
+      type: int32_t
+    - name: directoryName
+      type: ConstStr255Param
+    - name: createdDirID
+      type: int32_t*
+
+# ####
+
+- function:
+    name: HSetFInfo
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: fileName
+      type: ConstStr255Param
+    - name: fndrInfo
+      type: const FInfo*
+
+# ####
+
+- function:
+    name: HSetFLock
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: fileName
+      type: ConstStr255Param
+
+# ####
+
+- function:
+    name: HRstFLock
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: fileName
+      type: ConstStr255Param
+
+# ####
+
+- function:
+    name: CatMove
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: oldName
+      type: ConstStr255Param
+    - name: newDirID
+      type: int32_t
+    - name: newName
+      type: ConstStr255Param
+
+# ####
+
+- function:
+    name: OpenWD
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: procID
+      type: int32_t
+    - name: wdRefNum
+      type: INTEGER*
+
+# ####
+
+- function:
+    name: CloseWD
+    return: OSErr
+    args:
+    - name: wdRefNum
+      type: INTEGER

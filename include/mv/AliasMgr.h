@@ -49,6 +49,12 @@ pascal OSErr MatchAlias(FSSpecPtr fromFile, long rulesMask, AliasHandle alias, i
 
 pascal OSErr GetAliasInfo(AliasHandle alias, AliasTypeInfo index, Str63 theString) M68K_INLINE(0x7007, 0xA823);
 
+pascal OSErr FollowFinderAlias(const FSSpec *fromFile, AliasHandle alias, Boolean logon, FSSpec *target, Boolean *wasChanged) M68K_INLINE(0x700F, 0xA823);
+
+pascal OSErr IsAliasFile(const FSSpec *fileFSSpec, Boolean *aliasFileFlag, Boolean *folderFlag);
+
+pascal OSErr ResolveAliasFileWithMountFlags(FSSpec *theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags);
+
 #pragma options align=reset
 
 #endif

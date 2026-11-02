@@ -215,3 +215,52 @@
     dispatcher: AliasDispatch
     selector: 0x0007
     executor: C_
+
+# ####
+
+- function:
+    name: FollowFinderAlias
+    return: OSErr
+    args:
+    - name: fromFile
+      type: const FSSpec*
+    - name: alias
+      type: AliasHandle
+    - name: logon
+      type: Boolean
+    - name: target
+      type: FSSpec*
+    - name: wasChanged
+      type: Boolean*
+    dispatcher: AliasDispatch
+    selector: 15
+
+# ####
+
+- function:
+    name: IsAliasFile
+    return: OSErr
+    args:
+    - name: fileFSSpec
+      type: const FSSpec*
+    - name: aliasFileFlag
+      type: Boolean*
+    - name: folderFlag
+      type: Boolean*
+
+# ####
+
+- function:
+    name: ResolveAliasFileWithMountFlags
+    return: OSErr
+    args:
+    - name: theSpec
+      type: FSSpec*
+    - name: resolveAliasChains
+      type: Boolean
+    - name: targetIsFolder
+      type: Boolean*
+    - name: wasAliased
+      type: Boolean*
+    - name: mountFlags
+      type: uint32_t

@@ -151,6 +151,34 @@ pascal Fixed R_X2Fix(extended80 *x) M68K_INLINE(0xA844);
 enum { _R_X2Frac = 0xA846 };
 pascal Fract R_X2Frac(extended80 *x) M68K_INLINE(0xA846);
 
+// Conversions to floating point (68k needs SANE glue for these)
+pascal double Fix2X(Fixed x);
+
+pascal Fixed X2Fix(double x);
+
+pascal double Frac2X(Fract x);
+
+pascal Fract X2Frac(double x);
+
+// 64-bit integer arithmetic
+pascal wide* WideAdd(wide *target, const wide *source);
+
+pascal wide* WideSubtract(wide *target, const wide *source);
+
+pascal INTEGER WideCompare(const wide *target, const wide *source);
+
+pascal wide* WideNegate(wide *target);
+
+pascal wide* WideShift(wide *target, long shift);
+
+pascal unsigned long WideSquareRoot(const wide *source);
+
+pascal wide* WideMultiply(long multiplicand, long multiplier, wide *target);
+
+pascal long WideDivide(const wide *dividend, long divisor, long *remainder);
+
+pascal wide* WideWideDivide(wide *dividend, long divisor, long *remainder);
+
 #pragma options align=reset
 
 #endif

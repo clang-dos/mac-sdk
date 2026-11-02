@@ -104,6 +104,37 @@
 #define LMGetlastlowglobal() (*(LONGINT *)0x00002000)
 #define LMSetlastlowglobal(val) ((*(LONGINT *)0x00002000) = (val))
 
+// Apple's LowMem.h names for globals declared elsewhere under other names.
+#define LMGetSysFontSize() (*(INTEGER *)0x00000BA8)
+#define LMSetSysFontSize(val) ((*(INTEGER *)0x00000BA8) = (val))
+
+#define LMGetUnitTableEntryCount() (*(INTEGER *)0x000001D2)
+#define LMSetUnitTableEntryCount(val) ((*(INTEGER *)0x000001D2) = (val))
+
+#define LMGetROMMapInsert() (*(uint8_t *)0x00000B9E)
+#define LMSetROMMapInsert(val) ((*(uint8_t *)0x00000B9E) = (val))
+
+#define LMGetMBTicks() (*(long *)0x0000016E)
+#define LMSetMBTicks(val) ((*(long *)0x0000016E) = (val))
+
+#define LMGetDSWndUpdate() (*(uint8_t *)0x0000015D)
+#define LMSetDSWndUpdate(val) ((*(uint8_t *)0x0000015D) = (val))
+
+#define LMGetCursorNew() (*(uint8_t *)0x000008CE)
+#define LMSetCursorNew(val) ((*(uint8_t *)0x000008CE) = (val))
+
+#define LMGetWordRedraw() (*(uint8_t *)0x00000BA5)
+#define LMSetWordRedraw(val) ((*(uint8_t *)0x00000BA5) = (val))
+
+#define LMGetHWCfgFlags() (*(INTEGER *)0x00000B22)
+#define LMSetHWCfgFlags(val) ((*(INTEGER *)0x00000B22) = (val))
+
+#define LMGetRawMouseLocation() (*(Point *)0x0000082C)
+#define LMSetRawMouseLocation(val) ((*(Point *)0x0000082C) = (val))
+
+#define LMGetMouseTemp() (*(Point *)0x00000828)
+#define LMSetMouseTemp(val) ((*(Point *)0x00000828) = (val))
+
 #pragma options align=reset
 
 #endif

@@ -647,7 +647,34 @@ pascal OSErr UnmountVol(ConstStringPtr voln, INTEGER vrn);
 
 pascal OSErr Eject(ConstStringPtr voln, INTEGER vrn);
 
-pascal OSErr PBAllocContig(ParmBlkPtr pb, Boolean async);
+enum { _PBAllocContigSync = 0xA210 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBAllocContigSync(ParmBlkPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0xA210"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBAllocContigSync(ParmBlkPtr pb);
+#endif
+enum { _PBAllocContigAsync = 0xA610 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBAllocContigAsync(ParmBlkPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0xA610"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBAllocContigAsync(ParmBlkPtr pb);
+#endif
 
 // TODO: Trap?
 enum { _PBOpenSync = 0xA000 };
@@ -2527,6 +2554,361 @@ pascal OSErr HDelete(INTEGER vref, LONGINT dirid, ConstStringPtr name);
 pascal OSErr GetWDInfo(INTEGER wd, INTEGER *vrefp, LONGINT *dirp, LONGINT *procp);
 
 
+
+enum { _PBCloseImmed = 0xA201 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBCloseImmed(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA201"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBCloseImmed(ParmBlkPtr paramBlock);
+#endif
+
+enum { _PBControlImmed = 0xA204 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBControlImmed(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA204"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBControlImmed(ParmBlkPtr paramBlock);
+#endif
+
+enum { _PBKillIOImmed = 0xA206 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBKillIOImmed(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA206"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBKillIOImmed(ParmBlkPtr paramBlock);
+#endif
+
+enum { _PBOpenImmed = 0xA200 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBOpenImmed(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA200"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBOpenImmed(ParmBlkPtr paramBlock);
+#endif
+
+enum { _PBReadImmed = 0xA202 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBReadImmed(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA202"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBReadImmed(ParmBlkPtr paramBlock);
+#endif
+
+enum { _PBStatusImmed = 0xA205 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBStatusImmed(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA205"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBStatusImmed(ParmBlkPtr paramBlock);
+#endif
+
+enum { _PBWriteImmed = 0xA203 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBWriteImmed(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA203"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBWriteImmed(ParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecSync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x701B, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBMakeFSSpecSync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x701B, 0xA660"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBMakeFSSpecAsync(HParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBShareSync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7042, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBShareSync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBShareAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7042, 0xA660"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBShareAsync(HParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareSync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7043, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBUnshareSync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7043, 0xA660"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBUnshareAsync(HParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntrySync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7044, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetUGEntrySync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntryAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7044, 0xA660"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetUGEntryAsync(HParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsSync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7060, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetForeignPrivsSync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7060, 0xA660"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetForeignPrivsAsync(HParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsSync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7061, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBSetForeignPrivsSync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7061, 0xA660"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBSetForeignPrivsAsync(HParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenySync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7039, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBHOpenRFDenySync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenyAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7039, 0xA660"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBHOpenRFDenyAsync(HParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfoSize(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x703F, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetVolMountInfoSize(ParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfo(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7040, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetVolMountInfo(ParmBlkPtr paramBlock);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBVolumeMount(ParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7041, 0xA260"
+        : "=r"(_ret)
+        : "r"(_paramBlock)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBVolumeMount(ParmBlkPtr paramBlock);
+#endif
+
+// High-level calls built on the parameter block calls
+pascal OSErr HGetVol(StringPtr volName, INTEGER *vRefNum, long *dirID);
+
+pascal OSErr HSetVol(ConstStr63Param volName, INTEGER vRefNum, long dirID);
+
+pascal OSErr DirCreate(INTEGER vRefNum, long parentDirID, ConstStr255Param directoryName, long *createdDirID);
+
+pascal OSErr HSetFInfo(INTEGER vRefNum, long dirID, ConstStr255Param fileName, const FInfo *fndrInfo);
+
+pascal OSErr HSetFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName);
+
+pascal OSErr HRstFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName);
+
+pascal OSErr CatMove(INTEGER vRefNum, long dirID, ConstStr255Param oldName, long newDirID, ConstStr255Param newName);
+
+pascal OSErr OpenWD(INTEGER vRefNum, long dirID, long procID, INTEGER *wdRefNum);
+
+pascal OSErr CloseWD(INTEGER wdRefNum);
 
 #pragma options align=reset
 

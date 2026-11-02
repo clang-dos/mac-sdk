@@ -566,3 +566,142 @@
     name: Frac2X
     executor_raw: true
     trap: 0xA845
+
+# ####
+
+- function:
+    name: Fix2X
+    return: double
+    args:
+    - name: x
+      type: Fixed
+    comment: Conversions to floating point (68k needs SANE glue for these)
+
+# ####
+
+- function:
+    name: X2Fix
+    return: Fixed
+    args:
+    - name: x
+      type: double
+
+# ####
+
+- function:
+    name: Frac2X
+    return: double
+    args:
+    - name: x
+      type: Fract
+
+# ####
+
+- function:
+    name: X2Frac
+    return: Fract
+    args:
+    - name: x
+      type: double
+
+# ####
+
+- function:
+    name: WideAdd
+    return: wide*
+    args:
+    - name: target
+      type: wide*
+    - name: source
+      type: const wide*
+    comment: 64-bit integer arithmetic
+
+# ####
+
+- function:
+    name: WideSubtract
+    return: wide*
+    args:
+    - name: target
+      type: wide*
+    - name: source
+      type: const wide*
+
+# ####
+
+- function:
+    name: WideCompare
+    return: INTEGER
+    args:
+    - name: target
+      type: const wide*
+    - name: source
+      type: const wide*
+
+# ####
+
+- function:
+    name: WideNegate
+    return: wide*
+    args:
+    - name: target
+      type: wide*
+
+# ####
+
+- function:
+    name: WideShift
+    return: wide*
+    args:
+    - name: target
+      type: wide*
+    - name: shift
+      type: int32_t
+
+# ####
+
+- function:
+    name: WideSquareRoot
+    return: uint32_t
+    args:
+    - name: source
+      type: const wide*
+
+# ####
+
+- function:
+    name: WideMultiply
+    return: wide*
+    args:
+    - name: multiplicand
+      type: int32_t
+    - name: multiplier
+      type: int32_t
+    - name: target
+      type: wide*
+
+# ####
+
+- function:
+    name: WideDivide
+    return: int32_t
+    args:
+    - name: dividend
+      type: const wide*
+    - name: divisor
+      type: int32_t
+    - name: remainder
+      type: int32_t*
+
+# ####
+
+- function:
+    name: WideWideDivide
+    return: wide*
+    args:
+    - name: dividend
+      type: wide*
+    - name: divisor
+      type: int32_t
+    - name: remainder
+      type: int32_t*

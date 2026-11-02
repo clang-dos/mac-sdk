@@ -199,3 +199,74 @@
     address: 0x2000
     comment: |
       rsys/misc MadeUp (true-b);
+
+# ####
+
+- lowmem:
+    name: SysFontSize
+    type: INTEGER
+    address: 2984
+    comment: Apple's LowMem.h names for globals declared elsewhere under other names.
+
+# ####
+
+- lowmem:
+    name: UnitTableEntryCount
+    type: INTEGER
+    address: 466
+
+# ####
+
+- lowmem:
+    name: ROMMapInsert
+    type: uint8_t
+    address: 2974
+
+# ####
+
+- lowmem:
+    name: MBTicks
+    type: int32_t
+    address: 366
+
+# ####
+
+- lowmem:
+    name: DSWndUpdate
+    type: uint8_t
+    address: 349
+
+# ####
+
+- lowmem:
+    name: CursorNew
+    type: uint8_t
+    address: 2254
+
+# ####
+
+- lowmem:
+    name: WordRedraw
+    type: uint8_t
+    address: 2981
+
+# ####
+
+- lowmem:
+    name: HWCfgFlags
+    type: INTEGER
+    address: 2850
+
+# ####
+
+- lowmem:
+    name: RawMouseLocation
+    type: Point
+    address: 2092
+
+# ####
+
+- lowmem:
+    name: MouseTemp
+    type: Point
+    address: 2088
