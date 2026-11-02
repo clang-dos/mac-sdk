@@ -33,7 +33,7 @@ DISPATCHER_NAMES = {
     0xA82A: "ComponentDispatch", 0xAA54: "TSMDispatch",
     0xA82F: "Pack13", 0xAADB: "CursorDeviceDispatch",
     0xA815: "SCSIDispatch", 0xA88F: "OSDispatch", 0xA8B5: "ScriptUtil",
-    0xAA53: "DictionaryDispatch", 0xA825: "TranslationDispatch",
+    0xAA53: "DictionaryDispatch", 0xA825: "MenuDispatch",
     0xA9C9: "SysErrorDispatch", 0xA82B: "Pack9", 0xA08B: "CommToolboxDispatch",
     0xA06E: "SlotManager", 0xA08F: "DeferredTask", 0xA0AC: "FSMDispatch",
     0xA0DD: "PPCDispatch", 0xA05D: "MemoryDispatch", 0xA08D: "DebugUtil",
@@ -237,7 +237,11 @@ def attach_trap(fun, p, o, disp, new_disp, sizes):
         return "register trap " + ", ".join(f"{w:#06x}" for w in words + [trap])
     # Stack based: compare sizes (a byte goes as 2 on the stack in the
     # procInfo's view only for Pascal? No: procInfo records 1).
-    osz = [prm["size"] for prm in o["params"]]
+    consts = []
+    params = list(o["params"])
+    while params and "value" in params[-1] and len(params) > len(args):
+        consts.insert(0, params.pop())
+    osz = [prm["size"] for prm in params]
     mine = [min(s, 4) if s is not None else None for s in asizes]
     if None in mine:
         return f"68k skipped: unknown size in {mine}"
@@ -260,9 +264,36 @@ def attach_trap(fun, p, o, disp, new_disp, sizes):
             new_disp[trap] = d
         fun["dispatcher"] = d["name"]
         fun["selector"] = int(o["selector"], 16)
+        if consts:
+            return push_consts(fun, consts, d, trap)
         return f"{d['name']} selector {o['selector']}"
+    if consts:
+        return push_consts(fun, consts, None, trap)
     fun["trap"] = trap
     return f"trap {trap:#06x}"
+
+
+def push_consts(fun, consts, d, trap):
+    """The glue pushes constant trailing arguments: spell out the code."""
+    words = []
+    for c in consts:
+        v = int(c["value"], 16)
+        words += [0x3F3C, v & 0xFFFF] if c["size"] <= 2 else \
+            [0x2F3C, v >> 16, v & 0xFFFF]
+    if d:
+        sel = fun.pop("selector")
+        fun.pop("dispatcher")
+        loc = d["selector-location"]
+        if loc.startswith("StackW"):
+            words += [0x3F3C, sel & 0xFFFF]
+        elif loc == "StackL":
+            words += [0x2F3C, sel >> 16 & 0xFFFF, sel & 0xFFFF]
+        elif loc == "D0W":
+            words += [0x303C, sel & 0xFFFF]
+        else:
+            words += [0x203C, sel >> 16 & 0xFFFF, sel & 0xFFFF]
+    fun["m68k-inline"] = words + [trap]
+    return "pushes constants: " + ", ".join(f"{w:#06x}" for w in fun["m68k-inline"])
 
 
 if __name__ == "__main__":

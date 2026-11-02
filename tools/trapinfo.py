@@ -114,6 +114,13 @@ def main():
             d["selector"] = "0x%X" % args[0].v
             d["selector_size"] = d["params"][0]["size"]
             d["params"] = d["params"][1:]
+            args = args[1:]
+        if d["conv"] != "register":
+            # Stack arguments the glue fills with constants (a version
+            # number, or a routine code for a shared selector).
+            d["params"] = [dict(prm, value="0x%X" % a.v)
+                           if a is not None and a.kind == "const" else prm
+                           for prm, a in zip(d["params"], args + [None] * 6)]
         out[name] = d
     json.dump(out, sys.stdout, indent=1, sort_keys=True)
     print(f"trapinfo: {len(out)} functions", file=sys.stderr)

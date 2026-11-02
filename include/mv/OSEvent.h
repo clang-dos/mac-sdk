@@ -95,8 +95,6 @@ struct SIZEResource {
 
 pascal OSErr PPostEvent(INTEGER evcode, LONGINT evmsg, EvQElPtr *qelp);
 
-pascal OSErr PostEvent(INTEGER evcode, LONGINT evmsg);
-
 enum { _FlushEvents = 0xA032 };
 pascal void FlushEvents(INTEGER evmask, INTEGER stopmask) M68K_INLINE(0x201F, 0xA032);
 
@@ -185,6 +183,22 @@ pascal OSErr AcceptHighLevelEvent(TargetID *sender_id_return, long *refcon_retur
 pascal Boolean GetSpecificHighLevelEvent(GetSpecificFilterUPP fn, Ptr data, OSErr *err_return) M68K_INLINE(0x3F3C, 0x0045, 0xA88F);
 
 pascal OSErr PostHighLevelEvent(EventRecord *evt, Ptr receiver_id, long refcon, Ptr msg_buf, long msg_length, long post_options) M68K_INLINE(0x3F3C, 0x0034, 0xA88F);
+
+enum { _PostEvent = 0xA02F };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PostEvent(INTEGER eventNum, unsigned long eventMsg) {
+    register OSErr _ret __asm__("d0");
+    register INTEGER _eventNum __asm__("a0") = eventNum;
+    register unsigned long _eventMsg __asm__("d0") = eventMsg;
+    __asm__ __volatile__(".short 0xA02F"
+        : "=r"(_ret)
+        : "r"(_eventNum), "r"(_eventMsg)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PostEvent(INTEGER eventNum, unsigned long eventMsg);
+#endif
 
 #pragma options align=reset
 

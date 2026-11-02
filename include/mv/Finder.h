@@ -44,7 +44,7 @@ typedef DTPBRec *DTPBPtr;
 static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetPath(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
-    __asm__ __volatile__(".short 0x7020, 0xA060"
+    __asm__ __volatile__(".short 0x7020, 0xA260"
         : "=r"(_ret)
         : "r"(_dtp)
         : "d1", "d2", "a1", "cc", "memory");
@@ -58,7 +58,7 @@ pascal OSErr PBDTGetPath(DTPBPtr dtp);
 static __inline__ __attribute__((__always_inline__)) OSErr PBDTCloseDown(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
-    __asm__ __volatile__(".short 0x7021, 0xA060"
+    __asm__ __volatile__(".short 0x7021, 0xA260"
         : "=r"(_ret)
         : "r"(_dtp)
         : "d1", "d2", "a1", "cc", "memory");
@@ -410,7 +410,7 @@ pascal OSErr PBDTOpenInform(DTPBPtr dtp);
 static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteSync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
-    __asm__ __volatile__(".short 0x702F, 0xA260"
+    __asm__ __volatile__(".short 0x702F, 0xA060"
         : "=r"(_ret)
         : "r"(_dtp)
         : "d1", "d2", "a1", "cc", "memory");
@@ -423,7 +423,7 @@ pascal OSErr PBDTDeleteSync(DTPBPtr dtp);
 static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteAsync(DTPBPtr dtp) {
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
-    __asm__ __volatile__(".short 0x702F, 0xA660"
+    __asm__ __volatile__(".short 0x702F, 0xA460"
         : "=r"(_ret)
         : "r"(_dtp)
         : "d1", "d2", "a1", "cc", "memory");

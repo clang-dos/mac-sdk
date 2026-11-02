@@ -56,6 +56,84 @@ typedef DefOSRec *DefOSPtr;
 #define LMGetTimeSCSIDB() (*(INTEGER *)0x00000DA6)
 #define LMSetTimeSCSIDB(val) ((*(INTEGER *)0x00000DA6) = (val))
 
+enum { _GetDefaultStartup = 0xA07D };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void GetDefaultStartup(DefStartPtr paramBlock) {
+    register DefStartPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA07D"
+        : 
+        : "r"(_paramBlock)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void GetDefaultStartup(DefStartPtr paramBlock);
+#endif
+
+enum { _SetDefaultStartup = 0xA07E };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetDefaultStartup(DefStartPtr paramBlock) {
+    register DefStartPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA07E"
+        : 
+        : "r"(_paramBlock)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void SetDefaultStartup(DefStartPtr paramBlock);
+#endif
+
+enum { _GetVideoDefault = 0xA080 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void GetVideoDefault(DefVideoPtr paramBlock) {
+    register DefVideoPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA080"
+        : 
+        : "r"(_paramBlock)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void GetVideoDefault(DefVideoPtr paramBlock);
+#endif
+
+enum { _SetVideoDefault = 0xA081 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetVideoDefault(DefVideoPtr paramBlock) {
+    register DefVideoPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA081"
+        : 
+        : "r"(_paramBlock)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void SetVideoDefault(DefVideoPtr paramBlock);
+#endif
+
+enum { _GetOSDefault = 0xA084 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void GetOSDefault(DefOSPtr paramBlock) {
+    register DefOSPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA084"
+        : 
+        : "r"(_paramBlock)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void GetOSDefault(DefOSPtr paramBlock);
+#endif
+
+enum { _SetOSDefault = 0xA083 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetOSDefault(DefOSPtr paramBlock) {
+    register DefOSPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0xA083"
+        : 
+        : "r"(_paramBlock)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void SetOSDefault(DefOSPtr paramBlock);
+#endif
+
 #pragma options align=reset
 
 #endif

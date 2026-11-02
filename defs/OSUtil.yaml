@@ -662,8 +662,13 @@
     name: WriteParam
     return: OSErr
     executor: true
-    trap: 0xA038
+    trap: 41016
     returnreg: D0
+    m68k-inline:
+    - 16888
+    - 504
+    - 28927
+    - 41016
 
 # ####
 

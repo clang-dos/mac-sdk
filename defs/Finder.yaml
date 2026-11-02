@@ -75,6 +75,7 @@
         type: DTPBPtr
         register: A0
     executor: true
+    trap: 0xA260
     dispatcher: FSDispatch
     selector: 0x20
     returnreg: D0
@@ -89,6 +90,7 @@
         type: DTPBPtr
         register: A0
     executor: true
+    trap: 0xA260
     dispatcher: FSDispatch
     selector: 0x21
     returnreg: D0
@@ -385,7 +387,7 @@
         register: TrapBit<0x400>
     executor: true
     file_trap: true
-    trap: 0xA260
+    trap: 0xA060
     dispatcher: FSDispatch
     selector: 0x2F
     returnreg: D0

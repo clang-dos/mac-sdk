@@ -183,7 +183,6 @@ GetQDGlobalsScreenBits
 GetWindowPort
 InvalWindowRect
 ScreenRes
-SetPalette
 TESetWordBreak
 TESetClickLoop
 TEFromScrap
@@ -386,7 +385,6 @@ NavCompleteSave
 NavCreatePreview
 NavCustomControl
 PPostEvent
-PostEvent
 SetEventMask
 GetEvQHdr
 geteventelem
@@ -421,10 +419,6 @@ FSCreateResourceFile
 FSOpenResourceFile
 GetSysDirection
 SetSysDirection
-LowercaseText
-UppercaseText
-StripDiacritics
-UppercaseStripDiacritics
 LanguageOrder
 StringOrder
 TextOrder

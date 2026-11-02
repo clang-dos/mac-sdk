@@ -1303,3 +1303,14 @@
     dispatcher: SoundDispatch
     selector: 0x001C0004
     executor: C_
+
+# ####
+
+- function:
+    name: SndDispVersion
+    return: int32_t
+    args:
+    - name: dispatchID
+      type: INTEGER
+    dispatcher: SoundDispatch
+    selector: 0

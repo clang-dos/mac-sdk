@@ -2858,9 +2858,6 @@
    },
    {
     "size": 4
-   },
-   {
-    "size": 4
    }
   ],
   "procinfo": "0xFFFFFBA8",
@@ -6998,7 +6995,8 @@
     "size": 4
    },
    {
-    "size": 4
+    "size": 4,
+    "value": "0xFFFFFFFF"
    }
   ],
   "procinfo": "0x00000FAE",
@@ -9842,7 +9840,8 @@
   "conv": "d0-pascal",
   "params": [
    {
-    "size": 2
+    "size": 2,
+    "value": "0x4"
    }
   ],
   "procinfo": "0x000002A8",
@@ -11231,7 +11230,8 @@
     "size": 2
    },
    {
-    "size": 2
+    "size": 2,
+    "value": "0x0"
    }
   ],
   "procinfo": "0x0000ABCE",
@@ -23088,7 +23088,8 @@
     "size": 2
    },
    {
-    "size": 2
+    "size": 2,
+    "value": "0x200"
    }
   ],
   "procinfo": "0x0000ABCE",
@@ -24605,7 +24606,8 @@
     "size": 2
    },
    {
-    "size": 2
+    "size": 2,
+    "value": "0x600"
    }
   ],
   "procinfo": "0x0000ABCE",
@@ -24627,7 +24629,8 @@
     "size": 2
    },
    {
-    "size": 2
+    "size": 2,
+    "value": "0x400"
    }
   ],
   "procinfo": "0x0000ABCE",

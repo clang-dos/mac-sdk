@@ -221,17 +221,6 @@
 
 # ####
 
-- function:
-    name: PostEvent
-    return: OSErr
-    args:
-      - name: evcode
-        type: INTEGER
-      - name: evmsg
-        type: LONGINT
-
-# ####
-
 - not-for: executor
   function:
     name: FlushEvents
@@ -470,3 +459,18 @@
     name: PostEvent
     executor_raw: true
     trap: 0xA02F
+
+# ####
+
+- function:
+    name: PostEvent
+    return: OSErr
+    args:
+    - name: eventNum
+      type: INTEGER
+      register: A0
+    - name: eventMsg
+      type: uint32_t
+      register: D0
+    returnreg: D0
+    trap: 41007

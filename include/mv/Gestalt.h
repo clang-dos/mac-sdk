@@ -231,7 +231,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr NewGestalt(OSType sel
     register OSErr _ret __asm__("d0");
     register OSType _selector __asm__("d0") = selector;
     register SelectorFunctionUPP _selFunc __asm__("a0") = selFunc;
-    __asm__ __volatile__(".short 0xA1AD"
+    __asm__ __volatile__(".short 0xA3AD"
         : "=r"(_ret)
         : "r"(_selector), "r"(_selFunc)
         : "d1", "d2", "a1", "cc", "memory");
@@ -247,7 +247,7 @@ static __inline__ __attribute__((__always_inline__)) OSErr ReplaceGestalt(OSType
     register OSType _selector __asm__("d0") = selector;
     register SelectorFunctionUPP _selFunc __asm__("a0") = selFunc;
     register SelectorFunctionUPP _oldSelFuncp __asm__("a0");
-    __asm__ __volatile__(".short 0xA1AD"
+    __asm__ __volatile__(".short 0xA5AD"
         : "=r"(_ret), "=r"(_oldSelFuncp)
         : "r"(_selector), "r"(_selFunc)
         : "d1", "d2", "a1", "cc", "memory");

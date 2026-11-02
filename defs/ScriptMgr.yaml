@@ -1071,52 +1071,80 @@
 - function:
     name: LowercaseText
     args:
-      - name: textp
-        type: Ptr
-      - name: len
-        type: INTEGER
-      - name: script
-        type: ScriptCode
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
     executor: C_
+    m68k-inline:
+    - 16188
+    - 0
+    - 12092
+    - 32778
+    - 65462
+    - 43189
 
 # ####
 
 - function:
     name: UppercaseText
     args:
-      - name: textp
-        type: Ptr
-      - name: len
-        type: INTEGER
-      - name: script
-        type: ScriptCode
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
     executor: C_
+    m68k-inline:
+    - 16188
+    - 1024
+    - 12092
+    - 32778
+    - 65462
+    - 43189
 
 # ####
 
 - function:
     name: StripDiacritics
     args:
-      - name: textp
-        type: Ptr
-      - name: len
-        type: INTEGER
-      - name: script
-        type: ScriptCode
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
     executor: C_
+    m68k-inline:
+    - 16188
+    - 512
+    - 12092
+    - 32778
+    - 65462
+    - 43189
 
 # ####
 
 - function:
     name: UppercaseStripDiacritics
     args:
-      - name: textp
-        type: Ptr
-      - name: len
-        type: INTEGER
-      - name: script
-        type: ScriptCode
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
     executor: C_
+    m68k-inline:
+    - 16188
+    - 1536
+    - 12092
+    - 32778
+    - 65462
+    - 43189
 
 # ####
 

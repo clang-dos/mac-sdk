@@ -222,6 +222,10 @@ pascal Boolean PrJobDialog(THPrint hPrint) M68K_INLINE(0x2F3C, 0x3204, 0x0488, 0
 
 pascal void PrJobMerge(THPrint hPrintSrc, THPrint hPrintDst) M68K_INLINE(0x2F3C, 0x5804, 0x089C, 0xA8FD);
 
+pascal void PrPurge(void) M68K_INLINE(0x2F3C, 0xA800, 0x0000, 0xA8FD);
+
+pascal void PrNoPurge(void) M68K_INLINE(0x2F3C, 0xB000, 0x0000, 0xA8FD);
+
 #pragma options align=reset
 
 #endif

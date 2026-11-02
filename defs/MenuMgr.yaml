@@ -834,3 +834,40 @@
     executor: C_
     inline: LMGetMBarHeight()
     noinline: carbon, ppc
+
+# ####
+
+- dispatcher:
+    name: MenuDispatch
+    trap: 43045
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: InsertFontResMenu
+    args:
+    - name: theMenu
+      type: MenuHandle
+    - name: afterItem
+      type: INTEGER
+    - name: scriptFilter
+      type: INTEGER
+    dispatcher: MenuDispatch
+    selector: 1024
+
+# ####
+
+- function:
+    name: InsertIntlResMenu
+    args:
+    - name: theMenu
+      type: MenuHandle
+    - name: theType
+      type: ResType
+    - name: afterItem
+      type: INTEGER
+    - name: scriptFilter
+      type: INTEGER
+    dispatcher: MenuDispatch
+    selector: 1537

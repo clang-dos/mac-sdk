@@ -1417,16 +1417,6 @@
 # ####
 
 - function:
-    name: SetPalette
-    args:
-      - type: WindowPtr
-      - type: PaletteHandle
-      - type: Boolean
-    executor: C_
-
-# ####
-
-- function:
     name: NSetPalette
     args:
       - type: WindowPtr
@@ -2130,3 +2120,16 @@
         type: OpenCPicParams*
     trap: 0xAA20
     executor: C_
+
+# ####
+
+- function:
+    name: SetPalette
+    args:
+    - name: dstWindow
+      type: WindowPtr
+    - name: srcPalette
+      type: PaletteHandle
+    - name: cUpdates
+      type: Boolean
+    trap: 43669

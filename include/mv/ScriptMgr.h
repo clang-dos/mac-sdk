@@ -293,13 +293,13 @@ pascal INTEGER PixelToChar(Ptr textBuf, LONGINT textLen, Fixed slop, Fixed pixel
 
 pascal INTEGER CharToPixel(Ptr textBuf, LONGINT textLen, Fixed slop, LONGINT offset, INTEGER direction, JustStyleCode styleRunPosition, Point numer, Point denom) M68K_INLINE(0x2F3C, 0x821C, 0x0030, 0xA8B5);
 
-pascal void LowercaseText(Ptr textp, INTEGER len, ScriptCode script);
+pascal void LowercaseText(Ptr textp, INTEGER len, ScriptCode script) M68K_INLINE(0x3F3C, 0x0000, 0x2F3C, 0x800A, 0xFFB6, 0xA8B5);
 
-pascal void UppercaseText(Ptr textp, INTEGER len, ScriptCode script);
+pascal void UppercaseText(Ptr textp, INTEGER len, ScriptCode script) M68K_INLINE(0x3F3C, 0x0400, 0x2F3C, 0x800A, 0xFFB6, 0xA8B5);
 
-pascal void StripDiacritics(Ptr textp, INTEGER len, ScriptCode script);
+pascal void StripDiacritics(Ptr textp, INTEGER len, ScriptCode script) M68K_INLINE(0x3F3C, 0x0200, 0x2F3C, 0x800A, 0xFFB6, 0xA8B5);
 
-pascal void UppercaseStripDiacritics(Ptr textp, INTEGER len, ScriptCode script);
+pascal void UppercaseStripDiacritics(Ptr textp, INTEGER len, ScriptCode script) M68K_INLINE(0x3F3C, 0x0600, 0x2F3C, 0x800A, 0xFFB6, 0xA8B5);
 
 // the above four functions are actually one entry point on 68K:
 pascal void TextUtilFunctions(int16_t selector, Ptr textp, INTEGER len, ScriptCode script) M68K_INLINE(0x2F3C, 0x800A, 0xFFB6, 0xA8B5);

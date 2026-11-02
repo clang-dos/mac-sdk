@@ -313,6 +313,12 @@ pascal void DisableMenuItem(MenuHandle mh, INTEGER item);
 
 #define GetMBarHeight() (LMGetMBarHeight())
 
+enum { _MenuDispatch = 0xA825 };
+
+pascal void InsertFontResMenu(MenuHandle theMenu, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0400, 0xA825);
+
+pascal void InsertIntlResMenu(MenuHandle theMenu, ResType theType, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0601, 0xA825);
+
 #pragma options align=reset
 
 #endif

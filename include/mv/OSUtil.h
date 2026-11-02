@@ -387,7 +387,7 @@ enum { _WriteParam = 0xA038 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) OSErr WriteParam(void) {
     register OSErr _ret __asm__("d0");
-    __asm__ __volatile__(".short 0xA038"
+    __asm__ __volatile__(".short 0x41F8, 0x01F8, 0x70FF, 0xA038"
         : "=r"(_ret)
         : 
         : "d1", "d2", "a0", "a1", "cc", "memory");

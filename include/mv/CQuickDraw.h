@@ -525,8 +525,6 @@ pascal void DisposePalette(PaletteHandle arg0) M68K_INLINE(0xAA93);
 enum { _ActivatePalette = 0xAA94 };
 pascal void ActivatePalette(WindowPtr arg0) M68K_INLINE(0xAA94);
 
-pascal void SetPalette(WindowPtr arg0, PaletteHandle arg1, Boolean arg2);
-
 enum { _NSetPalette = 0xAA95 };
 pascal void NSetPalette(WindowPtr arg0, PaletteHandle arg1, INTEGER updates) M68K_INLINE(0xAA95);
 
@@ -675,6 +673,9 @@ pascal OSErr GetPixMapInfo(PixMapHandle arg0, PictInfo *arg1, int16_t arg2, int1
 
 enum { _OpenCPicture = 0xAA20 };
 pascal PicHandle OpenCPicture(OpenCPicParams *newheaderp) M68K_INLINE(0xAA20);
+
+enum { _SetPalette = 0xAA95 };
+pascal void SetPalette(WindowPtr dstWindow, PaletteHandle srcPalette, Boolean cUpdates) M68K_INLINE(0xAA95);
 
 #pragma options align=reset
 

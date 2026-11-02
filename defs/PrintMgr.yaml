@@ -592,3 +592,17 @@
     dispatcher: PrGlue
     selector: 0x5804089C
     executor: C_
+
+# ####
+
+- function:
+    name: PrPurge
+    dispatcher: PrGlue
+    selector: 2818572288
+
+# ####
+
+- function:
+    name: PrNoPurge
+    dispatcher: PrGlue
+    selector: 2952790016

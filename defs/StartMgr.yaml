@@ -131,3 +131,63 @@
     name: SetOSDefault
     executor_raw: true
     trap: 0xA083
+
+# ####
+
+- function:
+    name: GetDefaultStartup
+    args:
+    - name: paramBlock
+      type: DefStartPtr
+      register: A0
+    trap: 41085
+
+# ####
+
+- function:
+    name: SetDefaultStartup
+    args:
+    - name: paramBlock
+      type: DefStartPtr
+      register: A0
+    trap: 41086
+
+# ####
+
+- function:
+    name: GetVideoDefault
+    args:
+    - name: paramBlock
+      type: DefVideoPtr
+      register: A0
+    trap: 41088
+
+# ####
+
+- function:
+    name: SetVideoDefault
+    args:
+    - name: paramBlock
+      type: DefVideoPtr
+      register: A0
+    trap: 41089
+
+# ####
+
+- function:
+    name: GetOSDefault
+    args:
+    - name: paramBlock
+      type: DefOSPtr
+      register: A0
+    trap: 41092
+
+# ####
+
+- function:
+    name: SetOSDefault
+    args:
+    - name: paramBlock
+      type: DefOSPtr
+      register: A0
+    trap: 41091

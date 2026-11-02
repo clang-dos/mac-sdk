@@ -309,6 +309,8 @@ class Generator:
                 words += [0x3F3C, sel & 0xFFFF]
             elif loc == "StackL":
                 words += [0x2F3C, (sel >> 16) & 0xFFFF, sel & 0xFFFF]
+            elif loc == "TrapBits":         # the selector is in the trap word
+                trapbits |= sel
             words.append((fun.get("trap") or d["trap"]) | trapbits)
         elif fun.get("trap"):
             words.append(fun["trap"] | trapbits)

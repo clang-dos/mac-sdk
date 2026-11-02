@@ -361,6 +361,8 @@ pascal LONGINT DirectorUnknown3(void) M68K_INLINE(0x7004, 0xA800);
 
 pascal INTEGER DirectorUnknown4(ResType arg0, INTEGER arg1, Ptr arg2, Ptr arg3) M68K_INLINE(0x203C, 0x001C, 0x0004, 0xA800);
 
+pascal long SndDispVersion(INTEGER dispatchID) M68K_INLINE(0x7000, 0xA800);
+
 #pragma options align=reset
 
 #endif
