@@ -1065,3 +1065,194 @@
   function:
     name: bad_trap_unimplemented
     executor_raw: true
+
+# ####
+
+- union:
+    name: MachineLocationDelta
+    size: 4
+    members:
+    - name: dlsDelta
+      type: int8_t
+    - name: gmtDelta
+      type: int32_t
+
+# ####
+
+- struct:
+    name: MachineLocation
+    size: 12
+    members:
+    - name: latitude
+      type: Fixed
+    - name: longitude
+      type: Fixed
+    - name: u
+      type: MachineLocationDelta
+
+# ####
+
+- typedef:
+    name: DeferredTaskUPP
+    type: UniversalProcPtr
+
+# ####
+
+- struct:
+    name: DeferredTask
+    size: 20
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: dtFlags
+      type: INTEGER
+    - name: dtAddr
+      type: DeferredTaskUPP
+    - name: dtParam
+      type: int32_t
+    - name: dtReserved
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: DeferredTaskPtr
+    type: DeferredTask*
+
+# ####
+
+- typedef:
+    name: UserFnUPP
+    type: UniversalProcPtr
+
+# ####
+
+- typedef:
+    name: StatusRegisterContents
+    type: INTEGER
+
+# ####
+
+- dispatcher:
+    name: SysErrorDispatch
+    trap: 43465
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: ReadLocation
+    args:
+    - name: loc
+      type: MachineLocation*
+      register: A0
+    comment: Machine location, deferred tasks, debugger
+    m68k-inline:
+    - 8252
+    - 12
+    - 228
+    - 41041
+
+# ####
+
+- function:
+    name: WriteLocation
+    args:
+    - name: loc
+      type: const MachineLocation*
+      register: A0
+    m68k-inline:
+    - 8252
+    - 12
+    - 228
+    - 41042
+
+# ####
+
+- function:
+    name: DTInstall
+    return: OSErr
+    args:
+    - name: dtTaskPtr
+      type: DeferredTaskPtr
+      register: A0
+    returnreg: D0
+    trap: 41090
+
+# ####
+
+- function:
+    name: DeferUserFn
+    return: OSErr
+    args:
+    - name: userFunction
+      type: UserFnUPP
+      register: A0
+    - name: argument
+      type: void*
+      register: D0
+    returnreg: D0
+    trap: 41103
+
+# ####
+
+- function:
+    name: SysBreak
+    dispatcher: SysErrorDispatch
+    selector: 65046
+
+# ####
+
+- function:
+    name: SysBreakStr
+    args:
+    - name: debuggerMsg
+      type: ConstStr255Param
+    dispatcher: SysErrorDispatch
+    selector: 65045
+
+# ####
+
+- function:
+    name: SysBreakFunc
+    args:
+    - name: debuggerMsg
+      type: ConstStr255Param
+    dispatcher: SysErrorDispatch
+    selector: 65044
+
+# ####
+
+- function:
+    name: AttachVBL
+    return: OSErr
+    args:
+    - name: netValue
+      type: INTEGER
+      register: D0
+    returnreg: D0
+    trap: 41073
+
+# ####
+
+- function:
+    name: DoVBLTask
+    return: OSErr
+    args:
+    - name: netValue
+      type: INTEGER
+      register: D0
+    returnreg: D0
+    trap: 41074
+
+# ####
+
+- function:
+    name: EnterSupervisorMode
+    return: StatusRegisterContents
+    returnreg: D0
+    m68k-inline:
+    - 28680
+    - 41101

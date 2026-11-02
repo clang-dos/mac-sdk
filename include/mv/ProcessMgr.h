@@ -137,6 +137,12 @@ static __inline__ __attribute__((__always_inline__)) OSErr LaunchApplication(Lau
 pascal OSErr LaunchApplication(LaunchParamBlockRec *params);
 #endif
 
+pascal OSErr LaunchDeskAccessory(const FSSpec *pFileSpec, ConstStr255Param pDAName) M68K_INLINE(0x3F3C, 0x0036, 0xA88F);
+
+pascal OSErr GetFrontProcess(ProcessSerialNumber *PSN) M68K_INLINE(0x70FF, 0x2F00, 0x3F3C, 0x0039, 0xA88F);
+
+pascal OSErr KillProcess(const ProcessSerialNumber *inProcess);
+
 #pragma options align=reset
 
 #endif

@@ -1097,3 +1097,199 @@
     name: InitZone68K
     executor_raw: true
     trap: 0xA019
+
+# ####
+
+- function:
+    name: HoldMemory
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    comment: Virtual memory
+    returnreg: D0
+    m68k-inline:
+    - 28672
+    - 41052
+
+# ####
+
+- function:
+    name: UnholdMemory
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28673
+    - 41052
+
+# ####
+
+- function:
+    name: LockMemory
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28674
+    - 41052
+
+# ####
+
+- function:
+    name: LockMemoryContiguous
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28676
+    - 41052
+
+# ####
+
+- function:
+    name: UnlockMemory
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28675
+    - 41052
+
+# ####
+
+- typedef:
+    name: PageState
+    type: INTEGER
+
+# ####
+
+- enum:
+    values:
+    - name: kPageInMemory
+      value: 0
+    - name: kPageOnDisk
+      value: 1
+    - name: kNotPaged
+      value: 2
+
+# ####
+
+- function:
+    name: DebuggerGetMax
+    return: int32_t
+    comment: Debugger support (for debugger writers)
+    returnreg: D0
+    m68k-inline:
+    - 28672
+    - 41101
+
+# ####
+
+- function:
+    name: DebuggerEnter
+    m68k-inline:
+    - 28673
+    - 41101
+
+# ####
+
+- function:
+    name: DebuggerExit
+    m68k-inline:
+    - 28674
+    - 41101
+
+# ####
+
+- function:
+    name: DebuggerPoll
+    m68k-inline:
+    - 28675
+    - 41101
+
+# ####
+
+- function:
+    name: GetPageState
+    return: PageState
+    args:
+    - name: address
+      type: const void*
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28676
+    - 41101
+
+# ####
+
+- function:
+    name: PageFaultFatal
+    return: Boolean
+    returnreg: D0
+    m68k-inline:
+    - 28677
+    - 41101
+
+# ####
+
+- function:
+    name: DebuggerLockMemory
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28678
+    - 41101
+
+# ####
+
+- function:
+    name: DebuggerUnlockMemory
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28679
+    - 41101

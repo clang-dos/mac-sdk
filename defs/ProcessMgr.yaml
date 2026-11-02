@@ -334,3 +334,40 @@
   verbatim: |
     extern OSErr NewLaunch(ConstStringPtr appl, INTEGER vrefnum,
                            LaunchParamBlockRec *lpbp);
+
+# ####
+
+- function:
+    name: LaunchDeskAccessory
+    return: OSErr
+    args:
+    - name: pFileSpec
+      type: const FSSpec*
+    - name: pDAName
+      type: ConstStr255Param
+    dispatcher: OSDispatch
+    selector: 54
+
+# ####
+
+- function:
+    name: GetFrontProcess
+    return: OSErr
+    args:
+    - name: PSN
+      type: ProcessSerialNumber*
+    m68k-inline:
+    - 28927
+    - 12032
+    - 16188
+    - 57
+    - 43151
+
+# ####
+
+- function:
+    name: KillProcess
+    return: OSErr
+    args:
+    - name: inProcess
+      type: const ProcessSerialNumber*

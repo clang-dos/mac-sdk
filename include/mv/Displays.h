@@ -4,8 +4,11 @@
 
 #include "../ConditionalMacros.h"
 #include "AppleEvents.h"
+#include "CQuickDraw.h"
+#include "Components.h"
 #include "MacTypes.h"
 #include "ProcessMgr.h"
+#include "QuickDraw.h"
 
 #pragma options align=mac68k
 
@@ -26,6 +29,121 @@ typedef DMNotificationProcPtr DMNotificationUPP;
 enum { _DisplayDispatch = 0xABEB };
 
 pascal OSErr DMRegisterNotifyProc(DMNotificationUPP proc, ProcessSerialNumber *psn) M68K_INLINE(0x303C, 0x0414, 0xABEB);
+
+typedef unsigned long DisplayIDType;
+
+typedef ProcessSerialNumber *DMProcessInfoPtr;
+
+enum {
+    kDMNotifyInstalled = 1,
+    kDMNotifyEvent = 2,
+    kDMNotifyRemoved = 3,
+    kDMNotifyPrep = 4,
+    kDMNotifyExtendEvent = 5,
+    kDMNotifyDependents = 6,
+    kDMNotifySuspendConfigure = 7,
+    kDMNotifyResumeConfigure = 8,
+    kDMNotifyDisplayWillSleep = 9,
+    kDMNotifyDisplayDidWake = 10,
+};
+
+enum {
+    kNoSwitchConfirmBit = 0,
+    kDepthNotAvailableBit = 1,
+    kShowModeBit = 3,
+    kModeNotResizeBit = 4,
+    kNeverShowModeBit = 5,
+    kDisplayModeListNotPreferredBit = 0,
+    kDMDontFailToMain = 0,
+    kDMFailToMain = 1,
+};
+
+enum {
+    kDMGenErr = -6220,
+    kDMMirroringOnAlready = -6221,
+    kDMWrongNumberOfDisplays = -6222,
+    kDMMirroringBlocked = -6223,
+    kDMCantBlock = -6224,
+    kDMMirroringNotOn = -6225,
+    kSysSWTooOld = -6226,
+    kDMSWNotInitializedErr = -6227,
+    kDMDriverNotDisplayMgrAwareErr = -6228,
+    kDMDisplayNotFoundErr = -6229,
+    kDMNotFoundErr = -6229,
+    kDMDisplayAlreadyInstalledErr = -6230,
+    kDMMainDisplayCannotMoveErr = -6231,
+    kDMNoDeviceTableclothErr = -6231,
+    kDMFoundErr = -6232,
+};
+
+// Display Manager
+pascal GDHandle DMGetFirstScreenDevice(Boolean activeOnly) M68K_INLINE(0x7000, 0xABEB);
+
+pascal GDHandle DMGetNextScreenDevice(GDHandle theDevice, Boolean activeOnly) M68K_INLINE(0x7001, 0xABEB);
+
+pascal void DMDrawDesktopRect(Rect *globalRect) M68K_INLINE(0x7002, 0xABEB);
+
+pascal void DMDrawDesktopRegion(RgnHandle globalRgn) M68K_INLINE(0x7003, 0xABEB);
+
+pascal OSErr DMBeginConfigureDisplays(Handle *displayState) M68K_INLINE(0x303C, 0x0206, 0xABEB);
+
+pascal OSErr DMEndConfigureDisplays(Handle displayState) M68K_INLINE(0x303C, 0x0207, 0xABEB);
+
+pascal OSErr DMAddDisplay(GDHandle newDevice, INTEGER driver, unsigned long mode, unsigned long reserved, unsigned long displayID, Component displayComponent, Handle displayState) M68K_INLINE(0x303C, 0x0D08, 0xABEB);
+
+pascal OSErr DMMoveDisplay(GDHandle moveDevice, INTEGER x, INTEGER y, Handle displayState) M68K_INLINE(0x303C, 0x0609, 0xABEB);
+
+pascal OSErr DMDisableDisplay(GDHandle disableDevice, Handle displayState) M68K_INLINE(0x303C, 0x040A, 0xABEB);
+
+pascal OSErr DMEnableDisplay(GDHandle enableDevice, Handle displayState) M68K_INLINE(0x303C, 0x040B, 0xABEB);
+
+pascal OSErr DMRemoveDisplay(GDHandle removeDevice, Handle displayState) M68K_INLINE(0x303C, 0x040C, 0xABEB);
+
+pascal OSErr DMSetMainDisplay(GDHandle newMainDevice, Handle displayState) M68K_INLINE(0x303C, 0x0410, 0xABEB);
+
+pascal OSErr DMSetDisplayMode(GDHandle theDevice, unsigned long mode, unsigned long *depthMode, unsigned long reserved, Handle displayState) M68K_INLINE(0x303C, 0x0A11, 0xABEB);
+
+pascal OSErr DMCheckDisplayMode(GDHandle theDevice, unsigned long mode, unsigned long depthMode, unsigned long *switchFlags, unsigned long reserved, Boolean *modeOk) M68K_INLINE(0x303C, 0x0C12, 0xABEB);
+
+pascal OSErr DMGetDeskRegion(RgnHandle *desktopRegion) M68K_INLINE(0x303C, 0x0213, 0xABEB);
+
+pascal OSErr DMRemoveNotifyProc(DMNotificationUPP notificationProc, DMProcessInfoPtr whichPSN) M68K_INLINE(0x303C, 0x0415, 0xABEB);
+
+pascal OSErr DMQDIsMirroringCapable(Boolean *qdIsMirroringCapable) M68K_INLINE(0x303C, 0x0216, 0xABEB);
+
+pascal OSErr DMCanMirrorNow(Boolean *canMirrorNow) M68K_INLINE(0x303C, 0x0217, 0xABEB);
+
+pascal OSErr DMIsMirroringOn(Boolean *isMirroringOn) M68K_INLINE(0x303C, 0x0218, 0xABEB);
+
+pascal OSErr DMMirrorDevices(GDHandle gD1, GDHandle gD2, Handle displayState) M68K_INLINE(0x303C, 0x0619, 0xABEB);
+
+pascal OSErr DMUnmirrorDevice(GDHandle gDevice, Handle displayState) M68K_INLINE(0x303C, 0x041A, 0xABEB);
+
+pascal OSErr DMGetNextMirroredDevice(GDHandle gDevice, GDHandle *mirroredDevice) M68K_INLINE(0x303C, 0x041B, 0xABEB);
+
+pascal OSErr DMBlockMirroring(void) M68K_INLINE(0x701C, 0xABEB);
+
+pascal OSErr DMUnblockMirroring(void) M68K_INLINE(0x701D, 0xABEB);
+
+pascal OSErr DMGetDisplayMgrA5World(Ptr *dmA5) M68K_INLINE(0x303C, 0x021E, 0xABEB);
+
+pascal OSErr DMGetDisplayIDByGDevice(GDHandle displayDevice, DisplayIDType *displayID, Boolean failToMain) M68K_INLINE(0x303C, 0x051F, 0xABEB);
+
+pascal OSErr DMGetGDeviceByDisplayID(DisplayIDType displayID, GDHandle *displayDevice, Boolean failToMain) M68K_INLINE(0x303C, 0x0520, 0xABEB);
+
+pascal OSErr DMSetDisplayComponent(GDHandle theDevice, Component displayComponent) M68K_INLINE(0x303C, 0x0421, 0xABEB);
+
+pascal OSErr DMGetDisplayComponent(GDHandle theDevice, Component *displayComponent) M68K_INLINE(0x303C, 0x0422, 0xABEB);
+
+pascal OSErr DMNewDisplay(GDHandle *newDevice, INTEGER driverRefNum, unsigned long mode, unsigned long reserved, DisplayIDType displayID, Component displayComponent, Handle displayState) M68K_INLINE(0x303C, 0x0D23, 0xABEB);
+
+pascal OSErr DMDisposeDisplay(GDHandle disposeDevice, Handle displayState) M68K_INLINE(0x303C, 0x0424, 0xABEB);
+
+pascal OSErr DMResolveDisplayComponents(void) M68K_INLINE(0x7025, 0xABEB);
+
+pascal OSErr DMGetGDeviceTablecloth(GDHandle displayDevice, Boolean *useTablecloth) M68K_INLINE(0x303C, 0x0404, 0xABEB);
+
+pascal OSErr DMGetNextAnimateTime(UInt32 *nextAnimateTime) M68K_INLINE(0x303C, 0x020F, 0xABEB);
 
 #pragma options align=reset
 

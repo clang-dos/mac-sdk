@@ -1030,51 +1030,42 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xFFFFFF84"
    }
   ],
   "procinfo": "0x00071802",
   "result": 0,
   "result_reg": null,
-  "trap": "0xA085"
+  "trap": "0xA685"
  },
  "AOn": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x4"
    }
   ],
   "procinfo": "0x00071802",
   "result": 0,
   "result_reg": null,
-  "trap": "0xA085"
+  "trap": "0xA685"
  },
  "AOnIgnoreModem": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    }
   ],
   "procinfo": "0x00071802",
   "result": 0,
   "result_reg": null,
-  "trap": "0xA085"
+  "trap": "0xA685"
  },
  "AcceptHighLevelEvent": {
   "conv": "stack-pascal",
@@ -1347,34 +1338,28 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xFFFFFF80"
    }
   ],
   "procinfo": "0x00071802",
   "result": 0,
   "result_reg": null,
-  "trap": "0xA085"
+  "trap": "0xA685"
  },
  "BOn": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x0"
    }
   ],
   "procinfo": "0x00071802",
   "result": 0,
   "result_reg": null,
-  "trap": "0xA085"
+  "trap": "0xA685"
  },
  "BackColor": {
   "conv": "pascal",
@@ -3973,11 +3958,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    }
   ],
   "procinfo": "0x00071802",
@@ -3990,11 +3972,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    }
   ],
   "procinfo": "0x00071802",
@@ -4007,11 +3986,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x0"
    }
   ],
   "procinfo": "0x00071832",
@@ -4024,11 +4000,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x6"
    },
    {
     "reg": "A0",
@@ -4049,11 +4022,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x3"
    }
   ],
   "procinfo": "0x00071802",
@@ -4066,11 +4036,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x7"
    },
    {
     "reg": "A0",
@@ -4240,11 +4207,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xC"
    },
    {
     "reg": "A0",
@@ -4343,17 +4307,14 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    }
   ],
   "procinfo": "0x00071802",
   "result": 0,
   "result_reg": null,
-  "trap": "0xA085"
+  "trap": "0xA485"
  },
  "DisableItem": {
   "conv": "pascal",
@@ -4598,11 +4559,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1D"
    },
    {
     "reg": "A0",
@@ -4962,17 +4920,14 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x0"
    }
   ],
   "procinfo": "0x00071802",
   "result": 0,
   "result_reg": null,
-  "trap": "0xA085"
+  "trap": "0xA485"
  },
  "EnableItem": {
   "conv": "pascal",
@@ -5021,11 +4976,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x8"
    }
   ],
   "procinfo": "0x00071822",
@@ -5321,11 +5273,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 2
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 2,
+    "value": "0x1A"
    },
    {
     "reg": "A0",
@@ -6465,17 +6414,14 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xFFFFFFFF"
    }
   ],
   "procinfo": "0x00071832",
   "result": 4,
   "result_reg": "D0",
-  "trap": "0xA085"
+  "trap": "0xA485"
  },
  "GetCPixel": {
   "conv": "pascal",
@@ -6809,11 +6755,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xD"
    },
    {
     "reg": "A0",
@@ -7757,11 +7700,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x4"
    },
    {
     "reg": "A0",
@@ -7835,11 +7775,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 2
-   },
-   {
-    "reg": "D1",
-    "size": 2
+    "size": 2,
+    "value": "0x5"
    },
    {
     "reg": "A1",
@@ -7853,7 +7790,7 @@
   "procinfo": "0x4EE61022",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA05C"
+  "trap": "0xA15C"
  },
  "GetPictInfo": {
   "conv": "d0-pascal",
@@ -8391,7 +8328,8 @@
   "params": [
    {
     "reg": "A0",
-    "size": 2
+    "size": 2,
+    "value": "0x0"
    }
   ],
   "procinfo": "0x00009022",
@@ -9291,11 +9229,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x0"
    },
    {
     "reg": "A0",
@@ -9327,11 +9262,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xA"
    },
    {
     "reg": "A0",
@@ -9341,18 +9273,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "IPCListPortsSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xA"
    },
    {
     "reg": "A0",
@@ -10053,11 +9982,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x20"
    },
    {
     "reg": "A0",
@@ -10283,11 +10209,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xA"
    },
    {
     "reg": "A0",
@@ -11194,11 +11117,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    },
    {
     "reg": "A0",
@@ -11219,11 +11139,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x4"
    },
    {
     "reg": "A0",
@@ -13639,11 +13556,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    },
    {
     "reg": "A0",
@@ -13653,18 +13567,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBCatMoveSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    },
    {
     "reg": "A0",
@@ -13674,18 +13585,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBCatSearchAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x18"
    },
    {
     "reg": "A0",
@@ -13695,18 +13603,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBCatSearchSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x18"
    },
    {
     "reg": "A0",
@@ -13716,7 +13621,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBCloseAsync": {
   "conv": "register",
@@ -13762,11 +13667,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    },
    {
     "reg": "A0",
@@ -13776,18 +13678,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBCloseWDSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    },
    {
     "reg": "A0",
@@ -13797,7 +13696,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBControlAsync": {
   "conv": "register",
@@ -13856,11 +13755,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x14"
    },
    {
     "reg": "A0",
@@ -13870,18 +13766,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBCreateFileIDRefSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x14"
    },
    {
     "reg": "A0",
@@ -13891,7 +13784,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBCreateSync": {
   "conv": "register",
@@ -13911,11 +13804,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x25"
    },
    {
     "reg": "A0",
@@ -13925,18 +13815,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTAddAPPLSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x25"
    },
    {
     "reg": "A0",
@@ -13946,18 +13833,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTAddIconAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x22"
    },
    {
     "reg": "A0",
@@ -13967,18 +13851,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTAddIconSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x22"
    },
    {
     "reg": "A0",
@@ -13988,18 +13869,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTCloseDown": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x21"
    },
    {
     "reg": "A0",
@@ -14009,18 +13887,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTDeleteAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2F"
    },
    {
     "reg": "A0",
@@ -14030,18 +13905,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA460"
  },
  "PBDTDeleteSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2F"
    },
    {
     "reg": "A0",
@@ -14058,11 +13930,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2B"
    },
    {
     "reg": "A0",
@@ -14072,18 +13941,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTFlushSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2B"
    },
    {
     "reg": "A0",
@@ -14093,18 +13959,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTGetAPPLAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x27"
    },
    {
     "reg": "A0",
@@ -14114,18 +13977,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTGetAPPLSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x27"
    },
    {
     "reg": "A0",
@@ -14135,18 +13995,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTGetCommentAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2A"
    },
    {
     "reg": "A0",
@@ -14156,18 +14013,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTGetCommentSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2A"
    },
    {
     "reg": "A0",
@@ -14177,18 +14031,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTGetIconAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x23"
    },
    {
     "reg": "A0",
@@ -14198,18 +14049,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTGetIconInfoAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x24"
    },
    {
     "reg": "A0",
@@ -14219,18 +14067,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTGetIconInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x24"
    },
    {
     "reg": "A0",
@@ -14240,18 +14085,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTGetIconSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x23"
    },
    {
     "reg": "A0",
@@ -14261,18 +14103,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTGetInfoAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2D"
    },
    {
     "reg": "A0",
@@ -14282,18 +14121,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTGetInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2D"
    },
    {
     "reg": "A0",
@@ -14303,18 +14139,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTGetPath": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x20"
    },
    {
     "reg": "A0",
@@ -14324,18 +14157,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTOpenInform": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2E"
    },
    {
     "reg": "A0",
@@ -14352,11 +14182,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x26"
    },
    {
     "reg": "A0",
@@ -14366,18 +14193,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTRemoveAPPLSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x26"
    },
    {
     "reg": "A0",
@@ -14387,18 +14211,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTRemoveCommentAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x29"
    },
    {
     "reg": "A0",
@@ -14408,18 +14229,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTRemoveCommentSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x29"
    },
    {
     "reg": "A0",
@@ -14429,18 +14247,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTResetAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2C"
    },
    {
     "reg": "A0",
@@ -14450,18 +14265,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTResetSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2C"
    },
    {
     "reg": "A0",
@@ -14471,18 +14283,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDTSetCommentAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x28"
    },
    {
     "reg": "A0",
@@ -14492,18 +14301,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDTSetCommentSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x28"
    },
    {
     "reg": "A0",
@@ -14513,7 +14319,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDeleteAsync": {
   "conv": "register",
@@ -14533,11 +14339,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x15"
    },
    {
     "reg": "A0",
@@ -14547,18 +14350,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDeleteFileIDRefSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x15"
    },
    {
     "reg": "A0",
@@ -14568,7 +14368,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBDeleteSync": {
   "conv": "register",
@@ -14588,11 +14388,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x6"
    },
    {
     "reg": "A0",
@@ -14602,18 +14399,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBDirCreateSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x6"
    },
    {
     "reg": "A0",
@@ -14623,7 +14417,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBEject": {
   "conv": "register",
@@ -14643,11 +14437,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x17"
    },
    {
     "reg": "A0",
@@ -14657,18 +14448,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBExchangeFilesSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x17"
    },
    {
     "reg": "A0",
@@ -14678,7 +14466,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBFlushFileAsync": {
   "conv": "register",
@@ -14737,11 +14525,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x9"
    },
    {
     "reg": "A0",
@@ -14751,18 +14536,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBGetCatInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x9"
    },
    {
     "reg": "A0",
@@ -14772,7 +14554,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBGetEOFAsync": {
   "conv": "register",
@@ -14805,11 +14587,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x8"
    },
    {
     "reg": "A0",
@@ -14819,18 +14598,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBGetFCBInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x8"
    },
    {
     "reg": "A0",
@@ -14840,7 +14616,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBGetFInfoAsync": {
   "conv": "register",
@@ -14899,11 +14675,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x60"
    },
    {
     "reg": "A0",
@@ -14913,18 +14686,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBGetForeignPrivsSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x60"
    },
    {
     "reg": "A0",
@@ -14934,18 +14704,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBGetUGEntryAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x44"
    },
    {
     "reg": "A0",
@@ -14955,18 +14722,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBGetUGEntrySync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x44"
    },
    {
     "reg": "A0",
@@ -14976,7 +14740,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBGetVInfoAsync": {
   "conv": "register",
@@ -15022,11 +14786,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x40"
    },
    {
     "reg": "A0",
@@ -15036,18 +14797,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBGetVolMountInfoSize": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x3F"
    },
    {
     "reg": "A0",
@@ -15057,7 +14815,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBGetVolSync": {
   "conv": "register",
@@ -15077,11 +14835,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x7"
    },
    {
     "reg": "A0",
@@ -15091,18 +14846,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBGetWDInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x7"
    },
    {
     "reg": "A0",
@@ -15112,18 +14864,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHCopyFileAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x36"
    },
    {
     "reg": "A0",
@@ -15133,18 +14882,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHCopyFileSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x36"
    },
    {
     "reg": "A0",
@@ -15154,7 +14900,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHCreateAsync": {
   "conv": "register",
@@ -15213,11 +14959,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x32"
    },
    {
     "reg": "A0",
@@ -15227,18 +14970,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHGetDirAccessSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x32"
    },
    {
     "reg": "A0",
@@ -15248,7 +14988,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHGetFInfoAsync": {
   "conv": "register",
@@ -15281,11 +15021,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x31"
    },
    {
     "reg": "A0",
@@ -15295,18 +15032,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHGetLogInInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x31"
    },
    {
     "reg": "A0",
@@ -15316,7 +15050,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHGetVInfoAsync": {
   "conv": "register",
@@ -15362,11 +15096,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x30"
    },
    {
     "reg": "A0",
@@ -15376,18 +15107,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHGetVolParmsSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x30"
    },
    {
     "reg": "A0",
@@ -15397,7 +15125,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHGetVolSync": {
   "conv": "register",
@@ -15417,11 +15145,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x34"
    },
    {
     "reg": "A0",
@@ -15431,18 +15156,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHMapIDSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x34"
    },
    {
     "reg": "A0",
@@ -15452,18 +15174,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHMapNameAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x35"
    },
    {
     "reg": "A0",
@@ -15473,18 +15192,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHMapNameSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x35"
    },
    {
     "reg": "A0",
@@ -15494,18 +15210,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHMoveRenameAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x37"
    },
    {
     "reg": "A0",
@@ -15515,18 +15228,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHMoveRenameSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x37"
    },
    {
     "reg": "A0",
@@ -15536,7 +15246,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHOpenAsync": {
   "conv": "register",
@@ -15556,11 +15266,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1A"
    },
    {
     "reg": "A0",
@@ -15570,18 +15277,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHOpenDFSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1A"
    },
    {
     "reg": "A0",
@@ -15591,18 +15295,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHOpenDenyAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x38"
    },
    {
     "reg": "A0",
@@ -15612,18 +15313,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHOpenDenySync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x38"
    },
    {
     "reg": "A0",
@@ -15633,7 +15331,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHOpenRFAsync": {
   "conv": "register",
@@ -15653,11 +15351,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x39"
    },
    {
     "reg": "A0",
@@ -15667,18 +15362,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHOpenRFDenySync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x39"
    },
    {
     "reg": "A0",
@@ -15688,7 +15380,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHOpenRFSync": {
   "conv": "register",
@@ -15773,11 +15465,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x33"
    },
    {
     "reg": "A0",
@@ -15787,18 +15476,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBHSetDirAccessSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x33"
    },
    {
     "reg": "A0",
@@ -15808,7 +15494,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBHSetFInfoAsync": {
   "conv": "register",
@@ -15932,11 +15618,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x10"
    },
    {
     "reg": "A0",
@@ -15946,18 +15629,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBLockRangeSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x10"
    },
    {
     "reg": "A0",
@@ -15967,18 +15647,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBMakeFSSpecAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1B"
    },
    {
     "reg": "A0",
@@ -15988,18 +15665,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBMakeFSSpecSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1B"
    },
    {
     "reg": "A0",
@@ -16009,7 +15683,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBMountVol": {
   "conv": "register",
@@ -16055,11 +15729,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1A"
    },
    {
     "reg": "A0",
@@ -16069,18 +15740,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA460"
  },
  "PBOpenDFSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1A"
    },
    {
     "reg": "A0",
@@ -16149,11 +15817,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    },
    {
     "reg": "A0",
@@ -16163,18 +15828,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBOpenWDSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    },
    {
     "reg": "A0",
@@ -16184,7 +15846,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBReadAsync": {
   "conv": "register",
@@ -16256,11 +15918,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x16"
    },
    {
     "reg": "A0",
@@ -16270,18 +15929,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBResolveFileIDRefSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x16"
    },
    {
     "reg": "A0",
@@ -16291,7 +15947,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBRstFLockAsync": {
   "conv": "register",
@@ -16324,11 +15980,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xA"
    },
    {
     "reg": "A0",
@@ -16338,18 +15991,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBSetCatInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xA"
    },
    {
     "reg": "A0",
@@ -16359,7 +16009,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBSetEOFAsync": {
   "conv": "register",
@@ -16496,11 +16146,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x61"
    },
    {
     "reg": "A0",
@@ -16510,18 +16157,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBSetForeignPrivsSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x61"
    },
    {
     "reg": "A0",
@@ -16531,18 +16175,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBSetVInfoAsync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xB"
    },
    {
     "reg": "A0",
@@ -16552,18 +16193,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBSetVInfoSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xB"
    },
    {
     "reg": "A0",
@@ -16573,7 +16211,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBSetVolAsync": {
   "conv": "register",
@@ -16606,11 +16244,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x42"
    },
    {
     "reg": "A0",
@@ -16620,18 +16255,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBShareSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x42"
    },
    {
     "reg": "A0",
@@ -16641,7 +16273,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBStatusAsync": {
   "conv": "register",
@@ -16687,11 +16319,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x11"
    },
    {
     "reg": "A0",
@@ -16701,18 +16330,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBUnlockRangeSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x11"
    },
    {
     "reg": "A0",
@@ -16722,7 +16348,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBUnmountVol": {
   "conv": "register",
@@ -16742,11 +16368,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x43"
    },
    {
     "reg": "A0",
@@ -16756,18 +16379,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA660"
  },
  "PBUnshareSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x43"
    },
    {
     "reg": "A0",
@@ -16777,18 +16397,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBVolumeMount": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x41"
    },
    {
     "reg": "A0",
@@ -16798,7 +16415,7 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA060"
+  "trap": "0xA260"
  },
  "PBWriteAsync": {
   "conv": "register",
@@ -16853,11 +16470,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x4"
    },
    {
     "reg": "A0",
@@ -16867,18 +16481,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCAcceptSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x4"
    },
    {
     "reg": "A0",
@@ -16926,11 +16537,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x9"
    },
    {
     "reg": "A0",
@@ -16940,18 +16548,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCCloseSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x9"
    },
    {
     "reg": "A0",
@@ -16968,11 +16573,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x8"
    },
    {
     "reg": "A0",
@@ -16982,18 +16584,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCEndSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x8"
    },
    {
     "reg": "A0",
@@ -17010,11 +16609,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x3"
    },
    {
     "reg": "A0",
@@ -17024,18 +16620,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCInformSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x3"
    },
    {
     "reg": "A0",
@@ -17052,11 +16645,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x0"
    }
   ],
   "procinfo": "0x00071822",
@@ -17069,11 +16659,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    },
    {
     "reg": "A0",
@@ -17083,18 +16670,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCOpenSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    },
    {
     "reg": "A0",
@@ -17111,11 +16695,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x7"
    },
    {
     "reg": "A0",
@@ -17125,18 +16706,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCReadSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x7"
    },
    {
     "reg": "A0",
@@ -17153,11 +16731,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    },
    {
     "reg": "A0",
@@ -17167,18 +16742,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCRejectSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    },
    {
     "reg": "A0",
@@ -17195,11 +16767,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    },
    {
     "reg": "A0",
@@ -17209,18 +16778,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCStartSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    },
    {
     "reg": "A0",
@@ -17237,11 +16803,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x6"
    },
    {
     "reg": "A0",
@@ -17251,18 +16814,15 @@
   "procinfo": "0x02671822",
   "result": 2,
   "result_reg": "D0",
-  "trap": "0xA0DD"
+  "trap": "0xA4DD"
  },
  "PPCWriteSync": {
   "conv": "register",
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x6"
    },
    {
     "reg": "A0",
@@ -17317,11 +16877,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    }
   ],
   "procinfo": "0x00071812",
@@ -18679,11 +18236,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xC00E4"
    },
    {
     "reg": "A0",
@@ -19290,11 +18844,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    },
    {
     "reg": "A0",
@@ -19346,11 +18897,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x3"
    },
    {
     "reg": "A0",
@@ -19376,11 +18924,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    },
    {
     "reg": "A0",
@@ -19449,11 +18994,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    },
    {
     "reg": "A0",
@@ -19470,11 +19012,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x4"
    },
    {
     "reg": "A0",
@@ -19561,11 +19100,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2C"
    },
    {
     "reg": "A0",
@@ -19582,11 +19118,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x28"
    },
    {
     "reg": "A0",
@@ -19603,11 +19136,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x22"
    },
    {
     "reg": "A0",
@@ -19624,11 +19154,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x18"
    },
    {
     "reg": "A0",
@@ -19645,11 +19172,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x31"
    },
    {
     "reg": "A0",
@@ -19666,11 +19190,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x23"
    },
    {
     "reg": "A0",
@@ -19811,11 +19332,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1C"
    },
    {
     "reg": "A0",
@@ -19832,11 +19350,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1B"
    },
    {
     "reg": "A0",
@@ -19853,11 +19368,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2F"
    },
    {
     "reg": "A0",
@@ -19874,11 +19386,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x30"
    },
    {
     "reg": "A0",
@@ -19895,11 +19404,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x6"
    },
    {
     "reg": "A0",
@@ -19916,11 +19422,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x5"
    },
    {
     "reg": "A0",
@@ -19937,11 +19440,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x3"
    },
    {
     "reg": "A0",
@@ -19958,11 +19458,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2D"
    },
    {
     "reg": "A0",
@@ -19979,11 +19476,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xB"
    },
    {
     "reg": "A0",
@@ -20000,11 +19494,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1D"
    },
    {
     "reg": "A0",
@@ -20021,11 +19512,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xC"
    },
    {
     "reg": "A0",
@@ -20042,11 +19530,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x25"
    },
    {
     "reg": "A0",
@@ -20063,11 +19548,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x29"
    },
    {
     "reg": "A0",
@@ -20118,11 +19600,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x14"
    },
    {
     "reg": "A0",
@@ -20139,11 +19618,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x15"
    },
    {
     "reg": "A0",
@@ -20160,11 +19636,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x24"
    },
    {
     "reg": "A0",
@@ -20445,11 +19918,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x21"
    },
    {
     "reg": "A0",
@@ -20466,11 +19936,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2E"
    },
    {
     "reg": "A0",
@@ -20487,11 +19954,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x12"
    },
    {
     "reg": "A0",
@@ -20508,11 +19972,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x0"
    },
    {
     "reg": "A0",
@@ -20529,11 +19990,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x19"
    },
    {
     "reg": "A0",
@@ -20550,11 +20008,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x13"
    },
    {
     "reg": "A0",
@@ -20571,11 +20026,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x10"
    },
    {
     "reg": "A0",
@@ -20592,11 +20044,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2"
    },
    {
     "reg": "A0",
@@ -20613,11 +20062,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x26"
    },
    {
     "reg": "A0",
@@ -20634,11 +20080,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x11"
    },
    {
     "reg": "A0",
@@ -20655,11 +20098,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x7"
    },
    {
     "reg": "A0",
@@ -20676,11 +20116,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    },
    {
     "reg": "A0",
@@ -20697,11 +20134,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x16"
    },
    {
     "reg": "A0",
@@ -20718,11 +20152,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2A"
    },
    {
     "reg": "A0",
@@ -20739,11 +20170,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x2B"
    },
    {
     "reg": "A0",
@@ -20760,11 +20188,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x8"
    },
    {
     "reg": "A0",
@@ -22246,11 +21671,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x9"
    },
    {
     "reg": "A0",
@@ -22459,7 +21881,8 @@
   "params": [
    {
     "reg": "A0",
-    "size": 2
+    "size": 2,
+    "value": "0x1"
    },
    {
     "reg": "D0",
@@ -23285,11 +22708,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xE"
    },
    {
     "reg": "A0",
@@ -24921,11 +24341,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x1"
    },
    {
     "reg": "A0",
@@ -24992,11 +24409,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0x3"
    },
    {
     "reg": "A0",
@@ -25416,11 +24830,8 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
-   },
-   {
-    "reg": "D1",
-    "size": 4
+    "size": 4,
+    "value": "0xC00E4"
    },
    {
     "reg": "A0",
@@ -25437,11 +24848,13 @@
   "params": [
    {
     "reg": "D0",
-    "size": 4
+    "size": 4,
+    "value": "0xFFFFFFFF"
    },
    {
     "reg": "A0",
-    "size": 4
+    "size": 4,
+    "value": "0x1F8"
    }
   ],
   "procinfo": "0x02633822",

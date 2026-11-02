@@ -21,6 +21,7 @@ out = []
 for chunk in text.split("\n# ####\n"):
     data = yaml.safe_load(chunk) or []
     if len(data) == 1 and "function" in data[0] and \
+            "only-for" not in data[0] and \
             data[0]["function"]["name"] in want:
         f = data[0]["function"]
         f["m68k-inline"] = want.pop(f["name"])

@@ -3,6 +3,7 @@
 #define __MV_SCRIPTMGR__
 
 #include "../ConditionalMacros.h"
+#include "EventMgr.h"
 #include "IntlUtil.h"
 #include "MacTypes.h"
 #include "SANE.h"
@@ -308,6 +309,324 @@ pascal INTEGER CharacterByteType(Ptr textBuf, INTEGER textOffset, ScriptCode scr
 pascal INTEGER CharacterType(Ptr textbufp, INTEGER offset, ScriptCode script) M68K_INLINE(0x2F3C, 0xC206, 0x0012, 0xA8B5);
 
 pascal INTEGER TransliterateText(Handle srch, Handle dsth, INTEGER target, LONGINT srcmask, ScriptCode script) M68K_INLINE(0x2F3C, 0xC20E, 0x0018, 0xA8B5);
+
+typedef struct BreakTable BreakTable;
+struct BreakTable {
+    char charTypes[256];
+    int16_t tripleLength;
+    int16_t triples[1];
+};
+
+typedef BreakTable *BreakTablePtr;
+
+typedef struct OffsetPair OffsetPair;
+struct OffsetPair {
+    int16_t offFirst;
+    int16_t offSecond;
+};
+
+typedef OffsetPair OffsetTable[3];
+
+typedef struct FVector FVector;
+struct FVector {
+    int16_t start;
+    int16_t length;
+};
+
+typedef FVector TripleInt[3];
+
+typedef int16_t FormatOrder[1];
+
+typedef FormatOrder *FormatOrderPtr;
+
+typedef pascal Boolean (*StyleRunDirectionProcPtr)(int16_t styleRunIndex, void *dirParam);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr StyleRunDirectionUPP;
+enum { uppStyleRunDirectionProcInfo = 0x00000390 };
+#define NewStyleRunDirectionUPP(proc) ((StyleRunDirectionUPP)NewRoutineDescriptor((ProcPtr)(proc), uppStyleRunDirectionProcInfo, GetCurrentArchitecture()))
+#define DisposeStyleRunDirectionUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef StyleRunDirectionProcPtr StyleRunDirectionUPP;
+#define NewStyleRunDirectionUPP(proc) (proc)
+#define DisposeStyleRunDirectionUPP(upp) ((void)0)
+#endif
+#define NewStyleRunDirectionProc(proc) NewStyleRunDirectionUPP(proc)
+#define DisposeStyleRunDirectionProc(proc) DisposeStyleRunDirectionUPP(proc)
+
+typedef int16_t ScriptTokenType;
+
+typedef ScriptTokenType DelimType[2];
+
+typedef ScriptTokenType CommentType[4];
+
+typedef struct TokenRec TokenRec;
+struct TokenRec {
+    ScriptTokenType theToken;
+    Ptr position;
+    long length;
+    StringPtr stringPosition;
+};
+
+typedef TokenRec *TokenRecPtr;
+
+typedef struct TokenBlock TokenBlock;
+struct TokenBlock {
+    Ptr source;
+    long sourceLength;
+    Ptr tokenList;
+    long tokenLength;
+    long tokenCount;
+    Ptr stringList;
+    long stringLength;
+    long stringCount;
+    Boolean doString;
+    Boolean doAppend;
+    Boolean doAlphanumeric;
+    Boolean doNest;
+    ScriptTokenType leftDelims[2];
+    ScriptTokenType rightDelims[2];
+    ScriptTokenType leftComment[4];
+    ScriptTokenType rightComment[4];
+    ScriptTokenType escapeCode;
+    ScriptTokenType decimalCode;
+    Handle itlResource;
+    long reserved[8];
+};
+
+typedef TokenBlock *TokenBlockPtr;
+
+typedef int8_t TokenResults;
+
+enum {
+    tokenOK = 0,
+    tokenOverflow = 1,
+    stringOverflow = 2,
+    badDelim = 3,
+    badEnding = 4,
+    crash = 5,
+};
+
+enum {
+    tokenUnknown = 0,
+    tokenWhite = 1,
+    tokenLeftLit = 2,
+    tokenRightLit = 3,
+    tokenAlpha = 4,
+    tokenNumeric = 5,
+    tokenNewLine = 6,
+    tokenLeftComment = 7,
+    tokenRightComment = 8,
+    tokenLiteral = 9,
+    tokenEscape = 10,
+    tokenAltNum = 11,
+    tokenRealNum = 12,
+    tokenAltReal = 13,
+    tokenReserve1 = 14,
+    tokenReserve2 = 15,
+    tokenLeftParen = 16,
+    tokenRightParen = 17,
+    tokenLeftBracket = 18,
+    tokenRightBracket = 19,
+    tokenLeftCurly = 20,
+    tokenRightCurly = 21,
+    tokenLeftEnclose = 22,
+    tokenRightEnclose = 23,
+    tokenPlus = 24,
+    tokenMinus = 25,
+    tokenAsterisk = 26,
+    tokenDivide = 27,
+    tokenPlusMinus = 28,
+    tokenSlash = 29,
+    tokenBackSlash = 30,
+    tokenLess = 31,
+    tokenGreat = 32,
+    tokenEqual = 33,
+    tokenLessEqual2 = 34,
+    tokenLessEqual1 = 35,
+    tokenGreatEqual2 = 36,
+    tokenGreatEqual1 = 37,
+    token2Equal = 38,
+    tokenColonEqual = 39,
+    tokenNotEqual = 40,
+    tokenLessGreat = 41,
+    tokenExclamEqual = 42,
+    tokenExclam = 43,
+    tokenTilde = 44,
+    tokenComma = 45,
+    tokenPeriod = 46,
+    tokenLeft2Quote = 47,
+    tokenRight2Quote = 48,
+    tokenLeft1Quote = 49,
+    tokenRight1Quote = 50,
+    token2Quote = 51,
+    token1Quote = 52,
+    tokenSemicolon = 53,
+    tokenPercent = 54,
+    tokenCaret = 55,
+    tokenUnderline = 56,
+    tokenAmpersand = 57,
+    tokenAtSign = 58,
+    tokenBar = 59,
+    tokenQuestion = 60,
+    tokenPi = 61,
+    tokenRoot = 62,
+    tokenSigma = 63,
+    tokenIntegral = 64,
+    tokenMicro = 65,
+    tokenLeftSingGuillemet = 66,
+    tokenRightSingGuillemet = 67,
+    tokenLeftDoubleGuillemet = 68,
+    tokenRightDoubleGuillemet = 69,
+    tokenEmpty = -1,
+    delimPad = -2,
+};
+
+// Text utilities
+enum { _UpperText = 0xA456 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void UpperText(Ptr textPtr, INTEGER len) {
+    register Ptr _textPtr __asm__("a0") = textPtr;
+    register INTEGER _len __asm__("d0") = len;
+    __asm__ __volatile__(".short 0xA456"
+        : 
+        : "r"(_textPtr), "r"(_len)
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void UpperText(Ptr textPtr, INTEGER len);
+#endif
+
+enum { _LowerText = 0xA056 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void LowerText(Ptr textPtr, INTEGER len) {
+    register Ptr _textPtr __asm__("a0") = textPtr;
+    register INTEGER _len __asm__("d0") = len;
+    __asm__ __volatile__(".short 0xA056"
+        : 
+        : "r"(_textPtr), "r"(_len)
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void LowerText(Ptr textPtr, INTEGER len);
+#endif
+
+enum { _StripText = 0xA256 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void StripText(Ptr textPtr, INTEGER len) {
+    register Ptr _textPtr __asm__("a0") = textPtr;
+    register INTEGER _len __asm__("d0") = len;
+    __asm__ __volatile__(".short 0xA256"
+        : 
+        : "r"(_textPtr), "r"(_len)
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void StripText(Ptr textPtr, INTEGER len);
+#endif
+
+enum { _StripUpperText = 0xA656 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void StripUpperText(Ptr textPtr, INTEGER len) {
+    register Ptr _textPtr __asm__("a0") = textPtr;
+    register INTEGER _len __asm__("d0") = len;
+    __asm__ __volatile__(".short 0xA656"
+        : 
+        : "r"(_textPtr), "r"(_len)
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void StripUpperText(Ptr textPtr, INTEGER len);
+#endif
+
+enum { _UprText = 0xA054 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void UprText(Ptr textPtr, INTEGER len) {
+    register Ptr _textPtr __asm__("a0") = textPtr;
+    register INTEGER _len __asm__("d0") = len;
+    __asm__ __volatile__(".short 0xA054"
+        : 
+        : "r"(_textPtr), "r"(_len)
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void UprText(Ptr textPtr, INTEGER len);
+#endif
+
+enum { _LwrText = 0xA056 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void LwrText(Ptr textPtr, INTEGER len) {
+    register Ptr _textPtr __asm__("a0") = textPtr;
+    register INTEGER _len __asm__("d0") = len;
+    __asm__ __volatile__(".short 0xA056"
+        : 
+        : "r"(_textPtr), "r"(_len)
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void LwrText(Ptr textPtr, INTEGER len);
+#endif
+
+pascal INTEGER TruncText(INTEGER width, Ptr textPtr, INTEGER *length, TruncCode truncWhere) M68K_INLINE(0x2F3C, 0x820C, 0xFFDE, 0xA8B5);
+
+pascal void FindWordBreaks(Ptr textPtr, INTEGER textLength, INTEGER offset, Boolean leadingEdge, BreakTablePtr breaks, OffsetTable offsets, ScriptCode script) M68K_INLINE(0x2F3C, 0xC012, 0x001A, 0xA8B5);
+
+pascal void NFindWord(Ptr textPtr, INTEGER textLength, INTEGER offset, Boolean leadingEdge, BreakTablePtr nbreaks, OffsetTable offsets) M68K_INLINE(0x2F3C, 0x8012, 0xFFE2, 0xA8B5);
+
+pascal Fixed PortionText(Ptr textPtr, long textLength) M68K_INLINE(0x2F3C, 0x8408, 0x0024, 0xA8B5);
+
+pascal TokenResults IntlTokenize(TokenBlockPtr tokenParam) M68K_INLINE(0x2F3C, 0x8204, 0xFFFA, 0xA8B5);
+
+pascal long GetScript(INTEGER script, INTEGER verb) M68K_INLINE(0x2F3C, 0x8404, 0x000C, 0xA8B5);
+
+pascal OSErr SetScript(INTEGER script, INTEGER verb, long param) M68K_INLINE(0x2F3C, 0x8208, 0x000E, 0xA8B5);
+
+pascal INTEGER ScriptOrder(ScriptCode script1, ScriptCode script2) M68K_INLINE(0x3F3C, 0x001E, 0xA9ED);
+
+pascal INTEGER LanguageOrder(LangCode language1, LangCode language2);
+
+pascal INTEGER StringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+
+pascal INTEGER TextOrder(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+
+pascal INTEGER CompareText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle);
+
+pascal INTEGER IdenticalText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle);
+
+pascal INTEGER CompareString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+
+pascal INTEGER IdenticalString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+
+pascal INTEGER IUCompPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+
+pascal INTEGER IUEqualPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+
+pascal INTEGER IUStringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+
+pascal FormatStatus FormatRecToString(const NumFormatStringRec *myCanonical, const NumberParts *partsTable, Str255 outString, TripleInt positions) M68K_INLINE(0x2F3C, 0x8210, 0xFFEA, 0xA8B5);
+
+pascal void GetFormatOrder(FormatOrderPtr ordering, INTEGER firstFormat, INTEGER lastFormat, Boolean lineRight, StyleRunDirectionUPP rlDirProc, Ptr dirParam) M68K_INLINE(0x2F3C, 0x8012, 0xFFFC, 0xA8B5);
+
+pascal INTEGER ValidDate(LongDateRec *date, long flags, LongDateTime *newSecs) M68K_INLINE(0x2F3C, 0x820C, 0xFFE4, 0xA8B5);
+
+pascal Boolean IsCmdChar(const EventRecord *event, INTEGER test) M68K_INLINE(0x2F3C, 0x8206, 0xFFD0, 0xA8B5);
+
+pascal INTEGER NPixel2Char(Ptr textBuf, long textLen, Fixed slop, Fixed pixelWidth, Boolean *leadingEdge, Fixed *widthRemaining, JustStyleCode styleRunPosition, Point numer, Point denom);
+
+pascal INTEGER NChar2Pixel(Ptr textBuf, long textLen, Fixed slop, long offset, INTEGER direction, JustStyleCode styleRunPosition, Point numer, Point denom);
+
+pascal void NDrawJust(Ptr textPtr, long textLength, Fixed slop, JustStyleCode styleRunPosition, Point numer, Point denom);
+
+pascal void NMeasureJust(Ptr textPtr, long textLength, Fixed slop, Ptr charLocs, JustStyleCode styleRunPosition, Point numer, Point denom);
+
+pascal Fixed NPortionText(Ptr textPtr, long textLength, JustStyleCode styleRunPosition, Point numer, Point denom);
+
+pascal Ptr GetScriptUtilityAddress(INTEGER selector, Boolean Before, ScriptCode script) M68K_INLINE(0x2F3C, 0xC404, 0x0038, 0xA8B5);
+
+pascal void SetScriptUtilityAddress(INTEGER selector, Boolean Before, Ptr routineAddr, ScriptCode script) M68K_INLINE(0x2F3C, 0xC008, 0x003A, 0xA8B5);
+
+pascal Ptr GetScriptQDPatchAddress(INTEGER trapNum, Boolean before, Boolean forPrinting, ScriptCode script) M68K_INLINE(0x2F3C, 0xC406, 0x003C, 0xA8B5);
+
+pascal void SetScriptQDPatchAddress(INTEGER trapNum, Boolean before, Boolean forPrinting, Ptr routineAddr, ScriptCode script) M68K_INLINE(0x2F3C, 0xC00A, 0x003E, 0xA8B5);
 
 #pragma options align=reset
 

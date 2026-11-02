@@ -686,6 +686,144 @@ pascal void CopyCStringToPascal(const char *src, Str255 dst);
 
 pascal void CopyPascalStringToC(ConstStr255Param src, char *dst);
 
+typedef union MachineLocationDelta MachineLocationDelta;
+union MachineLocationDelta {
+    int8_t dlsDelta;
+    long gmtDelta;
+};
+
+typedef struct MachineLocation MachineLocation;
+struct MachineLocation {
+    Fixed latitude;
+    Fixed longitude;
+    MachineLocationDelta u;
+};
+
+typedef UniversalProcPtr DeferredTaskUPP;
+
+typedef struct DeferredTask DeferredTask;
+struct DeferredTask {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER dtFlags;
+    DeferredTaskUPP dtAddr;
+    long dtParam;
+    long dtReserved;
+};
+
+typedef DeferredTask *DeferredTaskPtr;
+
+typedef UniversalProcPtr UserFnUPP;
+
+typedef INTEGER StatusRegisterContents;
+
+enum { _SysErrorDispatch = 0xA9C9 };
+
+// Machine location, deferred tasks, debugger
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void ReadLocation(MachineLocation *loc) {
+    register MachineLocation* _loc __asm__("a0") = loc;
+    __asm__ __volatile__(".short 0x203C, 0x000C, 0x00E4, 0xA051"
+        : 
+        : "r"(_loc)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void ReadLocation(MachineLocation *loc);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void WriteLocation(const MachineLocation *loc) {
+    register const MachineLocation* _loc __asm__("a0") = loc;
+    __asm__ __volatile__(".short 0x203C, 0x000C, 0x00E4, 0xA052"
+        : 
+        : "r"(_loc)
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void WriteLocation(const MachineLocation *loc);
+#endif
+
+enum { _DTInstall = 0xA082 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DTInstall(DeferredTaskPtr dtTaskPtr) {
+    register OSErr _ret __asm__("d0");
+    register DeferredTaskPtr _dtTaskPtr __asm__("a0") = dtTaskPtr;
+    __asm__ __volatile__(".short 0xA082"
+        : "=r"(_ret)
+        : "r"(_dtTaskPtr)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DTInstall(DeferredTaskPtr dtTaskPtr);
+#endif
+
+enum { _DeferUserFn = 0xA08F };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DeferUserFn(UserFnUPP userFunction, void *argument) {
+    register OSErr _ret __asm__("d0");
+    register UserFnUPP _userFunction __asm__("a0") = userFunction;
+    register void* _argument __asm__("d0") = argument;
+    __asm__ __volatile__(".short 0xA08F"
+        : "=r"(_ret)
+        : "r"(_userFunction), "r"(_argument)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DeferUserFn(UserFnUPP userFunction, void *argument);
+#endif
+
+pascal void SysBreak(void) M68K_INLINE(0x303C, 0xFE16, 0xA9C9);
+
+pascal void SysBreakStr(ConstStr255Param debuggerMsg) M68K_INLINE(0x303C, 0xFE15, 0xA9C9);
+
+pascal void SysBreakFunc(ConstStr255Param debuggerMsg) M68K_INLINE(0x303C, 0xFE14, 0xA9C9);
+
+enum { _AttachVBL = 0xA071 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr AttachVBL(INTEGER netValue) {
+    register OSErr _ret __asm__("d0");
+    register INTEGER _netValue __asm__("d0") = netValue;
+    __asm__ __volatile__(".short 0xA071"
+        : "=r"(_ret)
+        : "r"(_netValue)
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr AttachVBL(INTEGER netValue);
+#endif
+
+enum { _DoVBLTask = 0xA072 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DoVBLTask(INTEGER netValue) {
+    register OSErr _ret __asm__("d0");
+    register INTEGER _netValue __asm__("d0") = netValue;
+    __asm__ __volatile__(".short 0xA072"
+        : "=r"(_ret)
+        : "r"(_netValue)
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DoVBLTask(INTEGER netValue);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) StatusRegisterContents EnterSupervisorMode(void) {
+    register StatusRegisterContents _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7008, 0xA08D"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal StatusRegisterContents EnterSupervisorMode(void);
+#endif
+
 #pragma options align=reset
 
 #endif

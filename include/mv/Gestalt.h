@@ -258,6 +258,15 @@ static __inline__ __attribute__((__always_inline__)) OSErr ReplaceGestalt(OSType
 pascal OSErr ReplaceGestalt(OSType selector, SelectorFunctionUPP selFunc, SelectorFunctionUPP *oldSelFuncp);
 #endif
 
+// Gestalt values (System 7.5 and later)
+pascal OSErr NewGestaltValue(OSType selector, long newValue);
+
+pascal OSErr ReplaceGestaltValue(OSType selector, long replacementValue);
+
+pascal OSErr SetGestaltValue(OSType selector, long newValue);
+
+pascal OSErr DeleteGestaltValue(OSType selector);
+
 #pragma options align=reset
 
 #endif

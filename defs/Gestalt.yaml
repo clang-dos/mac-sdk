@@ -428,3 +428,46 @@
     dispatcher: GestaltDispatch
     selector: 0x400
     returnreg: D0
+
+# ####
+
+- function:
+    name: NewGestaltValue
+    return: OSErr
+    args:
+    - name: selector
+      type: OSType
+    - name: newValue
+      type: int32_t
+    comment: Gestalt values (System 7.5 and later)
+
+# ####
+
+- function:
+    name: ReplaceGestaltValue
+    return: OSErr
+    args:
+    - name: selector
+      type: OSType
+    - name: replacementValue
+      type: int32_t
+
+# ####
+
+- function:
+    name: SetGestaltValue
+    return: OSErr
+    args:
+    - name: selector
+      type: OSType
+    - name: newValue
+      type: int32_t
+
+# ####
+
+- function:
+    name: DeleteGestaltValue
+    return: OSErr
+    args:
+    - name: selector
+      type: OSType

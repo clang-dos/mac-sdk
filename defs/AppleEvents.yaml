@@ -1892,3 +1892,15 @@
     dispatcher: Pack8
     selector: 0x0E35
     executor: C_
+
+# ####
+
+- typedef:
+    name: AEIdleUPP
+    type: IdleUPP
+
+# ####
+
+- typedef:
+    name: AEFilterUPP
+    type: EventFilterUPP

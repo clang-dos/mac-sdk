@@ -70,6 +70,9 @@ static __inline__ __attribute__((__always_inline__)) void PrimeTime(QElemPtr tas
 pascal void PrimeTime(QElemPtr taskp, LONGINT count);
 #endif
 
+// The trap returns the high half in A0 and the low half in D0.
+pascal void Microseconds(UnsignedWide *microTickCount) M68K_INLINE(0xA193, 0x225F, 0x22C8, 0x2280);
+
 #pragma options align=reset
 
 #endif

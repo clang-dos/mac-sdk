@@ -1,0 +1,519 @@
+
+# ####
+
+- typedef:
+    name: TSMDocumentID
+    type: void*
+
+# ####
+
+- typedef:
+    name: InterfaceTypeList
+    type: OSType[1]
+
+# ####
+
+- struct:
+    name: ScriptLanguageRecord
+    size: 4
+    members:
+    - name: fScript
+      type: ScriptCode
+    - name: fLanguage
+      type: LangCode
+
+# ####
+
+- struct:
+    name: ScriptLanguageSupport
+    size: 6
+    members:
+    - name: fScriptLanguageCount
+      type: INTEGER
+    - name: fScriptLanguageArray
+      type: ScriptLanguageRecord[1]
+
+# ####
+
+- typedef:
+    name: ScriptLanguageSupportPtr
+    type: ScriptLanguageSupport*
+
+# ####
+
+- typedef:
+    name: ScriptLanguageSupportHandle
+    type: ScriptLanguageSupportPtr*
+
+# ####
+
+- struct:
+    name: TextServiceInfo
+    size: 260
+    members:
+    - name: fComponent
+      type: Component
+    - name: fItemName
+      type: Str255
+
+# ####
+
+- typedef:
+    name: TextServiceInfoPtr
+    type: TextServiceInfo*
+
+# ####
+
+- struct:
+    name: TextServiceList
+    size: 262
+    members:
+    - name: fTextServiceCount
+      type: INTEGER
+    - name: fServices
+      type: TextServiceInfo[1]
+
+# ####
+
+- typedef:
+    name: TextServiceListPtr
+    type: TextServiceList*
+
+# ####
+
+- typedef:
+    name: TextServiceListHandle
+    type: TextServiceListPtr*
+
+# ####
+
+- enum:
+    values:
+    - name: kTSMVersion
+      value: 336
+    - name: kTextService
+      value: '''tsvc'''
+    - name: kInputMethodService
+      value: '''inpm'''
+    - name: kTSMTEInterfaceType
+      value: '''tmTE'''
+    - name: kTextServiceDocumentInterfaceType
+      value: '''tdoc'''
+    - name: kUnicodeDocument
+      value: '''udoc'''
+    - name: kUnicodeTextService
+      value: '''utsv'''
+
+# ####
+
+- enum:
+    values:
+    - name: bTakeActiveEvent
+      value: 15
+    - name: bHandleAERecording
+      value: 16
+    - name: bScriptMask
+      value: 32512
+    - name: bLanguageMask
+      value: 255
+    - name: bScriptLanguageMask
+      value: 32767
+
+# ####
+
+- enum:
+    values:
+    - name: kUpdateActiveInputArea
+      value: '''updt'''
+    - name: kPos2Offset
+      value: '''p2st'''
+    - name: kOffset2Pos
+      value: '''st2p'''
+    - name: kShowHideInputWindow
+      value: '''shiw'''
+    - name: kGetSelectedText
+      value: '''gtxt'''
+    - name: kTextServiceClass
+      value: '''tsvc'''
+    - name: kCaretPosition
+      value: 1
+    - name: kRawText
+      value: 2
+    - name: kSelectedRawText
+      value: 3
+    - name: kConvertedText
+      value: 4
+    - name: kSelectedConvertedText
+      value: 5
+    - name: kBlockFillText
+      value: 6
+    - name: kOutlineText
+      value: 7
+    - name: kSelectedText
+      value: 8
+
+# ####
+
+- enum:
+    values:
+    - name: tsmComponentNoErr
+      value: 0
+    - name: tsmUnsupScriptLanguageErr
+      value: -2500
+    - name: tsmInputMethodNotFoundErr
+      value: -2501
+    - name: tsmNotAnAppErr
+      value: -2502
+    - name: tsmAlreadyRegisteredErr
+      value: -2503
+    - name: tsmNeverRegisteredErr
+      value: -2504
+    - name: tsmInvalidDocIDErr
+      value: -2505
+    - name: tsmTSMDocBusyErr
+      value: -2506
+    - name: tsmDocNotActiveErr
+      value: -2507
+    - name: tsmNoOpenTSErr
+      value: -2508
+    - name: tsmCantOpenComponentErr
+      value: -2509
+    - name: tsmTextServiceNotFoundErr
+      value: -2510
+    - name: tsmDocumentOpenErr
+      value: -2511
+    - name: tsmUseInputWindowErr
+      value: -2512
+    - name: tsmTSHasNoMenuErr
+      value: -2513
+    - name: tsmTSNotOpenErr
+      value: -2514
+    - name: tsmComponentAlreadyOpenErr
+      value: -2515
+    - name: tsmInputMethodIsOldErr
+      value: -2516
+    - name: tsmScriptHasNoIMErr
+      value: -2517
+    - name: tsmUnsupportedTypeErr
+      value: -2518
+    - name: tsmUnknownErr
+      value: -2519
+    - name: tsmInvalidContext
+      value: -2520
+    - name: tsmNoHandler
+      value: -2521
+    - name: tsmNoMoreTokens
+      value: -2522
+    - name: tsmNoStem
+      value: -2523
+    - name: tsmDefaultIsNotInputMethodErr
+      value: -2524
+
+# ####
+
+- dispatcher:
+    name: TSMDispatch
+    trap: 43604
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: NewTSMDocument
+    return: OSErr
+    args:
+    - name: numOfInterface
+      type: INTEGER
+    - name: supportedInterfaceTypes
+      type: InterfaceTypeList
+    - name: idocID
+      type: TSMDocumentID*
+    - name: refcon
+      type: int32_t
+    comment: Text Services Manager
+    dispatcher: TSMDispatch
+    selector: 0
+
+# ####
+
+- function:
+    name: DeleteTSMDocument
+    return: OSErr
+    args:
+    - name: idocID
+      type: TSMDocumentID
+    dispatcher: TSMDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: ActivateTSMDocument
+    return: OSErr
+    args:
+    - name: idocID
+      type: TSMDocumentID
+    dispatcher: TSMDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: DeactivateTSMDocument
+    return: OSErr
+    args:
+    - name: idocID
+      type: TSMDocumentID
+    dispatcher: TSMDispatch
+    selector: 3
+
+# ####
+
+- function:
+    name: FixTSMDocument
+    return: OSErr
+    args:
+    - name: idocID
+      type: TSMDocumentID
+    dispatcher: TSMDispatch
+    selector: 7
+
+# ####
+
+- function:
+    name: GetServiceList
+    return: OSErr
+    args:
+    - name: numOfInterface
+      type: INTEGER
+    - name: supportedInterfaceTypes
+      type: OSType*
+    - name: serviceInfo
+      type: TextServiceListHandle*
+    - name: seedValue
+      type: int32_t*
+    dispatcher: TSMDispatch
+    selector: 8
+
+# ####
+
+- function:
+    name: OpenTextService
+    return: OSErr
+    args:
+    - name: idocID
+      type: TSMDocumentID
+    - name: aComponent
+      type: Component
+    - name: aComponentInstance
+      type: ComponentInstance*
+    dispatcher: TSMDispatch
+    selector: 9
+
+# ####
+
+- function:
+    name: CloseTextService
+    return: OSErr
+    args:
+    - name: idocID
+      type: TSMDocumentID
+    - name: aComponentInstance
+      type: ComponentInstance
+    dispatcher: TSMDispatch
+    selector: 10
+
+# ####
+
+- function:
+    name: SendAEFromTSMComponent
+    return: OSErr
+    args:
+    - name: theAppleEvent
+      type: const AppleEvent*
+    - name: reply
+      type: AppleEvent*
+    - name: sendMode
+      type: AESendMode
+    - name: sendPriority
+      type: AESendPriority
+    - name: timeOutInTicks
+      type: int32_t
+    - name: idleProc
+      type: AEIdleUPP
+    - name: filterProc
+      type: AEFilterUPP
+    dispatcher: TSMDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: SetDefaultInputMethod
+    return: OSErr
+    args:
+    - name: ts
+      type: Component
+    - name: slRecordPtr
+      type: ScriptLanguageRecord*
+    dispatcher: TSMDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: GetDefaultInputMethod
+    return: OSErr
+    args:
+    - name: ts
+      type: Component*
+    - name: slRecordPtr
+      type: ScriptLanguageRecord*
+    dispatcher: TSMDispatch
+    selector: 13
+
+# ####
+
+- function:
+    name: SetTextServiceLanguage
+    return: OSErr
+    args:
+    - name: slRecordPtr
+      type: ScriptLanguageRecord*
+    dispatcher: TSMDispatch
+    selector: 14
+
+# ####
+
+- function:
+    name: GetTextServiceLanguage
+    return: OSErr
+    args:
+    - name: slRecordPtr
+      type: ScriptLanguageRecord*
+    dispatcher: TSMDispatch
+    selector: 15
+
+# ####
+
+- function:
+    name: UseInputWindow
+    return: OSErr
+    args:
+    - name: idocID
+      type: TSMDocumentID
+    - name: useWindow
+      type: Boolean
+    dispatcher: TSMDispatch
+    selector: 16
+
+# ####
+
+- function:
+    name: NewServiceWindow
+    return: OSErr
+    args:
+    - name: wStorage
+      type: void*
+    - name: boundsRect
+      type: const Rect*
+    - name: title
+      type: ConstStr255Param
+    - name: visible
+      type: Boolean
+    - name: theProc
+      type: INTEGER
+    - name: behind
+      type: WindowPtr
+    - name: goAwayFlag
+      type: Boolean
+    - name: ts
+      type: ComponentInstance
+    - name: window
+      type: WindowPtr*
+    dispatcher: TSMDispatch
+    selector: 17
+
+# ####
+
+- function:
+    name: CloseServiceWindow
+    return: OSErr
+    args:
+    - name: window
+      type: WindowPtr
+    dispatcher: TSMDispatch
+    selector: 18
+
+# ####
+
+- function:
+    name: GetFrontServiceWindow
+    return: OSErr
+    args:
+    - name: window
+      type: WindowPtr*
+    dispatcher: TSMDispatch
+    selector: 19
+
+# ####
+
+- function:
+    name: FindServiceWindow
+    return: INTEGER
+    args:
+    - name: thePoint
+      type: Point
+    - name: theWindow
+      type: WindowPtr*
+    dispatcher: TSMDispatch
+    selector: 23
+
+# ####
+
+- function:
+    name: InitTSMAwareApplication
+    return: OSErr
+    dispatcher: TSMDispatch
+    selector: 20
+
+# ####
+
+- function:
+    name: CloseTSMAwareApplication
+    return: OSErr
+    dispatcher: TSMDispatch
+    selector: 21
+
+# ####
+
+- function:
+    name: TSMEvent
+    return: Boolean
+    args:
+    - name: event
+      type: EventRecord*
+    dispatcher: TSMDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: TSMMenuSelect
+    return: Boolean
+    args:
+    - name: menuResult
+      type: int32_t
+    dispatcher: TSMDispatch
+    selector: 5
+
+# ####
+
+- function:
+    name: SetTSMCursor
+    return: Boolean
+    args:
+    - name: mousePos
+      type: Point
+    dispatcher: TSMDispatch
+    selector: 6

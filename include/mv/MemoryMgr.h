@@ -951,6 +951,167 @@ pascal void TempHUnlock(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001F
 
 pascal void TempDisposeHandle(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x0020, 0xA88F);
 
+// Virtual memory
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr HoldMemory(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x7000, 0xA05C"
+        : "=r"(_ret)
+        : "r"(_address), "r"(_count)
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr HoldMemory(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr UnholdMemory(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x7001, 0xA05C"
+        : "=r"(_ret)
+        : "r"(_address), "r"(_count)
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr UnholdMemory(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr LockMemory(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x7002, 0xA05C"
+        : "=r"(_ret)
+        : "r"(_address), "r"(_count)
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr LockMemory(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryContiguous(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x7004, 0xA05C"
+        : "=r"(_ret)
+        : "r"(_address), "r"(_count)
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr LockMemoryContiguous(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr UnlockMemory(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x7003, 0xA05C"
+        : "=r"(_ret)
+        : "r"(_address), "r"(_count)
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr UnlockMemory(void *address, unsigned long count);
+#endif
+
+typedef INTEGER PageState;
+
+enum {
+    kPageInMemory = 0,
+    kPageOnDisk = 1,
+    kNotPaged = 2,
+};
+
+// Debugger support (for debugger writers)
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) long DebuggerGetMax(void) {
+    register long _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7000, 0xA08D"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal long DebuggerGetMax(void);
+#endif
+
+pascal void DebuggerEnter(void) M68K_INLINE(0x7001, 0xA08D);
+
+pascal void DebuggerExit(void) M68K_INLINE(0x7002, 0xA08D);
+
+pascal void DebuggerPoll(void) M68K_INLINE(0x7003, 0xA08D);
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) PageState GetPageState(const void *address) {
+    register PageState _ret __asm__("d0");
+    register const void* _address __asm__("a0") = address;
+    __asm__ __volatile__(".short 0x7004, 0xA08D"
+        : "=r"(_ret)
+        : "r"(_address)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal PageState GetPageState(const void *address);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean PageFaultFatal(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7005, 0xA08D"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean PageFaultFatal(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DebuggerLockMemory(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x7006, 0xA08D"
+        : "=r"(_ret)
+        : "r"(_address), "r"(_count)
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DebuggerLockMemory(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DebuggerUnlockMemory(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x7007, 0xA08D"
+        : "=r"(_ret)
+        : "r"(_address), "r"(_count)
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DebuggerUnlockMemory(void *address, unsigned long count);
+#endif
+
 #pragma options align=reset
 
 #endif

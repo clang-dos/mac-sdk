@@ -75,3 +75,13 @@
     name: Microseconds
     executor_raw: true
     trap: 0xA193
+
+# ####
+
+- function:
+    name: Microseconds
+    args:
+      - name: microTickCount
+        type: UnsignedWide*
+    comment: The trap returns the high half in A0 and the low half in D0.
+    m68k-inline: [0xA193, 0x225F, 0x22C8, 0x2280]

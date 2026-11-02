@@ -529,6 +529,10 @@ pascal OSErr AECallObjectAccessor(DescType desiredClass, AEDesc *containerToken,
 
 pascal OSErr AESetObjectCallbacks(ProcPtr myCompareProc, ProcPtr myCountProc, ProcPtr myDisposeTokenProc, ProcPtr myGetMarkTokenProc, ProcPtr myMarkProc, ProcPtr myAdjustMarksProc, ProcPtr myGetErrDescProc) M68K_INLINE(0x303C, 0x0E35, 0xA816);
 
+typedef IdleUPP AEIdleUPP;
+
+typedef EventFilterUPP AEFilterUPP;
+
 #pragma options align=reset
 
 #endif

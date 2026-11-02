@@ -42,7 +42,8 @@ TYPE_SIZE = {"uint8_t": 1, "uint16_t": 2, "uint32_t": 4, "uint64_t": 8,
 # Headers from Apple's Universal Interfaces that programs include. Each
 # one includes the whole set.
 APPLE_NAMES = [
-    "AppleEvents", "Aliases", "CodeFragments", "ConditionalMacros",
+    "AppleEvents", "Aliases", "CodeFragments", "Components",
+    "ConditionalMacros", "Displays", "Power", "TextServices",
     "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices",
     "Errors", "Events", "Files", "Finder", "FixMath", "Folders", "Fonts",
     "Gestalt", "Icons", "Interrupts", "Kernel", "Lists", "LowMem",

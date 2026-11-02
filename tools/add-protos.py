@@ -189,7 +189,8 @@ def attach_trap(fun, p, o, disp, new_disp, sizes):
     asizes = [size_of(a["type"], sizes) for a in args]
     rsize = size_of(p["return"], sizes) if p["return"] != "void" else 0
     if o["conv"] == "register":
-        params = o["params"]
+        consts = [prm for prm in o["params"] if "value" in prm]
+        params = [prm for prm in o["params"] if "value" not in prm]
         if len(params) > len(args):
             return f"NOT ADDED to 68k: glue passes {len(params)} registers"
         extra = args[len(params):]
@@ -206,8 +207,34 @@ def attach_trap(fun, p, o, disp, new_disp, sizes):
             fa["register"] = prm["reg"]
         if o.get("result_reg"):
             fun["returnreg"] = o["result_reg"]
-        fun["trap"] = trap
-        return f"register trap {trap:#06x}"
+        if not consts:
+            fun["trap"] = trap
+            return f"register trap {trap:#06x}"
+        # The glue loads a selector into a register: use the dispatcher
+        # when one is named for it, otherwise spell out the instructions.
+        if len(consts) == 1 and consts[0]["reg"] == "D0":
+            sel = int(consts[0]["value"], 16)
+            sel = sel - (1 << 32) if sel & 0x80000000 else sel
+            for d in list(disp.values()) + list(new_disp.values()):
+                if d["trap"] & 0xF8FF == trap & 0xF8FF and d.get(
+                        "selector-location") in ("D0W", "D0L"):
+                    fun["dispatcher"] = d["name"]
+                    fun["selector"] = sel
+                    fun["trap"] = trap
+                    return f"register {d['name']} selector {sel}"
+        words = []
+        for c in consts:
+            v = int(c["value"], 16)
+            n = int(c["reg"][1])
+            sv = v - (1 << 32) if v & 0x80000000 else v
+            if c["reg"][0] == "D" and -128 <= sv <= 127:
+                words.append(0x7000 | n << 9 | (v & 0xFF))
+            elif c["reg"][0] == "D":
+                words += [0x203C | n << 9, v >> 16, v & 0xFFFF]
+            else:
+                words += [0x207C | n << 9, v >> 16, v & 0xFFFF]
+        fun["m68k-inline"] = words + [trap]
+        return "register trap " + ", ".join(f"{w:#06x}" for w in words + [trap])
     # Stack based: compare sizes (a byte goes as 2 on the stack in the
     # procInfo's view only for Pascal? No: procInfo records 1).
     osz = [prm["size"] for prm in o["params"]]

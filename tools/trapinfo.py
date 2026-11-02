@@ -96,13 +96,19 @@ def main():
         d["trap"] = "0x%04X" % trap
         d["procinfo"] = "0x%08X" % info.v
         args = [regs.get(i) for i in range(5, 11)]
-        # OS traps get their trap word in D1 as the first register param.
-        if d["conv"] == "register" and d["params"] and \
-                d["params"][0]["reg"] == "D1" and args[0] and \
-                args[0].kind == "const" and (args[0].v & 0xF000) == 0xA000:
-            d["trap"] = "0x%04X" % (args[0].v & 0xFFFF)   # with flag bits
-            d["params"] = d["params"][1:]
-            args = args[1:]
+        if d["conv"] == "register":
+            # Register params the glue fills with constants: the trap word
+            # (OS traps get it in D1, with flag bits) or a selector.
+            keep, kargs = [], []
+            for prm, a in zip(d["params"], args):
+                if a is not None and a.kind == "const":
+                    if prm["reg"] == "D1" and (a.v & 0xF000) == 0xA000:
+                        d["trap"] = "0x%04X" % (a.v & 0xFFFF)
+                        continue
+                    prm = dict(prm, value="0x%X" % a.v)
+                keep.append(prm)
+                kargs.append(a)
+            d["params"], args = keep, kargs + [None] * 6
         if d["conv"] in ("d0-pascal", "d0-c", "d1-pascal", "stack-pascal") \
                 and args[0] is not None and args[0].kind == "const":
             d["selector"] = "0x%X" % args[0].v
