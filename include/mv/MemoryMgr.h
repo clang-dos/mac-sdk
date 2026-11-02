@@ -497,12 +497,12 @@ static __inline__ __attribute__((__always_inline__)) Size MaxBlockSys(void) {
 pascal Size MaxBlockSys(void);
 #endif
 
-enum { _PurgeSpace = 0xA062 };
+enum { _PurgeSpace = 0xA162 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void PurgeSpace(Size *totalp, Size *contigp) {
     register Size _totalp __asm__("d0");
     register Size _contigp __asm__("a0");
-    __asm__ __volatile__(".short 0xA062"
+    __asm__ __volatile__(".short 0xA162"
         : "=r"(_totalp), "=r"(_contigp)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -512,12 +512,12 @@ static __inline__ __attribute__((__always_inline__)) void PurgeSpace(Size *total
 #else
 pascal void PurgeSpace(Size *totalp, Size *contigp);
 #endif
-enum { _PurgeSpaceSys = 0xA462 };
+enum { _PurgeSpaceSys = 0xA562 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) void PurgeSpaceSys(Size *totalp, Size *contigp) {
     register Size _totalp __asm__("d0");
     register Size _contigp __asm__("a0");
-    __asm__ __volatile__(".short 0xA462"
+    __asm__ __volatile__(".short 0xA562"
         : "=r"(_totalp), "=r"(_contigp)
         : 
         : "d1", "d2", "a1", "cc", "memory");
@@ -936,6 +936,7 @@ pascal Handle GZSaveHnd(void);
 
 enum { _OSDispatch = 0xA88F };
 
+// temporary memory functions; see tempmem.c
 pascal long TempFreeMem(void) M68K_INLINE(0x3F3C, 0x0018, 0xA88F);
 
 pascal Size TempMaxMem(Size *grow) M68K_INLINE(0x3F3C, 0x0015, 0xA88F);

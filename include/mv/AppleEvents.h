@@ -76,7 +76,7 @@ typedef uint8_t AEEventSource;
 
 typedef uint8_t AEInteractionAllowed;
 
-typedef int16_t AEArrayType;
+typedef int8_t AEArrayType;
 
 enum {
     kAEInteractWithSelf = 0,
@@ -256,6 +256,11 @@ typedef AE_info_t *AE_info_ptr;
 
 enum { _Pack8 = 0xA816 };
 
+// Private/undocumented entry point.  system_zone selects the system heap;
+// sizes is packed (valueSize << 16) | keySize; capacity_hint is the
+// expected number of entries (not a hard limit).  imports is a pointer to
+// a four-entry vector of manager routines, or 0.  Every observed caller
+// uses sizes == 0x00080008 and imports == 0.
 pascal OSErr _AE_hdlr_table_alloc(AE_hdlr_table_h *table_return, uint8_t system_zone, const void *imports, long sizes, long capacity_hint) M68K_INLINE(0x303C, 0x092E, 0xA816);
 
 pascal OSErr _AE_hdlr_table_free(const void *imports, AE_hdlr_table_h *table) M68K_INLINE(0x303C, 0x042F, 0xA816);
@@ -409,6 +414,7 @@ enum {
 #define LMGetAE_info() (*(AE_info_ptr *)0x000002B6)
 #define LMSetAE_info(val) ((*(AE_info_ptr *)0x000002B6) = (val))
 
+// prototypes go here
 pascal OSErr AEGetCoercionHandler(DescType from_type, DescType to_type, AECoerceDescUPP *hdlr_out, long *refcon_out, Boolean *from_type_is_desc_p_out, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0B24, 0xA816);
 
 pascal OSErr AECreateDesc(DescType type, const void *data, Size data_size, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0825, 0xA816);
@@ -425,6 +431,12 @@ pascal OSErr AEPutParamPtr(AERecord *record, AEKeyword keyword, DescType type, c
 
 pascal OSErr AEPutParamDesc(AERecord *record, AEKeyword keyword, AEDesc *desc) M68K_INLINE(0x303C, 0x0610, 0xA816);
 
+// extern OSErr C_AEDeleteParam(AppleEvent *evt, AEKeyword keyword);
+// PASCAL_SUBTRAP(AEDeleteParam, 0xA816, 0x0413, Pack8);
+// The following does not exist. Maybe it should be AEDeleteParam?
+// extern OSErr C_AEDeleteAttribute(AppleEvent *evt,
+//                                              AEKeyword keyword);
+// PASCAL_SUBTRAP_UNKNOWN(AEDeleteAttribute, 0xA816, Pack8);
 pascal OSErr AESizeOfParam(AERecord *record, AEKeyword keyword, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x0829, 0xA816);
 
 pascal OSErr AESetInteractionAllowed(AEInteractionAllowed level) M68K_INLINE(0x303C, 0x011E, 0xA816);

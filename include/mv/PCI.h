@@ -9,6 +9,9 @@
 
 #pragma options align=mac68k
 
+// configAddr is typed as an address but carries a register offset in
+// configuration space, 0 to 255.  The word and long routines swap
+// bytes, so values arrive as they appear on the bus.
 pascal OSErr ExpMgrConfigReadByte(RegEntryIDPtr node, LogicalAddress configAddr, UInt8 *valuePtr);
 
 pascal OSErr ExpMgrConfigReadWord(RegEntryIDPtr node, LogicalAddress configAddr, UInt16 *valuePtr);

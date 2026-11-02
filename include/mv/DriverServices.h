@@ -44,6 +44,8 @@ enum {
     kHardwareInterruptLevel = 6,
 };
 
+// Callable at any level.  Many Driver Services calls, the memory pool
+// and PrepareMemoryForIO among them, are legal only at kTaskLevel.
 pascal ExecutionLevel CurrentExecutionLevel(void);
 
 // Positive values are milliseconds, negative values are negated
@@ -80,26 +82,44 @@ struct Nanoseconds {
 };
 #pragma options align=reset
 
+// Time since startup.  Callable at any level.
 pascal AbsoluteTime UpTime(void);
 
+// Returns left minus right, and zero if that is negative, so the later
+// time goes on the left: AbsoluteDeltaToDuration(UpTime(), start).
+// This is the reverse of what the book's note on the routine suggests;
+// the order given here is the one observed under Mac OS 9.2.2.
 pascal Duration AbsoluteDeltaToDuration(AbsoluteTime leftAbsoluteTime, AbsoluteTime rightAbsoluteTime);
 
 pascal AbsoluteTime DurationToAbsolute(Duration duration);
 
 pascal AbsoluteTime AddDurationToAbsolute(Duration duration, AbsoluteTime absoluteTime);
 
+// Blocks, so task level only.  The delay can run long but not short.
 pascal OSStatus DelayFor(Duration expirationTime);
 
+// Busy-waits, which makes it callable at any level.  The argument is
+// the length of the delay, not a deadline: convert with
+// DurationToAbsolute.  Passing UpTime() plus a delay spins for the
+// machine's whole uptime.
 pascal OSStatus DelayForHardware(AbsoluteTime absoluteTime);
 
 typedef KernelID TimerID;
 
 typedef OSStatus (*SecondaryInterruptHandler2)(void *p1, void *p2);
 
+// Runs handler as a secondary interrupt handler once expirationTime (an
+// absolute time, unlike DelayForHardware's argument) is reached.  The
+// handler gets p1, and the program counter at expiry as p2.  Callable
+// at any level.
 pascal OSStatus SetInterruptTimer(const AbsoluteTime *expirationTime, SecondaryInterruptHandler2 handler, void *p1, TimerID *timer);
 
+// Fails if the timer has already fired or been cancelled, which is how
+// a caller learns that the handler has run or is about to.
 pascal OSStatus CancelTimer(TimerID timer, AbsoluteTime *timeRemaining);
 
+// Orders accesses to noncached (memory-mapped I/O) space against the
+// instructions around them.
 pascal void SynchronizeIO(void);
 
 typedef KernelID InterruptSetID;
@@ -156,14 +176,23 @@ typedef void (*InterruptEnabler)(InterruptSetMember ISTmember, void *refCon);
 
 typedef InterruptSourceState (*InterruptDisabler)(InterruptSetMember ISTmember, void *refCon);
 
+// Task level only.  A nil function leaves whatever is installed in
+// place, so a driver can take over the handler while keeping the
+// platform's enabler and disabler.
 pascal OSStatus InstallInterruptFunctions(InterruptSetID setID, InterruptMemberNumber member, void *refCon, InterruptHandler handlerFunction, InterruptEnabler enableFunction, InterruptDisabler disableFunction);
 
+// Installing replaces the member's handler, and PCI interrupt lines are
+// shared; reading the old one first lets a driver pass on interrupts
+// that are not its own.
 pascal OSStatus GetInterruptFunctions(InterruptSetID setID, InterruptMemberNumber member, void **refCon, InterruptHandler *handlerFunction, InterruptEnabler *enableFunction, InterruptDisabler *disableFunction);
 
+// Resident (never paged) memory from the system pool.  Task level only.
 pascal LogicalAddress PoolAllocateResident(ByteCount byteSize, Boolean clear);
 
 pascal OSStatus PoolDeallocate(LogicalAddress address);
 
+// Resident and physically contiguous.  Task level only, and large
+// requests made after startup are unlikely to succeed.
 pascal LogicalAddress MemAllocatePhysicallyContiguous(ByteCount byteSize, Boolean clear);
 
 pascal OSStatus MemDeallocatePhysicallyContiguous(LogicalAddress address);
@@ -234,6 +263,9 @@ union {
 };
 #pragma options align=reset
 
+// Locks a buffer down, settles the caches, and returns its physical
+// addresses for a bus-master transfer; CheckpointIO undoes it.  Task
+// level only.
 pascal OSStatus PrepareMemoryForIO(IOPreparationTable *theIOPreparationTable);
 
 typedef OptionBits IOCheckpointOptions;

@@ -427,6 +427,9 @@ static __inline__ __attribute__((__always_inline__)) OSErr Dequeue(QElemPtr e, Q
 pascal OSErr Dequeue(QElemPtr e, QHdrPtr h);
 #endif
 
+// extern LONGINT GetTrapAddress(INTEGER n); // 68K in emustubs, not supported on ppc
+// extern void SetTrapAddress(LONGINT addr,
+// INTEGER n);
 pascal ProcPtr NGetTrapAddress(uint16_t n, TrapType ttype);
 
 pascal void NSetTrapAddress(ProcPtr addr, uint16_t n, TrapType ttype);

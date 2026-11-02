@@ -135,6 +135,9 @@ class Header:
                 for a in v.get("args") or []:
                     self.need(a["type"])
                 self.declared.update(v.get("variants") or [])
+                if key == "funptr":
+                    base = re.sub(r"(ProcPtr|UPP)$", "", v["name"])
+                    self.declared.update([base + "UPP", base + "ProcPtr"])
         self.required -= self.declared
         self.includes = set()
 
@@ -388,7 +391,8 @@ class Generator:
         regs = [a for a in args if a.get("register")] or fun.get("returnreg")
         params = ", ".join(decl(a["type"], a.get("name")) for a in args) or "void"
         # Variadic functions (CallUniversalProc) use the C convention.
-        cc = "" if any(a["type"] == "..." for a in args) else "pascal "
+        cc = "" if any(a["type"] == "..." for a in args) or \
+            fun.get("callconv") == "C" else "pascal "
         proto = f"{cc}{ret} {name}({params})"
 
         if fun.get("inline"):
@@ -436,7 +440,7 @@ class Generator:
                 out.append("#if TARGET_API_MAC_CARBON")
             elif api == "classic":
                 out.append("#if !TARGET_API_MAC_CARBON")
-            if isinstance(v, dict) and v.get("comment") and key != "function":
+            if isinstance(v, dict) and v.get("comment"):
                 comment(v["comment"], out)
             if key == "enum":
                 self.enum(v, out)

@@ -169,7 +169,7 @@
 
 - typedef:
     name: AEArrayType
-    type: int16_t
+    type: int8_t
 
 # ####
 

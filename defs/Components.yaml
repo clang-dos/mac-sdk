@@ -25,3 +25,947 @@
 - typedef:
     name: ComponentInstance
     type: ComponentInstanceRecord*
+
+# ####
+
+- typedef:
+    name: ComponentResult
+    type: int32_t
+
+# ####
+
+- enum:
+    values:
+      - name: kAppleManufacturer
+        value: "'appl'"
+      - name: kComponentResourceType
+        value: "'thng'"
+      - name: kComponentAliasResourceType
+        value: "'thga'"
+
+# ####
+
+- enum:
+    values:
+      - name: kAnyComponentType
+        value: 0
+      - name: kAnyComponentSubType
+        value: 0
+      - name: kAnyComponentManufacturer
+        value: 0
+      - name: kAnyComponentFlagsMask
+        value: 0
+
+# ####
+
+- enum:
+    values:
+      - name: cmpIsMissing
+        value: 0x20000000
+      - name: cmpWantsRegisterMessage
+        value: 0x80000000
+
+# ####
+
+- enum:
+    values:
+      - name: kComponentOpenSelect
+        value: -1
+      - name: kComponentCloseSelect
+        value: -2
+      - name: kComponentCanDoSelect
+        value: -3
+      - name: kComponentVersionSelect
+        value: -4
+      - name: kComponentRegisterSelect
+        value: -5
+      - name: kComponentTargetSelect
+        value: -6
+      - name: kComponentUnregisterSelect
+        value: -7
+      - name: kComponentGetMPWorkFunctionSelect
+        value: -8
+      - name: kComponentExecuteWiredActionSelect
+        value: -9
+      - name: kComponentGetPublicResourceSelect
+        value: -10
+
+# ####
+
+- enum:
+    values:
+      - name: componentDoAutoVersion
+        value: 1
+      - name: componentWantsUnregister
+        value: 2
+      - name: componentAutoVersionIncludeFlags
+        value: 4
+      - name: componentHasMultiplePlatforms
+        value: 8
+      - name: componentLoadResident
+        value: 16
+
+# ####
+
+- enum:
+    values:
+      - name: defaultComponentIdentical
+        value: 0
+      - name: defaultComponentAnyFlags
+        value: 1
+      - name: defaultComponentAnyManufacturer
+        value: 2
+      - name: defaultComponentAnySubType
+        value: 4
+      - name: defaultComponentAnyFlagsAnyManufacturer
+        value: 3
+      - name: defaultComponentAnyFlagsAnyManufacturerAnySubType
+        value: 7
+
+# ####
+
+- enum:
+    values:
+      - name: registerComponentGlobal
+        value: 1
+      - name: registerComponentNoDuplicates
+        value: 2
+      - name: registerComponentAfterExisting
+        value: 4
+      - name: registerComponentAliasesOnly
+        value: 8
+
+# ####
+
+- struct:
+    name: ComponentDescription
+    members:
+      - name: componentType
+        type: OSType
+      - name: componentSubType
+        type: OSType
+      - name: componentManufacturer
+        type: OSType
+      - name: componentFlags
+        type: uint32_t
+      - name: componentFlagsMask
+        type: uint32_t
+    size: 20
+
+# ####
+
+- struct:
+    name: ResourceSpec
+    members:
+      - name: resType
+        type: OSType
+      - name: resID
+        type: INTEGER
+    size: 6
+
+# ####
+
+- struct:
+    name: ComponentResource
+    members:
+      - name: cd
+        type: ComponentDescription
+      - name: component
+        type: ResourceSpec
+      - name: componentName
+        type: ResourceSpec
+      - name: componentInfo
+        type: ResourceSpec
+      - name: componentIcon
+        type: ResourceSpec
+    size: 44
+
+# ####
+
+- typedef:
+    name: ComponentResourcePtr
+    type: ComponentResource*
+
+# ####
+
+- typedef:
+    name: ComponentResourceHandle
+    type: ComponentResourcePtr*
+
+# ####
+
+- struct:
+    name: ComponentParameters
+    members:
+      - name: flags
+        type: UInt8
+      - name: paramSize
+        type: UInt8
+      - name: what
+        type: INTEGER
+      - name: params
+        type: int32_t[1]
+    size: 8
+
+# ####
+
+- funptr:
+    name: ComponentRoutineProcPtr
+    return: ComponentResult
+    args:
+      - name: cp
+        type: ComponentParameters*
+      - name: componentStorage
+        type: Handle
+
+# ####
+
+- funptr:
+    name: GetMissingComponentResourceProcPtr
+    return: OSErr
+    args:
+      - name: c
+        type: Component
+      - name: resType
+        type: OSType
+      - name: resID
+        type: INTEGER
+      - name: refCon
+        type: void*
+      - name: resource
+        type: Handle*
+
+# ####
+
+- funptr:
+    name: ComponentMPWorkFunctionProcPtr
+    return: ComponentResult
+    args:
+      - name: globalRefCon
+        type: void*
+      - name: header
+        type: void*
+
+# ####
+
+- typedef:
+    name: ComponentFunctionUPP
+    type: UniversalProcPtr
+
+# ####
+
+- dispatcher:
+    name: ComponentDispatch
+    trap: 43050
+    selector-location: D0L
+
+# ####
+
+- function:
+    name: RegisterComponentResource
+    return: Component
+    args:
+    - name: cr
+      type: ComponentResourceHandle
+    - name: global
+      type: INTEGER
+    dispatcher: ComponentDispatch
+    selector: 18
+
+# ####
+
+- function:
+    name: UnregisterComponent
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    dispatcher: ComponentDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: FindNextComponent
+    return: Component
+    args:
+    - name: aComponent
+      type: Component
+    - name: looking
+      type: ComponentDescription*
+    dispatcher: ComponentDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: CountComponents
+    return: int32_t
+    args:
+    - name: looking
+      type: ComponentDescription*
+    dispatcher: ComponentDispatch
+    selector: 3
+
+# ####
+
+- function:
+    name: GetComponentInfo
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: cd
+      type: ComponentDescription*
+    - name: componentName
+      type: Handle
+    - name: componentInfo
+      type: Handle
+    - name: componentIcon
+      type: Handle
+    dispatcher: ComponentDispatch
+    selector: 5
+
+# ####
+
+- function:
+    name: GetComponentListModSeed
+    return: int32_t
+    dispatcher: ComponentDispatch
+    selector: 6
+
+# ####
+
+- function:
+    name: GetComponentTypeModSeed
+    return: int32_t
+    args:
+    - name: componentType
+      type: OSType
+
+# ####
+
+- function:
+    name: OpenAComponent
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: ci
+      type: ComponentInstance*
+
+# ####
+
+- function:
+    name: OpenComponent
+    return: ComponentInstance
+    args:
+    - name: aComponent
+      type: Component
+    dispatcher: ComponentDispatch
+    selector: 7
+
+# ####
+
+- function:
+    name: CloseComponent
+    return: OSErr
+    args:
+    - name: aComponentInstance
+      type: ComponentInstance
+    dispatcher: ComponentDispatch
+    selector: 8
+
+# ####
+
+- function:
+    name: GetComponentInstanceError
+    return: OSErr
+    args:
+    - name: aComponentInstance
+      type: ComponentInstance
+    dispatcher: ComponentDispatch
+    selector: 10
+
+# ####
+
+- function:
+    name: ResolveComponentAlias
+    return: Component
+    args:
+    - name: aComponent
+      type: Component
+
+# ####
+
+- function:
+    name: GetComponentPublicResource
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: resourceType
+      type: OSType
+    - name: resourceID
+      type: INTEGER
+    - name: theResource
+      type: Handle*
+
+# ####
+
+- function:
+    name: GetComponentPublicResourceList
+    return: OSErr
+    args:
+    - name: resourceType
+      type: OSType
+    - name: resourceID
+      type: INTEGER
+    - name: flags
+      type: int32_t
+    - name: cd
+      type: ComponentDescription*
+    - name: missingProc
+      type: GetMissingComponentResourceUPP
+    - name: refCon
+      type: void*
+    - name: atomContainerPtr
+      type: void*
+
+# ####
+
+- function:
+    name: GetComponentPublicIndString
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: theString
+      type: Str255
+    - name: strListID
+      type: INTEGER
+    - name: index
+      type: INTEGER
+
+# ####
+
+- function:
+    name: SetComponentInstanceError
+    args:
+    - name: aComponentInstance
+      type: ComponentInstance
+    - name: theError
+      type: OSErr
+    dispatcher: ComponentDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: GetComponentRefcon
+    return: int32_t
+    args:
+    - name: aComponent
+      type: Component
+    dispatcher: ComponentDispatch
+    selector: 16
+
+# ####
+
+- function:
+    name: SetComponentRefcon
+    args:
+    - name: aComponent
+      type: Component
+    - name: theRefcon
+      type: int32_t
+    dispatcher: ComponentDispatch
+    selector: 17
+
+# ####
+
+- function:
+    name: OpenComponentResFile
+    return: INTEGER
+    args:
+    - name: aComponent
+      type: Component
+    dispatcher: ComponentDispatch
+    selector: 21
+
+# ####
+
+- function:
+    name: OpenAComponentResFile
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: resRef
+      type: INTEGER*
+
+# ####
+
+- function:
+    name: CloseComponentResFile
+    return: OSErr
+    args:
+    - name: refnum
+      type: INTEGER
+    dispatcher: ComponentDispatch
+    selector: 24
+
+# ####
+
+- function:
+    name: GetComponentResource
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: resType
+      type: OSType
+    - name: resID
+      type: INTEGER
+    - name: theResource
+      type: Handle*
+
+# ####
+
+- function:
+    name: GetComponentIndString
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: theString
+      type: Str255
+    - name: strListID
+      type: INTEGER
+    - name: index
+      type: INTEGER
+
+# ####
+
+- function:
+    name: GetComponentInstanceStorage
+    return: Handle
+    args:
+    - name: aComponentInstance
+      type: ComponentInstance
+    dispatcher: ComponentDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: SetComponentInstanceStorage
+    args:
+    - name: aComponentInstance
+      type: ComponentInstance
+    - name: theStorage
+      type: Handle
+    dispatcher: ComponentDispatch
+    selector: 13
+
+# ####
+
+- function:
+    name: GetComponentInstanceA5
+    return: int32_t
+    args:
+    - name: aComponentInstance
+      type: ComponentInstance
+    dispatcher: ComponentDispatch
+    selector: 14
+
+# ####
+
+- function:
+    name: SetComponentInstanceA5
+    args:
+    - name: aComponentInstance
+      type: ComponentInstance
+    - name: theA5
+      type: int32_t
+    dispatcher: ComponentDispatch
+    selector: 15
+
+# ####
+
+- function:
+    name: CountComponentInstances
+    return: int32_t
+    args:
+    - name: aComponent
+      type: Component
+    dispatcher: ComponentDispatch
+    selector: 19
+
+# ####
+
+- function:
+    name: CallComponentFunction
+    return: int32_t
+    args:
+    - name: params
+      type: ComponentParameters*
+    - name: func
+      type: ComponentFunctionUPP
+    dispatcher: ComponentDispatch
+    selector: 4294967295
+
+# ####
+
+- function:
+    name: CallComponentFunctionWithStorage
+    return: int32_t
+    args:
+    - name: storage
+      type: Handle
+    - name: params
+      type: ComponentParameters*
+    - name: func
+      type: ComponentFunctionUPP
+    dispatcher: ComponentDispatch
+    selector: 4294967295
+
+# ####
+
+- function:
+    name: CallComponentFunctionWithStorageProcInfo
+    return: int32_t
+    args:
+    - name: storage
+      type: Handle
+    - name: params
+      type: ComponentParameters*
+    - name: func
+      type: ProcPtr
+    - name: funcProcInfo
+      type: int32_t
+
+# ####
+
+- function:
+    name: DelegateComponentCall
+    return: int32_t
+    args:
+    - name: originalParams
+      type: ComponentParameters*
+    - name: ci
+      type: ComponentInstance
+    dispatcher: ComponentDispatch
+    selector: 36
+
+# ####
+
+- function:
+    name: SetDefaultComponent
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: flags
+      type: INTEGER
+    dispatcher: ComponentDispatch
+    selector: 30
+
+# ####
+
+- function:
+    name: OpenDefaultComponent
+    return: ComponentInstance
+    args:
+    - name: componentType
+      type: OSType
+    - name: componentSubType
+      type: OSType
+    dispatcher: ComponentDispatch
+    selector: 33
+
+# ####
+
+- function:
+    name: OpenADefaultComponent
+    return: OSErr
+    args:
+    - name: componentType
+      type: OSType
+    - name: componentSubType
+      type: OSType
+    - name: ci
+      type: ComponentInstance*
+
+# ####
+
+- function:
+    name: CaptureComponent
+    return: Component
+    args:
+    - name: capturedComponent
+      type: Component
+    - name: capturingComponent
+      type: Component
+    dispatcher: ComponentDispatch
+    selector: 28
+
+# ####
+
+- function:
+    name: UncaptureComponent
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    dispatcher: ComponentDispatch
+    selector: 29
+
+# ####
+
+- function:
+    name: RegisterComponentResourceFile
+    return: int32_t
+    args:
+    - name: resRefNum
+      type: INTEGER
+    - name: global
+      type: INTEGER
+    dispatcher: ComponentDispatch
+    selector: 20
+
+# ####
+
+- function:
+    name: GetComponentIconSuite
+    return: OSErr
+    args:
+    - name: aComponent
+      type: Component
+    - name: iconSuite
+      type: Handle*
+    dispatcher: ComponentDispatch
+    selector: 41
+
+# ####
+
+- function:
+    name: ComponentFunctionImplemented
+    return: int32_t
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: ftnNumber
+      type: INTEGER
+    m68k-inline:
+    - 12092
+    - 2
+    - 65533
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: GetComponentVersion
+    return: int32_t
+    args:
+    - name: ci
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 65532
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: ComponentSetTarget
+    return: int32_t
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: target
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 4
+    - 65530
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentOpen
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: self
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 4
+    - 65535
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentClose
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: self
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 4
+    - 65534
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentCanDo
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: ftnNumber
+      type: INTEGER
+    m68k-inline:
+    - 12092
+    - 2
+    - 65533
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentVersion
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 65532
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentRegister
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 65531
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentTarget
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: target
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 4
+    - 65530
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentUnregister
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 65529
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentGetMPWorkFunction
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: workFunction
+      type: ComponentMPWorkFunctionUPP*
+    - name: refCon
+      type: Ptr*
+    m68k-inline:
+    - 12092
+    - 8
+    - 65528
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: CallComponentGetPublicResource
+    return: ComponentResult
+    args:
+    - name: ci
+      type: ComponentInstance
+    - name: resourceType
+      type: OSType
+    - name: resourceID
+      type: INTEGER
+    - name: resource
+      type: Handle*
+    m68k-inline:
+    - 12092
+    - 10
+    - 65526
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: RegisterComponent
+    return: Component
+    args:
+    - name: cd
+      type: ComponentDescription*
+    - name: componentEntryPoint
+      type: ComponentRoutineUPP
+    - name: global
+      type: INTEGER
+    - name: componentName
+      type: Handle
+    - name: componentInfo
+      type: Handle
+    - name: componentIcon
+      type: Handle
+    dispatcher: ComponentDispatch
+    selector: 1

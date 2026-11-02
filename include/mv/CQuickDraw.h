@@ -325,8 +325,8 @@ pascal void OpenCPort(CGrafPtr arg0) M68K_INLINE(0xAA00);
 enum { _InitCPort = 0xAA01 };
 pascal void InitCPort(CGrafPtr arg0) M68K_INLINE(0xAA01);
 
-enum { _CloseCPort = 0xAA02 };
-pascal void CloseCPort(CGrafPtr arg0) M68K_INLINE(0xAA02);
+enum { _CloseCPort = 0xA87D };
+pascal void CloseCPort(CGrafPtr arg0) M68K_INLINE(0xA87D);
 
 enum { _RGBForeColor = 0xAA14 };
 pascal void RGBForeColor(RGBColor *arg0) M68K_INLINE(0xAA14);
@@ -599,6 +599,7 @@ pascal void CopyPalette(PaletteHandle src_palette, PaletteHandle dst_palette, in
 enum { _GetCWMgrPort = 0xAA48 };
 pascal void GetCWMgrPort(CGrafPtr *arg0) M68K_INLINE(0xAA48);
 
+// QDExtensions trap
 pascal QDErr NewGWorld(GWorldPtr *arg0, INTEGER arg1, const Rect *arg2, CTabHandle arg3, GDHandle arg4, GWorldFlags arg5) M68K_INLINE(0x203C, 0x0016, 0x0000, 0xAB1D);
 
 pascal Boolean LockPixels(PixMapHandle arg0) M68K_INLINE(0x203C, 0x0004, 0x0001, 0xAB1D);

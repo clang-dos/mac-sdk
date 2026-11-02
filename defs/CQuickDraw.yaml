@@ -711,7 +711,7 @@
     name: CloseCPort
     args:
       - type: CGrafPtr
-    trap: 0xAA02
+    trap: 0xA87D
     executor: C_
 
 # ####

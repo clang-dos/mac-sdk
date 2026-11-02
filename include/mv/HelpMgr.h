@@ -77,7 +77,7 @@ pascal OSErr HMGetDialogResID(INTEGER *residp) M68K_INLINE(0x303C, 0x0213, 0xA83
 
 pascal OSErr HMSetMenuResID(INTEGER menuid, INTEGER resid) M68K_INLINE(0x303C, 0x020D, 0xA830);
 
-pascal OSErr HMGetMenuResID(INTEGER *menuidp, INTEGER *residp) M68K_INLINE(0x303C, 0x0314, 0xA830);
+pascal OSErr HMGetMenuResID(INTEGER menuID, INTEGER *residp) M68K_INLINE(0x303C, 0x0314, 0xA830);
 
 pascal OSErr HMScanTemplateItems(INTEGER whichid, INTEGER whicresfile, ResType whictype) M68K_INLINE(0x303C, 0x0410, 0xA830);
 

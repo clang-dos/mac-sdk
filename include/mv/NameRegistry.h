@@ -55,12 +55,18 @@ pascal OSStatus RegistryEntryIterateCreate(RegEntryIter *cookie);
 
 pascal void RegistryEntryIterateDispose(RegEntryIter *cookie);
 
+// Each entry returned in foundEntry must be disposed of with
+// RegistryEntryIDDispose.
 pascal OSStatus RegistryEntryIterate(RegEntryIter *cookie, RegEntryIterationOp relationship, RegEntryID *foundEntry, Boolean *done);
 
+// Fails if the property already exists; use RegistryPropertySet to
+// change the value of an existing one.
 pascal OSStatus RegistryPropertyCreate(const RegEntryID *entryID, const RegPropertyName *propertyName, const void *propertyValue, RegPropertyValueSize propertySize);
 
 pascal OSStatus RegistryPropertyGetSize(const RegEntryID *entryID, const RegPropertyName *propertyName, RegPropertyValueSize *propertySize);
 
+// propertySize is the buffer size on entry and the value's size on
+// return.
 pascal OSStatus RegistryPropertyGet(const RegEntryID *entryID, const RegPropertyName *propertyName, void *propertyValue, RegPropertyValueSize *propertySize);
 
 pascal OSStatus RegistryPropertySet(const RegEntryID *entryID, const RegPropertyName *propertyName, const void *propertyValue, RegPropertyValueSize propertySize);

@@ -267,8 +267,8 @@
     name: HMGetMenuResID
     return: OSErr
     args:
-      - name: menuidp
-        type: INTEGER*
+      - name: menuID
+        type: INTEGER
       - name: residp
         type: INTEGER*
     dispatcher: Pack14

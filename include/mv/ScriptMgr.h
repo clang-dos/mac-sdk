@@ -246,7 +246,7 @@ pascal INTEGER Char2Pixel(Ptr textbufp, INTEGER len, INTEGER slop, INTEGER offse
 
 pascal void FindWord(Ptr textbufp, INTEGER length, INTEGER offset, Boolean leftside, Ptr breaks, INTEGER *offsets) M68K_INLINE(0x2F3C, 0x8012, 0x001A, 0xA8B5);
 
-pascal void HiliteText(Ptr textbufp, INTEGER firstoffset, INTEGER secondoffset, INTEGER *offsets) M68K_INLINE(0x2F3C, 0x800E, 0x001C, 0xA8B5);
+pascal void HiliteText(Ptr textbufp, INTEGER textLength, INTEGER firstoffset, INTEGER secondoffset, INTEGER *offsets) M68K_INLINE(0x2F3C, 0x800E, 0x001C, 0xA8B5);
 
 pascal void DrawJust(Ptr textbufp, INTEGER length, INTEGER slop) M68K_INLINE(0x2F3C, 0x8008, 0x001E, 0xA8B5);
 
@@ -300,6 +300,7 @@ pascal void StripDiacritics(Ptr textp, INTEGER len, ScriptCode script);
 
 pascal void UppercaseStripDiacritics(Ptr textp, INTEGER len, ScriptCode script);
 
+// the above four functions are actually one entry point on 68K:
 pascal void TextUtilFunctions(int16_t selector, Ptr textp, INTEGER len, ScriptCode script) M68K_INLINE(0x2F3C, 0x800A, 0xFFB6, 0xA8B5);
 
 pascal INTEGER CharacterByteType(Ptr textBuf, INTEGER textOffset, ScriptCode script) M68K_INLINE(0x2F3C, 0xC206, 0x0010, 0xA8B5);

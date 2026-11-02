@@ -649,6 +649,7 @@ pascal OSErr Eject(ConstStringPtr voln, INTEGER vrn);
 
 pascal OSErr PBAllocContig(ParmBlkPtr pb, Boolean async);
 
+// TODO: Trap?
 enum { _PBOpenSync = 0xA000 };
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) OSErr PBOpenSync(ParmBlkPtr pb) {
@@ -2519,8 +2520,10 @@ pascal OSErr HOpenDF(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByt
 
 pascal OSErr HRename(INTEGER vref, LONGINT dirid, ConstStringPtr src, ConstStringPtr dst);
 
+// NOTRAP_FUNCTION2(HRename);
 pascal OSErr HDelete(INTEGER vref, LONGINT dirid, ConstStringPtr name);
 
+// NOTRAP_FUNCTION2(HDelete);
 pascal OSErr GetWDInfo(INTEGER wd, INTEGER *vrefp, LONGINT *dirp, LONGINT *procp);
 
 

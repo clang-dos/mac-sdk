@@ -671,6 +671,8 @@
     args:
       - name: textbufp
         type: Ptr
+      - name: textLength
+        type: INTEGER
       - name: firstoffset
         type: INTEGER
       - name: secondoffset

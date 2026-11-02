@@ -141,6 +141,22 @@ struct Point {
     INTEGER h;
 };
 
+typedef struct wide wide;
+struct wide {
+    SInt32 hi;
+    UInt32 lo;
+};
+
+typedef struct UnsignedWide UnsignedWide;
+struct UnsignedWide {
+    UInt32 hi;
+    UInt32 lo;
+};
+
+typedef int64_t SInt64;
+
+typedef uint64_t UInt64;
+
 #pragma options align=reset
 
 #endif

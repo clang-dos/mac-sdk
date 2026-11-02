@@ -558,7 +558,7 @@
         type: bool
         register: TrapBit<SYSBIT>
     executor: _PurgeSpace_flags
-    trap: 0xA062
+    trap: 0xA162
     variants:
       - PurgeSpace
       - PurgeSpaceSys

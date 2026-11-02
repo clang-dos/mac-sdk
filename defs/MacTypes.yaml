@@ -359,3 +359,37 @@
       - name: h
         type: INTEGER
     size: 4
+
+# ####
+
+- struct:
+    name: wide
+    members:
+      - name: hi
+        type: SInt32
+      - name: lo
+        type: UInt32
+    size: 8
+
+# ####
+
+- struct:
+    name: UnsignedWide
+    members:
+      - name: hi
+        type: UInt32
+      - name: lo
+        type: UInt32
+    size: 8
+
+# ####
+
+- typedef:
+    name: SInt64
+    type: int64_t
+
+# ####
+
+- typedef:
+    name: UInt64
+    type: uint64_t

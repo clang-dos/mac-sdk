@@ -56,6 +56,17 @@ CRMInstall
 CRMRemove
 CRMSearch
 InitCRM
+GetComponentTypeModSeed
+OpenAComponent
+ResolveComponentAlias
+GetComponentPublicResource
+GetComponentPublicResourceList
+GetComponentPublicIndString
+OpenAComponentResFile
+GetComponentResource
+GetComponentIndString
+CallComponentFunctionWithStorageProcInfo
+OpenADefaultComponent
 OpenDriver
 CloseDriver
 Control
