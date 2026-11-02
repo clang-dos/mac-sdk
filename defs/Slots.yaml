@@ -1,0 +1,757 @@
+- dispatcher:
+    name: SlotManager
+    trap: 0xA06E
+    selector-location: D0W
+
+# ####
+
+- struct:
+    name: SpBlock
+    size: 56
+    members:
+    - name: spResult
+      type: int32_t
+    - name: spsPointer
+      type: Ptr
+    - name: spSize
+      type: int32_t
+    - name: spOffsetData
+      type: int32_t
+    - name: spIOFileName
+      type: Ptr
+    - name: spsExecPBlk
+      type: Ptr
+    - name: spParamData
+      type: Ptr
+    - name: spMisc
+      type: Ptr
+    - name: spReserved
+      type: int32_t
+    - name: spIOReserved
+      type: INTEGER
+    - name: spRefNum
+      type: INTEGER
+    - name: spCategory
+      type: INTEGER
+    - name: spCType
+      type: INTEGER
+    - name: spDrvrSW
+      type: INTEGER
+    - name: spDrvrHW
+      type: INTEGER
+    - name: spTBMask
+      type: int8_t
+    - name: spSlot
+      type: int8_t
+    - name: spID
+      type: int8_t
+    - name: spExtDev
+      type: int8_t
+    - name: spHwDev
+      type: int8_t
+    - name: spByteLanes
+      type: int8_t
+    - name: spFlags
+      type: int8_t
+    - name: spKey
+      type: int8_t
+
+# ####
+
+- typedef:
+    name: SpBlockPtr
+    type: SpBlock*
+
+# ####
+
+- struct:
+    name: SQElem
+    size: 16
+    members:
+    - name: sqLink
+      type: QElemPtr
+    - name: sqType
+      type: INTEGER
+    - name: sqPrio
+      type: INTEGER
+    - name: sqAddr
+      type: Ptr
+    - name: sqParm
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: SQElemPtr
+    type: SQElem*
+
+# ####
+
+- enum:
+    values:
+    - name: fCardIsChanged
+      value: 1
+    - name: fCkForSame
+      value: 0
+    - name: fCkForNext
+      value: 1
+    - name: fWarmStart
+      value: 2
+
+# ####
+
+- enum:
+    values:
+    - name: stateNil
+      value: 0
+    - name: stateSDMInit
+      value: 1
+    - name: statePRAMInit
+      value: 2
+    - name: statePInit
+      value: 3
+    - name: stateSInit
+      value: 4
+
+# ####
+
+- function:
+    name: SReadByte
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    comment: Slot Manager
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 0
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadWord
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 1
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadLong
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 2
+    trap: 41070
+
+# ####
+
+- function:
+    name: SGetCString
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 3
+    trap: 41070
+
+# ####
+
+- function:
+    name: SGetBlock
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 5
+    trap: 41070
+
+# ####
+
+- function:
+    name: SFindStruct
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 6
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadStruct
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 7
+    trap: 41070
+
+# ####
+
+- function:
+    name: SVersion
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 8
+    trap: 41070
+
+# ####
+
+- function:
+    name: SetSRsrcState
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 9
+    trap: 41070
+
+# ####
+
+- function:
+    name: InsertSRTRec
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 10
+    trap: 41070
+
+# ####
+
+- function:
+    name: SGetSRsrc
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 11
+    trap: 41070
+
+# ####
+
+- function:
+    name: SGetTypeSRsrc
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 12
+    trap: 41070
+
+# ####
+
+- function:
+    name: SGetSRsrcPtr
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 29
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadInfo
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 16
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadPRAMRec
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 17
+    trap: 41070
+
+# ####
+
+- function:
+    name: SPutPRAMRec
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 18
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadFHeader
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 19
+    trap: 41070
+
+# ####
+
+- function:
+    name: SNextSRsrc
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 20
+    trap: 41070
+
+# ####
+
+- function:
+    name: SNextTypeSRsrc
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 21
+    trap: 41070
+
+# ####
+
+- function:
+    name: SRsrcInfo
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 22
+    trap: 41070
+
+# ####
+
+- function:
+    name: SCkCardStat
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 24
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadDrvrName
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 25
+    trap: 41070
+
+# ####
+
+- function:
+    name: SFindDevBase
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 27
+    trap: 41070
+
+# ####
+
+- function:
+    name: SFindBigDevBase
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 28
+    trap: 41070
+
+# ####
+
+- function:
+    name: InitSDeclMgr
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 32
+    trap: 41070
+
+# ####
+
+- function:
+    name: SPrimaryInit
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 33
+    trap: 41070
+
+# ####
+
+- function:
+    name: SCardChanged
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 34
+    trap: 41070
+
+# ####
+
+- function:
+    name: SExec
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 35
+    trap: 41070
+
+# ####
+
+- function:
+    name: SOffsetData
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 36
+    trap: 41070
+
+# ####
+
+- function:
+    name: SInitPRAMRecs
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 37
+    trap: 41070
+
+# ####
+
+- function:
+    name: SReadPBSize
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 38
+    trap: 41070
+
+# ####
+
+- function:
+    name: SCalcStep
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 40
+    trap: 41070
+
+# ####
+
+- function:
+    name: SInitSRsrcTable
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 41
+    trap: 41070
+
+# ####
+
+- function:
+    name: SSearchSRT
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 42
+    trap: 41070
+
+# ####
+
+- function:
+    name: SUpdateSRT
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 43
+    trap: 41070
+
+# ####
+
+- function:
+    name: SCalcSPointer
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 44
+    trap: 41070
+
+# ####
+
+- function:
+    name: SGetDriver
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 45
+    trap: 41070
+
+# ####
+
+- function:
+    name: SPtrToSlot
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 46
+    trap: 41070
+
+# ####
+
+- function:
+    name: SFindSInfoRecPtr
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 47
+    trap: 41070
+
+# ####
+
+- function:
+    name: SFindSRsrcPtr
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 48
+    trap: 41070
+
+# ####
+
+- function:
+    name: SDeleteSRTRec
+    return: OSErr
+    args:
+    - name: spBlkPtr
+      type: SpBlockPtr
+      register: A0
+    returnreg: D0
+    dispatcher: SlotManager
+    selector: 49
+    trap: 41070
+
+# ####
+
+- function:
+    name: SIntInstall
+    return: OSErr
+    args:
+    - name: sIntQElemPtr
+      type: SQElemPtr
+      register: A0
+    - name: theSlot
+      type: INTEGER
+      register: D0
+    returnreg: D0
+    trap: 41077
+
+# ####
+
+- function:
+    name: SIntRemove
+    return: OSErr
+    args:
+    - name: sIntQElemPtr
+      type: SQElemPtr
+      register: A0
+    - name: theSlot
+      type: INTEGER
+      register: D0
+    returnreg: D0
+    trap: 41078
+
+# ####
+
+- function:
+    name: OpenSlotSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    returnreg: D0
+    trap: 41472
+
+# ####
+
+- function:
+    name: OpenSlotAsync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    returnreg: D0
+    trap: 42496
+
+# ####
+
+- function:
+    name: OpenSlot
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+    - name: async
+      type: Boolean
+    m68k-needs: [OpenSlotSync, OpenSlotAsync]
+    m68k-body: |
+      return async ? OpenSlotAsync(paramBlock) : OpenSlotSync(paramBlock);

@@ -1,0 +1,325 @@
+- enum:
+    values:
+    - name: sListening
+      value: 1
+    - name: sPassive
+      value: 2
+    - name: sOpening
+      value: 3
+    - name: sOpen
+      value: 4
+    - name: sClosing
+      value: 5
+    - name: sClosed
+      value: 6
+    comment: Connection states (TRCCB.state)
+
+# ####
+
+- enum:
+    values:
+    - name: eClosed
+      value: 128
+    - name: eTearDown
+      value: 64
+    - name: eAttention
+      value: 32
+    - name: eFwdReset
+      value: 16
+    comment: Connection events (TRCCB.userFlags)
+
+# ####
+
+- enum:
+    values:
+    - name: ocRequest
+      value: 1
+    - name: ocPassive
+      value: 2
+    - name: ocAccept
+      value: 3
+    - name: ocEstablish
+      value: 4
+    comment: Open modes
+
+# ####
+
+- enum:
+    values:
+    - name: attnBufSize
+      value: 570
+    - name: minDSPQueueSize
+      value: 100
+
+# ####
+
+- enum:
+    values:
+    - name: errOpenDenied
+      value: -1273
+    - name: errDSPQueueSize
+      value: -1274
+    - name: errFwdReset
+      value: -1275
+    - name: errAttention
+      value: -1276
+    - name: errOpening
+      value: -1277
+    - name: errState
+      value: -1278
+    - name: errAborted
+      value: -1279
+    - name: errRefNum
+      value: -1280
+
+# ####
+
+- struct:
+    name: TRCCB
+    size: 242
+    members:
+    - type: struct TRCCB*
+      name: ccbLink
+    - type: uint16_t
+      name: refNum
+    - type: uint16_t
+      name: state
+    - type: uint8_t
+      name: userFlags
+    - type: uint8_t
+      name: localSocket
+    - type: AddrBlock
+      name: remoteAddress
+    - type: uint16_t
+      name: attnCode
+    - type: uint16_t
+      name: attnSize
+    - type: void*
+      name: attnPtr
+    - type: uint8_t[220]
+      name: reserved
+    comment: The connection control block
+
+# ####
+
+- typedef:
+    name: TPCCB
+    type: TRCCB*
+
+# ####
+
+- typedef:
+    name: ADSPConnectionEventUPP
+    type: UniversalProcPtr
+    comment: Called with the CCB in A1
+
+# ####
+
+- typedef:
+    name: ADSPCompletionUPP
+    type: UniversalProcPtr
+    comment: Called with the parameter block in A0
+
+# ####
+
+- struct:
+    name: TRinitParams
+    size: 26
+    members:
+    - type: TPCCB
+      name: ccbPtr
+    - type: ADSPConnectionEventUPP
+      name: userRoutine
+    - type: uint16_t
+      name: sendQSize
+    - type: Ptr
+      name: sendQueue
+    - type: uint16_t
+      name: recvQSize
+    - type: Ptr
+      name: recvQueue
+    - type: Ptr
+      name: attnPtr
+    - type: uint8_t
+      name: localSocket
+    - type: uint8_t
+      name: filler1
+
+# ####
+
+- struct:
+    name: TRopenParams
+    size: 34
+    members:
+    - type: uint16_t
+      name: localCID
+    - type: uint16_t
+      name: remoteCID
+    - type: AddrBlock
+      name: remoteAddress
+    - type: AddrBlock
+      name: filterAddress
+    - type: uint32_t
+      name: sendSeq
+    - type: uint16_t
+      name: sendWindow
+    - type: uint32_t
+      name: recvSeq
+    - type: uint32_t
+      name: attnSendSeq
+    - type: uint32_t
+      name: attnRecvSeq
+    - type: uint8_t
+      name: ocMode
+    - type: uint8_t
+      name: ocInterval
+    - type: uint8_t
+      name: ocMaximum
+    - type: uint8_t
+      name: filler2
+
+# ####
+
+- struct:
+    name: TRcloseParams
+    size: 2
+    members:
+    - type: uint8_t
+      name: abort
+    - type: uint8_t
+      name: filler3
+
+# ####
+
+- struct:
+    name: TRioParams
+    size: 10
+    members:
+    - type: uint16_t
+      name: reqCount
+    - type: uint16_t
+      name: actCount
+    - type: Ptr
+      name: dataPtr
+    - type: uint8_t
+      name: eom
+    - type: uint8_t
+      name: flush
+
+# ####
+
+- struct:
+    name: TRattnParams
+    size: 10
+    members:
+    - type: uint16_t
+      name: attnCode
+    - type: uint16_t
+      name: attnSize
+    - type: Ptr
+      name: attnData
+    - type: uint8_t
+      name: attnInterval
+    - type: uint8_t
+      name: filler4
+
+# ####
+
+- struct:
+    name: TRstatusParams
+    size: 12
+    members:
+    - type: TPCCB
+      name: statusCCB
+    - type: uint16_t
+      name: sendQPending
+    - type: uint16_t
+      name: sendQFree
+    - type: uint16_t
+      name: recvQPending
+    - type: uint16_t
+      name: recvQFree
+
+# ####
+
+- struct:
+    name: TRoptionParams
+    size: 6
+    members:
+    - type: uint16_t
+      name: sendBlocking
+    - type: uint8_t
+      name: sendTimer
+    - type: uint8_t
+      name: rtmtTimer
+    - type: uint8_t
+      name: badSeqMax
+    - type: uint8_t
+      name: useCheckSum
+
+# ####
+
+- struct:
+    name: TRnewcidParams
+    size: 2
+    members:
+    - type: uint16_t
+      name: newcid
+
+# ####
+
+- struct:
+    name: DSPParamBlock
+    size: 68
+    members:
+    - type: QElemPtr
+      name: qLink
+    - type: INTEGER
+      name: qType
+    - type: INTEGER
+      name: ioTrap
+    - type: Ptr
+      name: ioCmdAddr
+    - type: ADSPCompletionUPP
+      name: ioCompletion
+    - type: OSErr
+      name: ioResult
+    - type: StringPtr
+      name: ioNamePtr
+    - type: INTEGER
+      name: ioVRefNum
+    - type: INTEGER
+      name: ioCRefNum
+    - type: INTEGER
+      name: csCode
+    - type: int32_t
+      name: qStatus
+    - type: INTEGER
+      name: ccbRefNum
+    - name: u
+      union:
+      - type: TRinitParams
+        name: initParams
+      - type: TRopenParams
+        name: openParams
+      - type: TRcloseParams
+        name: closeParams
+      - type: TRioParams
+        name: ioParams
+      - type: TRattnParams
+        name: attnParams
+      - type: TRstatusParams
+        name: statusParams
+      - type: TRoptionParams
+        name: optionParams
+      - type: TRnewcidParams
+        name: newCIDParams
+    comment: |-
+      The .DSP driver parameter block. Open the driver with OpenDriver(".DSP")
+      and pass its reference number in ioCRefNum; csCode is one of dspInit, dspOpen, ...
+
+# ####
+
+- typedef:
+    name: DSPPBPtr
+    type: DSPParamBlock*

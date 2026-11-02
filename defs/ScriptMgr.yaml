@@ -1,0 +1,2211 @@
+- typedef:
+    name: String2DateStatus
+    type: INTEGER
+
+# ####
+
+- enum:
+    values:
+      - name: smRoman
+        value: 0
+
+# ####
+
+- enum:
+    values:
+      - name: smCharPunct
+        value: 0
+      - name: smCharAscii
+        value: 1
+      - name: smCharEuro
+        value: 7
+
+# ####
+
+- enum:
+    values:
+      - name: smPunctNormal
+        value: 0x0000
+      - name: smPunctNumber
+        value: 0x0100
+      - name: smPunctSymbol
+        value: 0x0200
+      - name: smPunctBlank
+        value: 0x0300
+
+# ####
+
+- enum:
+    values:
+      - name: smCharLeft
+        value: 0x0000
+      - name: smCharRight
+        value: 0x2000
+
+# ####
+
+- enum:
+    values:
+      - name: smCharLower
+        value: 0x0000
+      - name: smCharUpper
+        value: 0x4000
+
+# ####
+
+- enum:
+    values:
+      - name: smChar1byte
+        value: 0x0000
+      - name: smChar2byte
+        value: 0x8000
+
+# ####
+
+- enum:
+    values:
+      - name: smTransAscii
+        value: 0
+      - name: smTransNative
+        value: 1
+      - name: smTransLower
+        value: 16384
+      - name: smTransUpper
+        value: 32768
+      - name: smMaskAscii
+        value: 1
+      - name: smMaskNative
+        value: 2
+      - name: smMaskAll
+        value: -1
+
+# ####
+
+- enum:
+    values:
+      - name: smScriptVersion
+        value: 0
+      - name: smScriptMunged
+        value: 2
+      - name: smScriptEnabled
+        value: 4
+      - name: smScriptRight
+        value: 6
+      - name: smScriptJust
+        value: 8
+      - name: smScriptRedraw
+        value: 10
+      - name: smScriptSysFond
+        value: 12
+      - name: smScriptAppFond
+        value: 14
+      - name: smScriptNumber
+        value: 16
+      - name: smScriptDate
+        value: 18
+      - name: smScriptSort
+        value: 20
+      - name: smScriptRsvd1
+        value: 22
+      - name: smScriptRsvd2
+        value: 24
+      - name: smScriptRsvd3
+        value: 26
+      - name: smScriptRsvd4
+        value: 28
+      - name: smScriptRsvd5
+        value: 30
+      - name: smScriptKeys
+        value: 32
+      - name: smScriptIcon
+        value: 34
+      - name: smScriptPrint
+        value: 36
+      - name: smScriptTrap
+        value: 38
+      - name: smScriptCreator
+        value: 40
+      - name: smScriptFile
+        value: 42
+      - name: smScriptName
+        value: 44
+
+# ####
+
+- enum:
+    values:
+      - name: smVersion
+        value: 0
+      - name: smMunged
+        value: 2
+      - name: smEnabled
+        value: 4
+      - name: smBiDirect
+        value: 6
+      - name: smFontForce
+        value: 8
+      - name: smIntlForce
+        value: 10
+      - name: smForced
+        value: 12
+      - name: smDefault
+        value: 14
+      - name: smPrint
+        value: 16
+      - name: smSysScript
+        value: 18
+      - name: smAppScript
+        value: 20
+      - name: smKeyScript
+        value: 22
+      - name: smSysRef
+        value: 24
+      - name: smKeyCache
+        value: 26
+      - name: smKeySwap
+        value: 28
+
+# ####
+
+- enum:
+    values:
+      - name: smKCHRCache
+        value: 38
+
+# ####
+
+- enum:
+    values:
+      - name: smVerbNotFound
+        value: -1
+
+# ####
+
+- enum:
+    values:
+      - name: smBreakWord
+        value: 0
+      - name: smBreakChar
+        value: 1
+      - name: smBreakOverflow
+        value: 2
+
+# ####
+
+- enum:
+    values:
+      - name: NotTruncated
+        value: 0
+      - name: Truncated
+        value: 1
+      - name: TruncErr
+        value: -1
+    comment: |
+      TruncText return codes
+
+# ####
+
+- typedef:
+    name: StyledLineBreakCode
+    type: uint8_t
+
+# ####
+
+- struct:
+    name: DateCacheRec
+    members:
+      - name: hidden
+        type: int16_t[256]
+    size: 512
+
+# ####
+
+- typedef:
+    name: DateCachePtr
+    type: DateCacheRec*
+
+# ####
+
+- struct:
+    name: LongDateRec
+    members:
+      - name: era
+        type: int16_t
+      - name: year
+        type: int16_t
+      - name: month
+        type: int16_t
+      - name: day
+        type: int16_t
+      - name: hour
+        type: int16_t
+      - name: minute
+        type: int16_t
+      - name: second
+        type: int16_t
+      - name: dayOfWeek
+        type: int16_t
+      - name: dayOfYear
+        type: int16_t
+      - name: weekOfYear
+        type: int16_t
+      - name: pm
+        type: int16_t
+      - name: res1
+        type: int16_t
+      - name: res2
+        type: int16_t
+      - name: res3
+        type: int16_t
+    size: 28
+
+# ####
+
+- typedef:
+    name: LongDatePtr
+    type: LongDateRec*
+
+# ####
+
+- typedef:
+    name: TruncCode
+    type: INTEGER
+
+# ####
+
+- typedef:
+    name: JustStyleCode
+    type: int16_t
+
+# ####
+
+- typedef:
+    name: CharByteTable
+    type: int8_t[256]
+
+# ####
+
+- typedef:
+    name: ScriptRunStatus
+    type: int16_t
+    comment: |
+      Not sure this is correct, since in IM
+      				  ScriptRunStatus is a record with two
+      				  Signed Bytes
+
+# ####
+
+- typedef:
+    name: FormatStatus
+    type: INTEGER
+
+# ####
+
+- struct:
+    name: NumFormatStringRec
+    members:
+      - name: fLength
+        type: Byte
+      - name: fVersion
+        type: Byte
+      - name: data
+        type: SignedByte[254]
+    size: 256
+
+# ####
+
+- typedef:
+    name: WideChar
+    type: uint16_t
+    size: 2
+
+# ####
+
+- struct:
+    members:
+      - name: size
+        type: INTEGER
+      - name: data
+        type: WideChar[10]
+    name: WideCharArr
+    size: 22
+
+# ####
+
+- struct:
+    name: NumberParts
+    members:
+      - name: version
+        type: INTEGER
+      - name: data
+        type: WideChar[31]
+      - name: pePlus
+        type: WideCharArr
+      - name: peMinus
+        type: WideCharArr
+      - name: peMinusPlus
+        type: WideCharArr
+      - name: altNumTable
+        type: WideCharArr
+      - name: reserved
+        type: char[20]
+    size: 172
+
+# ####
+
+- typedef:
+    name: Extended80
+    type: extended80
+    size: 10
+
+# ####
+
+- typedef:
+    name: ToggleResults
+    type: int16_t
+    size: 2
+
+# ####
+
+- typedef:
+    name: LongDateField
+    type: uint8_t
+    size: 1
+
+# ####
+
+- typedef:
+    name: DateDelta
+    type: char
+    size: 1
+
+# ####
+
+- struct:
+    name: TogglePB
+    members:
+      - name: togFlags
+        type: int32_t
+      - name: amChars
+        type: ResType
+      - name: pmChars
+        type: ResType
+      - name: reserved
+        type: int32_t[4]
+    size: 28
+
+# ####
+
+- enum:
+    values:
+      - name: smSystemScript
+        value: -1
+
+# ####
+
+- lowmem:
+    name: TESysJust
+    type: INTEGER
+    address: 0xBAC
+    comment: |
+      ScriptMgr ToolEqu.a (true-b);
+
+# ####
+
+- dispatcher:
+    name: ScriptUtil
+    trap: 0xA8B5
+    selector-location: StackL
+
+# ####
+
+- function:
+    name: VisibleLength
+    return: LONGINT
+    args:
+      - name: textp
+        type: Ptr
+      - name: len
+        type: LONGINT
+    dispatcher: ScriptUtil
+    selector: 0x84080028
+    executor: C_
+
+# ####
+
+- function:
+    name: LongDateToSeconds
+    args:
+      - name: ldatep
+        type: LongDateRec*
+      - name: secs_outp
+        type: ULONGINT*
+    dispatcher: ScriptUtil
+    selector: 0x8008FFF2
+    executor: C_
+
+# ####
+
+- function:
+    name: LongSecondsToDate
+    args:
+      - name: secs_inp
+        type: ULONGINT*
+      - name: ldatep
+        type: LongDateRec*
+    dispatcher: ScriptUtil
+    selector: 0x8008FFF0
+    executor: C_
+
+# ####
+
+- function:
+    name: GetScriptManagerVariable
+    return: LONGINT
+    args:
+      - name: verb
+        type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x84020008
+    executor: C_
+
+# ####
+
+- function:
+    name: SetScriptManagerVariable
+    return: OSErr
+    args:
+      - name: verb
+        type: INTEGER
+      - name: param
+        type: LONGINT
+    dispatcher: ScriptUtil
+    selector: 0x8206000A
+    executor: C_
+
+# ####
+
+- function:
+    name: GetScriptVariable
+    return: LONGINT
+    args:
+      - name: script
+        type: INTEGER
+      - name: verb
+        type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x8404000C
+    executor: C_
+
+# ####
+
+- function:
+    name: SetScriptVariable
+    return: OSErr
+    args:
+      - name: script
+        type: INTEGER
+      - name: verb
+        type: INTEGER
+      - name: param
+        type: LONGINT
+    dispatcher: ScriptUtil
+    selector: 0x8208000E
+    executor: C_
+
+# ####
+
+- function:
+    name: FontToScript
+    return: INTEGER
+    args:
+      - name: fontnum
+        type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x82020006
+    executor: C_
+
+# ####
+
+- function:
+    name: Transliterate
+    return: INTEGER
+    args:
+      - name: srch
+        type: Handle
+      - name: dsth
+        type: Handle
+      - name: target
+        type: INTEGER
+      - name: srcmask
+        type: LONGINT
+    dispatcher: ScriptUtil
+    selector: 0x820E0018
+    executor: C_
+
+# ####
+
+- function:
+    name: FontScript
+    return: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x82000000
+    executor: C_
+
+# ####
+
+- function:
+    name: IntlScript
+    return: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x82000002
+    executor: C_
+
+# ####
+
+- function:
+    name: KeyScript
+    args:
+      - name: scriptcode
+        type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x80020004
+    executor: C_
+
+# ####
+
+- function:
+    name: CharType
+    return: INTEGER
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: offset
+        type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x82060012
+    executor: C_
+
+# ####
+
+- function:
+    name: MeasureJust
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: length
+        type: INTEGER
+      - name: slop
+        type: INTEGER
+      - name: charlocs
+        type: Ptr
+    dispatcher: ScriptUtil
+    selector: 0x800C0020
+    executor: C_
+
+# ####
+
+- function:
+    name: Pixel2Char
+    return: INTEGER
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: len
+        type: INTEGER
+      - name: slop
+        type: INTEGER
+      - name: pixwidth
+        type: INTEGER
+      - name: leftsidep
+        type: Boolean*
+    dispatcher: ScriptUtil
+    selector: 0x820E0014
+    executor: C_
+
+# ####
+
+- function:
+    name: Char2Pixel
+    return: INTEGER
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: len
+        type: INTEGER
+      - name: slop
+        type: INTEGER
+      - name: offset
+        type: INTEGER
+      - name: dir
+        type: SignedByte
+    dispatcher: ScriptUtil
+    selector: 0x820C0016
+    executor: C_
+
+# ####
+
+- function:
+    name: FindWord
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: length
+        type: INTEGER
+      - name: offset
+        type: INTEGER
+      - name: leftside
+        type: Boolean
+      - name: breaks
+        type: Ptr
+      - name: offsets
+        type: INTEGER*
+    dispatcher: ScriptUtil
+    selector: 0x8012001A
+    executor: C_
+
+# ####
+
+- function:
+    name: HiliteText
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: textLength
+        type: INTEGER
+      - name: firstoffset
+        type: INTEGER
+      - name: secondoffset
+        type: INTEGER
+      - name: offsets
+        type: INTEGER*
+    dispatcher: ScriptUtil
+    selector: 0x800E001C
+    executor: C_
+
+# ####
+
+- function:
+    name: DrawJust
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: length
+        type: INTEGER
+      - name: slop
+        type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x8008001E
+    executor: C_
+
+# ####
+
+- function:
+    name: StringToTime
+    return: String2DateStatus
+    args:
+      - name: textp
+        type: Ptr
+      - name: len
+        type: LONGINT
+      - name: cachep
+        type: Ptr
+      - name: lenusedp
+        type: LONGINT*
+      - name: datetimep
+        type: Ptr*
+    dispatcher: ScriptUtil
+    selector: 0x8214FFF4
+    executor: C_
+
+# ####
+
+- function:
+    name: GetSysDirection
+    return: INTEGER
+    m68k-body: |
+      return *(INTEGER *)0xBAC;
+
+# ####
+
+- function:
+    name: SetSysDirection
+    args:
+      - name: just
+        type: INTEGER
+    m68k-body: |
+      *(INTEGER *)0xBAC = just;
+
+# ####
+
+- function:
+    name: InitDateCache
+    return: OSErr
+    args:
+      - name: theCache
+        type: DateCachePtr
+    dispatcher: ScriptUtil
+    selector: 0x8204FFF8
+    executor: C_
+
+# ####
+
+- function:
+    name: CharByte
+    return: INTEGER
+    args:
+      - name: textBuf
+        type: Ptr
+      - name: textOffset
+        type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 0x82060010
+    executor: C_
+
+# ####
+
+- function:
+    name: StringToDate
+    return: String2DateStatus
+    args:
+      - name: text
+        type: Ptr
+      - name: length
+        type: int32_t
+      - name: cache
+        type: DateCachePtr
+      - name: length_used_ret
+        type: int32_t*
+      - name: date_time
+        type: LongDatePtr
+    dispatcher: ScriptUtil
+    selector: 0x8214FFF6
+    executor: C_
+
+# ####
+
+- function:
+    name: StyledLineBreak
+    return: StyledLineBreakCode
+    args:
+      - name: textp
+        type: Ptr
+      - name: length
+        type: int32_t
+      - name: text_start
+        type: int32_t
+      - name: text_end
+        type: int32_t
+      - name: flags
+        type: int32_t
+      - name: text_width_fp
+        type: Fixed*
+      - name: text_offset
+        type: int32_t*
+    dispatcher: ScriptUtil
+    selector: 0x821CFFFE
+    executor: C_
+
+# ####
+
+- function:
+    name: MeasureJustified
+    args:
+      - name: text
+        type: Ptr
+      - name: length
+        type: int32_t
+      - name: slop
+        type: Fixed
+      - name: charLocs
+        type: Ptr
+      - name: run_pos
+        type: JustStyleCode
+      - name: numer
+        type: Point
+      - name: denom
+        type: Point
+    dispatcher: ScriptUtil
+    selector: 0x801A0034
+    executor: C_
+
+# ####
+
+- function:
+    name: ParseTable
+    return: Boolean
+    args:
+      - name: table
+        type: CharByteTable
+    dispatcher: ScriptUtil
+    selector: 0x82040022
+    executor: C_
+
+# ####
+
+- function:
+    name: FillParseTable
+    return: Boolean
+    args:
+      - name: table
+        type: CharByteTable
+      - name: script
+        type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 0xC2040022
+    executor: C_
+
+# ####
+
+- function:
+    name: ReplaceText
+    return: INTEGER
+    args:
+      - name: base_text
+        type: Handle
+      - name: subst_text
+        type: Handle
+      - name: key
+        type: Str15
+    dispatcher: ScriptUtil
+    selector: 0x820CFFDC
+    executor: C_
+
+# ####
+
+- function:
+    name: TruncString
+    return: INTEGER
+    args:
+      - name: width
+        type: INTEGER
+      - name: string
+        type: Str255
+      - name: code
+        type: TruncCode
+    dispatcher: ScriptUtil
+    selector: 0x8208FFE0
+    executor: C_
+
+# ####
+
+- function:
+    name: StringToExtended
+    return: FormatStatus
+    args:
+      - name: string
+        type: Str255
+      - name: formatp
+        type: NumFormatStringRec*
+      - name: partsp
+        type: NumberParts*
+      - name: xp
+        type: Extended80*
+    dispatcher: ScriptUtil
+    selector: 0x8210FFE6
+    executor: C_
+
+# ####
+
+- function:
+    name: ExtendedToString
+    return: FormatStatus
+    args:
+      - name: xp
+        type: Extended80*
+      - name: formatp
+        type: NumFormatStringRec*
+      - name: partsp
+        type: NumberParts*
+      - name: string
+        type: Str255
+    dispatcher: ScriptUtil
+    selector: 0x8210FFE8
+    executor: C_
+
+# ####
+
+- function:
+    name: StringToFormatRec
+    return: FormatStatus
+    args:
+      - name: in_string
+        type: ConstStringPtr
+      - name: partsp
+        type: NumberParts*
+      - name: out_string
+        type: NumFormatStringRec*
+    dispatcher: ScriptUtil
+    selector: 0x820CFFEC
+    executor: C_
+
+# ####
+
+- function:
+    name: ToggleDate
+    return: ToggleResults
+    args:
+      - name: lsecsp
+        type: LongDateTime*
+      - name: field
+        type: LongDateField
+      - name: delta
+        type: DateDelta
+      - name: ch
+        type: INTEGER
+      - name: paramsp
+        type: TogglePB*
+    dispatcher: ScriptUtil
+    selector: 0x820EFFEE
+    executor: C_
+
+# ####
+
+- function:
+    name: PortionLine
+    return: Fixed
+    args:
+      - name: textPtr
+        type: Ptr
+      - name: textLen
+        type: LONGINT
+      - name: styleRunPosition
+        type: JustStyleCode
+      - name: numer
+        type: Point
+      - name: denom
+        type: Point
+    dispatcher: ScriptUtil
+    selector: 0x84120036
+    executor: C_
+
+# ####
+
+- function:
+    name: DrawJustified
+    args:
+      - name: textPtr
+        type: Ptr
+      - name: textLength
+        type: LONGINT
+      - name: slop
+        type: Fixed
+      - name: styleRunPosition
+        type: JustStyleCode
+      - name: numer
+        type: Point
+      - name: denom
+        type: Point
+    dispatcher: ScriptUtil
+    selector: 0x80160032
+    executor: C_
+
+# ####
+
+- function:
+    name: FindScriptRun
+    return: ScriptRunStatus
+    args:
+      - name: textPtr
+        type: Ptr
+      - name: textLen
+        type: LONGINT
+      - name: lenUsedp
+        type: LONGINT*
+    dispatcher: ScriptUtil
+    selector: 0x820C0026
+    executor: C_
+
+# ####
+
+- function:
+    name: PixelToChar
+    return: INTEGER
+    args:
+      - name: textBuf
+        type: Ptr
+      - name: textLen
+        type: LONGINT
+      - name: slop
+        type: Fixed
+      - name: pixelWidth
+        type: Fixed
+      - name: leadingEdgep
+        type: Boolean*
+      - name: widthRemainingp
+        type: Fixed*
+      - name: styleRunPosition
+        type: JustStyleCode
+      - name: numer
+        type: Point
+      - name: denom
+        type: Point
+    dispatcher: ScriptUtil
+    selector: 0x8222002E
+    executor: C_
+
+# ####
+
+- function:
+    name: CharToPixel
+    return: INTEGER
+    args:
+      - name: textBuf
+        type: Ptr
+      - name: textLen
+        type: LONGINT
+      - name: slop
+        type: Fixed
+      - name: offset
+        type: LONGINT
+      - name: direction
+        type: INTEGER
+      - name: styleRunPosition
+        type: JustStyleCode
+      - name: numer
+        type: Point
+      - name: denom
+        type: Point
+    dispatcher: ScriptUtil
+    selector: 0x821C0030
+    executor: C_
+
+# ####
+
+- function:
+    name: LowercaseText
+    args:
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
+    executor: C_
+    m68k-inline:
+    - 16188
+    - 0
+    - 12092
+    - 32778
+    - 65462
+    - 43189
+
+# ####
+
+- function:
+    name: UppercaseText
+    args:
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
+    executor: C_
+    m68k-inline:
+    - 16188
+    - 1024
+    - 12092
+    - 32778
+    - 65462
+    - 43189
+
+# ####
+
+- function:
+    name: StripDiacritics
+    args:
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
+    executor: C_
+    m68k-inline:
+    - 16188
+    - 512
+    - 12092
+    - 32778
+    - 65462
+    - 43189
+
+# ####
+
+- function:
+    name: UppercaseStripDiacritics
+    args:
+    - name: textp
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: script
+      type: ScriptCode
+    executor: C_
+    m68k-inline:
+    - 16188
+    - 1536
+    - 12092
+    - 32778
+    - 65462
+    - 43189
+
+# ####
+
+- function:
+    name: TextUtilFunctions
+    args:
+      - name: selector
+        type: int16_t
+      - name: textp
+        type: Ptr
+      - name: len
+        type: INTEGER
+      - name: script
+        type: ScriptCode
+    comment: |
+      the above four functions are actually one entry point on 68K:
+    dispatcher: ScriptUtil
+    selector: 0x800AFFB6
+    executor: C_
+
+# ####
+
+- function:
+    name: CharacterByteType
+    return: INTEGER
+    args:
+      - name: textBuf
+        type: Ptr
+      - name: textOffset
+        type: INTEGER
+      - name: script
+        type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 0xC2060010
+    executor: C_
+
+# ####
+
+- function:
+    name: CharacterType
+    return: INTEGER
+    args:
+      - name: textbufp
+        type: Ptr
+      - name: offset
+        type: INTEGER
+      - name: script
+        type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 0xC2060012
+    executor: C_
+
+# ####
+
+- function:
+    name: TransliterateText
+    return: INTEGER
+    args:
+      - name: srch
+        type: Handle
+      - name: dsth
+        type: Handle
+      - name: target
+        type: INTEGER
+      - name: srcmask
+        type: LONGINT
+      - name: script
+        type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 0xC20E0018
+    executor: C_
+
+# ####
+
+- struct:
+    name: BreakTable
+    size: 260
+    members:
+    - name: charTypes
+      type: char[256]
+    - name: tripleLength
+      type: int16_t
+    - name: triples
+      type: int16_t[1]
+
+# ####
+
+- typedef:
+    name: BreakTablePtr
+    type: BreakTable*
+
+# ####
+
+- struct:
+    name: OffsetPair
+    size: 4
+    members:
+    - name: offFirst
+      type: int16_t
+    - name: offSecond
+      type: int16_t
+
+# ####
+
+- typedef:
+    name: OffsetTable
+    type: OffsetPair[3]
+
+# ####
+
+- struct:
+    name: FVector
+    size: 4
+    members:
+    - name: start
+      type: int16_t
+    - name: length
+      type: int16_t
+
+# ####
+
+- typedef:
+    name: TripleInt
+    type: FVector[3]
+
+# ####
+
+- typedef:
+    name: FormatOrder
+    type: int16_t[1]
+
+# ####
+
+- typedef:
+    name: FormatOrderPtr
+    type: FormatOrder*
+
+# ####
+
+- funptr:
+    name: StyleRunDirectionProcPtr
+    return: Boolean
+    args:
+    - name: styleRunIndex
+      type: int16_t
+    - name: dirParam
+      type: void*
+
+# ####
+
+- typedef:
+    name: ScriptTokenType
+    type: int16_t
+
+# ####
+
+- typedef:
+    name: DelimType
+    type: ScriptTokenType[2]
+
+# ####
+
+- typedef:
+    name: CommentType
+    type: ScriptTokenType[4]
+
+# ####
+
+- struct:
+    name: TokenRec
+    size: 14
+    members:
+    - name: theToken
+      type: ScriptTokenType
+    - name: position
+      type: Ptr
+    - name: length
+      type: int32_t
+    - name: stringPosition
+      type: StringPtr
+
+# ####
+
+- typedef:
+    name: TokenRecPtr
+    type: TokenRec*
+
+# ####
+
+- struct:
+    name: TokenBlock
+    size: 100
+    members:
+    - name: source
+      type: Ptr
+    - name: sourceLength
+      type: int32_t
+    - name: tokenList
+      type: Ptr
+    - name: tokenLength
+      type: int32_t
+    - name: tokenCount
+      type: int32_t
+    - name: stringList
+      type: Ptr
+    - name: stringLength
+      type: int32_t
+    - name: stringCount
+      type: int32_t
+    - name: doString
+      type: Boolean
+    - name: doAppend
+      type: Boolean
+    - name: doAlphanumeric
+      type: Boolean
+    - name: doNest
+      type: Boolean
+    - name: leftDelims
+      type: ScriptTokenType[2]
+    - name: rightDelims
+      type: ScriptTokenType[2]
+    - name: leftComment
+      type: ScriptTokenType[4]
+    - name: rightComment
+      type: ScriptTokenType[4]
+    - name: escapeCode
+      type: ScriptTokenType
+    - name: decimalCode
+      type: ScriptTokenType
+    - name: itlResource
+      type: Handle
+    - name: reserved
+      type: int32_t[8]
+
+# ####
+
+- typedef:
+    name: TokenBlockPtr
+    type: TokenBlock*
+
+# ####
+
+- typedef:
+    name: TokenResults
+    type: int8_t
+
+# ####
+
+- enum:
+    values:
+    - name: tokenOK
+      value: 0
+    - name: tokenOverflow
+      value: 1
+    - name: stringOverflow
+      value: 2
+    - name: badDelim
+      value: 3
+    - name: badEnding
+      value: 4
+    - name: crash
+      value: 5
+
+# ####
+
+- enum:
+    values:
+    - name: tokenUnknown
+      value: 0
+    - name: tokenWhite
+      value: 1
+    - name: tokenLeftLit
+      value: 2
+    - name: tokenRightLit
+      value: 3
+    - name: tokenAlpha
+      value: 4
+    - name: tokenNumeric
+      value: 5
+    - name: tokenNewLine
+      value: 6
+    - name: tokenLeftComment
+      value: 7
+    - name: tokenRightComment
+      value: 8
+    - name: tokenLiteral
+      value: 9
+    - name: tokenEscape
+      value: 10
+    - name: tokenAltNum
+      value: 11
+    - name: tokenRealNum
+      value: 12
+    - name: tokenAltReal
+      value: 13
+    - name: tokenReserve1
+      value: 14
+    - name: tokenReserve2
+      value: 15
+    - name: tokenLeftParen
+      value: 16
+    - name: tokenRightParen
+      value: 17
+    - name: tokenLeftBracket
+      value: 18
+    - name: tokenRightBracket
+      value: 19
+    - name: tokenLeftCurly
+      value: 20
+    - name: tokenRightCurly
+      value: 21
+    - name: tokenLeftEnclose
+      value: 22
+    - name: tokenRightEnclose
+      value: 23
+    - name: tokenPlus
+      value: 24
+    - name: tokenMinus
+      value: 25
+    - name: tokenAsterisk
+      value: 26
+    - name: tokenDivide
+      value: 27
+    - name: tokenPlusMinus
+      value: 28
+    - name: tokenSlash
+      value: 29
+    - name: tokenBackSlash
+      value: 30
+    - name: tokenLess
+      value: 31
+    - name: tokenGreat
+      value: 32
+    - name: tokenEqual
+      value: 33
+    - name: tokenLessEqual2
+      value: 34
+    - name: tokenLessEqual1
+      value: 35
+    - name: tokenGreatEqual2
+      value: 36
+    - name: tokenGreatEqual1
+      value: 37
+    - name: token2Equal
+      value: 38
+    - name: tokenColonEqual
+      value: 39
+    - name: tokenNotEqual
+      value: 40
+    - name: tokenLessGreat
+      value: 41
+    - name: tokenExclamEqual
+      value: 42
+    - name: tokenExclam
+      value: 43
+    - name: tokenTilde
+      value: 44
+    - name: tokenComma
+      value: 45
+    - name: tokenPeriod
+      value: 46
+    - name: tokenLeft2Quote
+      value: 47
+    - name: tokenRight2Quote
+      value: 48
+    - name: tokenLeft1Quote
+      value: 49
+    - name: tokenRight1Quote
+      value: 50
+    - name: token2Quote
+      value: 51
+    - name: token1Quote
+      value: 52
+    - name: tokenSemicolon
+      value: 53
+    - name: tokenPercent
+      value: 54
+    - name: tokenCaret
+      value: 55
+    - name: tokenUnderline
+      value: 56
+    - name: tokenAmpersand
+      value: 57
+    - name: tokenAtSign
+      value: 58
+    - name: tokenBar
+      value: 59
+    - name: tokenQuestion
+      value: 60
+    - name: tokenPi
+      value: 61
+    - name: tokenRoot
+      value: 62
+    - name: tokenSigma
+      value: 63
+    - name: tokenIntegral
+      value: 64
+    - name: tokenMicro
+      value: 65
+    - name: tokenLeftSingGuillemet
+      value: 66
+    - name: tokenRightSingGuillemet
+      value: 67
+    - name: tokenLeftDoubleGuillemet
+      value: 68
+    - name: tokenRightDoubleGuillemet
+      value: 69
+    - name: tokenEmpty
+      value: -1
+    - name: delimPad
+      value: -2
+
+# ####
+
+- function:
+    name: UpperText
+    args:
+    - name: textPtr
+      type: Ptr
+      register: A0
+    - name: len
+      type: INTEGER
+      register: D0
+    comment: Text utilities
+    trap: 42070
+
+# ####
+
+- function:
+    name: LowerText
+    args:
+    - name: textPtr
+      type: Ptr
+      register: A0
+    - name: len
+      type: INTEGER
+      register: D0
+    trap: 41046
+
+# ####
+
+- function:
+    name: StripText
+    args:
+    - name: textPtr
+      type: Ptr
+      register: A0
+    - name: len
+      type: INTEGER
+      register: D0
+    trap: 41558
+
+# ####
+
+- function:
+    name: StripUpperText
+    args:
+    - name: textPtr
+      type: Ptr
+      register: A0
+    - name: len
+      type: INTEGER
+      register: D0
+    trap: 42582
+
+# ####
+
+- function:
+    name: UprText
+    args:
+    - name: textPtr
+      type: Ptr
+      register: A0
+    - name: len
+      type: INTEGER
+      register: D0
+    trap: 41044
+
+# ####
+
+- function:
+    name: LwrText
+    args:
+    - name: textPtr
+      type: Ptr
+      register: A0
+    - name: len
+      type: INTEGER
+      register: D0
+    trap: 41046
+
+# ####
+
+- function:
+    name: TruncText
+    return: INTEGER
+    args:
+    - name: width
+      type: INTEGER
+    - name: textPtr
+      type: Ptr
+    - name: length
+      type: INTEGER*
+    - name: truncWhere
+      type: TruncCode
+    dispatcher: ScriptUtil
+    selector: 2181890014
+
+# ####
+
+- function:
+    name: FindWordBreaks
+    args:
+    - name: textPtr
+      type: Ptr
+    - name: textLength
+      type: INTEGER
+    - name: offset
+      type: INTEGER
+    - name: leadingEdge
+      type: Boolean
+    - name: breaks
+      type: BreakTablePtr
+    - name: offsets
+      type: OffsetTable
+    - name: script
+      type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 3222405146
+
+# ####
+
+- function:
+    name: NFindWord
+    args:
+    - name: textPtr
+      type: Ptr
+    - name: textLength
+      type: INTEGER
+    - name: offset
+      type: INTEGER
+    - name: leadingEdge
+      type: Boolean
+    - name: nbreaks
+      type: BreakTablePtr
+    - name: offsets
+      type: OffsetTable
+    dispatcher: ScriptUtil
+    selector: 2148728802
+
+# ####
+
+- function:
+    name: PortionText
+    return: Fixed
+    args:
+    - name: textPtr
+      type: Ptr
+    - name: textLength
+      type: int32_t
+    dispatcher: ScriptUtil
+    selector: 2215116836
+
+# ####
+
+- function:
+    name: IntlTokenize
+    return: TokenResults
+    args:
+    - name: tokenParam
+      type: TokenBlockPtr
+    dispatcher: ScriptUtil
+    selector: 2181365754
+
+# ####
+
+- function:
+    name: GetScript
+    return: int32_t
+    args:
+    - name: script
+      type: INTEGER
+    - name: verb
+      type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 2214854668
+
+# ####
+
+- function:
+    name: SetScript
+    return: OSErr
+    args:
+    - name: script
+      type: INTEGER
+    - name: verb
+      type: INTEGER
+    - name: param
+      type: int32_t
+    dispatcher: ScriptUtil
+    selector: 2181562382
+
+# ####
+
+- function:
+    name: ScriptOrder
+    return: INTEGER
+    args:
+    - name: script1
+      type: ScriptCode
+    - name: script2
+      type: ScriptCode
+    dispatcher: Pack6
+    selector: 30
+
+# ####
+
+- function:
+    name: LanguageOrder
+    return: INTEGER
+    args:
+    - name: language1
+      type: LangCode
+    - name: language2
+      type: LangCode
+    m68k-needs: [IULangOrder]
+    m68k-body: |
+      return IULangOrder(language1, language2);
+
+# ####
+
+- function:
+    name: StringOrder
+    return: INTEGER
+    args:
+    - name: aStr
+      type: ConstStr255Param
+    - name: bStr
+      type: ConstStr255Param
+    - name: aScript
+      type: ScriptCode
+    - name: bScript
+      type: ScriptCode
+    - name: aLang
+      type: LangCode
+    - name: bLang
+      type: LangCode
+    m68k-needs: [IUTextOrder]
+    m68k-body: |
+      return IUTextOrder((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], aScript, bScript, aLang, bLang);
+
+# ####
+
+- function:
+    name: TextOrder
+    return: INTEGER
+    args:
+    - name: aPtr
+      type: const void*
+    - name: bPtr
+      type: const void*
+    - name: aLen
+      type: INTEGER
+    - name: bLen
+      type: INTEGER
+    - name: aScript
+      type: ScriptCode
+    - name: bScript
+      type: ScriptCode
+    - name: aLang
+      type: LangCode
+    - name: bLang
+      type: LangCode
+    m68k-needs: [IUTextOrder]
+    m68k-body: |
+      return IUTextOrder((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, aScript, bScript, aLang, bLang);
+
+# ####
+
+- function:
+    name: CompareText
+    return: INTEGER
+    args:
+    - name: aPtr
+      type: const void*
+    - name: bPtr
+      type: const void*
+    - name: aLen
+      type: INTEGER
+    - name: bLen
+      type: INTEGER
+    - name: itl2Handle
+      type: Handle
+    m68k-needs: [IUMagPString]
+    m68k-body: |
+      return IUMagPString((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, itl2Handle);
+
+# ####
+
+- function:
+    name: IdenticalText
+    return: INTEGER
+    args:
+    - name: aPtr
+      type: const void*
+    - name: bPtr
+      type: const void*
+    - name: aLen
+      type: INTEGER
+    - name: bLen
+      type: INTEGER
+    - name: itl2Handle
+      type: Handle
+    m68k-needs: [IUMagIDPString]
+    m68k-body: |
+      return IUMagIDPString((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, itl2Handle);
+
+# ####
+
+- function:
+    name: CompareString
+    return: INTEGER
+    args:
+    - name: aStr
+      type: ConstStr255Param
+    - name: bStr
+      type: ConstStr255Param
+    - name: itl2Handle
+      type: Handle
+    m68k-needs: [IUMagPString]
+    m68k-body: |
+      return IUMagPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+
+# ####
+
+- function:
+    name: IdenticalString
+    return: INTEGER
+    args:
+    - name: aStr
+      type: ConstStr255Param
+    - name: bStr
+      type: ConstStr255Param
+    - name: itl2Handle
+      type: Handle
+    m68k-needs: [IUMagIDPString]
+    m68k-body: |
+      return IUMagIDPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+
+# ####
+
+- function:
+    name: IUCompPString
+    return: INTEGER
+    args:
+    - name: aStr
+      type: ConstStr255Param
+    - name: bStr
+      type: ConstStr255Param
+    - name: itl2Handle
+      type: Handle
+    m68k-needs: [IUMagPString]
+    m68k-body: |
+      return IUMagPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+
+# ####
+
+- function:
+    name: IUEqualPString
+    return: INTEGER
+    args:
+    - name: aStr
+      type: ConstStr255Param
+    - name: bStr
+      type: ConstStr255Param
+    - name: itl2Handle
+      type: Handle
+    m68k-needs: [IUMagIDPString]
+    m68k-body: |
+      return IUMagIDPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+
+# ####
+
+- function:
+    name: IUStringOrder
+    return: INTEGER
+    args:
+    - name: aStr
+      type: ConstStr255Param
+    - name: bStr
+      type: ConstStr255Param
+    - name: aScript
+      type: ScriptCode
+    - name: bScript
+      type: ScriptCode
+    - name: aLang
+      type: LangCode
+    - name: bLang
+      type: LangCode
+    m68k-needs: [IUTextOrder]
+    m68k-body: |
+      return IUTextOrder((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], aScript, bScript, aLang, bLang);
+
+# ####
+
+- function:
+    name: FormatRecToString
+    return: FormatStatus
+    args:
+    - name: myCanonical
+      type: const NumFormatStringRec*
+    - name: partsTable
+      type: const NumberParts*
+    - name: outString
+      type: Str255
+    - name: positions
+      type: TripleInt
+    dispatcher: ScriptUtil
+    selector: 2182152170
+
+# ####
+
+- function:
+    name: GetFormatOrder
+    args:
+    - name: ordering
+      type: FormatOrderPtr
+    - name: firstFormat
+      type: INTEGER
+    - name: lastFormat
+      type: INTEGER
+    - name: lineRight
+      type: Boolean
+    - name: rlDirProc
+      type: StyleRunDirectionUPP
+    - name: dirParam
+      type: Ptr
+    dispatcher: ScriptUtil
+    selector: 2148728828
+
+# ####
+
+- function:
+    name: ValidDate
+    return: INTEGER
+    args:
+    - name: date
+      type: LongDateRec*
+    - name: flags
+      type: int32_t
+    - name: newSecs
+      type: LongDateTime*
+    dispatcher: ScriptUtil
+    selector: 2181890020
+
+# ####
+
+- function:
+    name: IsCmdChar
+    return: Boolean
+    args:
+    - name: event
+      type: const EventRecord*
+    - name: test
+      type: INTEGER
+    dispatcher: ScriptUtil
+    selector: 2181496784
+
+# ####
+
+- function:
+    name: NPixel2Char
+    return: INTEGER
+    args:
+    - name: textBuf
+      type: Ptr
+    - name: textLen
+      type: int32_t
+    - name: slop
+      type: Fixed
+    - name: pixelWidth
+      type: Fixed
+    - name: leadingEdge
+      type: Boolean*
+    - name: widthRemaining
+      type: Fixed*
+    - name: styleRunPosition
+      type: JustStyleCode
+    - name: numer
+      type: Point
+    - name: denom
+      type: Point
+
+# ####
+
+- function:
+    name: NChar2Pixel
+    return: INTEGER
+    args:
+    - name: textBuf
+      type: Ptr
+    - name: textLen
+      type: int32_t
+    - name: slop
+      type: Fixed
+    - name: offset
+      type: int32_t
+    - name: direction
+      type: INTEGER
+    - name: styleRunPosition
+      type: JustStyleCode
+    - name: numer
+      type: Point
+    - name: denom
+      type: Point
+
+# ####
+
+- function:
+    name: NDrawJust
+    args:
+    - name: textPtr
+      type: Ptr
+    - name: textLength
+      type: int32_t
+    - name: slop
+      type: Fixed
+    - name: styleRunPosition
+      type: JustStyleCode
+    - name: numer
+      type: Point
+    - name: denom
+      type: Point
+
+# ####
+
+- function:
+    name: NMeasureJust
+    args:
+    - name: textPtr
+      type: Ptr
+    - name: textLength
+      type: int32_t
+    - name: slop
+      type: Fixed
+    - name: charLocs
+      type: Ptr
+    - name: styleRunPosition
+      type: JustStyleCode
+    - name: numer
+      type: Point
+    - name: denom
+      type: Point
+
+# ####
+
+- function:
+    name: NPortionText
+    return: Fixed
+    args:
+    - name: textPtr
+      type: Ptr
+    - name: textLength
+      type: int32_t
+    - name: styleRunPosition
+      type: JustStyleCode
+    - name: numer
+      type: Point
+    - name: denom
+      type: Point
+
+# ####
+
+- function:
+    name: GetScriptUtilityAddress
+    return: Ptr
+    args:
+    - name: selector
+      type: INTEGER
+    - name: Before
+      type: Boolean
+    - name: script
+      type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 3288596536
+
+# ####
+
+- function:
+    name: SetScriptUtilityAddress
+    args:
+    - name: selector
+      type: INTEGER
+    - name: Before
+      type: Boolean
+    - name: routineAddr
+      type: Ptr
+    - name: script
+      type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 3221749818
+
+# ####
+
+- function:
+    name: GetScriptQDPatchAddress
+    return: Ptr
+    args:
+    - name: trapNum
+      type: INTEGER
+    - name: before
+      type: Boolean
+    - name: forPrinting
+      type: Boolean
+    - name: script
+      type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 3288727612
+
+# ####
+
+- function:
+    name: SetScriptQDPatchAddress
+    args:
+    - name: trapNum
+      type: INTEGER
+    - name: before
+      type: Boolean
+    - name: forPrinting
+      type: Boolean
+    - name: routineAddr
+      type: Ptr
+    - name: script
+      type: ScriptCode
+    dispatcher: ScriptUtil
+    selector: 3221880894
+
+# ####
+
+- enum:
+    values:
+    - name: smTruncEnd
+      value: 0
+    - name: smTruncMiddle
+      value: 16384
+    - name: truncEnd
+      value: 0
+    - name: truncMiddle
+      value: 16384
+
+# ####
+
+- enum:
+    values:
+    - name: smNotTruncated
+      value: 0
+    - name: smTruncated
+      value: 1
+    - name: smTruncErr
+      value: -1

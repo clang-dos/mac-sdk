@@ -1,0 +1,2169 @@
+
+# ####
+
+- function:
+    name: addpt
+    args:
+    - name: src
+      type: Point*
+    - name: dst
+      type: Point*
+    callconv: C
+    comment: 'C-string forms of Toolbox calls (C calling convention; they take C
+
+      strings, and Points by address). On 68k they need MPW-style glue.'
+    m68k-needs: [AddPt]
+    m68k-body: |
+      AddPt(*src, dst);
+
+# ####
+
+- function:
+    name: addresource
+    args:
+    - name: data
+      type: Handle
+    - name: typ
+      type: ResType
+    - name: id
+      type: INTEGER
+    - name: name
+      type: const char*
+    callconv: C
+    m68k-needs: [AddResource, c2pstrcpy]
+    m68k-body: |
+      Str255 _s3;
+      if (name)
+          c2pstrcpy(_s3, name);
+      AddResource(data, typ, id, name ? _s3 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: appendmenu
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: str
+      type: const char*
+    callconv: C
+    m68k-needs: [AppendMenu, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (str)
+          c2pstrcpy(_s1, str);
+      AppendMenu(mh, str ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: create
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: creator
+      type: OSType
+    - name: filtyp
+      type: OSType
+    callconv: C
+    m68k-needs: [Create, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return Create(filen ? _s0 : (unsigned char *)0, vrn, creator, filtyp);
+
+# ####
+
+- function:
+    name: createresfile
+    args:
+    - name: fn
+      type: const char*
+    callconv: C
+    m68k-needs: [CreateResFile, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (fn)
+          c2pstrcpy(_s0, fn);
+      CreateResFile(fn ? _s0 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: debugstr
+    args:
+    - name: p
+      type: const char*
+    callconv: C
+    m68k-needs: [DebugStr, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (p)
+          c2pstrcpy(_s0, p);
+      DebugStr(p ? _s0 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: deltapoint
+    return: LONGINT
+    args:
+    - name: a
+      type: Point*
+    - name: b
+      type: Point*
+    callconv: C
+    m68k-needs: [DeltaPoint]
+    m68k-body: |
+      return DeltaPoint(*a, *b);
+
+# ####
+
+- function:
+    name: dibadmount
+    return: INTEGER
+    args:
+    - name: pt
+      type: Point*
+    - name: evtmess
+      type: LONGINT
+    callconv: C
+    m68k-needs: [DIBadMount]
+    m68k-body: |
+      return DIBadMount(*pt, evtmess);
+
+# ####
+
+- function:
+    name: dizero
+    return: OSErr
+    args:
+    - name: dn
+      type: INTEGER
+    - name: vname
+      type: char*
+    callconv: C
+    m68k-needs: [DIZero, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (vname)
+          c2pstrcpy(_s1, vname);
+      return DIZero(dn, vname ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: dragcontrol
+    args:
+    - name: c
+      type: ControlHandle
+    - name: p
+      type: Point*
+    - name: limit
+      type: const Rect*
+    - name: slop
+      type: const Rect*
+    - name: axis
+      type: INTEGER
+    callconv: C
+    m68k-needs: [DragControl]
+    m68k-body: |
+      DragControl(c, *p, limit, slop, axis);
+
+# ####
+
+- function:
+    name: draggrayrgn
+    return: LONGINT
+    args:
+    - name: rgn
+      type: RgnHandle
+    - name: startp
+      type: Point*
+    - name: limit
+      type: const Rect*
+    - name: slop
+      type: const Rect*
+    - name: axis
+      type: INTEGER
+    - name: proc
+      type: ProcPtr
+    callconv: C
+    m68k-needs: [DragGrayRgn]
+    m68k-body: |
+      return DragGrayRgn(rgn, *startp, limit, slop, axis, proc);
+
+# ####
+
+- function:
+    name: dragwindow
+    args:
+    - name: wp
+      type: WindowPtr
+    - name: p
+      type: Point*
+    - name: rp
+      type: const Rect*
+    callconv: C
+    m68k-needs: [DragWindow]
+    m68k-body: |
+      DragWindow(wp, *p, rp);
+
+# ####
+
+- function:
+    name: drawstring
+    args:
+    - name: s
+      type: const char*
+    callconv: C
+    m68k-needs: [DrawString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (s)
+          c2pstrcpy(_s0, s);
+      DrawString(s ? _s0 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: eject
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+    m68k-needs: [Eject, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (voln)
+          c2pstrcpy(_s0, voln);
+      return Eject(voln ? _s0 : (unsigned char *)0, vrn);
+
+# ####
+
+- function:
+    name: equalpt
+    return: Boolean
+    args:
+    - name: p1
+      type: Point*
+    - name: p2
+      type: Point*
+    callconv: C
+    m68k-needs: [EqualPt]
+    m68k-body: |
+      return EqualPt(*p1, *p2);
+
+# ####
+
+- function:
+    name: equalstring
+    return: Boolean
+    args:
+    - name: s1
+      type: const char*
+    - name: s2
+      type: const char*
+    - name: casesig
+      type: Boolean
+    - name: diacsig
+      type: Boolean
+    callconv: C
+    m68k-needs: [EqualString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (s1)
+          c2pstrcpy(_s0, s1);
+      Str255 _s1;
+      if (s2)
+          c2pstrcpy(_s1, s2);
+      return EqualString(s1 ? _s0 : (unsigned char *)0, s2 ? _s1 : (unsigned char *)0, casesig, diacsig);
+
+# ####
+
+- function:
+    name: findcontrol
+    return: INTEGER
+    args:
+    - name: p
+      type: Point*
+    - name: w
+      type: WindowPtr
+    - name: cp
+      type: ControlHandle*
+    callconv: C
+    m68k-needs: [FindControl]
+    m68k-body: |
+      return FindControl(*p, w, cp);
+
+# ####
+
+- function:
+    name: finddialogitem
+    return: INTEGER
+    args:
+    - name: dp
+      type: DialogPtr
+    - name: pt
+      type: Point*
+    callconv: C
+    m68k-needs: [FindDialogItem]
+    m68k-body: |
+      return FindDialogItem(dp, *pt);
+
+# ####
+
+- function:
+    name: findwindow
+    return: INTEGER
+    args:
+    - name: p
+      type: Point*
+    - name: wpp
+      type: WindowPtr*
+    callconv: C
+    m68k-needs: [FindWindow]
+    m68k-body: |
+      return FindWindow(*p, wpp);
+
+# ####
+
+- function:
+    name: flushvol
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+    m68k-needs: [FlushVol, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (voln)
+          c2pstrcpy(_s0, voln);
+      return FlushVol(voln ? _s0 : (unsigned char *)0, vrn);
+
+# ####
+
+- function:
+    name: fsdelete
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+    m68k-needs: [FSDelete, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return FSDelete(filen ? _s0 : (unsigned char *)0, vrn);
+
+# ####
+
+- function:
+    name: fsopen
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: rn
+      type: INTEGER*
+    callconv: C
+    m68k-needs: [FSOpen, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return FSOpen(filen ? _s0 : (unsigned char *)0, vrn, rn);
+
+# ####
+
+- function:
+    name: fsrename
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: newf
+      type: const char*
+    callconv: C
+    m68k-needs: [Rename, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      Str255 _s2;
+      if (newf)
+          c2pstrcpy(_s2, newf);
+      return Rename(filen ? _s0 : (unsigned char *)0, vrn, newf ? _s2 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: get1namedresource
+    return: Handle
+    args:
+    - name: typ
+      type: ResType
+    - name: s
+      type: const char*
+    callconv: C
+    m68k-needs: [Get1NamedResource, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (s)
+          c2pstrcpy(_s1, s);
+      return Get1NamedResource(typ, s ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: getcontroltitle
+    args:
+    - name: c
+      type: ControlHandle
+    - name: t
+      type: char*
+    callconv: C
+    m68k-needs: [GetControlTitle, p2cstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      _s1[0] = 0;
+      GetControlTitle(c, t ? _s1 : (unsigned char *)0);
+      if (t)
+          p2cstrcpy(t, _s1);
+
+# ####
+
+- function:
+    name: getdialogitemtext
+    args:
+    - name: item
+      type: Handle
+    - name: text
+      type: char*
+    callconv: C
+    m68k-needs: [GetDialogItemText, p2cstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      _s1[0] = 0;
+      GetDialogItemText(item, text ? _s1 : (unsigned char *)0);
+      if (text)
+          p2cstrcpy(text, _s1);
+
+# ####
+
+- function:
+    name: getfinfo
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: fndrinfo
+      type: FInfo*
+    callconv: C
+    m68k-needs: [GetFInfo, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return GetFInfo(filen ? _s0 : (unsigned char *)0, vrn, fndrinfo);
+
+# ####
+
+- function:
+    name: getfnum
+    args:
+    - name: fnam
+      type: const char*
+    - name: fnum
+      type: INTEGER*
+    callconv: C
+    m68k-needs: [GetFNum, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (fnam)
+          c2pstrcpy(_s0, fnam);
+      GetFNum(fnam ? _s0 : (unsigned char *)0, fnum);
+
+# ####
+
+- function:
+    name: getfontname
+    args:
+    - name: fnum
+      type: INTEGER
+    - name: fnam
+      type: char*
+    callconv: C
+    m68k-needs: [GetFontName, p2cstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      _s1[0] = 0;
+      GetFontName(fnum, fnam ? _s1 : (unsigned char *)0);
+      if (fnam)
+          p2cstrcpy(fnam, _s1);
+
+# ####
+
+- function:
+    name: getindstring
+    args:
+    - name: s
+      type: char*
+    - name: sid
+      type: INTEGER
+    - name: index
+      type: INTEGER
+    callconv: C
+    m68k-needs: [GetIndString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      _s0[0] = 0;
+      GetIndString(s ? _s0 : (unsigned char *)0, sid, index);
+      if (s)
+          p2cstrcpy(s, _s0);
+
+# ####
+
+- function:
+    name: getmenuitemtext
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: item
+      type: INTEGER
+    - name: str
+      type: char*
+    callconv: C
+    m68k-needs: [GetMenuItemText, p2cstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      _s2[0] = 0;
+      GetMenuItemText(mh, item, str ? _s2 : (unsigned char *)0);
+      if (str)
+          p2cstrcpy(str, _s2);
+
+# ####
+
+- function:
+    name: getnamedresource
+    return: Handle
+    args:
+    - name: typ
+      type: ResType
+    - name: nam
+      type: const char*
+    callconv: C
+    m68k-needs: [GetNamedResource, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (nam)
+          c2pstrcpy(_s1, nam);
+      return GetNamedResource(typ, nam ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: getresinfo
+    args:
+    - name: res
+      type: Handle
+    - name: id1
+      type: INTEGER*
+    - name: typ
+      type: ResType*
+    - name: name
+      type: char*
+    callconv: C
+    m68k-needs: [GetResInfo, p2cstrcpy]
+    m68k-body: |
+      Str255 _s3;
+      _s3[0] = 0;
+      GetResInfo(res, id1, typ, name ? _s3 : (unsigned char *)0);
+      if (name)
+          p2cstrcpy(name, _s3);
+
+# ####
+
+- function:
+    name: getvinfo
+    return: OSErr
+    args:
+    - name: drv
+      type: INTEGER
+    - name: voln
+      type: char*
+    - name: vrn
+      type: INTEGER*
+    - name: freeb
+      type: LONGINT*
+    callconv: C
+    m68k-needs: [GetVInfo, p2cstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      _s1[0] = 0;
+      OSErr _r = GetVInfo(drv, voln ? _s1 : (unsigned char *)0, vrn, freeb);
+      if (voln)
+          p2cstrcpy(voln, _s1);
+      return _r;
+
+# ####
+
+- function:
+    name: getvol
+    return: OSErr
+    args:
+    - name: voln
+      type: char*
+    - name: vrn
+      type: INTEGER*
+    callconv: C
+    m68k-needs: [GetVol, p2cstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      _s0[0] = 0;
+      OSErr _r = GetVol(voln ? _s0 : (unsigned char *)0, vrn);
+      if (voln)
+          p2cstrcpy(voln, _s0);
+      return _r;
+
+# ####
+
+- function:
+    name: getwtitle
+    args:
+    - name: w
+      type: WindowPtr
+    - name: t
+      type: char*
+    callconv: C
+    m68k-needs: [GetWTitle, p2cstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      _s1[0] = 0;
+      GetWTitle(w, t ? _s1 : (unsigned char *)0);
+      if (t)
+          p2cstrcpy(t, _s1);
+
+# ####
+
+- function:
+    name: growwindow
+    return: LONGINT
+    args:
+    - name: w
+      type: WindowPtr
+    - name: startp
+      type: Point*
+    - name: rp
+      type: const Rect*
+    callconv: C
+    m68k-needs: [GrowWindow]
+    m68k-body: |
+      return GrowWindow(w, *startp, rp);
+
+# ####
+
+- function:
+    name: insertmenuitem
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: str
+      type: const char*
+    - name: after
+      type: INTEGER
+    callconv: C
+    m68k-needs: [InsertMenuItem, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (str)
+          c2pstrcpy(_s1, str);
+      InsertMenuItem(mh, str ? _s1 : (unsigned char *)0, after);
+
+# ####
+
+- function:
+    name: iucomppstring
+    return: INTEGER
+    args:
+    - name: aStr
+      type: const char*
+    - name: bStr
+      type: const char*
+    - name: itl2Handle
+      type: Handle
+    callconv: C
+    m68k-needs: [IUCompPString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (aStr)
+          c2pstrcpy(_s0, aStr);
+      Str255 _s1;
+      if (bStr)
+          c2pstrcpy(_s1, bStr);
+      return IUCompPString(aStr ? _s0 : (unsigned char *)0, bStr ? _s1 : (unsigned char *)0, itl2Handle);
+
+# ####
+
+- function:
+    name: iucompstring
+    return: INTEGER
+    args:
+    - name: str1
+      type: const char*
+    - name: str2
+      type: const char*
+    callconv: C
+    m68k-needs: [IUCompString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (str1)
+          c2pstrcpy(_s0, str1);
+      Str255 _s1;
+      if (str2)
+          c2pstrcpy(_s1, str2);
+      return IUCompString(str1 ? _s0 : (unsigned char *)0, str2 ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: iudatepstring
+    args:
+    - name: date
+      type: LONGINT
+    - name: form
+      type: DateForm
+    - name: p
+      type: char*
+    - name: h
+      type: Handle
+    callconv: C
+    m68k-needs: [IUDatePString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      _s2[0] = 0;
+      IUDatePString(date, form, p ? _s2 : (unsigned char *)0, h);
+      if (p)
+          p2cstrcpy(p, _s2);
+
+# ####
+
+- function:
+    name: iudatestring
+    args:
+    - name: date
+      type: LONGINT
+    - name: form
+      type: DateForm
+    - name: p
+      type: char*
+    callconv: C
+    m68k-needs: [IUDateString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      _s2[0] = 0;
+      IUDateString(date, form, p ? _s2 : (unsigned char *)0);
+      if (p)
+          p2cstrcpy(p, _s2);
+
+# ####
+
+- function:
+    name: iuequalpstring
+    return: INTEGER
+    args:
+    - name: aStr
+      type: const char*
+    - name: bStr
+      type: const char*
+    - name: itl2Handle
+      type: Handle
+    callconv: C
+    m68k-needs: [IUEqualPString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (aStr)
+          c2pstrcpy(_s0, aStr);
+      Str255 _s1;
+      if (bStr)
+          c2pstrcpy(_s1, bStr);
+      return IUEqualPString(aStr ? _s0 : (unsigned char *)0, bStr ? _s1 : (unsigned char *)0, itl2Handle);
+
+# ####
+
+- function:
+    name: iuequalstring
+    return: INTEGER
+    args:
+    - name: str1
+      type: const char*
+    - name: str2
+      type: const char*
+    callconv: C
+    m68k-needs: [IUEqualString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (str1)
+          c2pstrcpy(_s0, str1);
+      Str255 _s1;
+      if (str2)
+          c2pstrcpy(_s1, str2);
+      return IUEqualString(str1 ? _s0 : (unsigned char *)0, str2 ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: iuldatestring
+    args:
+    - name: datetimep
+      type: LongDateTime*
+    - name: longflag
+      type: DateForm
+    - name: result
+      type: char*
+    - name: intlhand
+      type: Handle
+    callconv: C
+    m68k-needs: [IULDateString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      _s2[0] = 0;
+      IULDateString(datetimep, longflag, result ? _s2 : (unsigned char *)0, intlhand);
+      if (result)
+          p2cstrcpy(result, _s2);
+
+# ####
+
+- function:
+    name: iultimestring
+    args:
+    - name: datetimep
+      type: LongDateTime*
+    - name: wantseconds
+      type: Boolean
+    - name: result
+      type: char*
+    - name: intlhand
+      type: Handle
+    callconv: C
+    m68k-needs: [IULTimeString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      _s2[0] = 0;
+      IULTimeString(datetimep, wantseconds, result ? _s2 : (unsigned char *)0, intlhand);
+      if (result)
+          p2cstrcpy(result, _s2);
+
+# ####
+
+- function:
+    name: iustringorder
+    return: INTEGER
+    args:
+    - name: aStr
+      type: const char*
+    - name: bStr
+      type: const char*
+    - name: aScript
+      type: ScriptCode
+    - name: bScript
+      type: ScriptCode
+    - name: aLang
+      type: LangCode
+    - name: bLang
+      type: LangCode
+    callconv: C
+    m68k-needs: [IUStringOrder, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (aStr)
+          c2pstrcpy(_s0, aStr);
+      Str255 _s1;
+      if (bStr)
+          c2pstrcpy(_s1, bStr);
+      return IUStringOrder(aStr ? _s0 : (unsigned char *)0, bStr ? _s1 : (unsigned char *)0, aScript, bScript, aLang, bLang);
+
+# ####
+
+- function:
+    name: iutimepstring
+    args:
+    - name: date
+      type: LONGINT
+    - name: secs
+      type: Boolean
+    - name: p
+      type: char*
+    - name: h
+      type: Handle
+    callconv: C
+    m68k-needs: [IUTimePString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      _s2[0] = 0;
+      IUTimePString(date, secs, p ? _s2 : (unsigned char *)0, h);
+      if (p)
+          p2cstrcpy(p, _s2);
+
+# ####
+
+- function:
+    name: iutimestring
+    args:
+    - name: date
+      type: LONGINT
+    - name: secs
+      type: Boolean
+    - name: p
+      type: char*
+    callconv: C
+    m68k-needs: [IUTimeString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      _s2[0] = 0;
+      IUTimeString(date, secs, p ? _s2 : (unsigned char *)0);
+      if (p)
+          p2cstrcpy(p, _s2);
+
+# ####
+
+- function:
+    name: laddtocell
+    args:
+    - name: dp
+      type: Ptr
+    - name: dl
+      type: INTEGER
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LAddToCell]
+    m68k-body: |
+      LAddToCell(dp, dl, cell, list);
+
+# ####
+
+- function:
+    name: lcellsize
+    args:
+    - name: csize
+      type: Point*
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LCellSize]
+    m68k-body: |
+      LCellSize(*csize, list);
+
+# ####
+
+- function:
+    name: lclick
+    return: Boolean
+    args:
+    - name: pt
+      type: Point*
+    - name: mods
+      type: INTEGER
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LClick]
+    m68k-body: |
+      return LClick(*pt, mods, list);
+
+# ####
+
+- function:
+    name: lclrcell
+    args:
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LClrCell]
+    m68k-body: |
+      LClrCell(cell, list);
+
+# ####
+
+- function:
+    name: ldraw
+    args:
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LDraw]
+    m68k-body: |
+      LDraw(cell, list);
+
+# ####
+
+- function:
+    name: lgetcell
+    args:
+    - name: dp
+      type: Ptr
+    - name: dlp
+      type: INTEGER*
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LGetCell]
+    m68k-body: |
+      LGetCell(dp, dlp, cell, list);
+
+# ####
+
+- function:
+    name: lgetcelldatalocation
+    args:
+    - name: offsetp
+      type: INTEGER*
+    - name: lenp
+      type: INTEGER*
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LGetCellDataLocation]
+    m68k-body: |
+      LGetCellDataLocation(offsetp, lenp, cell, list);
+
+# ####
+
+- function:
+    name: lnew
+    return: ListHandle
+    args:
+    - name: rview
+      type: const Rect*
+    - name: bounds
+      type: const Rect*
+    - name: csize
+      type: Point*
+    - name: proc
+      type: INTEGER
+    - name: wind
+      type: WindowPtr
+    - name: draw
+      type: Boolean
+    - name: grow
+      type: Boolean
+    - name: scrollh
+      type: Boolean
+    - name: scrollv
+      type: Boolean
+    callconv: C
+    m68k-needs: [LNew]
+    m68k-body: |
+      return LNew(rview, bounds, *csize, proc, wind, draw, grow, scrollh, scrollv);
+
+# ####
+
+- function:
+    name: lrect
+    args:
+    - name: cellrect
+      type: Rect*
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LRect]
+    m68k-body: |
+      LRect(cellrect, cell, list);
+
+# ####
+
+- function:
+    name: lsetcell
+    args:
+    - name: dp
+      type: Ptr
+    - name: dl
+      type: INTEGER
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LSetCell]
+    m68k-body: |
+      LSetCell(dp, dl, cell, list);
+
+# ####
+
+- function:
+    name: lsetselect
+    args:
+    - name: setit
+      type: Boolean
+    - name: cell
+      type: Cell
+    - name: list
+      type: ListHandle
+    callconv: C
+    m68k-needs: [LSetSelect]
+    m68k-body: |
+      LSetSelect(setit, cell, list);
+
+# ####
+
+- function:
+    name: menuselect
+    return: LONGINT
+    args:
+    - name: p
+      type: Point*
+    callconv: C
+    m68k-needs: [MenuSelect]
+    m68k-body: |
+      return MenuSelect(*p);
+
+# ####
+
+- function:
+    name: newcolordialog
+    return: DialogPtr
+    args:
+    - name: arg0
+      type: void*
+    - name: arg1
+      type: const Rect*
+    - name: arg2
+      type: const char*
+    - name: arg3
+      type: Boolean
+    - name: arg4
+      type: INTEGER
+    - name: arg5
+      type: WindowPtr
+    - name: arg6
+      type: Boolean
+    - name: arg7
+      type: LONGINT
+    - name: arg8
+      type: Handle
+    callconv: C
+    m68k-needs: [NewColorDialog, c2pstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      if (arg2)
+          c2pstrcpy(_s2, arg2);
+      return NewColorDialog(arg0, arg1, arg2 ? _s2 : (unsigned char *)0, arg3, arg4, arg5, arg6, arg7, arg8);
+
+# ####
+
+- function:
+    name: newcontrol
+    return: ControlHandle
+    args:
+    - name: wst
+      type: WindowPtr
+    - name: r
+      type: const Rect*
+    - name: title
+      type: const char*
+    - name: vis
+      type: Boolean
+    - name: value
+      type: INTEGER
+    - name: min
+      type: INTEGER
+    - name: max
+      type: INTEGER
+    - name: procid
+      type: INTEGER
+    - name: rc
+      type: LONGINT
+    callconv: C
+    m68k-needs: [NewControl, c2pstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      if (title)
+          c2pstrcpy(_s2, title);
+      return NewControl(wst, r, title ? _s2 : (unsigned char *)0, vis, value, min, max, procid, rc);
+
+# ####
+
+- function:
+    name: newcwindow
+    return: WindowPtr
+    args:
+    - name: storage
+      type: void*
+    - name: arg1
+      type: const Rect*
+    - name: arg2
+      type: const char*
+    - name: arg3
+      type: Boolean
+    - name: arg4
+      type: INTEGER
+    - name: arg5
+      type: WindowPtr
+    - name: arg6
+      type: Boolean
+    - name: arg7
+      type: LONGINT
+    callconv: C
+    m68k-needs: [NewCWindow, c2pstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      if (arg2)
+          c2pstrcpy(_s2, arg2);
+      return NewCWindow(storage, arg1, arg2 ? _s2 : (unsigned char *)0, arg3, arg4, arg5, arg6, arg7);
+
+# ####
+
+- function:
+    name: newdialog
+    return: DialogPtr
+    args:
+    - name: dst
+      type: void*
+    - name: r
+      type: const Rect*
+    - name: tit
+      type: const char*
+    - name: vis
+      type: Boolean
+    - name: procid
+      type: INTEGER
+    - name: behind
+      type: WindowPtr
+    - name: gaflag
+      type: Boolean
+    - name: rc
+      type: LONGINT
+    - name: items
+      type: Handle
+    callconv: C
+    m68k-needs: [NewDialog, c2pstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      if (tit)
+          c2pstrcpy(_s2, tit);
+      return NewDialog(dst, r, tit ? _s2 : (unsigned char *)0, vis, procid, behind, gaflag, rc, items);
+
+# ####
+
+- function:
+    name: newmenu
+    return: MenuHandle
+    args:
+    - name: mid
+      type: INTEGER
+    - name: str
+      type: const char*
+    callconv: C
+    m68k-needs: [NewMenu, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (str)
+          c2pstrcpy(_s1, str);
+      return NewMenu(mid, str ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: newstring
+    return: StringHandle
+    args:
+    - name: s
+      type: const char*
+    callconv: C
+    m68k-needs: [NewString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (s)
+          c2pstrcpy(_s0, s);
+      return NewString(s ? _s0 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: newwindow
+    return: WindowPtr
+    args:
+    - name: wst
+      type: void*
+    - name: r
+      type: const Rect*
+    - name: title
+      type: const char*
+    - name: vis
+      type: Boolean
+    - name: procid
+      type: INTEGER
+    - name: behind
+      type: WindowPtr
+    - name: gaflag
+      type: Boolean
+    - name: rc
+      type: LONGINT
+    callconv: C
+    m68k-needs: [NewWindow, c2pstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      if (title)
+          c2pstrcpy(_s2, title);
+      return NewWindow(wst, r, title ? _s2 : (unsigned char *)0, vis, procid, behind, gaflag, rc);
+
+# ####
+
+- function:
+    name: numtostring
+    args:
+    - name: l
+      type: LONGINT
+    - name: s
+      type: char*
+    callconv: C
+    m68k-needs: [NumToString, p2cstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      _s1[0] = 0;
+      NumToString(l, s ? _s1 : (unsigned char *)0);
+      if (s)
+          p2cstrcpy(s, _s1);
+
+# ####
+
+- function:
+    name: opendeskacc
+    return: INTEGER
+    args:
+    - name: acc
+      type: const char*
+    callconv: C
+    m68k-needs: [OpenDeskAcc, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (acc)
+          c2pstrcpy(_s0, acc);
+      return OpenDeskAcc(acc ? _s0 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: opendriver
+    return: OSErr
+    args:
+    - name: name
+      type: const char*
+    - name: rnp
+      type: INTEGER*
+    callconv: C
+    m68k-needs: [OpenDriver, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (name)
+          c2pstrcpy(_s0, name);
+      return OpenDriver(name ? _s0 : (unsigned char *)0, rnp);
+
+# ####
+
+- function:
+    name: openresfile
+    return: INTEGER
+    args:
+    - name: fn
+      type: const char*
+    callconv: C
+    m68k-needs: [OpenResFile, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (fn)
+          c2pstrcpy(_s0, fn);
+      return OpenResFile(fn ? _s0 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: openrf
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: rn
+      type: INTEGER*
+    callconv: C
+    m68k-needs: [OpenRF, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return OpenRF(filen ? _s0 : (unsigned char *)0, vrn, rn);
+
+# ####
+
+- function:
+    name: openrfperm
+    return: INTEGER
+    args:
+    - name: fn
+      type: const char*
+    - name: vref
+      type: INTEGER
+    - name: perm
+      type: Byte
+    callconv: C
+    m68k-needs: [OpenRFPerm, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (fn)
+          c2pstrcpy(_s0, fn);
+      return OpenRFPerm(fn ? _s0 : (unsigned char *)0, vref, perm);
+
+# ####
+
+- function:
+    name: paramtext
+    args:
+    - name: p0
+      type: const char*
+    - name: p1
+      type: const char*
+    - name: p2
+      type: const char*
+    - name: p3
+      type: const char*
+    callconv: C
+    m68k-needs: [ParamText, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (p0)
+          c2pstrcpy(_s0, p0);
+      Str255 _s1;
+      if (p1)
+          c2pstrcpy(_s1, p1);
+      Str255 _s2;
+      if (p2)
+          c2pstrcpy(_s2, p2);
+      Str255 _s3;
+      if (p3)
+          c2pstrcpy(_s3, p3);
+      ParamText(p0 ? _s0 : (unsigned char *)0, p1 ? _s1 : (unsigned char *)0, p2 ? _s2 : (unsigned char *)0, p3 ? _s3 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: pinrect
+    return: LONGINT
+    args:
+    - name: r
+      type: const Rect*
+    - name: p
+      type: Point*
+    callconv: C
+    m68k-needs: [PinRect]
+    m68k-body: |
+      return PinRect(r, *p);
+
+# ####
+
+- function:
+    name: pt2rect
+    args:
+    - name: p1
+      type: Point*
+    - name: p2
+      type: Point*
+    - name: dest
+      type: Rect*
+    callconv: C
+    m68k-needs: [Pt2Rect]
+    m68k-body: |
+      Pt2Rect(*p1, *p2, dest);
+
+# ####
+
+- function:
+    name: ptinrect
+    return: Boolean
+    args:
+    - name: p
+      type: Point*
+    - name: r
+      type: const Rect*
+    callconv: C
+    m68k-needs: [PtInRect]
+    m68k-body: |
+      return PtInRect(*p, r);
+
+# ####
+
+- function:
+    name: ptinrgn
+    return: Boolean
+    args:
+    - name: p
+      type: Point*
+    - name: rh
+      type: RgnHandle
+    callconv: C
+    m68k-needs: [PtInRgn]
+    m68k-body: |
+      return PtInRgn(*p, rh);
+
+# ####
+
+- function:
+    name: pttoangle
+    args:
+    - name: rp
+      type: const Rect*
+    - name: p
+      type: Point*
+    - name: angle
+      type: INTEGER*
+    callconv: C
+    m68k-needs: [PtToAngle]
+    m68k-body: |
+      PtToAngle(rp, *p, angle);
+
+# ####
+
+- function:
+    name: relstring
+    return: INTEGER
+    args:
+    - name: s1
+      type: const char*
+    - name: s2
+      type: const char*
+    - name: casesig
+      type: Boolean
+    - name: diacsig
+      type: Boolean
+    callconv: C
+    m68k-needs: [RelString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (s1)
+          c2pstrcpy(_s0, s1);
+      Str255 _s1;
+      if (s2)
+          c2pstrcpy(_s1, s2);
+      return RelString(s1 ? _s0 : (unsigned char *)0, s2 ? _s1 : (unsigned char *)0, casesig, diacsig);
+
+# ####
+
+- function:
+    name: rstflock
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+    m68k-needs: [RstFLock, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return RstFLock(filen ? _s0 : (unsigned char *)0, vrn);
+
+# ####
+
+- function:
+    name: setcontroltitle
+    args:
+    - name: c
+      type: ControlHandle
+    - name: t
+      type: const char*
+    callconv: C
+    m68k-needs: [SetControlTitle, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (t)
+          c2pstrcpy(_s1, t);
+      SetControlTitle(c, t ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: setdialogitemtext
+    args:
+    - name: item
+      type: Handle
+    - name: text
+      type: const char*
+    callconv: C
+    m68k-needs: [SetDialogItemText, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (text)
+          c2pstrcpy(_s1, text);
+      SetDialogItemText(item, text ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: setfinfo
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    - name: fndrinfo
+      type: FInfo*
+    callconv: C
+    m68k-needs: [SetFInfo, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return SetFInfo(filen ? _s0 : (unsigned char *)0, vrn, fndrinfo);
+
+# ####
+
+- function:
+    name: setflock
+    return: OSErr
+    args:
+    - name: filen
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+    m68k-needs: [SetFLock, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (filen)
+          c2pstrcpy(_s0, filen);
+      return SetFLock(filen ? _s0 : (unsigned char *)0, vrn);
+
+# ####
+
+- function:
+    name: setmenuitemtext
+    args:
+    - name: mh
+      type: MenuHandle
+    - name: item
+      type: INTEGER
+    - name: str
+      type: const char*
+    callconv: C
+    m68k-needs: [SetMenuItemText, c2pstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      if (str)
+          c2pstrcpy(_s2, str);
+      SetMenuItemText(mh, item, str ? _s2 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: setresinfo
+    args:
+    - name: res
+      type: Handle
+    - name: id
+      type: INTEGER
+    - name: name
+      type: const char*
+    callconv: C
+    m68k-needs: [SetResInfo, c2pstrcpy]
+    m68k-body: |
+      Str255 _s2;
+      if (name)
+          c2pstrcpy(_s2, name);
+      SetResInfo(res, id, name ? _s2 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: setstring
+    args:
+    - name: h
+      type: StringHandle
+    - name: s
+      type: const char*
+    callconv: C
+    m68k-needs: [SetString, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (s)
+          c2pstrcpy(_s1, s);
+      SetString(h, s ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: setvol
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+    m68k-needs: [SetVol, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (voln)
+          c2pstrcpy(_s0, voln);
+      return SetVol(voln ? _s0 : (unsigned char *)0, vrn);
+
+# ####
+
+- function:
+    name: setwtitle
+    args:
+    - name: w
+      type: WindowPtr
+    - name: t
+      type: const char*
+    callconv: C
+    m68k-needs: [SetWTitle, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (t)
+          c2pstrcpy(_s1, t);
+      SetWTitle(w, t ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: sfgetfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: filef
+      type: FileFilterUPP
+    - name: numt
+      type: INTEGER
+    - name: tl
+      type: SFTypeList
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    callconv: C
+    m68k-needs: [SFGetFile, c2pstrcpy, p2cstrcpy, SFReply]
+    m68k-body: |
+      Str255 _s1;
+      if (prompt)
+          c2pstrcpy(_s1, prompt);
+      SFGetFile(*p, prompt ? _s1 : (unsigned char *)0, filef, numt, tl, dh, rep);
+      p2cstrcpy((char *)rep->fName, rep->fName);
+
+# ####
+
+- function:
+    name: sfpgetfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: filef
+      type: FileFilterUPP
+    - name: numt
+      type: INTEGER
+    - name: tl
+      type: SFTypeList
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    - name: dig
+      type: INTEGER
+    - name: fp
+      type: ModalFilterUPP
+    callconv: C
+    m68k-needs: [SFPGetFile, c2pstrcpy, p2cstrcpy, SFReply]
+    m68k-body: |
+      Str255 _s1;
+      if (prompt)
+          c2pstrcpy(_s1, prompt);
+      SFPGetFile(*p, prompt ? _s1 : (unsigned char *)0, filef, numt, tl, dh, rep, dig, fp);
+      p2cstrcpy((char *)rep->fName, rep->fName);
+
+# ####
+
+- function:
+    name: sfpputfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: name
+      type: const char*
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    - name: dig
+      type: INTEGER
+    - name: fp
+      type: ModalFilterUPP
+    callconv: C
+    m68k-needs: [SFPPutFile, c2pstrcpy, p2cstrcpy, SFReply]
+    m68k-body: |
+      Str255 _s1;
+      if (prompt)
+          c2pstrcpy(_s1, prompt);
+      Str255 _s2;
+      if (name)
+          c2pstrcpy(_s2, name);
+      SFPPutFile(*p, prompt ? _s1 : (unsigned char *)0, name ? _s2 : (unsigned char *)0, dh, rep, dig, fp);
+      p2cstrcpy((char *)rep->fName, rep->fName);
+
+# ####
+
+- function:
+    name: sfputfile
+    args:
+    - name: p
+      type: Point*
+    - name: prompt
+      type: const char*
+    - name: name
+      type: const char*
+    - name: dh
+      type: DlgHookUPP
+    - name: rep
+      type: SFReply*
+    callconv: C
+    m68k-needs: [SFPutFile, c2pstrcpy, p2cstrcpy, SFReply]
+    m68k-body: |
+      Str255 _s1;
+      if (prompt)
+          c2pstrcpy(_s1, prompt);
+      Str255 _s2;
+      if (name)
+          c2pstrcpy(_s2, name);
+      SFPutFile(*p, prompt ? _s1 : (unsigned char *)0, name ? _s2 : (unsigned char *)0, dh, rep);
+      p2cstrcpy((char *)rep->fName, rep->fName);
+
+# ####
+
+- function:
+    name: shieldcursor
+    args:
+    - name: rp
+      type: Rect*
+    - name: p
+      type: Point*
+    callconv: C
+    m68k-needs: [ShieldCursor]
+    m68k-body: |
+      ShieldCursor(rp, *p);
+
+# ####
+
+- function:
+    name: stdline
+    args:
+    - name: p
+      type: Point*
+    callconv: C
+    m68k-needs: [StdLine]
+    m68k-body: |
+      StdLine(*p);
+
+# ####
+
+- function:
+    name: stdtext
+    args:
+    - name: n
+      type: INTEGER
+    - name: textbufp
+      type: Ptr
+    - name: num
+      type: Point*
+    - name: den
+      type: Point*
+    callconv: C
+    m68k-needs: [StdText]
+    m68k-body: |
+      StdText(n, textbufp, *num, *den);
+
+# ####
+
+- function:
+    name: stringtonum
+    args:
+    - name: s
+      type: const char*
+    - name: lp
+      type: LONGINT*
+    callconv: C
+    m68k-needs: [StringToNum, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (s)
+          c2pstrcpy(_s0, s);
+      StringToNum(s ? _s0 : (unsigned char *)0, lp);
+
+# ####
+
+- function:
+    name: stringwidth
+    return: INTEGER
+    args:
+    - name: s
+      type: const char*
+    callconv: C
+    m68k-needs: [StringWidth, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (s)
+          c2pstrcpy(_s0, s);
+      return StringWidth(s ? _s0 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: stuffhex
+    args:
+    - name: p
+      type: Ptr
+    - name: s
+      type: const char*
+    callconv: C
+    m68k-needs: [StuffHex, c2pstrcpy]
+    m68k-body: |
+      Str255 _s1;
+      if (s)
+          c2pstrcpy(_s1, s);
+      StuffHex(p, s ? _s1 : (unsigned char *)0);
+
+# ####
+
+- function:
+    name: subpt
+    args:
+    - name: src
+      type: Point*
+    - name: dst
+      type: Point*
+    callconv: C
+    m68k-needs: [SubPt]
+    m68k-body: |
+      SubPt(*src, dst);
+
+# ####
+
+- function:
+    name: teclick
+    args:
+    - name: p
+      type: Point*
+    - name: ext
+      type: Boolean
+    - name: teh
+      type: TEHandle
+    callconv: C
+    m68k-needs: [TEClick]
+    m68k-body: |
+      TEClick(*p, ext, teh);
+
+# ####
+
+- function:
+    name: testcontrol
+    return: INTEGER
+    args:
+    - name: c
+      type: ControlHandle
+    - name: p
+      type: Point*
+    callconv: C
+    m68k-needs: [TestControl]
+    m68k-body: |
+      return TestControl(c, *p);
+
+# ####
+
+- function:
+    name: trackbox
+    return: Boolean
+    args:
+    - name: wp
+      type: WindowPtr
+    - name: pt
+      type: Point*
+    - name: part
+      type: INTEGER
+    callconv: C
+    m68k-needs: [TrackBox]
+    m68k-body: |
+      return TrackBox(wp, *pt, part);
+
+# ####
+
+- function:
+    name: trackcontrol
+    return: INTEGER
+    args:
+    - name: c
+      type: ControlHandle
+    - name: p
+      type: Point*
+    - name: a
+      type: ControlActionUPP
+    callconv: C
+    m68k-needs: [TrackControl]
+    m68k-body: |
+      return TrackControl(c, *p, a);
+
+# ####
+
+- function:
+    name: trackgoaway
+    return: Boolean
+    args:
+    - name: w
+      type: WindowPtr
+    - name: p
+      type: Point*
+    callconv: C
+    m68k-needs: [TrackGoAway]
+    m68k-body: |
+      return TrackGoAway(w, *p);
+
+# ####
+
+- function:
+    name: unmountvol
+    return: OSErr
+    args:
+    - name: voln
+      type: const char*
+    - name: vrn
+      type: INTEGER
+    callconv: C
+    m68k-needs: [UnmountVol, c2pstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (voln)
+          c2pstrcpy(_s0, voln);
+      return UnmountVol(voln ? _s0 : (unsigned char *)0, vrn);
+
+# ####
+
+- function:
+    name: upperstring
+    args:
+    - name: s
+      type: char*
+    - name: diac
+      type: Boolean
+    callconv: C
+    m68k-needs: [UpperString, c2pstrcpy, p2cstrcpy]
+    m68k-body: |
+      Str255 _s0;
+      if (s)
+          c2pstrcpy(_s0, s);
+      UpperString(s ? _s0 : (unsigned char *)0, diac);
+      if (s)
+          p2cstrcpy(s, _s0);
+
+# ####
+
+- function:
+    name: p2cstr
+    return: char*
+    args:
+    - name: aStr
+      type: StringPtr
+    callconv: C
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      unsigned char n = aStr[0];
+      BlockMoveData(aStr + 1, aStr, n);
+      aStr[n] = 0;
+      return (char *)aStr;
+
+# ####
+
+- function:
+    name: c2pstr
+    return: StringPtr
+    args:
+    - name: aStr
+      type: char*
+    callconv: C
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      const volatile char *p = aStr;
+      Size n = 0;
+      while (n < 255 && p[n])
+          n++;
+      BlockMoveData(aStr, aStr + 1, n);
+      *(unsigned char *)aStr = (unsigned char)n;
+      return (StringPtr)aStr;
+
+# ####
+
+- function:
+    name: C2PStr
+    args:
+    - name: cString
+      type: Ptr
+    callconv: C
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      const volatile char *p = (char *)cString;
+      Size n = 0;
+      while (n < 255 && p[n])
+          n++;
+      BlockMoveData(cString, cString + 1, n);
+      *(unsigned char *)cString = (unsigned char)n;
+
+# ####
+
+- function:
+    name: P2CStr
+    args:
+    - name: pString
+      type: StringPtr
+    callconv: C
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      unsigned char n = pString[0];
+      BlockMoveData(pString + 1, pString, n);
+      pString[n] = 0;

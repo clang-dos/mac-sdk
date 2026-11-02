@@ -1,0 +1,610 @@
+- funptr:
+    args:
+      - name: theEvent
+        type: AppleEvent*
+    name: DMNotificationUPP
+
+# ####
+
+- dispatcher:
+    name: DisplayDispatch
+    trap: 0xABEB
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: DMRegisterNotifyProc
+    return: OSErr
+    args:
+      - name: proc
+        type: DMNotificationUPP
+      - name: psn
+        type: ProcessSerialNumber*
+    dispatcher: DisplayDispatch
+    selector: 0x0414
+    executor: C_
+
+# ####
+
+- typedef:
+    name: DisplayIDType
+    type: uint32_t
+
+# ####
+
+- typedef:
+    name: DMProcessInfoPtr
+    type: ProcessSerialNumber*
+
+# ####
+
+- enum:
+    values:
+      - name: kDMNotifyInstalled
+        value: 1
+      - name: kDMNotifyEvent
+        value: 2
+      - name: kDMNotifyRemoved
+        value: 3
+      - name: kDMNotifyPrep
+        value: 4
+      - name: kDMNotifyExtendEvent
+        value: 5
+      - name: kDMNotifyDependents
+        value: 6
+      - name: kDMNotifySuspendConfigure
+        value: 7
+      - name: kDMNotifyResumeConfigure
+        value: 8
+      - name: kDMNotifyDisplayWillSleep
+        value: 9
+      - name: kDMNotifyDisplayDidWake
+        value: 10
+
+# ####
+
+- enum:
+    values:
+      - name: kNoSwitchConfirmBit
+        value: 0
+      - name: kDepthNotAvailableBit
+        value: 1
+      - name: kShowModeBit
+        value: 3
+      - name: kModeNotResizeBit
+        value: 4
+      - name: kNeverShowModeBit
+        value: 5
+      - name: kDisplayModeListNotPreferredBit
+        value: 0
+      - name: kDMDontFailToMain
+        value: 0
+      - name: kDMFailToMain
+        value: 1
+
+# ####
+
+- enum:
+    values:
+      - name: kDMGenErr
+        value: -6220
+      - name: kDMMirroringOnAlready
+        value: -6221
+      - name: kDMWrongNumberOfDisplays
+        value: -6222
+      - name: kDMMirroringBlocked
+        value: -6223
+      - name: kDMCantBlock
+        value: -6224
+      - name: kDMMirroringNotOn
+        value: -6225
+      - name: kSysSWTooOld
+        value: -6226
+      - name: kDMSWNotInitializedErr
+        value: -6227
+      - name: kDMDriverNotDisplayMgrAwareErr
+        value: -6228
+      - name: kDMDisplayNotFoundErr
+        value: -6229
+      - name: kDMNotFoundErr
+        value: -6229
+      - name: kDMDisplayAlreadyInstalledErr
+        value: -6230
+      - name: kDMMainDisplayCannotMoveErr
+        value: -6231
+      - name: kDMNoDeviceTableclothErr
+        value: -6231
+      - name: kDMFoundErr
+        value: -6232
+
+# ####
+
+- function:
+    name: DMGetFirstScreenDevice
+    return: GDHandle
+    args:
+    - name: activeOnly
+      type: Boolean
+    comment: Display Manager
+    dispatcher: DisplayDispatch
+    selector: 0
+
+# ####
+
+- function:
+    name: DMGetNextScreenDevice
+    return: GDHandle
+    args:
+    - name: theDevice
+      type: GDHandle
+    - name: activeOnly
+      type: Boolean
+    dispatcher: DisplayDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: DMDrawDesktopRect
+    args:
+    - name: globalRect
+      type: Rect*
+    dispatcher: DisplayDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: DMDrawDesktopRegion
+    args:
+    - name: globalRgn
+      type: RgnHandle
+    dispatcher: DisplayDispatch
+    selector: 3
+
+# ####
+
+- function:
+    name: DMBeginConfigureDisplays
+    return: OSErr
+    args:
+    - name: displayState
+      type: Handle*
+    dispatcher: DisplayDispatch
+    selector: 518
+
+# ####
+
+- function:
+    name: DMEndConfigureDisplays
+    return: OSErr
+    args:
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 519
+
+# ####
+
+- function:
+    name: DMAddDisplay
+    return: OSErr
+    args:
+    - name: newDevice
+      type: GDHandle
+    - name: driver
+      type: INTEGER
+    - name: mode
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: displayID
+      type: uint32_t
+    - name: displayComponent
+      type: Component
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 3336
+
+# ####
+
+- function:
+    name: DMMoveDisplay
+    return: OSErr
+    args:
+    - name: moveDevice
+      type: GDHandle
+    - name: x
+      type: INTEGER
+    - name: y
+      type: INTEGER
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1545
+
+# ####
+
+- function:
+    name: DMDisableDisplay
+    return: OSErr
+    args:
+    - name: disableDevice
+      type: GDHandle
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1034
+
+# ####
+
+- function:
+    name: DMEnableDisplay
+    return: OSErr
+    args:
+    - name: enableDevice
+      type: GDHandle
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1035
+
+# ####
+
+- function:
+    name: DMRemoveDisplay
+    return: OSErr
+    args:
+    - name: removeDevice
+      type: GDHandle
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1036
+
+# ####
+
+- function:
+    name: DMSetMainDisplay
+    return: OSErr
+    args:
+    - name: newMainDevice
+      type: GDHandle
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1040
+
+# ####
+
+- function:
+    name: DMSetDisplayMode
+    return: OSErr
+    args:
+    - name: theDevice
+      type: GDHandle
+    - name: mode
+      type: uint32_t
+    - name: depthMode
+      type: uint32_t*
+    - name: reserved
+      type: uint32_t
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 2577
+
+# ####
+
+- function:
+    name: DMCheckDisplayMode
+    return: OSErr
+    args:
+    - name: theDevice
+      type: GDHandle
+    - name: mode
+      type: uint32_t
+    - name: depthMode
+      type: uint32_t
+    - name: switchFlags
+      type: uint32_t*
+    - name: reserved
+      type: uint32_t
+    - name: modeOk
+      type: Boolean*
+    dispatcher: DisplayDispatch
+    selector: 3090
+
+# ####
+
+- function:
+    name: DMGetDeskRegion
+    return: OSErr
+    args:
+    - name: desktopRegion
+      type: RgnHandle*
+    dispatcher: DisplayDispatch
+    selector: 531
+
+# ####
+
+- function:
+    name: DMRemoveNotifyProc
+    return: OSErr
+    args:
+    - name: notificationProc
+      type: DMNotificationUPP
+    - name: whichPSN
+      type: DMProcessInfoPtr
+    dispatcher: DisplayDispatch
+    selector: 1045
+
+# ####
+
+- function:
+    name: DMQDIsMirroringCapable
+    return: OSErr
+    args:
+    - name: qdIsMirroringCapable
+      type: Boolean*
+    dispatcher: DisplayDispatch
+    selector: 534
+
+# ####
+
+- function:
+    name: DMCanMirrorNow
+    return: OSErr
+    args:
+    - name: canMirrorNow
+      type: Boolean*
+    dispatcher: DisplayDispatch
+    selector: 535
+
+# ####
+
+- function:
+    name: DMIsMirroringOn
+    return: OSErr
+    args:
+    - name: isMirroringOn
+      type: Boolean*
+    dispatcher: DisplayDispatch
+    selector: 536
+
+# ####
+
+- function:
+    name: DMMirrorDevices
+    return: OSErr
+    args:
+    - name: gD1
+      type: GDHandle
+    - name: gD2
+      type: GDHandle
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1561
+
+# ####
+
+- function:
+    name: DMUnmirrorDevice
+    return: OSErr
+    args:
+    - name: gDevice
+      type: GDHandle
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1050
+
+# ####
+
+- function:
+    name: DMGetNextMirroredDevice
+    return: OSErr
+    args:
+    - name: gDevice
+      type: GDHandle
+    - name: mirroredDevice
+      type: GDHandle*
+    dispatcher: DisplayDispatch
+    selector: 1051
+
+# ####
+
+- function:
+    name: DMBlockMirroring
+    return: OSErr
+    dispatcher: DisplayDispatch
+    selector: 28
+
+# ####
+
+- function:
+    name: DMUnblockMirroring
+    return: OSErr
+    dispatcher: DisplayDispatch
+    selector: 29
+
+# ####
+
+- function:
+    name: DMGetDisplayMgrA5World
+    return: OSErr
+    args:
+    - name: dmA5
+      type: Ptr*
+    dispatcher: DisplayDispatch
+    selector: 542
+
+# ####
+
+- function:
+    name: DMGetDisplayIDByGDevice
+    return: OSErr
+    args:
+    - name: displayDevice
+      type: GDHandle
+    - name: displayID
+      type: DisplayIDType*
+    - name: failToMain
+      type: Boolean
+    dispatcher: DisplayDispatch
+    selector: 1311
+
+# ####
+
+- function:
+    name: DMGetGDeviceByDisplayID
+    return: OSErr
+    args:
+    - name: displayID
+      type: DisplayIDType
+    - name: displayDevice
+      type: GDHandle*
+    - name: failToMain
+      type: Boolean
+    dispatcher: DisplayDispatch
+    selector: 1312
+
+# ####
+
+- function:
+    name: DMSetDisplayComponent
+    return: OSErr
+    args:
+    - name: theDevice
+      type: GDHandle
+    - name: displayComponent
+      type: Component
+    dispatcher: DisplayDispatch
+    selector: 1057
+
+# ####
+
+- function:
+    name: DMGetDisplayComponent
+    return: OSErr
+    args:
+    - name: theDevice
+      type: GDHandle
+    - name: displayComponent
+      type: Component*
+    dispatcher: DisplayDispatch
+    selector: 1058
+
+# ####
+
+- function:
+    name: DMNewDisplay
+    return: OSErr
+    args:
+    - name: newDevice
+      type: GDHandle*
+    - name: driverRefNum
+      type: INTEGER
+    - name: mode
+      type: uint32_t
+    - name: reserved
+      type: uint32_t
+    - name: displayID
+      type: DisplayIDType
+    - name: displayComponent
+      type: Component
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 3363
+
+# ####
+
+- function:
+    name: DMDisposeDisplay
+    return: OSErr
+    args:
+    - name: disposeDevice
+      type: GDHandle
+    - name: displayState
+      type: Handle
+    dispatcher: DisplayDispatch
+    selector: 1060
+
+# ####
+
+- function:
+    name: DMResolveDisplayComponents
+    return: OSErr
+    dispatcher: DisplayDispatch
+    selector: 37
+
+# ####
+
+- function:
+    name: DMGetGDeviceTablecloth
+    return: OSErr
+    args:
+    - name: displayDevice
+      type: GDHandle
+    - name: useTablecloth
+      type: Boolean*
+    dispatcher: DisplayDispatch
+    selector: 1028
+
+# ####
+
+- function:
+    name: DMGetNextAnimateTime
+    return: OSErr
+    args:
+    - name: nextAnimateTime
+      type: UInt32*
+    dispatcher: DisplayDispatch
+    selector: 527
+
+# ####
+
+- function:
+    name: DMGetComponentAnimateTicks
+    return: OSErr
+    args:
+    - name: animationComponent
+      type: ComponentInstance
+    - name: animationTicks
+      type: UInt32*
+    - name: nextAnimateTick
+      type: UInt32*
+    dispatcher: DisplayDispatch
+    selector: 1549
+
+# ####
+
+- function:
+    name: DMSetComponentAnimateTicks
+    return: OSErr
+    args:
+    - name: animationComponent
+      type: ComponentInstance
+    - name: animationTicks
+      type: UInt32
+    - name: nextAnimateTick
+      type: UInt32*
+    dispatcher: DisplayDispatch
+    selector: 1550
+
+# ####
+
+- function:
+    name: DMSetGDeviceTablecloth
+    return: OSErr
+    args:
+    - name: displayDevice
+      type: GDHandle
+    - name: tableclothInstance
+      type: ComponentInstance
+    dispatcher: DisplayDispatch
+    selector: 1029

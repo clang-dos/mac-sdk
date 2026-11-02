@@ -1,0 +1,1206 @@
+
+# ####
+
+- enum:
+    values:
+    - name: curCMVersion
+      value: 2
+    - name: curConnEnvRecVers
+      value: 0
+
+# ####
+
+- typedef:
+    name: CMErr
+    type: OSErr
+
+# ####
+
+- enum:
+    values:
+    - name: cmGenericError
+      value: -1
+    - name: cmNoErr
+      value: 0
+    - name: cmRejected
+      value: 1
+    - name: cmFailed
+      value: 2
+    - name: cmTimeOut
+      value: 3
+    - name: cmNotOpen
+      value: 4
+    - name: cmNotClosed
+      value: 5
+    - name: cmNoRequestPending
+      value: 6
+    - name: cmNotSupported
+      value: 7
+    - name: cmNoTools
+      value: 8
+    - name: cmUserCancel
+      value: 9
+    - name: cmUnknownError
+      value: 11
+
+# ####
+
+- typedef:
+    name: CMRecFlags
+    type: uint32_t
+
+# ####
+
+- typedef:
+    name: CMChannel
+    type: INTEGER
+
+# ####
+
+- enum:
+    values:
+    - name: cmData
+      value: 1
+    - name: cmCntl
+      value: 2
+    - name: cmAttn
+      value: 4
+    - name: cmDataNoEcho
+      value: 16
+    - name: cmCntlNoEcho
+      value: 32
+    - name: cmAttnNoEcho
+      value: 64
+    - name: cmNoMenus
+      value: 65536
+    - name: cmQuiet
+      value: 131072
+    - name: cmConnChanged
+      value: 262144
+
+# ####
+
+- typedef:
+    name: CMStatFlags
+    type: int32_t
+
+# ####
+
+- enum:
+    values:
+    - name: cmStatusOpening
+      value: 1
+    - name: cmStatusOpen
+      value: 2
+    - name: cmStatusClosing
+      value: 4
+    - name: cmStatusDataAvail
+      value: 8
+    - name: cmStatusCntlAvail
+      value: 16
+    - name: cmStatusAttnAvail
+      value: 32
+    - name: cmStatusDRPend
+      value: 64
+    - name: cmStatusDWPend
+      value: 128
+    - name: cmStatusCRPend
+      value: 256
+    - name: cmStatusCWPend
+      value: 512
+    - name: cmStatusARPend
+      value: 1024
+    - name: cmStatusAWPend
+      value: 2048
+    - name: cmStatusBreakPend
+      value: 4096
+    - name: cmStatusListenPend
+      value: 8192
+    - name: cmStatusIncomingCallPresent
+      value: 16384
+    - name: cmStatusReserved0
+      value: 32768
+
+# ####
+
+- typedef:
+    name: CMBufFields
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: cmDataIn
+      value: 0
+    - name: cmDataOut
+      value: 1
+    - name: cmCntlIn
+      value: 2
+    - name: cmCntlOut
+      value: 3
+    - name: cmAttnIn
+      value: 4
+    - name: cmAttnOut
+      value: 5
+    - name: cmRsrvIn
+      value: 6
+    - name: cmRsrvOut
+      value: 7
+
+# ####
+
+- typedef:
+    name: CMBuffers
+    type: Ptr[8]
+
+# ####
+
+- typedef:
+    name: CMBufferSizes
+    type: int32_t[8]
+
+# ####
+
+- typedef:
+    name: ConstCMBufferSizesParam
+    type: const int32_t*
+
+# ####
+
+- typedef:
+    name: CMSearchFlags
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: cmSearchSevenBit
+      value: 1
+
+# ####
+
+- typedef:
+    name: CMFlags
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: cmFlagsEOM
+      value: 1
+
+# ####
+
+- struct:
+    name: ConnEnvironRec
+    size: 14
+    members:
+    - name: version
+      type: INTEGER
+    - name: baudRate
+      type: int32_t
+    - name: dataBits
+      type: INTEGER
+    - name: channels
+      type: CMChannel
+    - name: swFlowControl
+      type: Boolean
+    - name: hwFlowControl
+      type: Boolean
+    - name: flags
+      type: CMFlags
+
+# ####
+
+- typedef:
+    name: ConnEnvironRecPtr
+    type: ConnEnvironRec*
+
+# ####
+
+- struct:
+    name: ConnRecord
+    size: 144
+    members:
+    - name: procID
+      type: INTEGER
+    - name: flags
+      type: CMRecFlags
+    - name: errCode
+      type: CMErr
+    - name: refCon
+      type: int32_t
+    - name: userData
+      type: int32_t
+    - name: defProc
+      type: ProcPtr
+    - name: config
+      type: Ptr
+    - name: oldConfig
+      type: Ptr
+    - name: asyncEOM
+      type: int32_t
+    - name: reserved1
+      type: int32_t
+    - name: reserved2
+      type: int32_t
+    - name: cmPrivate
+      type: Ptr
+    - name: bufferArray
+      type: CMBuffers
+    - name: bufSizes
+      type: CMBufferSizes
+    - name: mluField
+      type: int32_t
+    - name: asyncCount
+      type: CMBufferSizes
+
+# ####
+
+- typedef:
+    name: ConnPtr
+    type: ConnRecord*
+
+# ####
+
+- typedef:
+    name: ConnHandle
+    type: ConnPtr*
+
+# ####
+
+- enum:
+    values:
+    - name: cmInitiate
+      value: 0
+    - name: cmDispose
+      value: 1
+    - name: cmSuspend
+      value: 2
+    - name: cmResume
+      value: 3
+    - name: cmMenu
+      value: 4
+    - name: cmEvent
+      value: 5
+    - name: cmActivate
+      value: 6
+    - name: cmDeactivate
+      value: 7
+    - name: cmIdle
+      value: 50
+    - name: cmReset
+      value: 51
+    - name: cmAbort
+      value: 52
+    - name: cmRead
+      value: 100
+    - name: cmWrite
+      value: 101
+    - name: cmStatus
+      value: 102
+    - name: cmListen
+      value: 103
+    - name: cmAccept
+      value: 104
+    - name: cmClose
+      value: 105
+    - name: cmOpen
+      value: 106
+    - name: cmBreak
+      value: 107
+    - name: cmIOKill
+      value: 108
+    - name: cmEnvirons
+      value: 109
+    - name: cmNewIOPB
+      value: 110
+    - name: cmDisposeIOPB
+      value: 111
+    - name: cmGetErrorString
+      value: 112
+    - name: cmPBRead
+      value: 113
+    - name: cmPBWrite
+      value: 114
+    - name: cmPBIOKill
+      value: 115
+    - name: cmValidateMsg
+      value: 0
+    - name: cmDefaultMsg
+      value: 1
+    - name: cmSpecifyMsg
+      value: 0
+    - name: cmSetupPreflightMsg
+      value: 0
+    - name: cmSetupCleanupMsg
+      value: 1
+    - name: cmSetupItemMsg
+      value: 2
+    - name: cmSetupFilterMsg
+      value: 3
+    - name: cmSetupSetupMsg
+      value: 4
+    - name: cmSetupPostflightMsg
+      value: 5
+    - name: cmScriptMgrMsg
+      value: 0
+    - name: cmMgrToEnglishMsg
+      value: 1
+    - name: cmEnglishToMgrMsg
+      value: 2
+
+# ####
+
+- funptr:
+    name: ConnectionToolDefUPP
+    return: int32_t
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: msg
+      type: INTEGER
+    - name: p1
+      type: int32_t
+    - name: p2
+      type: int32_t
+    - name: p3
+      type: int32_t
+
+# ####
+
+- funptr:
+    name: ConnectionSearchCallBackUPP
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: matchPtr
+      type: Ptr
+    - name: refNum
+      type: int32_t
+
+# ####
+
+- funptr:
+    name: ConnectionCompletionUPP
+    args:
+    - name: hConn
+      type: ConnHandle
+
+# ####
+
+- funptr:
+    name: ConnectionChooseIdleUPP
+
+# ####
+
+- enum:
+    values:
+    - name: cmIOPBQType
+      value: 10
+    - name: cmIOPBversion
+      value: 0
+
+# ####
+
+- struct:
+    name: CMIOPB
+    size: 56
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: hConn
+      type: ConnHandle
+    - name: theBuffer
+      type: Ptr
+    - name: count
+      type: int32_t
+    - name: flags
+      type: CMFlags
+    - name: userCompletion
+      type: ConnectionCompletionUPP
+    - name: timeout
+      type: int32_t
+    - name: errCode
+      type: CMErr
+    - name: channel
+      type: CMChannel
+    - name: asyncEOM
+      type: int32_t
+    - name: reserved1
+      type: int32_t
+    - name: reserved2
+      type: INTEGER
+    - name: version
+      type: INTEGER
+    - name: refCon
+      type: int32_t
+    - name: toolData1
+      type: int32_t
+    - name: toolData2
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: CMIOPBPtr
+    type: CMIOPB*
+
+# ####
+
+- function:
+    name: InitCM
+    return: CMErr
+    m68k-pbtrap:
+    - 41099
+    - 257
+
+# ####
+
+- function:
+    name: CMGetRefCon
+    return: int32_t
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 259
+
+# ####
+
+- function:
+    name: CMSetRefCon
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: refCon
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 258
+
+# ####
+
+- function:
+    name: CMGetUserData
+    return: int32_t
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 261
+
+# ####
+
+- function:
+    name: CMSetUserData
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: userData
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 260
+
+# ####
+
+- function:
+    name: CMGetToolName
+    args:
+    - name: procID
+      type: INTEGER
+    - name: name
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 262
+
+# ####
+
+- function:
+    name: CMGetProcID
+    return: INTEGER
+    args:
+    - name: name
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 263
+
+# ####
+
+- function:
+    name: CMNew
+    return: ConnHandle
+    args:
+    - name: procID
+      type: INTEGER
+    - name: flags
+      type: CMRecFlags
+    - name: desiredSizes
+      type: ConstCMBufferSizesParam
+    - name: refCon
+      type: int32_t
+    - name: userData
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 264
+
+# ####
+
+- function:
+    name: CMDispose
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 265
+
+# ####
+
+- function:
+    name: CMIdle
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 266
+
+# ####
+
+- function:
+    name: CMOpen
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: async
+      type: Boolean
+    - name: completor
+      type: ConnectionCompletionUPP
+    - name: timeout
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 267
+
+# ####
+
+- function:
+    name: CMListen
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: async
+      type: Boolean
+    - name: completor
+      type: ConnectionCompletionUPP
+    - name: timeout
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 268
+
+# ####
+
+- function:
+    name: CMAccept
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: accept
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 269
+
+# ####
+
+- function:
+    name: CMClose
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: async
+      type: Boolean
+    - name: completor
+      type: ConnectionCompletionUPP
+    - name: timeout
+      type: int32_t
+    - name: now
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 270
+
+# ####
+
+- function:
+    name: CMAbort
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 271
+
+# ####
+
+- function:
+    name: CMStatus
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: sizes
+      type: CMBufferSizes
+    - name: flags
+      type: CMStatFlags*
+    m68k-pbtrap:
+    - 41099
+    - 272
+
+# ####
+
+- function:
+    name: CMRead
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theBuffer
+      type: void*
+    - name: toRead
+      type: int32_t*
+    - name: theChannel
+      type: CMChannel
+    - name: async
+      type: Boolean
+    - name: completor
+      type: ConnectionCompletionUPP
+    - name: timeout
+      type: int32_t
+    - name: flags
+      type: CMFlags*
+    m68k-pbtrap:
+    - 41099
+    - 273
+
+# ####
+
+- function:
+    name: CMWrite
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theBuffer
+      type: const void*
+    - name: toWrite
+      type: int32_t*
+    - name: theChannel
+      type: CMChannel
+    - name: async
+      type: Boolean
+    - name: completor
+      type: ConnectionCompletionUPP
+    - name: timeout
+      type: int32_t
+    - name: flags
+      type: CMFlags
+    m68k-pbtrap:
+    - 41099
+    - 274
+
+# ####
+
+- function:
+    name: CMActivate
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: activate
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 275
+
+# ####
+
+- function:
+    name: CMResume
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: resume
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 276
+
+# ####
+
+- function:
+    name: CMMenu
+    return: Boolean
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: menuID
+      type: INTEGER
+    - name: item
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 277
+
+# ####
+
+- function:
+    name: CMReset
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 278
+
+# ####
+
+- function:
+    name: CMValidate
+    return: Boolean
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 279
+
+# ####
+
+- function:
+    name: CMDefault
+    args:
+    - name: theConfig
+      type: Ptr*
+    - name: procID
+      type: INTEGER
+    - name: allocate
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 280
+
+# ####
+
+- function:
+    name: CMSetupPreflight
+    return: Handle
+    args:
+    - name: procID
+      type: INTEGER
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 291
+
+# ####
+
+- function:
+    name: CMSetupFilter
+    return: Boolean
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: theEvent
+      type: EventRecord*
+    - name: theItem
+      type: INTEGER*
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 290
+
+# ####
+
+- function:
+    name: CMSetupSetup
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 281
+
+# ####
+
+- function:
+    name: CMSetupItem
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: theItem
+      type: INTEGER*
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 282
+
+# ####
+
+- function:
+    name: CMSetupXCleanup
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: OKed
+      type: Boolean
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 302
+
+# ####
+
+- function:
+    name: CMSetupPostflight
+    args:
+    - name: procID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 299
+
+# ####
+
+- function:
+    name: CMGetConfig
+    return: Ptr
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 284
+
+# ####
+
+- function:
+    name: CMSetConfig
+    return: INTEGER
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: thePtr
+      type: const void*
+    m68k-pbtrap:
+    - 41099
+    - 285
+
+# ####
+
+- function:
+    name: CMIntlToEnglish
+    return: OSErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: inputPtr
+      type: const void*
+    - name: outputPtr
+      type: Ptr*
+    - name: language
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 286
+
+# ####
+
+- function:
+    name: CMEnglishToIntl
+    return: OSErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: inputPtr
+      type: const void*
+    - name: outputPtr
+      type: Ptr*
+    - name: language
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 287
+
+# ####
+
+- function:
+    name: CMAddSearch
+    return: int32_t
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theString
+      type: ConstStr255Param
+    - name: flags
+      type: CMSearchFlags
+    - name: callBack
+      type: ConnectionSearchCallBackUPP
+    m68k-pbtrap:
+    - 41099
+    - 294
+
+# ####
+
+- function:
+    name: CMRemoveSearch
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: refnum
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 295
+
+# ####
+
+- function:
+    name: CMClearSearch
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 296
+
+# ####
+
+- function:
+    name: CMGetConnEnvirons
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theEnvirons
+      type: ConnEnvironRec*
+    m68k-pbtrap:
+    - 41099
+    - 300
+
+# ####
+
+- function:
+    name: CMChoose
+    return: INTEGER
+    args:
+    - name: hConn
+      type: ConnHandle*
+    - name: where
+      type: Point
+    - name: idle
+      type: ConnectionChooseIdleUPP
+    m68k-pbtrap:
+    - 41099
+    - 292
+
+# ####
+
+- function:
+    name: CMEvent
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theEvent
+      type: const EventRecord*
+    m68k-pbtrap:
+    - 41099
+    - 298
+
+# ####
+
+- function:
+    name: CMGetErrorString
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: id
+      type: INTEGER
+    - name: errMsg
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 303
+
+# ####
+
+- function:
+    name: CMNewIOPB
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theIOPB
+      type: CMIOPBPtr*
+    m68k-pbtrap:
+    - 41099
+    - 304
+
+# ####
+
+- function:
+    name: CMDisposeIOPB
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theIOPB
+      type: CMIOPBPtr
+    m68k-pbtrap:
+    - 41099
+    - 305
+
+# ####
+
+- function:
+    name: CMPBRead
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theIOPB
+      type: CMIOPBPtr
+    - name: async
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 306
+
+# ####
+
+- function:
+    name: CMPBWrite
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theIOPB
+      type: CMIOPBPtr
+    - name: async
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 307
+
+# ####
+
+- function:
+    name: CMPBIOKill
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: theIOPB
+      type: CMIOPBPtr
+    m68k-pbtrap:
+    - 41099
+    - 308
+
+# ####
+
+- function:
+    name: CMBreak
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: duration
+      type: int32_t
+    - name: async
+      type: Boolean
+    - name: completor
+      type: ConnectionCompletionUPP
+    m68k-pbtrap:
+    - 41099
+    - 293
+
+# ####
+
+- function:
+    name: CMIOKill
+    return: CMErr
+    args:
+    - name: hConn
+      type: ConnHandle
+    - name: which
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 297
+
+# ####
+
+- function:
+    name: CMGetVersion
+    return: Handle
+    args:
+    - name: hConn
+      type: ConnHandle
+    m68k-pbtrap:
+    - 41099
+    - 288
+
+# ####
+
+- function:
+    name: CMGetCMVersion
+    return: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 289

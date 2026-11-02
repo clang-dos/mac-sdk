@@ -1,0 +1,234 @@
+
+# ####
+
+- enum:
+    values:
+    - name: curCTBUVersion
+      value: 2
+
+# ####
+
+- typedef:
+    name: CTBUErr
+    type: OSErr
+
+# ####
+
+- enum:
+    values:
+    - name: ctbuGenericError
+      value: -1
+    - name: ctbuNoErr
+      value: 0
+
+# ####
+
+- enum:
+    values:
+    - name: chooseDisaster
+      value: -2
+    - name: chooseFailed
+      value: -1
+    - name: chooseAborted
+      value: 0
+    - name: chooseOKMinor
+      value: 1
+    - name: chooseOKMajor
+      value: 2
+    - name: chooseCancel
+      value: 3
+
+# ####
+
+- enum:
+    values:
+    - name: nlOk
+      value: 0
+    - name: nlCancel
+      value: 1
+    - name: nlEject
+      value: 2
+
+# ####
+
+- enum:
+    values:
+    - name: nameInclude
+      value: 1
+    - name: nameDisable
+      value: 2
+    - name: nameReject
+      value: 3
+
+# ####
+
+- enum:
+    values:
+    - name: zoneInclude
+      value: 1
+    - name: zoneDisable
+      value: 2
+    - name: zoneReject
+      value: 3
+
+# ####
+
+- enum:
+    values:
+    - name: hookOK
+      value: 1
+    - name: hookCancel
+      value: 2
+    - name: hookOutline
+      value: 3
+    - name: hookTitle
+      value: 4
+    - name: hookItemList
+      value: 5
+    - name: hookZoneTitle
+      value: 6
+    - name: hookZoneList
+      value: 7
+    - name: hookLine
+      value: 8
+    - name: hookVersion
+      value: 9
+    - name: hookReserved1
+      value: 10
+    - name: hookReserved2
+      value: 11
+    - name: hookReserved3
+      value: 12
+    - name: hookReserved4
+      value: 13
+    - name: hookNull
+      value: 100
+    - name: hookItemRefresh
+      value: 101
+    - name: hookZoneRefresh
+      value: 102
+    - name: hookEject
+      value: 103
+    - name: hookPreflight
+      value: 104
+    - name: hookPostflight
+      value: 105
+    - name: hookKeyBase
+      value: 1000
+
+# ####
+
+- typedef:
+    name: NLTypeEntry
+    type: Str32
+
+# ####
+
+- typedef:
+    name: NLType
+    type: NLTypeEntry[4]
+
+# ####
+
+- struct:
+    name: NBPReply
+    size: 106
+    members:
+    - name: theEntity
+      type: EntityName
+    - name: theAddr
+      type: AddrBlock
+
+# ####
+
+- funptr:
+    name: NameFilterUPP
+    return: INTEGER
+    args:
+    - name: theEntity
+      type: EntityName*
+
+# ####
+
+- funptr:
+    name: ZoneFilterUPP
+    return: INTEGER
+    args:
+    - name: theZone
+      type: ConstStr32Param
+
+# ####
+
+- function:
+    name: InitCTBUtilities
+    return: CTBUErr
+    m68k-pbtrap:
+    - 41099
+    - 1025
+
+# ####
+
+- function:
+    name: CTBGetCTBVersion
+    return: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1029
+
+# ####
+
+- function:
+    name: StandardNBP
+    return: INTEGER
+    args:
+    - name: where
+      type: Point
+    - name: prompt
+      type: ConstStr255Param
+    - name: numTypes
+      type: INTEGER
+    - name: typeList
+      type: NLType
+    - name: nameFilter
+      type: NameFilterUPP
+    - name: zoneFilter
+      type: ZoneFilterUPP
+    - name: hook
+      type: DlgHookUPP
+    - name: theReply
+      type: NBPReply*
+    m68k-pbtrap:
+    - 41099
+    - 1030
+
+# ####
+
+- function:
+    name: CustomNBP
+    return: INTEGER
+    args:
+    - name: where
+      type: Point
+    - name: prompt
+      type: ConstStr255Param
+    - name: numTypes
+      type: INTEGER
+    - name: typeList
+      type: NLType
+    - name: nameFilter
+      type: NameFilterUPP
+    - name: zoneFilter
+      type: ZoneFilterUPP
+    - name: hook
+      type: DlgHookUPP
+    - name: userData
+      type: int32_t
+    - name: dialogID
+      type: INTEGER
+    - name: filter
+      type: ModalFilterUPP
+    - name: theReply
+      type: NBPReply*
+    m68k-pbtrap:
+    - 41099
+    - 1031

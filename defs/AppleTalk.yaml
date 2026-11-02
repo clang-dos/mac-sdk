@@ -1,0 +1,2033 @@
+- lowmem:
+    name: PortBUse
+    type: Byte
+    address: 0x291
+    comment: |
+      AppleTalk IMII-305 (true-b);
+
+# ####
+
+- lowmem:
+    name: ABusVars
+    type: Ptr
+    address: 0x2D8
+    comment: |
+      AppleTalk IMII-328 (false);
+
+# ####
+
+- lowmem:
+    name: ABusDCE
+    type: Ptr
+    address: 0x2DC
+    comment: |
+      AppleTalk MPW (false);
+
+# ####
+
+- lowmem:
+    name: ATalkHk2
+    type: Ptr
+    address: 0xB18
+    comment: |
+      The LAP Manager's entry point (LAPMgrPtr); calls go to 2 bytes past it.
+
+# ####
+
+- enum:
+    values:
+    - name: mppUnitNum
+      value: 9
+    - name: atpUnitNum
+      value: 10
+    - name: xppUnitNum
+      value: 40
+    - name: mppRefNum
+      value: -10
+    - name: atpRefNum
+      value: -11
+    - name: xppRefNum
+      value: -41
+
+# ####
+
+- enum:
+    values:
+    - name: lookupReply
+      value: 242
+    - name: writeLAP
+      value: 243
+    - name: detachPH
+      value: 244
+    - name: attachPH
+      value: 245
+    - name: writeDDP
+      value: 246
+    - name: closeSkt
+      value: 247
+    - name: openSkt
+      value: 248
+    - name: loadNBP
+      value: 249
+    - name: lastResident
+      value: 249
+    - name: confirmName
+      value: 250
+    - name: lookupName
+      value: 251
+    - name: removeName
+      value: 252
+    - name: registerName
+      value: 253
+    - name: killNBP
+      value: 254
+    - name: unloadNBP
+      value: 255
+    - name: setSelfSend
+      value: 256
+    - name: SetMyZone
+      value: 257
+    - name: GetATalkInfo
+      value: 258
+    - name: ATalkClosePrep
+      value: 259
+    comment: MPP control codes
+
+# ####
+
+- enum:
+    values:
+    - name: nSendRequest
+      value: 248
+    - name: relRspCB
+      value: 249
+    - name: closeATPSkt
+      value: 250
+    - name: addResponse
+      value: 251
+    - name: sendResponse
+      value: 252
+    - name: getRequest
+      value: 253
+    - name: openATPSkt
+      value: 254
+    - name: sendRequest
+      value: 255
+    - name: relTCB
+      value: 256
+    - name: killGetReq
+      value: 257
+    - name: killSendReq
+      value: 258
+    - name: killAllGetReq
+      value: 259
+    comment: ATP control codes
+
+# ####
+
+- enum:
+    values:
+    - name: openSess
+      value: 255
+    - name: closeSess
+      value: 254
+    - name: userCommand
+      value: 253
+    - name: userWrite
+      value: 252
+    - name: getStatus
+      value: 251
+    - name: afpCall
+      value: 250
+    - name: getParms
+      value: 249
+    - name: abortOS
+      value: 248
+    - name: closeAll
+      value: 247
+    - name: xCall
+      value: 246
+    comment: XPP control codes
+
+# ####
+
+- enum:
+    values:
+    - name: zipGetLocalZones
+      value: 5
+    - name: zipGetZoneList
+      value: 6
+    - name: zipGetMyZone
+      value: 7
+    comment: xCall subcodes
+
+# ####
+
+- enum:
+    values:
+    - name: dspInit
+      value: 255
+    - name: dspRemove
+      value: 254
+    - name: dspOpen
+      value: 253
+    - name: dspClose
+      value: 252
+    - name: dspCLInit
+      value: 251
+    - name: dspCLRemove
+      value: 250
+    - name: dspCLListen
+      value: 249
+    - name: dspCLDeny
+      value: 248
+    - name: dspStatus
+      value: 247
+    - name: dspRead
+      value: 246
+    - name: dspWrite
+      value: 245
+    - name: dspAttention
+      value: 244
+    - name: dspOptions
+      value: 243
+    - name: dspReset
+      value: 242
+    - name: dspNewCID
+      value: 241
+    comment: ADSP control codes
+
+# ####
+
+- enum:
+    values:
+    - name: ATTransOpen
+      value: 0
+    - name: ATTransClose
+      value: 2
+    - name: ATTransClosePrep
+      value: 3
+    - name: ATTransCancelClose
+      value: 4
+    - name: ATTransNetworkTransition
+      value: 5
+    - name: ATTransNameChangeTellTask
+      value: 6
+    - name: ATTransNameChangeAskTask
+      value: 7
+    - name: ATTransCancelNameChange
+      value: 8
+    - name: ATTransCableChange
+      value: '''rngc'''
+    - name: ATTransSpeedChange
+      value: '''sped'''
+    comment: AppleTalk transition queue events
+
+# ####
+
+- enum:
+    values:
+    - name: ddpSktErr
+      value: -91
+    - name: ddpLenErr
+      value: -92
+    - name: noBridgeErr
+      value: -93
+    - name: lapProtErr
+      value: -94
+    - name: excessCollsns
+      value: -95
+    - name: portNotPwr
+      value: -96
+    - name: portInUse
+      value: -97
+    - name: portNotCf
+      value: -98
+    - name: nbpBuffOvr
+      value: -1024
+    - name: nbpNoConfirm
+      value: -1025
+    - name: nbpConfDiff
+      value: -1026
+    - name: nbpDuplicate
+      value: -1027
+    - name: nbpNotFound
+      value: -1028
+    - name: nbpNISErr
+      value: -1029
+    - name: aspBadVersNum
+      value: -1066
+    - name: aspBufTooSmall
+      value: -1067
+    - name: aspNoMoreSess
+      value: -1068
+    - name: aspNoServers
+      value: -1069
+    - name: aspParamErr
+      value: -1070
+    - name: aspServerBusy
+      value: -1071
+    - name: aspSessClosed
+      value: -1072
+    - name: aspSizeErr
+      value: -1073
+    - name: aspTooMany
+      value: -1074
+    - name: aspNoAck
+      value: -1075
+    - name: reqFailed
+      value: -1096
+    - name: tooManyReqs
+      value: -1097
+    - name: tooManySkts
+      value: -1098
+    - name: badATPSkt
+      value: -1099
+    - name: badBuffNum
+      value: -1100
+    - name: noRelErr
+      value: -1101
+    - name: cbNotFound
+      value: -1102
+    - name: noSendResp
+      value: -1103
+    - name: noDataArea
+      value: -1104
+    - name: reqAborted
+      value: -1105
+    - name: buf2SmallErr
+      value: -3101
+    - name: noMPPErr
+      value: -3102
+    - name: ckSumErr
+      value: -3103
+    - name: extractErr
+      value: -3104
+    - name: readQErr
+      value: -3105
+    - name: atpLenErr
+      value: -3106
+    - name: atpBadRsp
+      value: -3107
+    - name: recNotFnd
+      value: -3108
+    - name: sktClosedErr
+      value: -3109
+    comment: Errors
+
+# ####
+
+- enum:
+    values:
+    - name: atpXOvalue
+      value: 32
+    - name: atpEOMvalue
+      value: 16
+    - name: atpSTSvalue
+      value: 8
+    - name: atpTIDValidvalue
+      value: 2
+    - name: atpSendChkvalue
+      value: 1
+    comment: ATP flags
+
+# ####
+
+- struct:
+    name: AddrBlock
+    size: 4
+    members:
+    - name: aNet
+      type: uint16_t
+    - name: aNode
+      type: uint8_t
+    - name: aSocket
+      type: uint8_t
+
+# ####
+
+- typedef:
+    name: Str32Field
+    type: uint8_t[34]
+
+# ####
+
+- struct:
+    name: EntityName
+    size: 102
+    members:
+    - name: objStr
+      type: Str32Field
+    - name: typeStr
+      type: Str32Field
+    - name: zoneStr
+      type: Str32Field
+
+# ####
+
+- typedef:
+    name: EntityPtr
+    type: EntityName*
+
+# ####
+
+- struct:
+    name: RetransType
+    size: 2
+    members:
+    - name: retransInterval
+      type: uint8_t
+    - name: retransCount
+      type: uint8_t
+
+# ####
+
+- struct:
+    name: BDSElement
+    size: 12
+    members:
+    - name: buffSize
+      type: INTEGER
+    - name: buffPtr
+      type: Ptr
+    - name: dataSize
+      type: INTEGER
+    - name: userBytes
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: BDSType
+    type: BDSElement[8]
+
+# ####
+
+- typedef:
+    name: BDSPtr
+    type: BDSElement*
+
+# ####
+
+- typedef:
+    name: BitMapType
+    type: uint8_t
+
+# ####
+
+- struct:
+    name: WDSElement
+    size: 6
+    members:
+    - name: entryLength
+      type: INTEGER
+    - name: entryPtr
+      type: Ptr
+
+# ####
+
+- struct:
+    name: NTElement
+    size: 104
+    members:
+    - name: nteAddress
+      type: AddrBlock
+    - name: filler
+      type: char
+    - name: entityData
+      type: char[99]
+
+# ####
+
+- struct:
+    name: NamesTableEntry
+    size: 108
+    members:
+    - name: qNext
+      type: Ptr
+    - name: nt
+      type: NTElement
+
+# ####
+
+- typedef:
+    name: NamesTableEntryPtr
+    type: NamesTableEntry*
+
+# ####
+
+- struct:
+    name: ATQEntry
+    size: 10
+    members:
+    - name: qLink
+      type: struct ATQEntry*
+    - name: qType
+      type: INTEGER
+    - name: CallAddr
+      type: ProcPtr
+
+# ####
+
+- typedef:
+    name: ATQEntryPtr
+    type: ATQEntry*
+
+# ####
+
+- typedef:
+    name: MPPCompletionUPP
+    type: UniversalProcPtr
+    comment: Completion routines get the parameter block in A0
+
+# ####
+
+- typedef:
+    name: ATPCompletionUPP
+    type: UniversalProcPtr
+
+# ####
+
+- typedef:
+    name: XPPCompletionUPP
+    type: UniversalProcPtr
+
+# ####
+
+- typedef:
+    name: ENETCompletionUPP
+    type: UniversalProcPtr
+
+# ####
+
+- typedef:
+    name: AttnRoutineUPP
+    type: UniversalProcPtr
+    comment: Called with the session in D0 and the attention bytes in D1
+
+# ####
+
+- common:
+    name: MPPATPHeader
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: UniversalProcPtr
+    - name: ioResult
+      type: OSErr
+    - name: userData
+      type: int32_t
+    - name: reqTID
+      type: INTEGER
+    - name: ioRefNum
+      type: INTEGER
+    - name: csCode
+      type: INTEGER
+
+# ####
+
+- struct:
+    name: MPPparms
+    size: 28
+    members:
+    - common: MPPATPHeader
+
+# ####
+
+- struct:
+    name: LAPparms
+    size: 34
+    members:
+    - common: MPPATPHeader
+    - name: protType
+      type: uint8_t
+    - name: filler
+      type: uint8_t
+    - name: LAPptrs
+      union:
+      - name: wdsPointer
+        type: Ptr
+      - name: handler
+        type: Ptr
+
+# ####
+
+- struct:
+    name: DDPparms
+    size: 34
+    members:
+    - common: MPPATPHeader
+    - name: socket
+      type: uint8_t
+    - name: checksumFlag
+      type: uint8_t
+    - name: DDPptrs
+      union:
+      - name: wdsPointer
+        type: Ptr
+      - name: listener
+        type: Ptr
+
+# ####
+
+- struct:
+    name: NBPparms
+    size: 44
+    members:
+    - common: MPPATPHeader
+    - name: interval
+      type: uint8_t
+    - name: count
+      type: uint8_t
+    - name: NBPPtrs
+      union:
+      - name: ntQElPtr
+        type: Ptr
+      - name: entityPtr
+        type: Ptr
+    - name: parm
+      union:
+      - name: verifyFlag
+        type: uint8_t
+      - name: Lookup
+        struct:
+        - name: retBuffPtr
+          type: Ptr
+        - name: retBuffSize
+          type: INTEGER
+        - name: maxToGet
+          type: INTEGER
+        - name: numGotten
+          type: INTEGER
+      - name: Confirm
+        struct:
+        - name: confirmAddr
+          type: AddrBlock
+        - name: newSocket
+          type: uint8_t
+
+# ####
+
+- struct:
+    name: SetSelfparms
+    size: 30
+    members:
+    - common: MPPATPHeader
+    - name: newSelfFlag
+      type: uint8_t
+    - name: oldSelfFlag
+      type: uint8_t
+
+# ####
+
+- struct:
+    name: NBPKillparms
+    size: 32
+    members:
+    - common: MPPATPHeader
+    - name: nKillQEl
+      type: Ptr
+
+# ####
+
+- struct:
+    name: GetAppTlkInfoParm
+    size: 78
+    members:
+    - common: MPPATPHeader
+    - name: version
+      type: INTEGER
+    - name: varsPtr
+      type: Ptr
+    - name: DCEPtr
+      type: Ptr
+    - name: portID
+      type: INTEGER
+    - name: configuration
+      type: int32_t
+    - name: selfSend
+      type: INTEGER
+    - name: netLo
+      type: INTEGER
+    - name: netHi
+      type: INTEGER
+    - name: ourAdd
+      type: int32_t
+    - name: routerAddr
+      type: int32_t
+    - name: numOfPHs
+      type: INTEGER
+    - name: numOfSkts
+      type: INTEGER
+    - name: numNBPEs
+      type: INTEGER
+    - name: nTQueue
+      type: Ptr
+    - name: LAlength
+      type: INTEGER
+    - name: linkAddr
+      type: Ptr
+    - name: zoneName
+      type: Ptr
+
+# ####
+
+- struct:
+    name: ATalkClosePrepParm
+    size: 32
+    members:
+    - common: MPPATPHeader
+    - name: appName
+      type: Ptr
+
+# ####
+
+- union:
+    name: MPPParamBlock
+    size: 78
+    members:
+    - name: MPP
+      type: MPPparms
+    - name: LAP
+      type: LAPparms
+    - name: DDP
+      type: DDPparms
+    - name: NBP
+      type: NBPparms
+    - name: SETSELF
+      type: SetSelfparms
+    - name: NBPKILL
+      type: NBPKillparms
+    - name: GAIINFO
+      type: GetAppTlkInfoParm
+    - name: ATALKCLOSE
+      type: ATalkClosePrepParm
+    comment: The .MPP driver parameter block (LAP, DDP and NBP calls)
+
+# ####
+
+- typedef:
+    name: MPPPBPtr
+    type: MPPParamBlock*
+
+# ####
+
+- struct:
+    name: ATPParamBlock
+    size: 52
+    members:
+    - common: MPPATPHeader
+    - name: atpSocket
+      type: uint8_t
+    - name: atpFlags
+      type: uint8_t
+    - name: addrBlock
+      type: AddrBlock
+    - name: reqLength
+      type: INTEGER
+    - name: reqPointer
+      type: Ptr
+    - name: bdsPointer
+      type: Ptr
+    - name: ''
+      union:
+      - name: ''
+        struct:
+        - name: numOfBuffs
+          type: uint8_t
+        - name: timeOutVal
+          type: uint8_t
+        - name: numOfResps
+          type: uint8_t
+        - name: retryCount
+          type: uint8_t
+      - name: ''
+        struct:
+        - name: bitMap
+          type: uint8_t
+        - name: bdsSize
+          type: uint8_t
+        - name: transID
+          type: INTEGER
+      - name: ''
+        struct:
+        - name: rspNum
+          type: uint8_t
+      - name: aKillQEl
+        type: Ptr
+    - name: intBuff
+      type: INTEGER
+    - name: TRelTime
+      type: uint8_t
+    - name: filler0
+      type: uint8_t
+    comment: |-
+      The .ATP driver parameter block. The fields after bdsPointer
+      overlap: numOfBuffs, timeOutVal, numOfResps and retryCount for
+      PSendRequest; bitMap and transID for PGetRequest and PSendResponse;
+      rspNum for PAddResponse; aKillQEl for PKillSendReq and PKillGetReq.
+
+# ####
+
+- typedef:
+    name: ATPPBPtr
+    type: ATPParamBlock*
+
+# ####
+
+- common:
+    name: XPPPBHeader
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: UniversalProcPtr
+    - name: ioResult
+      type: OSErr
+    - name: cmdResult
+      type: int32_t
+    - name: ioVRefNum
+      type: INTEGER
+    - name: ioRefNum
+      type: INTEGER
+    - name: csCode
+      type: INTEGER
+
+# ####
+
+- struct:
+    name: XPPPrmBlk
+    size: 346
+    members:
+    - common: XPPPBHeader
+    - name: sessRefnum
+      type: INTEGER
+    - name: aspTimeout
+      type: uint8_t
+    - name: aspRetry
+      type: uint8_t
+    - name: cbSize
+      type: INTEGER
+    - name: cbPtr
+      type: Ptr
+    - name: rbSize
+      type: INTEGER
+    - name: rbPtr
+      type: Ptr
+    - name: wdSize
+      type: INTEGER
+    - name: wdPtr
+      type: Ptr
+    - name: ccbStart
+      type: uint8_t[296]
+
+# ####
+
+- struct:
+    name: ASPOpenPrm
+    size: 44
+    members:
+    - common: XPPPBHeader
+    - name: sessRefnum
+      type: INTEGER
+    - name: aspTimeout
+      type: uint8_t
+    - name: aspRetry
+      type: uint8_t
+    - name: serverAddr
+      type: AddrBlock
+    - name: scbPointer
+      type: Ptr
+    - name: attnRoutine
+      type: AttnRoutineUPP
+
+# ####
+
+- typedef:
+    name: ASPOpenPrmPtr
+    type: ASPOpenPrm*
+
+# ####
+
+- struct:
+    name: ASPAbortPrm
+    size: 32
+    members:
+    - common: XPPPBHeader
+    - name: abortSCBPtr
+      type: Ptr
+
+# ####
+
+- struct:
+    name: ASPGetparmsBlk
+    size: 34
+    members:
+    - common: XPPPBHeader
+    - name: aspMaxCmdSize
+      type: INTEGER
+    - name: aspQuantumSize
+      type: INTEGER
+    - name: numSesss
+      type: INTEGER
+
+# ####
+
+- struct:
+    name: XCallParam
+    size: 112
+    members:
+    - common: XPPPBHeader
+    - name: xppSubCode
+      type: INTEGER
+    - name: xppTimeout
+      type: uint8_t
+    - name: xppRetry
+      type: uint8_t
+    - name: filler1
+      type: INTEGER
+    - name: zipBuffPtr
+      type: Ptr
+    - name: zipNumZones
+      type: INTEGER
+    - name: zipLastFlag
+      type: uint8_t
+    - name: filler2
+      type: uint8_t
+    - name: zipInfoField
+      type: uint8_t[70]
+
+# ####
+
+- union:
+    name: XPPParamBlock
+    size: 346
+    members:
+    - name: XPP
+      type: XPPPrmBlk
+    - name: OPEN
+      type: ASPOpenPrm
+    - name: ABORT
+      type: ASPAbortPrm
+    - name: GETPARM
+      type: ASPGetparmsBlk
+    - name: XCALL
+      type: XCallParam
+    comment: The .XPP driver parameter block (ASP, AFP and the ZIP calls)
+
+# ####
+
+- typedef:
+    name: XPPParmBlkPtr
+    type: XPPParamBlock*
+# ####
+
+- verbatim: // Opening the drivers
+
+# ####
+
+- function:
+    name: MPPOpen
+    return: OSErr
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)"\004.MPP";
+      pb.ioParam.ioPermssn = 0;
+      return PBOpenSync(&pb);
+    m68k-needs:
+    - ParamBlockRec
+    - StringPtr
+    - PBOpenSync
+
+# ####
+
+- function:
+    name: ATPLoad
+    return: OSErr
+    m68k-body: |
+      return MPPOpen();
+    comment: ATP is part of the .MPP driver.
+
+# ####
+
+- function:
+    name: ATPUnload
+    return: OSErr
+    m68k-body: |
+      return noErr;
+
+# ####
+
+- function:
+    name: OpenXPP
+    return: OSErr
+    args:
+    - type: INTEGER*
+      name: xppRefnum
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)"\004.XPP";
+      pb.ioParam.ioPermssn = 0;
+      OSErr err = PBOpenSync(&pb);
+      *xppRefnum = pb.ioParam.ioRefNum;
+      return err;
+    m68k-needs:
+    - ParamBlockRec
+    - StringPtr
+    - PBOpenSync
+
+# ####
+
+- function:
+    name: IsMPPOpen
+    return: Boolean
+    m68k-body: |
+      signed char use = (signed char)LMGetPortBUse();
+      return use >= 0 && (use & 0x0F) == 1;
+    comment: True when port B is configured for AppleTalk and .MPP is open.
+
+# ####
+
+- function:
+    name: IsATPOpen
+    return: Boolean
+    m68k-body: |
+      return IsMPPOpen() && (LMGetPortBUse() & 0x10) != 0;
+
+# ####
+
+- function:
+    name: PWriteLAP
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = writeLAP;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PDetachPH
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = detachPH;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PAttachPH
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = attachPH;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PWriteDDP
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = writeDDP;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PCloseSkt
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = closeSkt;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: POpenSkt
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = openSkt;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PRegisterName
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = registerName;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PLookupName
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = lookupName;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PConfirmName
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = confirmName;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PRemoveName
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = removeName;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PKillNBP
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = killNBP;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PSetSelfSend
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = setSelfSend;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PGetAppleTalkInfo
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = GetATalkInfo;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PATalkClosePrep
+    return: OSErr
+    args:
+    - type: MPPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->MPP.ioRefNum = mppRefNum;
+      thePBptr->MPP.csCode = ATalkClosePrep;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: POpenATPSkt
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = openATPSkt;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PCloseATPSkt
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = closeATPSkt;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PSendRequest
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = sendRequest;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PNSendRequest
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = nSendRequest;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PGetRequest
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = getRequest;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PSendResponse
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = sendResponse;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PAddResponse
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = addResponse;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PRelTCB
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = relTCB;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PRelRspCB
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = relRspCB;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PKillSendReq
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = killSendReq;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: PKillGetReq
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = killGetReq;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ATPKillAllGetReq
+    return: OSErr
+    args:
+    - type: ATPPBPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->ioRefNum = atpRefNum;
+      thePBptr->csCode = killAllGetReq;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- verbatim: '// ASP and AFP: set ioRefNum to the .XPP reference number from OpenXPP'
+
+# ####
+
+- function:
+    name: ASPOpenSession
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = openSess;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ASPCloseSession
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = closeSess;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ASPAbortOS
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = abortOS;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ASPGetParms
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = getParms;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ASPCloseAll
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = closeAll;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ASPUserWrite
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = userWrite;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ASPUserCommand
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = userCommand;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ASPGetStatus
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = getStatus;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: AFPCommand
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XPP.csCode = afpCall;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: GetLocalZones
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XCALL.ioRefNum = xppRefNum;
+      thePBptr->XCALL.csCode = xCall;
+      thePBptr->XCALL.xppSubCode = zipGetLocalZones;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: GetZoneList
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XCALL.ioRefNum = xppRefNum;
+      thePBptr->XCALL.csCode = xCall;
+      thePBptr->XCALL.xppSubCode = zipGetZoneList;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: GetMyZone
+    return: OSErr
+    args:
+    - type: XPPParmBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->XCALL.ioRefNum = xppRefNum;
+      thePBptr->XCALL.csCode = xCall;
+      thePBptr->XCALL.xppSubCode = zipGetMyZone;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- verbatim: // Building records
+
+# ####
+
+- function:
+    name: BuildLAPwds
+    args:
+    - type: Ptr
+      name: wdsPtr
+    - type: Ptr
+      name: dataPtr
+    - type: INTEGER
+      name: destHost
+    - type: INTEGER
+      name: protoType
+    - type: INTEGER
+      name: frameLen
+    m68k-body: |
+      WDSElement *wds = (WDSElement *)wdsPtr;
+      dataPtr[0] = (char)destHost;
+      dataPtr[1] = 0;
+      dataPtr[2] = (char)protoType;
+      dataPtr[3] = (char)((frameLen + 2) >> 8);   /* may be odd: store bytes */
+      dataPtr[4] = (char)(frameLen + 2);
+      wds[0].entryLength = frameLen + 3;
+      wds[0].entryPtr = dataPtr;
+      wds[1].entryLength = 0;
+
+# ####
+
+- function:
+    name: BuildDDPwds
+    args:
+    - type: Ptr
+      name: wdsPtr
+    - type: Ptr
+      name: headerPtr
+    - type: Ptr
+      name: dataPtr
+    - type: AddrBlock
+      name: netAddr
+    - type: INTEGER
+      name: ddpType
+    - type: INTEGER
+      name: dataLen
+    m68k-body: |
+      WDSElement *wds = (WDSElement *)wdsPtr;
+      wds[0].entryPtr = headerPtr + 1;
+      wds[1].entryLength = dataLen;
+      wds[1].entryPtr = dataPtr;
+      wds[2].entryLength = 0;
+      *(unsigned short *)(headerPtr + 8) = netAddr.aNet;
+      headerPtr[12] = (char)netAddr.aNode;
+      headerPtr[14] = (char)netAddr.aSocket;
+      headerPtr[16] = (char)ddpType;
+    comment: Like the ROM's version, this leaves the first entry's length alone.
+
+# ####
+
+- function:
+    name: BuildBDS
+    return: INTEGER
+    args:
+    - type: Ptr
+      name: buffPtr
+    - type: Ptr
+      name: bdsPtr
+    - type: INTEGER
+      name: buffSize
+    m68k-body: |
+      BDSElement *bds = (BDSElement *)bdsPtr;
+      short n = 0;
+      while (buffSize > 0 && n < 8) {
+          short len = buffSize < 578 ? buffSize : 578;
+          bds[n].buffSize = len;
+          bds[n].buffPtr = buffPtr;
+          bds[n].dataSize = 0;
+          buffPtr += len;
+          buffSize -= len;
+          n++;
+      }
+      return n;
+    comment: Splits a buffer into ATP response buffers of up to 578 bytes.
+
+# ####
+
+- function:
+    name: NBPSetEntity
+    m68k-needs: [BlockMoveData]
+    args:
+    - type: Ptr
+      name: buffer
+    - type: ConstStr32Param
+      name: nbpObject
+    - type: ConstStr32Param
+      name: nbpType
+    - type: ConstStr32Param
+      name: nbpZone
+    m68k-body: |
+      /* BlockMoveData, not a loop: the compiler would turn a loop into memcpy */
+      BlockMoveData(nbpObject, buffer, nbpObject[0] + 1);
+      buffer += nbpObject[0] + 1;
+      BlockMoveData(nbpType, buffer, nbpType[0] + 1);
+      buffer += nbpType[0] + 1;
+      BlockMoveData(nbpZone, buffer, nbpZone[0] + 1);
+
+# ####
+
+- function:
+    name: NBPSetNTE
+    args:
+    - type: Ptr
+      name: ntePtr
+    - type: ConstStr32Param
+      name: nbpObject
+    - type: ConstStr32Param
+      name: nbpType
+    - type: ConstStr32Param
+      name: nbpZone
+    - type: INTEGER
+      name: socket
+    m68k-body: |
+      NamesTableEntry *nte = (NamesTableEntry *)ntePtr;
+      nte->qNext = 0;
+      nte->nt.nteAddress.aSocket = (unsigned char)socket;
+      NBPSetEntity(nte->nt.entityData, nbpObject, nbpType, nbpZone);
+
+# ####
+
+- function:
+    name: NBPExtract
+    m68k-needs: [BlockMoveData]
+    return: OSErr
+    args:
+    - type: Ptr
+      name: theBuffer
+    - type: INTEGER
+      name: numInBuf
+    - type: INTEGER
+      name: whichOne
+    - type: EntityName*
+      name: abEntity
+    - type: AddrBlock*
+      name: address
+    m68k-body: |
+      const unsigned char *p = (const unsigned char *)theBuffer;
+      unsigned char *dst[3];
+      int i;
+      if (whichOne < 1 || whichOne > numInBuf)
+          return extractErr;
+      while (--whichOne > 0) {   /* skip a tuple: address, enumerator, three names */
+          p += 5;
+          for (i = 0; i < 3; i++)
+              p += p[0] + 1;
+      }
+      address->aNet = (unsigned short)(p[0] << 8 | p[1]);   /* may be odd */
+      address->aNode = p[2];
+      address->aSocket = p[3];
+      p += 5;
+      dst[0] = abEntity->objStr; dst[1] = abEntity->typeStr; dst[2] = abEntity->zoneStr;
+      for (i = 0; i < 3; i++) {
+          BlockMoveData(p, dst[i], p[0] + 1);
+          p += p[0] + 1;
+      }
+      return noErr;
+    comment: Gets one name and address from the buffer PLookupName filled.
+
+# ####
+
+- function:
+    name: GetNodeAddress
+    return: OSErr
+    args:
+    - type: INTEGER*
+      name: myNode
+    - type: INTEGER*
+      name: myNet
+    m68k-body: |
+      Ptr vars = LMGetABusVars();
+      if (!IsMPPOpen())
+          return noMPPErr;
+      *myNode = (signed char)vars[0];
+      *myNet = *(short *)(vars + 26);
+      return noErr;
+
+# ####
+
+- function:
+    name: GetBridgeAddress
+    return: INTEGER
+    m68k-body: |
+      Ptr vars = LMGetABusVars();
+      if (vars == 0 || vars == (Ptr)-1)
+          return 0;
+      return (signed char)vars[25];
+
+# ####
+
+- verbatim: // The AppleTalk transition queue
+
+# ####
+
+- function:
+    name: LAPAddATQ
+    return: OSErr
+    args:
+    - type: ATQEntryPtr
+      name: theATQEntry
+    m68k-body: |
+      register long _d0 __asm__("d0") = 23;
+      register ATQEntryPtr _a0 __asm__("a0") = theATQEntry;
+      register Ptr _a1 __asm__("a1") = LMGetATalkHk2();
+      __asm__ __volatile__("jsr 2(%2)"
+          : "+r"(_d0), "+r"(_a0), "+a"(_a1)
+          :
+          : "d1", "d2", "cc", "memory");
+      return (OSErr)_d0;
+    m68k-needs:
+    - ATalkHk2
+
+# ####
+
+- function:
+    name: LAPRmvATQ
+    return: OSErr
+    args:
+    - type: ATQEntryPtr
+      name: theATQEntry
+    m68k-body: |
+      register long _d0 __asm__("d0") = 24;
+      register ATQEntryPtr _a0 __asm__("a0") = theATQEntry;
+      register Ptr _a1 __asm__("a1") = LMGetATalkHk2();
+      __asm__ __volatile__("jsr 2(%2)"
+          : "+r"(_d0), "+r"(_a0), "+a"(_a1)
+          :
+          : "d1", "d2", "cc", "memory");
+      return (OSErr)_d0;
+    m68k-needs:
+    - ATalkHk2
+
+# ####
+
+- function:
+    name: ATEvent
+    args:
+    - type: int32_t
+      name: event
+    - type: Ptr
+      name: infoPtr
+
+# ####
+
+- function:
+    name: ATPreFlightEvent
+    return: OSErr
+    args:
+    - type: int32_t
+      name: event
+    - type: int32_t
+      name: cancel
+    - type: Ptr
+      name: infoPtr

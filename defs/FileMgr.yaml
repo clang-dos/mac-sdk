@@ -1,0 +1,5951 @@
+- only-for: Executor
+  verbatim: |
+    //So as to not conflict with OS X defines
+    #undef PBGetVInfo
+    #undef PBXGetVolInfo
+    #undef PBGetVol
+    #undef PBSetVol
+    #undef PBFlushVol
+    #undef PBCreate
+    #undef PBDelete
+    #undef PBOpenDF
+    #undef PBOpenRF
+    #undef PBRename
+    #undef PBGetFInfo
+    #undef PBSetFInf
+    #undef PBSetFLock
+    #undef PBRstFLock
+    #undef PBSetFVers
+    #undef PBAllocate
+    #undef PBGetEOF
+    #undef PBSetEOF
+    #undef PBGetFPos
+    #undef PBSetFPos
+    #undef PBFlushFile
+    #undef PBCatSearch
+    #undef PBOpenWD
+    #undef PBCloseWD
+    #undef PBHSetVol
+    #undef PBHGetVol
+    #undef PBCatMove
+    #undef PBDirCreate
+    #undef PBGetWDInfo
+    #undef PBGetFCBInfo
+    #undef PBGetCatInfo
+    #undef PBSetCatInfo
+    #undef PBAllocContig
+    #undef PBLockRange
+    #undef PBUnlockRange
+    #undef PBSetVInfo
+    #undef PBHGetVInfo
+    #undef PBHOpen
+    #undef PBHOpenRF
+    #undef PBHOpenDF
+    #undef PBHCreate
+    #undef PBHDelete
+    #undef PBHRename
+    #undef PBHRstFLock
+    #undef PBHSetFLock
+    #undef PBHGetFInfo
+    #undef PBHSetFInfo
+    #undef PBMakeFSSpec
+    #undef PBHGetVolParms
+    #undef PBHGetLogInInfo
+    #undef PBHGetDirAccess
+    #undef PBHSetDirAccess
+    #undef PBHMapID
+    #undef PBHMapName
+    #undef PBHCopyFile
+    #undef PBHMoveRename
+    #undef PBHOpenDeny
+    #undef PBHOpenRFDeny
+    #undef PBExchangeFiles
+    #undef PBCreateFileIDRef
+    #undef PBResolveFileIDRef
+    #undef PBDeleteFileIDRef
+    #undef PBGetForeignPrivs
+    #undef PBSetForeignPrivs
+    #undef PBDTAddIcon
+    #undef PBDTGetIcon
+    #undef PBDTGetIconInfo
+    #undef PBDTAddAPPL
+    #undef PBDTRemoveAPPL
+    #undef PBDTGetAPPL
+    #undef PBDTSetComment
+    #undef PBDTRemoveComment
+    #undef PBDTGetComment
+    #undef PBDTFlush
+    #undef PBDTReset
+    #undef PBDTGetInfo
+    #undef PBDTDelete
+    #undef PBSetFInfo
+    #undef PBGetFInfo
+
+# ####
+
+- enum:
+    values:
+      - name: fOnDesk
+        value: 1
+      - name: fHasBundle
+        value: 8192
+      - name: fInvisible
+        value: 16384
+      - name: fTrash
+        value: -3
+      - name: fDesktop
+        value: -2
+      - name: fDisk
+        value: 0
+
+# ####
+
+- enum:
+    values:
+      - name: fsCurPerm
+        value: 0
+      - name: fsRdPerm
+        value: 1
+      - name: fsWrPerm
+        value: 2
+      - name: fsRdWrPerm
+        value: 3
+      - name: fsRdWrShPerm
+        value: 4
+      - name: fsRdDenyPerm
+        value: 0x10
+      - name: fsWrDenyPerm
+        value: 0x20
+
+# ####
+
+- enum:
+    values:
+      - name: fsAtMark
+        value: 0
+      - name: fsFromStart
+        value: 1
+      - name: fsFromLEOF
+        value: 2
+      - name: fsFromMark
+        value: 3
+      - name: rdVerify
+        value: 64
+
+# ####
+
+- enum:
+    values:
+      - name: ioDirMask
+        value: 0x10
+
+# ####
+
+- enum:
+    values:
+      - name: badMDBErr
+        value: -60
+      - name: badMovErr
+        value: -122
+      - name: bdNamErr
+        value: -37
+      - name: dirFulErr
+        value: -33
+      - name: dskFulErr
+        value: -34
+      - name: dupFNErr
+        value: -48
+      - name: eofErr
+        value: -39
+      - name: extFSErr
+        value: -58
+      - name: fBsyErr
+        value: -47
+      - name: fLckdErr
+        value: -45
+      - name: fnfErr
+        value: -43
+      - name: fnOpnErr
+        value: -38
+      - name: fsRnErr
+        value: -59
+      - name: gfpErr
+        value: -52
+      - name: ioErr
+        value: -36
+      - name: noMacDskErr
+        value: -57
+      - name: nsDrvErr
+        value: -56
+      - name: nsvErr
+        value: -35
+      - name: opWrErr
+        value: -49
+      - name: permErr
+        value: -54
+      - name: posErr
+        value: -40
+      - name: rfNumErr
+        value: -51
+      - name: tmfoErr
+        value: -42
+      - name: volOffLinErr
+        value: -53
+      - name: volOnLinErr
+        value: -55
+      - name: vLckdErr
+        value: -46
+      - name: wrgVolTypErr
+        value: -123
+      - name: wrPermErr
+        value: -61
+      - name: wPrErr
+        value: -44
+      - name: tmwdoErr
+        value: -121
+      - name: dirNFErr
+        value: -120
+      - name: fsDSIntErr
+        value: -127
+
+# ####
+
+- enum:
+    values:
+      - name: wrgVolTypeErr
+        value: -123
+      - name: diffVolErr
+        value: -1303
+
+# ####
+
+- struct:
+    members:
+      - name: fdType
+        type: OSType
+      - name: fdCreator
+        type: OSType
+      - name: fdFlags
+        type: uint16_t
+      - name: fdLocation
+        type: Point
+      - name: fdFldr
+        type: uint16_t
+    name: FInfo
+    size: 16
+
+# ####
+
+- struct:
+    members:
+      - name: fdIconID
+        type: uint16_t
+      - name: fdUnused
+        type: uint16_t[4]
+      - name: fdComment
+        type: uint16_t
+      - name: fdPutAway
+        type: LONGINT
+    name: FXInfo
+    size: 16
+
+# ####
+
+- struct:
+    members:
+      - name: frRect
+        type: Rect
+      - name: frFlags
+        type: uint16_t
+      - name: frLocation
+        type: Point
+      - name: frView
+        type: uint16_t
+    name: DInfo
+    size: 16
+
+# ####
+
+- struct:
+    members:
+      - name: frScroll
+        type: Point
+      - name: frOpenChain
+        type: LONGINT
+      - name: frUnused
+        type: uint16_t
+      - name: frComment
+        type: uint16_t
+      - name: frPutAway
+        type: LONGINT
+    name: DXInfo
+    size: 16
+
+# ####
+
+- enum:
+    values:
+      - name: ioParamType
+      - name: fileParamType
+      - name: volumeParamType
+      - name: cntrlParamType
+    name: ParamBlkType
+
+# ####
+
+- only-for: Executor
+  verbatim: |
+    #define COMMONFSQUEUEDEFS        \
+        GUEST<QElemPtr> qLink;       \
+        GUEST<INTEGER> qType;        \
+        GUEST<INTEGER> ioTrap;       \
+        GUEST<Ptr> ioCmdAddr;        \
+        GUEST<ProcPtr> ioCompletion; \
+        GUEST<OSErr> ioResult;       \
+        GUEST<StringPtr> ioNamePtr;  \
+        GUEST<INTEGER> ioVRefNum
+
+# ####
+
+- only-for: executor
+  typedef:
+    name: IOMiscType
+    type: uint32_t
+    comment: |
+      Executor needs ioMisc to be uint32_t instead of the normal
+      Ptr, so this is defined as a separate typedef here.
+      
+- not-for: executor
+  typedef:
+    name: IOMiscType
+    type: Ptr
+    comment: |
+      Executor needs ioMisc to be uint32_t instead of the normal
+      Ptr, so this is defined as a separate typedef here.
+      
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: ioRefNum
+        type: INTEGER
+      - name: ioVersNum
+        type: SignedByte
+      - name: ioPermssn
+        type: SignedByte
+      - name: ioMisc
+        type: IOMiscType
+        comment: |
+          should be largest of Ptr, LONGINT
+      - name: ioBuffer
+        type: Ptr
+      - name: ioReqCount
+        type: LONGINT
+      - name: ioActCount
+        type: LONGINT
+      - name: ioPosMode
+        type: INTEGER
+      - name: ioPosOffset
+        type: LONGINT
+    name: IOParam
+    size: 50
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: ioFRefNum
+        type: INTEGER
+      - name: ioFVersNum
+        type: SignedByte
+      - name: filler1
+        type: SignedByte
+      - name: ioFDirIndex
+        type: INTEGER
+      - name: ioFlAttrib
+        type: SignedByte
+      - name: ioFlVersNum
+        type: SignedByte
+      - name: ioFlFndrInfo
+        type: FInfo
+      - name: ioFlNum
+        type: LONGINT
+      - name: ioFlStBlk
+        type: INTEGER
+      - name: ioFlLgLen
+        type: LONGINT
+      - name: ioFlPyLen
+        type: LONGINT
+      - name: ioFlRStBlk
+        type: INTEGER
+      - name: ioFlRLgLen
+        type: LONGINT
+      - name: ioFlRPyLen
+        type: LONGINT
+      - name: ioFlCrDat
+        type: ULONGINT
+      - name: ioFlMdDat
+        type: ULONGINT
+    name: FileParam
+    size: 80
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: filler2
+        type: LONGINT
+      - name: ioVolIndex
+        type: INTEGER
+      - name: ioVCrDate
+        type: ULONGINT
+      - name: ioVLsBkUp
+        type: ULONGINT
+      - name: ioVAtrb
+        type: uint16_t
+      - name: ioVNmFls
+        type: uint16_t
+      - name: ioVDirSt
+        type: uint16_t
+      - name: ioVBlLn
+        type: uint16_t
+      - name: ioVNmAlBlks
+        type: uint16_t
+      - name: ioVAlBlkSiz
+        type: LONGINT
+      - name: ioVClpSiz
+        type: LONGINT
+      - name: ioAlBlSt
+        type: uint16_t
+      - name: ioVNxtFNum
+        type: LONGINT
+      - name: ioVFrBlk
+        type: uint16_t
+    name: VolumeParam
+    size: 64
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: ioCRefNum
+        type: INTEGER
+      - name: csCode
+        type: INTEGER
+      - name: csParam
+        type: INTEGER[11]
+    name: CntrlParam
+    size: 50
+
+# ####
+
+- union:
+    members:
+      - name: ioParam
+        type: IOParam
+      - name: fileParam
+        type: FileParam
+      - name: volumeParam
+        type: VolumeParam
+      - name: cntrlParam
+        type: CntrlParam
+    name: ParamBlockRec
+    size: 80
+
+# ####
+
+- typedef:
+    name: ParmBlkPtr
+    type: ParamBlockRec*
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: ioRefNum
+        type: INTEGER
+      - name: ioVersNum
+        type: SignedByte
+      - name: ioPermssn
+        type: SignedByte
+      - name: ioMisc
+        type: IOMiscType
+        comment: |
+          should be largest of Ptr, LONGINT
+      - name: ioBuffer
+        type: Ptr
+      - name: ioReqCount
+        type: LONGINT
+      - name: ioActCount
+        type: LONGINT
+      - name: ioPosMode
+        type: INTEGER
+      - name: ioPosOffset
+        type: LONGINT
+    name: HIoParam
+    size: 50
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: ioFRefNum
+        type: INTEGER
+      - name: ioFVersNum
+        type: SignedByte
+      - name: filler1
+        type: SignedByte
+      - name: ioFDirIndex
+        type: INTEGER
+      - name: ioFlAttrib
+        type: SignedByte
+      - name: ioFlVersNum
+        type: SignedByte
+      - name: ioFlFndrInfo
+        type: FInfo
+      - name: ioDirID
+        type: LONGINT
+        comment: |
+          -->
+      - name: ioFlStBlk
+        type: INTEGER
+      - name: ioFlLgLen
+        type: LONGINT
+      - name: ioFlPyLen
+        type: LONGINT
+      - name: ioFlRStBlk
+        type: INTEGER
+      - name: ioFlRLgLen
+        type: LONGINT
+      - name: ioFlRPyLen
+        type: LONGINT
+      - name: ioFlCrDat
+        type: ULONGINT
+      - name: ioFlMdDat
+        type: ULONGINT
+    name: HFileParam
+    size: 80
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: pfiller2
+        type: LONGINT
+      - name: ioVolIndex
+        type: INTEGER
+      - name: ioVCrDate
+        type: ULONGINT
+      - name: ioVLsMod
+        type: ULONGINT
+        comment: |
+          -->
+      - name: ioVAtrb
+        type: INTEGER
+      - name: ioVNmFls
+        type: uint16_t
+      - name: ioVBitMap
+        type: uint16_t
+        comment: |
+          -->
+      - name: ioVAllocPtr
+        type: uint16_t
+        comment: |
+          -->
+      - name: ioVNmAlBlks
+        type: uint16_t
+      - name: ioVAlBlkSiz
+        type: LONGINT
+      - name: ioVClpSiz
+        type: LONGINT
+      - name: ioAlBlSt
+        type: uint16_t
+      - name: ioVNxtCNID
+        type: LONGINT
+        comment: |
+          -->
+      - name: ioVFrBlk
+        type: uint16_t
+      - name: ioVSigWord
+        type: uint16_t
+        comment: |
+          -->
+      - name: ioVDrvInfo
+        type: INTEGER
+        comment: |
+          -->
+      - name: ioVDRefNum
+        type: INTEGER
+        comment: |
+          -->
+      - name: ioVFSID
+        type: INTEGER
+        comment: |
+          -->
+      - name: ioVBkUp
+        type: LONGINT
+        comment: |
+          -->
+      - name: ioVSeqNum
+        type: uint16_t
+        comment: |
+          -->
+      - name: ioVWrCnt
+        type: LONGINT
+        comment: |
+          -->
+      - name: ioVFilCnt
+        type: LONGINT
+        comment: |
+          -->
+      - name: ioVDirCnt
+        type: LONGINT
+        comment: |
+          -->
+      - name: ioVFndrInfo
+        type: LONGINT[8]
+        comment: |
+          -->
+    name: HVolumeParam
+    size: 122
+
+# ####
+
+- union:
+    members:
+      - name: ioParam
+        type: HIoParam
+      - name: fileParam
+        type: HFileParam
+      - name: volumeParam
+        type: HVolumeParam
+    name: HParamBlockRec
+    size: 122
+
+# ####
+
+- typedef:
+    name: HParmBlkPtr
+    type: HParamBlockRec*
+
+# ####
+
+- enum:
+    values:
+      - name: hfileInfo
+      - name: dirInfo
+    name: CInfoType
+
+# ####
+
+- only-for: Executor
+  verbatim: |
+    #define COMMONCINFODEFS           \
+        COMMONFSQUEUEDEFS;            \
+        GUEST<INTEGER> ioFRefNum;     \
+        GUEST<SignedByte> ioFVersNum; \
+        GUEST<SignedByte> filler1;    \
+        GUEST<INTEGER> ioFDirIndex;   \
+        GUEST<SignedByte> ioFlAttrib; \
+        GUEST<SignedByte> ioACUser
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONCINFODEFS
+      - name: ioFlFndrInfo
+        type: FInfo
+      - name: ioDirID
+        type: LONGINT
+      - name: ioFlStBlk
+        type: INTEGER
+      - name: ioFlLgLen
+        type: LONGINT
+      - name: ioFlPyLen
+        type: LONGINT
+      - name: ioFlRStBlk
+        type: INTEGER
+      - name: ioFlRLgLen
+        type: LONGINT
+      - name: ioFlRPyLen
+        type: LONGINT
+      - name: ioFlCrDat
+        type: ULONGINT
+      - name: ioFlMdDat
+        type: ULONGINT
+      - name: ioFlBkDat
+        type: ULONGINT
+      - name: ioFlXFndrInfo
+        type: FXInfo
+      - name: ioFlParID
+        type: LONGINT
+      - name: ioFlClpSiz
+        type: LONGINT
+    name: HFileInfo
+    size: 108
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONCINFODEFS
+      - name: ioDrUsrWds
+        type: DInfo
+      - name: ioDrDirID
+        type: LONGINT
+      - name: ioDrNmFls
+        type: uint16_t
+      - name: filler3
+        type: uint16_t[9]
+      - name: ioDrCrDat
+        type: ULONGINT
+      - name: ioDrMdDat
+        type: ULONGINT
+      - name: ioDrBkDat
+        type: ULONGINT
+      - name: ioDrFndrInfo
+        type: DXInfo
+      - name: ioDrParID
+        type: LONGINT
+    name: DirInfo
+    size: 104
+
+# ####
+
+- union:
+    members:
+      - name: hFileInfo
+        type: HFileInfo
+      - name: dirInfo
+        type: DirInfo
+    name: CInfoPBRec
+    size: 108
+
+# ####
+
+- typedef:
+    name: CInfoPBPtr
+    type: CInfoPBRec*
+
+# ####
+
+- struct:
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: filler1
+        type: LONGINT
+      - name: ioNewName
+        type: StringPtr
+      - name: filler2
+        type: LONGINT
+      - name: ioNewDirID
+        type: LONGINT
+      - name: filler3
+        type: LONGINT[2]
+      - name: ioDirID
+        type: LONGINT
+    name: CMovePBRec
+    size: 52
+
+# ####
+
+- typedef:
+    name: CMovePBPtr
+    type: CMovePBRec*
+
+# ####
+
+- struct:
+    name: WDPBRec
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: filler1
+        type: uint16_t
+      - name: ioWDIndex
+        type: INTEGER
+      - name: ioWDProcID
+        type: LONGINT
+      - name: ioWDVRefNum
+        type: INTEGER
+      - name: filler2
+        type: INTEGER[7]
+      - name: ioWDDirID
+        type: LONGINT
+    size: 52
+
+# ####
+
+- typedef:
+    name: WDPBPtr
+    type: WDPBRec*
+
+# ####
+
+- struct:
+    name: FCBPBRec
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: ioRefNum
+        type: INTEGER
+      - name: filler
+        type: uint16_t
+      - name: ioFCBIndx
+        type: INTEGER
+      - name: ioFCBobnoxiousfiller
+        type: INTEGER
+        comment: |
+          ACK! not in IMIV, but ThinkC+MPW
+      - name: ioFCBFlNm
+        type: LONGINT
+      - name: ioFCBFlags
+        type: uint16_t
+      - name: ioFCBStBlk
+        type: INTEGER
+      - name: ioFCBEOF
+        type: LONGINT
+      - name: ioFCBPLen
+        type: LONGINT
+      - name: ioFCBCrPs
+        type: LONGINT
+      - name: ioFCBVRefNum
+        type: INTEGER
+      - name: ioFCBClpSiz
+        type: LONGINT
+      - name: ioFCBParID
+        type: LONGINT
+    size: 62
+
+# ####
+
+- typedef:
+    name: FCBPBPtr
+    type: FCBPBRec*
+
+# ####
+
+- struct:
+    name: VCB
+    members:
+      - name: qLink
+        type: QElemPtr
+        comment: |
+          0
+      - name: qType
+        type: INTEGER
+        comment: |
+          4
+      - name: vcbFlags
+        type: uint16_t
+        comment: |
+          6
+      - name: vcbSigWord
+        type: uint16_t
+        comment: |
+          8
+      - name: vcbCrDate
+        type: ULONGINT
+        comment: |
+          10
+      - name: vcbLsMod
+        type: ULONGINT
+        comment: |
+          14
+      - name: vcbAtrb
+        type: uint16_t
+        comment: |
+          18
+      - name: vcbNmFls
+        type: uint16_t
+        comment: |
+          20
+      - name: vcbVBMSt
+        type: uint16_t
+        comment: |
+          22
+      - name: vcbAllocPtr
+        type: uint16_t
+        comment: |
+          24
+      - name: vcbNmAlBlks
+        type: uint16_t
+        comment: |
+          26
+      - name: vcbAlBlkSiz
+        type: LONGINT
+        comment: |
+          28
+      - name: vcbClpSiz
+        type: LONGINT
+        comment: |
+          32
+      - name: vcbAlBlSt
+        type: uint16_t
+        comment: |
+          36
+      - name: vcbNxtCNID
+        type: LONGINT
+        comment: |
+          38
+      - name: vcbFreeBks
+        type: uint16_t
+        comment: |
+          42
+      - name: vcbVN
+        type: Byte[28]
+        comment: |
+          44
+      - name: vcbDrvNum
+        type: INTEGER
+        comment: |
+          72
+      - name: vcbDRefNum
+        type: INTEGER
+        comment: |
+          74
+      - name: vcbFSID
+        type: INTEGER
+        comment: |
+          76
+      - name: vcbVRefNum
+        type: INTEGER
+        comment: |
+          78
+      - name: vcbMAdr
+        type: Ptr
+      - name: vcbBufAdr
+        type: Ptr
+      - name: vcbMLen
+        type: uint16_t
+      - name: vcbDirIndex
+        type: INTEGER
+      - name: vcbDirBlk
+        type: uint16_t
+      - name: vcbVolBkUp
+        type: LONGINT
+      - name: vcbVSeqNum
+        type: uint16_t
+      - name: vcbWrCnt
+        type: LONGINT
+      - name: vcbXTClpSiz
+        type: LONGINT
+      - name: vcbCTClpSiz
+        type: LONGINT
+      - name: vcbNmRtDirs
+        type: uint16_t
+      - name: vcbFilCnt
+        type: LONGINT
+      - name: vcbDirCnt
+        type: LONGINT
+      - name: vcbFndrInfo
+        type: LONGINT[8]
+      - name: vcbVCSize
+        type: uint16_t
+      - name: vcbVBMCSiz
+        type: uint16_t
+      - name: vcbCtlCSiz
+        type: uint16_t
+      - name: vcbXTAlBlks
+        type: uint16_t
+      - name: vcbCTAlBlks
+        type: uint16_t
+      - name: vcbXTRef
+        type: INTEGER
+      - name: vcbCTRef
+        type: INTEGER
+      - name: vcbCtlBuf
+        type: Ptr
+      - name: vcbDirIDM
+        type: LONGINT
+      - name: vcbOffsM
+        type: uint16_t
+    size: 178
+
+# ####
+
+- typedef:
+    name: VCBPtr
+    type: VCB*
+
+# ####
+
+- struct:
+    name: DrvQEl
+    members:
+      - name: qLink
+        type: QElemPtr
+      - name: qType
+        type: INTEGER
+      - name: dQDrive
+        type: INTEGER
+      - name: dQRefNum
+        type: INTEGER
+      - name: dQFSID
+        type: INTEGER
+      - name: dQDrvSz
+        type: uint16_t
+      - name: dQDrvSz2
+        type: uint16_t
+    size: 16
+
+# ####
+
+- struct:
+    name: FSSpec
+    members:
+      - name: vRefNum
+        type: INTEGER
+      - name: parID
+        type: LONGINT
+      - name: name
+        type: Str63
+    comment: |
+      data types introduced by the new high level file system dispatch
+         traps
+
+# ####
+
+- struct:
+    name: FSSpec
+    size: 70
+
+# ####
+
+- typedef:
+    name: FSSpecPtr
+    type: FSSpec*
+
+# ####
+
+- typedef:
+    name: FSSpecArrayPtr
+    type: FSSpecPtr
+
+# ####
+
+- lowmem:
+    name: BootDrive
+    type: INTEGER
+    address: 0x210
+    comment: |
+      FileMgr IMIV-212 (true);
+
+# ####
+
+- lowmem:
+    name: DrvQHdr
+    type: QHdr
+    address: 0x308
+    comment: |
+      FileMgr IMIV-182 (true);
+
+# ####
+
+- lowmem:
+    name: EjectNotify
+    type: ProcPtr
+    address: 0x338
+    comment: |
+      FileMgr ThinkC (false);
+
+# ####
+
+- lowmem:
+    name: FCBSPtr
+    type: Ptr
+    address: 0x34E
+    comment: |
+      FileMgr IMIV-179 (true);
+
+# ####
+
+- lowmem:
+    name: DefVCBPtr
+    type: VCBPtr
+    address: 0x352
+    comment: |
+      FileMgr IMIV-178 (true);
+
+# ####
+
+- lowmem:
+    name: VCBQHdr
+    type: QHdr
+    address: 0x356
+    comment: |
+      FileMgr IMIV-178 (true);
+
+# ####
+
+- lowmem:
+    name: FSQHdr
+    type: QHdr
+    address: 0x360
+    comment: |
+      FileMgr IMIV-176 (true);
+
+# ####
+
+- lowmem:
+    name: WDCBsPtr
+    type: Ptr
+    address: 0x372
+    comment: |
+      FileMgr idunno (true);
+
+# ####
+
+- lowmem:
+    name: DefVRefNum
+    type: INTEGER
+    address: 0x384
+    comment: |
+      FileMgr MPW (true);
+
+# ####
+
+- lowmem:
+    name: ToExtFS
+    type: Ptr
+    address: 0x3F2
+    comment: |
+      * Note: MacLinkPC+ loads 0x358 into a register (i.e. the address of the
+       * pointer to the first element on the VCB queue) and then uses
+       * 72 off of it (0x3A0) and 78 off of it (0x3A6). As long as
+       * there are zeros there, that doesn't hurt us, but normally,
+       * we'd have negative ones in there. Hence we describe them
+       * here and set them to zero in executor.
+      const LowMemGlobal<Ptr> FmtDefaults { 0x39E }; // FileMgr ThinkC (false);
+      FileMgr IMIV-212 (false);
+
+# ####
+
+- lowmem:
+    name: FSFCBLen
+    type: INTEGER
+    address: 0x3F6
+    comment: |
+      FileMgr IMIV-97 (true);
+
+# ####
+
+- function:
+    name: FSOpen
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+      - name: rn
+        type: INTEGER*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBOpenSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = 0;    /* fsCurPerm */
+      pb.ioParam.ioMisc = 0;
+      err = PBOpenSync(&pb);
+      *rn = pb.ioParam.ioRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: OpenRF
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+      - name: rn
+        type: INTEGER*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBOpenRFSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = 0;
+      pb.ioParam.ioMisc = 0;
+      err = PBOpenRFSync(&pb);
+      *rn = pb.ioParam.ioRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: OpenDF
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+      - name: rn
+        type: INTEGER*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBOpenDFSync, PBOpenSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = 0;
+      pb.ioParam.ioMisc = 0;
+      err = PBOpenDFSync(&pb);
+      if (err == paramErr)     /* no _OpenDF before System 7 */
+          err = PBOpenSync(&pb);
+      *rn = pb.ioParam.ioRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: FSRead
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: count
+        type: LONGINT*
+      - name: buffp
+        type: void*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBReadSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioBuffer = (Ptr)buffp;
+      pb.ioParam.ioReqCount = *count;
+      pb.ioParam.ioPosMode = 0;    /* fsAtMark */
+      pb.ioParam.ioPosOffset = 0;
+      err = PBReadSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
+
+# ####
+
+- function:
+    name: FSWrite
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: count
+        type: LONGINT*
+      - name: buffp
+        type: const void*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBWriteSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioBuffer = (Ptr)buffp;
+      pb.ioParam.ioReqCount = *count;
+      pb.ioParam.ioPosMode = 0;
+      pb.ioParam.ioPosOffset = 0;
+      err = PBWriteSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
+
+# ####
+
+- function:
+    name: GetFPos
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: filep
+        type: LONGINT*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBGetFPosSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      err = PBGetFPosSync(&pb);
+      *filep = pb.ioParam.ioPosOffset;
+      return err;
+
+# ####
+
+- function:
+    name: SetFPos
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: posmode
+        type: INTEGER
+      - name: possoff
+        type: LONGINT
+    executor: true
+    m68k-needs: [ParamBlockRec, PBSetFPosSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioPosMode = posmode;
+      pb.ioParam.ioPosOffset = possoff;
+      return PBSetFPosSync(&pb);
+
+# ####
+
+- function:
+    name: GetEOF
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: eof
+        type: LONGINT*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBGetEOFSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      err = PBGetEOFSync(&pb);
+      *eof = (long)pb.ioParam.ioMisc;
+      return err;
+
+# ####
+
+- function:
+    name: SetEOF
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: eof
+        type: LONGINT
+    executor: true
+    m68k-needs: [ParamBlockRec, PBSetEOFSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioMisc = (Ptr)eof;
+      return PBSetEOFSync(&pb);
+
+# ####
+
+- function:
+    name: Allocate
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: count
+        type: LONGINT*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBAllocateSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioReqCount = *count;
+      err = PBAllocateSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
+
+# ####
+
+- function:
+    name: AllocContig
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+      - name: count
+        type: LONGINT*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBAllocContigSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioReqCount = *count;
+      err = PBAllocContigSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
+
+# ####
+
+- function:
+    name: FSClose
+    return: OSErr
+    args:
+      - name: rn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBCloseSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      return PBCloseSync(&pb);
+
+# ####
+
+- function:
+    name: Create
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+      - name: creator
+        type: OSType
+      - name: filtyp
+        type: OSType
+    executor: true
+    m68k-needs: [ParamBlockRec, PBCreateSync, PBGetFInfoSync, PBSetFInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      err = PBCreateSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFDirIndex = 0;
+      err = PBGetFInfoSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo.fdCreator = creator;
+      pb.fileParam.ioFlFndrInfo.fdType = filtyp;
+      return PBSetFInfoSync(&pb);
+
+# ####
+
+- function:
+    name: FSDelete
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBDeleteSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      return PBDeleteSync(&pb);
+
+# ####
+
+- function:
+    name: GetFInfo
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+      - name: fndrinfo
+        type: FInfo*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBGetFInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      err = PBGetFInfoSync(&pb);
+      *fndrinfo = pb.fileParam.ioFlFndrInfo;
+      return err;
+
+# ####
+
+- function:
+    name: HGetFInfo
+    return: OSErr
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: name
+        type: ConstStringPtr
+      - name: fndrinfo
+        type: FInfo*
+    executor: true
+    m68k-needs: [HParamBlockRec, PBHGetFInfoSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)name;
+      pb.fileParam.ioVRefNum = vref;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHGetFInfoSync(&pb);
+      *fndrinfo = pb.fileParam.ioFlFndrInfo;
+      return err;
+
+# ####
+
+- function:
+    name: SetFInfo
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+      - name: fndrinfo
+        type: FInfo*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBGetFInfoSync, PBSetFInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      err = PBGetFInfoSync(&pb);    /* keep the dates */
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo = *fndrinfo;
+      return PBSetFInfoSync(&pb);
+
+# ####
+
+- function:
+    name: SetFLock
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBSetFLockSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      return PBSetFLockSync(&pb);
+
+# ####
+
+- function:
+    name: RstFLock
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBRstFLockSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      return PBRstFLockSync(&pb);
+
+# ####
+
+- function:
+    name: Rename
+    return: OSErr
+    args:
+      - name: filen
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+      - name: newf
+        type: ConstStringPtr
+    executor: true
+    m68k-needs: [ParamBlockRec, PBRenameSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioMisc = (Ptr)newf;
+      return PBRenameSync(&pb);
+
+# ####
+
+- function:
+    name: FInitQueue
+    trap: 0xA016
+    executor: C_
+
+# ####
+
+- function:
+    name: GetFSQHdr
+    return: QHdrPtr
+    executor: C_
+    m68k-body: |
+      return (QHdrPtr)0x360;
+
+# ####
+
+- function:
+    name: GetVCBQHdr
+    return: QHdrPtr
+    executor: C_
+    m68k-body: |
+      return (QHdrPtr)0x356;
+
+# ####
+
+- function:
+    name: GetDrvQHdr
+    return: QHdrPtr
+    executor: C_
+    m68k-body: |
+      return (QHdrPtr)0x308;
+
+# ####
+
+- function:
+    name: GetVInfo
+    return: OSErr
+    args:
+      - name: drv
+        type: INTEGER
+      - name: voln
+        type: StringPtr
+      - name: vrn
+        type: INTEGER*
+      - name: freeb
+        type: LONGINT*
+    m68k-needs: [ParamBlockRec, PBGetVInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = voln;
+      pb.volumeParam.ioVRefNum = drv;
+      pb.volumeParam.ioVolIndex = 0;
+      err = PBGetVInfoSync(&pb);
+      *vrn = pb.volumeParam.ioVRefNum;
+      /* The block count is 16 bits, so this needs no __mulsi3. */
+      *freeb = (long)((unsigned long)(unsigned short)pb.volumeParam.ioVFrBlk *
+                      (unsigned long)pb.volumeParam.ioVAlBlkSiz);
+      return err;
+
+# ####
+
+- function:
+    name: GetVRefNum
+    return: OSErr
+    args:
+      - name: prn
+        type: INTEGER
+      - name: vrn
+        type: INTEGER*
+    m68k-needs: [FCBPBRec, PBGetFCBInfoSync]
+    m68k-body: |
+      FCBPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = 0;
+      pb.ioRefNum = prn;
+      pb.ioFCBIndx = 0;
+      err = PBGetFCBInfoSync(&pb);
+      *vrn = pb.ioFCBVRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: GetVol
+    return: OSErr
+    args:
+      - name: voln
+        type: StringPtr
+      - name: vrn
+        type: INTEGER*
+    executor: true
+    m68k-needs: [ParamBlockRec, PBGetVolSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = voln;
+      err = PBGetVolSync(&pb);
+      *vrn = pb.volumeParam.ioVRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: SetVol
+    return: OSErr
+    args:
+      - name: voln
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBSetVolSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBSetVolSync(&pb);
+
+# ####
+
+- function:
+    name: FlushVol
+    return: OSErr
+    args:
+      - name: voln
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBFlushVolSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBFlushVolSync(&pb);
+
+# ####
+
+- function:
+    name: UnmountVol
+    return: OSErr
+    args:
+      - name: voln
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBUnmountVol]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBUnmountVol(&pb);
+
+# ####
+
+- function:
+    name: Eject
+    return: OSErr
+    args:
+      - name: voln
+        type: ConstStringPtr
+      - name: vrn
+        type: INTEGER
+    executor: true
+    m68k-needs: [ParamBlockRec, PBEject]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBEject(&pb);
+
+# ####
+
+- function:
+    name: PBAllocContig
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    trap: 0xA210
+    returnreg: D0
+    variants:
+      - PBAllocContigSync
+      - PBAllocContigAsync
+
+# ####
+
+- function:
+    name: PBOpen
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    comment: |
+      TODO: Trap?
+    executor: true
+    file_trap: mfs
+    trap: 0xA000
+    returnreg: D0
+    variants:
+      - PBOpenSync
+      - PBOpenAsync
+
+# ####
+
+- function:
+    name: PBHOpen
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA200
+    returnreg: D0
+    variants:
+      - PBHOpenSync
+      - PBHOpenAsync
+
+# ####
+
+- function:
+    name: PBClose
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA001
+    returnreg: D0
+    variants:
+      - PBCloseSync
+      - PBCloseAsync
+
+# ####
+
+- function:
+    name: PBRead
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA002
+    returnreg: D0
+    variants:
+      - PBReadSync
+      - PBReadAsync
+
+# ####
+
+- function:
+    name: PBWrite
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA003
+    returnreg: D0
+    variants:
+      - PBWriteSync
+      - PBWriteAsync
+
+# ####
+
+- function:
+    name: PBGetVInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA007
+    returnreg: D0
+    variants:
+      - PBGetVInfoSync
+      - PBGetVInfoAsync
+
+# ####
+
+- function:
+    name: PBHGetVInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA207
+    returnreg: D0
+    variants:
+      - PBHGetVInfoSync
+      - PBHGetVInfoAsync
+
+# ####
+
+- function:
+    name: PBCreate
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA008
+    returnreg: D0
+    variants:
+      - PBCreateSync
+      - PBCreateAsync
+
+# ####
+
+- function:
+    name: PBHCreate
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA208
+    returnreg: D0
+    variants:
+      - PBHCreateSync
+      - PBHCreateAsync
+
+# ####
+
+- function:
+    name: PBDelete
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA009
+    returnreg: D0
+    variants:
+      - PBDeleteSync
+      - PBDeleteAsync
+
+# ####
+
+- function:
+    name: PBHDelete
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA209
+    returnreg: D0
+    variants:
+      - PBHDeleteSync
+      - PBHDeleteAsync
+
+# ####
+
+- function:
+    name: PBOpenRF
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA00A
+    returnreg: D0
+    variants:
+      - PBOpenRFSync
+      - PBOpenRFAsync
+
+# ####
+
+- function:
+    name: PBHOpenRF
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA20A
+    returnreg: D0
+    variants:
+      - PBHOpenRFSync
+      - PBHOpenRFAsync
+
+# ####
+
+- function:
+    name: PBRename
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA00B
+    returnreg: D0
+    variants:
+      - PBRenameSync
+      - PBRenameAsync
+
+# ####
+
+- function:
+    name: PBHRename
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA20B
+    returnreg: D0
+    variants:
+      - PBHRenameSync
+      - PBHRenameAsync
+
+# ####
+
+- function:
+    name: PBGetFInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA00C
+    returnreg: D0
+    variants:
+      - PBGetFInfoSync
+      - PBGetFInfoAsync
+
+# ####
+
+- function:
+    name: PBHGetFInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA20C
+    returnreg: D0
+    variants:
+      - PBHGetFInfoSync
+      - PBHGetFInfoAsync
+
+# ####
+
+- function:
+    name: PBSetFInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA00D
+    returnreg: D0
+    variants:
+      - PBSetFInfoSync
+      - PBSetFInfoAsync
+
+# ####
+
+- function:
+    name: PBHSetFInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA20D
+    returnreg: D0
+    variants:
+      - PBHSetFInfoSync
+      - PBHSetFInfoAsync
+
+# ####
+
+- function:
+    name: PBUnmountVol
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+    executor: true
+    trap: 0xA00E
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBMountVol
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+    executor: true
+    trap: 0xA00F
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBAllocate
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA010
+    returnreg: D0
+    variants:
+      - PBAllocateSync
+      - PBAllocateAsync
+
+# ####
+
+- function:
+    name: PBGetEOF
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA011
+    returnreg: D0
+    variants:
+      - PBGetEOFSync
+      - PBGetEOFAsync
+
+# ####
+
+- function:
+    name: PBSetEOF
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA012
+    returnreg: D0
+    variants:
+      - PBSetEOFSync
+      - PBSetEOFAsync
+
+# ####
+
+- function:
+    name: PBFlushVol
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA013
+    returnreg: D0
+    variants:
+      - PBFlushVolSync
+      - PBFlushVolAsync
+
+# ####
+
+- function:
+    name: PBGetVol
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA014
+    returnreg: D0
+    variants:
+      - PBGetVolSync
+      - PBGetVolAsync
+
+# ####
+
+- function:
+    name: PBHGetVol
+    return: OSErr
+    args:
+      - name: pb
+        type: WDPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA214
+    returnreg: D0
+    variants:
+      - PBHGetVolSync
+      - PBHGetVolAsync
+
+# ####
+
+- function:
+    name: PBSetVol
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA015
+    returnreg: D0
+    variants:
+      - PBSetVolSync
+      - PBSetVolAsync
+
+# ####
+
+- function:
+    name: PBHSetVol
+    return: OSErr
+    args:
+      - name: pb
+        type: WDPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA215
+    returnreg: D0
+    variants:
+      - PBHSetVolSync
+      - PBHSetVolAsync
+
+# ####
+
+- function:
+    name: PBEject
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+    executor: true
+    trap: 0xA017
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBGetFPos
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA018
+    returnreg: D0
+    variants:
+      - PBGetFPosSync
+      - PBGetFPosAsync
+
+# ####
+
+- function:
+    name: PBOffLine
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+    executor: true
+    trap: 0xA035
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBSetFLock
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA041
+    returnreg: D0
+    variants:
+      - PBSetFLockSync
+      - PBSetFLockAsync
+
+# ####
+
+- function:
+    name: PBHSetFLock
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA241
+    returnreg: D0
+    variants:
+      - PBHSetFLockSync
+      - PBHSetFLockAsync
+
+# ####
+
+- function:
+    name: PBRstFLock
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA042
+    returnreg: D0
+    variants:
+      - PBRstFLockSync
+      - PBRstFLockAsync
+
+# ####
+
+- function:
+    name: PBHRstFLock
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA242
+    returnreg: D0
+    variants:
+      - PBHRstFLockSync
+      - PBHRstFLockAsync
+
+# ####
+
+- function:
+    name: PBSetFVers
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA043
+    returnreg: D0
+    variants:
+      - PBSetFVersSync
+      - PBSetFVersAsync
+
+# ####
+
+- function:
+    name: PBSetFPos
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA044
+    returnreg: D0
+    variants:
+      - PBSetFPosSync
+      - PBSetFPosAsync
+
+# ####
+
+- function:
+    name: PBFlushFile
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA045
+    returnreg: D0
+    variants:
+      - PBFlushFileSync
+      - PBFlushFileAsync
+
+# ####
+
+- dispatcher:
+    name: FSDispatch
+    trap: 0xA060
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: PBOpenWD
+    return: OSErr
+    args:
+      - name: pb
+        type: WDPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x0001
+    returnreg: D0
+    variants:
+      - PBOpenWDSync
+      - PBOpenWDAsync
+
+# ####
+
+- function:
+    name: PBCloseWD
+    return: OSErr
+    args:
+      - name: pb
+        type: WDPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x0002
+    returnreg: D0
+    variants:
+      - PBCloseWDSync
+      - PBCloseWDAsync
+
+# ####
+
+- function:
+    name: PBCatMove
+    return: OSErr
+    args:
+      - name: pb
+        type: CMovePBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x0005
+    returnreg: D0
+    variants:
+      - PBCatMoveSync
+      - PBCatMoveAsync
+
+# ####
+
+- function:
+    name: PBDirCreate
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x0006
+    returnreg: D0
+    variants:
+      - PBDirCreateSync
+      - PBDirCreateAsync
+
+# ####
+
+- function:
+    name: PBGetWDInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: WDPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x0007
+    returnreg: D0
+    variants:
+      - PBGetWDInfoSync
+      - PBGetWDInfoAsync
+
+# ####
+
+- function:
+    name: PBGetFCBInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: FCBPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x0008
+    returnreg: D0
+    variants:
+      - PBGetFCBInfoSync
+      - PBGetFCBInfoAsync
+
+# ####
+
+- function:
+    name: PBGetCatInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: CInfoPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 9
+    returnreg: D0
+    variants:
+      - PBGetCatInfoSync
+      - PBGetCatInfoAsync
+
+# ####
+
+- function:
+    name: PBSetCatInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: CInfoPBPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 10
+    returnreg: D0
+    variants:
+      - PBSetCatInfoSync
+      - PBSetCatInfoAsync
+
+# ####
+
+- function:
+    name: PBSetVInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 11
+    returnreg: D0
+    variants:
+      - PBSetVInfoSync
+      - PBSetVInfoAsync
+
+# ####
+
+- function:
+    name: PBLockRange
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x10
+    returnreg: D0
+    variants:
+      - PBLockRangeSync
+      - PBLockRangeAsync
+
+# ####
+
+- function:
+    name: PBUnlockRange
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x11
+    returnreg: D0
+    variants:
+      - PBUnlockRangeSync
+      - PBUnlockRangeAsync
+
+# ####
+
+- function:
+    name: PBCreateFileIDRef
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x14
+    returnreg: D0
+    variants:
+      - PBCreateFileIDRefSync
+      - PBCreateFileIDRefAsync
+
+# ####
+
+- function:
+    name: PBDeleteFileIDRef
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x15
+    returnreg: D0
+    variants:
+      - PBDeleteFileIDRefSync
+      - PBDeleteFileIDRefAsync
+
+# ####
+
+- function:
+    name: PBResolveFileIDRef
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x16
+    returnreg: D0
+    variants:
+      - PBResolveFileIDRefSync
+      - PBResolveFileIDRefAsync
+
+# ####
+
+- function:
+    name: PBExchangeFiles
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x17
+    returnreg: D0
+    variants:
+      - PBExchangeFilesSync
+      - PBExchangeFilesAsync
+
+# ####
+
+- function:
+    name: PBCatSearch
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x18
+    returnreg: D0
+    variants:
+      - PBCatSearchSync
+      - PBCatSearchAsync
+
+# ####
+
+- function:
+    name: PBOpenDF
+    return: OSErr
+    args:
+      - name: pb
+        type: ParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: mfs
+    trap: 0xA060
+    dispatcher: FSDispatch
+    selector: 0x1A
+    returnreg: D0
+    variants:
+      - PBOpenDFSync
+      - PBOpenDFAsync
+
+# ####
+
+- function:
+    name: PBHOpenDF
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: hfs
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x1A
+    returnreg: D0
+    variants:
+      - PBHOpenDFSync
+      - PBHOpenDFAsync
+
+# ####
+
+- struct:
+    members:
+      - name: vMVersion
+        type: INTEGER
+      - name: vMAttrib
+        type: LONGINT
+      - name: vMLocalHand
+        type: Handle
+      - name: vMServerAdr
+        type: LONGINT
+      - name: vMVolumeGrade
+        type: LONGINT
+      - name: vMForeignPrivID
+        type: INTEGER
+    name: GetVolParmsInfoBuffer
+    size: 20
+
+# ####
+
+- enum:
+    values:
+      - name: bHasExtFSVol
+        value: 16
+      - name: bHasDesktopMgr
+        value: 12
+
+# ####
+
+- function:
+    name: PBHGetVolParms
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: async
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x30
+    returnreg: D0
+    variants:
+      - PBHGetVolParmsSync
+      - PBHGetVolParmsAsync
+
+# ####
+
+- function:
+    name: PBHGetLogInInfo
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x31
+    returnreg: D0
+    variants:
+      - PBHGetLogInInfoSync
+      - PBHGetLogInInfoAsync
+
+# ####
+
+- function:
+    name: PBHGetDirAccess
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x32
+    returnreg: D0
+    variants:
+      - PBHGetDirAccessSync
+      - PBHGetDirAccessAsync
+
+# ####
+
+- function:
+    name: PBHSetDirAccess
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x33
+    returnreg: D0
+    variants:
+      - PBHSetDirAccessSync
+      - PBHSetDirAccessAsync
+
+# ####
+
+- function:
+    name: PBHMapID
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x34
+    returnreg: D0
+    variants:
+      - PBHMapIDSync
+      - PBHMapIDAsync
+
+# ####
+
+- function:
+    name: PBHMapName
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x35
+    returnreg: D0
+    variants:
+      - PBHMapNameSync
+      - PBHMapNameAsync
+
+# ####
+
+- function:
+    name: PBHCopyFile
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x36
+    returnreg: D0
+    variants:
+      - PBHCopyFileSync
+      - PBHCopyFileAsync
+
+# ####
+
+- function:
+    name: PBHMoveRename
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x37
+    returnreg: D0
+    variants:
+      - PBHMoveRenameSync
+      - PBHMoveRenameAsync
+
+# ####
+
+- function:
+    name: PBHOpenDeny
+    return: OSErr
+    args:
+      - name: pb
+        type: HParmBlkPtr
+        register: A0
+      - name: a
+        type: Boolean
+        register: TrapBit<0x400>
+    executor: true
+    file_trap: true
+    trap: 0xA260
+    dispatcher: FSDispatch
+    selector: 0x38
+    returnreg: D0
+    variants:
+      - PBHOpenDenySync
+      - PBHOpenDenyAsync
+
+# ####
+
+- dispatcher:
+    name: HighLevelFSDispatch
+    trap: 0xAA52
+    selector-location: D0<0xF>
+    comment: |
+      prototypes for the high level filesystem dispatch traps
+
+# ####
+
+- function:
+    name: FSMakeFSSpec
+    return: OSErr
+    args:
+      - name: vRefNum
+        type: int16_t
+      - name: dir_id
+        type: int32_t
+      - name: file_name
+        type: ConstStringPtr
+      - name: spec
+        type: FSSpecPtr
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0001
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpExchangeFiles
+    return: OSErr
+    args:
+      - name: src
+        type: FSSpecPtr
+      - name: dst
+        type: FSSpecPtr
+    dispatcher: HighLevelFSDispatch
+    selector: 0x000F
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpOpenDF
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: perms
+        type: SignedByte
+      - name: refNum_out
+        type: int16_t*
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0002
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpOpenRF
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: perms
+        type: SignedByte
+      - name: refNum_out
+        type: int16_t*
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0003
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpCreate
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: creator
+        type: OSType
+      - name: file_type
+        type: OSType
+      - name: script
+        type: ScriptCode
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0004
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpDirCreate
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: script
+        type: ScriptCode
+      - name: created_dir_id
+        type: int32_t*
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0005
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpDelete
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0006
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpGetFInfo
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: fndr_info
+        type: FInfo*
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0007
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpSetFInfo
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: fndr_info
+        type: FInfo*
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0008
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpSetFLock
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+    dispatcher: HighLevelFSDispatch
+    selector: 0x0009
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpRstFLock
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+    dispatcher: HighLevelFSDispatch
+    selector: 0x000A
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpRename
+    return: OSErr
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: new_name
+        type: ConstStringPtr
+    dispatcher: HighLevelFSDispatch
+    selector: 0x000B
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpCatMove
+    return: OSErr
+    args:
+      - name: src
+        type: FSSpecPtr
+      - name: dst
+        type: FSSpecPtr
+    dispatcher: HighLevelFSDispatch
+    selector: 0x000C
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpCreateResFile
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: creator
+        type: OSType
+      - name: file_type
+        type: OSType
+      - name: script
+        type: ScriptCode
+    dispatcher: HighLevelFSDispatch
+    selector: 0x000E
+    executor: C_
+
+# ####
+
+- function:
+    name: FSpOpenResFile
+    return: INTEGER
+    args:
+      - name: spec
+        type: FSSpecPtr
+      - name: perms
+        type: SignedByte
+    dispatcher: HighLevelFSDispatch
+    selector: 0x000D
+    executor: C_
+
+# ####
+
+- function:
+    name: HOpenResFile
+    return: INTEGER
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: file_name
+        type: ConstStringPtr
+      - name: perm
+        type: SignedByte
+    trap: 0xA81A
+    executor: C_
+
+# ####
+
+- function:
+    name: HCreateResFile
+    args:
+      - name: vrefnum
+        type: INTEGER
+      - name: parid
+        type: LONGINT
+      - name: name
+        type: ConstStringPtr
+    trap: 0xA81B
+    executor: C_
+
+# ####
+
+- function:
+    name: HCreate
+    return: OSErr
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: name
+        type: ConstStringPtr
+      - name: creator
+        type: OSType
+      - name: type
+        type: OSType
+    executor: true
+    m68k-needs: [HParamBlockRec, PBHCreateSync, PBHGetFInfoSync, PBHSetFInfoSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)name;
+      pb.fileParam.ioVRefNum = vref;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHCreateSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFDirIndex = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHGetFInfoSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo.fdCreator = creator;
+      pb.fileParam.ioFlFndrInfo.fdType = type;
+      pb.fileParam.ioDirID = dirid;
+      return PBHSetFInfoSync(&pb);
+
+# ####
+
+- function:
+    name: HOpenRF
+    return: OSErr
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: name
+        type: ConstStringPtr
+      - name: perm
+        type: SignedByte
+      - name: refp
+        type: INTEGER*
+    executor: true
+    m68k-needs: [HParamBlockRec, PBHOpenRFSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)name;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = perm;
+      pb.ioParam.ioMisc = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHOpenRFSync(&pb);
+      *refp = pb.ioParam.ioRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: HOpen
+    return: OSErr
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: name
+        type: ConstStringPtr
+      - name: perm
+        type: SignedByte
+      - name: refp
+        type: INTEGER*
+    executor: true
+    m68k-needs: [HParamBlockRec, PBHOpenSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)name;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = perm;
+      pb.ioParam.ioMisc = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHOpenSync(&pb);
+      *refp = pb.ioParam.ioRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: HOpenDF
+    return: OSErr
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: name
+        type: ConstStringPtr
+      - name: perm
+        type: SignedByte
+      - name: refp
+        type: INTEGER*
+    executor: true
+    m68k-needs: [HParamBlockRec, PBHOpenDFSync, PBHOpenSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)name;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = perm;
+      pb.ioParam.ioMisc = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHOpenDFSync(&pb);
+      if (err == paramErr)     /* no _OpenDF before System 7 */
+          err = PBHOpenSync(&pb);
+      *refp = pb.ioParam.ioRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: HRename
+    return: OSErr
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: src
+        type: ConstStringPtr
+      - name: dst
+        type: ConstStringPtr
+    m68k-needs: [HParamBlockRec, PBHRenameSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)src;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioMisc = (Ptr)dst;
+      pb.fileParam.ioDirID = dirid;
+      return PBHRenameSync(&pb);
+
+# ####
+
+- function:
+    name: HDelete
+    return: OSErr
+    args:
+      - name: vref
+        type: INTEGER
+      - name: dirid
+        type: LONGINT
+      - name: name
+        type: ConstStringPtr
+    comment: |
+      NOTRAP_FUNCTION2(HRename);
+    m68k-needs: [HParamBlockRec, PBHDeleteSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)name;
+      pb.fileParam.ioVRefNum = vref;
+      pb.fileParam.ioDirID = dirid;
+      return PBHDeleteSync(&pb);
+
+# ####
+
+- function:
+    name: GetWDInfo
+    return: OSErr
+    args:
+      - name: wd
+        type: INTEGER
+      - name: vrefp
+        type: INTEGER*
+      - name: dirp
+        type: LONGINT*
+      - name: procp
+        type: LONGINT*
+    comment: |
+      NOTRAP_FUNCTION2(HDelete);
+    m68k-needs: [WDPBRec, PBGetWDInfoSync]
+    m68k-body: |
+      WDPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = wd;
+      pb.ioWDIndex = 0;
+      pb.ioWDProcID = 0;
+      err = PBGetWDInfoSync(&pb);
+      *vrefp = pb.ioWDVRefNum;
+      *dirp = pb.ioWDDirID;
+      *procp = pb.ioWDProcID;
+      return err;
+
+# ####
+
+- common:
+    name: COMMONFSQUEUEDEFS
+    members:
+      - name: qLink
+        type: QElemPtr
+      - name: qType
+        type: INTEGER
+      - name: ioTrap
+        type: INTEGER
+      - name: ioCmdAddr
+        type: Ptr
+      - name: ioCompletion
+        type: ProcPtr
+      - name: ioResult
+        type: OSErr
+      - name: ioNamePtr
+        type: StringPtr
+      - name: ioVRefNum
+        type: INTEGER
+
+# ####
+
+- common:
+    name: COMMONCINFODEFS
+    members:
+      - common: COMMONFSQUEUEDEFS
+      - name: ioFRefNum
+        type: INTEGER
+      - name: ioFVersNum
+        type: SignedByte
+      - name: filler1
+        type: SignedByte
+      - name: ioFDirIndex
+        type: INTEGER
+      - name: ioFlAttrib
+        type: SignedByte
+      - name: ioACUser
+        type: SignedByte
+
+# ####
+
+- function:
+    name: PBCloseImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41473
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBControlImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41476
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBKillIOImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41478
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBOpenImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41472
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBReadImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41474
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBStatusImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41477
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBWriteImmed
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41475
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBMakeFSSpec
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 27
+    returnreg: D0
+    variants:
+    - PBMakeFSSpecSync
+    - PBMakeFSSpecAsync
+
+# ####
+
+- function:
+    name: PBShare
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 66
+    returnreg: D0
+    variants:
+    - PBShareSync
+    - PBShareAsync
+
+# ####
+
+- function:
+    name: PBUnshare
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 67
+    returnreg: D0
+    variants:
+    - PBUnshareSync
+    - PBUnshareAsync
+
+# ####
+
+- function:
+    name: PBGetUGEntry
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 68
+    returnreg: D0
+    variants:
+    - PBGetUGEntrySync
+    - PBGetUGEntryAsync
+
+# ####
+
+- function:
+    name: PBGetForeignPrivs
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 96
+    returnreg: D0
+    variants:
+    - PBGetForeignPrivsSync
+    - PBGetForeignPrivsAsync
+
+# ####
+
+- function:
+    name: PBSetForeignPrivs
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 97
+    returnreg: D0
+    variants:
+    - PBSetForeignPrivsSync
+    - PBSetForeignPrivsAsync
+
+# ####
+
+- function:
+    name: PBHOpenRFDeny
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: HParmBlkPtr
+      register: A0
+    - name: async
+      type: Boolean
+      register: TrapBit<0x400>
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 57
+    returnreg: D0
+    variants:
+    - PBHOpenRFDenySync
+    - PBHOpenRFDenyAsync
+
+# ####
+
+- function:
+    name: PBGetVolMountInfoSize
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 63
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBGetVolMountInfo
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 64
+    returnreg: D0
+
+# ####
+
+- function:
+    name: PBVolumeMount
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: ParmBlkPtr
+      register: A0
+    trap: 41568
+    dispatcher: FSDispatch
+    selector: 65
+    returnreg: D0
+
+# ####
+
+- function:
+    name: HGetVol
+    return: OSErr
+    args:
+    - name: volName
+      type: StringPtr
+    - name: vRefNum
+      type: INTEGER*
+    - name: dirID
+      type: int32_t*
+    comment: High-level calls built on the parameter block calls
+    m68k-needs: [WDPBRec, PBHGetVolSync]
+    m68k-body: |
+      WDPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = volName;
+      err = PBHGetVolSync(&pb);
+      *vRefNum = pb.ioVRefNum;
+      *dirID = pb.ioWDDirID;
+      return err;
+
+# ####
+
+- function:
+    name: HSetVol
+    return: OSErr
+    args:
+    - name: volName
+      type: ConstStr63Param
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    m68k-needs: [WDPBRec, PBHSetVolSync]
+    m68k-body: |
+      WDPBRec pb;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = (StringPtr)volName;
+      pb.ioVRefNum = vRefNum;
+      pb.ioWDDirID = dirID;
+      return PBHSetVolSync(&pb);
+
+# ####
+
+- function:
+    name: DirCreate
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: parentDirID
+      type: int32_t
+    - name: directoryName
+      type: ConstStr255Param
+    - name: createdDirID
+      type: int32_t*
+    m68k-needs: [HParamBlockRec, PBDirCreateSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)directoryName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioDirID = parentDirID;
+      err = PBDirCreateSync(&pb);
+      *createdDirID = pb.fileParam.ioDirID;
+      return err;
+
+# ####
+
+- function:
+    name: HSetFInfo
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: fileName
+      type: ConstStr255Param
+    - name: fndrInfo
+      type: const FInfo*
+    m68k-needs: [HParamBlockRec, PBHGetFInfoSync, PBHSetFInfoSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)fileName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      pb.fileParam.ioDirID = dirID;
+      err = PBHGetFInfoSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo = *fndrInfo;
+      pb.fileParam.ioDirID = dirID;    /* GetFInfo returned the file number here */
+      return PBHSetFInfoSync(&pb);
+
+# ####
+
+- function:
+    name: HSetFLock
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: fileName
+      type: ConstStr255Param
+    m68k-needs: [HParamBlockRec, PBHSetFLockSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)fileName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioDirID = dirID;
+      return PBHSetFLockSync(&pb);
+
+# ####
+
+- function:
+    name: HRstFLock
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: fileName
+      type: ConstStr255Param
+    m68k-needs: [HParamBlockRec, PBHRstFLockSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)fileName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioDirID = dirID;
+      return PBHRstFLockSync(&pb);
+
+# ####
+
+- function:
+    name: CatMove
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: oldName
+      type: ConstStr255Param
+    - name: newDirID
+      type: int32_t
+    - name: newName
+      type: ConstStr255Param
+    m68k-needs: [CMovePBRec, PBCatMoveSync]
+    m68k-body: |
+      CMovePBRec pb;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = (StringPtr)oldName;
+      pb.ioVRefNum = vRefNum;
+      pb.ioNewName = (StringPtr)newName;
+      pb.ioNewDirID = newDirID;
+      pb.ioDirID = dirID;
+      return PBCatMoveSync(&pb);
+
+# ####
+
+- function:
+    name: OpenWD
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: procID
+      type: int32_t
+    - name: wdRefNum
+      type: INTEGER*
+    m68k-needs: [WDPBRec, PBOpenWDSync]
+    m68k-body: |
+      WDPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = vRefNum;
+      pb.ioWDDirID = dirID;
+      pb.ioWDProcID = procID;
+      err = PBOpenWDSync(&pb);
+      *wdRefNum = pb.ioVRefNum;
+      return err;
+
+# ####
+
+- function:
+    name: CloseWD
+    return: OSErr
+    args:
+    - name: wdRefNum
+      type: INTEGER
+    m68k-needs: [WDPBRec, PBCloseWDSync]
+    m68k-body: |
+      WDPBRec pb;
+      pb.ioCompletion = 0;
+      pb.ioVRefNum = wdRefNum;
+      return PBCloseWDSync(&pb);
+
+# ####
+
+- typedef:
+    name: IOCompletionUPP
+    type: UniversalProcPtr
+
+# ####
+
+- struct:
+    name: CatPositionRec
+    size: 16
+    members:
+    - name: initialize
+      type: int32_t
+    - name: priv
+      type: INTEGER[6]
+
+# ####
+
+- typedef:
+    name: FSVolumeRefNum
+    type: INTEGER
+
+# ####
+
+- struct:
+    name: HFSUniStr255
+    size: 512
+    members:
+    - name: length
+      type: uint16_t
+    - name: unicode
+      type: UniChar[255]
+
+# ####
+
+- typedef:
+    name: ConstHFSUniStr255Param
+    type: const HFSUniStr255*
+
+# ####
+
+- struct:
+    name: FSRef
+    size: 80
+    comment: An opaque reference to a file or folder (Mac OS 9 and later).
+    members:
+    - name: hidden
+      type: uint8_t[80]
+
+# ####
+
+- typedef:
+    name: FSRefPtr
+    type: FSRef*
+
+# ####
+
+- struct:
+    name: UTCDateTime
+    size: 8
+    members:
+    - name: highSeconds
+      type: uint16_t
+    - name: lowSeconds
+      type: uint32_t
+    - name: fraction
+      type: uint16_t
+
+# ####
+
+- typedef:
+    name: UTCDateTimePtr
+    type: UTCDateTime*
+
+# ####
+
+- typedef:
+    name: UTCDateTimeHandle
+    type: UTCDateTimePtr*
+
+# ####
+
+- typedef:
+    name: LocalDateTime
+    type: UTCDateTime
+
+# ####
+
+- typedef:
+    name: FSCatalogInfoBitmap
+    type: uint32_t
+
+# ####
+
+- enum:
+    values:
+    - name: kFSCatInfoNone
+      value: 0
+    - name: kFSCatInfoTextEncoding
+      value: 1
+    - name: kFSCatInfoNodeFlags
+      value: 2
+    - name: kFSCatInfoVolume
+      value: 4
+    - name: kFSCatInfoParentDirID
+      value: 8
+    - name: kFSCatInfoNodeID
+      value: 16
+    - name: kFSCatInfoCreateDate
+      value: 32
+    - name: kFSCatInfoContentMod
+      value: 64
+    - name: kFSCatInfoAttrMod
+      value: 128
+    - name: kFSCatInfoAccessDate
+      value: 256
+    - name: kFSCatInfoBackupDate
+      value: 512
+    - name: kFSCatInfoPermissions
+      value: 1024
+    - name: kFSCatInfoFinderInfo
+      value: 2048
+    - name: kFSCatInfoFinderXInfo
+      value: 4096
+    - name: kFSCatInfoValence
+      value: 8192
+    - name: kFSCatInfoDataSizes
+      value: 16384
+    - name: kFSCatInfoRsrcSizes
+      value: 32768
+    - name: kFSCatInfoSharingFlags
+      value: 65536
+    - name: kFSCatInfoUserPrivs
+      value: 131072
+    - name: kFSCatInfoAllDates
+      value: 992
+    - name: kFSCatInfoGettableInfo
+      value: 262143
+    - name: kFSCatInfoSettableInfo
+      value: 8163
+    - name: kFSCatInfoReserved
+      value: 4294705152
+
+# ####
+
+- enum:
+    values:
+    - name: kFSNodeLockedBit
+      value: 0
+    - name: kFSNodeLockedMask
+      value: 1
+    - name: kFSNodeResOpenBit
+      value: 2
+    - name: kFSNodeResOpenMask
+      value: 4
+    - name: kFSNodeDataOpenBit
+      value: 3
+    - name: kFSNodeDataOpenMask
+      value: 8
+    - name: kFSNodeIsDirectoryBit
+      value: 4
+    - name: kFSNodeIsDirectoryMask
+      value: 16
+    - name: kFSNodeCopyProtectBit
+      value: 6
+    - name: kFSNodeCopyProtectMask
+      value: 64
+    - name: kFSNodeForkOpenBit
+      value: 7
+    - name: kFSNodeForkOpenMask
+      value: 128
+
+# ####
+
+- enum:
+    values:
+    - name: kFSNodeInSharedBit
+      value: 2
+    - name: kFSNodeInSharedMask
+      value: 4
+    - name: kFSNodeIsMountedBit
+      value: 3
+    - name: kFSNodeIsMountedMask
+      value: 8
+    - name: kFSNodeIsSharePointBit
+      value: 5
+    - name: kFSNodeIsSharePointMask
+      value: 32
+
+# ####
+
+- enum:
+    values:
+    - name: kFSInvalidVolumeRefNum
+      value: 0
+    - name: kFSIterateFlat
+      value: 0
+    - name: kFSIterateSubtree
+      value: 1
+    - name: kFSIterateDelete
+      value: 2
+    - name: kFSIterateReserved
+      value: 4294967292
+
+# ####
+
+- struct:
+    name: FSCatalogInfo
+    size: 144
+    members:
+    - name: nodeFlags
+      type: uint16_t
+    - name: volume
+      type: FSVolumeRefNum
+    - name: parentDirID
+      type: uint32_t
+    - name: nodeID
+      type: uint32_t
+    - name: sharingFlags
+      type: uint8_t
+    - name: userPrivileges
+      type: uint8_t
+    - name: reserved1
+      type: uint8_t
+    - name: reserved2
+      type: uint8_t
+    - name: createDate
+      type: UTCDateTime
+    - name: contentModDate
+      type: UTCDateTime
+    - name: attributeModDate
+      type: UTCDateTime
+    - name: accessDate
+      type: UTCDateTime
+    - name: backupDate
+      type: UTCDateTime
+    - name: permissions
+      type: uint32_t[4]
+    - name: finderInfo
+      type: uint8_t[16]
+    - name: extFinderInfo
+      type: uint8_t[16]
+    - name: dataLogicalSize
+      type: UInt64
+    - name: dataPhysicalSize
+      type: UInt64
+    - name: rsrcLogicalSize
+      type: UInt64
+    - name: rsrcPhysicalSize
+      type: UInt64
+    - name: valence
+      type: uint32_t
+    - name: textEncodingHint
+      type: TextEncoding
+
+# ####
+
+- typedef:
+    name: FSCatalogInfoPtr
+    type: FSCatalogInfo*
+
+# ####
+
+- struct:
+    name: FSRefParam
+    size: 72
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: ioNamePtr
+      type: ConstStringPtr
+    - name: ioVRefNum
+      type: INTEGER
+    - name: reserved1
+      type: INTEGER
+    - name: reserved2
+      type: uint8_t
+    - name: reserved3
+      type: uint8_t
+    - name: ref
+      type: const FSRef*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catInfo
+      type: FSCatalogInfo*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: ioDirID
+      type: int32_t
+    - name: spec
+      type: FSSpec*
+    - name: parentRef
+      type: FSRef*
+    - name: newRef
+      type: FSRef*
+    - name: textEncodingHint
+      type: TextEncoding
+    - name: outName
+      type: HFSUniStr255*
+
+# ####
+
+- typedef:
+    name: FSRefParamPtr
+    type: FSRefParam*
+
+# ####
+
+- typedef:
+    name: FSIterator
+    type: struct OpaqueFSIterator*
+
+# ####
+
+- typedef:
+    name: FSIteratorFlags
+    type: uint32_t
+
+# ####
+
+- struct:
+    name: FSSearchParams
+    size: 24
+    members:
+    - name: searchTime
+      type: Duration
+    - name: searchBits
+      type: OptionBits
+    - name: searchNameLength
+      type: UniCharCount
+    - name: searchName
+      type: const UniChar*
+    - name: searchInfo1
+      type: FSCatalogInfo*
+    - name: searchInfo2
+      type: FSCatalogInfo*
+
+# ####
+
+- typedef:
+    name: FSSearchParamsPtr
+    type: FSSearchParams*
+
+# ####
+
+- struct:
+    name: FSCatalogBulkParam
+    size: 64
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: containerChanged
+      type: Boolean
+    - name: reserved
+      type: uint8_t
+    - name: iteratorFlags
+      type: FSIteratorFlags
+    - name: iterator
+      type: FSIterator
+    - name: container
+      type: const FSRef*
+    - name: maximumItems
+      type: ItemCount
+    - name: actualItems
+      type: ItemCount
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: FSCatalogInfo*
+    - name: refs
+      type: FSRef*
+    - name: specs
+      type: FSSpec*
+    - name: names
+      type: HFSUniStr255*
+    - name: searchParams
+      type: const FSSearchParams*
+
+# ####
+
+- typedef:
+    name: FSCatalogBulkParamPtr
+    type: FSCatalogBulkParam*
+
+# ####
+
+- typedef:
+    name: FSAllocationFlags
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: kFSAllocDefaultFlags
+      value: 0
+    - name: kFSAllocAllOrNothingMask
+      value: 1
+    - name: kFSAllocContiguousMask
+      value: 2
+    - name: kFSAllocNoRoundUpMask
+      value: 4
+    - name: kFSAllocReservedMask
+      value: 65528
+
+# ####
+
+- struct:
+    name: FSForkIOParam
+    size: 92
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: reserved1
+      type: void*
+    - name: reserved2
+      type: INTEGER
+    - name: forkRefNum
+      type: INTEGER
+    - name: reserved3
+      type: uint8_t
+    - name: permissions
+      type: int8_t
+    - name: ref
+      type: const FSRef*
+    - name: buffer
+      type: Ptr
+    - name: requestCount
+      type: uint32_t
+    - name: actualCount
+      type: uint32_t
+    - name: positionMode
+      type: uint16_t
+    - name: positionOffset
+      type: SInt64
+    - name: allocationFlags
+      type: FSAllocationFlags
+    - name: allocationAmount
+      type: UInt64
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+    - name: forkIterator
+      type: CatPositionRec
+    - name: outForkName
+      type: HFSUniStr255*
+
+# ####
+
+- typedef:
+    name: FSForkIOParamPtr
+    type: FSForkIOParam*
+
+# ####
+
+- struct:
+    name: FSForkInfo
+    size: 48
+    members:
+    - name: flags
+      type: int8_t
+    - name: permissions
+      type: int8_t
+    - name: volume
+      type: FSVolumeRefNum
+    - name: reserved2
+      type: uint32_t
+    - name: nodeID
+      type: uint32_t
+    - name: forkID
+      type: uint32_t
+    - name: currentPosition
+      type: UInt64
+    - name: logicalEOF
+      type: UInt64
+    - name: physicalEOF
+      type: UInt64
+    - name: process
+      type: UInt64
+
+# ####
+
+- typedef:
+    name: FSForkInfoPtr
+    type: FSForkInfo*
+
+# ####
+
+- struct:
+    name: FSForkCBInfoParam
+    size: 38
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: desiredRefNum
+      type: INTEGER
+    - name: volumeRefNum
+      type: INTEGER
+    - name: iterator
+      type: INTEGER
+    - name: actualRefNum
+      type: INTEGER
+    - name: ref
+      type: FSRef*
+    - name: forkInfo
+      type: FSForkInfo*
+    - name: forkName
+      type: HFSUniStr255*
+
+# ####
+
+- typedef:
+    name: FSForkCBInfoParamPtr
+    type: FSForkCBInfoParam*
+
+# ####
+
+- typedef:
+    name: FSVolumeInfoBitmap
+    type: uint32_t
+
+# ####
+
+- enum:
+    values:
+    - name: kFSVolInfoNone
+      value: 0
+    - name: kFSVolInfoCreateDate
+      value: 1
+    - name: kFSVolInfoModDate
+      value: 2
+    - name: kFSVolInfoBackupDate
+      value: 4
+    - name: kFSVolInfoCheckedDate
+      value: 8
+    - name: kFSVolInfoFileCount
+      value: 16
+    - name: kFSVolInfoDirCount
+      value: 32
+    - name: kFSVolInfoSizes
+      value: 64
+    - name: kFSVolInfoBlocks
+      value: 128
+    - name: kFSVolInfoNextAlloc
+      value: 256
+    - name: kFSVolInfoRsrcClump
+      value: 512
+    - name: kFSVolInfoDataClump
+      value: 1024
+    - name: kFSVolInfoNextID
+      value: 2048
+    - name: kFSVolInfoFinderInfo
+      value: 4096
+    - name: kFSVolInfoFlags
+      value: 8192
+    - name: kFSVolInfoFSInfo
+      value: 16384
+    - name: kFSVolInfoDriveInfo
+      value: 32768
+    - name: kFSVolInfoGettableInfo
+      value: 65535
+    - name: kFSVolInfoSettableInfo
+      value: 12292
+
+# ####
+
+- enum:
+    values:
+    - name: kFSVolFlagDefaultVolumeBit
+      value: 5
+    - name: kFSVolFlagDefaultVolumeMask
+      value: 32
+    - name: kFSVolFlagFilesOpenBit
+      value: 6
+    - name: kFSVolFlagFilesOpenMask
+      value: 64
+    - name: kFSVolFlagHardwareLockedBit
+      value: 7
+    - name: kFSVolFlagHardwareLockedMask
+      value: 128
+    - name: kFSVolFlagSoftwareLockedBit
+      value: 15
+    - name: kFSVolFlagSoftwareLockedMask
+      value: 32768
+
+# ####
+
+- struct:
+    name: FSVolumeInfo
+    size: 126
+    members:
+    - name: createDate
+      type: UTCDateTime
+    - name: modifyDate
+      type: UTCDateTime
+    - name: backupDate
+      type: UTCDateTime
+    - name: checkedDate
+      type: UTCDateTime
+    - name: fileCount
+      type: uint32_t
+    - name: folderCount
+      type: uint32_t
+    - name: totalBytes
+      type: UInt64
+    - name: freeBytes
+      type: UInt64
+    - name: blockSize
+      type: uint32_t
+    - name: totalBlocks
+      type: uint32_t
+    - name: freeBlocks
+      type: uint32_t
+    - name: nextAllocation
+      type: uint32_t
+    - name: rsrcClumpSize
+      type: uint32_t
+    - name: dataClumpSize
+      type: uint32_t
+    - name: nextCatalogID
+      type: uint32_t
+    - name: finderInfo
+      type: uint8_t[32]
+    - name: flags
+      type: uint16_t
+    - name: filesystemID
+      type: uint16_t
+    - name: signature
+      type: uint16_t
+    - name: driveNumber
+      type: uint16_t
+    - name: driverRefNum
+      type: INTEGER
+
+# ####
+
+- typedef:
+    name: FSVolumeInfoPtr
+    type: FSVolumeInfo*
+
+# ####
+
+- struct:
+    name: FSVolumeInfoParam
+    size: 44
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: ioNamePtr
+      type: StringPtr
+    - name: ioVRefNum
+      type: FSVolumeRefNum
+    - name: volumeIndex
+      type: uint32_t
+    - name: whichInfo
+      type: FSVolumeInfoBitmap
+    - name: volumeInfo
+      type: FSVolumeInfo*
+    - name: volumeName
+      type: HFSUniStr255*
+    - name: ref
+      type: FSRef*
+
+# ####
+
+- typedef:
+    name: FSVolumeInfoParamPtr
+    type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: FSpMakeFSRef
+    return: OSErr
+    args:
+    - name: source
+      type: const FSSpec*
+    - name: newRef
+      type: FSRef*
+    comment: HFS Plus API (Mac OS 9 and later, PowerPC)
+
+# ####
+
+- function:
+    name: FSMakeFSRefUnicode
+    return: OSErr
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: textEncodingHint
+      type: TextEncoding
+    - name: newRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSCompareFSRefs
+    return: OSErr
+    args:
+    - name: ref1
+      type: const FSRef*
+    - name: ref2
+      type: const FSRef*
+
+# ####
+
+- function:
+    name: FSCreateFileUnicode
+    return: OSErr
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+    - name: newRef
+      type: FSRef*
+    - name: newSpec
+      type: FSSpec*
+
+# ####
+
+- function:
+    name: FSCreateDirectoryUnicode
+    return: OSErr
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+    - name: newRef
+      type: FSRef*
+    - name: newSpec
+      type: FSSpec*
+    - name: newDirID
+      type: UInt32*
+
+# ####
+
+- function:
+    name: FSDeleteObject
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+
+# ####
+
+- function:
+    name: FSMoveObject
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: destDirectory
+      type: const FSRef*
+    - name: newRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSExchangeObjects
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: destRef
+      type: const FSRef*
+
+# ####
+
+- function:
+    name: FSRenameUnicode
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: textEncodingHint
+      type: TextEncoding
+    - name: newRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSGetCatalogInfo
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: FSCatalogInfo*
+    - name: outName
+      type: HFSUniStr255*
+    - name: fsSpec
+      type: FSSpec*
+    - name: parentRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSSetCatalogInfo
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+
+# ####
+
+- function:
+    name: FSOpenIterator
+    return: OSErr
+    args:
+    - name: container
+      type: const FSRef*
+    - name: iteratorFlags
+      type: FSIteratorFlags
+    - name: iterator
+      type: FSIterator*
+
+# ####
+
+- function:
+    name: FSCloseIterator
+    return: OSErr
+    args:
+    - name: iterator
+      type: FSIterator
+
+# ####
+
+- function:
+    name: FSGetCatalogInfoBulk
+    return: OSErr
+    args:
+    - name: iterator
+      type: FSIterator
+    - name: maximumObjects
+      type: ItemCount
+    - name: actualObjects
+      type: ItemCount*
+    - name: containerChanged
+      type: Boolean*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfos
+      type: FSCatalogInfo*
+    - name: refs
+      type: FSRef*
+    - name: specs
+      type: FSSpec*
+    - name: names
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSCatalogSearch
+    return: OSErr
+    args:
+    - name: iterator
+      type: FSIterator
+    - name: searchCriteria
+      type: const FSSearchParams*
+    - name: maximumObjects
+      type: ItemCount
+    - name: actualObjects
+      type: ItemCount*
+    - name: containerChanged
+      type: Boolean*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfos
+      type: FSCatalogInfo*
+    - name: refs
+      type: FSRef*
+    - name: specs
+      type: FSSpec*
+    - name: names
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSCreateFork
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+
+# ####
+
+- function:
+    name: FSDeleteFork
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+
+# ####
+
+- function:
+    name: FSIterateForks
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkIterator
+      type: CatPositionRec*
+    - name: forkName
+      type: HFSUniStr255*
+    - name: forkSize
+      type: SInt64*
+    - name: forkPhysicalSize
+      type: UInt64*
+
+# ####
+
+- function:
+    name: FSOpenFork
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+    - name: permissions
+      type: SInt8
+    - name: forkRefNum
+      type: SInt16*
+
+# ####
+
+- function:
+    name: FSReadFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+    - name: requestCount
+      type: ByteCount
+    - name: buffer
+      type: void*
+    - name: actualCount
+      type: ByteCount*
+
+# ####
+
+- function:
+    name: FSWriteFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+    - name: requestCount
+      type: ByteCount
+    - name: buffer
+      type: const void*
+    - name: actualCount
+      type: ByteCount*
+
+# ####
+
+- function:
+    name: FSGetForkPosition
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: position
+      type: SInt64*
+
+# ####
+
+- function:
+    name: FSSetForkPosition
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+
+# ####
+
+- function:
+    name: FSGetForkSize
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: forkSize
+      type: SInt64*
+
+# ####
+
+- function:
+    name: FSSetForkSize
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+
+# ####
+
+- function:
+    name: FSAllocateFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: flags
+      type: FSAllocationFlags
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+    - name: requestCount
+      type: UInt64
+    - name: actualCount
+      type: UInt64*
+
+# ####
+
+- function:
+    name: FSFlushFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+
+# ####
+
+- function:
+    name: FSCloseFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+
+# ####
+
+- function:
+    name: FSGetForkCBInfo
+    return: OSErr
+    args:
+    - name: desiredRefNum
+      type: SInt16
+    - name: volume
+      type: FSVolumeRefNum
+    - name: iterator
+      type: SInt16*
+    - name: actualRefNum
+      type: SInt16*
+    - name: forkInfo
+      type: FSForkInfo*
+    - name: ref
+      type: FSRef*
+    - name: outForkName
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSGetVolumeInfo
+    return: OSErr
+    args:
+    - name: volume
+      type: FSVolumeRefNum
+    - name: volumeIndex
+      type: ItemCount
+    - name: actualVolume
+      type: FSVolumeRefNum*
+    - name: whichInfo
+      type: FSVolumeInfoBitmap
+    - name: info
+      type: FSVolumeInfo*
+    - name: volumeName
+      type: HFSUniStr255*
+    - name: rootDirectory
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSSetVolumeInfo
+    return: OSErr
+    args:
+    - name: volume
+      type: FSVolumeRefNum
+    - name: whichInfo
+      type: FSVolumeInfoBitmap
+    - name: info
+      type: const FSVolumeInfo*
+
+# ####
+
+- function:
+    name: FSGetDataForkName
+    return: OSErr
+    args:
+    - name: dataForkName
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSGetResourceForkName
+    return: OSErr
+    args:
+    - name: resourceForkName
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: PBMakeFSRefSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+    comment: Parameter block forms of the HFS Plus API
+
+# ####
+
+- function:
+    name: PBMakeFSRefAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMakeFSRefUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMakeFSRefUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCompareFSRefsSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCompareFSRefsAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateFileUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateFileUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateDirectoryUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateDirectoryUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBDeleteObjectSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBDeleteObjectAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMoveObjectSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMoveObjectAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBExchangeObjectsSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBExchangeObjectsAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBRenameUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBRenameUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBSetCatalogInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBSetCatalogInfoAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBOpenIteratorSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBOpenIteratorAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCloseIteratorSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCloseIteratorAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoBulkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoBulkAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCatalogSearchSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCatalogSearchAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCreateForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBCreateForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBDeleteForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBDeleteForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBIterateForksSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBIterateForksAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBOpenForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBOpenForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBReadForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBReadForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBWriteForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBWriteForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkPositionSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkPositionAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkPositionSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkPositionAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkSizeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkSizeAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkSizeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkSizeAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBAllocateForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBAllocateForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBFlushForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBFlushForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBCloseForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBCloseForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkCBInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkCBInfoParam*
+
+# ####
+
+- function:
+    name: PBGetForkCBInfoAsync
+    args:
+    - name: paramBlock
+      type: FSForkCBInfoParam*
+
+# ####
+
+- function:
+    name: PBGetVolumeInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: PBGetVolumeInfoAsync
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: PBSetVolumeInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: PBSetVolumeInfoAsync
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*
+
+# ####
+
+- typedef:
+    name: DrvQElPtr
+    type: DrvQEl*

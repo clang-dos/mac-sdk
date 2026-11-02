@@ -1,0 +1,477 @@
+
+# ####
+
+- typedef:
+    name: DBType
+    type: OSType
+
+# ####
+
+- struct:
+    name: DBAsyncParamBlockRec
+    size: 18
+    members:
+    - name: completionProc
+      type: ProcPtr
+    - name: result
+      type: OSErr
+    - name: userRef
+      type: int32_t
+    - name: ddevRef
+      type: int32_t
+    - name: reserved
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: DBAsyncParmBlkPtr
+    type: DBAsyncParamBlockRec*
+
+# ####
+
+- typedef:
+    name: QueryPtr
+    type: struct QueryRecord*
+    comment: Query records are not declared field by field yet.
+
+# ####
+
+- typedef:
+    name: QueryHandle
+    type: QueryPtr*
+
+# ####
+
+- struct:
+    name: ResultsRecord
+    size: 16
+    members:
+    - name: numRows
+      type: INTEGER
+    - name: numCols
+      type: INTEGER
+    - name: colTypes
+      type: Handle
+    - name: colData
+      type: Handle
+    - name: colInfo
+      type: Handle
+
+# ####
+
+- typedef:
+    name: DBStatusUPP
+    type: UniversalProcPtr
+
+# ####
+
+- typedef:
+    name: DBResultHandlerUPP
+    type: UniversalProcPtr
+
+# ####
+
+- enum:
+    values:
+    - name: typeNone
+      value: '''none'''
+    - name: typeDate
+      value: '''date'''
+    - name: typeTime
+      value: '''time'''
+    - name: typeTimeStamp
+      value: '''tims'''
+    - name: typeDecimal
+      value: '''deci'''
+    - name: typeMoney
+      value: '''mone'''
+    - name: typeVChar
+      value: '''vcha'''
+    - name: typeVBin
+      value: '''vbin'''
+    - name: typeLChar
+      value: '''lcha'''
+    - name: typeLBin
+      value: '''lbin'''
+    - name: typeDiscard
+      value: '''disc'''
+    - name: typeUnknown
+      value: '''unkn'''
+    - name: typeColBreak
+      value: '''colb'''
+    - name: typeRowBreak
+      value: '''rowb'''
+    - name: typeAnyType
+      value: 0
+
+# ####
+
+- dispatcher:
+    name: Pack13
+    trap: 43055
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: InitDBPack
+    return: OSErr
+    comment: Data Access Manager
+    m68k-inline:
+    - 16188
+    - 4
+    - 12348
+    - 256
+    - 43055
+
+# ####
+
+- function:
+    name: DBInit
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t*
+    - name: DSType
+      type: ConstStr63Param
+    - name: host
+      type: ConstStr255Param
+    - name: user
+      type: ConstStr255Param
+    - name: passwd
+      type: ConstStr255Param
+    - name: connStr
+      type: ConstStr255Param
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 3586
+
+# ####
+
+- function:
+    name: DBEnd
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 1027
+
+# ####
+
+- function:
+    name: DBGetConnInfo
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: sessNum
+      type: INTEGER
+    - name: returnedID
+      type: int32_t*
+    - name: version
+      type: int32_t*
+    - name: DSType
+      type: Str63
+    - name: host
+      type: Str255
+    - name: user
+      type: Str255
+    - name: network
+      type: Str255
+    - name: connStr
+      type: Str255
+    - name: start
+      type: int32_t*
+    - name: state
+      type: OSErr*
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 5892
+
+# ####
+
+- function:
+    name: DBGetSessionNum
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: sessNum
+      type: INTEGER*
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 1541
+
+# ####
+
+- function:
+    name: DBSend
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: text
+      type: Ptr
+    - name: len
+      type: INTEGER
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 1798
+
+# ####
+
+- function:
+    name: DBSendItem
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: dataType
+      type: DBType
+    - name: len
+      type: INTEGER
+    - name: places
+      type: INTEGER
+    - name: flags
+      type: INTEGER
+    - name: buffer
+      type: void*
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 2823
+
+# ####
+
+- function:
+    name: DBExec
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 1032
+
+# ####
+
+- function:
+    name: DBState
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 1033
+
+# ####
+
+- function:
+    name: DBGetErr
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: err1
+      type: int32_t*
+    - name: err2
+      type: int32_t*
+    - name: item1
+      type: Str255
+    - name: item2
+      type: Str255
+    - name: errorMsg
+      type: Str255
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 3594
+
+# ####
+
+- function:
+    name: DBBreak
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: abort
+      type: Boolean
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 1291
+
+# ####
+
+- function:
+    name: DBGetItem
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: timeout
+      type: int32_t
+    - name: dataType
+      type: DBType*
+    - name: len
+      type: INTEGER*
+    - name: places
+      type: INTEGER*
+    - name: flags
+      type: INTEGER*
+    - name: buffer
+      type: void*
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 4108
+
+# ####
+
+- function:
+    name: DBUnGetItem
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 1037
+
+# ####
+
+- function:
+    name: DBKill
+    return: OSErr
+    args:
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 526
+
+# ####
+
+- function:
+    name: DBGetNewQuery
+    return: OSErr
+    args:
+    - name: queryID
+      type: INTEGER
+    - name: query
+      type: QueryHandle*
+    dispatcher: Pack13
+    selector: 783
+
+# ####
+
+- function:
+    name: DBDisposeQuery
+    return: OSErr
+    args:
+    - name: query
+      type: QueryHandle
+    dispatcher: Pack13
+    selector: 528
+
+# ####
+
+- function:
+    name: DBStartQuery
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t*
+    - name: query
+      type: QueryHandle
+    - name: statusProc
+      type: DBStatusUPP
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 2065
+
+# ####
+
+- function:
+    name: DBGetQueryResults
+    return: OSErr
+    args:
+    - name: sessID
+      type: int32_t
+    - name: results
+      type: ResultsRecord*
+    - name: timeout
+      type: int32_t
+    - name: statusProc
+      type: DBStatusUPP
+    - name: asyncPB
+      type: DBAsyncParmBlkPtr
+    dispatcher: Pack13
+    selector: 2578
+
+# ####
+
+- function:
+    name: DBResultsToText
+    return: OSErr
+    args:
+    - name: results
+      type: ResultsRecord*
+    - name: theText
+      type: Handle*
+    dispatcher: Pack13
+    selector: 1043
+
+# ####
+
+- function:
+    name: DBInstallResultHandler
+    return: OSErr
+    args:
+    - name: dataType
+      type: DBType
+    - name: theHandler
+      type: DBResultHandlerUPP
+    - name: isSysHandler
+      type: Boolean
+    dispatcher: Pack13
+    selector: 1300
+
+# ####
+
+- function:
+    name: DBRemoveResultHandler
+    return: OSErr
+    args:
+    - name: dataType
+      type: DBType
+    dispatcher: Pack13
+    selector: 533
+
+# ####
+
+- function:
+    name: DBGetResultHandler
+    return: OSErr
+    args:
+    - name: dataType
+      type: DBType
+    - name: theHandler
+      type: DBResultHandlerUPP*
+    - name: getSysHandler
+      type: Boolean
+    dispatcher: Pack13
+    selector: 1302

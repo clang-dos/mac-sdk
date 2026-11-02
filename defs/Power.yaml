@@ -1,0 +1,258 @@
+
+# ####
+
+- typedef:
+    name: SleepQUPP
+    type: UniversalProcPtr
+
+# ####
+
+- struct:
+    name: SleepQRec
+    size: 12
+    members:
+    - name: sleepQLink
+      type: SleepQRec*
+    - name: sleepQType
+      type: INTEGER
+    - name: sleepQProc
+      type: SleepQUPP
+    - name: sleepQFlags
+      type: INTEGER
+
+# ####
+
+- typedef:
+    name: SleepQRecPtr
+    type: SleepQRec*
+
+# ####
+
+- enum:
+    values:
+    - name: sleepQType
+      value: 16
+    - name: noCalls
+      value: 1
+    - name: noRequest
+      value: 2
+    - name: slpQType
+      value: 16
+    - name: sleepRequest
+      value: 1
+    - name: sleepDemand
+      value: 2
+    - name: sleepWakeUp
+      value: 3
+    - name: sleepRevoke
+      value: 4
+    - name: sleepUnlock
+      value: 4
+    - name: sleepDeny
+      value: 5
+    - name: sleepNow
+      value: 6
+    - name: dozeDemand
+      value: 7
+    - name: dozeWakeUp
+      value: 8
+    - name: dozeRequest
+      value: 9
+    - name: enterStandby
+      value: 10
+    - name: enterRun
+      value: 11
+    - name: suspendRequest
+      value: 12
+    - name: suspendDemand
+      value: 13
+    - name: suspendRevoke
+      value: 14
+    - name: suspendWakeUp
+      value: 15
+    - name: getPowerLevel
+      value: 16
+    - name: setPowerLevel
+      value: 17
+    - name: deviceInitiatedWake
+      value: 18
+    - name: wakeToDoze
+      value: 19
+    - name: dozeToFullWakeUp
+      value: 20
+    - name: getPowerInfo
+      value: 21
+    - name: getWakeOnNetInfo
+      value: 22
+    - name: suspendWakeToDoze
+      value: 23
+    - name: enterIdle
+      value: 24
+    - name: exitIdle
+      value: 25
+
+# ####
+
+- function:
+    name: AOn
+    comment: Power Manager
+    m68k-inline:
+    - 28676
+    - 42629
+
+# ####
+
+- function:
+    name: AOnIgnoreModem
+    m68k-inline:
+    - 28677
+    - 42629
+
+# ####
+
+- function:
+    name: BOn
+    m68k-inline:
+    - 28672
+    - 42629
+
+# ####
+
+- function:
+    name: AOff
+    m68k-inline:
+    - 28804
+    - 42629
+
+# ####
+
+- function:
+    name: BOff
+    m68k-inline:
+    - 28800
+    - 42629
+
+# ####
+
+- function:
+    name: GetCPUSpeed
+    return: int32_t
+    returnreg: D0
+    m68k-inline:
+    - 28927
+    - 42117
+
+# ####
+
+- function:
+    name: IdleUpdate
+    return: int32_t
+    returnreg: D0
+    trap: 41605
+
+# ####
+
+- function:
+    name: EnableIdle
+    m68k-inline:
+    - 28672
+    - 42117
+
+# ####
+
+- function:
+    name: DisableIdle
+    m68k-inline:
+    - 28673
+    - 42117
+
+# ####
+
+- function:
+    name: SleepQInstall
+    args:
+    - name: qRecPtr
+      type: SleepQRecPtr
+      register: A0
+    trap: 41610
+
+# ####
+
+- function:
+    name: SleepQRemove
+    args:
+    - name: qRecPtr
+      type: SleepQRecPtr
+      register: A0
+    trap: 42122
+
+# ####
+
+- function:
+    name: SetTimeout
+    args:
+    - name: count
+      type: INTEGER
+      register: D0
+    m68k-inline:
+    - 8316
+    - 0
+    - 1
+    - 41087
+
+# ####
+
+- function:
+    name: GetTimeout
+    args:
+      - name: count
+        type: INTEGER*
+        register: Out<D0>
+    m68k-inline: [0x207C, 0x0000, 0x0000, 0xA07F]
+
+# ####
+
+- function:
+    name: BatteryStatus
+    return: OSErr
+    args:
+    - name: status
+      type: Byte*
+    - name: power
+      type: Byte*
+    comment: Power Manager extras (PowerPC)
+
+# ####
+
+- function:
+    name: ModemStatus
+    return: OSErr
+    args:
+    - name: status
+      type: Byte*
+
+# ####
+
+- function:
+    name: GetWUTime
+    return: OSErr
+    args:
+    - name: wTime
+      type: int32_t*
+    - name: wFlag
+      type: Byte*
+
+# ####
+
+- function:
+    name: SetWUTime
+    return: OSErr
+    args:
+    - name: wTime
+      type: int32_t
+
+# ####
+
+- function:
+    name: DisableWUTime
+    return: OSErr

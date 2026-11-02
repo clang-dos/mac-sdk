@@ -1,0 +1,942 @@
+- typedef:
+    name: PPCPortKinds
+    type: int16_t
+
+# ####
+
+- typedef:
+    name: PPCLocationKind
+    type: int16_t
+
+# ####
+
+- struct:
+    name: PPCXTIAddress
+    members:
+      - name: fAddressType
+        type: int16_t
+      - name: fAddress
+        type: uint8_t[96]
+
+# ####
+
+- struct:
+    name: PPCAddrRec
+    members:
+      - name: Reserved
+        type: uint8_t[3]
+      - name: xtiAddrLen
+        type: uint8_t
+      - name: xtiAddr
+        type: PPCXTIAddress
+
+# ####
+
+- struct:
+    name: LocationNameRec
+    members:
+      - name: locationKindSelector
+        type: PPCLocationKind
+      - name: u
+        union:
+          - name: npbEntity
+            type: EntityName
+          - name: npbType
+            type: Str32
+          - name: xtiType
+            type: PPCAddrRec
+    size: 104
+
+# ####
+
+- struct:
+    name: PPCPortRec
+    members:
+      - name: nameScript
+        type: ScriptCode
+      - name: name
+        type: Str32
+      - name: portKindsSelector
+        type: PPCPortKinds
+      - name: u
+        union:
+          - name: portTypeStr
+            type: Str32
+          - name: port
+            struct:
+              - name: creator
+                type: OSType
+              - name: type
+                type: OSType
+    size: 72
+
+# ####
+
+- typedef:
+    name: PPCPortPtr
+    type: PPCPortRec*
+
+# ####
+# Raw 68K entry points (Executor only).  The wrapper objects and the
+# RAW_<name> prototypes are generated; the bodies live in emustubs.cpp
+# (or pack.cpp/patches.cpp), and emustubs.h keeps only the structs.
+- only-for: Executor
+  function:
+    name: IMVI_PPC
+    executor_raw: true
+    trap: 0xA0DD
+
+# ####
+
+- typedef:
+    name: PPCServiceType
+    type: uint8_t
+
+# ####
+
+- typedef:
+    name: PPCSessionOrigin
+    type: int8_t
+
+# ####
+
+- typedef:
+    name: PPCPortRefNum
+    type: INTEGER
+
+# ####
+
+- typedef:
+    name: PPCSessRefNum
+    type: int32_t
+
+# ####
+
+- typedef:
+    name: LocationNamePtr
+    type: LocationNameRec*
+
+# ####
+
+- typedef:
+    name: PPCCompUPP
+    type: UniversalProcPtr
+
+# ####
+
+- typedef:
+    name: PPCFilterUPP
+    type: UniversalProcPtr
+
+# ####
+
+- enum:
+    values:
+    - name: ppcServiceRealTime
+      value: 1
+    - name: ppcLocalOrigin
+      value: 1
+    - name: ppcRemoteOrigin
+      value: 2
+    - name: ppcNoLocation
+      value: 0
+    - name: ppcNBPLocation
+      value: 1
+    - name: ppcNBPTypeLocation
+      value: 2
+    - name: ppcXTIAddrLocation
+      value: 3
+    - name: ppcByCreatorAndType
+      value: 1
+    - name: ppcByString
+      value: 2
+
+# ####
+
+- struct:
+    name: PortInfoRec
+    size: 74
+    members:
+    - name: filler1
+      type: uint8_t
+    - name: authRequired
+      type: Boolean
+    - name: name
+      type: PPCPortRec
+
+# ####
+
+- typedef:
+    name: PortInfoPtr
+    type: PortInfoRec*
+
+# ####
+
+- typedef:
+    name: PortInfoArrayPtr
+    type: PortInfoRec*
+
+# ####
+
+- struct:
+    name: PPCOpenPBRec
+    size: 56
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: portRefNum
+      type: PPCPortRefNum
+    - name: filler1
+      type: int32_t
+    - name: serviceType
+      type: PPCServiceType
+    - name: resFlag
+      type: uint8_t
+    - name: portName
+      type: PPCPortPtr
+    - name: locationName
+      type: LocationNamePtr
+    - name: networkVisible
+      type: Boolean
+    - name: nbpRegistered
+      type: Boolean
+
+# ####
+
+- typedef:
+    name: PPCOpenPBPtr
+    type: PPCOpenPBRec*
+
+# ####
+
+- struct:
+    name: PPCInformPBRec
+    size: 64
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: portRefNum
+      type: PPCPortRefNum
+    - name: sessRefNum
+      type: PPCSessRefNum
+    - name: serviceType
+      type: PPCServiceType
+    - name: autoAccept
+      type: Boolean
+    - name: portName
+      type: PPCPortPtr
+    - name: locationName
+      type: LocationNamePtr
+    - name: userName
+      type: StringPtr
+    - name: userData
+      type: uint32_t
+    - name: requestType
+      type: PPCSessionOrigin
+    - name: filler
+      type: int8_t
+
+# ####
+
+- typedef:
+    name: PPCInformPBPtr
+    type: PPCInformPBRec*
+
+# ####
+
+- struct:
+    name: PPCStartPBRec
+    size: 66
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: portRefNum
+      type: PPCPortRefNum
+    - name: sessRefNum
+      type: PPCSessRefNum
+    - name: serviceType
+      type: PPCServiceType
+    - name: resFlag
+      type: uint8_t
+    - name: portName
+      type: PPCPortPtr
+    - name: locationName
+      type: LocationNamePtr
+    - name: rejectInfo
+      type: uint32_t
+    - name: userData
+      type: uint32_t
+    - name: userRefNum
+      type: uint32_t
+
+# ####
+
+- typedef:
+    name: PPCStartPBPtr
+    type: PPCStartPBRec*
+
+# ####
+
+- struct:
+    name: PPCAcceptPBRec
+    size: 44
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: filler1
+      type: INTEGER
+    - name: sessRefNum
+      type: PPCSessRefNum
+
+# ####
+
+- typedef:
+    name: PPCAcceptPBPtr
+    type: PPCAcceptPBRec*
+
+# ####
+
+- struct:
+    name: PPCRejectPBRec
+    size: 58
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: filler1
+      type: INTEGER
+    - name: sessRefNum
+      type: PPCSessRefNum
+    - name: filler2
+      type: INTEGER
+    - name: filler3
+      type: int32_t
+    - name: filler4
+      type: int32_t
+    - name: rejectInfo
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: PPCRejectPBPtr
+    type: PPCRejectPBRec*
+
+# ####
+
+- struct:
+    name: PPCWritePBRec
+    size: 70
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: filler1
+      type: INTEGER
+    - name: sessRefNum
+      type: PPCSessRefNum
+    - name: bufferLength
+      type: Size
+    - name: actualLength
+      type: Size
+    - name: bufferPtr
+      type: Ptr
+    - name: more
+      type: Boolean
+    - name: filler2
+      type: uint8_t
+    - name: userData
+      type: uint32_t
+    - name: blockCreator
+      type: OSType
+    - name: blockType
+      type: OSType
+
+# ####
+
+- typedef:
+    name: PPCWritePBPtr
+    type: PPCWritePBRec*
+
+# ####
+
+- struct:
+    name: PPCReadPBRec
+    size: 70
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: filler1
+      type: INTEGER
+    - name: sessRefNum
+      type: PPCSessRefNum
+    - name: bufferLength
+      type: Size
+    - name: actualLength
+      type: Size
+    - name: bufferPtr
+      type: Ptr
+    - name: more
+      type: Boolean
+    - name: filler2
+      type: uint8_t
+    - name: userData
+      type: uint32_t
+    - name: blockCreator
+      type: OSType
+    - name: blockType
+      type: OSType
+
+# ####
+
+- typedef:
+    name: PPCReadPBPtr
+    type: PPCReadPBRec*
+
+# ####
+
+- struct:
+    name: PPCEndPBRec
+    size: 44
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: filler1
+      type: INTEGER
+    - name: sessRefNum
+      type: PPCSessRefNum
+
+# ####
+
+- typedef:
+    name: PPCEndPBPtr
+    type: PPCEndPBRec*
+
+# ####
+
+- struct:
+    name: PPCClosePBRec
+    size: 40
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: portRefNum
+      type: PPCPortRefNum
+
+# ####
+
+- typedef:
+    name: PPCClosePBPtr
+    type: PPCClosePBRec*
+
+# ####
+
+- struct:
+    name: IPCListPortsPBRec
+    size: 58
+    members:
+    - name: qLink
+      type: Ptr
+    - name: csCode
+      type: uint16_t
+    - name: intUse
+      type: uint16_t
+    - name: intUsePtr
+      type: Ptr
+    - name: ioCompletion
+      type: PPCCompUPP
+    - name: ioResult
+      type: OSErr
+    - name: Reserved
+      type: uint32_t[5]
+    - name: filler1
+      type: INTEGER
+    - name: startIndex
+      type: uint16_t
+    - name: requestCount
+      type: uint16_t
+    - name: actualCount
+      type: uint16_t
+    - name: portName
+      type: PPCPortPtr
+    - name: locationName
+      type: LocationNamePtr
+    - name: bufferPtr
+      type: PortInfoArrayPtr
+
+# ####
+
+- typedef:
+    name: IPCListPortsPBPtr
+    type: IPCListPortsPBRec*
+
+# ####
+
+- function:
+    name: PPCInit
+    return: OSErr
+    comment: PPC Toolbox
+    returnreg: D0
+    m68k-inline:
+    - 28672
+    - 41181
+
+# ####
+
+- function:
+    name: PPCOpenSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCOpenPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28673
+    - 41181
+
+# ####
+
+- function:
+    name: PPCOpenAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCOpenPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28673
+    - 42205
+
+# ####
+
+- function:
+    name: PPCStartSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCStartPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28674
+    - 41181
+
+# ####
+
+- function:
+    name: PPCStartAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCStartPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28674
+    - 42205
+
+# ####
+
+- function:
+    name: PPCInformSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCInformPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28675
+    - 41181
+
+# ####
+
+- function:
+    name: PPCInformAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCInformPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28675
+    - 42205
+
+# ####
+
+- function:
+    name: PPCAcceptSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCAcceptPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28676
+    - 41181
+
+# ####
+
+- function:
+    name: PPCAcceptAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCAcceptPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28676
+    - 42205
+
+# ####
+
+- function:
+    name: PPCRejectSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCRejectPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28677
+    - 41181
+
+# ####
+
+- function:
+    name: PPCRejectAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCRejectPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28677
+    - 42205
+
+# ####
+
+- function:
+    name: PPCWriteSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCWritePBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28678
+    - 41181
+
+# ####
+
+- function:
+    name: PPCWriteAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCWritePBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28678
+    - 42205
+
+# ####
+
+- function:
+    name: PPCReadSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCReadPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28679
+    - 41181
+
+# ####
+
+- function:
+    name: PPCReadAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCReadPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28679
+    - 42205
+
+# ####
+
+- function:
+    name: PPCEndSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCEndPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28680
+    - 41181
+
+# ####
+
+- function:
+    name: PPCEndAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCEndPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28680
+    - 42205
+
+# ####
+
+- function:
+    name: PPCCloseSync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCClosePBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28681
+    - 41181
+
+# ####
+
+- function:
+    name: PPCCloseAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCClosePBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28681
+    - 42205
+
+# ####
+
+- function:
+    name: IPCListPortsSync
+    return: OSErr
+    args:
+    - name: pb
+      type: IPCListPortsPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28682
+    - 41181
+
+# ####
+
+- function:
+    name: IPCListPortsAsync
+    return: OSErr
+    args:
+    - name: pb
+      type: IPCListPortsPBPtr
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28682
+    - 42205
+
+# ####
+
+- function:
+    name: DeleteUserIdentity
+    return: OSErr
+    args:
+    - name: userRef
+      type: uint32_t
+      register: A0
+    returnreg: D0
+    m68k-inline:
+    - 28684
+    - 41181
+
+# ####
+
+- function:
+    name: GetDefaultUser
+    return: OSErr
+    args:
+    - name: userRef
+      type: uint32_t*
+    - name: userName
+      type: Str32
+
+# ####
+
+- function:
+    name: StartSecureSession
+    return: OSErr
+    args:
+    - name: pb
+      type: PPCStartPBPtr
+    - name: userName
+      type: Str32
+    - name: useDefault
+      type: Boolean
+    - name: allowGuest
+      type: Boolean
+    - name: guestSelected
+      type: Boolean*
+    - name: prompt
+      type: ConstStr255Param
+
+# ####
+
+- dispatcher:
+    name: Pack9
+    trap: 43051
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: PPCBrowser
+    return: OSErr
+    args:
+    - name: prompt
+      type: ConstStr255Param
+    - name: applListLabel
+      type: ConstStr255Param
+    - name: defaultSpecified
+      type: Boolean
+    - name: theLocation
+      type: LocationNameRec*
+    - name: thePortInfo
+      type: PortInfoRec*
+    - name: portFilter
+      type: PPCFilterUPP
+    - name: theLocNBPType
+      type: ConstStr32Param
+    dispatcher: Pack9
+    selector: 3328

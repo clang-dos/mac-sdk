@@ -1,0 +1,210 @@
+- function:
+    name: ExitToShell
+    trap: 0xA9F4
+    executor: C_
+
+# ####
+
+- enum:
+    values:
+      - name: appOpen
+        value: 0
+      - name: appPrint
+        value: 1
+
+# ####
+
+- struct:
+    name: AppFile
+    members:
+      - name: vRefNum
+        type: INTEGER
+      - name: fType
+        type: OSType
+      - name: versNum
+        type: INTEGER
+      - name: fName
+        type: Str255
+    size: 264
+
+# ####
+
+- lowmem:
+    name: loadtrap
+    type: Byte
+    address: 0x12D
+    comment: |
+      SegmentLdr SysEqu.a (true-b);
+
+# ####
+
+- lowmem:
+    name: FinderName
+    type: Byte[16]
+    address: 0x2E0
+    comment: |
+      SegmentLdr IMII-59 (true);
+
+# ####
+
+- lowmem:
+    name: CurApRefNum
+    type: INTEGER
+    address: 0x900
+    comment: |
+      SegmentLdr IMII-58 (true);
+
+# ####
+
+- lowmem:
+    name: CurApName
+    type: Byte[34]
+    address: 0x910
+    comment: |
+      * NOTE: IMIII says CurApName is 32 bytes long, but it looks to me like
+       * it is really 34 bytes long.
+      SegmentLdr IMII-58 (true);
+
+# ####
+
+- lowmem:
+    name: CurJTOffset
+    type: INTEGER
+    address: 0x934
+    comment: |
+      SegmentLdr IMII-62 (true-b);
+
+# ####
+
+- lowmem:
+    name: CurPageOption
+    type: INTEGER
+    address: 0x936
+    comment: |
+      SegmentLdr IMII-60 (true);
+
+# ####
+
+- lowmem:
+    name: AppParmHandle
+    type: Handle
+    address: 0xAEC
+    comment: |
+      SegmentLdr IMII-57 (true);
+
+# ####
+
+- function:
+    name: CountAppFiles
+    args:
+      - name: messagep
+        type: INTEGER*
+      - name: countp
+        type: INTEGER*
+    m68k-body: |
+      Handle h = *(Handle *)0xAEC;    /* AppParmHandle */
+      if (!h || !*h) {
+          *messagep = 0;
+          *countp = 0;
+          return;
+      }
+      *messagep = ((INTEGER *)*h)[0];
+      *countp = ((INTEGER *)*h)[1];
+
+# ####
+
+- function:
+    name: GetAppFiles
+    args:
+      - name: index
+        type: INTEGER
+      - name: filep
+        type: AppFile*
+    m68k-needs: [AppFile, BlockMoveData]
+    m68k-body: |
+      /* entries: vRefNum, fType, versNum, then the name padded to even length */
+      Handle h = *(Handle *)0xAEC;
+      unsigned char *p;
+      if (!h || !*h || index < 1 || index > ((INTEGER *)*h)[1])
+          return;
+      p = (unsigned char *)*h + 4;
+      while (--index)
+          p += 8 + ((p[8] + 2) & ~1);
+      BlockMoveData(p, filep, 8);
+      BlockMoveData(p + 8, filep->fName, p[8] + 1);
+
+# ####
+
+- function:
+    name: ClrAppFiles
+    args:
+      - name: index
+        type: INTEGER
+    m68k-body: |
+      Handle h = *(Handle *)0xAEC;
+      unsigned char *p;
+      if (!h || !*h || index < 1 || index > ((INTEGER *)*h)[1])
+          return;
+      p = (unsigned char *)*h + 4;
+      while (--index)
+          p += 8 + ((p[8] + 2) & ~1);
+      *(OSType *)(p + 2) = 0;
+
+# ####
+
+- only-for: Executor
+  verbatim: |
+    extern void Launch(ConstStringPtr appl, INTEGER vrefnum);
+    extern void Chain(ConstStringPtr appl, INTEGER vrefnum);
+
+# ####
+
+- function:
+    name: GetAppParms
+    args:
+      - name: namep
+        type: StringPtr
+      - name: rnp
+        type: INTEGER*
+      - name: aphandp
+        type: Handle*
+    trap: 0xA9F5
+    executor: C_
+
+# ####
+
+- function:
+    name: UnloadSeg
+    args:
+      - name: addr
+        type: void*
+    trap: 0xA9F1
+    executor: C_
+
+# ####
+
+- enum:
+    values:
+      - name: _LoadSeg
+        value: 0xA9F0
+      - name: _UnLoadSeg
+        value: 0xA9F1
+      - name: _Launch
+        value: 0xA9F2
+      - name: _Chain
+        value: 0xA9F3
+
+# ####
+# Raw 68K entry points (Executor only).  The wrapper objects and the
+# RAW_<name> prototypes are generated; the bodies live in emustubs.cpp
+# (or pack.cpp/patches.cpp), and emustubs.h keeps only the structs.
+- only-for: Executor
+  function:
+    name: Chain
+    executor_raw: true
+    trap: 0xA9F3
+- only-for: Executor
+  function:
+    name: LoadSeg
+    executor_raw: true
+    trap: 0xA9F0

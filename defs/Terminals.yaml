@@ -1,0 +1,1074 @@
+
+# ####
+
+- enum:
+    values:
+    - name: curTMVersion
+      value: 2
+    - name: curTermEnvRecVers
+      value: 0
+
+# ####
+
+- typedef:
+    name: TMErr
+    type: OSErr
+
+# ####
+
+- enum:
+    values:
+    - name: tmGenericError
+      value: -1
+    - name: tmNoErr
+      value: 0
+    - name: tmNotSent
+      value: 1
+    - name: tmEnvironsChanged
+      value: 2
+    - name: tmNotSupported
+      value: 7
+    - name: tmNoTools
+      value: 8
+
+# ####
+
+- typedef:
+    name: TMFlags
+    type: uint32_t
+
+# ####
+
+- enum:
+    values:
+    - name: tmInvisible
+      value: 1
+    - name: tmSaveBeforeClear
+      value: 2
+    - name: tmNoMenus
+      value: 4
+    - name: tmAutoScroll
+      value: 8
+    - name: tmConfigChanged
+      value: 16
+
+# ####
+
+- typedef:
+    name: TMSelTypes
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: selTextNormal
+      value: 1
+    - name: selTextBoxed
+      value: 2
+    - name: selGraphicsMarquee
+      value: 4
+    - name: selGraphicsLasso
+      value: 8
+
+# ####
+
+- typedef:
+    name: TMSearchTypes
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: tmSearchNoDiacrit
+      value: 256
+    - name: tmSearchNoCase
+      value: 512
+
+# ####
+
+- typedef:
+    name: TMCursorTypes
+    type: INTEGER
+
+# ####
+
+- enum:
+    values:
+    - name: cursorText
+      value: 1
+    - name: cursorGraphics
+      value: 2
+
+# ####
+
+- typedef:
+    name: TMTermTypes
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: tmTextTerminal
+      value: 1
+    - name: tmGraphicsTerminal
+      value: 2
+
+# ####
+
+- struct:
+    name: TermDataBlock
+    size: 14
+    members:
+    - name: flags
+      type: TMTermTypes
+    - name: theData
+      type: Handle
+    - name: auxData
+      type: Handle
+    - name: reserved
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: TermDataBlockPtr
+    type: TermDataBlock*
+
+# ####
+
+- typedef:
+    name: TermDataBlockH
+    type: TermDataBlockPtr*
+
+# ####
+
+- typedef:
+    name: TermDataBlockHandle
+    type: TermDataBlockPtr*
+
+# ####
+
+- struct:
+    name: TermEnvironRec
+    size: 32
+    members:
+    - name: version
+      type: INTEGER
+    - name: termType
+      type: TMTermTypes
+    - name: textRows
+      type: INTEGER
+    - name: textCols
+      type: INTEGER
+    - name: cellSize
+      type: Point
+    - name: graphicSize
+      type: Rect
+    - name: slop
+      type: Point
+    - name: auxSpace
+      type: Rect
+
+# ####
+
+- typedef:
+    name: TermEnvironPtr
+    type: TermEnvironRec*
+
+# ####
+
+- union:
+    name: TMSelection
+    size: 8
+    members:
+    - name: selRect
+      type: Rect
+    - name: selRgnHandle
+      type: RgnHandle
+
+# ####
+
+- struct:
+    name: TermRecord
+    size: 106
+    members:
+    - name: procID
+      type: INTEGER
+    - name: flags
+      type: TMFlags
+    - name: errCode
+      type: TMErr
+    - name: refCon
+      type: int32_t
+    - name: userData
+      type: int32_t
+    - name: defProc
+      type: ProcPtr
+    - name: config
+      type: Ptr
+    - name: oldConfig
+      type: Ptr
+    - name: environsProc
+      type: ProcPtr
+    - name: reserved1
+      type: int32_t
+    - name: reserved2
+      type: int32_t
+    - name: tmPrivate
+      type: Ptr
+    - name: sendProc
+      type: ProcPtr
+    - name: breakProc
+      type: ProcPtr
+    - name: cacheProc
+      type: ProcPtr
+    - name: clikLoop
+      type: ProcPtr
+    - name: owner
+      type: WindowPtr
+    - name: termRect
+      type: Rect
+    - name: viewRect
+      type: Rect
+    - name: visRect
+      type: Rect
+    - name: lastIdle
+      type: int32_t
+    - name: selection
+      type: TMSelection
+    - name: selType
+      type: TMSelTypes
+    - name: mluField
+      type: int32_t
+
+# ####
+
+- typedef:
+    name: TermPtr
+    type: TermRecord*
+
+# ####
+
+- typedef:
+    name: TermHandle
+    type: TermPtr*
+
+# ####
+
+- funptr:
+    name: TerminalSendProcUPP
+    return: int32_t
+    args:
+    - name: thePtr
+      type: Ptr
+    - name: theSize
+      type: int32_t
+    - name: refCon
+      type: int32_t
+    - name: flags
+      type: CMFlags
+
+# ####
+
+- funptr:
+    name: TerminalBreakProcUPP
+    args:
+    - name: duration
+      type: int32_t
+    - name: refCon
+      type: int32_t
+
+# ####
+
+- funptr:
+    name: TerminalCacheProcUPP
+    return: int32_t
+    args:
+    - name: refCon
+      type: int32_t
+    - name: theTermData
+      type: TermDataBlockPtr
+
+# ####
+
+- funptr:
+    name: TerminalSearchCallBackUPP
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: refNum
+      type: INTEGER
+    - name: foundRect
+      type: Rect*
+
+# ####
+
+- funptr:
+    name: TerminalClikLoopUPP
+    return: Boolean
+    args:
+    - name: refCon
+      type: int32_t
+
+# ####
+
+- funptr:
+    name: TerminalEnvironsProcUPP
+    return: CMErr
+    args:
+    - name: refCon
+      type: int32_t
+    - name: theEnvirons
+      type: ConnEnvironRec*
+
+# ####
+
+- funptr:
+    name: TerminalChooseIdleUPP
+
+# ####
+
+- funptr:
+    name: TerminalToolDefUPP
+    return: int32_t
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: msg
+      type: INTEGER
+    - name: p1
+      type: int32_t
+    - name: p2
+      type: int32_t
+    - name: p3
+      type: int32_t
+
+# ####
+
+- function:
+    name: InitTM
+    return: TMErr
+    m68k-pbtrap:
+    - 41099
+    - 769
+
+# ####
+
+- function:
+    name: TMGetRefCon
+    return: int32_t
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 802
+
+# ####
+
+- function:
+    name: TMSetRefCon
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: refCon
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 801
+
+# ####
+
+- function:
+    name: TMGetUserData
+    return: int32_t
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 804
+
+# ####
+
+- function:
+    name: TMSetUserData
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: userData
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 803
+
+# ####
+
+- function:
+    name: TMGetToolName
+    args:
+    - name: id
+      type: INTEGER
+    - name: name
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 800
+
+# ####
+
+- function:
+    name: TMGetProcID
+    return: INTEGER
+    args:
+    - name: name
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 799
+
+# ####
+
+- function:
+    name: TMNew
+    return: TermHandle
+    args:
+    - name: termRect
+      type: const Rect*
+    - name: viewRect
+      type: const Rect*
+    - name: flags
+      type: TMFlags
+    - name: procID
+      type: INTEGER
+    - name: owner
+      type: WindowPtr
+    - name: sendProc
+      type: TerminalSendProcUPP
+    - name: cacheProc
+      type: TerminalCacheProcUPP
+    - name: breakProc
+      type: TerminalBreakProcUPP
+    - name: clikLoop
+      type: TerminalClikLoopUPP
+    - name: environsProc
+      type: TerminalEnvironsProcUPP
+    - name: refCon
+      type: int32_t
+    - name: userData
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 770
+
+# ####
+
+- function:
+    name: TMDispose
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 771
+
+# ####
+
+- function:
+    name: TMKey
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theEvent
+      type: const EventRecord*
+    m68k-pbtrap:
+    - 41099
+    - 772
+
+# ####
+
+- function:
+    name: TMUpdate
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: visRgn
+      type: RgnHandle
+    m68k-pbtrap:
+    - 41099
+    - 773
+
+# ####
+
+- function:
+    name: TMPaint
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theTermData
+      type: const TermDataBlock*
+    - name: theRect
+      type: const Rect*
+    m68k-pbtrap:
+    - 41099
+    - 774
+
+# ####
+
+- function:
+    name: TMActivate
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: activate
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 775
+
+# ####
+
+- function:
+    name: TMResume
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: resume
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 776
+
+# ####
+
+- function:
+    name: TMClick
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theEvent
+      type: const EventRecord*
+    m68k-pbtrap:
+    - 41099
+    - 777
+
+# ####
+
+- function:
+    name: TMIdle
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 787
+
+# ####
+
+- function:
+    name: TMStream
+    return: int32_t
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theBuffer
+      type: void*
+    - name: theLength
+      type: int32_t
+    - name: flags
+      type: CMFlags
+    m68k-pbtrap:
+    - 41099
+    - 778
+
+# ####
+
+- function:
+    name: TMMenu
+    return: Boolean
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: menuID
+      type: INTEGER
+    - name: item
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 779
+
+# ####
+
+- function:
+    name: TMReset
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 780
+
+# ####
+
+- function:
+    name: TMClear
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 781
+
+# ####
+
+- function:
+    name: TMResize
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: newViewRect
+      type: const Rect*
+    m68k-pbtrap:
+    - 41099
+    - 782
+
+# ####
+
+- function:
+    name: TMGetSelect
+    return: int32_t
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theData
+      type: Handle
+    - name: theType
+      type: ResType*
+    m68k-pbtrap:
+    - 41099
+    - 783
+
+# ####
+
+- function:
+    name: TMGetLine
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: lineNo
+      type: INTEGER
+    - name: theTermData
+      type: TermDataBlock*
+    m68k-pbtrap:
+    - 41099
+    - 784
+
+# ####
+
+- function:
+    name: TMSetSelection
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theSelection
+      type: const TMSelection*
+    - name: selType
+      type: TMSelTypes
+    m68k-pbtrap:
+    - 41099
+    - 785
+
+# ####
+
+- function:
+    name: TMScroll
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: dh
+      type: INTEGER
+    - name: dv
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 786
+
+# ####
+
+- function:
+    name: TMValidate
+    return: Boolean
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 788
+
+# ####
+
+- function:
+    name: TMDefault
+    args:
+    - name: theConfig
+      type: Ptr*
+    - name: procID
+      type: INTEGER
+    - name: allocate
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 789
+
+# ####
+
+- function:
+    name: TMSetupPreflight
+    return: Handle
+    args:
+    - name: procID
+      type: INTEGER
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 790
+
+# ####
+
+- function:
+    name: TMSetupFilter
+    return: Boolean
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: theEvent
+      type: EventRecord*
+    - name: theItem
+      type: INTEGER*
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 792
+
+# ####
+
+- function:
+    name: TMSetupSetup
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 791
+
+# ####
+
+- function:
+    name: TMSetupItem
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: theItem
+      type: INTEGER*
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 793
+
+# ####
+
+- function:
+    name: TMSetupXCleanup
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: OKed
+      type: Boolean
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 820
+
+# ####
+
+- function:
+    name: TMSetupPostflight
+    args:
+    - name: procID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 817
+
+# ####
+
+- function:
+    name: TMGetConfig
+    return: Ptr
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 795
+
+# ####
+
+- function:
+    name: TMSetConfig
+    return: INTEGER
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: thePtr
+      type: const void*
+    m68k-pbtrap:
+    - 41099
+    - 796
+
+# ####
+
+- function:
+    name: TMIntlToEnglish
+    return: OSErr
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: inputPtr
+      type: const void*
+    - name: outputPtr
+      type: Ptr*
+    - name: language
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 797
+
+# ####
+
+- function:
+    name: TMEnglishToIntl
+    return: OSErr
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: inputPtr
+      type: const void*
+    - name: outputPtr
+      type: Ptr*
+    - name: language
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 798
+
+# ####
+
+- function:
+    name: TMGetVersion
+    return: Handle
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 805
+
+# ####
+
+- function:
+    name: TMGetTMVersion
+    return: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 806
+
+# ####
+
+- function:
+    name: TMAddSearch
+    return: INTEGER
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theString
+      type: ConstStr255Param
+    - name: where
+      type: const Rect*
+    - name: searchType
+      type: TMSearchTypes
+    - name: callBack
+      type: TerminalSearchCallBackUPP
+    m68k-pbtrap:
+    - 41099
+    - 807
+
+# ####
+
+- function:
+    name: TMRemoveSearch
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: refnum
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 808
+
+# ####
+
+- function:
+    name: TMClearSearch
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 809
+
+# ####
+
+- function:
+    name: TMGetCursor
+    return: Point
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: cursType
+      type: TMCursorTypes
+    m68k-pbtrap:
+    - 41099
+    - 810
+
+# ####
+
+- function:
+    name: TMGetTermEnvirons
+    return: TMErr
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theEnvirons
+      type: TermEnvironRec*
+    m68k-pbtrap:
+    - 41099
+    - 811
+
+# ####
+
+- function:
+    name: TMChoose
+    return: INTEGER
+    args:
+    - name: hTerm
+      type: TermHandle*
+    - name: where
+      type: Point
+    - name: idle
+      type: TerminalChooseIdleUPP
+    m68k-pbtrap:
+    - 41099
+    - 812
+
+# ####
+
+- function:
+    name: TMEvent
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theEvent
+      type: const EventRecord*
+    m68k-pbtrap:
+    - 41099
+    - 813
+
+# ####
+
+- function:
+    name: TMDoTermKey
+    return: Boolean
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: theKey
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 814
+
+# ####
+
+- function:
+    name: TMCountTermKeys
+    return: INTEGER
+    args:
+    - name: hTerm
+      type: TermHandle
+    m68k-pbtrap:
+    - 41099
+    - 815
+
+# ####
+
+- function:
+    name: TMGetIndTermKey
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: id
+      type: INTEGER
+    - name: theKey
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 816
+
+# ####
+
+- function:
+    name: TMGetErrorString
+    args:
+    - name: hTerm
+      type: TermHandle
+    - name: id
+      type: INTEGER
+    - name: errMsg
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 821

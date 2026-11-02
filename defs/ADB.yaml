@@ -1,0 +1,140 @@
+- struct:
+    name: ADBDataBlock
+    members:
+      - name: devType
+        type: SignedByte
+      - name: origADBAddr
+        type: SignedByte
+      - name: dbServiceRtPtr
+        type: ProcPtr
+      - name: dbDataAreaAddr
+        type: Ptr
+    size: 10
+
+# ####
+
+- struct:
+    name: ADBSetInfoBlock
+    members:
+      - name: siServiceRtPtr
+        type: ProcPtr
+      - name: siDataAreaAddr
+        type: Ptr
+    size: 8
+
+# ####
+
+- lowmem:
+    name: KbdLast
+    type: Byte
+    address: 0x218
+    comment: |
+      QuickDraw IMV-367 (false);
+
+# ####
+
+- lowmem:
+    name: KbdType
+    type: Byte
+    address: 0x21E
+    comment: |
+      QuickDraw IMV-367 (false);
+
+# ####
+
+- function:
+    name: ADBReInit
+    executor: true
+    trap: 0xA07B
+
+# ####
+
+- function:
+    name: ADBOp
+    return: OSErr
+    args:
+      - name: data
+        type: Ptr
+      - name: procp
+        type: ProcPtr
+      - name: buffer
+        type: Ptr
+      - name: command
+        type: INTEGER
+    m68k-body: |
+      /* _ADBOp: A0 = {buffer, completion, data}, D0 = command */
+      struct { Ptr buffer; ProcPtr compRout; Ptr data; } blk;
+      register void *a0 __asm__("a0") = &blk;
+      register long d0 __asm__("d0") = command;
+      blk.buffer = buffer;
+      blk.compRout = procp;
+      blk.data = data;
+      __asm__ __volatile__(".short 0xA07C" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+      return (OSErr)d0;
+
+# ####
+
+- function:
+    name: CountADBs
+    return: INTEGER
+    executor: true
+    trap: 0xA077
+    returnreg: D0
+
+# ####
+
+- function:
+    name: GetIndADB
+    return: OSErr
+    args:
+      - name: adbp
+        type: ADBDataBlock*
+        register: A0
+      - name: index
+        type: INTEGER
+        register: D0
+    executor: true
+    trap: 0xA078
+    returnreg: D0
+
+# ####
+
+- function:
+    name: GetADBInfo
+    return: OSErr
+    args:
+      - name: adbp
+        type: ADBDataBlock*
+        register: A0
+      - name: address
+        type: INTEGER
+        register: D0
+    executor: true
+    trap: 0xA079
+    returnreg: D0
+
+# ####
+
+- function:
+    name: SetADBInfo
+    return: OSErr
+    args:
+      - name: adbp
+        type: ADBSetInfoBlock*
+        register: A0
+      - name: address
+        type: INTEGER
+        register: D0
+    executor: true
+    trap: 0xA07A
+    returnreg: D0
+
+# ####
+# Raw 68K entry points (Executor only).  The wrapper objects and the
+# RAW_<name> prototypes are generated; the bodies live in emustubs.cpp
+# (or pack.cpp/patches.cpp), and emustubs.h keeps only the structs.
+- only-for: Executor
+  function:
+    name: ADBOp
+    executor_raw: true
+    trap: 0xA07C
