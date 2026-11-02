@@ -322,6 +322,25 @@ pascal Boolean GetPreserveGlyph(void) M68K_INLINE(0x700B, 0xA854);
 
 pascal OSErr FlushFonts(void) M68K_INLINE(0x700C, 0xA854);
 
+// On 68k these three read the low-memory globals, as Apple's 68k glue does.
+#if TARGET_CPU_68K
+#define GetSysFont() (LMGetSysFontFam())
+#else
+pascal INTEGER GetSysFont(void);
+#endif
+
+#if TARGET_CPU_68K
+#define GetAppFont() (LMGetApFontID())
+#else
+pascal INTEGER GetAppFont(void);
+#endif
+
+#if TARGET_CPU_68K
+#define GetDefFontSize() ((LMGetSysFontSiz() ? LMGetSysFontSiz() : 12))
+#else
+pascal INTEGER GetDefFontSize(void);
+#endif
+
 #pragma options align=reset
 
 #endif

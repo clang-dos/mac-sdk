@@ -139,6 +139,8 @@ pascal OSErr RestoreMixedModeState(void *statep, unsigned long vers) M68K_INLINE
 
 LONGINT CallUniversalProc(UniversalProcPtr theProcPtr, ProcInfoType procInfo, ...);
 
+long CallOSTrapUniversalProc(UniversalProcPtr theProc, ProcInfoType procInfo, ...);
+
 #pragma options align=reset
 
 #endif

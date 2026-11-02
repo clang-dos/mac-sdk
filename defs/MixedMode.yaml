@@ -369,3 +369,16 @@
     name: modeswitch
     executor_raw: true
     trap: 0xAAFE
+
+# ####
+
+- function:
+    name: CallOSTrapUniversalProc
+    return: int32_t
+    args:
+    - name: theProc
+      type: UniversalProcPtr
+    - name: procInfo
+      type: ProcInfoType
+    - type: '...'
+    callconv: C

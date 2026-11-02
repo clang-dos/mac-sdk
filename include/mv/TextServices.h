@@ -7,6 +7,7 @@
 #include "Components.h"
 #include "EventMgr.h"
 #include "MacTypes.h"
+#include "MenuMgr.h"
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
@@ -161,6 +162,29 @@ pascal Boolean TSMEvent(EventRecord *event) M68K_INLINE(0x7004, 0xAA54);
 pascal Boolean TSMMenuSelect(long menuResult) M68K_INLINE(0x7005, 0xAA54);
 
 pascal Boolean SetTSMCursor(Point mousePos) M68K_INLINE(0x7006, 0xAA54);
+
+// Calls into a text service component (for input method writers)
+pascal ComponentResult InitiateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0002, 0x7000, 0xA82A);
+
+pascal ComponentResult TerminateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0003, 0x7000, 0xA82A);
+
+pascal ComponentResult ActivateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0004, 0x7000, 0xA82A);
+
+pascal ComponentResult DeactivateTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0005, 0x7000, 0xA82A);
+
+pascal ComponentResult TextServiceEvent(ComponentInstance ts, INTEGER numOfEvents, EventRecord *event) M68K_INLINE(0x2F3C, 0x0006, 0x0006, 0x7000, 0xA82A);
+
+pascal ComponentResult GetTextServiceMenu(ComponentInstance ts, MenuHandle *serviceMenu) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+
+pascal ComponentResult TextServiceMenuSelect(ComponentInstance ts, MenuHandle serviceMenu, INTEGER item) M68K_INLINE(0x2F3C, 0x0006, 0x0008, 0x7000, 0xA82A);
+
+pascal ComponentResult FixTextService(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x0009, 0x7000, 0xA82A);
+
+pascal ComponentResult SetTextServiceCursor(ComponentInstance ts, Point mousePos) M68K_INLINE(0x2F3C, 0x0004, 0x000A, 0x7000, 0xA82A);
+
+pascal ComponentResult HidePaletteWindows(ComponentInstance ts) M68K_INLINE(0x2F3C, 0x0000, 0x000B, 0x7000, 0xA82A);
+
+pascal OSErr GetScriptLanguageSupport(ScriptLanguageSupportHandle *scriptHdl);
 
 #pragma options align=reset
 

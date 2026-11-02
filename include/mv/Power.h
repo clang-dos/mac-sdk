@@ -145,6 +145,17 @@ static __inline__ __attribute__((__always_inline__)) void GetTimeout(INTEGER *co
 pascal void GetTimeout(INTEGER *count);
 #endif
 
+// Power Manager extras (PowerPC)
+pascal OSErr BatteryStatus(Byte *status, Byte *power);
+
+pascal OSErr ModemStatus(Byte *status);
+
+pascal OSErr GetWUTime(long *wTime, Byte *wFlag);
+
+pascal OSErr SetWUTime(long wTime);
+
+pascal OSErr DisableWUTime(void);
+
 #pragma options align=reset
 
 #endif

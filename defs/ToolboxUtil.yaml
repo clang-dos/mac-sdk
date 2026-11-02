@@ -705,3 +705,14 @@
       type: int32_t
     - name: remainder
       type: int32_t*
+
+# ####
+
+- function:
+    name: WideBitShift
+    return: wide*
+    args:
+    - name: src
+      type: wide*
+    - name: shift
+      type: int32_t

@@ -356,7 +356,12 @@ SystemZone
 GetApplLimit
 TopMem
 GZSaveHnd
+BlockZero
+BlockZeroUncached
+BlockMoveUncached
+BlockMoveDataUncached
 CallUniversalProc
+CallOSTrapUniversalProc
 RegistryEntryIDDispose
 RegistryEntryIterateCreate
 RegistryEntryIterateDispose
@@ -413,10 +418,16 @@ ExpMgrConfigReadLong
 ExpMgrConfigWriteByte
 ExpMgrConfigWriteWord
 ExpMgrConfigWriteLong
+BatteryStatus
+ModemStatus
+GetWUTime
+SetWUTime
+DisableWUTime
 FSOpenResFile
 FSCreateResFile
 FSCreateResourceFile
 FSOpenResourceFile
+TempInsertROMMap
 GetSysDirection
 SetSysDirection
 LanguageOrder
@@ -451,6 +462,7 @@ StopSound
 SoundDone
 GetSoundVol
 SetSoundVol
+GetScriptLanguageSupport
 GetDblTime
 GetCaretTime
 GetIndString
@@ -468,3 +480,4 @@ WideSquareRoot
 WideMultiply
 WideDivide
 WideWideDivide
+WideBitShift

@@ -1293,3 +1293,48 @@
     m68k-inline:
     - 28679
     - 41101
+
+# ####
+
+- function:
+    name: BlockZero
+    args:
+    - name: destPtr
+      type: void*
+    - name: byteCount
+      type: Size
+    comment: Memory (PowerPC)
+
+# ####
+
+- function:
+    name: BlockZeroUncached
+    args:
+    - name: destPtr
+      type: void*
+    - name: byteCount
+      type: Size
+
+# ####
+
+- function:
+    name: BlockMoveUncached
+    args:
+    - name: srcPtr
+      type: const void*
+    - name: destPtr
+      type: void*
+    - name: byteCount
+      type: Size
+
+# ####
+
+- function:
+    name: BlockMoveDataUncached
+    args:
+    - name: srcPtr
+      type: const void*
+    - name: destPtr
+      type: void*
+    - name: byteCount
+      type: Size

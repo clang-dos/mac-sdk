@@ -209,3 +209,50 @@
         type: INTEGER*
         register: Out<D0>
     m68k-inline: [0x207C, 0x0000, 0x0000, 0xA07F]
+
+# ####
+
+- function:
+    name: BatteryStatus
+    return: OSErr
+    args:
+    - name: status
+      type: Byte*
+    - name: power
+      type: Byte*
+    comment: Power Manager extras (PowerPC)
+
+# ####
+
+- function:
+    name: ModemStatus
+    return: OSErr
+    args:
+    - name: status
+      type: Byte*
+
+# ####
+
+- function:
+    name: GetWUTime
+    return: OSErr
+    args:
+    - name: wTime
+      type: int32_t*
+    - name: wFlag
+      type: Byte*
+
+# ####
+
+- function:
+    name: SetWUTime
+    return: OSErr
+    args:
+    - name: wTime
+      type: int32_t
+
+# ####
+
+- function:
+    name: DisableWUTime
+    return: OSErr

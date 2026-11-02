@@ -1116,6 +1116,15 @@ static __inline__ __attribute__((__always_inline__)) OSErr DebuggerUnlockMemory(
 pascal OSErr DebuggerUnlockMemory(void *address, unsigned long count);
 #endif
 
+// Memory (PowerPC)
+pascal void BlockZero(void *destPtr, Size byteCount);
+
+pascal void BlockZeroUncached(void *destPtr, Size byteCount);
+
+pascal void BlockMoveUncached(const void *srcPtr, void *destPtr, Size byteCount);
+
+pascal void BlockMoveDataUncached(const void *srcPtr, void *destPtr, Size byteCount);
+
 #pragma options align=reset
 
 #endif

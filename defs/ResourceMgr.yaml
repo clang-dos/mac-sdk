@@ -830,3 +830,11 @@
       type: SInt8
     - name: refNum
       type: SInt16*
+
+# ####
+
+- function:
+    name: TempInsertROMMap
+    args:
+    - name: tempResLoad
+      type: Boolean

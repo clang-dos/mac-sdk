@@ -517,3 +517,175 @@
       type: Point
     dispatcher: TSMDispatch
     selector: 6
+
+# ####
+
+- function:
+    name: InitiateTextService
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    comment: Calls into a text service component (for input method writers)
+    m68k-inline:
+    - 12092
+    - 0
+    - 2
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: TerminateTextService
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 3
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: ActivateTextService
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 4
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: DeactivateTextService
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 5
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: TextServiceEvent
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    - name: numOfEvents
+      type: INTEGER
+    - name: event
+      type: EventRecord*
+    m68k-inline:
+    - 12092
+    - 6
+    - 6
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: GetTextServiceMenu
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    - name: serviceMenu
+      type: MenuHandle*
+    m68k-inline:
+    - 12092
+    - 4
+    - 7
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: TextServiceMenuSelect
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    - name: serviceMenu
+      type: MenuHandle
+    - name: item
+      type: INTEGER
+    m68k-inline:
+    - 12092
+    - 6
+    - 8
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: FixTextService
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 9
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: SetTextServiceCursor
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    - name: mousePos
+      type: Point
+    m68k-inline:
+    - 12092
+    - 4
+    - 10
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: HidePaletteWindows
+    return: ComponentResult
+    args:
+    - name: ts
+      type: ComponentInstance
+    m68k-inline:
+    - 12092
+    - 0
+    - 11
+    - 28672
+    - 43050
+
+# ####
+
+- function:
+    name: GetScriptLanguageSupport
+    return: OSErr
+    args:
+    - name: scriptHdl
+      type: ScriptLanguageSupportHandle*

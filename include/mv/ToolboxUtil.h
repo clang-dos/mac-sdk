@@ -179,6 +179,8 @@ pascal long WideDivide(const wide *dividend, long divisor, long *remainder);
 
 pascal wide* WideWideDivide(wide *dividend, long divisor, long *remainder);
 
+pascal wide* WideBitShift(wide *src, long shift);
+
 #pragma options align=reset
 
 #endif

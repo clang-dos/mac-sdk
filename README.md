@@ -43,8 +43,33 @@ pip install pyyaml
 python3 tools/gen-headers.py
 ```
 
-`include/needs-glue.txt` lists the functions that have no trap on 68k
-(they need glue code, which is not written yet).
+Since then the definitions have been extended here with the rest of
+the documented Toolbox: the Component, Display, Text Services, Power,
+Slot, SCSI, Cursor Device, MIDI, Dictionary and Data Access Managers,
+the PPC Toolbox, the HFS Plus API and more.
+
+### Checked against a real ROM
+
+The 68k trap words and selectors are checked against the Mac OS ROM.
+A Power Macintosh ROM contains InterfaceLib, whose PowerPC glue calls
+each 68k trap through the Mixed Mode Manager; that glue names the trap,
+the selector and where each argument goes.
+
+- `tools/trapinfo.py ROM > data/trapinfo.json` reads that glue (from a
+  4 MB OldWorld ROM image, such as the Beige G3's) and records each
+  call. The checked-in `data/trapinfo.json` came from the Beige G3 ROM.
+- `tools/check-traps.py` compares every call in the headers with it.
+  All 1,543 calls that the ROM describes match.
+- `tools/add-protos.py defs/X.yaml < protos.h` turns C prototypes into
+  definitions, with the 68k details from `data/trapinfo.json`, and
+  refuses a prototype whose argument sizes disagree with the ROM.
+  `tools/add-types.py` does the same for records and constants.
+- `tools/coverage.py` writes [docs/coverage.md](docs/coverage.md).
+
+`include/needs-glue.txt` lists the functions that have no trap on 68k:
+C-string variants, File Manager calls built on parameter blocks, and
+Mac OS 9 calls that never ran on 68k. They need glue code, which is not
+written yet.
 
 ## Tests
 
@@ -52,13 +77,15 @@ python3 tools/gen-headers.py
 CLANG=path/to/clang tests/run.sh
 ```
 
-It compiles every header for both targets in C and C++, checks record
-sizes, and builds the example.
+It compiles every header for both targets in C and C++, generates code
+for every 68k register-trap inline, checks the size of every record
+whose definition gives one, and builds the example.
 
 ## Not done yet
 
-- Coverage: the definitions have about 1,600 functions. InterfaceLib
-  alone exports about 2,800, and all public libraries about 12,500.
+- Coverage: the headers declare about 90% of what the ROM's InterfaceLib
+  exports (see docs/coverage.md). The AppleTalk and Communications
+  Toolbox calls are the largest gaps.
 - 68k glue for the functions in `needs-glue.txt`, and a runtime library
   (`__udivsi3` and the other helpers clang calls on 68k).
 - The linkers and tools, which are still in clang-dos/dos-sdk under

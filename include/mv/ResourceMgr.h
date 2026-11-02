@@ -248,6 +248,8 @@ pascal OSErr FSCreateResourceFile(const FSRef *parentRef, UniCharCount nameLengt
 
 pascal OSErr FSOpenResourceFile(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName, SInt8 permissions, SInt16 *refNum);
 
+pascal void TempInsertROMMap(Boolean tempResLoad);
+
 #pragma options align=reset
 
 #endif

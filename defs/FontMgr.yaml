@@ -698,3 +698,28 @@
     dispatcher: FontDispatch
     selector: 0x000C
     executor: C_
+
+# ####
+
+- function:
+    name: GetSysFont
+    return: INTEGER
+    comment: On 68k these three read the low-memory globals, as Apple's 68k glue does.
+    inline: LMGetSysFontFam()
+    noinline: ppc
+
+# ####
+
+- function:
+    name: GetAppFont
+    return: INTEGER
+    inline: LMGetApFontID()
+    noinline: ppc
+
+# ####
+
+- function:
+    name: GetDefFontSize
+    return: INTEGER
+    inline: "(LMGetSysFontSiz() ? LMGetSysFontSiz() : 12)"
+    noinline: ppc
