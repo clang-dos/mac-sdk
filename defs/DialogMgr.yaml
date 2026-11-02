@@ -552,6 +552,10 @@
     args:
       - name: dp
         type: DialogPtr
+    m68k-needs: [DialogPeek, TECut]
+    m68k-body: |
+      if (((DialogPeek)dp)->editField >= 0)
+          TECut(((DialogPeek)dp)->textH);
 
 # ####
 
@@ -560,6 +564,10 @@
     args:
       - name: dp
         type: DialogPtr
+    m68k-needs: [DialogPeek, TECopy]
+    m68k-body: |
+      if (((DialogPeek)dp)->editField >= 0)
+          TECopy(((DialogPeek)dp)->textH);
 
 # ####
 
@@ -568,6 +576,10 @@
     args:
       - name: dp
         type: DialogPtr
+    m68k-needs: [DialogPeek, TEPaste]
+    m68k-body: |
+      if (((DialogPeek)dp)->editField >= 0)
+          TEPaste(((DialogPeek)dp)->textH);
 
 # ####
 
@@ -576,6 +588,10 @@
     args:
       - name: dp
         type: DialogPtr
+    m68k-needs: [DialogPeek, TEDelete]
+    m68k-body: |
+      if (((DialogPeek)dp)->editField >= 0)
+          TEDelete(((DialogPeek)dp)->textH);
 
 # ####
 
@@ -604,6 +620,8 @@
     args:
       - name: i
         type: INTEGER
+    m68k-body: |
+      *(INTEGER *)0xAFA = i;
 
 # ####
 
@@ -702,11 +720,15 @@
 - function:
     name: GetAlertStage
     return: INTEGER
+    m68k-body: |
+      return *(INTEGER *)0xA9A;
 
 # ####
 
 - function:
     name: ResetAlertStage
+    m68k-body: |
+      *(INTEGER *)0xA9A = 0;
 
 # ####
 

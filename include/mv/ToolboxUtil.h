@@ -4,7 +4,9 @@
 
 #include "../ConditionalMacros.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 #include "QuickDraw.h"
+#include "ResourceMgr.h"
 #include "SANE.h"
 
 #pragma options align=mac68k
@@ -60,7 +62,11 @@ pascal void SetString(StringHandle h, ConstStringPtr s) M68K_INLINE(0xA907);
 enum { _GetString = 0xA9BA };
 pascal StringHandle GetString(INTEGER i) M68K_INLINE(0xA9BA);
 
+#if TARGET_CPU_68K
+static __inline__ void GetIndString(StringPtr s, INTEGER sid, INTEGER index);
+#else
 pascal void GetIndString(StringPtr s, INTEGER sid, INTEGER index);
+#endif
 
 enum { _Munger = 0xA9E0 };
 pascal LONGINT Munger(Handle h, LONGINT off, Ptr p1, LONGINT len1, Ptr p2, LONGINT len2) M68K_INLINE(0xA9E0);
@@ -107,7 +113,11 @@ pascal void LongMul(LONGINT a, LONGINT b, Int64Bit *c) M68K_INLINE(0xA867);
 enum { _GetPattern = 0xA9B8 };
 pascal PatHandle GetPattern(INTEGER id) M68K_INLINE(0xA9B8);
 
+#if TARGET_CPU_68K
+static __inline__ void GetIndPattern(Byte *op, INTEGER plistid, INTEGER index);
+#else
 pascal void GetIndPattern(Byte *op, INTEGER plistid, INTEGER index);
+#endif
 
 enum { _GetCursor = 0xA9B9 };
 pascal CursHandle GetCursor(INTEGER id) M68K_INLINE(0xA9B9);
@@ -180,6 +190,33 @@ pascal long WideDivide(const wide *dividend, long divisor, long *remainder);
 pascal wide* WideWideDivide(wide *dividend, long divisor, long *remainder);
 
 pascal wide* WideBitShift(wide *src, long shift);
+
+#if TARGET_CPU_68K
+static __inline__ void GetIndString(StringPtr s, INTEGER sid, INTEGER index) {
+    Handle h = GetResource(0x53545223, sid);    /* 'STR#' */
+    unsigned char *p;
+    s[0] = 0;
+    if (!h || !*h)
+        return;
+    p = (unsigned char *)*h;
+    if (index < 1 || index > *(INTEGER *)p)
+        return;
+    p += 2;
+    while (--index)
+        p += *p + 1;
+    BlockMoveData(p, s, *p + 1);
+}
+
+static __inline__ void GetIndPattern(Byte *op, INTEGER plistid, INTEGER index) {
+    Handle h = GetResource(0x50415423, plistid);    /* 'PAT#' */
+    Ptr p;
+    if (!h || !*h || index < 1 || index > *(INTEGER *)*h)
+        return;
+    p = *h + 2 + (index - 1) * 8;
+    BlockMoveData(p, op, 8);
+}
+
+#endif
 
 #pragma options align=reset
 

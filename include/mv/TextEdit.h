@@ -4,7 +4,9 @@
 
 #include "../ConditionalMacros.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 #include "QuickDraw.h"
+#include "ScrapMgr.h"
 
 #pragma options align=mac68k
 
@@ -330,17 +332,71 @@ pascal void TESetClickLoop(ProcPtr cp, TEHandle teh);
 enum { _TECalText = 0xA9D0 };
 pascal void TECalText(TEHandle teh) M68K_INLINE(0xA9D0);
 
+#if TARGET_CPU_68K
+static __inline__ OSErr TEFromScrap(void);
+#else
 pascal OSErr TEFromScrap(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr TEToScrap(void);
+#else
 pascal OSErr TEToScrap(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ Handle TEScrapHandle(void);
+#else
 pascal Handle TEScrapHandle(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ LONGINT TEGetScrapLength(void);
+#else
 pascal LONGINT TEGetScrapLength(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void TESetScrapLength(LONGINT ln);
+#else
 pascal void TESetScrapLength(LONGINT ln);
+#endif
 
 pascal int16_t TEFeatureFlag(int16_t feature, int16_t action, TEHandle te) M68K_INLINE(0x3F3C, 0x000E, 0xA83D);
+
+#if TARGET_CPU_68K
+static __inline__ OSErr TEFromScrap(void) {
+    LONGINT offset;
+    LONGINT len = GetScrap(*(Handle *)0xAB4, 0x54455854, &offset);    /* 'TEXT' */
+    if (len < 0)
+        return (OSErr)len;
+    *(INTEGER *)0xAB0 = (INTEGER)len;
+    return 0;
+}
+
+static __inline__ OSErr TEToScrap(void) {
+    /* Call ZeroScrap first. */
+    Handle h = *(Handle *)0xAB4;
+    OSErr err;
+    HLock(h);
+    err = (OSErr)PutScrap(*(unsigned short *)0xAB0, 0x54455854, *h);    /* 'TEXT' */
+    HUnlock(h);
+    return err;
+}
+
+static __inline__ Handle TEScrapHandle(void) {
+    return *(Handle *)0xAB4;
+}
+
+static __inline__ LONGINT TEGetScrapLength(void) {
+    return *(unsigned short *)0xAB0;
+}
+
+static __inline__ void TESetScrapLength(LONGINT ln) {
+    *(INTEGER *)0xAB0 = (INTEGER)ln;
+}
+
+#endif
 
 #pragma options align=reset
 

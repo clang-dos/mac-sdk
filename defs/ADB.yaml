@@ -61,6 +61,16 @@
         type: Ptr
       - name: command
         type: INTEGER
+    m68k-body: |
+      /* _ADBOp: A0 = {buffer, completion, data}, D0 = command */
+      struct { Ptr buffer; ProcPtr compRout; Ptr data; } blk;
+      register void *a0 __asm__("a0") = &blk;
+      register long d0 __asm__("d0") = command;
+      blk.buffer = buffer;
+      blk.compRout = procp;
+      blk.data = data;
+      __asm__ __volatile__(".short 0xA07C" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+      return (OSErr)d0;
 
 # ####
 

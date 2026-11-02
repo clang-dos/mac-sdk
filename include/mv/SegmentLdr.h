@@ -4,6 +4,7 @@
 
 #include "../ConditionalMacros.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 
 #pragma options align=mac68k
 
@@ -53,11 +54,23 @@ struct AppFile {
 #define LMGetAppParmHandle() (*(Handle *)0x00000AEC)
 #define LMSetAppParmHandle(val) ((*(Handle *)0x00000AEC) = (val))
 
+#if TARGET_CPU_68K
+static __inline__ void CountAppFiles(INTEGER *messagep, INTEGER *countp);
+#else
 pascal void CountAppFiles(INTEGER *messagep, INTEGER *countp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void GetAppFiles(INTEGER index, AppFile *filep);
+#else
 pascal void GetAppFiles(INTEGER index, AppFile *filep);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void ClrAppFiles(INTEGER index);
+#else
 pascal void ClrAppFiles(INTEGER index);
+#endif
 
 enum { _GetAppParms = 0xA9F5 };
 pascal void GetAppParms(StringPtr namep, INTEGER *rnp, Handle *aphandp) M68K_INLINE(0xA9F5);
@@ -71,6 +84,44 @@ enum {
     _Launch = 43506,
     _Chain = 43507,
 };
+
+#if TARGET_CPU_68K
+static __inline__ void CountAppFiles(INTEGER *messagep, INTEGER *countp) {
+    Handle h = *(Handle *)0xAEC;    /* AppParmHandle */
+    if (!h || !*h) {
+        *messagep = 0;
+        *countp = 0;
+        return;
+    }
+    *messagep = ((INTEGER *)*h)[0];
+    *countp = ((INTEGER *)*h)[1];
+}
+
+static __inline__ void GetAppFiles(INTEGER index, AppFile *filep) {
+    /* entries: vRefNum, fType, versNum, then the name padded to even length */
+    Handle h = *(Handle *)0xAEC;
+    unsigned char *p;
+    if (!h || !*h || index < 1 || index > ((INTEGER *)*h)[1])
+        return;
+    p = (unsigned char *)*h + 4;
+    while (--index)
+        p += 8 + ((p[8] + 2) & ~1);
+    BlockMoveData(p, filep, 8);
+    BlockMoveData(p + 8, filep->fName, p[8] + 1);
+}
+
+static __inline__ void ClrAppFiles(INTEGER index) {
+    Handle h = *(Handle *)0xAEC;
+    unsigned char *p;
+    if (!h || !*h || index < 1 || index > ((INTEGER *)*h)[1])
+        return;
+    p = (unsigned char *)*h + 4;
+    while (--index)
+        p += 8 + ((p[8] + 2) & ~1);
+    *(OSType *)(p + 2) = 0;
+}
+
+#endif
 
 #pragma options align=reset
 

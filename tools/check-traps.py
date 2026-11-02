@@ -84,7 +84,7 @@ def main():
     for b in bad:
         print(b)
     print(f"check-traps: {ok} calls match the ROM, {len(bad)} differ, "
-          f"{skipped} glue entries not declared with 68k code", file=sys.stderr)
+          f"{skipped} implemented in C glue or not declared", file=sys.stderr)
     sys.exit(1 if bad else 0)
 
 

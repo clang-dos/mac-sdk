@@ -37,8 +37,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr VInstall(VBLTaskPtr v
     register OSErr _ret __asm__("d0");
     register VBLTaskPtr _vtaskp __asm__("a0") = vtaskp;
     __asm__ __volatile__(".short 0xA033"
-        : "=r"(_ret)
-        : "r"(_vtaskp)
+        : "=r"(_ret), "+r"(_vtaskp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -52,8 +52,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr VRemove(VBLTaskPtr vt
     register OSErr _ret __asm__("d0");
     register VBLTaskPtr _vtaskp __asm__("a0") = vtaskp;
     __asm__ __volatile__(".short 0xA034"
-        : "=r"(_ret)
-        : "r"(_vtaskp)
+        : "=r"(_ret), "+r"(_vtaskp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -61,7 +61,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr VRemove(VBLTaskPtr vt
 pascal OSErr VRemove(VBLTaskPtr vtaskp);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ QHdrPtr GetVBLQHdr(void);
+#else
 pascal QHdrPtr GetVBLQHdr(void);
+#endif
 
 enum { _SlotVInstall = 0xA06F };
 #if TARGET_CPU_68K
@@ -70,8 +74,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SlotVInstall(VBLTaskP
     register VBLTaskPtr _vtaskp __asm__("a0") = vtaskp;
     register INTEGER _slot __asm__("d0") = slot;
     __asm__ __volatile__(".short 0xA06F"
-        : "=r"(_ret)
-        : "r"(_vtaskp), "r"(_slot)
+        : "=r"(_ret), "+r"(_vtaskp)
+        : "r"(_slot)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -86,13 +90,20 @@ static __inline__ __attribute__((__always_inline__)) OSErr SlotVRemove(VBLTaskPt
     register VBLTaskPtr _vtaskp __asm__("a0") = vtaskp;
     register INTEGER _slot __asm__("d0") = slot;
     __asm__ __volatile__(".short 0xA070"
-        : "=r"(_ret)
-        : "r"(_vtaskp), "r"(_slot)
+        : "=r"(_ret), "+r"(_vtaskp)
+        : "r"(_slot)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
 #else
 pascal OSErr SlotVRemove(VBLTaskPtr vtaskp, INTEGER slot);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ QHdrPtr GetVBLQHdr(void) {
+    return (QHdrPtr)0x160;
+}
+
 #endif
 
 #pragma options align=reset

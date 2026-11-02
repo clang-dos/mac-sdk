@@ -168,6 +168,20 @@
       - name: index
         type: INTEGER
     executor: C_
+    m68k-needs: [GetResource, BlockMoveData]
+    m68k-body: |
+      Handle h = GetResource(0x53545223, sid);    /* 'STR#' */
+      unsigned char *p;
+      s[0] = 0;
+      if (!h || !*h)
+          return;
+      p = (unsigned char *)*h;
+      if (index < 1 || index > *(INTEGER *)p)
+          return;
+      p += 2;
+      while (--index)
+          p += *p + 1;
+      BlockMoveData(p, s, *p + 1);
 
 # ####
 
@@ -376,6 +390,14 @@
         type: INTEGER
       - name: index
         type: INTEGER
+    m68k-needs: [GetResource, BlockMoveData]
+    m68k-body: |
+      Handle h = GetResource(0x50415423, plistid);    /* 'PAT#' */
+      Ptr p;
+      if (!h || !*h || index < 1 || index > *(INTEGER *)*h)
+          return;
+      p = *h + 2 + (index - 1) * 8;
+      BlockMoveData(p, op, 8);
 
 # ####
 

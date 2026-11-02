@@ -146,11 +146,19 @@ pascal void SetIntlResource(INTEGER rn, INTEGER id, Handle newh) M68K_INLINE(0x3
 
 pascal INTEGER IUMagString(Ptr ptr1, Ptr ptr2, INTEGER len1, INTEGER len2) M68K_INLINE(0x3F3C, 0x000A, 0xA9ED);
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER IUCompString(ConstStringPtr str1, ConstStringPtr str2);
+#else
 pascal INTEGER IUCompString(ConstStringPtr str1, ConstStringPtr str2);
+#endif
 
 pascal INTEGER IUMagIDString(Ptr ptr1, Ptr ptr2, INTEGER len1, INTEGER len2) M68K_INLINE(0x3F3C, 0x000C, 0xA9ED);
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER IUEqualString(ConstStringPtr str1, ConstStringPtr str2);
+#else
 pascal INTEGER IUEqualString(ConstStringPtr str1, ConstStringPtr str2);
+#endif
 
 pascal void IUMystery(Ptr arg1, Ptr arg2, INTEGER arg3, INTEGER arg4) M68K_INLINE(0x3F3C, 0x0012, 0xA9ED);
 
@@ -171,6 +179,17 @@ pascal INTEGER IULangOrder(LangCode l1, LangCode l2) M68K_INLINE(0x3F3C, 0x0020,
 pascal INTEGER IUTextOrder(Ptr ptra, Ptr ptrb, INTEGER lena, INTEGER lenb, ScriptCode scripta, ScriptCode bscript, LangCode langa, LangCode langb) M68K_INLINE(0x3F3C, 0x0022, 0xA9ED);
 
 pascal void GetIntlResourceTable(ScriptCode script, INTEGER tablecode, Handle *itlhandlep, LONGINT *offsetp, LONGINT *lengthp) M68K_INLINE(0x3F3C, 0x0024, 0xA9ED);
+
+#if TARGET_CPU_68K
+static __inline__ INTEGER IUCompString(ConstStringPtr str1, ConstStringPtr str2) {
+    return IUMagString((Ptr)str1 + 1, (Ptr)str2 + 1, str1[0], str2[0]);
+}
+
+static __inline__ INTEGER IUEqualString(ConstStringPtr str1, ConstStringPtr str2) {
+    return IUMagIDString((Ptr)str1 + 1, (Ptr)str2 + 1, str1[0], str2[0]);
+}
+
+#endif
 
 #pragma options align=reset
 

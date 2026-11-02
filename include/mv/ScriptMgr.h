@@ -253,9 +253,17 @@ pascal void DrawJust(Ptr textbufp, INTEGER length, INTEGER slop) M68K_INLINE(0x2
 
 pascal String2DateStatus StringToTime(Ptr textp, LONGINT len, Ptr cachep, LONGINT *lenusedp, Ptr *datetimep) M68K_INLINE(0x2F3C, 0x8214, 0xFFF4, 0xA8B5);
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER GetSysDirection(void);
+#else
 pascal INTEGER GetSysDirection(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void SetSysDirection(INTEGER just);
+#else
 pascal void SetSysDirection(INTEGER just);
+#endif
 
 pascal OSErr InitDateCache(DateCachePtr theCache) M68K_INLINE(0x2F3C, 0x8204, 0xFFF8, 0xA8B5);
 
@@ -488,8 +496,8 @@ static __inline__ __attribute__((__always_inline__)) void UpperText(Ptr textPtr,
     register Ptr _textPtr __asm__("a0") = textPtr;
     register INTEGER _len __asm__("d0") = len;
     __asm__ __volatile__(".short 0xA456"
+        : "+r"(_textPtr), "+r"(_len)
         : 
-        : "r"(_textPtr), "r"(_len)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -502,8 +510,8 @@ static __inline__ __attribute__((__always_inline__)) void LowerText(Ptr textPtr,
     register Ptr _textPtr __asm__("a0") = textPtr;
     register INTEGER _len __asm__("d0") = len;
     __asm__ __volatile__(".short 0xA056"
+        : "+r"(_textPtr), "+r"(_len)
         : 
-        : "r"(_textPtr), "r"(_len)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -516,8 +524,8 @@ static __inline__ __attribute__((__always_inline__)) void StripText(Ptr textPtr,
     register Ptr _textPtr __asm__("a0") = textPtr;
     register INTEGER _len __asm__("d0") = len;
     __asm__ __volatile__(".short 0xA256"
+        : "+r"(_textPtr), "+r"(_len)
         : 
-        : "r"(_textPtr), "r"(_len)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -530,8 +538,8 @@ static __inline__ __attribute__((__always_inline__)) void StripUpperText(Ptr tex
     register Ptr _textPtr __asm__("a0") = textPtr;
     register INTEGER _len __asm__("d0") = len;
     __asm__ __volatile__(".short 0xA656"
+        : "+r"(_textPtr), "+r"(_len)
         : 
-        : "r"(_textPtr), "r"(_len)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -544,8 +552,8 @@ static __inline__ __attribute__((__always_inline__)) void UprText(Ptr textPtr, I
     register Ptr _textPtr __asm__("a0") = textPtr;
     register INTEGER _len __asm__("d0") = len;
     __asm__ __volatile__(".short 0xA054"
+        : "+r"(_textPtr), "+r"(_len)
         : 
-        : "r"(_textPtr), "r"(_len)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -558,8 +566,8 @@ static __inline__ __attribute__((__always_inline__)) void LwrText(Ptr textPtr, I
     register Ptr _textPtr __asm__("a0") = textPtr;
     register INTEGER _len __asm__("d0") = len;
     __asm__ __volatile__(".short 0xA056"
+        : "+r"(_textPtr), "+r"(_len)
         : 
-        : "r"(_textPtr), "r"(_len)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -582,25 +590,65 @@ pascal OSErr SetScript(INTEGER script, INTEGER verb, long param) M68K_INLINE(0x2
 
 pascal INTEGER ScriptOrder(ScriptCode script1, ScriptCode script2) M68K_INLINE(0x3F3C, 0x001E, 0xA9ED);
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER LanguageOrder(LangCode language1, LangCode language2);
+#else
 pascal INTEGER LanguageOrder(LangCode language1, LangCode language2);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER StringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+#else
 pascal INTEGER StringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER TextOrder(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+#else
 pascal INTEGER TextOrder(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER CompareText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle);
+#else
 pascal INTEGER CompareText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER IdenticalText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle);
+#else
 pascal INTEGER IdenticalText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER CompareString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#else
 pascal INTEGER CompareString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER IdenticalString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#else
 pascal INTEGER IdenticalString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER IUCompPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#else
 pascal INTEGER IUCompPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER IUEqualPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#else
 pascal INTEGER IUEqualPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER IUStringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+#else
 pascal INTEGER IUStringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang);
+#endif
 
 pascal FormatStatus FormatRecToString(const NumFormatStringRec *myCanonical, const NumberParts *partsTable, Str255 outString, TripleInt positions) M68K_INLINE(0x2F3C, 0x8210, 0xFFEA, 0xA8B5);
 
@@ -640,6 +688,57 @@ enum {
     smTruncated = 1,
     smTruncErr = -1,
 };
+
+#if TARGET_CPU_68K
+static __inline__ INTEGER GetSysDirection(void) {
+    return *(INTEGER *)0xBAC;
+}
+
+static __inline__ void SetSysDirection(INTEGER just) {
+    *(INTEGER *)0xBAC = just;
+}
+
+static __inline__ INTEGER LanguageOrder(LangCode language1, LangCode language2) {
+    return IULangOrder(language1, language2);
+}
+
+static __inline__ INTEGER StringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang) {
+    return IUTextOrder((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], aScript, bScript, aLang, bLang);
+}
+
+static __inline__ INTEGER TextOrder(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang) {
+    return IUTextOrder((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, aScript, bScript, aLang, bLang);
+}
+
+static __inline__ INTEGER CompareText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle) {
+    return IUMagPString((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, itl2Handle);
+}
+
+static __inline__ INTEGER IdenticalText(const void *aPtr, const void *bPtr, INTEGER aLen, INTEGER bLen, Handle itl2Handle) {
+    return IUMagIDPString((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, itl2Handle);
+}
+
+static __inline__ INTEGER CompareString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle) {
+    return IUMagPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+}
+
+static __inline__ INTEGER IdenticalString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle) {
+    return IUMagIDPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+}
+
+static __inline__ INTEGER IUCompPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle) {
+    return IUMagPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+}
+
+static __inline__ INTEGER IUEqualPString(ConstStr255Param aStr, ConstStr255Param bStr, Handle itl2Handle) {
+    return IUMagIDPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
+}
+
+static __inline__ INTEGER IUStringOrder(ConstStr255Param aStr, ConstStr255Param bStr, ScriptCode aScript, ScriptCode bScript, LangCode aLang, LangCode bLang) {
+    return IUTextOrder((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], aScript, bScript, aLang, bLang);
+}
+
+#endif
 
 #pragma options align=reset
 

@@ -1211,39 +1211,135 @@ enum { _CopyDeepMask = 0xAA51 };
 pascal void CopyDeepMask(BitMap *srcBits, BitMap *maskBits, BitMap *dstBits, const Rect *srcRect, const Rect *maskRect, const Rect *dstRect, INTEGER mode, RgnHandle maskRgn) M68K_INLINE(0xAA51);
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ int16_t GetPortTextFont(CGrafPtr p);
+#else
 pascal int16_t GetPortTextFont(CGrafPtr p);
 #endif
+#endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ int16_t GetPortTextSize(CGrafPtr p);
+#else
 pascal int16_t GetPortTextSize(CGrafPtr p);
 #endif
+#endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ int16_t GetPortTextFace(CGrafPtr p);
+#else
 pascal int16_t GetPortTextFace(CGrafPtr p);
 #endif
+#endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void QDFlushPortBuffer(CGrafPtr p, RgnHandle rgn);
+#else
 pascal void QDFlushPortBuffer(CGrafPtr p, RgnHandle rgn);
 #endif
+#endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void GetPortBounds(CGrafPtr p, Rect *r);
+#else
 pascal void GetPortBounds(CGrafPtr p, Rect *r);
 #endif
+#endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void GetPortVisibleRegion(CGrafPtr p, RgnHandle rgn);
+#else
 pascal void GetPortVisibleRegion(CGrafPtr p, RgnHandle rgn);
 #endif
+#endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void GetRegionBounds(RgnHandle rgn, Rect *r);
+#else
 pascal void GetRegionBounds(RgnHandle rgn, Rect *r);
 #endif
-
-#if TARGET_API_MAC_CARBON
-pascal BitMap * GetPortBitMapForCopyBits(CGrafPtr p);
 #endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ BitMap * GetPortBitMapForCopyBits(CGrafPtr p);
+#else
+pascal BitMap * GetPortBitMapForCopyBits(CGrafPtr p);
+#endif
+#endif
+
+#if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void GetQDGlobalsScreenBits(BitMap *bm);
+#else
 pascal void GetQDGlobalsScreenBits(BitMap *bm);
+#endif
+#endif
+
+#if TARGET_CPU_68K
+#if TARGET_API_MAC_CARBON
+static __inline__ int16_t GetPortTextFont(CGrafPtr p) {
+    return ((GrafPtr)p)->txFont;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ int16_t GetPortTextSize(CGrafPtr p) {
+    return ((GrafPtr)p)->txSize;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ int16_t GetPortTextFace(CGrafPtr p) {
+    return ((GrafPtr)p)->txFace;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ void QDFlushPortBuffer(CGrafPtr p, RgnHandle rgn) {
+    /* Nothing is buffered before Mac OS X. */
+    (void)p;
+    (void)rgn;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ void GetPortBounds(CGrafPtr p, Rect *r) {
+    *r = ((GrafPtr)p)->portRect;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ void GetPortVisibleRegion(CGrafPtr p, RgnHandle rgn) {
+    CopyRgn(((GrafPtr)p)->visRgn, rgn);
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ void GetRegionBounds(RgnHandle rgn, Rect *r) {
+    *r = (*rgn)->rgnBBox;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ BitMap * GetPortBitMapForCopyBits(CGrafPtr p) {
+    return &((GrafPtr)p)->portBits;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ void GetQDGlobalsScreenBits(BitMap *bm) {
+    /* *CurrentA5 points at qd.thePort; qd.screenBits is 122 bytes below. */
+    *bm = *(BitMap *)(**(char ***)0x904 - 122);
+}
+#endif
+
 #endif
 
 #pragma options align=reset

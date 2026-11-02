@@ -814,6 +814,9 @@
         type: MenuHandle
       - name: item
         type: INTEGER
+    m68k-needs: [EnableItem]
+    m68k-body: |
+      EnableItem(mh, item);
 
 # ####
 
@@ -825,6 +828,9 @@
         type: MenuHandle
       - name: item
         type: INTEGER
+    m68k-needs: [DisableItem]
+    m68k-body: |
+      DisableItem(mh, item);
 
 # ####
 

@@ -3,7 +3,10 @@
 #define __MV_DISK__
 
 #include "../ConditionalMacros.h"
+#include "DeviceMgr.h"
+#include "FileMgr.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 
 #pragma options align=mac68k
 
@@ -47,11 +50,57 @@ struct DrvSts {
     INTEGER diskErrs;
 };
 
+#if TARGET_CPU_68K
+static __inline__ OSErr DiskEject(INTEGER rn);
+#else
 pascal OSErr DiskEject(INTEGER rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SetTagBuffer(Ptr bp);
+#else
 pascal OSErr SetTagBuffer(Ptr bp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr DriveStatus(INTEGER dn, DrvSts *statp);
+#else
 pascal OSErr DriveStatus(INTEGER dn, DrvSts *statp);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr DiskEject(INTEGER rn) {
+    ParamBlockRec pb;
+    pb.cntrlParam.ioCompletion = 0;
+    pb.cntrlParam.ioVRefNum = rn;
+    pb.cntrlParam.ioCRefNum = -5;    /* .Sony */
+    pb.cntrlParam.csCode = 7;
+    return PBControlSync(&pb);
+}
+
+static __inline__ OSErr SetTagBuffer(Ptr bp) {
+    ParamBlockRec pb;
+    pb.cntrlParam.ioCompletion = 0;
+    pb.cntrlParam.ioVRefNum = 0;
+    pb.cntrlParam.ioCRefNum = -5;    /* .Sony */
+    pb.cntrlParam.csCode = 8;
+    *(Ptr *)pb.cntrlParam.csParam = bp;
+    return PBControlSync(&pb);
+}
+
+static __inline__ OSErr DriveStatus(INTEGER dn, DrvSts *statp) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.cntrlParam.ioCompletion = 0;
+    pb.cntrlParam.ioVRefNum = dn;
+    pb.cntrlParam.ioCRefNum = -5;    /* .Sony */
+    pb.cntrlParam.csCode = 8;
+    err = PBStatusSync(&pb);
+    BlockMoveData(pb.cntrlParam.csParam, statp, 22);
+    return err;
+}
+
+#endif
 
 #pragma options align=reset
 

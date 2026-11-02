@@ -12,8 +12,8 @@ static __inline__ __attribute__((__always_inline__)) void NumToString(LONGINT l,
     register LONGINT _l __asm__("d0") = l;
     register StringPtr _s __asm__("a0") = s;
     __asm__ __volatile__(".short 0x3F3C, 0x0000, 0xA9EE"
+        : "+r"(_l), "+r"(_s)
         : 
-        : "r"(_l), "r"(_s)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -25,8 +25,8 @@ static __inline__ __attribute__((__always_inline__)) void StringToNum(ConstStrin
     register ConstStringPtr _s __asm__("a0") = s;
     register LONGINT _lp __asm__("d0");
     __asm__ __volatile__(".short 0x3F3C, 0x0001, 0xA9EE"
-        : "=r"(_lp)
-        : "r"(_s)
+        : "+r"(_s), "=r"(_lp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     if (lp) *lp = _lp;
 }

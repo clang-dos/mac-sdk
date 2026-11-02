@@ -3201,6 +3201,9 @@
       - name: p
         type: CGrafPtr
     return: int16_t
+    m68k-needs: [GrafPort]
+    m68k-body: |
+      return ((GrafPtr)p)->txFont;
 
 # ####
 
@@ -3211,7 +3214,12 @@
       - name: p
         type: CGrafPtr
     return: int16_t
-    
+    m68k-needs: [GrafPort]
+    m68k-body: |
+      return ((GrafPtr)p)->txSize;
+
+# ####
+
 - api: carbon
   function:
     name: GetPortTextFace
@@ -3219,6 +3227,9 @@
       - name: p
         type: CGrafPtr
     return: int16_t
+    m68k-needs: [GrafPort]
+    m68k-body: |
+      return ((GrafPtr)p)->txFace;
 
 # ####
 
@@ -3230,6 +3241,10 @@
         type: CGrafPtr
       - name: rgn
         type: RgnHandle
+    m68k-body: |
+      /* Nothing is buffered before Mac OS X. */
+      (void)p;
+      (void)rgn;
 
 # ####
 
@@ -3241,6 +3256,9 @@
         type: CGrafPtr
       - name: r
         type: Rect *
+    m68k-needs: [GrafPort]
+    m68k-body: |
+      *r = ((GrafPtr)p)->portRect;
 
 # ####
 
@@ -3252,6 +3270,9 @@
         type: CGrafPtr
       - name: rgn
         type: RgnHandle
+    m68k-needs: [GrafPort, CopyRgn]
+    m68k-body: |
+      CopyRgn(((GrafPtr)p)->visRgn, rgn);
 
 # ####
 
@@ -3263,6 +3284,9 @@
         type: RgnHandle
       - name: r
         type: Rect *
+    m68k-needs: [Region]
+    m68k-body: |
+      *r = (*rgn)->rgnBBox;
 
 # ####
 
@@ -3273,6 +3297,9 @@
       - name: p
         type: CGrafPtr
     return: BitMap *
+    m68k-needs: [GrafPort]
+    m68k-body: |
+      return &((GrafPtr)p)->portBits;
 
 # ####
 
@@ -3282,6 +3309,10 @@
     args:
       - name: bm
         type: BitMap *
+    m68k-needs: [BitMap]
+    m68k-body: |
+      /* *CurrentA5 points at qd.thePort; qd.screenBits is 122 bytes below. */
+      *bm = *(BitMap *)(**(char ***)0x904 - 122);
 
 # ####
 # Raw 68K entry points (Executor only).  The wrapper objects and the

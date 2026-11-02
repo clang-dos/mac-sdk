@@ -93,7 +93,11 @@ struct SIZEResource {
 #define LMGetMouseLocation2() (*(Point *)0x00000830)
 #define LMSetMouseLocation2(val) ((*(Point *)0x00000830) = (val))
 
+#if TARGET_CPU_68K
+static __inline__ OSErr PPostEvent(INTEGER evcode, LONGINT evmsg, EvQElPtr *qelp);
+#else
 pascal OSErr PPostEvent(INTEGER evcode, LONGINT evmsg, EvQElPtr *qelp);
+#endif
 
 enum { _FlushEvents = 0xA032 };
 pascal void FlushEvents(INTEGER evmask, INTEGER stopmask) M68K_INLINE(0x201F, 0xA032);
@@ -105,8 +109,8 @@ static __inline__ __attribute__((__always_inline__)) Boolean GetOSEvent(INTEGER 
     register INTEGER _evmask __asm__("d0") = evmask;
     register EventRecord* _eventp __asm__("a0") = eventp;
     __asm__ __volatile__(".short 0xA031, 0x5240"
-        : "=r"(_ret)
-        : "r"(_evmask), "r"(_eventp)
+        : "=r"(_ret), "+r"(_eventp)
+        : "r"(_evmask)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -121,8 +125,8 @@ static __inline__ __attribute__((__always_inline__)) Boolean OSEventAvail(INTEGE
     register INTEGER _evmask __asm__("d0") = evmask;
     register EventRecord* _eventp __asm__("a0") = eventp;
     __asm__ __volatile__(".short 0xA030, 0x5240"
-        : "=r"(_ret)
-        : "r"(_evmask), "r"(_eventp)
+        : "=r"(_ret), "+r"(_eventp)
+        : "r"(_evmask)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -130,9 +134,17 @@ static __inline__ __attribute__((__always_inline__)) Boolean OSEventAvail(INTEGE
 pascal Boolean OSEventAvail(INTEGER evmask, EventRecord *eventp);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ void SetEventMask(INTEGER evmask);
+#else
 pascal void SetEventMask(INTEGER evmask);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ QHdrPtr GetEvQHdr(void);
+#else
 pascal QHdrPtr GetEvQHdr(void);
+#endif
 
 pascal EvQEl* geteventelem(void);
 
@@ -191,13 +203,34 @@ static __inline__ __attribute__((__always_inline__)) OSErr PostEvent(INTEGER eve
     register INTEGER _eventNum __asm__("a0") = eventNum;
     register unsigned long _eventMsg __asm__("d0") = eventMsg;
     __asm__ __volatile__(".short 0xA02F"
-        : "=r"(_ret)
-        : "r"(_eventNum), "r"(_eventMsg)
+        : "=r"(_ret), "+r"(_eventNum)
+        : "r"(_eventMsg)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
 #else
 pascal OSErr PostEvent(INTEGER eventNum, unsigned long eventMsg);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PPostEvent(INTEGER evcode, LONGINT evmsg, EvQElPtr *qelp) {
+    /* _PPostEvent: A0 = event code, D0 = message; returns the element in A0 */
+    register long a0 __asm__("a0") = evcode;
+    register long d0 __asm__("d0") = evmsg;
+    __asm__ __volatile__(".short 0xA12F" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+    if (qelp)
+        *qelp = (EvQElPtr)a0;
+    return (OSErr)d0;
+}
+
+static __inline__ void SetEventMask(INTEGER evmask) {
+    *(INTEGER *)0x144 = evmask;
+}
+
+static __inline__ QHdrPtr GetEvQHdr(void) {
+    return (QHdrPtr)0x14A;
+}
+
 #endif
 
 #pragma options align=reset

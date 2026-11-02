@@ -218,6 +218,15 @@
         type: LONGINT
       - name: qelp
         type: EvQElPtr*
+    m68k-needs: [EvQElPtr]
+    m68k-body: |
+      /* _PPostEvent: A0 = event code, D0 = message; returns the element in A0 */
+      register long a0 __asm__("a0") = evcode;
+      register long d0 __asm__("d0") = evmsg;
+      __asm__ __volatile__(".short 0xA12F" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+      if (qelp)
+          *qelp = (EvQElPtr)a0;
+      return (OSErr)d0;
 
 # ####
 
@@ -314,12 +323,17 @@
     args:
       - name: evmask
         type: INTEGER
+    m68k-body: |
+      *(INTEGER *)0x144 = evmask;
 
 # ####
 
 - function:
     name: GetEvQHdr
     return: QHdrPtr
+    m68k-needs: [QHdrPtr]
+    m68k-body: |
+      return (QHdrPtr)0x14A;
 
 # ####
 

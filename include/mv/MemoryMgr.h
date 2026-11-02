@@ -200,8 +200,8 @@ static __inline__ __attribute__((__always_inline__)) Handle NewHandle(Size size)
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA122"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -214,8 +214,8 @@ static __inline__ __attribute__((__always_inline__)) Handle NewHandleClear(Size 
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA322"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -228,8 +228,8 @@ static __inline__ __attribute__((__always_inline__)) Handle NewHandleSys(Size si
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA522"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -242,8 +242,8 @@ static __inline__ __attribute__((__always_inline__)) Handle NewHandleSysClear(Si
     register Handle _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA722"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -286,8 +286,8 @@ static __inline__ __attribute__((__always_inline__)) Ptr NewPtr(Size size) {
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA11E"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -300,8 +300,8 @@ static __inline__ __attribute__((__always_inline__)) Ptr NewPtrClear(Size size) 
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA31E"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -314,8 +314,8 @@ static __inline__ __attribute__((__always_inline__)) Ptr NewPtrSys(Size size) {
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA51E"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -328,8 +328,8 @@ static __inline__ __attribute__((__always_inline__)) Ptr NewPtrSysClear(Size siz
     register Ptr _ret __asm__("a0");
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA71E"
-        : "=r"(_ret)
-        : "r"(_size)
+        : "=r"(_ret), "+r"(_size)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -429,8 +429,8 @@ enum { _ReserveMem = 0xA040 };
 static __inline__ __attribute__((__always_inline__)) void ReserveMem(Size needed) {
     register Size _needed __asm__("d0") = needed;
     __asm__ __volatile__(".short 0xA040"
+        : "+r"(_needed)
         : 
-        : "r"(_needed)
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
@@ -441,8 +441,8 @@ enum { _ReserveMemSys = 0xA440 };
 static __inline__ __attribute__((__always_inline__)) void ReserveMemSys(Size needed) {
     register Size _needed __asm__("d0") = needed;
     __asm__ __volatile__(".short 0xA440"
+        : "+r"(_needed)
         : 
-        : "r"(_needed)
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
@@ -454,8 +454,8 @@ enum { _PurgeMem = 0xA04D };
 static __inline__ __attribute__((__always_inline__)) void PurgeMem(Size needed) {
     register Size _needed __asm__("d0") = needed;
     __asm__ __volatile__(".short 0xA04D"
+        : "+r"(_needed)
         : 
-        : "r"(_needed)
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
@@ -466,8 +466,8 @@ enum { _PurgeMemSys = 0xA44D };
 static __inline__ __attribute__((__always_inline__)) void PurgeMemSys(Size needed) {
     register Size _needed __asm__("d0") = needed;
     __asm__ __volatile__(".short 0xA44D"
+        : "+r"(_needed)
         : 
-        : "r"(_needed)
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else
@@ -540,8 +540,8 @@ static __inline__ __attribute__((__always_inline__)) SignedByte HGetState(Handle
     register SignedByte _ret __asm__("d0");
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA069"
-        : "=r"(_ret)
-        : "r"(_h)
+        : "=r"(_ret), "+r"(_h)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -555,8 +555,8 @@ static __inline__ __attribute__((__always_inline__)) void HSetState(Handle h, Si
     register Handle _h __asm__("a0") = h;
     register SignedByte _flags __asm__("d0") = flags;
     __asm__ __volatile__(".short 0xA06A"
+        : "+r"(_h), "+r"(_flags)
         : 
-        : "r"(_h), "r"(_flags)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -568,8 +568,8 @@ enum { _HLock = 0xA029 };
 static __inline__ __attribute__((__always_inline__)) void HLock(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA029"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -581,8 +581,8 @@ enum { _HUnlock = 0xA02A };
 static __inline__ __attribute__((__always_inline__)) void HUnlock(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA02A"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -594,8 +594,8 @@ enum { _HPurge = 0xA049 };
 static __inline__ __attribute__((__always_inline__)) void HPurge(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA049"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -607,8 +607,8 @@ enum { _HNoPurge = 0xA04A };
 static __inline__ __attribute__((__always_inline__)) void HNoPurge(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA04A"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -620,8 +620,8 @@ enum { _HSetRBit = 0xA067 };
 static __inline__ __attribute__((__always_inline__)) void HSetRBit(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA067"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -633,8 +633,8 @@ enum { _HClrRBit = 0xA068 };
 static __inline__ __attribute__((__always_inline__)) void HClrRBit(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA068"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -649,8 +649,8 @@ enum { _SetApplBase = 0xA057 };
 static __inline__ __attribute__((__always_inline__)) void SetApplBase(Ptr newbase) {
     register Ptr _newbase __asm__("a0") = newbase;
     __asm__ __volatile__(".short 0xA057"
+        : "+r"(_newbase)
         : 
-        : "r"(_newbase)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -660,7 +660,11 @@ pascal void SetApplBase(Ptr newbase);
 enum { _MoreMasters = 0xA036 };
 pascal void MoreMasters(void) M68K_INLINE(0xA036);
 
+#if TARGET_CPU_68K
+static __inline__ void InitZone(GrowZoneUPP pGrowZone, int16_t cMoreMasters, Ptr limitPtr, THz startPtr);
+#else
 pascal void InitZone(GrowZoneUPP pGrowZone, int16_t cMoreMasters, Ptr limitPtr, THz startPtr);
+#endif
 
 enum { _GetZone = 0xA11A };
 #if TARGET_CPU_68K
@@ -681,8 +685,8 @@ enum { _SetZone = 0xA01B };
 static __inline__ __attribute__((__always_inline__)) void SetZone(THz hz) {
     register THz _hz __asm__("a0") = hz;
     __asm__ __volatile__(".short 0xA01B"
+        : "+r"(_hz)
         : 
-        : "r"(_hz)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -694,8 +698,8 @@ enum { _DisposeHandle = 0xA023 };
 static __inline__ __attribute__((__always_inline__)) void DisposeHandle(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA023"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -708,8 +712,8 @@ static __inline__ __attribute__((__always_inline__)) Size GetHandleSize(Handle h
     register Size _ret __asm__("d0");
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA025"
-        : "=r"(_ret)
-        : "r"(_h)
+        : "=r"(_ret), "+r"(_h)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -723,8 +727,8 @@ static __inline__ __attribute__((__always_inline__)) void SetHandleSize(Handle h
     register Handle _h __asm__("a0") = h;
     register Size _newsize __asm__("d0") = newsize;
     __asm__ __volatile__(".short 0xA024"
+        : "+r"(_h), "+r"(_newsize)
         : 
-        : "r"(_h), "r"(_newsize)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -752,8 +756,8 @@ static __inline__ __attribute__((__always_inline__)) void ReallocateHandle(Handl
     register Handle _h __asm__("a0") = h;
     register Size _size __asm__("d0") = size;
     __asm__ __volatile__(".short 0xA027"
+        : "+r"(_h), "+r"(_size)
         : 
-        : "r"(_h), "r"(_size)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -765,8 +769,8 @@ enum { _DisposePtr = 0xA01F };
 static __inline__ __attribute__((__always_inline__)) void DisposePtr(Ptr p) {
     register Ptr _p __asm__("a0") = p;
     __asm__ __volatile__(".short 0xA01F"
+        : "+r"(_p)
         : 
-        : "r"(_p)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -779,8 +783,8 @@ static __inline__ __attribute__((__always_inline__)) Size GetPtrSize(Ptr p) {
     register Size _ret __asm__("d0");
     register Ptr _p __asm__("a0") = p;
     __asm__ __volatile__(".short 0xA021"
-        : "=r"(_ret)
-        : "r"(_p)
+        : "=r"(_ret), "+r"(_p)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -794,8 +798,8 @@ static __inline__ __attribute__((__always_inline__)) void SetPtrSize(Ptr p, Size
     register Ptr _p __asm__("a0") = p;
     register Size _newsize __asm__("d0") = newsize;
     __asm__ __volatile__(".short 0xA020"
+        : "+r"(_p), "+r"(_newsize)
         : 
-        : "r"(_p), "r"(_newsize)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -824,8 +828,8 @@ static __inline__ __attribute__((__always_inline__)) void BlockMove(const void *
     register void* _dst __asm__("a1") = dst;
     register Size _cnt __asm__("d0") = cnt;
     __asm__ __volatile__(".short 0xA02E"
+        : "+r"(_src), "+r"(_dst), "+r"(_cnt)
         : 
-        : "r"(_src), "r"(_dst), "r"(_cnt)
         : "d1", "d2", "cc", "memory");
 }
 #else
@@ -838,8 +842,8 @@ static __inline__ __attribute__((__always_inline__)) void BlockMoveData(const vo
     register void* _dst __asm__("a1") = dst;
     register Size _cnt __asm__("d0") = cnt;
     __asm__ __volatile__(".short 0xA22E"
+        : "+r"(_src), "+r"(_dst), "+r"(_cnt)
         : 
-        : "r"(_src), "r"(_dst), "r"(_cnt)
         : "d1", "d2", "cc", "memory");
 }
 #else
@@ -854,8 +858,8 @@ enum { _MoveHHi = 0xA064 };
 static __inline__ __attribute__((__always_inline__)) void MoveHHi(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA064"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -867,8 +871,8 @@ enum { _SetApplLimit = 0xA02D };
 static __inline__ __attribute__((__always_inline__)) void SetApplLimit(Ptr newlimit) {
     register Ptr _newlimit __asm__("a0") = newlimit;
     __asm__ __volatile__(".short 0xA02D"
+        : "+r"(_newlimit)
         : 
-        : "r"(_newlimit)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -880,8 +884,8 @@ enum { _SetGrowZone = 0xA04B };
 static __inline__ __attribute__((__always_inline__)) void SetGrowZone(GrowZoneUPP newgz) {
     register GrowZoneUPP _newgz __asm__("a0") = newgz;
     __asm__ __volatile__(".short 0xA04B"
+        : "+r"(_newgz)
         : 
-        : "r"(_newgz)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -893,17 +897,25 @@ enum { _EmptyHandle = 0xA02B };
 static __inline__ __attribute__((__always_inline__)) void EmptyHandle(Handle h) {
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA02B"
+        : "+r"(_h)
         : 
-        : "r"(_h)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
 pascal void EmptyHandle(Handle h);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ void HLockHi(Handle h);
+#else
 pascal void HLockHi(Handle h);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ THz SystemZone(void);
+#else
 pascal THz SystemZone(void);
+#endif
 
 #if TARGET_CPU_68K
 static __inline__ __attribute__((__always_inline__)) THz ApplicationZone(void) {
@@ -932,11 +944,23 @@ static __inline__ __attribute__((__always_inline__)) Size StackSpace(void) {
 pascal Size StackSpace(void);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ Ptr GetApplLimit(void);
+#else
 pascal Ptr GetApplLimit(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ Ptr TopMem(void);
+#else
 pascal Ptr TopMem(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ Handle GZSaveHnd(void);
+#else
 pascal Handle GZSaveHnd(void);
+#endif
 
 enum { _OSDispatch = 0xA88F };
 
@@ -962,8 +986,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr HoldMemory(void *addr
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
     __asm__ __volatile__(".short 0x7000, 0xA05C"
-        : "=r"(_ret)
-        : "r"(_address), "r"(_count)
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -977,8 +1001,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr UnholdMemory(void *ad
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
     __asm__ __volatile__(".short 0x7001, 0xA05C"
-        : "=r"(_ret)
-        : "r"(_address), "r"(_count)
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -992,8 +1016,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr LockMemory(void *addr
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
     __asm__ __volatile__(".short 0x7002, 0xA05C"
-        : "=r"(_ret)
-        : "r"(_address), "r"(_count)
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -1007,8 +1031,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryContiguous(
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
     __asm__ __volatile__(".short 0x7004, 0xA05C"
-        : "=r"(_ret)
-        : "r"(_address), "r"(_count)
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -1022,8 +1046,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr UnlockMemory(void *ad
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
     __asm__ __volatile__(".short 0x7003, 0xA05C"
-        : "=r"(_ret)
-        : "r"(_address), "r"(_count)
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -1064,8 +1088,8 @@ static __inline__ __attribute__((__always_inline__)) PageState GetPageState(cons
     register PageState _ret __asm__("d0");
     register const void* _address __asm__("a0") = address;
     __asm__ __volatile__(".short 0x7004, 0xA08D"
-        : "=r"(_ret)
-        : "r"(_address)
+        : "=r"(_ret), "+r"(_address)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1092,8 +1116,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr DebuggerLockMemory(vo
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
     __asm__ __volatile__(".short 0x7006, 0xA08D"
-        : "=r"(_ret)
-        : "r"(_address), "r"(_count)
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -1107,8 +1131,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr DebuggerUnlockMemory(
     register void* _address __asm__("a0") = address;
     register unsigned long _count __asm__("a1") = count;
     __asm__ __volatile__(".short 0x7007, 0xA08D"
-        : "=r"(_ret)
-        : "r"(_address), "r"(_count)
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -1117,13 +1141,29 @@ pascal OSErr DebuggerUnlockMemory(void *address, unsigned long count);
 #endif
 
 // Memory (PowerPC)
+#if TARGET_CPU_68K
+static __inline__ void BlockZero(void *destPtr, Size byteCount);
+#else
 pascal void BlockZero(void *destPtr, Size byteCount);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void BlockZeroUncached(void *destPtr, Size byteCount);
+#else
 pascal void BlockZeroUncached(void *destPtr, Size byteCount);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void BlockMoveUncached(const void *srcPtr, void *destPtr, Size byteCount);
+#else
 pascal void BlockMoveUncached(const void *srcPtr, void *destPtr, Size byteCount);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void BlockMoveDataUncached(const void *srcPtr, void *destPtr, Size byteCount);
+#else
 pascal void BlockMoveDataUncached(const void *srcPtr, void *destPtr, Size byteCount);
+#endif
 
 typedef struct MemoryBlock MemoryBlock;
 struct MemoryBlock {
@@ -1148,8 +1188,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr DisposeZone(THz zone)
     register OSErr _ret __asm__("d0");
     register THz _zone __asm__("a0") = zone;
     __asm__ __volatile__(".short 0x701D, 0xA0A4"
-        : "=r"(_ret)
-        : "r"(_zone)
+        : "=r"(_ret), "+r"(_zone)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1163,8 +1203,8 @@ static __inline__ __attribute__((__always_inline__)) Size InlineGetHandleSize(Ha
     register Size _ret __asm__("d0");
     register Handle _h __asm__("a0") = h;
     __asm__ __volatile__(".short 0xA025"
-        : "=r"(_ret)
-        : "r"(_h)
+        : "=r"(_ret), "+r"(_h)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1175,6 +1215,69 @@ pascal Size InlineGetHandleSize(Handle h);
 // _MemoryDispatch selector 5: A0 is the table and A1 the entry count,
 // which comes back in A1.
 #if TARGET_CPU_68K
+static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
+#else
+pascal OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ void InitZone(GrowZoneUPP pGrowZone, int16_t cMoreMasters, Ptr limitPtr, THz startPtr) {
+    struct {
+        THz startPtr;
+        Ptr limitPtr;
+        int16_t cMoreMasters;
+        GrowZoneUPP pGrowZone;
+    } __attribute__((__packed__)) blk;
+    register void *a0 __asm__("a0") = &blk;
+    blk.startPtr = startPtr;
+    blk.limitPtr = limitPtr;
+    blk.cMoreMasters = cMoreMasters;
+    blk.pGrowZone = pGrowZone;
+    __asm__ __volatile__(".short 0xA019" : "+r"(a0) : : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+
+static __inline__ void HLockHi(Handle h) {
+    MoveHHi(h);
+    HLock(h);
+}
+
+static __inline__ THz SystemZone(void) {
+    return *(THz *)0x2A6;
+}
+
+static __inline__ Ptr GetApplLimit(void) {
+    return *(Ptr *)0x130;
+}
+
+static __inline__ Ptr TopMem(void) {
+    return *(Ptr *)0x108;
+}
+
+static __inline__ Handle GZSaveHnd(void) {
+    return *(Handle *)0x328;
+}
+
+static __inline__ void BlockZero(void *destPtr, Size byteCount) {
+    /* volatile, so the loop is not turned into a call to memset */
+    volatile char *p = (volatile char *)destPtr;
+    while (byteCount-- > 0)
+        *p++ = 0;
+}
+
+static __inline__ void BlockZeroUncached(void *destPtr, Size byteCount) {
+    volatile char *p = (volatile char *)destPtr;
+    while (byteCount-- > 0)
+        *p++ = 0;
+}
+
+static __inline__ void BlockMoveUncached(const void *srcPtr, void *destPtr, Size byteCount) {
+    BlockMove(srcPtr, destPtr, byteCount);
+}
+
+static __inline__ void BlockMoveDataUncached(const void *srcPtr, void *destPtr, Size byteCount) {
+    BlockMoveData(srcPtr, destPtr, byteCount);
+}
+
 static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount) {
     register long _d0 __asm__("d0") = 5;
     register LogicalToPhysicalTable *_a0 __asm__("a0") = addresses;
@@ -1184,8 +1287,7 @@ static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned 
     *physicalEntryCount = _a1;
     return (OSErr)_d0;
 }
-#else
-pascal OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
+
 #endif
 
 #pragma options align=reset

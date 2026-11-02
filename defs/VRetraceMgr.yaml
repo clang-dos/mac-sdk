@@ -77,6 +77,9 @@
 - function:
     name: GetVBLQHdr
     return: QHdrPtr
+    m68k-needs: [QHdrPtr]
+    m68k-body: |
+      return (QHdrPtr)0x160;
 
 # ####
 

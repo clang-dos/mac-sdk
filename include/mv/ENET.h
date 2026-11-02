@@ -60,93 +60,114 @@ struct {
 typedef EParamBlock *EParamBlkPtr;
 
 #if TARGET_CPU_68K
-static __inline__ OSErr EWrite(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetWrite;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr EWrite(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr EWrite(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ OSErr EAttachPH(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetAttachPH;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr EAttachPH(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr EAttachPH(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ OSErr EDetachPH(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetDetachPH;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr EDetachPH(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr EDetachPH(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ OSErr ERead(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetRead;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr ERead(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr ERead(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ OSErr ERdCancel(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetRdCancel;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr ERdCancel(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr ERdCancel(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ OSErr EGetInfo(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetGetInfo;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr EGetInfo(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr EGetInfo(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ OSErr ESetGeneral(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetSetGeneral;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr ESetGeneral(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr ESetGeneral(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ OSErr EAddMulti(EParamBlkPtr thePBptr, Boolean async) {
-    thePBptr->csCode = ENetAddMulti;
-    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
-                 : PBControlSync((ParmBlkPtr)thePBptr);
-}
+static __inline__ OSErr EAddMulti(EParamBlkPtr thePBptr, Boolean async);
 #else
 pascal OSErr EAddMulti(EParamBlkPtr thePBptr, Boolean async);
 #endif
 
 #if TARGET_CPU_68K
+static __inline__ OSErr EDelMulti(EParamBlkPtr thePBptr, Boolean async);
+#else
+pascal OSErr EDelMulti(EParamBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr EWrite(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetWrite;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
+static __inline__ OSErr EAttachPH(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetAttachPH;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
+static __inline__ OSErr EDetachPH(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetDetachPH;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
+static __inline__ OSErr ERead(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetRead;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
+static __inline__ OSErr ERdCancel(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetRdCancel;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
+static __inline__ OSErr EGetInfo(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetGetInfo;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
+static __inline__ OSErr ESetGeneral(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetSetGeneral;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
+static __inline__ OSErr EAddMulti(EParamBlkPtr thePBptr, Boolean async) {
+    thePBptr->csCode = ENetAddMulti;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+
 static __inline__ OSErr EDelMulti(EParamBlkPtr thePBptr, Boolean async) {
     thePBptr->csCode = ENetDelMulti;
     return async ? PBControlAsync((ParmBlkPtr)thePBptr)
                  : PBControlSync((ParmBlkPtr)thePBptr);
 }
-#else
-pascal OSErr EDelMulti(EParamBlkPtr thePBptr, Boolean async);
+
 #endif
 
 #pragma options align=reset

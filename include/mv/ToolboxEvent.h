@@ -67,9 +67,28 @@ pascal void GetKeys(uint8_t *keys) M68K_INLINE(0xA976);
 enum { _TickCount = 0xA975 };
 pascal ULONGINT TickCount(void) M68K_INLINE(0xA975);
 
+#if TARGET_CPU_68K
+static __inline__ LONGINT GetDblTime(void);
+#else
 pascal LONGINT GetDblTime(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ LONGINT GetCaretTime(void);
+#else
 pascal LONGINT GetCaretTime(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ LONGINT GetDblTime(void) {
+    return *(LONGINT *)0x2F0;
+}
+
+static __inline__ LONGINT GetCaretTime(void) {
+    return *(LONGINT *)0x2F4;
+}
+
+#endif
 
 #pragma options align=reset
 

@@ -388,7 +388,18 @@ class Generator:
                 reg = r.lower()
                 body.append(f"register {ctype_of(a['type'])} _{a['name']} __asm__"
                             f"(\"{reg}\") = {a['name']};")
-                ins.append(f'"r"(_{a["name"]})')
+                # The trap may change any register it reads (an OS trap
+                # returns its result code in D0 even when the call has no
+                # result), so an input is also an output, unless it shares
+                # a register with an output already.
+                outregs = {("d0" if boolean_d0 else rr.lower())} if rr else set()
+                outregs |= {m2.group(1).lower() for m2 in (
+                    re.match(r"(?:Out|InOut)<([AD][0-7])>$", b.get("register") or "")
+                    for b in args) if m2}
+                if reg in outregs:
+                    ins.append(f'"r"(_{a["name"]})')
+                else:
+                    outs.append(f'"+r"(_{a["name"]})')
             else:
                 return False
             if reg in clobbers:
@@ -453,10 +464,15 @@ class Generator:
                 out.append(macro)
         elif fun.get("m68k-body"):
             # Glue that is short enough to inline: C code for 68k.
-            out.append("#if TARGET_CPU_68K")
-            out.append(f"static __inline__ {ret} {name}({params}) {{")
-            out += ["    " + l for l in fun["m68k-body"].rstrip().splitlines()]
-            out += ["}", "#else", proto + ";", "#endif"]
+            # The body may call functions declared later in the header,
+            # so only the prototype goes here; the definition goes last.
+            head = f"static __inline__ {ret} {name}({params})"
+            out += ["#if TARGET_CPU_68K", head + ";", "#else", proto + ";",
+                    "#endif"]
+            body = [head + " {"]
+            body += ["    " + l for l in fun["m68k-body"].rstrip().splitlines()]
+            body.append("}")
+            self.deferred.append((self.api, body))
         elif fun.get("m68k-pbtrap"):
             out.append("#if TARGET_CPU_68K")
             self.pb_trap(fun, name, args, ret, out)
@@ -489,9 +505,11 @@ class Generator:
         for inc in sorted(h.includes):
             out.append(f'#include "{inc}.h"')
         out += ["", "#pragma options align=mac68k", ""]
+        self.deferred = []
         for item in h.items:
             key, v = main_elem(item)
             api = str(item.get("api", "")).lower()
+            self.api = api
             if api == "carbon":
                 out.append("#if TARGET_API_MAC_CARBON")
             elif api == "classic":
@@ -520,6 +538,14 @@ class Generator:
             if api in ("carbon", "classic"):
                 out.append("#endif")
             out.append("")
+        if self.deferred:
+            out.append("#if TARGET_CPU_68K")
+            for api, body in self.deferred:
+                cond = {"carbon": "TARGET_API_MAC_CARBON",
+                        "classic": "!TARGET_API_MAC_CARBON"}.get(api)
+                out += ([f"#if {cond}"] if cond else []) + body + \
+                    (["#endif"] if cond else []) + [""]
+            out += ["#endif", ""]
         out += ["#pragma options align=reset", "", "#endif", ""]
         return "\n".join(out)
 

@@ -99,8 +99,8 @@ enum { _SleepQInstall = 0xA28A };
 static __inline__ __attribute__((__always_inline__)) void SleepQInstall(SleepQRecPtr qRecPtr) {
     register SleepQRecPtr _qRecPtr __asm__("a0") = qRecPtr;
     __asm__ __volatile__(".short 0xA28A"
+        : "+r"(_qRecPtr)
         : 
-        : "r"(_qRecPtr)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -112,8 +112,8 @@ enum { _SleepQRemove = 0xA48A };
 static __inline__ __attribute__((__always_inline__)) void SleepQRemove(SleepQRecPtr qRecPtr) {
     register SleepQRecPtr _qRecPtr __asm__("a0") = qRecPtr;
     __asm__ __volatile__(".short 0xA48A"
+        : "+r"(_qRecPtr)
         : 
-        : "r"(_qRecPtr)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -124,8 +124,8 @@ pascal void SleepQRemove(SleepQRecPtr qRecPtr);
 static __inline__ __attribute__((__always_inline__)) void SetTimeout(INTEGER count) {
     register INTEGER _count __asm__("d0") = count;
     __asm__ __volatile__(".short 0x207C, 0x0000, 0x0001, 0xA07F"
+        : "+r"(_count)
         : 
-        : "r"(_count)
         : "d1", "d2", "a0", "a1", "cc", "memory");
 }
 #else

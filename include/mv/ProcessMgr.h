@@ -128,8 +128,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr LaunchApplication(Lau
     register OSErr _ret __asm__("d0");
     register LaunchParamBlockRec* _params __asm__("a0") = params;
     __asm__ __volatile__(".short 0xA9F2"
-        : "=r"(_ret)
-        : "r"(_params)
+        : "=r"(_ret), "+r"(_params)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }

@@ -713,6 +713,20 @@
       - name: startPtr
         type: THz
     executor: true
+    m68k-needs: [THz, GrowZoneUPP]
+    m68k-body: |
+      struct {
+          THz startPtr;
+          Ptr limitPtr;
+          int16_t cMoreMasters;
+          GrowZoneUPP pGrowZone;
+      } __attribute__((__packed__)) blk;
+      register void *a0 __asm__("a0") = &blk;
+      blk.startPtr = startPtr;
+      blk.limitPtr = limitPtr;
+      blk.cMoreMasters = cMoreMasters;
+      blk.pGrowZone = pGrowZone;
+      __asm__ __volatile__(".short 0xA019" : "+r"(a0) : : "d0", "d1", "d2", "a1", "cc", "memory");
 
 # ####
 
@@ -949,6 +963,10 @@
       - name: h
         type: Handle
     executor: C_
+    m68k-needs: [MoveHHi, HLock]
+    m68k-body: |
+      MoveHHi(h);
+      HLock(h);
 
 # ####
 
@@ -956,6 +974,9 @@
     name: SystemZone
     return: THz
     executor: C_
+    m68k-needs: [THz]
+    m68k-body: |
+      return *(THz *)0x2A6;
 
 # ####
 
@@ -981,6 +1002,8 @@
     name: GetApplLimit
     return: Ptr
     executor: C_
+    m68k-body: |
+      return *(Ptr *)0x130;
 
 # ####
 
@@ -988,6 +1011,8 @@
     name: TopMem
     return: Ptr
     executor: C_
+    m68k-body: |
+      return *(Ptr *)0x108;
 
 # ####
 
@@ -995,6 +1020,8 @@
     name: GZSaveHnd
     return: Handle
     executor: C_
+    m68k-body: |
+      return *(Handle *)0x328;
 
 # ####
 
@@ -1304,6 +1331,11 @@
     - name: byteCount
       type: Size
     comment: Memory (PowerPC)
+    m68k-body: |
+      /* volatile, so the loop is not turned into a call to memset */
+      volatile char *p = (volatile char *)destPtr;
+      while (byteCount-- > 0)
+          *p++ = 0;
 
 # ####
 
@@ -1314,6 +1346,10 @@
       type: void*
     - name: byteCount
       type: Size
+    m68k-body: |
+      volatile char *p = (volatile char *)destPtr;
+      while (byteCount-- > 0)
+          *p++ = 0;
 
 # ####
 
@@ -1326,6 +1362,9 @@
       type: void*
     - name: byteCount
       type: Size
+    m68k-needs: [BlockMove]
+    m68k-body: |
+      BlockMove(srcPtr, destPtr, byteCount);
 
 # ####
 
@@ -1338,6 +1377,9 @@
       type: void*
     - name: byteCount
       type: Size
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      BlockMoveData(srcPtr, destPtr, byteCount);
 
 # ####
 

@@ -385,6 +385,17 @@
       - name: rnp
         type: INTEGER*
     executor: true
+    m68k-needs: [ParamBlockRec, PBOpenSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)name;
+      pb.ioParam.ioVRefNum = 0;
+      pb.ioParam.ioPermssn = 0;
+      err = PBOpenSync(&pb);
+      *rnp = pb.ioParam.ioRefNum;
+      return err;
 
 # ####
 
@@ -395,6 +406,12 @@
       - name: rn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBCloseSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      return PBCloseSync(&pb);
 
 # ####
 
@@ -409,6 +426,16 @@
       - name: param
         type: const void*
     executor: true
+    m68k-needs: [ParamBlockRec, PBControlSync, BlockMoveData]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.cntrlParam.ioCompletion = 0;
+      pb.cntrlParam.ioVRefNum = 0;
+      pb.cntrlParam.ioCRefNum = rn;
+      pb.cntrlParam.csCode = code;
+      if (param)
+          BlockMoveData(param, pb.cntrlParam.csParam, sizeof pb.cntrlParam.csParam);
+      return PBControlSync(&pb);
 
 # ####
 
@@ -423,6 +450,18 @@
       - name: param
         type: Ptr
     executor: true
+    m68k-needs: [ParamBlockRec, PBStatusSync, BlockMoveData]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.cntrlParam.ioCompletion = 0;
+      pb.cntrlParam.ioVRefNum = 0;
+      pb.cntrlParam.ioCRefNum = rn;
+      pb.cntrlParam.csCode = code;
+      err = PBStatusSync(&pb);
+      if (param)
+          BlockMoveData(pb.cntrlParam.csParam, param, sizeof pb.cntrlParam.csParam);
+      return err;
 
 # ####
 
@@ -433,6 +472,12 @@
       - name: rn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBKillIOSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      return PBKillIOSync(&pb);
 
 # ####
 
@@ -443,6 +488,10 @@
       - name: rn
         type: INTEGER
     executor: true
+    m68k-needs: [DCtlHandle]
+    m68k-body: |
+      /* UTableBase: the unit table, indexed by -(refNum + 1). */
+      return (*(DCtlHandle **)0x11C)[~rn];
 
 # ####
 # Raw 68K entry points (Executor only).  The wrapper objects and the

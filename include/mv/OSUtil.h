@@ -5,7 +5,9 @@
 #include "../ConditionalMacros.h"
 #include "FileMgr.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 #include "OSEvent.h"
+#include "ShutDown.h"
 #include "VRetraceMgr.h"
 
 #pragma options align=mac68k
@@ -252,8 +254,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PtrToXHand(const void
     register Handle _h __asm__("a1") = h;
     register LONGINT _s __asm__("d0") = s;
     __asm__ __volatile__(".short 0xA9E2"
-        : "=r"(_ret)
-        : "r"(_p), "r"(_h), "r"(_s)
+        : "=r"(_ret), "+r"(_p), "+r"(_h)
+        : "r"(_s)
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -268,8 +270,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr HandAndHand(Handle h1
     register Handle _h1 __asm__("a0") = h1;
     register Handle _h2 __asm__("a1") = h2;
     __asm__ __volatile__(".short 0xA9E4"
-        : "=r"(_ret)
-        : "r"(_h1), "r"(_h2)
+        : "=r"(_ret), "+r"(_h1), "+r"(_h2)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -285,8 +287,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PtrAndHand(const void
     register Handle _h __asm__("a1") = h;
     register LONGINT _s1 __asm__("d0") = s1;
     __asm__ __volatile__(".short 0xA9EF"
-        : "=r"(_ret)
-        : "r"(_p), "r"(_h), "r"(_s1)
+        : "=r"(_ret), "+r"(_p), "+r"(_h)
+        : "r"(_s1)
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -295,12 +297,24 @@ pascal OSErr PtrAndHand(const void *p, Handle h, LONGINT s1);
 #endif
 
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
+#else
 pascal INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ Boolean EqualString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
+#else
 pascal Boolean EqualString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig);
+#endif
 
 
+#if TARGET_CPU_68K
+static __inline__ void UpperString(StringPtr s, Boolean diac);
+#else
 pascal void UpperString(StringPtr s, Boolean diac);
+#endif
 
 #define GetDateTime(mactimepointer) (*(mactimepointer) = *(ULONGINT*)0x020C)
 
@@ -310,8 +324,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr ReadDateTime(ULONGINT
     register OSErr _ret __asm__("d0");
     register ULONGINT* _secs __asm__("a0") = secs;
     __asm__ __volatile__(".short 0xA039"
-        : "=r"(_ret)
-        : "r"(_secs)
+        : "=r"(_ret), "+r"(_secs)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -340,8 +354,8 @@ static __inline__ __attribute__((__always_inline__)) void DateToSeconds(DateTime
     register DateTimeRec* _d __asm__("a0") = d;
     register ULONGINT _s __asm__("d0");
     __asm__ __volatile__(".short 0xA9C7"
-        : "=r"(_s)
-        : "r"(_d)
+        : "+r"(_d), "=r"(_s)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     if (s) *s = _s;
 }
@@ -355,17 +369,25 @@ static __inline__ __attribute__((__always_inline__)) void SecondsToDate(ULONGINT
     register ULONGINT _mactime __asm__("d0") = mactime;
     register DateTimeRec* _d __asm__("a0") = d;
     __asm__ __volatile__(".short 0xA9C6"
+        : "+r"(_mactime), "+r"(_d)
         : 
-        : "r"(_mactime), "r"(_d)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
 pascal void SecondsToDate(ULONGINT mactime, DateTimeRec *d);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ void GetTime(DateTimeRec *d);
+#else
 pascal void GetTime(DateTimeRec *d);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void SetTime(DateTimeRec *d);
+#else
 pascal void SetTime(DateTimeRec *d);
+#endif
 
 enum { _InitUtil = 0xA03F };
 #if TARGET_CPU_68K
@@ -381,7 +403,11 @@ static __inline__ __attribute__((__always_inline__)) OSErr InitUtil(void) {
 pascal OSErr InitUtil(void);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ SysPPtr GetSysPPtr(void);
+#else
 pascal SysPPtr GetSysPPtr(void);
+#endif
 
 enum { _WriteParam = 0xA038 };
 #if TARGET_CPU_68K
@@ -403,8 +429,8 @@ static __inline__ __attribute__((__always_inline__)) void Enqueue(QElemPtr e, QH
     register QElemPtr _e __asm__("a0") = e;
     register QHdrPtr _h __asm__("a1") = h;
     __asm__ __volatile__(".short 0xA96F"
+        : "+r"(_e), "+r"(_h)
         : 
-        : "r"(_e), "r"(_h)
         : "d0", "d1", "d2", "cc", "memory");
 }
 #else
@@ -418,8 +444,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr Dequeue(QElemPtr e, Q
     register QElemPtr _e __asm__("a0") = e;
     register QHdrPtr _h __asm__("a1") = h;
     __asm__ __volatile__(".short 0xA96E"
-        : "=r"(_ret)
-        : "r"(_e), "r"(_h)
+        : "=r"(_ret), "+r"(_e), "+r"(_h)
+        : 
         : "d1", "d2", "cc", "memory");
     return _ret;
 }
@@ -430,9 +456,17 @@ pascal OSErr Dequeue(QElemPtr e, QHdrPtr h);
 // extern LONGINT GetTrapAddress(INTEGER n); // 68K in emustubs, not supported on ppc
 // extern void SetTrapAddress(LONGINT addr,
 // INTEGER n);
+#if TARGET_CPU_68K
+static __inline__ ProcPtr NGetTrapAddress(uint16_t n, TrapType ttype);
+#else
 pascal ProcPtr NGetTrapAddress(uint16_t n, TrapType ttype);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void NSetTrapAddress(ProcPtr addr, uint16_t n, TrapType ttype);
+#else
 pascal void NSetTrapAddress(ProcPtr addr, uint16_t n, TrapType ttype);
+#endif
 
 enum { _GetTrapAddress = 0xA146 };
 #if TARGET_CPU_68K
@@ -440,8 +474,8 @@ static __inline__ __attribute__((__always_inline__)) ProcPtr GetTrapAddress(uint
     register ProcPtr _ret __asm__("a0");
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA146"
-        : "=r"(_ret)
-        : "r"(_n)
+        : "=r"(_ret), "+r"(_n)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -454,8 +488,8 @@ static __inline__ __attribute__((__always_inline__)) ProcPtr INVALID_GetTrapAddr
     register ProcPtr _ret __asm__("a0");
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA546"
-        : "=r"(_ret)
-        : "r"(_n)
+        : "=r"(_ret), "+r"(_n)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -468,8 +502,8 @@ static __inline__ __attribute__((__always_inline__)) ProcPtr GetOSTrapAddress(ui
     register ProcPtr _ret __asm__("a0");
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA346"
-        : "=r"(_ret)
-        : "r"(_n)
+        : "=r"(_ret), "+r"(_n)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -482,8 +516,8 @@ static __inline__ __attribute__((__always_inline__)) ProcPtr GetToolTrapAddress(
     register ProcPtr _ret __asm__("a0");
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA746"
-        : "=r"(_ret)
-        : "r"(_n)
+        : "=r"(_ret), "+r"(_n)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -497,8 +531,8 @@ static __inline__ __attribute__((__always_inline__)) void SetTrapAddress(ProcPtr
     register ProcPtr _addr __asm__("a0") = addr;
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA047"
+        : "+r"(_addr), "+r"(_n)
         : 
-        : "r"(_addr), "r"(_n)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -510,8 +544,8 @@ static __inline__ __attribute__((__always_inline__)) void INVALID_SetTrapAddress
     register ProcPtr _addr __asm__("a0") = addr;
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA447"
+        : "+r"(_addr), "+r"(_n)
         : 
-        : "r"(_addr), "r"(_n)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -523,8 +557,8 @@ static __inline__ __attribute__((__always_inline__)) void SetOSTrapAddress(ProcP
     register ProcPtr _addr __asm__("a0") = addr;
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA247"
+        : "+r"(_addr), "+r"(_n)
         : 
-        : "r"(_addr), "r"(_n)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -536,8 +570,8 @@ static __inline__ __attribute__((__always_inline__)) void SetToolTrapAddress(Pro
     register ProcPtr _addr __asm__("a0") = addr;
     register uint16_t _n __asm__("d0") = n;
     __asm__ __volatile__(".short 0xA647"
+        : "+r"(_addr), "+r"(_n)
         : 
-        : "r"(_addr), "r"(_n)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -558,8 +592,8 @@ static __inline__ __attribute__((__always_inline__)) void Delay(LONGINT n, LONGI
     register LONGINT _n __asm__("a0") = n;
     register LONGINT _ftp __asm__("d0");
     __asm__ __volatile__(".short 0xA03B"
-        : "=r"(_ftp)
-        : "r"(_n)
+        : "+r"(_n), "=r"(_ftp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     if (ftp) *ftp = _ftp;
 }
@@ -570,7 +604,11 @@ pascal void Delay(LONGINT n, LONGINT *ftp);
 enum { _SysBeep = 0xA9C8 };
 pascal void SysBeep(INTEGER i) M68K_INLINE(0xA9C8);
 
+#if TARGET_CPU_68K
+static __inline__ void Environs(INTEGER *rom, INTEGER *machine);
+#else
 pascal void Environs(INTEGER *rom, INTEGER *machine);
+#endif
 
 enum { _SysEnvirons = 0xA090 };
 #if TARGET_CPU_68K
@@ -579,8 +617,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SysEnvirons(INTEGER v
     register INTEGER _vers __asm__("d0") = vers;
     register SysEnvRecPtr _p __asm__("a0") = p;
     __asm__ __volatile__(".short 0xA090"
-        : "=r"(_ret)
-        : "r"(_vers), "r"(_p)
+        : "=r"(_ret), "+r"(_p)
+        : "r"(_vers)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -588,13 +626,21 @@ static __inline__ __attribute__((__always_inline__)) OSErr SysEnvirons(INTEGER v
 pascal OSErr SysEnvirons(INTEGER vers, SysEnvRecPtr p);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ void Restart(void);
+#else
 pascal void Restart(void);
+#endif
 
 pascal void SetUpA5(void);
 
 pascal void RestoreA5(void);
 
+#if TARGET_CPU_68K
+static __inline__ Byte GetMMUMode(void);
+#else
 pascal Byte GetMMUMode(void);
+#endif
 
 enum { _SwapMMUMode = 0xA05D };
 #if TARGET_CPU_68K
@@ -643,8 +689,8 @@ static __inline__ __attribute__((__always_inline__)) void HWPriv(LONGINT d0, LON
     register LONGINT _d0 __asm__("d0") = d0;
     register LONGINT _a0 __asm__("a0") = a0;
     __asm__ __volatile__(".short 0xA198"
+        : "+r"(_d0), "+r"(_a0)
         : 
-        : "r"(_d0), "r"(_a0)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -678,13 +724,29 @@ static __inline__ __attribute__((__always_inline__)) LONGINT SetA5(LONGINT a5) {
 pascal LONGINT SetA5(LONGINT a5);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ void c2pstrcpy(Str255 dst, const char *src);
+#else
 pascal void c2pstrcpy(Str255 dst, const char *src);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void p2cstrcpy(char *dst, ConstStr255Param src);
+#else
 pascal void p2cstrcpy(char *dst, ConstStr255Param src);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void CopyCStringToPascal(const char *src, Str255 dst);
+#else
 pascal void CopyCStringToPascal(const char *src, Str255 dst);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void CopyPascalStringToC(ConstStr255Param src, char *dst);
+#else
 pascal void CopyPascalStringToC(ConstStr255Param src, char *dst);
+#endif
 
 typedef union MachineLocationDelta MachineLocationDelta;
 union MachineLocationDelta {
@@ -724,8 +786,8 @@ enum { _SysErrorDispatch = 0xA9C9 };
 static __inline__ __attribute__((__always_inline__)) void ReadLocation(MachineLocation *loc) {
     register MachineLocation* _loc __asm__("a0") = loc;
     __asm__ __volatile__(".short 0x203C, 0x000C, 0x00E4, 0xA051"
+        : "+r"(_loc)
         : 
-        : "r"(_loc)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -736,8 +798,8 @@ pascal void ReadLocation(MachineLocation *loc);
 static __inline__ __attribute__((__always_inline__)) void WriteLocation(const MachineLocation *loc) {
     register const MachineLocation* _loc __asm__("a0") = loc;
     __asm__ __volatile__(".short 0x203C, 0x000C, 0x00E4, 0xA052"
+        : "+r"(_loc)
         : 
-        : "r"(_loc)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -750,8 +812,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr DTInstall(DeferredTas
     register OSErr _ret __asm__("d0");
     register DeferredTaskPtr _dtTaskPtr __asm__("a0") = dtTaskPtr;
     __asm__ __volatile__(".short 0xA082"
-        : "=r"(_ret)
-        : "r"(_dtTaskPtr)
+        : "=r"(_ret), "+r"(_dtTaskPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -766,8 +828,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr DeferUserFn(UserFnUPP
     register UserFnUPP _userFunction __asm__("a0") = userFunction;
     register void* _argument __asm__("d0") = argument;
     __asm__ __volatile__(".short 0xA08F"
-        : "=r"(_ret)
-        : "r"(_userFunction), "r"(_argument)
+        : "=r"(_ret), "+r"(_userFunction)
+        : "r"(_argument)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -826,28 +888,20 @@ pascal StatusRegisterContents EnterSupervisorMode(void);
 
 // Enters the 68k debugger; on 68k this is Debugger.
 #if TARGET_CPU_68K
-static __inline__ void Debugger68k(void) {
-    Debugger();
-}
+static __inline__ void Debugger68k(void);
 #else
 pascal void Debugger68k(void);
 #endif
 
 #if TARGET_CPU_68K
-static __inline__ void DebugStr68k(ConstStr255Param debuggerMsg) {
-    DebugStr(debuggerMsg);
-}
+static __inline__ void DebugStr68k(ConstStr255Param debuggerMsg);
 #else
 pascal void DebugStr68k(ConstStr255Param debuggerMsg);
 #endif
 
 // The address of a trap's entry in the dispatch tables in low memory.
 #if TARGET_CPU_68K
-static __inline__ UniversalProcPtr* GetTrapVector(uint16_t trapNumber) {
-    if (trapNumber & 0x0800)
-        return (UniversalProcPtr *)(0xE00 + ((trapNumber & 0x3FF) << 2));
-    return (UniversalProcPtr *)(0x400 + ((trapNumber & 0xFF) << 2));
-}
+static __inline__ UniversalProcPtr* GetTrapVector(uint16_t trapNumber);
 #else
 pascal UniversalProcPtr* GetTrapVector(uint16_t trapNumber);
 #endif
@@ -860,6 +914,152 @@ typedef OSStatus (*ExceptionHandler)(ExceptionInformation *theException);
 
 // PowerPC only.
 pascal ExceptionHandler InstallExceptionHandler(ExceptionHandler theHandler);
+
+#if TARGET_CPU_68K
+static __inline__ INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig) {
+    /* _RelString: A0, A1 = text, D0 = lengths; CASE = 0x400, MARKS = 0x200 */
+    register const unsigned char *a0 __asm__("a0") = s1 + 1;
+    register const unsigned char *a1 __asm__("a1") = s2 + 1;
+    register long d0 __asm__("d0") = ((long)s1[0] << 16) | s2[0];
+    if (casesig) {
+        if (diacsig)
+            __asm__ __volatile__(".short 0xA450" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+        else
+            __asm__ __volatile__(".short 0xA650" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+    } else {
+        if (diacsig)
+            __asm__ __volatile__(".short 0xA050" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+        else
+            __asm__ __volatile__(".short 0xA250" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+    }
+    return (INTEGER)d0;
+}
+
+static __inline__ Boolean EqualString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig) {
+    /* _CmpString: D0 = 0 when equal; CASE = 0x400, MARKS = 0x200 */
+    register const unsigned char *a0 __asm__("a0") = s1 + 1;
+    register const unsigned char *a1 __asm__("a1") = s2 + 1;
+    register long d0 __asm__("d0") = ((long)s1[0] << 16) | s2[0];
+    if (casesig) {
+        if (diacsig)
+            __asm__ __volatile__(".short 0xA43C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+        else
+            __asm__ __volatile__(".short 0xA63C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+    } else {
+        if (diacsig)
+            __asm__ __volatile__(".short 0xA03C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+        else
+            __asm__ __volatile__(".short 0xA23C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+    }
+    return (short)d0 == 0;
+}
+
+static __inline__ void UpperString(StringPtr s, Boolean diac) {
+    /* _UprString: A0 = text, D0 = length; MARKS = 0x200 strips diacriticals */
+    register unsigned char *a0 __asm__("a0") = s + 1;
+    register long d0 __asm__("d0") = s[0];
+    if (diac)
+        __asm__ __volatile__(".short 0xA054" : "+r"(d0), "+r"(a0) : : "d1", "d2", "a1", "cc", "memory");
+    else
+        __asm__ __volatile__(".short 0xA254" : "+r"(d0), "+r"(a0) : : "d1", "d2", "a1", "cc", "memory");
+}
+
+static __inline__ void GetTime(DateTimeRec *d) {
+    SecondsToDate(*(ULONGINT *)0x20C, d);
+}
+
+static __inline__ void SetTime(DateTimeRec *d) {
+    ULONGINT s;
+    DateToSeconds(d, &s);
+    SetDateTime(s);
+}
+
+static __inline__ SysPPtr GetSysPPtr(void) {
+    return (SysPPtr)0x1F8;
+}
+
+static __inline__ ProcPtr NGetTrapAddress(uint16_t n, TrapType ttype) {
+    /* _GetOSTrapAddress (0xA346) or _GetToolTrapAddress (0xA746) */
+    register long d0 __asm__("d0") = n;
+    register ProcPtr a0 __asm__("a0");
+    if (ttype)
+        __asm__ __volatile__(".short 0xA746" : "=r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+    else
+        __asm__ __volatile__(".short 0xA346" : "=r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+    return a0;
+}
+
+static __inline__ void NSetTrapAddress(ProcPtr addr, uint16_t n, TrapType ttype) {
+    /* _SetOSTrapAddress (0xA247) or _SetToolTrapAddress (0xA647) */
+    register long d0 __asm__("d0") = n;
+    register ProcPtr a0 __asm__("a0") = addr;
+    if (ttype)
+        __asm__ __volatile__(".short 0xA647" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+    else
+        __asm__ __volatile__(".short 0xA247" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+}
+
+static __inline__ void Environs(INTEGER *rom, INTEGER *machine) {
+    /* the ROM version byte follows the machine byte at ROMBase + 8 */
+    unsigned char *rb = *(unsigned char **)0x2AE;
+    *rom = rb[9];
+    *machine = rb[9] == 0xFF ? 0 : 1;    /* macXLMachine : macMachine */
+}
+
+static __inline__ void Restart(void) {
+    ShutDwnStart();
+}
+
+static __inline__ Byte GetMMUMode(void) {
+    return *(Byte *)0xCB2;
+}
+
+static __inline__ void c2pstrcpy(Str255 dst, const char *src) {
+    /* volatile, so the length loop is not turned into a call to strlen */
+    const volatile char *p = src;
+    Size n = 0;
+    while (n < 255 && p[n])
+        n++;
+    BlockMoveData(src, dst + 1, n);
+    dst[0] = (unsigned char)n;
+}
+
+static __inline__ void p2cstrcpy(char *dst, ConstStr255Param src) {
+    unsigned char n = src[0];
+    BlockMoveData(src + 1, dst, n);
+    dst[n] = 0;
+}
+
+static __inline__ void CopyCStringToPascal(const char *src, Str255 dst) {
+    const volatile char *p = src;
+    Size n = 0;
+    while (n < 255 && p[n])
+        n++;
+    BlockMoveData(src, dst + 1, n);
+    dst[0] = (unsigned char)n;
+}
+
+static __inline__ void CopyPascalStringToC(ConstStr255Param src, char *dst) {
+    unsigned char n = src[0];
+    BlockMoveData(src + 1, dst, n);
+    dst[n] = 0;
+}
+
+static __inline__ void Debugger68k(void) {
+    Debugger();
+}
+
+static __inline__ void DebugStr68k(ConstStr255Param debuggerMsg) {
+    DebugStr(debuggerMsg);
+}
+
+static __inline__ UniversalProcPtr* GetTrapVector(uint16_t trapNumber) {
+    if (trapNumber & 0x0800)
+        return (UniversalProcPtr *)(0xE00 + ((trapNumber & 0x3FF) << 2));
+    return (UniversalProcPtr *)(0x400 + ((trapNumber & 0xFF) << 2));
+}
+
+#endif
 
 #pragma options align=reset
 

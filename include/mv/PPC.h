@@ -302,8 +302,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenSync(PPCOpenPB
     register OSErr _ret __asm__("d0");
     register PPCOpenPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -316,8 +316,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenAsync(PPCOpenP
     register OSErr _ret __asm__("d0");
     register PPCOpenPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -330,8 +330,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCStartSync(PPCStart
     register OSErr _ret __asm__("d0");
     register PPCStartPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -344,8 +344,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCStartAsync(PPCStar
     register OSErr _ret __asm__("d0");
     register PPCStartPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -358,8 +358,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCInformSync(PPCInfo
     register OSErr _ret __asm__("d0");
     register PPCInformPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7003, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -372,8 +372,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCInformAsync(PPCInf
     register OSErr _ret __asm__("d0");
     register PPCInformPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7003, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -386,8 +386,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptSync(PPCAcce
     register OSErr _ret __asm__("d0");
     register PPCAcceptPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7004, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -400,8 +400,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptAsync(PPCAcc
     register OSErr _ret __asm__("d0");
     register PPCAcceptPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7004, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -414,8 +414,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectSync(PPCReje
     register OSErr _ret __asm__("d0");
     register PPCRejectPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -428,8 +428,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectAsync(PPCRej
     register OSErr _ret __asm__("d0");
     register PPCRejectPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -442,8 +442,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteSync(PPCWrite
     register OSErr _ret __asm__("d0");
     register PPCWritePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -456,8 +456,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteAsync(PPCWrit
     register OSErr _ret __asm__("d0");
     register PPCWritePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -470,8 +470,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCReadSync(PPCReadPB
     register OSErr _ret __asm__("d0");
     register PPCReadPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -484,8 +484,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCReadAsync(PPCReadP
     register OSErr _ret __asm__("d0");
     register PPCReadPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -498,8 +498,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCEndSync(PPCEndPBPt
     register OSErr _ret __asm__("d0");
     register PPCEndPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -512,8 +512,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCEndAsync(PPCEndPBP
     register OSErr _ret __asm__("d0");
     register PPCEndPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -526,8 +526,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseSync(PPCClose
     register OSErr _ret __asm__("d0");
     register PPCClosePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -540,8 +540,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseAsync(PPCClos
     register OSErr _ret __asm__("d0");
     register PPCClosePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -554,8 +554,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsSync(IPCL
     register OSErr _ret __asm__("d0");
     register IPCListPortsPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -568,8 +568,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsAsync(IPC
     register OSErr _ret __asm__("d0");
     register IPCListPortsPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA4DD"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -582,8 +582,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr DeleteUserIdentity(un
     register OSErr _ret __asm__("d0");
     register unsigned long _userRef __asm__("a0") = userRef;
     __asm__ __volatile__(".short 0x700C, 0xA0DD"
-        : "=r"(_ret)
-        : "r"(_userRef)
+        : "=r"(_ret), "+r"(_userRef)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }

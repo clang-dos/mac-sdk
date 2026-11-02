@@ -76,13 +76,17 @@ the selector and where each argument goes.
   PowerPC target.
 - `tools/coverage.py` writes [docs/coverage.md](docs/coverage.md).
 
-`include/needs-glue.txt` lists the functions that have no trap on 68k:
-C-string variants, File Manager calls built on parameter blocks, and
-Mac OS 9 calls that never ran on 68k. They need glue code, which is not
-written yet. Glue that is short enough is inline C in the headers
-(`m68k-body` in the definitions): the AppleTalk calls, for example, set
-the driver and control code and call PBControl, as the ROM's PowerPC
-glue does.
+Calls with no trap of their own get their 68k glue as inline C in the
+headers (`m68k-body` in the definitions; `tools/set-body.py` adds it).
+The AppleTalk calls set the driver and control code and call PBControl,
+as the ROM's PowerPC glue does; the high-level File Manager, Device
+Manager and serial calls fill in a parameter block; the lowercase
+C-string calls (`fsopen`, `getwtitle`, ...) convert their strings and
+call the Pascal routine. The glue avoids `memcpy`, `memset` and 32-bit
+multiplies, since there is no 68k runtime library yet (BlockMoveData
+copies instead). `include/needs-glue.txt` lists what is left: mostly
+Mac OS 9 calls that never ran on 68k (the HFS Plus API, Navigation
+Services, Driver Services, the Name Registry).
 
 ## Tests
 
@@ -97,11 +101,13 @@ and builds the example.
 
 ## Not done yet
 
-- Coverage: the headers declare 99% of what the ROM's InterfaceLib
-  exports (see docs/coverage.md). ADSP has its control codes but not
-  its parameter blocks yet.
-- 68k glue for the functions in `needs-glue.txt`, and a runtime library
-  (`__udivsi3` and the other helpers clang calls on 68k).
+- Coverage: the headers declare all but 3 undocumented symbols of what
+  the ROM's InterfaceLib exports (see docs/coverage.md).
+- 68k glue for the rest of `needs-glue.txt` that did run on 68k (the
+  Fixed/extended conversions, the 64-bit Wide math, the Alias Manager
+  FSRef calls, TESetWordBreak and TESetClickLoop, which need a register
+  trampoline), and a runtime library (`__udivsi3`, `memcpy` and the
+  other helpers clang calls on 68k).
 - The linkers and tools, which are still in clang-dos/dos-sdk under
   `classicmac/`.
 

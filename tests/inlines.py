@@ -6,13 +6,29 @@ import os
 import re
 
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "include", "mv")
+# (name, condition): functions inside "#if TARGET_API_MAC_CARBON" (or its
+# negation) keep that condition in the output.
 names = []
+pat = re.compile(r"static __inline__ (?:__attribute__\(\(__always_inline__\)\) )?"
+                 r"[^(]*?\b(\w+)\(")
 for f in sorted(os.listdir(root)):
-    text = open(os.path.join(root, f)).read()
-    names += re.findall(r"static __inline__ (?:__attribute__\(\(__always_inline__\)\) )?"
-                        r"[^(]*?\b(\w+)\(", text)
+    stack = []
+    for line in open(os.path.join(root, f)):
+        if line.startswith("#if"):
+            stack.append(line.split(None, 1)[1].strip() if "TARGET_API_MAC_CARBON" in line else None)
+        elif line.startswith("#endif"):
+            stack.pop()
+        else:
+            m = pat.match(line)
+            if m:
+                conds = [c for c in stack if c]
+                names.append((m.group(1), conds[-1] if conds else None))
 print("#include <Multiverse.h>")
 print("void *const inline_traps[] = {")
-for n in names:
+for n, cond in names:
+    if cond:
+        print(f"#if {cond}")
     print(f"    (void *){n},")
+    if cond:
+        print("#endif")
 print("};")

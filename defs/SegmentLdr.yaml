@@ -101,6 +101,15 @@
         type: INTEGER*
       - name: countp
         type: INTEGER*
+    m68k-body: |
+      Handle h = *(Handle *)0xAEC;    /* AppParmHandle */
+      if (!h || !*h) {
+          *messagep = 0;
+          *countp = 0;
+          return;
+      }
+      *messagep = ((INTEGER *)*h)[0];
+      *countp = ((INTEGER *)*h)[1];
 
 # ####
 
@@ -111,6 +120,18 @@
         type: INTEGER
       - name: filep
         type: AppFile*
+    m68k-needs: [AppFile, BlockMoveData]
+    m68k-body: |
+      /* entries: vRefNum, fType, versNum, then the name padded to even length */
+      Handle h = *(Handle *)0xAEC;
+      unsigned char *p;
+      if (!h || !*h || index < 1 || index > ((INTEGER *)*h)[1])
+          return;
+      p = (unsigned char *)*h + 4;
+      while (--index)
+          p += 8 + ((p[8] + 2) & ~1);
+      BlockMoveData(p, filep, 8);
+      BlockMoveData(p + 8, filep->fName, p[8] + 1);
 
 # ####
 
@@ -119,6 +140,15 @@
     args:
       - name: index
         type: INTEGER
+    m68k-body: |
+      Handle h = *(Handle *)0xAEC;
+      unsigned char *p;
+      if (!h || !*h || index < 1 || index > ((INTEGER *)*h)[1])
+          return;
+      p = (unsigned char *)*h + 4;
+      while (--index)
+          p += 8 + ((p[8] + 2) & ~1);
+      *(OSType *)(p + 2) = 0;
 
 # ####
 

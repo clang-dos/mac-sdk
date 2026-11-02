@@ -377,6 +377,9 @@
         type: ConstStringPtr
       - name: str2
         type: ConstStringPtr
+    m68k-needs: [IUMagString]
+    m68k-body: |
+      return IUMagString((Ptr)str1 + 1, (Ptr)str2 + 1, str1[0], str2[0]);
 
 # ####
 
@@ -406,6 +409,9 @@
         type: ConstStringPtr
       - name: str2
         type: ConstStringPtr
+    m68k-needs: [IUMagIDString]
+    m68k-body: |
+      return IUMagIDString((Ptr)str1 + 1, (Ptr)str2 + 1, str1[0], str2[0]);
 
 # ####
 

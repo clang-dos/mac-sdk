@@ -98,9 +98,20 @@ pascal void StopSound(void);
 
 pascal Boolean SoundDone(void);
 
+#if TARGET_CPU_68K
+static __inline__ void GetSoundVol(INTEGER *volp);
+#else
 pascal void GetSoundVol(INTEGER *volp);
+#endif
 
 pascal void SetSoundVol(INTEGER vol);
+
+#if TARGET_CPU_68K
+static __inline__ void GetSoundVol(INTEGER *volp) {
+    *volp = *(Byte *)0x260 & 7;    /* SdVolume */
+}
+
+#endif
 
 #pragma options align=reset
 

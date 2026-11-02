@@ -199,8 +199,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIAction(SCSI_PB *p
     register OSErr _ret __asm__("d0");
     register SCSI_PB* _parameterBlock __asm__("a0") = parameterBlock;
     __asm__ __volatile__(".short 0x7001, 0xA089"
-        : "=r"(_ret)
-        : "r"(_parameterBlock)
+        : "=r"(_ret), "+r"(_parameterBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -213,8 +213,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIRegisterBus(SIMIn
     register OSErr _ret __asm__("d0");
     register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
     __asm__ __volatile__(".short 0x7002, 0xA089"
-        : "=r"(_ret)
-        : "r"(_SIMinfoPtr)
+        : "=r"(_ret), "+r"(_SIMinfoPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -227,8 +227,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIDeregisterBus(SCS
     register OSErr _ret __asm__("d0");
     register SCSI_PB* _parameterBlock __asm__("a0") = parameterBlock;
     __asm__ __volatile__(".short 0x7003, 0xA089"
-        : "=r"(_ret)
-        : "r"(_parameterBlock)
+        : "=r"(_ret), "+r"(_parameterBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -241,8 +241,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIReregisterBus(SIM
     register OSErr _ret __asm__("d0");
     register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
     __asm__ __volatile__(".short 0x7004, 0xA089"
-        : "=r"(_ret)
-        : "r"(_SIMinfoPtr)
+        : "=r"(_ret), "+r"(_SIMinfoPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -255,8 +255,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCSIKillXPT(SIMInitIn
     register OSErr _ret __asm__("d0");
     register SIMInitInfo* _SIMinfoPtr __asm__("a0") = SIMinfoPtr;
     __asm__ __volatile__(".short 0x7005, 0xA089"
-        : "=r"(_ret)
-        : "r"(_SIMinfoPtr)
+        : "=r"(_ret), "+r"(_SIMinfoPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }

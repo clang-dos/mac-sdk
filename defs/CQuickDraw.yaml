@@ -975,6 +975,9 @@
       - type: INTEGER*
       - type: INTEGER*
     executor: C_
+    m68k-body: |
+      *arg0 = *(INTEGER *)0x104;    /* ScrHRes */
+      *arg1 = *(INTEGER *)0x102;    /* ScrVRes */
 
 # ####
 

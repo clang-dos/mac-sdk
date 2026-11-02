@@ -1161,6 +1161,8 @@
       - name: w
         type: WindowRef
     return: CGrafPtr
+    m68k-body: |
+      return (CGrafPtr)w;
 
 # ####
 
@@ -1172,3 +1174,10 @@
         type: WindowRef
       - name: r
         type: const Rect*
+    m68k-needs: [GetPort, SetPort, InvalRect]
+    m68k-body: |
+      GrafPtr save;
+      GetPort(&save);
+      SetPort((GrafPtr)w);
+      InvalRect(r);
+      SetPort(save);

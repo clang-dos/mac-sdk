@@ -723,6 +723,8 @@
 - function:
     name: GetSysDirection
     return: INTEGER
+    m68k-body: |
+      return *(INTEGER *)0xBAC;
 
 # ####
 
@@ -731,6 +733,8 @@
     args:
       - name: just
         type: INTEGER
+    m68k-body: |
+      *(INTEGER *)0xBAC = just;
 
 # ####
 
@@ -1770,6 +1774,9 @@
       type: LangCode
     - name: language2
       type: LangCode
+    m68k-needs: [IULangOrder]
+    m68k-body: |
+      return IULangOrder(language1, language2);
 
 # ####
 
@@ -1789,6 +1796,9 @@
       type: LangCode
     - name: bLang
       type: LangCode
+    m68k-needs: [IUTextOrder]
+    m68k-body: |
+      return IUTextOrder((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], aScript, bScript, aLang, bLang);
 
 # ####
 
@@ -1812,6 +1822,9 @@
       type: LangCode
     - name: bLang
       type: LangCode
+    m68k-needs: [IUTextOrder]
+    m68k-body: |
+      return IUTextOrder((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, aScript, bScript, aLang, bLang);
 
 # ####
 
@@ -1829,6 +1842,9 @@
       type: INTEGER
     - name: itl2Handle
       type: Handle
+    m68k-needs: [IUMagPString]
+    m68k-body: |
+      return IUMagPString((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, itl2Handle);
 
 # ####
 
@@ -1846,6 +1862,9 @@
       type: INTEGER
     - name: itl2Handle
       type: Handle
+    m68k-needs: [IUMagIDPString]
+    m68k-body: |
+      return IUMagIDPString((Ptr)aPtr, (Ptr)bPtr, aLen, bLen, itl2Handle);
 
 # ####
 
@@ -1859,6 +1878,9 @@
       type: ConstStr255Param
     - name: itl2Handle
       type: Handle
+    m68k-needs: [IUMagPString]
+    m68k-body: |
+      return IUMagPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
 
 # ####
 
@@ -1872,6 +1894,9 @@
       type: ConstStr255Param
     - name: itl2Handle
       type: Handle
+    m68k-needs: [IUMagIDPString]
+    m68k-body: |
+      return IUMagIDPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
 
 # ####
 
@@ -1885,6 +1910,9 @@
       type: ConstStr255Param
     - name: itl2Handle
       type: Handle
+    m68k-needs: [IUMagPString]
+    m68k-body: |
+      return IUMagPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
 
 # ####
 
@@ -1898,6 +1926,9 @@
       type: ConstStr255Param
     - name: itl2Handle
       type: Handle
+    m68k-needs: [IUMagIDPString]
+    m68k-body: |
+      return IUMagIDPString((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], itl2Handle);
 
 # ####
 
@@ -1917,6 +1948,9 @@
       type: LangCode
     - name: bLang
       type: LangCode
+    m68k-needs: [IUTextOrder]
+    m68k-body: |
+      return IUTextOrder((Ptr)aStr + 1, (Ptr)bStr + 1, aStr[0], bStr[0], aScript, bScript, aLang, bLang);
 
 # ####
 

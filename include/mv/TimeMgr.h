@@ -22,8 +22,8 @@ enum { _InsTime = 0xA058 };
 static __inline__ __attribute__((__always_inline__)) void InsTime(QElemPtr taskp) {
     register QElemPtr _taskp __asm__("a0") = taskp;
     __asm__ __volatile__(".short 0xA058"
+        : "+r"(_taskp)
         : 
-        : "r"(_taskp)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -35,8 +35,8 @@ enum { _InsXTime = 0xA458 };
 static __inline__ __attribute__((__always_inline__)) void InsXTime(QElemPtr taskp) {
     register QElemPtr _taskp __asm__("a0") = taskp;
     __asm__ __volatile__(".short 0xA458"
+        : "+r"(_taskp)
         : 
-        : "r"(_taskp)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -48,8 +48,8 @@ enum { _RmvTime = 0xA059 };
 static __inline__ __attribute__((__always_inline__)) void RmvTime(QElemPtr taskp) {
     register QElemPtr _taskp __asm__("a0") = taskp;
     __asm__ __volatile__(".short 0xA059"
+        : "+r"(_taskp)
         : 
-        : "r"(_taskp)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -62,8 +62,8 @@ static __inline__ __attribute__((__always_inline__)) void PrimeTime(QElemPtr tas
     register QElemPtr _taskp __asm__("a0") = taskp;
     register LONGINT _count __asm__("d0") = count;
     __asm__ __volatile__(".short 0xA05A"
+        : "+r"(_taskp), "+r"(_count)
         : 
-        : "r"(_taskp), "r"(_count)
         : "d1", "d2", "a1", "cc", "memory");
 }
 #else

@@ -104,9 +104,9 @@ def main():
            "predates, such as the HFS Plus API.", "",
            "## 68k", "",
            f"- {len(glue)} declared calls have no 68k trap and need glue code "
-           "on 68k (listed in `include/needs-glue.txt`). Most are C-string "
-           "variants, high-level File Manager calls built on parameter blocks, "
-           "and Mac OS 9 calls that never ran on 68k.",
+           "on 68k (listed in `include/needs-glue.txt`). Most are Mac OS 9 "
+           "calls that never ran on 68k: the HFS Plus API, Navigation "
+           "Services, Driver Services and the Name Registry.",
            f"- The ROM's PowerPC glue describes {len(info)} 68k calls. Checked "
            f"against it: {summary}.", "",
            "## Not declared yet", "",

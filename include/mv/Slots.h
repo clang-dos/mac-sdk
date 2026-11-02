@@ -72,8 +72,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadByte(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7000, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -86,8 +86,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadWord(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7001, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -100,8 +100,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadLong(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7002, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -114,8 +114,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetCString(SpBlockPt
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7003, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -128,8 +128,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetBlock(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7005, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -142,8 +142,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindStruct(SpBlockPt
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7006, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -156,8 +156,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadStruct(SpBlockPt
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7007, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -170,8 +170,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SVersion(SpBlockPtr s
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7008, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -184,8 +184,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SetSRsrcState(SpBlock
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7009, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -198,8 +198,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr InsertSRTRec(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x700A, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -212,8 +212,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrc(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x700B, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -226,8 +226,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetTypeSRsrc(SpBlock
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x700C, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -240,8 +240,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetSRsrcPtr(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x701D, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -254,8 +254,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadInfo(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7010, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -268,8 +268,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadPRAMRec(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7011, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -282,8 +282,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SPutPRAMRec(SpBlockPt
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7012, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -296,8 +296,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadFHeader(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7013, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -310,8 +310,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SNextSRsrc(SpBlockPtr
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7014, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -324,8 +324,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SNextTypeSRsrc(SpBloc
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7015, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -338,8 +338,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SRsrcInfo(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7016, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -352,8 +352,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCkCardStat(SpBlockPt
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7018, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -366,8 +366,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadDrvrName(SpBlock
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7019, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -380,8 +380,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindDevBase(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x701B, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -394,8 +394,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindBigDevBase(SpBlo
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x701C, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -408,8 +408,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr InitSDeclMgr(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7020, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -422,8 +422,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SPrimaryInit(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7021, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -436,8 +436,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCardChanged(SpBlockP
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7022, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -450,8 +450,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SExec(SpBlockPtr spBl
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7023, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -464,8 +464,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SOffsetData(SpBlockPt
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7024, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -478,8 +478,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SInitPRAMRecs(SpBlock
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7025, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -492,8 +492,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SReadPBSize(SpBlockPt
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7026, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -506,8 +506,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCalcStep(SpBlockPtr 
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7028, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -520,8 +520,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SInitSRsrcTable(SpBlo
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7029, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -534,8 +534,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SSearchSRT(SpBlockPtr
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702A, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -548,8 +548,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SUpdateSRT(SpBlockPtr
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702B, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -562,8 +562,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SCalcSPointer(SpBlock
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702C, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -576,8 +576,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SGetDriver(SpBlockPtr
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702D, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -590,8 +590,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SPtrToSlot(SpBlockPtr
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702E, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -604,8 +604,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindSInfoRecPtr(SpBl
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x702F, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -618,8 +618,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SFindSRsrcPtr(SpBlock
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7030, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -632,8 +632,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SDeleteSRTRec(SpBlock
     register OSErr _ret __asm__("d0");
     register SpBlockPtr _spBlkPtr __asm__("a0") = spBlkPtr;
     __asm__ __volatile__(".short 0x7031, 0xA06E"
-        : "=r"(_ret)
-        : "r"(_spBlkPtr)
+        : "=r"(_ret), "+r"(_spBlkPtr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -648,8 +648,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SIntInstall(SQElemPtr
     register SQElemPtr _sIntQElemPtr __asm__("a0") = sIntQElemPtr;
     register INTEGER _theSlot __asm__("d0") = theSlot;
     __asm__ __volatile__(".short 0xA075"
-        : "=r"(_ret)
-        : "r"(_sIntQElemPtr), "r"(_theSlot)
+        : "=r"(_ret), "+r"(_sIntQElemPtr)
+        : "r"(_theSlot)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -664,8 +664,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr SIntRemove(SQElemPtr 
     register SQElemPtr _sIntQElemPtr __asm__("a0") = sIntQElemPtr;
     register INTEGER _theSlot __asm__("d0") = theSlot;
     __asm__ __volatile__(".short 0xA076"
-        : "=r"(_ret)
-        : "r"(_sIntQElemPtr), "r"(_theSlot)
+        : "=r"(_ret), "+r"(_sIntQElemPtr)
+        : "r"(_theSlot)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -679,8 +679,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr OpenSlotSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA200"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -694,8 +694,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr OpenSlotAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA600"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -704,11 +704,16 @@ pascal OSErr OpenSlotAsync(ParmBlkPtr paramBlock);
 #endif
 
 #if TARGET_CPU_68K
+static __inline__ OSErr OpenSlot(ParmBlkPtr paramBlock, Boolean async);
+#else
+pascal OSErr OpenSlot(ParmBlkPtr paramBlock, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
 static __inline__ OSErr OpenSlot(ParmBlkPtr paramBlock, Boolean async) {
     return async ? OpenSlotAsync(paramBlock) : OpenSlotSync(paramBlock);
 }
-#else
-pascal OSErr OpenSlot(ParmBlkPtr paramBlock, Boolean async);
+
 #endif
 
 #pragma options align=reset

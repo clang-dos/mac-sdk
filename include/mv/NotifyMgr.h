@@ -32,8 +32,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr NMInstall(NMRecPtr nm
     register OSErr _ret __asm__("d0");
     register NMRecPtr _nmptr __asm__("a0") = nmptr;
     __asm__ __volatile__(".short 0xA05E"
-        : "=r"(_ret)
-        : "r"(_nmptr)
+        : "=r"(_ret), "+r"(_nmptr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -47,8 +47,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr NMRemove(NMRecPtr nmp
     register OSErr _ret __asm__("d0");
     register NMRecPtr _nmptr __asm__("a0") = nmptr;
     __asm__ __volatile__(".short 0xA05F"
-        : "=r"(_ret)
-        : "r"(_nmptr)
+        : "=r"(_ret), "+r"(_nmptr)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }

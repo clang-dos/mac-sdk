@@ -3,7 +3,9 @@
 #define __MV_SERIAL__
 
 #include "../ConditionalMacros.h"
+#include "DeviceMgr.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 
 #pragma options align=mac68k
 
@@ -135,23 +137,117 @@ enum {
     PRNTRORNUM = -9,
 };
 
+#if TARGET_CPU_68K
+static __inline__ OSErr RAMSDOpen(SPortSel port);
+#else
 pascal OSErr RAMSDOpen(SPortSel port);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void RAMSDClose(SPortSel port);
+#else
 pascal void RAMSDClose(SPortSel port);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SerReset(INTEGER rn, INTEGER config);
+#else
 pascal OSErr SerReset(INTEGER rn, INTEGER config);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SerSetBuf(INTEGER rn, Ptr p, INTEGER len);
+#else
 pascal OSErr SerSetBuf(INTEGER rn, Ptr p, INTEGER len);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SerHShake(INTEGER rn, const SerShk *flags);
+#else
 pascal OSErr SerHShake(INTEGER rn, const SerShk *flags);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SerSetBrk(INTEGER rn);
+#else
 pascal OSErr SerSetBrk(INTEGER rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SerClrBrk(INTEGER rn);
+#else
 pascal OSErr SerClrBrk(INTEGER rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SerGetBuf(INTEGER rn, LONGINT *lp);
+#else
 pascal OSErr SerGetBuf(INTEGER rn, LONGINT *lp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SerStatus(INTEGER rn, SerStaRec *serstap);
+#else
 pascal OSErr SerStatus(INTEGER rn, SerStaRec *serstap);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr RAMSDOpen(SPortSel port) {
+    static const unsigned char names[2][2][6] = {
+        {{4, '.', 'A', 'I', 'n'}, {5, '.', 'A', 'O', 'u', 't'}},
+        {{4, '.', 'B', 'I', 'n'}, {5, '.', 'B', 'O', 'u', 't'}}};
+    INTEGER rn;
+    OSErr err = OpenDriver(names[port != 0][1], &rn);
+    if (err == 0)
+        err = OpenDriver(names[port != 0][0], &rn);
+    return err;
+}
+
+static __inline__ void RAMSDClose(SPortSel port) {
+    /* .AIn -6, .AOut -7, .BIn -8, .BOut -9 */
+    INTEGER in = port ? -8 : -6;
+    CloseDriver(in);
+    CloseDriver(in - 1);
+}
+
+static __inline__ OSErr SerReset(INTEGER rn, INTEGER config) {
+    return Control(rn, 8, &config);
+}
+
+static __inline__ OSErr SerSetBuf(INTEGER rn, Ptr p, INTEGER len) {
+    struct { Ptr p; INTEGER len; } __attribute__((__packed__)) b;
+    b.p = p;
+    b.len = len;
+    return Control(rn, 9, &b);
+}
+
+static __inline__ OSErr SerHShake(INTEGER rn, const SerShk *flags) {
+    return Control(rn, 10, flags);
+}
+
+static __inline__ OSErr SerSetBrk(INTEGER rn) {
+    return Control(rn, 12, 0);
+}
+
+static __inline__ OSErr SerClrBrk(INTEGER rn) {
+    return Control(rn, 11, 0);
+}
+
+static __inline__ OSErr SerGetBuf(INTEGER rn, LONGINT *lp) {
+    INTEGER cs[11];
+    OSErr err = Status(rn, 2, (Ptr)cs);
+    *lp = *(LONGINT *)cs;
+    return err;
+}
+
+static __inline__ OSErr SerStatus(INTEGER rn, SerStaRec *serstap) {
+    INTEGER cs[11];
+    OSErr err = Status(rn, 8, (Ptr)cs);
+    BlockMoveData(cs, serstap, sizeof(SerStaRec));
+    return err;
+}
+
+#endif
 
 #pragma options align=reset
 

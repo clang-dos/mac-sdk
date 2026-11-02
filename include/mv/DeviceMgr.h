@@ -5,6 +5,7 @@
 #include "../ConditionalMacros.h"
 #include "FileMgr.h"
 #include "MacTypes.h"
+#include "MemoryMgr.h"
 #include "WindowMgr.h"
 
 #pragma options align=mac68k
@@ -174,8 +175,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBControlSync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pbp __asm__("a0") = pbp;
     __asm__ __volatile__(".short 0xA004"
-        : "=r"(_ret)
-        : "r"(_pbp)
+        : "=r"(_ret), "+r"(_pbp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -188,8 +189,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBControlAsync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pbp __asm__("a0") = pbp;
     __asm__ __volatile__(".short 0xA404"
-        : "=r"(_ret)
-        : "r"(_pbp)
+        : "=r"(_ret), "+r"(_pbp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -203,8 +204,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBStatusSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pbp __asm__("a0") = pbp;
     __asm__ __volatile__(".short 0xA005"
-        : "=r"(_ret)
-        : "r"(_pbp)
+        : "=r"(_ret), "+r"(_pbp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -217,8 +218,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBStatusAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pbp __asm__("a0") = pbp;
     __asm__ __volatile__(".short 0xA405"
-        : "=r"(_ret)
-        : "r"(_pbp)
+        : "=r"(_ret), "+r"(_pbp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -232,8 +233,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBKillIOSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pbp __asm__("a0") = pbp;
     __asm__ __volatile__(".short 0xA006"
-        : "=r"(_ret)
-        : "r"(_pbp)
+        : "=r"(_ret), "+r"(_pbp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -246,8 +247,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBKillIOAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pbp __asm__("a0") = pbp;
     __asm__ __volatile__(".short 0xA406"
-        : "=r"(_ret)
-        : "r"(_pbp)
+        : "=r"(_ret), "+r"(_pbp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -255,17 +256,41 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBKillIOAsync(ParmBlk
 pascal OSErr PBKillIOAsync(ParmBlkPtr pbp);
 #endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr OpenDriver(ConstStringPtr name, INTEGER *rnp);
+#else
 pascal OSErr OpenDriver(ConstStringPtr name, INTEGER *rnp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr CloseDriver(INTEGER rn);
+#else
 pascal OSErr CloseDriver(INTEGER rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr Control(INTEGER rn, INTEGER code, const void *param);
+#else
 pascal OSErr Control(INTEGER rn, INTEGER code, const void *param);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr Status(INTEGER rn, INTEGER code, Ptr param);
+#else
 pascal OSErr Status(INTEGER rn, INTEGER code, Ptr param);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr KillIO(INTEGER rn);
+#else
 pascal OSErr KillIO(INTEGER rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ DCtlHandle GetDCtlEntry(INTEGER rn);
+#else
 pascal DCtlHandle GetDCtlEntry(INTEGER rn);
+#endif
 
 typedef struct DRVRHeader DRVRHeader;
 struct DRVRHeader {
@@ -302,13 +327,7 @@ pascal OSErr DrvrRemove(INTEGER refNum);
 
 // The trap takes the driver itself (A0) and the reference number (D0).
 #if TARGET_CPU_68K
-static __inline__ OSErr DrvrInstall(DRVRHeaderHandle drvrHandle, INTEGER refNum) {
-    register OSErr _d0 __asm__("d0") = refNum;
-    register DRVRHeaderPtr _a0 __asm__("a0") = *drvrHandle;
-    __asm__ __volatile__(".short 0xA03D"
-        : "+r"(_d0), "+r"(_a0) : : "d1", "d2", "a1", "cc", "memory");
-    return _d0;
-}
+static __inline__ OSErr DrvrInstall(DRVRHeaderHandle drvrHandle, INTEGER refNum);
 #else
 pascal OSErr DrvrInstall(DRVRHeaderHandle drvrHandle, INTEGER refNum);
 #endif
@@ -316,14 +335,82 @@ pascal OSErr DrvrInstall(DRVRHeaderHandle drvrHandle, INTEGER refNum);
 // The trap takes the drive number in the high word of D0 and the
 // driver in the low word.
 #if TARGET_CPU_68K
+static __inline__ void AddDrive(INTEGER drvrRefNum, INTEGER drvNum, DrvQElPtr qEl);
+#else
+pascal void AddDrive(INTEGER drvrRefNum, INTEGER drvNum, DrvQElPtr qEl);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr OpenDriver(ConstStringPtr name, INTEGER *rnp) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)name;
+    pb.ioParam.ioVRefNum = 0;
+    pb.ioParam.ioPermssn = 0;
+    err = PBOpenSync(&pb);
+    *rnp = pb.ioParam.ioRefNum;
+    return err;
+}
+
+static __inline__ OSErr CloseDriver(INTEGER rn) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    return PBCloseSync(&pb);
+}
+
+static __inline__ OSErr Control(INTEGER rn, INTEGER code, const void *param) {
+    ParamBlockRec pb;
+    pb.cntrlParam.ioCompletion = 0;
+    pb.cntrlParam.ioVRefNum = 0;
+    pb.cntrlParam.ioCRefNum = rn;
+    pb.cntrlParam.csCode = code;
+    if (param)
+        BlockMoveData(param, pb.cntrlParam.csParam, sizeof pb.cntrlParam.csParam);
+    return PBControlSync(&pb);
+}
+
+static __inline__ OSErr Status(INTEGER rn, INTEGER code, Ptr param) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.cntrlParam.ioCompletion = 0;
+    pb.cntrlParam.ioVRefNum = 0;
+    pb.cntrlParam.ioCRefNum = rn;
+    pb.cntrlParam.csCode = code;
+    err = PBStatusSync(&pb);
+    if (param)
+        BlockMoveData(pb.cntrlParam.csParam, param, sizeof pb.cntrlParam.csParam);
+    return err;
+}
+
+static __inline__ OSErr KillIO(INTEGER rn) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    return PBKillIOSync(&pb);
+}
+
+static __inline__ DCtlHandle GetDCtlEntry(INTEGER rn) {
+    /* UTableBase: the unit table, indexed by -(refNum + 1). */
+    return (*(DCtlHandle **)0x11C)[~rn];
+}
+
+static __inline__ OSErr DrvrInstall(DRVRHeaderHandle drvrHandle, INTEGER refNum) {
+    register OSErr _d0 __asm__("d0") = refNum;
+    register DRVRHeaderPtr _a0 __asm__("a0") = *drvrHandle;
+    __asm__ __volatile__(".short 0xA03D"
+        : "+r"(_d0), "+r"(_a0) : : "d1", "d2", "a1", "cc", "memory");
+    return _d0;
+}
+
 static __inline__ void AddDrive(INTEGER drvrRefNum, INTEGER drvNum, DrvQElPtr qEl) {
     register long _d0 __asm__("d0") = ((long)drvNum << 16) | (unsigned short)drvrRefNum;
     register DrvQElPtr _a0 __asm__("a0") = qEl;
     __asm__ __volatile__(".short 0xA04E"
         : "+r"(_d0), "+r"(_a0) : : "d1", "d2", "a1", "cc", "memory");
 }
-#else
-pascal void AddDrive(INTEGER drvrRefNum, INTEGER drvNum, DrvQElPtr qEl);
+
 #endif
 
 #pragma options align=reset

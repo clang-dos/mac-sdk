@@ -522,6 +522,23 @@
         type: Boolean
       - name: diacsig
         type: Boolean
+    m68k-body: |
+      /* _RelString: A0, A1 = text, D0 = lengths; CASE = 0x400, MARKS = 0x200 */
+      register const unsigned char *a0 __asm__("a0") = s1 + 1;
+      register const unsigned char *a1 __asm__("a1") = s2 + 1;
+      register long d0 __asm__("d0") = ((long)s1[0] << 16) | s2[0];
+      if (casesig) {
+          if (diacsig)
+              __asm__ __volatile__(".short 0xA450" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+          else
+              __asm__ __volatile__(".short 0xA650" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+      } else {
+          if (diacsig)
+              __asm__ __volatile__(".short 0xA050" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+          else
+              __asm__ __volatile__(".short 0xA250" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+      }
+      return (INTEGER)d0;
 
 # ####
 
@@ -537,6 +554,23 @@
         type: Boolean
       - name: diacsig
         type: Boolean
+    m68k-body: |
+      /* _CmpString: D0 = 0 when equal; CASE = 0x400, MARKS = 0x200 */
+      register const unsigned char *a0 __asm__("a0") = s1 + 1;
+      register const unsigned char *a1 __asm__("a1") = s2 + 1;
+      register long d0 __asm__("d0") = ((long)s1[0] << 16) | s2[0];
+      if (casesig) {
+          if (diacsig)
+              __asm__ __volatile__(".short 0xA43C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+          else
+              __asm__ __volatile__(".short 0xA63C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+      } else {
+          if (diacsig)
+              __asm__ __volatile__(".short 0xA03C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+          else
+              __asm__ __volatile__(".short 0xA23C" : "+r"(d0), "+r"(a0), "+r"(a1) : : "d1", "d2", "cc", "memory");
+      }
+      return (short)d0 == 0;
 
 # ####
 
@@ -559,6 +593,14 @@
         type: StringPtr
       - name: diac
         type: Boolean
+    m68k-body: |
+      /* _UprString: A0 = text, D0 = length; MARKS = 0x200 strips diacriticals */
+      register unsigned char *a0 __asm__("a0") = s + 1;
+      register long d0 __asm__("d0") = s[0];
+      if (diac)
+          __asm__ __volatile__(".short 0xA054" : "+r"(d0), "+r"(a0) : : "d1", "d2", "a1", "cc", "memory");
+      else
+          __asm__ __volatile__(".short 0xA254" : "+r"(d0), "+r"(a0) : : "d1", "d2", "a1", "cc", "memory");
 
 # ####
 
@@ -632,6 +674,9 @@
     args:
       - name: d
         type: DateTimeRec*
+    m68k-needs: [SecondsToDate]
+    m68k-body: |
+      SecondsToDate(*(ULONGINT *)0x20C, d);
 
 # ####
 
@@ -640,6 +685,11 @@
     args:
       - name: d
         type: DateTimeRec*
+    m68k-needs: [DateToSeconds, SetDateTime]
+    m68k-body: |
+      ULONGINT s;
+      DateToSeconds(d, &s);
+      SetDateTime(s);
 
 # ####
 
@@ -655,6 +705,9 @@
 - function:
     name: GetSysPPtr
     return: SysPPtr
+    m68k-needs: [SysPPtr]
+    m68k-body: |
+      return (SysPPtr)0x1F8;
 
 # ####
 
@@ -717,6 +770,15 @@
       extern void SetTrapAddress(LONGINT addr,
       INTEGER n);
     executor: C_
+    m68k-body: |
+      /* _GetOSTrapAddress (0xA346) or _GetToolTrapAddress (0xA746) */
+      register long d0 __asm__("d0") = n;
+      register ProcPtr a0 __asm__("a0");
+      if (ttype)
+          __asm__ __volatile__(".short 0xA746" : "=r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+      else
+          __asm__ __volatile__(".short 0xA346" : "=r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+      return a0;
 
 # ####
 
@@ -730,6 +792,14 @@
       - name: ttype
         type: TrapType
     executor: C_
+    m68k-body: |
+      /* _SetOSTrapAddress (0xA247) or _SetToolTrapAddress (0xA647) */
+      register long d0 __asm__("d0") = n;
+      register ProcPtr a0 __asm__("a0") = addr;
+      if (ttype)
+          __asm__ __volatile__(".short 0xA647" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+      else
+          __asm__ __volatile__(".short 0xA247" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
 
 # ####
 
@@ -845,6 +915,11 @@
         type: INTEGER*
       - name: machine
         type: INTEGER*
+    m68k-body: |
+      /* the ROM version byte follows the machine byte at ROMBase + 8 */
+      unsigned char *rb = *(unsigned char **)0x2AE;
+      *rom = rb[9];
+      *machine = rb[9] == 0xFF ? 0 : 1;    /* macXLMachine : macMachine */
 
 # ####
 
@@ -866,6 +941,9 @@
 
 - function:
     name: Restart
+    m68k-needs: [ShutDwnStart]
+    m68k-body: |
+      ShutDwnStart();
 
 # ####
 
@@ -883,6 +961,8 @@
     name: GetMMUMode
     return: Byte
     executor: true
+    m68k-body: |
+      return *(Byte *)0xCB2;
 
 # ####
 
@@ -998,6 +1078,15 @@
       - name: src
         type: const char*
     carbon: only
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      /* volatile, so the length loop is not turned into a call to strlen */
+      const volatile char *p = src;
+      Size n = 0;
+      while (n < 255 && p[n])
+          n++;
+      BlockMoveData(src, dst + 1, n);
+      dst[0] = (unsigned char)n;
 
 # ####
 
@@ -1009,6 +1098,11 @@
       - name: src
         type: ConstStr255Param
     carbon: only
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      unsigned char n = src[0];
+      BlockMoveData(src + 1, dst, n);
+      dst[n] = 0;
 
 # ####
 
@@ -1020,6 +1114,14 @@
       - name: dst
         type: Str255
     carbon: only
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      const volatile char *p = src;
+      Size n = 0;
+      while (n < 255 && p[n])
+          n++;
+      BlockMoveData(src, dst + 1, n);
+      dst[0] = (unsigned char)n;
 
 # ####
 
@@ -1031,6 +1133,11 @@
       - name: dst
         type: char *
     carbon: only
+    m68k-needs: [BlockMoveData]
+    m68k-body: |
+      unsigned char n = src[0];
+      BlockMoveData(src + 1, dst, n);
+      dst[n] = 0;
 
 # ####
 # Raw 68K entry points (Executor only).  The wrapper objects and the

@@ -244,13 +244,29 @@ pascal void UpdateDialog(DialogPtr dp, RgnHandle rgn) M68K_INLINE(0xA978);
 enum { _DialogSelect = 0xA980 };
 pascal Boolean DialogSelect(EventRecord *evt, DialogPtr *dpp, INTEGER *item) M68K_INLINE(0xA980);
 
+#if TARGET_CPU_68K
+static __inline__ void DialogCut(DialogPtr dp);
+#else
 pascal void DialogCut(DialogPtr dp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void DialogCopy(DialogPtr dp);
+#else
 pascal void DialogCopy(DialogPtr dp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void DialogPaste(DialogPtr dp);
+#else
 pascal void DialogPaste(DialogPtr dp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void DialogDelete(DialogPtr dp);
+#else
 pascal void DialogDelete(DialogPtr dp);
+#endif
 
 enum { _ErrorSound = 0xA98C };
 pascal void ErrorSound(SoundUPP sp) M68K_INLINE(0xA98C);
@@ -258,7 +274,11 @@ pascal void ErrorSound(SoundUPP sp) M68K_INLINE(0xA98C);
 enum { _InitDialogs = 0xA97B };
 pascal void InitDialogs(ProcPtr rp) M68K_INLINE(0xA97B);
 
+#if TARGET_CPU_68K
+static __inline__ void SetDialogFont(INTEGER i);
+#else
 pascal void SetDialogFont(INTEGER i);
+#endif
 
 enum { _ParamText = 0xA98B };
 pascal void ParamText(ConstStringPtr p0, ConstStringPtr p1, ConstStringPtr p2, ConstStringPtr p3) M68K_INLINE(0xA98B);
@@ -278,9 +298,17 @@ pascal void SetDialogItemText(Handle item, ConstStringPtr text) M68K_INLINE(0xA9
 enum { _SelectDialogItemText = 0xA97E };
 pascal void SelectDialogItemText(DialogPtr dp, INTEGER itemno, INTEGER start, INTEGER stop) M68K_INLINE(0xA97E);
 
+#if TARGET_CPU_68K
+static __inline__ INTEGER GetAlertStage(void);
+#else
 pascal INTEGER GetAlertStage(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ void ResetAlertStage(void);
+#else
 pascal void ResetAlertStage(void);
+#endif
 
 enum { _HideDialogItem = 0xA827 };
 pascal void HideDialogItem(DialogPtr dp, INTEGER item) M68K_INLINE(0xA827);
@@ -349,14 +377,51 @@ typedef int16_t DialogItemType;
 
 // Calls the standard modal dialog filter (GetStdFilterProc).
 #if TARGET_CPU_68K
+static __inline__ Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit);
+#else
+pascal Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ void DialogCut(DialogPtr dp) {
+    if (((DialogPeek)dp)->editField >= 0)
+        TECut(((DialogPeek)dp)->textH);
+}
+
+static __inline__ void DialogCopy(DialogPtr dp) {
+    if (((DialogPeek)dp)->editField >= 0)
+        TECopy(((DialogPeek)dp)->textH);
+}
+
+static __inline__ void DialogPaste(DialogPtr dp) {
+    if (((DialogPeek)dp)->editField >= 0)
+        TEPaste(((DialogPeek)dp)->textH);
+}
+
+static __inline__ void DialogDelete(DialogPtr dp) {
+    if (((DialogPeek)dp)->editField >= 0)
+        TEDelete(((DialogPeek)dp)->textH);
+}
+
+static __inline__ void SetDialogFont(INTEGER i) {
+    *(INTEGER *)0xAFA = i;
+}
+
+static __inline__ INTEGER GetAlertStage(void) {
+    return *(INTEGER *)0xA9A;
+}
+
+static __inline__ void ResetAlertStage(void) {
+    *(INTEGER *)0xA9A = 0;
+}
+
 static __inline__ Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit) {
     ModalFilterUPP proc;
     if (GetStdFilterProc((ProcPtr *)&proc) != noErr)
         return false;
     return proc(theDialog, event, itemHit);
 }
-#else
-pascal Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit);
+
 #endif
 
 #pragma options align=reset

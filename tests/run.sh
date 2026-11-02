@@ -12,6 +12,8 @@ BLOCKS=$(mktemp "${TMPDIR:-/tmp}/blocks.XXXXXX")
 trap 'rm -f "$SIZES" "$INLINES" "$BLOCKS"' EXIT
 python3 tests/inlines.py > "$INLINES"
 $CLANG --target=m68k-apple-macos -O1 -Iinclude -x c -c "$INLINES" -o /dev/null
+# The Carbon accessors also have 68k glue, for code that opts in to them.
+$CLANG --target=m68k-apple-macos -O1 -Iinclude -DTARGET_API_MAC_CARBON=1 -x c -c "$INLINES" -o /dev/null
 # Argument-block calls against the ROM's glue (data/blockinfo.json).
 python3 tests/blocks.py > "$BLOCKS"
 $CLANG --target=m68k-apple-macos -Wall -Werror -Wno-unused-function -Iinclude -x c -fsyntax-only "$BLOCKS"

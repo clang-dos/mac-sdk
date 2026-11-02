@@ -263,6 +263,16 @@
       - name: port
         type: SPortSel
     executor: true
+    m68k-needs: [OpenDriver]
+    m68k-body: |
+      static const unsigned char names[2][2][6] = {
+          {{4, '.', 'A', 'I', 'n'}, {5, '.', 'A', 'O', 'u', 't'}},
+          {{4, '.', 'B', 'I', 'n'}, {5, '.', 'B', 'O', 'u', 't'}}};
+      INTEGER rn;
+      OSErr err = OpenDriver(names[port != 0][1], &rn);
+      if (err == 0)
+          err = OpenDriver(names[port != 0][0], &rn);
+      return err;
 
 # ####
 
@@ -272,6 +282,12 @@
       - name: port
         type: SPortSel
     executor: true
+    m68k-needs: [CloseDriver]
+    m68k-body: |
+      /* .AIn -6, .AOut -7, .BIn -8, .BOut -9 */
+      INTEGER in = port ? -8 : -6;
+      CloseDriver(in);
+      CloseDriver(in - 1);
 
 # ####
 
@@ -284,6 +300,9 @@
       - name: config
         type: INTEGER
     executor: true
+    m68k-needs: [Control]
+    m68k-body: |
+      return Control(rn, 8, &config);
 
 # ####
 
@@ -298,6 +317,12 @@
       - name: len
         type: INTEGER
     executor: true
+    m68k-needs: [Control]
+    m68k-body: |
+      struct { Ptr p; INTEGER len; } __attribute__((__packed__)) b;
+      b.p = p;
+      b.len = len;
+      return Control(rn, 9, &b);
 
 # ####
 
@@ -310,6 +335,9 @@
       - name: flags
         type: const SerShk*
     executor: true
+    m68k-needs: [Control]
+    m68k-body: |
+      return Control(rn, 10, flags);
 
 # ####
 
@@ -320,6 +348,9 @@
       - name: rn
         type: INTEGER
     executor: true
+    m68k-needs: [Control]
+    m68k-body: |
+      return Control(rn, 12, 0);
 
 # ####
 
@@ -330,6 +361,9 @@
       - name: rn
         type: INTEGER
     executor: true
+    m68k-needs: [Control]
+    m68k-body: |
+      return Control(rn, 11, 0);
 
 # ####
 
@@ -342,6 +376,12 @@
       - name: lp
         type: LONGINT*
     executor: true
+    m68k-needs: [Status]
+    m68k-body: |
+      INTEGER cs[11];
+      OSErr err = Status(rn, 2, (Ptr)cs);
+      *lp = *(LONGINT *)cs;
+      return err;
 
 # ####
 
@@ -354,3 +394,9 @@
       - name: serstap
         type: SerStaRec*
     executor: true
+    m68k-needs: [Status, SerStaRec, BlockMoveData]
+    m68k-body: |
+      INTEGER cs[11];
+      OSErr err = Status(rn, 8, (Ptr)cs);
+      BlockMoveData(cs, serstap, sizeof(SerStaRec));
+      return err;

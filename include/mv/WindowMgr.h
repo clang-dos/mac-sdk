@@ -424,11 +424,38 @@ pascal void GetWindowPortBounds(WindowRef window, Rect *bounds);
 #endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ CGrafPtr GetWindowPort(WindowRef w);
+#else
 pascal CGrafPtr GetWindowPort(WindowRef w);
+#endif
 #endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void InvalWindowRect(WindowRef w, const Rect *r);
+#else
 pascal void InvalWindowRect(WindowRef w, const Rect *r);
+#endif
+#endif
+
+#if TARGET_CPU_68K
+#if TARGET_API_MAC_CARBON
+static __inline__ CGrafPtr GetWindowPort(WindowRef w) {
+    return (CGrafPtr)w;
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ void InvalWindowRect(WindowRef w, const Rect *r) {
+    GrafPtr save;
+    GetPort(&save);
+    SetPort((GrafPtr)w);
+    InvalRect(r);
+    SetPort(save);
+}
+#endif
+
 #endif
 
 #pragma options align=reset

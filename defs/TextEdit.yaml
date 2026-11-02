@@ -1019,6 +1019,14 @@
     name: TEFromScrap
     return: OSErr
     executor: true
+    m68k-needs: [GetScrap]
+    m68k-body: |
+      LONGINT offset;
+      LONGINT len = GetScrap(*(Handle *)0xAB4, 0x54455854, &offset);    /* 'TEXT' */
+      if (len < 0)
+          return (OSErr)len;
+      *(INTEGER *)0xAB0 = (INTEGER)len;
+      return 0;
 
 # ####
 
@@ -1026,6 +1034,15 @@
     name: TEToScrap
     return: OSErr
     executor: true
+    m68k-needs: [PutScrap, HLock, HUnlock]
+    m68k-body: |
+      /* Call ZeroScrap first. */
+      Handle h = *(Handle *)0xAB4;
+      OSErr err;
+      HLock(h);
+      err = (OSErr)PutScrap(*(unsigned short *)0xAB0, 0x54455854, *h);    /* 'TEXT' */
+      HUnlock(h);
+      return err;
 
 # ####
 
@@ -1033,6 +1050,8 @@
     name: TEScrapHandle
     return: Handle
     executor: true
+    m68k-body: |
+      return *(Handle *)0xAB4;
 
 # ####
 
@@ -1040,6 +1059,8 @@
     name: TEGetScrapLength
     return: LONGINT
     executor: true
+    m68k-body: |
+      return *(unsigned short *)0xAB0;
 
 # ####
 
@@ -1049,6 +1070,8 @@
       - name: ln
         type: LONGINT
     executor: true
+    m68k-body: |
+      *(INTEGER *)0xAB0 = (INTEGER)ln;
 
 # ####
 

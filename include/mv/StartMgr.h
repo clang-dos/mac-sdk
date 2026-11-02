@@ -61,8 +61,8 @@ enum { _GetDefaultStartup = 0xA07D };
 static __inline__ __attribute__((__always_inline__)) void GetDefaultStartup(DefStartPtr paramBlock) {
     register DefStartPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA07D"
+        : "+r"(_paramBlock)
         : 
-        : "r"(_paramBlock)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -74,8 +74,8 @@ enum { _SetDefaultStartup = 0xA07E };
 static __inline__ __attribute__((__always_inline__)) void SetDefaultStartup(DefStartPtr paramBlock) {
     register DefStartPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA07E"
+        : "+r"(_paramBlock)
         : 
-        : "r"(_paramBlock)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -87,8 +87,8 @@ enum { _GetVideoDefault = 0xA080 };
 static __inline__ __attribute__((__always_inline__)) void GetVideoDefault(DefVideoPtr paramBlock) {
     register DefVideoPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA080"
+        : "+r"(_paramBlock)
         : 
-        : "r"(_paramBlock)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -100,8 +100,8 @@ enum { _SetVideoDefault = 0xA081 };
 static __inline__ __attribute__((__always_inline__)) void SetVideoDefault(DefVideoPtr paramBlock) {
     register DefVideoPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA081"
+        : "+r"(_paramBlock)
         : 
-        : "r"(_paramBlock)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -113,8 +113,8 @@ enum { _GetOSDefault = 0xA084 };
 static __inline__ __attribute__((__always_inline__)) void GetOSDefault(DefOSPtr paramBlock) {
     register DefOSPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA084"
+        : "+r"(_paramBlock)
         : 
-        : "r"(_paramBlock)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else
@@ -126,8 +126,8 @@ enum { _SetOSDefault = 0xA083 };
 static __inline__ __attribute__((__always_inline__)) void SetOSDefault(DefOSPtr paramBlock) {
     register DefOSPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA083"
+        : "+r"(_paramBlock)
         : 
-        : "r"(_paramBlock)
         : "d0", "d1", "d2", "a1", "cc", "memory");
 }
 #else

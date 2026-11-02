@@ -174,12 +174,16 @@
 - function:
     name: GetDblTime
     return: LONGINT
+    m68k-body: |
+      return *(LONGINT *)0x2F0;
 
 # ####
 
 - function:
     name: GetCaretTime
     return: LONGINT
+    m68k-body: |
+      return *(LONGINT *)0x2F4;
 
 # ####
 # Raw 68K entry points (Executor only).  The wrapper objects and the

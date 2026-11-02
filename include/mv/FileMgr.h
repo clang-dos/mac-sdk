@@ -585,68 +585,188 @@ typedef FSSpecPtr FSSpecArrayPtr;
 #define LMGetFSFCBLen() (*(INTEGER *)0x000003F6)
 #define LMSetFSFCBLen(val) ((*(INTEGER *)0x000003F6) = (val))
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSOpen(ConstStringPtr filen, INTEGER vrn, INTEGER *rn);
+#else
 pascal OSErr FSOpen(ConstStringPtr filen, INTEGER vrn, INTEGER *rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr OpenRF(ConstStringPtr filen, INTEGER vrn, INTEGER *rn);
+#else
 pascal OSErr OpenRF(ConstStringPtr filen, INTEGER vrn, INTEGER *rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr OpenDF(ConstStringPtr filen, INTEGER vrn, INTEGER *rn);
+#else
 pascal OSErr OpenDF(ConstStringPtr filen, INTEGER vrn, INTEGER *rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSRead(INTEGER rn, LONGINT *count, void *buffp);
+#else
 pascal OSErr FSRead(INTEGER rn, LONGINT *count, void *buffp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSWrite(INTEGER rn, LONGINT *count, const void *buffp);
+#else
 pascal OSErr FSWrite(INTEGER rn, LONGINT *count, const void *buffp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr GetFPos(INTEGER rn, LONGINT *filep);
+#else
 pascal OSErr GetFPos(INTEGER rn, LONGINT *filep);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SetFPos(INTEGER rn, INTEGER posmode, LONGINT possoff);
+#else
 pascal OSErr SetFPos(INTEGER rn, INTEGER posmode, LONGINT possoff);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr GetEOF(INTEGER rn, LONGINT *eof);
+#else
 pascal OSErr GetEOF(INTEGER rn, LONGINT *eof);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SetEOF(INTEGER rn, LONGINT eof);
+#else
 pascal OSErr SetEOF(INTEGER rn, LONGINT eof);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr Allocate(INTEGER rn, LONGINT *count);
+#else
 pascal OSErr Allocate(INTEGER rn, LONGINT *count);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr AllocContig(INTEGER rn, LONGINT *count);
+#else
 pascal OSErr AllocContig(INTEGER rn, LONGINT *count);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSClose(INTEGER rn);
+#else
 pascal OSErr FSClose(INTEGER rn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr Create(ConstStringPtr filen, INTEGER vrn, OSType creator, OSType filtyp);
+#else
 pascal OSErr Create(ConstStringPtr filen, INTEGER vrn, OSType creator, OSType filtyp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FSDelete(ConstStringPtr filen, INTEGER vrn);
+#else
 pascal OSErr FSDelete(ConstStringPtr filen, INTEGER vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr GetFInfo(ConstStringPtr filen, INTEGER vrn, FInfo *fndrinfo);
+#else
 pascal OSErr GetFInfo(ConstStringPtr filen, INTEGER vrn, FInfo *fndrinfo);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HGetFInfo(INTEGER vref, LONGINT dirid, ConstStringPtr name, FInfo *fndrinfo);
+#else
 pascal OSErr HGetFInfo(INTEGER vref, LONGINT dirid, ConstStringPtr name, FInfo *fndrinfo);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SetFInfo(ConstStringPtr filen, INTEGER vrn, FInfo *fndrinfo);
+#else
 pascal OSErr SetFInfo(ConstStringPtr filen, INTEGER vrn, FInfo *fndrinfo);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SetFLock(ConstStringPtr filen, INTEGER vrn);
+#else
 pascal OSErr SetFLock(ConstStringPtr filen, INTEGER vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr RstFLock(ConstStringPtr filen, INTEGER vrn);
+#else
 pascal OSErr RstFLock(ConstStringPtr filen, INTEGER vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr Rename(ConstStringPtr filen, INTEGER vrn, ConstStringPtr newf);
+#else
 pascal OSErr Rename(ConstStringPtr filen, INTEGER vrn, ConstStringPtr newf);
+#endif
 
 enum { _FInitQueue = 0xA016 };
 pascal void FInitQueue(void) M68K_INLINE(0xA016);
 
+#if TARGET_CPU_68K
+static __inline__ QHdrPtr GetFSQHdr(void);
+#else
 pascal QHdrPtr GetFSQHdr(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ QHdrPtr GetVCBQHdr(void);
+#else
 pascal QHdrPtr GetVCBQHdr(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ QHdrPtr GetDrvQHdr(void);
+#else
 pascal QHdrPtr GetDrvQHdr(void);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr GetVInfo(INTEGER drv, StringPtr voln, INTEGER *vrn, LONGINT *freeb);
+#else
 pascal OSErr GetVInfo(INTEGER drv, StringPtr voln, INTEGER *vrn, LONGINT *freeb);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr GetVRefNum(INTEGER prn, INTEGER *vrn);
+#else
 pascal OSErr GetVRefNum(INTEGER prn, INTEGER *vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr GetVol(StringPtr voln, INTEGER *vrn);
+#else
 pascal OSErr GetVol(StringPtr voln, INTEGER *vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr SetVol(ConstStringPtr voln, INTEGER vrn);
+#else
 pascal OSErr SetVol(ConstStringPtr voln, INTEGER vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr FlushVol(ConstStringPtr voln, INTEGER vrn);
+#else
 pascal OSErr FlushVol(ConstStringPtr voln, INTEGER vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr UnmountVol(ConstStringPtr voln, INTEGER vrn);
+#else
 pascal OSErr UnmountVol(ConstStringPtr voln, INTEGER vrn);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr Eject(ConstStringPtr voln, INTEGER vrn);
+#else
 pascal OSErr Eject(ConstStringPtr voln, INTEGER vrn);
+#endif
 
 enum { _PBAllocContigSync = 0xA210 };
 #if TARGET_CPU_68K
@@ -654,8 +774,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBAllocContigSync(Par
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA210"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -668,8 +788,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBAllocContigAsync(Pa
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA610"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -684,8 +804,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenSync(ParmBlkPtr
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA000"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -698,8 +818,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenAsync(ParmBlkPt
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA400"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -713,8 +833,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenSync(HParmBlkP
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA200"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -727,8 +847,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenAsync(HParmBlk
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA600"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -742,8 +862,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseSync(ParmBlkPt
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA001"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -756,8 +876,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseAsync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA401"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -771,8 +891,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBReadSync(ParmBlkPtr
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA002"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -785,8 +905,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBReadAsync(ParmBlkPt
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA402"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -800,8 +920,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBWriteSync(ParmBlkPt
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA003"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -814,8 +934,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBWriteAsync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA403"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -829,8 +949,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVInfoSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA007"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -843,8 +963,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVInfoAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA407"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -858,8 +978,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVInfoSync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA207"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -872,8 +992,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVInfoAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA607"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -887,8 +1007,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA008"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -901,8 +1021,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA408"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -916,8 +1036,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHCreateSync(HParmBl
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA208"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -930,8 +1050,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHCreateAsync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA608"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -945,8 +1065,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA009"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -959,8 +1079,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA409"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -974,8 +1094,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHDeleteSync(HParmBl
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA209"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -988,8 +1108,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHDeleteAsync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA609"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1003,8 +1123,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenRFSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA00A"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1017,8 +1137,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenRFAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA40A"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1032,8 +1152,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFSync(HParmBl
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA20A"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1046,8 +1166,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFAsync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA60A"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1061,8 +1181,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBRenameSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA00B"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1075,8 +1195,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBRenameAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA40B"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1090,8 +1210,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHRenameSync(HParmBl
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA20B"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1104,8 +1224,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHRenameAsync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA60B"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1119,8 +1239,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFInfoSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA00C"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1133,8 +1253,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFInfoAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA40C"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1148,8 +1268,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetFInfoSync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA20C"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1162,8 +1282,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetFInfoAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA60C"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1177,8 +1297,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFInfoSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA00D"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1191,8 +1311,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFInfoAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA40D"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1206,8 +1326,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetFInfoSync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA20D"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1220,8 +1340,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetFInfoAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA60D"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1235,8 +1355,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnmountVol(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA00E"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1250,8 +1370,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMountVol(ParmBlkPtr
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA00F"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1265,8 +1385,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBAllocateSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA010"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1279,8 +1399,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBAllocateAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA410"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1294,8 +1414,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetEOFSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA011"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1308,8 +1428,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetEOFAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA411"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1323,8 +1443,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetEOFSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA012"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1337,8 +1457,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetEOFAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA412"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1352,8 +1472,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBFlushVolSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA013"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1366,8 +1486,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBFlushVolAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA413"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1381,8 +1501,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA014"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1395,8 +1515,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA414"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1410,8 +1530,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolSync(WDPBPtr
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA214"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1424,8 +1544,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolAsync(WDPBPt
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA614"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1439,8 +1559,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetVolSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA015"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1453,8 +1573,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetVolAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA415"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1468,8 +1588,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetVolSync(WDPBPtr
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA215"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1482,8 +1602,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetVolAsync(WDPBPt
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA615"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1497,8 +1617,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBEject(ParmBlkPtr pb
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA017"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1512,8 +1632,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFPosSync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA018"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1526,8 +1646,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFPosAsync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA418"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1541,8 +1661,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOffLine(ParmBlkPtr 
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA035"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1556,8 +1676,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFLockSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA041"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1570,8 +1690,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFLockAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA441"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1585,8 +1705,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetFLockSync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA241"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1599,8 +1719,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetFLockAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA641"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1614,8 +1734,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBRstFLockSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA042"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1628,8 +1748,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBRstFLockAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA442"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1643,8 +1763,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHRstFLockSync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA242"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1657,8 +1777,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHRstFLockAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA642"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1672,8 +1792,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFVersSync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA043"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1686,8 +1806,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFVersAsync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA443"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1701,8 +1821,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFPosSync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA044"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1715,8 +1835,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetFPosAsync(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA444"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1730,8 +1850,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBFlushFileSync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA045"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1744,8 +1864,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBFlushFileAsync(Parm
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0xA445"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1760,8 +1880,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDSync(WDPBPtr 
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1773,8 +1893,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenWDAsync(WDPBPtr
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7001, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1787,8 +1907,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDSync(WDPBPtr
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1800,8 +1920,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseWDAsync(WDPBPt
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7002, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1814,8 +1934,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveSync(CMovePB
     register OSErr _ret __asm__("d0");
     register CMovePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1827,8 +1947,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatMoveAsync(CMoveP
     register OSErr _ret __asm__("d0");
     register CMovePBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7005, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1841,8 +1961,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateSync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1854,8 +1974,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDirCreateAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7006, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1868,8 +1988,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoSync(WDPBP
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1881,8 +2001,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetWDInfoAsync(WDPB
     register OSErr _ret __asm__("d0");
     register WDPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7007, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1895,8 +2015,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoSync(FCBP
     register OSErr _ret __asm__("d0");
     register FCBPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1908,8 +2028,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetFCBInfoAsync(FCB
     register OSErr _ret __asm__("d0");
     register FCBPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7008, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1922,8 +2042,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoSync(CInf
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1935,8 +2055,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetCatInfoAsync(CIn
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7009, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1949,8 +2069,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoSync(CInf
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1962,8 +2082,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetCatInfoAsync(CIn
     register OSErr _ret __asm__("d0");
     register CInfoPBPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700A, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1976,8 +2096,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoSync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700B, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -1989,8 +2109,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetVInfoAsync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x700B, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2003,8 +2123,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeSync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7010, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2016,8 +2136,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBLockRangeAsync(Parm
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7010, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2030,8 +2150,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeSync(Par
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7011, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2043,8 +2163,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnlockRangeAsync(Pa
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7011, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2057,8 +2177,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefSync
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7014, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2070,8 +2190,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCreateFileIDRefAsyn
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7014, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2084,8 +2204,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefSync
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7015, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2097,8 +2217,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDeleteFileIDRefAsyn
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7015, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2111,8 +2231,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefSyn
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7016, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2124,8 +2244,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBResolveFileIDRefAsy
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7016, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2138,8 +2258,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesSync(P
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7017, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2151,8 +2271,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBExchangeFilesAsync(
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7017, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2165,8 +2285,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchSync(ParmB
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7018, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2178,8 +2298,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCatSearchAsync(Parm
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7018, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2192,8 +2312,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFSync(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA060"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2205,8 +2325,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenDFAsync(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA460"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2219,8 +2339,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFSync(HParmBl
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2232,8 +2352,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDFAsync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x701A, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2261,8 +2381,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsSync(HP
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7030, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2274,8 +2394,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetVolParmsAsync(H
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7030, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2288,8 +2408,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoSync(H
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7031, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2301,8 +2421,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetLogInInfoAsync(
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7031, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2315,8 +2435,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessSync(H
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7032, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2328,8 +2448,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHGetDirAccessAsync(
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7032, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2342,8 +2462,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessSync(H
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7033, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2355,8 +2475,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHSetDirAccessAsync(
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7033, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2369,8 +2489,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDSync(HParmBlk
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7034, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2382,8 +2502,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapIDAsync(HParmBl
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7034, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2396,8 +2516,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameSync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7035, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2409,8 +2529,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMapNameAsync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7035, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2423,8 +2543,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileSync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7036, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2436,8 +2556,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHCopyFileAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7036, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2450,8 +2570,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameSync(HPa
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7037, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2463,8 +2583,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHMoveRenameAsync(HP
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7037, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2477,8 +2597,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenySync(HParm
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7038, 0xA260"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2490,8 +2610,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenDenyAsync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _pb __asm__("a0") = pb;
     __asm__ __volatile__(".short 0x7038, 0xA660"
-        : "=r"(_ret)
-        : "r"(_pb)
+        : "=r"(_ret), "+r"(_pb)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2538,21 +2658,49 @@ pascal INTEGER HOpenResFile(INTEGER vref, LONGINT dirid, ConstStringPtr file_nam
 enum { _HCreateResFile = 0xA81B };
 pascal void HCreateResFile(INTEGER vrefnum, LONGINT parid, ConstStringPtr name) M68K_INLINE(0xA81B);
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HCreate(INTEGER vref, LONGINT dirid, ConstStringPtr name, OSType creator, OSType type);
+#else
 pascal OSErr HCreate(INTEGER vref, LONGINT dirid, ConstStringPtr name, OSType creator, OSType type);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HOpenRF(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp);
+#else
 pascal OSErr HOpenRF(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HOpen(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp);
+#else
 pascal OSErr HOpen(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HOpenDF(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp);
+#else
 pascal OSErr HOpenDF(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HRename(INTEGER vref, LONGINT dirid, ConstStringPtr src, ConstStringPtr dst);
+#else
 pascal OSErr HRename(INTEGER vref, LONGINT dirid, ConstStringPtr src, ConstStringPtr dst);
+#endif
 
 // NOTRAP_FUNCTION2(HRename);
+#if TARGET_CPU_68K
+static __inline__ OSErr HDelete(INTEGER vref, LONGINT dirid, ConstStringPtr name);
+#else
 pascal OSErr HDelete(INTEGER vref, LONGINT dirid, ConstStringPtr name);
+#endif
 
 // NOTRAP_FUNCTION2(HDelete);
+#if TARGET_CPU_68K
+static __inline__ OSErr GetWDInfo(INTEGER wd, INTEGER *vrefp, LONGINT *dirp, LONGINT *procp);
+#else
 pascal OSErr GetWDInfo(INTEGER wd, INTEGER *vrefp, LONGINT *dirp, LONGINT *procp);
+#endif
 
 
 
@@ -2562,8 +2710,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBCloseImmed(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA201"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2577,8 +2725,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBControlImmed(ParmBl
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA204"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2592,8 +2740,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBKillIOImmed(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA206"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2607,8 +2755,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBOpenImmed(ParmBlkPt
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA200"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2622,8 +2770,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBReadImmed(ParmBlkPt
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA202"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2637,8 +2785,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBStatusImmed(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA205"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2652,8 +2800,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBWriteImmed(ParmBlkP
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0xA203"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2666,8 +2814,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecSync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701B, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2679,8 +2827,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBMakeFSSpecAsync(HPa
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x701B, 0xA660"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2693,8 +2841,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBShareSync(HParmBlkP
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7042, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2706,8 +2854,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBShareAsync(HParmBlk
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7042, 0xA660"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2720,8 +2868,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareSync(HParmBl
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7043, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2733,8 +2881,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBUnshareAsync(HParmB
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7043, 0xA660"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2747,8 +2895,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntrySync(HPar
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7044, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2760,8 +2908,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetUGEntryAsync(HPa
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7044, 0xA660"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2774,8 +2922,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsSync
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7060, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2787,8 +2935,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetForeignPrivsAsyn
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7060, 0xA660"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2801,8 +2949,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsSync
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7061, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2814,8 +2962,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBSetForeignPrivsAsyn
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7061, 0xA660"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2828,8 +2976,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenySync(HPa
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7039, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2841,8 +2989,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBHOpenRFDenyAsync(HP
     register OSErr _ret __asm__("d0");
     register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7039, 0xA660"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2855,8 +3003,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfoSize
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x703F, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2869,8 +3017,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBGetVolMountInfo(Par
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7040, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2883,8 +3031,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBVolumeMount(ParmBlk
     register OSErr _ret __asm__("d0");
     register ParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
     __asm__ __volatile__(".short 0x7041, 0xA260"
-        : "=r"(_ret)
-        : "r"(_paramBlock)
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -2893,23 +3041,59 @@ pascal OSErr PBVolumeMount(ParmBlkPtr paramBlock);
 #endif
 
 // High-level calls built on the parameter block calls
+#if TARGET_CPU_68K
+static __inline__ OSErr HGetVol(StringPtr volName, INTEGER *vRefNum, long *dirID);
+#else
 pascal OSErr HGetVol(StringPtr volName, INTEGER *vRefNum, long *dirID);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HSetVol(ConstStr63Param volName, INTEGER vRefNum, long dirID);
+#else
 pascal OSErr HSetVol(ConstStr63Param volName, INTEGER vRefNum, long dirID);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr DirCreate(INTEGER vRefNum, long parentDirID, ConstStr255Param directoryName, long *createdDirID);
+#else
 pascal OSErr DirCreate(INTEGER vRefNum, long parentDirID, ConstStr255Param directoryName, long *createdDirID);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HSetFInfo(INTEGER vRefNum, long dirID, ConstStr255Param fileName, const FInfo *fndrInfo);
+#else
 pascal OSErr HSetFInfo(INTEGER vRefNum, long dirID, ConstStr255Param fileName, const FInfo *fndrInfo);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HSetFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName);
+#else
 pascal OSErr HSetFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr HRstFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName);
+#else
 pascal OSErr HRstFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr CatMove(INTEGER vRefNum, long dirID, ConstStr255Param oldName, long newDirID, ConstStr255Param newName);
+#else
 pascal OSErr CatMove(INTEGER vRefNum, long dirID, ConstStr255Param oldName, long newDirID, ConstStr255Param newName);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr OpenWD(INTEGER vRefNum, long dirID, long procID, INTEGER *wdRefNum);
+#else
 pascal OSErr OpenWD(INTEGER vRefNum, long dirID, long procID, INTEGER *wdRefNum);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ OSErr CloseWD(INTEGER wdRefNum);
+#else
 pascal OSErr CloseWD(INTEGER wdRefNum);
+#endif
 
 typedef UniversalProcPtr IOCompletionUPP;
 
@@ -3455,6 +3639,530 @@ pascal OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
 pascal void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
 
 typedef DrvQEl *DrvQElPtr;
+
+#if TARGET_CPU_68K
+static __inline__ OSErr FSOpen(ConstStringPtr filen, INTEGER vrn, INTEGER *rn) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)filen;
+    pb.ioParam.ioVRefNum = vrn;
+    pb.ioParam.ioVersNum = 0;
+    pb.ioParam.ioPermssn = 0;    /* fsCurPerm */
+    pb.ioParam.ioMisc = 0;
+    err = PBOpenSync(&pb);
+    *rn = pb.ioParam.ioRefNum;
+    return err;
+}
+
+static __inline__ OSErr OpenRF(ConstStringPtr filen, INTEGER vrn, INTEGER *rn) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)filen;
+    pb.ioParam.ioVRefNum = vrn;
+    pb.ioParam.ioVersNum = 0;
+    pb.ioParam.ioPermssn = 0;
+    pb.ioParam.ioMisc = 0;
+    err = PBOpenRFSync(&pb);
+    *rn = pb.ioParam.ioRefNum;
+    return err;
+}
+
+static __inline__ OSErr OpenDF(ConstStringPtr filen, INTEGER vrn, INTEGER *rn) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)filen;
+    pb.ioParam.ioVRefNum = vrn;
+    pb.ioParam.ioVersNum = 0;
+    pb.ioParam.ioPermssn = 0;
+    pb.ioParam.ioMisc = 0;
+    err = PBOpenDFSync(&pb);
+    if (err == paramErr)     /* no _OpenDF before System 7 */
+        err = PBOpenSync(&pb);
+    *rn = pb.ioParam.ioRefNum;
+    return err;
+}
+
+static __inline__ OSErr FSRead(INTEGER rn, LONGINT *count, void *buffp) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    pb.ioParam.ioBuffer = (Ptr)buffp;
+    pb.ioParam.ioReqCount = *count;
+    pb.ioParam.ioPosMode = 0;    /* fsAtMark */
+    pb.ioParam.ioPosOffset = 0;
+    err = PBReadSync(&pb);
+    *count = pb.ioParam.ioActCount;
+    return err;
+}
+
+static __inline__ OSErr FSWrite(INTEGER rn, LONGINT *count, const void *buffp) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    pb.ioParam.ioBuffer = (Ptr)buffp;
+    pb.ioParam.ioReqCount = *count;
+    pb.ioParam.ioPosMode = 0;
+    pb.ioParam.ioPosOffset = 0;
+    err = PBWriteSync(&pb);
+    *count = pb.ioParam.ioActCount;
+    return err;
+}
+
+static __inline__ OSErr GetFPos(INTEGER rn, LONGINT *filep) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    err = PBGetFPosSync(&pb);
+    *filep = pb.ioParam.ioPosOffset;
+    return err;
+}
+
+static __inline__ OSErr SetFPos(INTEGER rn, INTEGER posmode, LONGINT possoff) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    pb.ioParam.ioPosMode = posmode;
+    pb.ioParam.ioPosOffset = possoff;
+    return PBSetFPosSync(&pb);
+}
+
+static __inline__ OSErr GetEOF(INTEGER rn, LONGINT *eof) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    err = PBGetEOFSync(&pb);
+    *eof = (long)pb.ioParam.ioMisc;
+    return err;
+}
+
+static __inline__ OSErr SetEOF(INTEGER rn, LONGINT eof) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    pb.ioParam.ioMisc = (Ptr)eof;
+    return PBSetEOFSync(&pb);
+}
+
+static __inline__ OSErr Allocate(INTEGER rn, LONGINT *count) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    pb.ioParam.ioReqCount = *count;
+    err = PBAllocateSync(&pb);
+    *count = pb.ioParam.ioActCount;
+    return err;
+}
+
+static __inline__ OSErr AllocContig(INTEGER rn, LONGINT *count) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    pb.ioParam.ioReqCount = *count;
+    err = PBAllocContigSync(&pb);
+    *count = pb.ioParam.ioActCount;
+    return err;
+}
+
+static __inline__ OSErr FSClose(INTEGER rn) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioRefNum = rn;
+    return PBCloseSync(&pb);
+}
+
+static __inline__ OSErr Create(ConstStringPtr filen, INTEGER vrn, OSType creator, OSType filtyp) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)filen;
+    pb.fileParam.ioVRefNum = vrn;
+    pb.fileParam.ioFVersNum = 0;
+    err = PBCreateSync(&pb);
+    if (err != noErr)
+        return err;
+    pb.fileParam.ioFDirIndex = 0;
+    err = PBGetFInfoSync(&pb);
+    if (err != noErr)
+        return err;
+    pb.fileParam.ioFlFndrInfo.fdCreator = creator;
+    pb.fileParam.ioFlFndrInfo.fdType = filtyp;
+    return PBSetFInfoSync(&pb);
+}
+
+static __inline__ OSErr FSDelete(ConstStringPtr filen, INTEGER vrn) {
+    ParamBlockRec pb;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)filen;
+    pb.fileParam.ioVRefNum = vrn;
+    pb.fileParam.ioFVersNum = 0;
+    return PBDeleteSync(&pb);
+}
+
+static __inline__ OSErr GetFInfo(ConstStringPtr filen, INTEGER vrn, FInfo *fndrinfo) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)filen;
+    pb.fileParam.ioVRefNum = vrn;
+    pb.fileParam.ioFVersNum = 0;
+    pb.fileParam.ioFDirIndex = 0;
+    err = PBGetFInfoSync(&pb);
+    *fndrinfo = pb.fileParam.ioFlFndrInfo;
+    return err;
+}
+
+static __inline__ OSErr HGetFInfo(INTEGER vref, LONGINT dirid, ConstStringPtr name, FInfo *fndrinfo) {
+    HParamBlockRec pb;
+    OSErr err;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)name;
+    pb.fileParam.ioVRefNum = vref;
+    pb.fileParam.ioFVersNum = 0;
+    pb.fileParam.ioFDirIndex = 0;
+    pb.fileParam.ioDirID = dirid;
+    err = PBHGetFInfoSync(&pb);
+    *fndrinfo = pb.fileParam.ioFlFndrInfo;
+    return err;
+}
+
+static __inline__ OSErr SetFInfo(ConstStringPtr filen, INTEGER vrn, FInfo *fndrinfo) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)filen;
+    pb.fileParam.ioVRefNum = vrn;
+    pb.fileParam.ioFVersNum = 0;
+    pb.fileParam.ioFDirIndex = 0;
+    err = PBGetFInfoSync(&pb);    /* keep the dates */
+    if (err != noErr)
+        return err;
+    pb.fileParam.ioFlFndrInfo = *fndrinfo;
+    return PBSetFInfoSync(&pb);
+}
+
+static __inline__ OSErr SetFLock(ConstStringPtr filen, INTEGER vrn) {
+    ParamBlockRec pb;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)filen;
+    pb.fileParam.ioVRefNum = vrn;
+    pb.fileParam.ioFVersNum = 0;
+    return PBSetFLockSync(&pb);
+}
+
+static __inline__ OSErr RstFLock(ConstStringPtr filen, INTEGER vrn) {
+    ParamBlockRec pb;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)filen;
+    pb.fileParam.ioVRefNum = vrn;
+    pb.fileParam.ioFVersNum = 0;
+    return PBRstFLockSync(&pb);
+}
+
+static __inline__ OSErr Rename(ConstStringPtr filen, INTEGER vrn, ConstStringPtr newf) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)filen;
+    pb.ioParam.ioVRefNum = vrn;
+    pb.ioParam.ioVersNum = 0;
+    pb.ioParam.ioMisc = (Ptr)newf;
+    return PBRenameSync(&pb);
+}
+
+static __inline__ QHdrPtr GetFSQHdr(void) {
+    return (QHdrPtr)0x360;
+}
+
+static __inline__ QHdrPtr GetVCBQHdr(void) {
+    return (QHdrPtr)0x356;
+}
+
+static __inline__ QHdrPtr GetDrvQHdr(void) {
+    return (QHdrPtr)0x308;
+}
+
+static __inline__ OSErr GetVInfo(INTEGER drv, StringPtr voln, INTEGER *vrn, LONGINT *freeb) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.volumeParam.ioCompletion = 0;
+    pb.volumeParam.ioNamePtr = voln;
+    pb.volumeParam.ioVRefNum = drv;
+    pb.volumeParam.ioVolIndex = 0;
+    err = PBGetVInfoSync(&pb);
+    *vrn = pb.volumeParam.ioVRefNum;
+    /* The block count is 16 bits, so this needs no __mulsi3. */
+    *freeb = (long)((unsigned long)(unsigned short)pb.volumeParam.ioVFrBlk *
+                    (unsigned long)pb.volumeParam.ioVAlBlkSiz);
+    return err;
+}
+
+static __inline__ OSErr GetVRefNum(INTEGER prn, INTEGER *vrn) {
+    FCBPBRec pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = 0;
+    pb.ioVRefNum = 0;
+    pb.ioRefNum = prn;
+    pb.ioFCBIndx = 0;
+    err = PBGetFCBInfoSync(&pb);
+    *vrn = pb.ioFCBVRefNum;
+    return err;
+}
+
+static __inline__ OSErr GetVol(StringPtr voln, INTEGER *vrn) {
+    ParamBlockRec pb;
+    OSErr err;
+    pb.volumeParam.ioCompletion = 0;
+    pb.volumeParam.ioNamePtr = voln;
+    err = PBGetVolSync(&pb);
+    *vrn = pb.volumeParam.ioVRefNum;
+    return err;
+}
+
+static __inline__ OSErr SetVol(ConstStringPtr voln, INTEGER vrn) {
+    ParamBlockRec pb;
+    pb.volumeParam.ioCompletion = 0;
+    pb.volumeParam.ioNamePtr = (StringPtr)voln;
+    pb.volumeParam.ioVRefNum = vrn;
+    return PBSetVolSync(&pb);
+}
+
+static __inline__ OSErr FlushVol(ConstStringPtr voln, INTEGER vrn) {
+    ParamBlockRec pb;
+    pb.volumeParam.ioCompletion = 0;
+    pb.volumeParam.ioNamePtr = (StringPtr)voln;
+    pb.volumeParam.ioVRefNum = vrn;
+    return PBFlushVolSync(&pb);
+}
+
+static __inline__ OSErr UnmountVol(ConstStringPtr voln, INTEGER vrn) {
+    ParamBlockRec pb;
+    pb.volumeParam.ioCompletion = 0;
+    pb.volumeParam.ioNamePtr = (StringPtr)voln;
+    pb.volumeParam.ioVRefNum = vrn;
+    return PBUnmountVol(&pb);
+}
+
+static __inline__ OSErr Eject(ConstStringPtr voln, INTEGER vrn) {
+    ParamBlockRec pb;
+    pb.volumeParam.ioCompletion = 0;
+    pb.volumeParam.ioNamePtr = (StringPtr)voln;
+    pb.volumeParam.ioVRefNum = vrn;
+    return PBEject(&pb);
+}
+
+static __inline__ OSErr HCreate(INTEGER vref, LONGINT dirid, ConstStringPtr name, OSType creator, OSType type) {
+    HParamBlockRec pb;
+    OSErr err;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)name;
+    pb.fileParam.ioVRefNum = vref;
+    pb.fileParam.ioFVersNum = 0;
+    pb.fileParam.ioDirID = dirid;
+    err = PBHCreateSync(&pb);
+    if (err != noErr)
+        return err;
+    pb.fileParam.ioFDirIndex = 0;
+    pb.fileParam.ioDirID = dirid;
+    err = PBHGetFInfoSync(&pb);
+    if (err != noErr)
+        return err;
+    pb.fileParam.ioFlFndrInfo.fdCreator = creator;
+    pb.fileParam.ioFlFndrInfo.fdType = type;
+    pb.fileParam.ioDirID = dirid;
+    return PBHSetFInfoSync(&pb);
+}
+
+static __inline__ OSErr HOpenRF(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp) {
+    HParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)name;
+    pb.ioParam.ioVRefNum = vref;
+    pb.ioParam.ioVersNum = 0;
+    pb.ioParam.ioPermssn = perm;
+    pb.ioParam.ioMisc = 0;
+    pb.fileParam.ioDirID = dirid;
+    err = PBHOpenRFSync(&pb);
+    *refp = pb.ioParam.ioRefNum;
+    return err;
+}
+
+static __inline__ OSErr HOpen(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp) {
+    HParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)name;
+    pb.ioParam.ioVRefNum = vref;
+    pb.ioParam.ioVersNum = 0;
+    pb.ioParam.ioPermssn = perm;
+    pb.ioParam.ioMisc = 0;
+    pb.fileParam.ioDirID = dirid;
+    err = PBHOpenSync(&pb);
+    *refp = pb.ioParam.ioRefNum;
+    return err;
+}
+
+static __inline__ OSErr HOpenDF(INTEGER vref, LONGINT dirid, ConstStringPtr name, SignedByte perm, INTEGER *refp) {
+    HParamBlockRec pb;
+    OSErr err;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)name;
+    pb.ioParam.ioVRefNum = vref;
+    pb.ioParam.ioVersNum = 0;
+    pb.ioParam.ioPermssn = perm;
+    pb.ioParam.ioMisc = 0;
+    pb.fileParam.ioDirID = dirid;
+    err = PBHOpenDFSync(&pb);
+    if (err == paramErr)     /* no _OpenDF before System 7 */
+        err = PBHOpenSync(&pb);
+    *refp = pb.ioParam.ioRefNum;
+    return err;
+}
+
+static __inline__ OSErr HRename(INTEGER vref, LONGINT dirid, ConstStringPtr src, ConstStringPtr dst) {
+    HParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)src;
+    pb.ioParam.ioVRefNum = vref;
+    pb.ioParam.ioMisc = (Ptr)dst;
+    pb.fileParam.ioDirID = dirid;
+    return PBHRenameSync(&pb);
+}
+
+static __inline__ OSErr HDelete(INTEGER vref, LONGINT dirid, ConstStringPtr name) {
+    HParamBlockRec pb;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)name;
+    pb.fileParam.ioVRefNum = vref;
+    pb.fileParam.ioDirID = dirid;
+    return PBHDeleteSync(&pb);
+}
+
+static __inline__ OSErr GetWDInfo(INTEGER wd, INTEGER *vrefp, LONGINT *dirp, LONGINT *procp) {
+    WDPBRec pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = 0;
+    pb.ioVRefNum = wd;
+    pb.ioWDIndex = 0;
+    pb.ioWDProcID = 0;
+    err = PBGetWDInfoSync(&pb);
+    *vrefp = pb.ioWDVRefNum;
+    *dirp = pb.ioWDDirID;
+    *procp = pb.ioWDProcID;
+    return err;
+}
+
+static __inline__ OSErr HGetVol(StringPtr volName, INTEGER *vRefNum, long *dirID) {
+    WDPBRec pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = volName;
+    err = PBHGetVolSync(&pb);
+    *vRefNum = pb.ioVRefNum;
+    *dirID = pb.ioWDDirID;
+    return err;
+}
+
+static __inline__ OSErr HSetVol(ConstStr63Param volName, INTEGER vRefNum, long dirID) {
+    WDPBRec pb;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = (StringPtr)volName;
+    pb.ioVRefNum = vRefNum;
+    pb.ioWDDirID = dirID;
+    return PBHSetVolSync(&pb);
+}
+
+static __inline__ OSErr DirCreate(INTEGER vRefNum, long parentDirID, ConstStr255Param directoryName, long *createdDirID) {
+    HParamBlockRec pb;
+    OSErr err;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)directoryName;
+    pb.fileParam.ioVRefNum = vRefNum;
+    pb.fileParam.ioDirID = parentDirID;
+    err = PBDirCreateSync(&pb);
+    *createdDirID = pb.fileParam.ioDirID;
+    return err;
+}
+
+static __inline__ OSErr HSetFInfo(INTEGER vRefNum, long dirID, ConstStr255Param fileName, const FInfo *fndrInfo) {
+    HParamBlockRec pb;
+    OSErr err;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)fileName;
+    pb.fileParam.ioVRefNum = vRefNum;
+    pb.fileParam.ioFVersNum = 0;
+    pb.fileParam.ioFDirIndex = 0;
+    pb.fileParam.ioDirID = dirID;
+    err = PBHGetFInfoSync(&pb);
+    if (err != noErr)
+        return err;
+    pb.fileParam.ioFlFndrInfo = *fndrInfo;
+    pb.fileParam.ioDirID = dirID;    /* GetFInfo returned the file number here */
+    return PBHSetFInfoSync(&pb);
+}
+
+static __inline__ OSErr HSetFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName) {
+    HParamBlockRec pb;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)fileName;
+    pb.fileParam.ioVRefNum = vRefNum;
+    pb.fileParam.ioFVersNum = 0;
+    pb.fileParam.ioDirID = dirID;
+    return PBHSetFLockSync(&pb);
+}
+
+static __inline__ OSErr HRstFLock(INTEGER vRefNum, long dirID, ConstStr255Param fileName) {
+    HParamBlockRec pb;
+    pb.fileParam.ioCompletion = 0;
+    pb.fileParam.ioNamePtr = (StringPtr)fileName;
+    pb.fileParam.ioVRefNum = vRefNum;
+    pb.fileParam.ioFVersNum = 0;
+    pb.fileParam.ioDirID = dirID;
+    return PBHRstFLockSync(&pb);
+}
+
+static __inline__ OSErr CatMove(INTEGER vRefNum, long dirID, ConstStr255Param oldName, long newDirID, ConstStr255Param newName) {
+    CMovePBRec pb;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = (StringPtr)oldName;
+    pb.ioVRefNum = vRefNum;
+    pb.ioNewName = (StringPtr)newName;
+    pb.ioNewDirID = newDirID;
+    pb.ioDirID = dirID;
+    return PBCatMoveSync(&pb);
+}
+
+static __inline__ OSErr OpenWD(INTEGER vRefNum, long dirID, long procID, INTEGER *wdRefNum) {
+    WDPBRec pb;
+    OSErr err;
+    pb.ioCompletion = 0;
+    pb.ioNamePtr = 0;
+    pb.ioVRefNum = vRefNum;
+    pb.ioWDDirID = dirID;
+    pb.ioWDProcID = procID;
+    err = PBOpenWDSync(&pb);
+    *wdRefNum = pb.ioVRefNum;
+    return err;
+}
+
+static __inline__ OSErr CloseWD(INTEGER wdRefNum) {
+    WDPBRec pb;
+    pb.ioCompletion = 0;
+    pb.ioVRefNum = wdRefNum;
+    return PBCloseWDSync(&pb);
+}
+
+#endif
 
 #pragma options align=reset
 

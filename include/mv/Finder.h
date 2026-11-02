@@ -45,8 +45,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetPath(DTPBPtr d
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7020, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -59,8 +59,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTCloseDown(DTPBPtr
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7021, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -73,8 +73,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconSync(DTPBP
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7022, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -86,8 +86,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddIconAsync(DTPB
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7022, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -100,8 +100,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconSync(DTPBP
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7023, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -113,8 +113,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconAsync(DTPB
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7023, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -127,8 +127,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoSync(D
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7024, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -140,8 +140,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetIconInfoAsync(
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7024, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -154,8 +154,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLSync(DTPBP
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7025, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -167,8 +167,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTAddAPPLAsync(DTPB
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7025, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -181,8 +181,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLSync(DT
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7026, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -194,8 +194,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveAPPLAsync(D
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7026, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -208,8 +208,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLSync(DTPBP
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7027, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -221,8 +221,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetAPPLAsync(DTPB
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7027, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -235,8 +235,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentSync(DT
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7028, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -248,8 +248,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTSetCommentAsync(D
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7028, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -262,8 +262,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentSync
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7029, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -275,8 +275,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTRemoveCommentAsyn
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x7029, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -289,8 +289,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentSync(DT
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702A, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -302,8 +302,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetCommentAsync(D
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702A, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -316,8 +316,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushSync(DTPBPtr
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702B, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -329,8 +329,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTFlushAsync(DTPBPt
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702B, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -343,8 +343,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetSync(DTPBPtr
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702C, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -356,8 +356,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTResetAsync(DTPBPt
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702C, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -370,8 +370,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoSync(DTPBP
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702D, 0xA260"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -383,8 +383,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTGetInfoAsync(DTPB
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702D, 0xA660"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -397,8 +397,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTOpenInform(DTPBPt
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702E, 0xA060"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -411,8 +411,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteSync(DTPBPt
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702F, 0xA060"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -424,8 +424,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr PBDTDeleteAsync(DTPBP
     register OSErr _ret __asm__("d0");
     register DTPBPtr _dtp __asm__("a0") = dtp;
     __asm__ __volatile__(".short 0x702F, 0xA460"
-        : "=r"(_ret)
-        : "r"(_dtp)
+        : "=r"(_ret), "+r"(_dtp)
+        : 
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }

@@ -211,6 +211,8 @@
     args:
       - name: volp
         type: INTEGER*
+    m68k-body: |
+      *volp = *(Byte *)0x260 & 7;    /* SdVolume */
 
 # ####
 

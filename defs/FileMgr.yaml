@@ -1148,6 +1148,19 @@
       - name: rn
         type: INTEGER*
     executor: true
+    m68k-needs: [ParamBlockRec, PBOpenSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = 0;    /* fsCurPerm */
+      pb.ioParam.ioMisc = 0;
+      err = PBOpenSync(&pb);
+      *rn = pb.ioParam.ioRefNum;
+      return err;
 
 # ####
 
@@ -1162,6 +1175,19 @@
       - name: rn
         type: INTEGER*
     executor: true
+    m68k-needs: [ParamBlockRec, PBOpenRFSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = 0;
+      pb.ioParam.ioMisc = 0;
+      err = PBOpenRFSync(&pb);
+      *rn = pb.ioParam.ioRefNum;
+      return err;
 
 # ####
 
@@ -1176,6 +1202,21 @@
       - name: rn
         type: INTEGER*
     executor: true
+    m68k-needs: [ParamBlockRec, PBOpenDFSync, PBOpenSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = 0;
+      pb.ioParam.ioMisc = 0;
+      err = PBOpenDFSync(&pb);
+      if (err == paramErr)     /* no _OpenDF before System 7 */
+          err = PBOpenSync(&pb);
+      *rn = pb.ioParam.ioRefNum;
+      return err;
 
 # ####
 
@@ -1190,6 +1231,19 @@
       - name: buffp
         type: void*
     executor: true
+    m68k-needs: [ParamBlockRec, PBReadSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioBuffer = (Ptr)buffp;
+      pb.ioParam.ioReqCount = *count;
+      pb.ioParam.ioPosMode = 0;    /* fsAtMark */
+      pb.ioParam.ioPosOffset = 0;
+      err = PBReadSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
 
 # ####
 
@@ -1204,6 +1258,19 @@
       - name: buffp
         type: const void*
     executor: true
+    m68k-needs: [ParamBlockRec, PBWriteSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioBuffer = (Ptr)buffp;
+      pb.ioParam.ioReqCount = *count;
+      pb.ioParam.ioPosMode = 0;
+      pb.ioParam.ioPosOffset = 0;
+      err = PBWriteSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
 
 # ####
 
@@ -1216,6 +1283,15 @@
       - name: filep
         type: LONGINT*
     executor: true
+    m68k-needs: [ParamBlockRec, PBGetFPosSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      err = PBGetFPosSync(&pb);
+      *filep = pb.ioParam.ioPosOffset;
+      return err;
 
 # ####
 
@@ -1230,6 +1306,14 @@
       - name: possoff
         type: LONGINT
     executor: true
+    m68k-needs: [ParamBlockRec, PBSetFPosSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioPosMode = posmode;
+      pb.ioParam.ioPosOffset = possoff;
+      return PBSetFPosSync(&pb);
 
 # ####
 
@@ -1242,6 +1326,15 @@
       - name: eof
         type: LONGINT*
     executor: true
+    m68k-needs: [ParamBlockRec, PBGetEOFSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      err = PBGetEOFSync(&pb);
+      *eof = (long)pb.ioParam.ioMisc;
+      return err;
 
 # ####
 
@@ -1254,6 +1347,13 @@
       - name: eof
         type: LONGINT
     executor: true
+    m68k-needs: [ParamBlockRec, PBSetEOFSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioMisc = (Ptr)eof;
+      return PBSetEOFSync(&pb);
 
 # ####
 
@@ -1266,6 +1366,16 @@
       - name: count
         type: LONGINT*
     executor: true
+    m68k-needs: [ParamBlockRec, PBAllocateSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioReqCount = *count;
+      err = PBAllocateSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
 
 # ####
 
@@ -1278,6 +1388,16 @@
       - name: count
         type: LONGINT*
     executor: true
+    m68k-needs: [ParamBlockRec, PBAllocContigSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      pb.ioParam.ioReqCount = *count;
+      err = PBAllocContigSync(&pb);
+      *count = pb.ioParam.ioActCount;
+      return err;
 
 # ####
 
@@ -1288,6 +1408,12 @@
       - name: rn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBCloseSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioRefNum = rn;
+      return PBCloseSync(&pb);
 
 # ####
 
@@ -1304,6 +1430,24 @@
       - name: filtyp
         type: OSType
     executor: true
+    m68k-needs: [ParamBlockRec, PBCreateSync, PBGetFInfoSync, PBSetFInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      err = PBCreateSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFDirIndex = 0;
+      err = PBGetFInfoSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo.fdCreator = creator;
+      pb.fileParam.ioFlFndrInfo.fdType = filtyp;
+      return PBSetFInfoSync(&pb);
 
 # ####
 
@@ -1316,6 +1460,14 @@
       - name: vrn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBDeleteSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      return PBDeleteSync(&pb);
 
 # ####
 
@@ -1330,6 +1482,18 @@
       - name: fndrinfo
         type: FInfo*
     executor: true
+    m68k-needs: [ParamBlockRec, PBGetFInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      err = PBGetFInfoSync(&pb);
+      *fndrinfo = pb.fileParam.ioFlFndrInfo;
+      return err;
 
 # ####
 
@@ -1346,6 +1510,19 @@
       - name: fndrinfo
         type: FInfo*
     executor: true
+    m68k-needs: [HParamBlockRec, PBHGetFInfoSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)name;
+      pb.fileParam.ioVRefNum = vref;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHGetFInfoSync(&pb);
+      *fndrinfo = pb.fileParam.ioFlFndrInfo;
+      return err;
 
 # ####
 
@@ -1360,6 +1537,20 @@
       - name: fndrinfo
         type: FInfo*
     executor: true
+    m68k-needs: [ParamBlockRec, PBGetFInfoSync, PBSetFInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      err = PBGetFInfoSync(&pb);    /* keep the dates */
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo = *fndrinfo;
+      return PBSetFInfoSync(&pb);
 
 # ####
 
@@ -1372,6 +1563,14 @@
       - name: vrn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBSetFLockSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      return PBSetFLockSync(&pb);
 
 # ####
 
@@ -1384,6 +1583,14 @@
       - name: vrn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBRstFLockSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)filen;
+      pb.fileParam.ioVRefNum = vrn;
+      pb.fileParam.ioFVersNum = 0;
+      return PBRstFLockSync(&pb);
 
 # ####
 
@@ -1398,6 +1605,15 @@
       - name: newf
         type: ConstStringPtr
     executor: true
+    m68k-needs: [ParamBlockRec, PBRenameSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)filen;
+      pb.ioParam.ioVRefNum = vrn;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioMisc = (Ptr)newf;
+      return PBRenameSync(&pb);
 
 # ####
 
@@ -1412,6 +1628,8 @@
     name: GetFSQHdr
     return: QHdrPtr
     executor: C_
+    m68k-body: |
+      return (QHdrPtr)0x360;
 
 # ####
 
@@ -1419,6 +1637,8 @@
     name: GetVCBQHdr
     return: QHdrPtr
     executor: C_
+    m68k-body: |
+      return (QHdrPtr)0x356;
 
 # ####
 
@@ -1426,6 +1646,8 @@
     name: GetDrvQHdr
     return: QHdrPtr
     executor: C_
+    m68k-body: |
+      return (QHdrPtr)0x308;
 
 # ####
 
@@ -1441,6 +1663,20 @@
         type: INTEGER*
       - name: freeb
         type: LONGINT*
+    m68k-needs: [ParamBlockRec, PBGetVInfoSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = voln;
+      pb.volumeParam.ioVRefNum = drv;
+      pb.volumeParam.ioVolIndex = 0;
+      err = PBGetVInfoSync(&pb);
+      *vrn = pb.volumeParam.ioVRefNum;
+      /* The block count is 16 bits, so this needs no __mulsi3. */
+      *freeb = (long)((unsigned long)(unsigned short)pb.volumeParam.ioVFrBlk *
+                      (unsigned long)pb.volumeParam.ioVAlBlkSiz);
+      return err;
 
 # ####
 
@@ -1452,6 +1688,18 @@
         type: INTEGER
       - name: vrn
         type: INTEGER*
+    m68k-needs: [FCBPBRec, PBGetFCBInfoSync]
+    m68k-body: |
+      FCBPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = 0;
+      pb.ioRefNum = prn;
+      pb.ioFCBIndx = 0;
+      err = PBGetFCBInfoSync(&pb);
+      *vrn = pb.ioFCBVRefNum;
+      return err;
 
 # ####
 
@@ -1464,6 +1712,15 @@
       - name: vrn
         type: INTEGER*
     executor: true
+    m68k-needs: [ParamBlockRec, PBGetVolSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      OSErr err;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = voln;
+      err = PBGetVolSync(&pb);
+      *vrn = pb.volumeParam.ioVRefNum;
+      return err;
 
 # ####
 
@@ -1476,6 +1733,13 @@
       - name: vrn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBSetVolSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBSetVolSync(&pb);
 
 # ####
 
@@ -1488,6 +1752,13 @@
       - name: vrn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBFlushVolSync]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBFlushVolSync(&pb);
 
 # ####
 
@@ -1500,6 +1771,13 @@
       - name: vrn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBUnmountVol]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBUnmountVol(&pb);
 
 # ####
 
@@ -1512,6 +1790,13 @@
       - name: vrn
         type: INTEGER
     executor: true
+    m68k-needs: [ParamBlockRec, PBEject]
+    m68k-body: |
+      ParamBlockRec pb;
+      pb.volumeParam.ioCompletion = 0;
+      pb.volumeParam.ioNamePtr = (StringPtr)voln;
+      pb.volumeParam.ioVRefNum = vrn;
+      return PBEject(&pb);
 
 # ####
 
@@ -3192,6 +3477,27 @@
       - name: type
         type: OSType
     executor: true
+    m68k-needs: [HParamBlockRec, PBHCreateSync, PBHGetFInfoSync, PBHSetFInfoSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)name;
+      pb.fileParam.ioVRefNum = vref;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHCreateSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFDirIndex = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHGetFInfoSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo.fdCreator = creator;
+      pb.fileParam.ioFlFndrInfo.fdType = type;
+      pb.fileParam.ioDirID = dirid;
+      return PBHSetFInfoSync(&pb);
 
 # ####
 
@@ -3210,6 +3516,20 @@
       - name: refp
         type: INTEGER*
     executor: true
+    m68k-needs: [HParamBlockRec, PBHOpenRFSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)name;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = perm;
+      pb.ioParam.ioMisc = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHOpenRFSync(&pb);
+      *refp = pb.ioParam.ioRefNum;
+      return err;
 
 # ####
 
@@ -3228,6 +3548,20 @@
       - name: refp
         type: INTEGER*
     executor: true
+    m68k-needs: [HParamBlockRec, PBHOpenSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)name;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = perm;
+      pb.ioParam.ioMisc = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHOpenSync(&pb);
+      *refp = pb.ioParam.ioRefNum;
+      return err;
 
 # ####
 
@@ -3246,6 +3580,22 @@
       - name: refp
         type: INTEGER*
     executor: true
+    m68k-needs: [HParamBlockRec, PBHOpenDFSync, PBHOpenSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)name;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioVersNum = 0;
+      pb.ioParam.ioPermssn = perm;
+      pb.ioParam.ioMisc = 0;
+      pb.fileParam.ioDirID = dirid;
+      err = PBHOpenDFSync(&pb);
+      if (err == paramErr)     /* no _OpenDF before System 7 */
+          err = PBHOpenSync(&pb);
+      *refp = pb.ioParam.ioRefNum;
+      return err;
 
 # ####
 
@@ -3261,6 +3611,15 @@
         type: ConstStringPtr
       - name: dst
         type: ConstStringPtr
+    m68k-needs: [HParamBlockRec, PBHRenameSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.ioParam.ioCompletion = 0;
+      pb.ioParam.ioNamePtr = (StringPtr)src;
+      pb.ioParam.ioVRefNum = vref;
+      pb.ioParam.ioMisc = (Ptr)dst;
+      pb.fileParam.ioDirID = dirid;
+      return PBHRenameSync(&pb);
 
 # ####
 
@@ -3276,6 +3635,14 @@
         type: ConstStringPtr
     comment: |
       NOTRAP_FUNCTION2(HRename);
+    m68k-needs: [HParamBlockRec, PBHDeleteSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)name;
+      pb.fileParam.ioVRefNum = vref;
+      pb.fileParam.ioDirID = dirid;
+      return PBHDeleteSync(&pb);
 
 # ####
 
@@ -3293,6 +3660,20 @@
         type: LONGINT*
     comment: |
       NOTRAP_FUNCTION2(HDelete);
+    m68k-needs: [WDPBRec, PBGetWDInfoSync]
+    m68k-body: |
+      WDPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = wd;
+      pb.ioWDIndex = 0;
+      pb.ioWDProcID = 0;
+      err = PBGetWDInfoSync(&pb);
+      *vrefp = pb.ioWDVRefNum;
+      *dirp = pb.ioWDDirID;
+      *procp = pb.ioWDProcID;
+      return err;
 
 # ####
 
@@ -3614,6 +3995,16 @@
     - name: dirID
       type: int32_t*
     comment: High-level calls built on the parameter block calls
+    m68k-needs: [WDPBRec, PBHGetVolSync]
+    m68k-body: |
+      WDPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = volName;
+      err = PBHGetVolSync(&pb);
+      *vRefNum = pb.ioVRefNum;
+      *dirID = pb.ioWDDirID;
+      return err;
 
 # ####
 
@@ -3627,6 +4018,14 @@
       type: INTEGER
     - name: dirID
       type: int32_t
+    m68k-needs: [WDPBRec, PBHSetVolSync]
+    m68k-body: |
+      WDPBRec pb;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = (StringPtr)volName;
+      pb.ioVRefNum = vRefNum;
+      pb.ioWDDirID = dirID;
+      return PBHSetVolSync(&pb);
 
 # ####
 
@@ -3642,6 +4041,17 @@
       type: ConstStr255Param
     - name: createdDirID
       type: int32_t*
+    m68k-needs: [HParamBlockRec, PBDirCreateSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)directoryName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioDirID = parentDirID;
+      err = PBDirCreateSync(&pb);
+      *createdDirID = pb.fileParam.ioDirID;
+      return err;
 
 # ####
 
@@ -3657,6 +4067,22 @@
       type: ConstStr255Param
     - name: fndrInfo
       type: const FInfo*
+    m68k-needs: [HParamBlockRec, PBHGetFInfoSync, PBHSetFInfoSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      OSErr err;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)fileName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioFDirIndex = 0;
+      pb.fileParam.ioDirID = dirID;
+      err = PBHGetFInfoSync(&pb);
+      if (err != noErr)
+          return err;
+      pb.fileParam.ioFlFndrInfo = *fndrInfo;
+      pb.fileParam.ioDirID = dirID;    /* GetFInfo returned the file number here */
+      return PBHSetFInfoSync(&pb);
 
 # ####
 
@@ -3670,6 +4096,15 @@
       type: int32_t
     - name: fileName
       type: ConstStr255Param
+    m68k-needs: [HParamBlockRec, PBHSetFLockSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)fileName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioDirID = dirID;
+      return PBHSetFLockSync(&pb);
 
 # ####
 
@@ -3683,6 +4118,15 @@
       type: int32_t
     - name: fileName
       type: ConstStr255Param
+    m68k-needs: [HParamBlockRec, PBHRstFLockSync]
+    m68k-body: |
+      HParamBlockRec pb;
+      pb.fileParam.ioCompletion = 0;
+      pb.fileParam.ioNamePtr = (StringPtr)fileName;
+      pb.fileParam.ioVRefNum = vRefNum;
+      pb.fileParam.ioFVersNum = 0;
+      pb.fileParam.ioDirID = dirID;
+      return PBHRstFLockSync(&pb);
 
 # ####
 
@@ -3700,6 +4144,16 @@
       type: int32_t
     - name: newName
       type: ConstStr255Param
+    m68k-needs: [CMovePBRec, PBCatMoveSync]
+    m68k-body: |
+      CMovePBRec pb;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = (StringPtr)oldName;
+      pb.ioVRefNum = vRefNum;
+      pb.ioNewName = (StringPtr)newName;
+      pb.ioNewDirID = newDirID;
+      pb.ioDirID = dirID;
+      return PBCatMoveSync(&pb);
 
 # ####
 
@@ -3715,6 +4169,18 @@
       type: int32_t
     - name: wdRefNum
       type: INTEGER*
+    m68k-needs: [WDPBRec, PBOpenWDSync]
+    m68k-body: |
+      WDPBRec pb;
+      OSErr err;
+      pb.ioCompletion = 0;
+      pb.ioNamePtr = 0;
+      pb.ioVRefNum = vRefNum;
+      pb.ioWDDirID = dirID;
+      pb.ioWDProcID = procID;
+      err = PBOpenWDSync(&pb);
+      *wdRefNum = pb.ioVRefNum;
+      return err;
 
 # ####
 
@@ -3724,6 +4190,12 @@
     args:
     - name: wdRefNum
       type: INTEGER
+    m68k-needs: [WDPBRec, PBCloseWDSync]
+    m68k-body: |
+      WDPBRec pb;
+      pb.ioCompletion = 0;
+      pb.ioVRefNum = wdRefNum;
+      return PBCloseWDSync(&pb);
 
 # ####
 

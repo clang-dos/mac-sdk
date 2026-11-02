@@ -409,7 +409,11 @@ pascal void DeviceLoop(RgnHandle arg0, DeviceLoopDrawingUPP arg1, LONGINT arg2, 
 enum { _TestDeviceAttribute = 0xAA2C };
 pascal Boolean TestDeviceAttribute(GDHandle arg0, INTEGER arg1) M68K_INLINE(0xAA2C);
 
+#if TARGET_CPU_68K
+static __inline__ void ScreenRes(INTEGER *arg0, INTEGER *arg1);
+#else
 pascal void ScreenRes(INTEGER *arg0, INTEGER *arg1);
+#endif
 
 pascal INTEGER HasDepth(GDHandle arg0, INTEGER arg1, INTEGER arg2, INTEGER arg3) M68K_INLINE(0x303C, 0x0A14, 0xAAA2);
 
@@ -676,6 +680,14 @@ pascal PicHandle OpenCPicture(OpenCPicParams *newheaderp) M68K_INLINE(0xAA20);
 
 enum { _SetPalette = 0xAA95 };
 pascal void SetPalette(WindowPtr dstWindow, PaletteHandle srcPalette, Boolean cUpdates) M68K_INLINE(0xAA95);
+
+#if TARGET_CPU_68K
+static __inline__ void ScreenRes(INTEGER *arg0, INTEGER *arg1) {
+    *arg0 = *(INTEGER *)0x104;    /* ScrHRes */
+    *arg1 = *(INTEGER *)0x102;    /* ScrVRes */
+}
+
+#endif
 
 #pragma options align=reset
 

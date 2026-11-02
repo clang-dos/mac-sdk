@@ -304,11 +304,19 @@ pascal void CheckMenuItem(MenuHandle mh, INTEGER item, Boolean cflag);
 #endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void EnableMenuItem(MenuHandle mh, INTEGER item);
+#else
 pascal void EnableMenuItem(MenuHandle mh, INTEGER item);
+#endif
 #endif
 
 #if TARGET_API_MAC_CARBON
+#if TARGET_CPU_68K
+static __inline__ void DisableMenuItem(MenuHandle mh, INTEGER item);
+#else
 pascal void DisableMenuItem(MenuHandle mh, INTEGER item);
+#endif
 #endif
 
 #define GetMBarHeight() (LMGetMBarHeight())
@@ -318,6 +326,21 @@ enum { _MenuDispatch = 0xA825 };
 pascal void InsertFontResMenu(MenuHandle theMenu, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0400, 0xA825);
 
 pascal void InsertIntlResMenu(MenuHandle theMenu, ResType theType, INTEGER afterItem, INTEGER scriptFilter) M68K_INLINE(0x303C, 0x0601, 0xA825);
+
+#if TARGET_CPU_68K
+#if TARGET_API_MAC_CARBON
+static __inline__ void EnableMenuItem(MenuHandle mh, INTEGER item) {
+    EnableItem(mh, item);
+}
+#endif
+
+#if TARGET_API_MAC_CARBON
+static __inline__ void DisableMenuItem(MenuHandle mh, INTEGER item) {
+    DisableItem(mh, item);
+}
+#endif
+
+#endif
 
 #pragma options align=reset
 

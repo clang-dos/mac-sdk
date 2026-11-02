@@ -32,7 +32,11 @@ struct ADBSetInfoBlock {
 enum { _ADBReInit = 0xA07B };
 pascal void ADBReInit(void) M68K_INLINE(0xA07B);
 
+#if TARGET_CPU_68K
+static __inline__ OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER command);
+#else
 pascal OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER command);
+#endif
 
 enum { _CountADBs = 0xA077 };
 #if TARGET_CPU_68K
@@ -55,8 +59,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr GetIndADB(ADBDataBloc
     register ADBDataBlock* _adbp __asm__("a0") = adbp;
     register INTEGER _index __asm__("d0") = index;
     __asm__ __volatile__(".short 0xA078"
-        : "=r"(_ret)
-        : "r"(_adbp), "r"(_index)
+        : "=r"(_ret), "+r"(_adbp)
+        : "r"(_index)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -71,8 +75,8 @@ static __inline__ __attribute__((__always_inline__)) OSErr GetADBInfo(ADBDataBlo
     register ADBDataBlock* _adbp __asm__("a0") = adbp;
     register INTEGER _address __asm__("d0") = address;
     __asm__ __volatile__(".short 0xA079"
-        : "=r"(_ret)
-        : "r"(_adbp), "r"(_address)
+        : "=r"(_ret), "+r"(_adbp)
+        : "r"(_address)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
@@ -87,13 +91,28 @@ static __inline__ __attribute__((__always_inline__)) OSErr SetADBInfo(ADBSetInfo
     register ADBSetInfoBlock* _adbp __asm__("a0") = adbp;
     register INTEGER _address __asm__("d0") = address;
     __asm__ __volatile__(".short 0xA07A"
-        : "=r"(_ret)
-        : "r"(_adbp), "r"(_address)
+        : "=r"(_ret), "+r"(_adbp)
+        : "r"(_address)
         : "d1", "d2", "a1", "cc", "memory");
     return _ret;
 }
 #else
 pascal OSErr SetADBInfo(ADBSetInfoBlock *adbp, INTEGER address);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ADBOp(Ptr data, ProcPtr procp, Ptr buffer, INTEGER command) {
+    /* _ADBOp: A0 = {buffer, completion, data}, D0 = command */
+    struct { Ptr buffer; ProcPtr compRout; Ptr data; } blk;
+    register void *a0 __asm__("a0") = &blk;
+    register long d0 __asm__("d0") = command;
+    blk.buffer = buffer;
+    blk.compRout = procp;
+    blk.data = data;
+    __asm__ __volatile__(".short 0xA07C" : "+r"(a0), "+r"(d0) : : "d1", "d2", "a1", "cc", "memory");
+    return (OSErr)d0;
+}
+
 #endif
 
 #pragma options align=reset
