@@ -27,7 +27,11 @@ clang --target=powerpc-apple-macos9 -O2 -Iinclude -c hello.c   # PowerPC
   passes `long *` compiles unchanged.
 
 `examples/hello.c` uses them; built as a fat application it runs on
-System 7.1 and 7.6.1 (68k) and Mac OS 8.1 (PowerPC).
+System 7.1 and 7.6.1 (68k) and Mac OS 8.1 (PowerPC). Its 68k build also
+runs on a Mac Plus (in MAME) under Systems 2.0, 2.0.1, 5.0, 5.1, 6.0,
+6.0.3, 6.0.4, 6.0.5 and 6.0.8. It checks that the Gestalt trap exists
+before calling it, since Gestalt arrived in System 6.0.4; 6.0.8 reports
+itself to Gestalt as 6.0.7.
 
 ### Mac OS 8
 
