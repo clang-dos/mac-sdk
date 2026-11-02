@@ -46,7 +46,10 @@ python3 tools/gen-headers.py
 Since then the definitions have been extended here with the rest of
 the documented Toolbox: the Component, Display, Text Services, Power,
 Slot, SCSI, Cursor Device, MIDI, Dictionary and Data Access Managers,
-the PPC Toolbox, the HFS Plus API and more.
+the PPC Toolbox, AppleTalk (MPP, ATP, NBP, ZIP, ASP and AFP), Ethernet,
+the Communications Toolbox (Connection, Terminal and File Transfer
+Managers, the Communications Resource Manager and the CTB utilities),
+the HFS Plus API and more.
 
 ### Checked against a real ROM
 
@@ -64,12 +67,22 @@ the selector and where each argument goes.
   definitions, with the 68k details from `data/trapinfo.json`, and
   refuses a prototype whose argument sizes disagree with the ROM.
   `tools/add-types.py` does the same for records and constants.
+- `tools/blockinfo.py ROM > data/blockinfo.json` does the same for the
+  Communications Toolbox calls, which pass their arguments as a block
+  (laid out like Pascal arguments under a selector word, with A0
+  pointing at it) to `_CommToolboxDispatch`. It records the selector
+  and each argument's offset and size; `tests/blocks.py` checks all 166
+  such calls in the headers against it. It needs `llvm-mc` with the
+  PowerPC target.
 - `tools/coverage.py` writes [docs/coverage.md](docs/coverage.md).
 
 `include/needs-glue.txt` lists the functions that have no trap on 68k:
 C-string variants, File Manager calls built on parameter blocks, and
 Mac OS 9 calls that never ran on 68k. They need glue code, which is not
-written yet.
+written yet. Glue that is short enough is inline C in the headers
+(`m68k-body` in the definitions): the AppleTalk calls, for example, set
+the driver and control code and call PBControl, as the ROM's PowerPC
+glue does.
 
 ## Tests
 
@@ -78,14 +91,15 @@ CLANG=path/to/clang tests/run.sh
 ```
 
 It compiles every header for both targets in C and C++, generates code
-for every 68k register-trap inline, checks the size of every record
-whose definition gives one, and builds the example.
+for every 68k inline function, checks the size of every record whose
+definition gives one, checks the argument-block calls against the ROM,
+and builds the example.
 
 ## Not done yet
 
-- Coverage: the headers declare about 90% of what the ROM's InterfaceLib
-  exports (see docs/coverage.md). The AppleTalk and Communications
-  Toolbox calls are the largest gaps.
+- Coverage: the headers declare 99% of what the ROM's InterfaceLib
+  exports (see docs/coverage.md). ADSP has its control codes but not
+  its parameter blocks yet.
 - 68k glue for the functions in `needs-glue.txt`, and a runtime library
   (`__udivsi3` and the other helpers clang calls on 68k).
 - The linkers and tools, which are still in clang-dos/dos-sdk under

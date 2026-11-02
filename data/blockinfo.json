@@ -1,0 +1,2683 @@
+{
+ "AppendDITL": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x402"
+ },
+ "CMAbort": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x10F"
+ },
+ "CMAccept": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x10D"
+ },
+ "CMActivate": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x113"
+ },
+ "CMAddSearch": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x126"
+ },
+ "CMBreak": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x125"
+ },
+ "CMChoose": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x124"
+ },
+ "CMClearSearch": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x128"
+ },
+ "CMClose": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    14,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x10E"
+ },
+ "CMDefault": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x118"
+ },
+ "CMDispose": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x109"
+ },
+ "CMDisposeIOPB": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x131"
+ },
+ "CMEnglishToIntl": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x11F"
+ },
+ "CMEvent": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x12A"
+ },
+ "CMGetCMVersion": {
+  "args": [],
+  "result": 2,
+  "selector": "0x121"
+ },
+ "CMGetConfig": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x11C"
+ },
+ "CMGetConnEnvirons": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x12C"
+ },
+ "CMGetErrorString": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x12F"
+ },
+ "CMGetProcID": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x107"
+ },
+ "CMGetRefCon": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x103"
+ },
+ "CMGetToolName": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x106"
+ },
+ "CMGetUserData": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x105"
+ },
+ "CMGetVersion": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x120"
+ },
+ "CMIOKill": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x129"
+ },
+ "CMIdle": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x10A"
+ },
+ "CMIntlToEnglish": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x11E"
+ },
+ "CMListen": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x10C"
+ },
+ "CMMenu": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x115"
+ },
+ "CMNew": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    2
+   ]
+  ],
+  "result": 4,
+  "selector": "0x108"
+ },
+ "CMNewIOPB": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x130"
+ },
+ "CMOpen": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x10B"
+ },
+ "CMPBIOKill": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x134"
+ },
+ "CMPBRead": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x132"
+ },
+ "CMPBWrite": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x133"
+ },
+ "CMRead": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    16,
+    2
+   ],
+   [
+    18,
+    4
+   ],
+   [
+    22,
+    4
+   ],
+   [
+    26,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x111"
+ },
+ "CMRemoveSearch": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x127"
+ },
+ "CMReset": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x116"
+ },
+ "CMResume": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x114"
+ },
+ "CMSetConfig": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x11D"
+ },
+ "CMSetRefCon": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x102"
+ },
+ "CMSetUserData": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x104"
+ },
+ "CMSetupFilter": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    2
+   ],
+   [
+    20,
+    4
+   ],
+   [
+    24,
+    2
+   ]
+  ],
+  "result": 1,
+  "selector": "0x122"
+ },
+ "CMSetupItem": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    2
+   ],
+   [
+    16,
+    4
+   ],
+   [
+    20,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x11A"
+ },
+ "CMSetupPostflight": {
+  "args": [
+   [
+    2,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x12B"
+ },
+ "CMSetupPreflight": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "result": 4,
+  "selector": "0x123"
+ },
+ "CMSetupSetup": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    12,
+    4
+   ],
+   [
+    16,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x119"
+ },
+ "CMSetupXCleanup": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    2
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x12E"
+ },
+ "CMStatus": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x110"
+ },
+ "CMValidate": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x117"
+ },
+ "CMWrite": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    14,
+    2
+   ],
+   [
+    16,
+    4
+   ],
+   [
+    20,
+    4
+   ],
+   [
+    24,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x112"
+ },
+ "CRMFindCommunications": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x51A"
+ },
+ "CRMGet1IndResource": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x50A"
+ },
+ "CRMGet1NamedResource": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x50C"
+ },
+ "CRMGet1Resource": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x508"
+ },
+ "CRMGetCRMVersion": {
+  "args": [],
+  "result": 2,
+  "selector": "0x506"
+ },
+ "CRMGetHeader": {
+  "args": [],
+  "result": 4,
+  "selector": "0x502"
+ },
+ "CRMGetIndResource": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x509"
+ },
+ "CRMGetIndToolName": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x511"
+ },
+ "CRMGetIndex": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x50E"
+ },
+ "CRMGetNamedResource": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x50B"
+ },
+ "CRMGetResource": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x507"
+ },
+ "CRMGetToolNamedResource": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    2
+   ]
+  ],
+  "result": 4,
+  "selector": "0x526"
+ },
+ "CRMGetToolResource": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    2
+   ]
+  ],
+  "result": 4,
+  "selector": "0x523"
+ },
+ "CRMInstall": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x503"
+ },
+ "CRMIsDriverOpen": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x521"
+ },
+ "CRMLocalToRealID": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    2
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x50F"
+ },
+ "CRMParseCAPSResource": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x525"
+ },
+ "CRMRealToLocalID": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    2
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x510"
+ },
+ "CRMReleaseRF": {
+  "args": [
+   [
+    2,
+    2
+   ]
+  ],
+  "result": 2,
+  "selector": "0x514"
+ },
+ "CRMReleaseResource": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x50D"
+ },
+ "CRMReleaseToolResource": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x524"
+ },
+ "CRMRemove": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x504"
+ },
+ "CRMReserveRF": {
+  "args": [
+   [
+    2,
+    2
+   ]
+  ],
+  "result": 2,
+  "selector": "0x513"
+ },
+ "CRMSearch": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x505"
+ },
+ "CTBGetCTBVersion": {
+  "args": [],
+  "result": 2,
+  "selector": "0x405"
+ },
+ "CountDITL": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x403"
+ },
+ "CustomNBP": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    12,
+    4
+   ],
+   [
+    16,
+    4
+   ],
+   [
+    20,
+    4
+   ],
+   [
+    24,
+    4
+   ],
+   [
+    28,
+    4
+   ],
+   [
+    32,
+    2
+   ],
+   [
+    34,
+    4
+   ],
+   [
+    38,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x407"
+ },
+ "FTAbort": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x20D"
+ },
+ "FTActivate": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x220"
+ },
+ "FTChoose": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x21C"
+ },
+ "FTDefault": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x210"
+ },
+ "FTDispose": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x209"
+ },
+ "FTEnglishToIntl": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x219"
+ },
+ "FTEvent": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x21D"
+ },
+ "FTExec": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x20A"
+ },
+ "FTGetConfig": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x216"
+ },
+ "FTGetErrorString": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x223"
+ },
+ "FTGetFTVersion": {
+  "args": [],
+  "result": 2,
+  "selector": "0x21B"
+ },
+ "FTGetProcID": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x207"
+ },
+ "FTGetRefCon": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x203"
+ },
+ "FTGetToolName": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x206"
+ },
+ "FTGetUserData": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x205"
+ },
+ "FTGetVersion": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x21A"
+ },
+ "FTIntlToEnglish": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x218"
+ },
+ "FTMenu": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x21F"
+ },
+ "FTNew": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    4
+   ],
+   [
+    22,
+    4
+   ],
+   [
+    26,
+    4
+   ],
+   [
+    30,
+    4
+   ],
+   [
+    34,
+    4
+   ],
+   [
+    38,
+    2
+   ]
+  ],
+  "result": 4,
+  "selector": "0x208"
+ },
+ "FTReceive": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x225"
+ },
+ "FTResume": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x20E"
+ },
+ "FTSend": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x224"
+ },
+ "FTSetConfig": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x217"
+ },
+ "FTSetRefCon": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x202"
+ },
+ "FTSetUserData": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x204"
+ },
+ "FTSetupFilter": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    2
+   ],
+   [
+    20,
+    4
+   ],
+   [
+    24,
+    2
+   ]
+  ],
+  "result": 1,
+  "selector": "0x213"
+ },
+ "FTSetupItem": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    2
+   ],
+   [
+    16,
+    4
+   ],
+   [
+    20,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x214"
+ },
+ "FTSetupPostflight": {
+  "args": [
+   [
+    2,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x21E"
+ },
+ "FTSetupPreflight": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "result": 4,
+  "selector": "0x211"
+ },
+ "FTSetupSetup": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    12,
+    4
+   ],
+   [
+    16,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x212"
+ },
+ "FTSetupXCleanup": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    2
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x222"
+ },
+ "FTStart": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x20B"
+ },
+ "FTValidate": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x20F"
+ },
+ "InitCM": {
+  "args": [],
+  "result": 2,
+  "selector": "0x101"
+ },
+ "InitCRM": {
+  "args": [],
+  "result": 2,
+  "selector": "0x501"
+ },
+ "InitCTBUtilities": {
+  "args": [],
+  "result": 2,
+  "selector": "0x401"
+ },
+ "InitFT": {
+  "args": [],
+  "result": 2,
+  "selector": "0x201"
+ },
+ "InitTM": {
+  "args": [],
+  "result": 2,
+  "selector": "0x301"
+ },
+ "ShortenDITL": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x404"
+ },
+ "StandardNBP": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    4
+   ],
+   [
+    22,
+    2
+   ],
+   [
+    24,
+    4
+   ],
+   [
+    28,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x406"
+ },
+ "TMActivate": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x307"
+ },
+ "TMAddSearch": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ],
+   [
+    16,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x327"
+ },
+ "TMChoose": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x32C"
+ },
+ "TMClear": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x30D"
+ },
+ "TMClearSearch": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x329"
+ },
+ "TMClick": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x309"
+ },
+ "TMCountTermKeys": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x32F"
+ },
+ "TMDefault": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x315"
+ },
+ "TMDispose": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x303"
+ },
+ "TMDoTermKey": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x32E"
+ },
+ "TMEnglishToIntl": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x31E"
+ },
+ "TMEvent": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x32D"
+ },
+ "TMGetConfig": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x31B"
+ },
+ "TMGetCursor": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x32A"
+ },
+ "TMGetErrorString": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x335"
+ },
+ "TMGetIndTermKey": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x330"
+ },
+ "TMGetLine": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x310"
+ },
+ "TMGetProcID": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x31F"
+ },
+ "TMGetRefCon": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x322"
+ },
+ "TMGetSelect": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x30F"
+ },
+ "TMGetTMVersion": {
+  "args": [],
+  "result": 2,
+  "selector": "0x326"
+ },
+ "TMGetTermEnvirons": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x32B"
+ },
+ "TMGetToolName": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x320"
+ },
+ "TMGetUserData": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x324"
+ },
+ "TMGetVersion": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x325"
+ },
+ "TMIdle": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x313"
+ },
+ "TMIntlToEnglish": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x31D"
+ },
+ "TMKey": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x304"
+ },
+ "TMMenu": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x30B"
+ },
+ "TMNew": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    4
+   ],
+   [
+    22,
+    4
+   ],
+   [
+    26,
+    4
+   ],
+   [
+    30,
+    4
+   ],
+   [
+    34,
+    2
+   ],
+   [
+    36,
+    4
+   ],
+   [
+    40,
+    4
+   ],
+   [
+    44,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x302"
+ },
+ "TMPaint": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x306"
+ },
+ "TMRemoveSearch": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x328"
+ },
+ "TMReset": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x30C"
+ },
+ "TMResize": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x30E"
+ },
+ "TMResume": {
+  "args": [
+   [
+    2,
+    1
+   ],
+   [
+    4,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x308"
+ },
+ "TMScroll": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x312"
+ },
+ "TMSetConfig": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 2,
+  "selector": "0x31C"
+ },
+ "TMSetRefCon": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x321"
+ },
+ "TMSetSelection": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x311"
+ },
+ "TMSetUserData": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x323"
+ },
+ "TMSetupFilter": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    2
+   ],
+   [
+    20,
+    4
+   ],
+   [
+    24,
+    2
+   ]
+  ],
+  "result": 1,
+  "selector": "0x318"
+ },
+ "TMSetupItem": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    14,
+    2
+   ],
+   [
+    16,
+    4
+   ],
+   [
+    20,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x319"
+ },
+ "TMSetupPostflight": {
+  "args": [
+   [
+    2,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x331"
+ },
+ "TMSetupPreflight": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    2
+   ]
+  ],
+  "result": 4,
+  "selector": "0x316"
+ },
+ "TMSetupSetup": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    12,
+    4
+   ],
+   [
+    16,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x317"
+ },
+ "TMSetupXCleanup": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    2
+   ],
+   [
+    14,
+    4
+   ],
+   [
+    18,
+    2
+   ]
+  ],
+  "result": 0,
+  "selector": "0x334"
+ },
+ "TMStream": {
+  "args": [
+   [
+    2,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    12,
+    4
+   ]
+  ],
+  "result": 4,
+  "selector": "0x30A"
+ },
+ "TMUpdate": {
+  "args": [
+   [
+    2,
+    4
+   ],
+   [
+    6,
+    4
+   ]
+  ],
+  "result": 0,
+  "selector": "0x305"
+ },
+ "TMValidate": {
+  "args": [
+   [
+    2,
+    4
+   ]
+  ],
+  "result": 1,
+  "selector": "0x314"
+ }
+}

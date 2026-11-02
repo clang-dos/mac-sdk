@@ -109,47 +109,6 @@
     type: CRMSerialRecord*
 
 # ####
-
-- function:
-    name: CRMGetCRMVersion
-    return: INTEGER
-
-# ####
-
-- function:
-    name: CRMGetHeader
-    return: QHdrPtr
-
-# ####
-
-- function:
-    name: CRMInstall
-    args:
-      - type: QElemPtr
-
-# ####
-
-- function:
-    name: CRMRemove
-    return: OSErr
-    args:
-      - type: QElemPtr
-
-# ####
-
-- function:
-    name: CRMSearch
-    return: QElemPtr
-    args:
-      - type: QElemPtr
-
-# ####
-
-- function:
-    name: InitCRM
-    return: CRMErr
-
-# ####
 # Raw 68K entry points (Executor only).  The wrapper objects and the
 # RAW_<name> prototypes are generated; the bodies live in emustubs.cpp
 # (or pack.cpp/patches.cpp), and emustubs.h keeps only the structs.
@@ -158,3 +117,335 @@
     name: CommToolboxDispatch
     executor_raw: true
     trap: 0xA08B
+
+# ####
+
+- function:
+    name: InitCRM
+    return: CRMErr
+    m68k-pbtrap:
+    - 41099
+    - 1281
+
+# ####
+
+- function:
+    name: CRMGetHeader
+    return: QHdrPtr
+    m68k-pbtrap:
+    - 41099
+    - 1282
+
+# ####
+
+- function:
+    name: CRMInstall
+    args:
+    - name: crmReqPtr
+      type: QElemPtr
+    m68k-pbtrap:
+    - 41099
+    - 1283
+
+# ####
+
+- function:
+    name: CRMRemove
+    return: OSErr
+    args:
+    - name: crmReqPtr
+      type: QElemPtr
+    m68k-pbtrap:
+    - 41099
+    - 1284
+
+# ####
+
+- function:
+    name: CRMSearch
+    return: QElemPtr
+    args:
+    - name: crmReqPtr
+      type: QElemPtr
+    m68k-pbtrap:
+    - 41099
+    - 1285
+
+# ####
+
+- function:
+    name: CRMGetCRMVersion
+    return: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1286
+
+# ####
+
+- function:
+    name: CRMGetResource
+    return: Handle
+    args:
+    - name: theType
+      type: ResType
+    - name: theID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1287
+
+# ####
+
+- function:
+    name: CRMGet1Resource
+    return: Handle
+    args:
+    - name: theType
+      type: ResType
+    - name: theID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1288
+
+# ####
+
+- function:
+    name: CRMGetIndResource
+    return: Handle
+    args:
+    - name: theType
+      type: ResType
+    - name: index
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1289
+
+# ####
+
+- function:
+    name: CRMGet1IndResource
+    return: Handle
+    args:
+    - name: theType
+      type: ResType
+    - name: index
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1290
+
+# ####
+
+- function:
+    name: CRMGetNamedResource
+    return: Handle
+    args:
+    - name: theType
+      type: ResType
+    - name: name
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 1291
+
+# ####
+
+- function:
+    name: CRMGet1NamedResource
+    return: Handle
+    args:
+    - name: theType
+      type: ResType
+    - name: name
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 1292
+
+# ####
+
+- function:
+    name: CRMReleaseResource
+    args:
+    - name: theHandle
+      type: Handle
+    m68k-pbtrap:
+    - 41099
+    - 1293
+
+# ####
+
+- function:
+    name: CRMGetToolResource
+    return: Handle
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theType
+      type: ResType
+    - name: theID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1315
+
+# ####
+
+- function:
+    name: CRMGetToolNamedResource
+    return: Handle
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theType
+      type: ResType
+    - name: name
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 1318
+
+# ####
+
+- function:
+    name: CRMReleaseToolResource
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theHandle
+      type: Handle
+    m68k-pbtrap:
+    - 41099
+    - 1316
+
+# ####
+
+- function:
+    name: CRMGetIndex
+    return: int32_t
+    args:
+    - name: theHandle
+      type: Handle
+    m68k-pbtrap:
+    - 41099
+    - 1294
+
+# ####
+
+- function:
+    name: CRMLocalToRealID
+    return: INTEGER
+    args:
+    - name: bundleType
+      type: ResType
+    - name: toolID
+      type: INTEGER
+    - name: theType
+      type: ResType
+    - name: localID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1295
+
+# ####
+
+- function:
+    name: CRMRealToLocalID
+    return: INTEGER
+    args:
+    - name: bundleType
+      type: ResType
+    - name: toolID
+      type: INTEGER
+    - name: theType
+      type: ResType
+    - name: realID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1296
+
+# ####
+
+- function:
+    name: CRMGetIndToolName
+    return: OSErr
+    args:
+    - name: bundleType
+      type: OSType
+    - name: index
+      type: INTEGER
+    - name: toolName
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 1297
+
+# ####
+
+- function:
+    name: CRMFindCommunications
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER*
+    - name: dirID
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 1306
+
+# ####
+
+- function:
+    name: CRMIsDriverOpen
+    return: Boolean
+    args:
+    - name: driverName
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 1313
+
+# ####
+
+- function:
+    name: CRMParseCAPSResource
+    return: CRMErr
+    args:
+    - name: theHandle
+      type: Handle
+    - name: selector
+      type: ResType
+    - name: value
+      type: uint32_t*
+    m68k-pbtrap:
+    - 41099
+    - 1317
+
+# ####
+
+- function:
+    name: CRMReserveRF
+    return: OSErr
+    args:
+    - name: refNum
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1299
+
+# ####
+
+- function:
+    name: CRMReleaseRF
+    return: OSErr
+    args:
+    - name: refNum
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 1300

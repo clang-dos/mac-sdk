@@ -1,0 +1,259 @@
+# ####
+
+- enum:
+    values:
+    - name: ENetSetGeneral
+      value: 253
+    - name: ENetGetInfo
+      value: 252
+    - name: ENetRdCancel
+      value: 251
+    - name: ENetRead
+      value: 250
+    - name: ENetWrite
+      value: 249
+    - name: ENetDetachPH
+      value: 248
+    - name: ENetAttachPH
+      value: 247
+    - name: ENetAddMulti
+      value: 246
+    - name: ENetDelMulti
+      value: 245
+
+# ####
+
+- enum:
+    values:
+    - name: eLenErr
+      value: -92
+    - name: eMultiErr
+      value: -91
+
+# ####
+
+- enum:
+    values:
+    - name: EAddrRType
+      value: '''eadr'''
+
+# ####
+
+- struct:
+    name: EParamBlock
+    size: 38
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: ENETCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: ioNamePtr
+      type: StringPtr
+    - name: ioVRefNum
+      type: INTEGER
+    - name: ioRefNum
+      type: INTEGER
+    - name: csCode
+      type: INTEGER
+    - name: u
+      union:
+      - name: EParms1
+        struct:
+        - name: eProtType
+          type: INTEGER
+        - name: ePointer
+          type: Ptr
+        - name: eBuffSize
+          type: INTEGER
+        - name: eDataSize
+          type: INTEGER
+      - name: EParms2
+        struct:
+        - name: eMultiAddr
+          type: uint8_t[6]
+    comment: Set ioRefNum to the Ethernet driver's reference number.
+
+# ####
+
+- typedef:
+    name: EParamBlkPtr
+    type: EParamBlock*
+
+# ####
+
+- function:
+    name: EWrite
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetWrite;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: EAttachPH
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetAttachPH;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: EDetachPH
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetDetachPH;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ERead
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetRead;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ERdCancel
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetRdCancel;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: EGetInfo
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetGetInfo;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: ESetGeneral
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetSetGeneral;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: EAddMulti
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetAddMulti;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync
+
+# ####
+
+- function:
+    name: EDelMulti
+    return: OSErr
+    args:
+    - type: EParamBlkPtr
+      name: thePBptr
+    - type: Boolean
+      name: async
+    m68k-body: |
+      thePBptr->csCode = ENetDelMulti;
+      return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                   : PBControlSync((ParmBlkPtr)thePBptr);
+    m68k-needs:
+    - ParmBlkPtr
+    - PBControlSync
+    - PBControlAsync

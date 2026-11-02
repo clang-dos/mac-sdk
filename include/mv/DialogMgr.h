@@ -299,11 +299,47 @@ pascal OSErr SetDialogCancelItem(DialogPtr dialog, int16_t new_item) M68K_INLINE
 
 pascal OSErr SetDialogTracksCursor(DialogPtr dialog, Boolean tracks) M68K_INLINE(0x303C, 0x0306, 0xAA68);
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void AppendDITL(DialogPtr arg0, Handle arg1, DITLMethod arg2) {
+    struct { short _sel; __typeof__(arg2) arg2; __typeof__(arg1) arg1; __typeof__(arg0) arg0; } __attribute__((__packed__)) _pb = { 0x0402, arg2, arg1, arg0 };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    (void)_ret;
+}
+#else
 pascal void AppendDITL(DialogPtr arg0, Handle arg1, DITLMethod arg2);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void ShortenDITL(DialogPtr arg0, int16_t arg1) {
+    struct { short _sel; __typeof__(arg1) arg1; __typeof__(arg0) arg0; } __attribute__((__packed__)) _pb = { 0x0404, arg1, arg0 };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    (void)_ret;
+}
+#else
 pascal void ShortenDITL(DialogPtr arg0, int16_t arg1);
+#endif
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) int16_t CountDITL(DialogPtr arg0) {
+    struct { short _sel; __typeof__(arg0) arg0; } __attribute__((__packed__)) _pb = { 0x0403, arg0 };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (int16_t)_ret;
+}
+#else
 pascal int16_t CountDITL(DialogPtr arg0);
+#endif
 
 typedef DialogPtr DialogRef;
 

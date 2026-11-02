@@ -11,18 +11,6 @@
 # ####
 
 - struct:
-    name: EntityName
-    members:
-      - name: objStr
-        type: Str32
-      - name: typeStr
-        type: Str32
-      - name: zoneStr
-        type: Str32
-
-# ####
-
-- struct:
     name: PPCXTIAddress
     members:
       - name: fAddressType

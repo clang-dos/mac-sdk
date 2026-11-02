@@ -3,6 +3,10 @@
 #define __MV_APPLETALK__
 
 #include "../ConditionalMacros.h"
+#include "DeviceMgr.h"
+#include "FileMgr.h"
+#include "MacTypes.h"
+#include "MemoryMgr.h"
 
 #pragma options align=mac68k
 
@@ -17,6 +21,1232 @@
 // AppleTalk MPW (false);
 #define LMGetABusDCE() (*(Ptr *)0x000002DC)
 #define LMSetABusDCE(val) ((*(Ptr *)0x000002DC) = (val))
+
+// The LAP Manager's entry point (LAPMgrPtr); calls go to 2 bytes past it.
+#define LMGetATalkHk2() (*(Ptr *)0x00000B18)
+#define LMSetATalkHk2(val) ((*(Ptr *)0x00000B18) = (val))
+
+enum {
+    mppUnitNum = 9,
+    atpUnitNum = 10,
+    xppUnitNum = 40,
+    mppRefNum = -10,
+    atpRefNum = -11,
+    xppRefNum = -41,
+};
+
+// MPP control codes
+enum {
+    lookupReply = 242,
+    writeLAP = 243,
+    detachPH = 244,
+    attachPH = 245,
+    writeDDP = 246,
+    closeSkt = 247,
+    openSkt = 248,
+    loadNBP = 249,
+    lastResident = 249,
+    confirmName = 250,
+    lookupName = 251,
+    removeName = 252,
+    registerName = 253,
+    killNBP = 254,
+    unloadNBP = 255,
+    setSelfSend = 256,
+    SetMyZone = 257,
+    GetATalkInfo = 258,
+    ATalkClosePrep = 259,
+};
+
+// ATP control codes
+enum {
+    nSendRequest = 248,
+    relRspCB = 249,
+    closeATPSkt = 250,
+    addResponse = 251,
+    sendResponse = 252,
+    getRequest = 253,
+    openATPSkt = 254,
+    sendRequest = 255,
+    relTCB = 256,
+    killGetReq = 257,
+    killSendReq = 258,
+    killAllGetReq = 259,
+};
+
+// XPP control codes
+enum {
+    openSess = 255,
+    closeSess = 254,
+    userCommand = 253,
+    userWrite = 252,
+    getStatus = 251,
+    afpCall = 250,
+    getParms = 249,
+    abortOS = 248,
+    closeAll = 247,
+    xCall = 246,
+};
+
+// xCall subcodes
+enum {
+    zipGetLocalZones = 5,
+    zipGetZoneList = 6,
+    zipGetMyZone = 7,
+};
+
+// ADSP control codes
+enum {
+    dspInit = 255,
+    dspRemove = 254,
+    dspOpen = 253,
+    dspClose = 252,
+    dspCLInit = 251,
+    dspCLRemove = 250,
+    dspCLListen = 249,
+    dspCLDeny = 248,
+    dspStatus = 247,
+    dspRead = 246,
+    dspWrite = 245,
+    dspAttention = 244,
+    dspOptions = 243,
+    dspReset = 242,
+    dspNewCID = 241,
+};
+
+// AppleTalk transition queue events
+enum {
+    ATTransOpen = 0,
+    ATTransClose = 2,
+    ATTransClosePrep = 3,
+    ATTransCancelClose = 4,
+    ATTransNetworkTransition = 5,
+    ATTransNameChangeTellTask = 6,
+    ATTransNameChangeAskTask = 7,
+    ATTransCancelNameChange = 8,
+    ATTransCableChange = 'rngc',
+    ATTransSpeedChange = 'sped',
+};
+
+// Errors
+enum {
+    ddpSktErr = -91,
+    ddpLenErr = -92,
+    noBridgeErr = -93,
+    lapProtErr = -94,
+    excessCollsns = -95,
+    portNotPwr = -96,
+    portInUse = -97,
+    portNotCf = -98,
+    nbpBuffOvr = -1024,
+    nbpNoConfirm = -1025,
+    nbpConfDiff = -1026,
+    nbpDuplicate = -1027,
+    nbpNotFound = -1028,
+    nbpNISErr = -1029,
+    aspBadVersNum = -1066,
+    aspBufTooSmall = -1067,
+    aspNoMoreSess = -1068,
+    aspNoServers = -1069,
+    aspParamErr = -1070,
+    aspServerBusy = -1071,
+    aspSessClosed = -1072,
+    aspSizeErr = -1073,
+    aspTooMany = -1074,
+    aspNoAck = -1075,
+    reqFailed = -1096,
+    tooManyReqs = -1097,
+    tooManySkts = -1098,
+    badATPSkt = -1099,
+    badBuffNum = -1100,
+    noRelErr = -1101,
+    cbNotFound = -1102,
+    noSendResp = -1103,
+    noDataArea = -1104,
+    reqAborted = -1105,
+    buf2SmallErr = -3101,
+    noMPPErr = -3102,
+    ckSumErr = -3103,
+    extractErr = -3104,
+    readQErr = -3105,
+    atpLenErr = -3106,
+    atpBadRsp = -3107,
+    recNotFnd = -3108,
+    sktClosedErr = -3109,
+};
+
+// ATP flags
+enum {
+    atpXOvalue = 32,
+    atpEOMvalue = 16,
+    atpSTSvalue = 8,
+    atpTIDValidvalue = 2,
+    atpSendChkvalue = 1,
+};
+
+typedef struct AddrBlock AddrBlock;
+struct AddrBlock {
+    uint16_t aNet;
+    uint8_t aNode;
+    uint8_t aSocket;
+};
+
+typedef uint8_t Str32Field[34];
+
+typedef struct EntityName EntityName;
+struct EntityName {
+    Str32Field objStr;
+    Str32Field typeStr;
+    Str32Field zoneStr;
+};
+
+typedef EntityName *EntityPtr;
+
+typedef struct RetransType RetransType;
+struct RetransType {
+    uint8_t retransInterval;
+    uint8_t retransCount;
+};
+
+typedef struct BDSElement BDSElement;
+struct BDSElement {
+    INTEGER buffSize;
+    Ptr buffPtr;
+    INTEGER dataSize;
+    long userBytes;
+};
+
+typedef BDSElement BDSType[8];
+
+typedef BDSElement *BDSPtr;
+
+typedef uint8_t BitMapType;
+
+typedef struct WDSElement WDSElement;
+struct WDSElement {
+    INTEGER entryLength;
+    Ptr entryPtr;
+};
+
+typedef struct NTElement NTElement;
+struct NTElement {
+    AddrBlock nteAddress;
+    char filler;
+    char entityData[99];
+};
+
+typedef struct NamesTableEntry NamesTableEntry;
+struct NamesTableEntry {
+    Ptr qNext;
+    NTElement nt;
+};
+
+typedef NamesTableEntry *NamesTableEntryPtr;
+
+typedef struct ATQEntry ATQEntry;
+struct ATQEntry {
+    struct ATQEntry *qLink;
+    INTEGER qType;
+    ProcPtr CallAddr;
+};
+
+typedef ATQEntry *ATQEntryPtr;
+
+// Completion routines get the parameter block in A0
+typedef UniversalProcPtr MPPCompletionUPP;
+
+typedef UniversalProcPtr ATPCompletionUPP;
+
+typedef UniversalProcPtr XPPCompletionUPP;
+
+typedef UniversalProcPtr ENETCompletionUPP;
+
+// Called with the session in D0 and the attention bytes in D1
+typedef UniversalProcPtr AttnRoutineUPP;
+
+
+typedef struct MPPparms MPPparms;
+struct MPPparms {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+};
+
+typedef struct LAPparms LAPparms;
+struct LAPparms {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    uint8_t protType;
+    uint8_t filler;
+union {
+    Ptr wdsPointer;
+    Ptr handler;
+} LAPptrs;
+};
+
+typedef struct DDPparms DDPparms;
+struct DDPparms {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    uint8_t socket;
+    uint8_t checksumFlag;
+union {
+    Ptr wdsPointer;
+    Ptr listener;
+} DDPptrs;
+};
+
+typedef struct NBPparms NBPparms;
+struct NBPparms {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    uint8_t interval;
+    uint8_t count;
+union {
+    Ptr ntQElPtr;
+    Ptr entityPtr;
+} NBPPtrs;
+union {
+    uint8_t verifyFlag;
+struct {
+    Ptr retBuffPtr;
+    INTEGER retBuffSize;
+    INTEGER maxToGet;
+    INTEGER numGotten;
+} Lookup;
+struct {
+    AddrBlock confirmAddr;
+    uint8_t newSocket;
+} Confirm;
+} parm;
+};
+
+typedef struct SetSelfparms SetSelfparms;
+struct SetSelfparms {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    uint8_t newSelfFlag;
+    uint8_t oldSelfFlag;
+};
+
+typedef struct NBPKillparms NBPKillparms;
+struct NBPKillparms {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    Ptr nKillQEl;
+};
+
+typedef struct GetAppTlkInfoParm GetAppTlkInfoParm;
+struct GetAppTlkInfoParm {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    INTEGER version;
+    Ptr varsPtr;
+    Ptr DCEPtr;
+    INTEGER portID;
+    long configuration;
+    INTEGER selfSend;
+    INTEGER netLo;
+    INTEGER netHi;
+    long ourAdd;
+    long routerAddr;
+    INTEGER numOfPHs;
+    INTEGER numOfSkts;
+    INTEGER numNBPEs;
+    Ptr nTQueue;
+    INTEGER LAlength;
+    Ptr linkAddr;
+    Ptr zoneName;
+};
+
+typedef struct ATalkClosePrepParm ATalkClosePrepParm;
+struct ATalkClosePrepParm {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    Ptr appName;
+};
+
+// The .MPP driver parameter block (LAP, DDP and NBP calls)
+typedef union MPPParamBlock MPPParamBlock;
+union MPPParamBlock {
+    MPPparms MPP;
+    LAPparms LAP;
+    DDPparms DDP;
+    NBPparms NBP;
+    SetSelfparms SETSELF;
+    NBPKillparms NBPKILL;
+    GetAppTlkInfoParm GAIINFO;
+    ATalkClosePrepParm ATALKCLOSE;
+};
+
+typedef MPPParamBlock *MPPPBPtr;
+
+// The .ATP driver parameter block. The fields after bdsPointer
+// overlap: numOfBuffs, timeOutVal, numOfResps and retryCount for
+// PSendRequest; bitMap and transID for PGetRequest and PSendResponse;
+// rspNum for PAddResponse; aKillQEl for PKillSendReq and PKillGetReq.
+typedef struct ATPParamBlock ATPParamBlock;
+struct ATPParamBlock {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long userData;
+    INTEGER reqTID;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    uint8_t atpSocket;
+    uint8_t atpFlags;
+    AddrBlock addrBlock;
+    INTEGER reqLength;
+    Ptr reqPointer;
+    Ptr bdsPointer;
+union {
+struct {
+    uint8_t numOfBuffs;
+    uint8_t timeOutVal;
+    uint8_t numOfResps;
+    uint8_t retryCount;
+} ;
+struct {
+    uint8_t bitMap;
+    uint8_t bdsSize;
+    INTEGER transID;
+} ;
+struct {
+    uint8_t rspNum;
+} ;
+    Ptr aKillQEl;
+} ;
+    INTEGER intBuff;
+    uint8_t TRelTime;
+    uint8_t filler0;
+};
+
+typedef ATPParamBlock *ATPPBPtr;
+
+
+typedef struct XPPPrmBlk XPPPrmBlk;
+struct XPPPrmBlk {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long cmdResult;
+    INTEGER ioVRefNum;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    INTEGER sessRefnum;
+    uint8_t aspTimeout;
+    uint8_t aspRetry;
+    INTEGER cbSize;
+    Ptr cbPtr;
+    INTEGER rbSize;
+    Ptr rbPtr;
+    INTEGER wdSize;
+    Ptr wdPtr;
+    uint8_t ccbStart[296];
+};
+
+typedef struct ASPOpenPrm ASPOpenPrm;
+struct ASPOpenPrm {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long cmdResult;
+    INTEGER ioVRefNum;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    INTEGER sessRefnum;
+    uint8_t aspTimeout;
+    uint8_t aspRetry;
+    AddrBlock serverAddr;
+    Ptr scbPointer;
+    AttnRoutineUPP attnRoutine;
+};
+
+typedef ASPOpenPrm *ASPOpenPrmPtr;
+
+typedef struct ASPAbortPrm ASPAbortPrm;
+struct ASPAbortPrm {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long cmdResult;
+    INTEGER ioVRefNum;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    Ptr abortSCBPtr;
+};
+
+typedef struct ASPGetparmsBlk ASPGetparmsBlk;
+struct ASPGetparmsBlk {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long cmdResult;
+    INTEGER ioVRefNum;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    INTEGER aspMaxCmdSize;
+    INTEGER aspQuantumSize;
+    INTEGER numSesss;
+};
+
+typedef struct XCallParam XCallParam;
+struct XCallParam {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    UniversalProcPtr ioCompletion;
+    OSErr ioResult;
+    long cmdResult;
+    INTEGER ioVRefNum;
+    INTEGER ioRefNum;
+    INTEGER csCode;
+    INTEGER xppSubCode;
+    uint8_t xppTimeout;
+    uint8_t xppRetry;
+    INTEGER filler1;
+    Ptr zipBuffPtr;
+    INTEGER zipNumZones;
+    uint8_t zipLastFlag;
+    uint8_t filler2;
+    uint8_t zipInfoField[70];
+};
+
+// The .XPP driver parameter block (ASP, AFP and the ZIP calls)
+typedef union XPPParamBlock XPPParamBlock;
+union XPPParamBlock {
+    XPPPrmBlk XPP;
+    ASPOpenPrm OPEN;
+    ASPAbortPrm ABORT;
+    ASPGetparmsBlk GETPARM;
+    XCallParam XCALL;
+};
+
+typedef XPPParamBlock *XPPParmBlkPtr;
+
+// Opening the drivers
+
+#if TARGET_CPU_68K
+static __inline__ OSErr MPPOpen(void) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)"\004.MPP";
+    pb.ioParam.ioPermssn = 0;
+    return PBOpenSync(&pb);
+}
+#else
+pascal OSErr MPPOpen(void);
+#endif
+
+// ATP is part of the .MPP driver.
+#if TARGET_CPU_68K
+static __inline__ OSErr ATPLoad(void) {
+    return MPPOpen();
+}
+#else
+pascal OSErr ATPLoad(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ATPUnload(void) {
+    return noErr;
+}
+#else
+pascal OSErr ATPUnload(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr OpenXPP(INTEGER *xppRefnum) {
+    ParamBlockRec pb;
+    pb.ioParam.ioCompletion = 0;
+    pb.ioParam.ioNamePtr = (StringPtr)"\004.XPP";
+    pb.ioParam.ioPermssn = 0;
+    OSErr err = PBOpenSync(&pb);
+    *xppRefnum = pb.ioParam.ioRefNum;
+    return err;
+}
+#else
+pascal OSErr OpenXPP(INTEGER *xppRefnum);
+#endif
+
+// True when port B is configured for AppleTalk and .MPP is open.
+#if TARGET_CPU_68K
+static __inline__ Boolean IsMPPOpen(void) {
+    signed char use = (signed char)LMGetPortBUse();
+    return use >= 0 && (use & 0x0F) == 1;
+}
+#else
+pascal Boolean IsMPPOpen(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ Boolean IsATPOpen(void) {
+    return IsMPPOpen() && (LMGetPortBUse() & 0x10) != 0;
+}
+#else
+pascal Boolean IsATPOpen(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PWriteLAP(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = writeLAP;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PWriteLAP(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PDetachPH(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = detachPH;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PDetachPH(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PAttachPH(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = attachPH;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PAttachPH(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PWriteDDP(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = writeDDP;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PWriteDDP(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PCloseSkt(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = closeSkt;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PCloseSkt(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr POpenSkt(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = openSkt;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr POpenSkt(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PRegisterName(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = registerName;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PRegisterName(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PLookupName(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = lookupName;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PLookupName(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PConfirmName(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = confirmName;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PConfirmName(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PRemoveName(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = removeName;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PRemoveName(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PKillNBP(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = killNBP;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PKillNBP(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PSetSelfSend(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = setSelfSend;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PSetSelfSend(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PGetAppleTalkInfo(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = GetATalkInfo;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PGetAppleTalkInfo(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PATalkClosePrep(MPPPBPtr thePBptr, Boolean async) {
+    thePBptr->MPP.ioRefNum = mppRefNum;
+    thePBptr->MPP.csCode = ATalkClosePrep;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PATalkClosePrep(MPPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr POpenATPSkt(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = openATPSkt;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr POpenATPSkt(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PCloseATPSkt(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = closeATPSkt;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PCloseATPSkt(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PSendRequest(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = sendRequest;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PSendRequest(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PNSendRequest(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = nSendRequest;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PNSendRequest(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PGetRequest(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = getRequest;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PGetRequest(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PSendResponse(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = sendResponse;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PSendResponse(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PAddResponse(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = addResponse;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PAddResponse(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PRelTCB(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = relTCB;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PRelTCB(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PRelRspCB(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = relRspCB;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PRelRspCB(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PKillSendReq(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = killSendReq;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PKillSendReq(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr PKillGetReq(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = killGetReq;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr PKillGetReq(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ATPKillAllGetReq(ATPPBPtr thePBptr, Boolean async) {
+    thePBptr->ioRefNum = atpRefNum;
+    thePBptr->csCode = killAllGetReq;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ATPKillAllGetReq(ATPPBPtr thePBptr, Boolean async);
+#endif
+
+// ASP and AFP: set ioRefNum to the .XPP reference number from OpenXPP
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPOpenSession(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = openSess;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPOpenSession(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPCloseSession(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = closeSess;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPCloseSession(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPAbortOS(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = abortOS;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPAbortOS(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPGetParms(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = getParms;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPGetParms(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPCloseAll(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = closeAll;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPCloseAll(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPUserWrite(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = userWrite;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPUserWrite(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPUserCommand(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = userCommand;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPUserCommand(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr ASPGetStatus(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = getStatus;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr ASPGetStatus(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr AFPCommand(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XPP.csCode = afpCall;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr AFPCommand(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetLocalZones(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XCALL.ioRefNum = xppRefNum;
+    thePBptr->XCALL.csCode = xCall;
+    thePBptr->XCALL.xppSubCode = zipGetLocalZones;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr GetLocalZones(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetZoneList(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XCALL.ioRefNum = xppRefNum;
+    thePBptr->XCALL.csCode = xCall;
+    thePBptr->XCALL.xppSubCode = zipGetZoneList;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr GetZoneList(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetMyZone(XPPParmBlkPtr thePBptr, Boolean async) {
+    thePBptr->XCALL.ioRefNum = xppRefNum;
+    thePBptr->XCALL.csCode = xCall;
+    thePBptr->XCALL.xppSubCode = zipGetMyZone;
+    return async ? PBControlAsync((ParmBlkPtr)thePBptr)
+                 : PBControlSync((ParmBlkPtr)thePBptr);
+}
+#else
+pascal OSErr GetMyZone(XPPParmBlkPtr thePBptr, Boolean async);
+#endif
+
+// Building records
+
+#if TARGET_CPU_68K
+static __inline__ void BuildLAPwds(Ptr wdsPtr, Ptr dataPtr, INTEGER destHost, INTEGER protoType, INTEGER frameLen) {
+    WDSElement *wds = (WDSElement *)wdsPtr;
+    dataPtr[0] = (char)destHost;
+    dataPtr[1] = 0;
+    dataPtr[2] = (char)protoType;
+    dataPtr[3] = (char)((frameLen + 2) >> 8);   /* may be odd: store bytes */
+    dataPtr[4] = (char)(frameLen + 2);
+    wds[0].entryLength = frameLen + 3;
+    wds[0].entryPtr = dataPtr;
+    wds[1].entryLength = 0;
+}
+#else
+pascal void BuildLAPwds(Ptr wdsPtr, Ptr dataPtr, INTEGER destHost, INTEGER protoType, INTEGER frameLen);
+#endif
+
+// Like the ROM's version, this leaves the first entry's length alone.
+#if TARGET_CPU_68K
+static __inline__ void BuildDDPwds(Ptr wdsPtr, Ptr headerPtr, Ptr dataPtr, AddrBlock netAddr, INTEGER ddpType, INTEGER dataLen) {
+    WDSElement *wds = (WDSElement *)wdsPtr;
+    wds[0].entryPtr = headerPtr + 1;
+    wds[1].entryLength = dataLen;
+    wds[1].entryPtr = dataPtr;
+    wds[2].entryLength = 0;
+    *(unsigned short *)(headerPtr + 8) = netAddr.aNet;
+    headerPtr[12] = (char)netAddr.aNode;
+    headerPtr[14] = (char)netAddr.aSocket;
+    headerPtr[16] = (char)ddpType;
+}
+#else
+pascal void BuildDDPwds(Ptr wdsPtr, Ptr headerPtr, Ptr dataPtr, AddrBlock netAddr, INTEGER ddpType, INTEGER dataLen);
+#endif
+
+// Splits a buffer into ATP response buffers of up to 578 bytes.
+#if TARGET_CPU_68K
+static __inline__ INTEGER BuildBDS(Ptr buffPtr, Ptr bdsPtr, INTEGER buffSize) {
+    BDSElement *bds = (BDSElement *)bdsPtr;
+    short n = 0;
+    while (buffSize > 0 && n < 8) {
+        short len = buffSize < 578 ? buffSize : 578;
+        bds[n].buffSize = len;
+        bds[n].buffPtr = buffPtr;
+        bds[n].dataSize = 0;
+        buffPtr += len;
+        buffSize -= len;
+        n++;
+    }
+    return n;
+}
+#else
+pascal INTEGER BuildBDS(Ptr buffPtr, Ptr bdsPtr, INTEGER buffSize);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ void NBPSetEntity(Ptr buffer, ConstStr32Param nbpObject, ConstStr32Param nbpType, ConstStr32Param nbpZone) {
+    /* BlockMoveData, not a loop: the compiler would turn a loop into memcpy */
+    BlockMoveData(nbpObject, buffer, nbpObject[0] + 1);
+    buffer += nbpObject[0] + 1;
+    BlockMoveData(nbpType, buffer, nbpType[0] + 1);
+    buffer += nbpType[0] + 1;
+    BlockMoveData(nbpZone, buffer, nbpZone[0] + 1);
+}
+#else
+pascal void NBPSetEntity(Ptr buffer, ConstStr32Param nbpObject, ConstStr32Param nbpType, ConstStr32Param nbpZone);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ void NBPSetNTE(Ptr ntePtr, ConstStr32Param nbpObject, ConstStr32Param nbpType, ConstStr32Param nbpZone, INTEGER socket) {
+    NamesTableEntry *nte = (NamesTableEntry *)ntePtr;
+    nte->qNext = 0;
+    nte->nt.nteAddress.aSocket = (unsigned char)socket;
+    NBPSetEntity(nte->nt.entityData, nbpObject, nbpType, nbpZone);
+}
+#else
+pascal void NBPSetNTE(Ptr ntePtr, ConstStr32Param nbpObject, ConstStr32Param nbpType, ConstStr32Param nbpZone, INTEGER socket);
+#endif
+
+// Gets one name and address from the buffer PLookupName filled.
+#if TARGET_CPU_68K
+static __inline__ OSErr NBPExtract(Ptr theBuffer, INTEGER numInBuf, INTEGER whichOne, EntityName *abEntity, AddrBlock *address) {
+    const unsigned char *p = (const unsigned char *)theBuffer;
+    unsigned char *dst[3];
+    int i;
+    if (whichOne < 1 || whichOne > numInBuf)
+        return extractErr;
+    while (--whichOne > 0) {   /* skip a tuple: address, enumerator, three names */
+        p += 5;
+        for (i = 0; i < 3; i++)
+            p += p[0] + 1;
+    }
+    address->aNet = (unsigned short)(p[0] << 8 | p[1]);   /* may be odd */
+    address->aNode = p[2];
+    address->aSocket = p[3];
+    p += 5;
+    dst[0] = abEntity->objStr; dst[1] = abEntity->typeStr; dst[2] = abEntity->zoneStr;
+    for (i = 0; i < 3; i++) {
+        BlockMoveData(p, dst[i], p[0] + 1);
+        p += p[0] + 1;
+    }
+    return noErr;
+}
+#else
+pascal OSErr NBPExtract(Ptr theBuffer, INTEGER numInBuf, INTEGER whichOne, EntityName *abEntity, AddrBlock *address);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetNodeAddress(INTEGER *myNode, INTEGER *myNet) {
+    Ptr vars = LMGetABusVars();
+    if (!IsMPPOpen())
+        return noMPPErr;
+    *myNode = (signed char)vars[0];
+    *myNet = *(short *)(vars + 26);
+    return noErr;
+}
+#else
+pascal OSErr GetNodeAddress(INTEGER *myNode, INTEGER *myNet);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ INTEGER GetBridgeAddress(void) {
+    Ptr vars = LMGetABusVars();
+    if (vars == 0 || vars == (Ptr)-1)
+        return 0;
+    return (signed char)vars[25];
+}
+#else
+pascal INTEGER GetBridgeAddress(void);
+#endif
+
+// The AppleTalk transition queue
+
+#if TARGET_CPU_68K
+static __inline__ OSErr LAPAddATQ(ATQEntryPtr theATQEntry) {
+    register long _d0 __asm__("d0") = 23;
+    register ATQEntryPtr _a0 __asm__("a0") = theATQEntry;
+    register Ptr _a1 __asm__("a1") = LMGetATalkHk2();
+    __asm__ __volatile__("jsr 2(%2)"
+        : "+r"(_d0), "+r"(_a0), "+a"(_a1)
+        :
+        : "d1", "d2", "cc", "memory");
+    return (OSErr)_d0;
+}
+#else
+pascal OSErr LAPAddATQ(ATQEntryPtr theATQEntry);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr LAPRmvATQ(ATQEntryPtr theATQEntry) {
+    register long _d0 __asm__("d0") = 24;
+    register ATQEntryPtr _a0 __asm__("a0") = theATQEntry;
+    register Ptr _a1 __asm__("a1") = LMGetATalkHk2();
+    __asm__ __volatile__("jsr 2(%2)"
+        : "+r"(_d0), "+r"(_a0), "+a"(_a1)
+        :
+        : "d1", "d2", "cc", "memory");
+    return (OSErr)_d0;
+}
+#else
+pascal OSErr LAPRmvATQ(ATQEntryPtr theATQEntry);
+#endif
+
+pascal void ATEvent(long event, Ptr infoPtr);
+
+pascal OSErr ATPreFlightEvent(long event, long cancel, Ptr infoPtr);
 
 #pragma options align=reset
 

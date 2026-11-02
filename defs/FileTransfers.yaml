@@ -1,0 +1,782 @@
+
+# ####
+
+- enum:
+    values:
+    - name: curFTVersion
+      value: 2
+
+# ####
+
+- typedef:
+    name: FTErr
+    type: OSErr
+
+# ####
+
+- enum:
+    values:
+    - name: ftGenericError
+      value: -1
+    - name: ftNoErr
+      value: 0
+    - name: ftRejected
+      value: 1
+    - name: ftFailed
+      value: 2
+    - name: ftTimeOut
+      value: 3
+    - name: ftTooManyRetry
+      value: 4
+    - name: ftNotEnoughDSpace
+      value: 5
+    - name: ftRemoteCancel
+      value: 6
+    - name: ftWrongFormat
+      value: 7
+    - name: ftNoTools
+      value: 8
+    - name: ftUserCancel
+      value: 9
+    - name: ftNotSupported
+      value: 10
+
+# ####
+
+- typedef:
+    name: FTDirection
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: ftReceiving
+      value: 0
+    - name: ftTransmitting
+      value: 1
+    - name: ftFullDuplex
+      value: 2
+
+# ####
+
+- typedef:
+    name: FTFlags
+    type: uint32_t
+
+# ####
+
+- enum:
+    values:
+    - name: ftIsFTMode
+      value: 1
+    - name: ftNoMenus
+      value: 2
+    - name: ftQuiet
+      value: 4
+    - name: ftConfigChanged
+      value: 16
+    - name: ftSucc
+      value: 128
+
+# ####
+
+- typedef:
+    name: FTAttributes
+    type: uint32_t
+
+# ####
+
+- enum:
+    values:
+    - name: ftSameCircuit
+      value: 1
+    - name: ftSendDisable
+      value: 2
+    - name: ftReceiveDisable
+      value: 4
+    - name: ftTextOnly
+      value: 8
+    - name: ftNoStdFile
+      value: 16
+    - name: ftMultipleFileSend
+      value: 32
+
+# ####
+
+- struct:
+    name: FTRecord
+    members:
+    - name: procID
+      type: INTEGER
+    - name: flags
+      type: FTFlags
+    - name: errCode
+      type: FTErr
+    - name: refCon
+      type: int32_t
+    - name: userData
+      type: int32_t
+    - name: defProc
+      type: ProcPtr
+    - name: config
+      type: Ptr
+    - name: oldConfig
+      type: Ptr
+    - name: environsProc
+      type: ProcPtr
+    - name: reserved1
+      type: int32_t
+    - name: reserved2
+      type: int32_t
+    - name: ftPrivate
+      type: Ptr
+    - name: sendProc
+      type: ProcPtr
+    - name: recvProc
+      type: ProcPtr
+    - name: writeProc
+      type: ProcPtr
+    - name: readProc
+      type: ProcPtr
+    - name: owner
+      type: WindowPtr
+    - name: direction
+      type: FTDirection
+    - name: theReply
+      type: SFReply
+    - name: writePtr
+      type: int32_t
+    - name: readPtr
+      type: int32_t
+    - name: theBuf
+      type: Ptr
+    - name: bufSize
+      type: int32_t
+    - name: autoRec
+      type: Str255
+    - name: attributes
+      type: FTAttributes
+
+# ####
+
+- typedef:
+    name: FTPtr
+    type: FTRecord*
+
+# ####
+
+- typedef:
+    name: FTHandle
+    type: FTPtr*
+
+# ####
+
+- funptr:
+    name: FileTransferDefUPP
+    return: int32_t
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: msg
+      type: INTEGER
+    - name: p1
+      type: int32_t
+    - name: p2
+      type: int32_t
+    - name: p3
+      type: int32_t
+
+# ####
+
+- funptr:
+    name: FileTransferReadProcUPP
+    return: OSErr
+    args:
+    - name: count
+      type: uint32_t*
+    - name: pData
+      type: Ptr
+    - name: refCon
+      type: int32_t
+    - name: fileKind
+      type: INTEGER
+
+# ####
+
+- funptr:
+    name: FileTransferWriteProcUPP
+    return: OSErr
+    args:
+    - name: count
+      type: uint32_t*
+    - name: pData
+      type: Ptr
+    - name: refCon
+      type: int32_t
+    - name: fileKind
+      type: INTEGER
+
+# ####
+
+- funptr:
+    name: FileTransferSendProcUPP
+    return: int32_t
+    args:
+    - name: thePtr
+      type: Ptr
+    - name: theSize
+      type: int32_t
+    - name: refCon
+      type: int32_t
+    - name: channel
+      type: CMChannel
+    - name: flag
+      type: CMFlags
+
+# ####
+
+- funptr:
+    name: FileTransferReceiveProcUPP
+    return: int32_t
+    args:
+    - name: thePtr
+      type: Ptr
+    - name: theSize
+      type: int32_t
+    - name: refCon
+      type: int32_t
+    - name: channel
+      type: CMChannel
+    - name: flag
+      type: CMFlags*
+
+# ####
+
+- funptr:
+    name: FileTransferEnvironsProcUPP
+    return: OSErr
+    args:
+    - name: refCon
+      type: int32_t
+    - name: theEnvirons
+      type: ConnEnvironRec*
+
+# ####
+
+- funptr:
+    name: FileTransferNotificationUPP
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: pFSSpec
+      type: const FSSpec*
+
+# ####
+
+- funptr:
+    name: FileTransferChooseIdleUPP
+
+# ####
+
+- function:
+    name: InitFT
+    return: FTErr
+    m68k-pbtrap:
+    - 41099
+    - 513
+
+# ####
+
+- function:
+    name: FTGetRefCon
+    return: int32_t
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 515
+
+# ####
+
+- function:
+    name: FTSetRefCon
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: refCon
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 514
+
+# ####
+
+- function:
+    name: FTGetUserData
+    return: int32_t
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 517
+
+# ####
+
+- function:
+    name: FTSetUserData
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: userData
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 516
+
+# ####
+
+- function:
+    name: FTGetToolName
+    args:
+    - name: procID
+      type: INTEGER
+    - name: name
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 518
+
+# ####
+
+- function:
+    name: FTGetProcID
+    return: INTEGER
+    args:
+    - name: name
+      type: ConstStr255Param
+    m68k-pbtrap:
+    - 41099
+    - 519
+
+# ####
+
+- function:
+    name: FTNew
+    return: FTHandle
+    args:
+    - name: procID
+      type: INTEGER
+    - name: flags
+      type: FTFlags
+    - name: sendProc
+      type: FileTransferSendProcUPP
+    - name: recvProc
+      type: FileTransferReceiveProcUPP
+    - name: readProc
+      type: FileTransferReadProcUPP
+    - name: writeProc
+      type: FileTransferWriteProcUPP
+    - name: environsProc
+      type: FileTransferEnvironsProcUPP
+    - name: owner
+      type: WindowPtr
+    - name: refCon
+      type: int32_t
+    - name: userData
+      type: int32_t
+    m68k-pbtrap:
+    - 41099
+    - 520
+
+# ####
+
+- function:
+    name: FTDispose
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 521
+
+# ####
+
+- function:
+    name: FTStart
+    return: FTErr
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: direction
+      type: FTDirection
+    - name: fileInfo
+      type: const SFReply*
+    m68k-pbtrap:
+    - 41099
+    - 523
+
+# ####
+
+- function:
+    name: FTAbort
+    return: FTErr
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 525
+
+# ####
+
+- function:
+    name: FTSend
+    return: FTErr
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: numFiles
+      type: INTEGER
+    - name: pFSSpec
+      type: FSSpecArrayPtr
+    - name: notifyProc
+      type: FileTransferNotificationUPP
+    m68k-pbtrap:
+    - 41099
+    - 548
+
+# ####
+
+- function:
+    name: FTReceive
+    return: FTErr
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: pFSSpec
+      type: FSSpecPtr
+    - name: notifyProc
+      type: FileTransferNotificationUPP
+    m68k-pbtrap:
+    - 41099
+    - 549
+
+# ####
+
+- function:
+    name: FTExec
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 522
+
+# ####
+
+- function:
+    name: FTActivate
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: activate
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 544
+
+# ####
+
+- function:
+    name: FTResume
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: resume
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 526
+
+# ####
+
+- function:
+    name: FTMenu
+    return: Boolean
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: menuID
+      type: INTEGER
+    - name: item
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 543
+
+# ####
+
+- function:
+    name: FTChoose
+    return: INTEGER
+    args:
+    - name: hFT
+      type: FTHandle*
+    - name: where
+      type: Point
+    - name: idle
+      type: FileTransferChooseIdleUPP
+    m68k-pbtrap:
+    - 41099
+    - 540
+
+# ####
+
+- function:
+    name: FTEvent
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: theEvent
+      type: const EventRecord*
+    m68k-pbtrap:
+    - 41099
+    - 541
+
+# ####
+
+- function:
+    name: FTValidate
+    return: Boolean
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 527
+
+# ####
+
+- function:
+    name: FTDefault
+    args:
+    - name: theConfig
+      type: Ptr*
+    - name: procID
+      type: INTEGER
+    - name: allocate
+      type: Boolean
+    m68k-pbtrap:
+    - 41099
+    - 528
+
+# ####
+
+- function:
+    name: FTSetupPreflight
+    return: Handle
+    args:
+    - name: procID
+      type: INTEGER
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 529
+
+# ####
+
+- function:
+    name: FTSetupSetup
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 530
+
+# ####
+
+- function:
+    name: FTSetupItem
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: theItem
+      type: INTEGER*
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 532
+
+# ####
+
+- function:
+    name: FTSetupFilter
+    return: Boolean
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: theEvent
+      type: EventRecord*
+    - name: theItem
+      type: INTEGER*
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 531
+
+# ####
+
+- function:
+    name: FTSetupXCleanup
+    args:
+    - name: procID
+      type: INTEGER
+    - name: theConfig
+      type: const void*
+    - name: count
+      type: INTEGER
+    - name: theDialog
+      type: DialogPtr
+    - name: OKed
+      type: Boolean
+    - name: magicCookie
+      type: int32_t*
+    m68k-pbtrap:
+    - 41099
+    - 546
+
+# ####
+
+- function:
+    name: FTSetupPostflight
+    args:
+    - name: procID
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 542
+
+# ####
+
+- function:
+    name: FTGetConfig
+    return: Ptr
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 534
+
+# ####
+
+- function:
+    name: FTSetConfig
+    return: INTEGER
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: thePtr
+      type: const void*
+    m68k-pbtrap:
+    - 41099
+    - 535
+
+# ####
+
+- function:
+    name: FTIntlToEnglish
+    return: OSErr
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: inputPtr
+      type: const void*
+    - name: outputPtr
+      type: Ptr*
+    - name: language
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 536
+
+# ####
+
+- function:
+    name: FTEnglishToIntl
+    return: OSErr
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: inputPtr
+      type: const void*
+    - name: outputPtr
+      type: Ptr*
+    - name: language
+      type: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 537
+
+# ####
+
+- function:
+    name: FTGetVersion
+    return: Handle
+    args:
+    - name: hFT
+      type: FTHandle
+    m68k-pbtrap:
+    - 41099
+    - 538
+
+# ####
+
+- function:
+    name: FTGetFTVersion
+    return: INTEGER
+    m68k-pbtrap:
+    - 41099
+    - 539
+
+# ####
+
+- function:
+    name: FTGetErrorString
+    args:
+    - name: hFT
+      type: FTHandle
+    - name: id
+      type: INTEGER
+    - name: errMsg
+      type: Str255
+    m68k-pbtrap:
+    - 41099
+    - 547

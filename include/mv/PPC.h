@@ -3,6 +3,7 @@
 #define __MV_PPC__
 
 #include "../ConditionalMacros.h"
+#include "AppleTalk.h"
 #include "MacTypes.h"
 
 #pragma options align=mac68k
@@ -10,13 +11,6 @@
 typedef int16_t PPCPortKinds;
 
 typedef int16_t PPCLocationKind;
-
-typedef struct EntityName EntityName;
-struct EntityName {
-    Str32 objStr;
-    Str32 typeStr;
-    Str32 zoneStr;
-};
 
 typedef struct PPCXTIAddress PPCXTIAddress;
 struct PPCXTIAddress {

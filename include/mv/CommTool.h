@@ -64,17 +64,355 @@ struct CRMSerialRecord {
 
 typedef CRMSerialRecord *CRMSerialPtr;
 
-pascal INTEGER CRMGetCRMVersion(void);
-
-pascal QHdrPtr CRMGetHeader(void);
-
-pascal void CRMInstall(QElemPtr arg0);
-
-pascal OSErr CRMRemove(QElemPtr arg0);
-
-pascal QElemPtr CRMSearch(QElemPtr arg0);
-
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) CRMErr InitCRM(void) {
+    struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0501 };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (CRMErr)_ret;
+}
+#else
 pascal CRMErr InitCRM(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) QHdrPtr CRMGetHeader(void) {
+    struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0502 };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; QHdrPtr r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal QHdrPtr CRMGetHeader(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void CRMInstall(QElemPtr crmReqPtr) {
+    struct { short _sel; __typeof__(crmReqPtr) crmReqPtr; } __attribute__((__packed__)) _pb = { 0x0503, crmReqPtr };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    (void)_ret;
+}
+#else
+pascal void CRMInstall(QElemPtr crmReqPtr);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr CRMRemove(QElemPtr crmReqPtr) {
+    struct { short _sel; __typeof__(crmReqPtr) crmReqPtr; } __attribute__((__packed__)) _pb = { 0x0504, crmReqPtr };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (OSErr)_ret;
+}
+#else
+pascal OSErr CRMRemove(QElemPtr crmReqPtr);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) QElemPtr CRMSearch(QElemPtr crmReqPtr) {
+    struct { short _sel; __typeof__(crmReqPtr) crmReqPtr; } __attribute__((__packed__)) _pb = { 0x0505, crmReqPtr };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; QElemPtr r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal QElemPtr CRMSearch(QElemPtr crmReqPtr);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER CRMGetCRMVersion(void) {
+    struct { short _sel; } __attribute__((__packed__)) _pb = { 0x0506 };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (INTEGER)_ret;
+}
+#else
+pascal INTEGER CRMGetCRMVersion(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGetResource(ResType theType, INTEGER theID) {
+    struct { short _sel; __typeof__(theID) theID; __typeof__(theType) theType; } __attribute__((__packed__)) _pb = { 0x0507, theID, theType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGetResource(ResType theType, INTEGER theID);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGet1Resource(ResType theType, INTEGER theID) {
+    struct { short _sel; __typeof__(theID) theID; __typeof__(theType) theType; } __attribute__((__packed__)) _pb = { 0x0508, theID, theType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGet1Resource(ResType theType, INTEGER theID);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGetIndResource(ResType theType, INTEGER index) {
+    struct { short _sel; __typeof__(index) index; __typeof__(theType) theType; } __attribute__((__packed__)) _pb = { 0x0509, index, theType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGetIndResource(ResType theType, INTEGER index);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGet1IndResource(ResType theType, INTEGER index) {
+    struct { short _sel; __typeof__(index) index; __typeof__(theType) theType; } __attribute__((__packed__)) _pb = { 0x050A, index, theType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGet1IndResource(ResType theType, INTEGER index);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGetNamedResource(ResType theType, ConstStr255Param name) {
+    struct { short _sel; __typeof__(name) name; __typeof__(theType) theType; } __attribute__((__packed__)) _pb = { 0x050B, name, theType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGetNamedResource(ResType theType, ConstStr255Param name);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGet1NamedResource(ResType theType, ConstStr255Param name) {
+    struct { short _sel; __typeof__(name) name; __typeof__(theType) theType; } __attribute__((__packed__)) _pb = { 0x050C, name, theType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGet1NamedResource(ResType theType, ConstStr255Param name);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void CRMReleaseResource(Handle theHandle) {
+    struct { short _sel; __typeof__(theHandle) theHandle; } __attribute__((__packed__)) _pb = { 0x050D, theHandle };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    (void)_ret;
+}
+#else
+pascal void CRMReleaseResource(Handle theHandle);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGetToolResource(INTEGER procID, ResType theType, INTEGER theID) {
+    struct { short _sel; __typeof__(theID) theID; __typeof__(theType) theType; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0523, theID, theType, procID };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGetToolResource(INTEGER procID, ResType theType, INTEGER theID);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Handle CRMGetToolNamedResource(INTEGER procID, ResType theType, ConstStr255Param name) {
+    struct { short _sel; __typeof__(name) name; __typeof__(theType) theType; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0526, name, theType, procID };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; Handle r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal Handle CRMGetToolNamedResource(INTEGER procID, ResType theType, ConstStr255Param name);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void CRMReleaseToolResource(INTEGER procID, Handle theHandle) {
+    struct { short _sel; __typeof__(theHandle) theHandle; __typeof__(procID) procID; } __attribute__((__packed__)) _pb = { 0x0524, theHandle, procID };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    (void)_ret;
+}
+#else
+pascal void CRMReleaseToolResource(INTEGER procID, Handle theHandle);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) long CRMGetIndex(Handle theHandle) {
+    struct { short _sel; __typeof__(theHandle) theHandle; } __attribute__((__packed__)) _pb = { 0x050E, theHandle };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    { union { long l; long r; } _u; _u.l = _ret; return _u.r; }
+}
+#else
+pascal long CRMGetIndex(Handle theHandle);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER CRMLocalToRealID(ResType bundleType, INTEGER toolID, ResType theType, INTEGER localID) {
+    struct { short _sel; __typeof__(localID) localID; __typeof__(theType) theType; __typeof__(toolID) toolID; __typeof__(bundleType) bundleType; } __attribute__((__packed__)) _pb = { 0x050F, localID, theType, toolID, bundleType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (INTEGER)_ret;
+}
+#else
+pascal INTEGER CRMLocalToRealID(ResType bundleType, INTEGER toolID, ResType theType, INTEGER localID);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER CRMRealToLocalID(ResType bundleType, INTEGER toolID, ResType theType, INTEGER realID) {
+    struct { short _sel; __typeof__(realID) realID; __typeof__(theType) theType; __typeof__(toolID) toolID; __typeof__(bundleType) bundleType; } __attribute__((__packed__)) _pb = { 0x0510, realID, theType, toolID, bundleType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (INTEGER)_ret;
+}
+#else
+pascal INTEGER CRMRealToLocalID(ResType bundleType, INTEGER toolID, ResType theType, INTEGER realID);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr CRMGetIndToolName(OSType bundleType, INTEGER index, Str255 toolName) {
+    struct { short _sel; __typeof__(toolName) toolName; __typeof__(index) index; __typeof__(bundleType) bundleType; } __attribute__((__packed__)) _pb = { 0x0511, toolName, index, bundleType };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (OSErr)_ret;
+}
+#else
+pascal OSErr CRMGetIndToolName(OSType bundleType, INTEGER index, Str255 toolName);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr CRMFindCommunications(INTEGER *vRefNum, long *dirID) {
+    struct { short _sel; __typeof__(dirID) dirID; __typeof__(vRefNum) vRefNum; } __attribute__((__packed__)) _pb = { 0x051A, dirID, vRefNum };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (OSErr)_ret;
+}
+#else
+pascal OSErr CRMFindCommunications(INTEGER *vRefNum, long *dirID);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean CRMIsDriverOpen(ConstStr255Param driverName) {
+    struct { short _sel; __typeof__(driverName) driverName; } __attribute__((__packed__)) _pb = { 0x0521, driverName };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (Boolean)_ret;
+}
+#else
+pascal Boolean CRMIsDriverOpen(ConstStr255Param driverName);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) CRMErr CRMParseCAPSResource(Handle theHandle, ResType selector, unsigned long *value) {
+    struct { short _sel; __typeof__(value) value; __typeof__(selector) selector; __typeof__(theHandle) theHandle; } __attribute__((__packed__)) _pb = { 0x0525, value, selector, theHandle };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (CRMErr)_ret;
+}
+#else
+pascal CRMErr CRMParseCAPSResource(Handle theHandle, ResType selector, unsigned long *value);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr CRMReserveRF(INTEGER refNum) {
+    struct { short _sel; __typeof__(refNum) refNum; } __attribute__((__packed__)) _pb = { 0x0513, refNum };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (OSErr)_ret;
+}
+#else
+pascal OSErr CRMReserveRF(INTEGER refNum);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr CRMReleaseRF(INTEGER refNum) {
+    struct { short _sel; __typeof__(refNum) refNum; } __attribute__((__packed__)) _pb = { 0x0514, refNum };
+    register long _ret __asm__("d0");
+    register void *_a0 __asm__("a0") = &_pb;
+    __asm__ __volatile__(".short 0xA08B"
+        : "=r"(_ret), "+r"(_a0) : "m"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return (OSErr)_ret;
+}
+#else
+pascal OSErr CRMReleaseRF(INTEGER refNum);
+#endif
 
 #pragma options align=reset
 

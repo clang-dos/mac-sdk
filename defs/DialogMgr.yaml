@@ -812,6 +812,7 @@
       - type: DialogPtr
       - type: Handle
       - type: DITLMethod
+    m68k-pbtrap: [0xA08B, 0x402]
 
 # ####
 
@@ -820,6 +821,7 @@
     args:
       - type: DialogPtr
       - type: int16_t
+    m68k-pbtrap: [0xA08B, 0x404]
 
 # ####
 
@@ -828,6 +830,7 @@
     return: int16_t
     args:
       - type: DialogPtr
+    m68k-pbtrap: [0xA08B, 0x403]
 
 # ####
 

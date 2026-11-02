@@ -43,7 +43,7 @@ TYPE_SIZE = {"uint8_t": 1, "uint16_t": 2, "uint32_t": 4, "uint64_t": 8,
 # one includes the whole set.
 APPLE_NAMES = [
     "AppleEvents", "Aliases", "CodeFragments", "Components", "CursorDevices", "DatabaseAccess",
-    "ConditionalMacros", "Displays", "Dictionary", "MIDI", "Power", "PPCToolbox", "SCSI", "Slots", "TextServices",
+    "ConditionalMacros", "Connections", "CommResources", "CTBUtilities", "Displays", "ENET", "FileTransfers", "Terminals", "AppleTalk", "Dictionary", "MIDI", "Power", "PPCToolbox", "SCSI", "Slots", "TextServices",
     "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices",
     "Errors", "Events", "Files", "Finder", "FixMath", "Folders", "Fonts",
     "Gestalt", "Icons", "Interrupts", "Kernel", "Lists", "LowMem",
@@ -135,6 +135,8 @@ class Header:
                 self.need(v.get("return"))
                 for a in v.get("args") or []:
                     self.need(a["type"])
+                for n in v.get("m68k-needs") or []:
+                    self.need(n)
                 self.declared.update(v.get("variants") or [])
                 if key == "funptr":
                     base = re.sub(r"(ProcPtr|UPP)$", "", v["name"])
@@ -316,6 +318,44 @@ class Generator:
             words.append(fun["trap"] | trapbits)
         return words
 
+    def pb_trap(self, fun, name, args, ret, out):
+        """A call that takes its arguments as a block in memory, laid out
+        like Pascal arguments on the stack under a selector word, with A0
+        pointing at the block (the Communications Toolbox dispatcher)."""
+        trap, sel = fun["m68k-pbtrap"]
+        params = ", ".join(decl(a["type"], a.get("name")) for a in args) or "void"
+        fields, inits = ["short _sel;"], [hexlit(sel)]
+        for a in reversed(args):
+            t = re.sub(r"^const\s+", "", a["type"])
+            sz = self.size_of(t)
+            if sz not in (1, 2, 4):
+                raise ValueError(f"{name}: argument {a['name']} has size {sz}")
+            fields.append(f"__typeof__({a['name']}) {a['name']};")
+            inits.append(a["name"])
+            if sz == 1:     # a byte goes in the high byte of a word
+                fields.append(f"char _pad_{a['name']};")
+                inits.append("0")
+        rsz = self.size_of(fun["return"]) if fun.get("return") else 0
+        if rsz not in (0, 1, 2, 4):
+            raise ValueError(f"{name}: result has size {rsz}")
+        out.append(f"static __inline__ __attribute__((__always_inline__)) "
+                   f"{ret} {name}({params}) {{")
+        out.append(f"    struct {{ {' '.join(fields)} }} __attribute__((__packed__))"
+                   f" _pb = {{ {', '.join(inits)} }};")
+        out.append('    register long _ret __asm__("d0");')
+        out.append('    register void *_a0 __asm__("a0") = &_pb;')
+        out.append(f'    __asm__ __volatile__(".short {hexlit(trap)}"')
+        out.append('        : "=r"(_ret), "+r"(_a0) : "m"(_pb)')
+        out.append('        : "d1", "d2", "a1", "cc", "memory");')
+        if rsz == 4:
+            out.append(f"    {{ union {{ long l; {decl(ret, 'r')}; }} _u; "
+                       f"_u.l = _ret; return _u.r; }}")
+        elif rsz:
+            out.append(f"    return ({ret})_ret;")
+        else:
+            out.append("    (void)_ret;")
+        out.append("}")
+
     def inline_trap(self, fun, name, args, words, ret, out):
         """A register-based trap: a static inline function for 68k."""
         params = ", ".join(decl(a["type"], a.get("name")) for a in args) or "void"
@@ -411,6 +451,16 @@ class Generator:
                 out += [f"#if {cond}", macro, "#else", proto + ";", "#endif"]
             else:
                 out.append(macro)
+        elif fun.get("m68k-body"):
+            # Glue that is short enough to inline: C code for 68k.
+            out.append("#if TARGET_CPU_68K")
+            out.append(f"static __inline__ {ret} {name}({params}) {{")
+            out += ["    " + l for l in fun["m68k-body"].rstrip().splitlines()]
+            out += ["}", "#else", proto + ";", "#endif"]
+        elif fun.get("m68k-pbtrap"):
+            out.append("#if TARGET_CPU_68K")
+            self.pb_trap(fun, name, args, ret, out)
+            out += ["#else", proto + ";", "#endif"]
         elif regs and words:
             out.append("#if TARGET_CPU_68K")
             if not self.inline_trap(fun, name, args, words, ret, out):
