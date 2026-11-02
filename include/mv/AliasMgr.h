@@ -55,6 +55,27 @@ pascal OSErr IsAliasFile(const FSSpec *fileFSSpec, Boolean *aliasFileFlag, Boole
 
 pascal OSErr ResolveAliasFileWithMountFlags(FSSpec *theSpec, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags);
 
+// Aliases by FSRef (Mac OS 9 and later)
+pascal OSErr FSNewAlias(const FSRef *fromFile, const FSRef *target, AliasHandle *inAlias);
+
+pascal OSErr FSNewAliasMinimal(const FSRef *target, AliasHandle *inAlias);
+
+pascal OSErr FSIsAliasFile(const FSRef *fileRef, Boolean *aliasFileFlag, Boolean *folderFlag);
+
+pascal OSErr FSResolveAliasWithMountFlags(const FSRef *fromFile, AliasHandle inAlias, FSRef *target, Boolean *wasChanged, unsigned long mountFlags);
+
+pascal OSErr FSResolveAlias(const FSRef *fromFile, AliasHandle alias, FSRef *target, Boolean *wasChanged);
+
+pascal OSErr FSResolveAliasFileWithMountFlags(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased, unsigned long mountFlags);
+
+pascal OSErr FSResolveAliasFile(FSRef *theRef, Boolean resolveAliasChains, Boolean *targetIsFolder, Boolean *wasAliased);
+
+pascal OSErr FSFollowFinderAlias(FSRef *fromFile, AliasHandle alias, Boolean logon, FSRef *target, Boolean *wasChanged);
+
+pascal OSErr FSUpdateAlias(const FSRef *fromFile, const FSRef *target, AliasHandle alias, Boolean *wasChanged);
+
+pascal OSErr FSFindFolder(INTEGER vRefNum, OSType folderType, Boolean createFolder, FSRef *foundRef);
+
 #pragma options align=reset
 
 #endif

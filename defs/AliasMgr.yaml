@@ -264,3 +264,152 @@
       type: Boolean*
     - name: mountFlags
       type: uint32_t
+
+# ####
+
+- function:
+    name: FSNewAlias
+    return: OSErr
+    args:
+    - name: fromFile
+      type: const FSRef*
+    - name: target
+      type: const FSRef*
+    - name: inAlias
+      type: AliasHandle*
+    comment: Aliases by FSRef (Mac OS 9 and later)
+
+# ####
+
+- function:
+    name: FSNewAliasMinimal
+    return: OSErr
+    args:
+    - name: target
+      type: const FSRef*
+    - name: inAlias
+      type: AliasHandle*
+
+# ####
+
+- function:
+    name: FSIsAliasFile
+    return: OSErr
+    args:
+    - name: fileRef
+      type: const FSRef*
+    - name: aliasFileFlag
+      type: Boolean*
+    - name: folderFlag
+      type: Boolean*
+
+# ####
+
+- function:
+    name: FSResolveAliasWithMountFlags
+    return: OSErr
+    args:
+    - name: fromFile
+      type: const FSRef*
+    - name: inAlias
+      type: AliasHandle
+    - name: target
+      type: FSRef*
+    - name: wasChanged
+      type: Boolean*
+    - name: mountFlags
+      type: uint32_t
+
+# ####
+
+- function:
+    name: FSResolveAlias
+    return: OSErr
+    args:
+    - name: fromFile
+      type: const FSRef*
+    - name: alias
+      type: AliasHandle
+    - name: target
+      type: FSRef*
+    - name: wasChanged
+      type: Boolean*
+
+# ####
+
+- function:
+    name: FSResolveAliasFileWithMountFlags
+    return: OSErr
+    args:
+    - name: theRef
+      type: FSRef*
+    - name: resolveAliasChains
+      type: Boolean
+    - name: targetIsFolder
+      type: Boolean*
+    - name: wasAliased
+      type: Boolean*
+    - name: mountFlags
+      type: uint32_t
+
+# ####
+
+- function:
+    name: FSResolveAliasFile
+    return: OSErr
+    args:
+    - name: theRef
+      type: FSRef*
+    - name: resolveAliasChains
+      type: Boolean
+    - name: targetIsFolder
+      type: Boolean*
+    - name: wasAliased
+      type: Boolean*
+
+# ####
+
+- function:
+    name: FSFollowFinderAlias
+    return: OSErr
+    args:
+    - name: fromFile
+      type: FSRef*
+    - name: alias
+      type: AliasHandle
+    - name: logon
+      type: Boolean
+    - name: target
+      type: FSRef*
+    - name: wasChanged
+      type: Boolean*
+
+# ####
+
+- function:
+    name: FSUpdateAlias
+    return: OSErr
+    args:
+    - name: fromFile
+      type: const FSRef*
+    - name: target
+      type: const FSRef*
+    - name: alias
+      type: AliasHandle
+    - name: wasChanged
+      type: Boolean*
+
+# ####
+
+- function:
+    name: FSFindFolder
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: folderType
+      type: OSType
+    - name: createFolder
+      type: Boolean
+    - name: foundRef
+      type: FSRef*

@@ -157,6 +157,16 @@ typedef int64_t SInt64;
 
 typedef uint64_t UInt64;
 
+typedef uint16_t UniChar;
+
+typedef UniChar *UniCharPtr;
+
+typedef unsigned long UniCharCount;
+
+typedef UniCharCount *UniCharCountPtr;
+
+typedef unsigned long TextEncoding;
+
 #pragma options align=reset
 
 #endif

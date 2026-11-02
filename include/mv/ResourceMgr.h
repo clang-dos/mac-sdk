@@ -3,6 +3,7 @@
 #define __MV_RESOURCEMGR__
 
 #include "../ConditionalMacros.h"
+#include "FileMgr.h"
 #include "MacTypes.h"
 
 #pragma options align=mac68k
@@ -236,6 +237,15 @@ pascal void WritePartialResource(Handle resource, long offset, Ptr buffer, long 
 pascal void SetResourceSize(Handle resource, long size) M68K_INLINE(0x7003, 0xA822);
 
 pascal Handle GetNextFOND(Handle fondHandle) M68K_INLINE(0x700A, 0xA822);
+
+// Opening resource files by FSRef (Mac OS 9 and later)
+pascal INTEGER FSOpenResFile(const FSRef *ref, SInt8 permission);
+
+pascal void FSCreateResFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec);
+
+pascal OSErr FSCreateResourceFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, UniCharCount forkNameLength, const UniChar *forkName, FSRef *newRef, FSSpec *newSpec);
+
+pascal OSErr FSOpenResourceFile(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName, SInt8 permissions, SInt16 *refNum);
 
 #pragma options align=reset
 

@@ -147,6 +147,7 @@ class Header:
             return
         t = re.sub(r"'[^']+'", "", str(text))
         t = re.sub(r'"(?:[^"\\]|\\.)*"', "", t)
+        t = re.sub(r"\b(struct|union|enum)\s+\w+", "", t)  # tags need nothing
         for w in re.findall(r"[A-Za-z_][A-Za-z0-9_]*", t):
             if w not in BUILTIN:
                 self.required.add(w)

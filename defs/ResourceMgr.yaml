@@ -756,3 +756,77 @@
       - name: len
         type: Size
     name: ResourceDecompressionUPP
+
+# ####
+
+- function:
+    name: FSOpenResFile
+    return: INTEGER
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: permission
+      type: SInt8
+    comment: Opening resource files by FSRef (Mac OS 9 and later)
+
+# ####
+
+- function:
+    name: FSCreateResFile
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+    - name: newRef
+      type: FSRef*
+    - name: newSpec
+      type: FSSpec*
+
+# ####
+
+- function:
+    name: FSCreateResourceFile
+    return: OSErr
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+    - name: newRef
+      type: FSRef*
+    - name: newSpec
+      type: FSSpec*
+
+# ####
+
+- function:
+    name: FSOpenResourceFile
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+    - name: permissions
+      type: SInt8
+    - name: refNum
+      type: SInt16*

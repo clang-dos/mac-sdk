@@ -3,6 +3,7 @@
 #define __MV_FILEMGR__
 
 #include "../ConditionalMacros.h"
+#include "DriverServices.h"
 #include "MacTypes.h"
 
 #pragma options align=mac68k
@@ -2909,6 +2910,549 @@ pascal OSErr CatMove(INTEGER vRefNum, long dirID, ConstStr255Param oldName, long
 pascal OSErr OpenWD(INTEGER vRefNum, long dirID, long procID, INTEGER *wdRefNum);
 
 pascal OSErr CloseWD(INTEGER wdRefNum);
+
+typedef UniversalProcPtr IOCompletionUPP;
+
+typedef struct CatPositionRec CatPositionRec;
+struct CatPositionRec {
+    long initialize;
+    INTEGER priv[6];
+};
+
+typedef INTEGER FSVolumeRefNum;
+
+typedef struct HFSUniStr255 HFSUniStr255;
+struct HFSUniStr255 {
+    uint16_t length;
+    UniChar unicode[255];
+};
+
+typedef const HFSUniStr255 *ConstHFSUniStr255Param;
+
+// An opaque reference to a file or folder (Mac OS 9 and later).
+typedef struct FSRef FSRef;
+struct FSRef {
+    uint8_t hidden[80];
+};
+
+typedef FSRef *FSRefPtr;
+
+typedef struct UTCDateTime UTCDateTime;
+struct UTCDateTime {
+    uint16_t highSeconds;
+    unsigned long lowSeconds;
+    uint16_t fraction;
+};
+
+typedef UTCDateTime *UTCDateTimePtr;
+
+typedef UTCDateTimePtr *UTCDateTimeHandle;
+
+typedef UTCDateTime LocalDateTime;
+
+typedef unsigned long FSCatalogInfoBitmap;
+
+enum {
+    kFSCatInfoNone = 0,
+    kFSCatInfoTextEncoding = 1,
+    kFSCatInfoNodeFlags = 2,
+    kFSCatInfoVolume = 4,
+    kFSCatInfoParentDirID = 8,
+    kFSCatInfoNodeID = 16,
+    kFSCatInfoCreateDate = 32,
+    kFSCatInfoContentMod = 64,
+    kFSCatInfoAttrMod = 128,
+    kFSCatInfoAccessDate = 256,
+    kFSCatInfoBackupDate = 512,
+    kFSCatInfoPermissions = 1024,
+    kFSCatInfoFinderInfo = 2048,
+    kFSCatInfoFinderXInfo = 4096,
+    kFSCatInfoValence = 8192,
+    kFSCatInfoDataSizes = 16384,
+    kFSCatInfoRsrcSizes = 32768,
+    kFSCatInfoSharingFlags = 65536,
+    kFSCatInfoUserPrivs = 131072,
+    kFSCatInfoAllDates = 992,
+    kFSCatInfoGettableInfo = 262143,
+    kFSCatInfoSettableInfo = 8163,
+    kFSCatInfoReserved = 4294705152,
+};
+
+enum {
+    kFSNodeLockedBit = 0,
+    kFSNodeLockedMask = 1,
+    kFSNodeResOpenBit = 2,
+    kFSNodeResOpenMask = 4,
+    kFSNodeDataOpenBit = 3,
+    kFSNodeDataOpenMask = 8,
+    kFSNodeIsDirectoryBit = 4,
+    kFSNodeIsDirectoryMask = 16,
+    kFSNodeCopyProtectBit = 6,
+    kFSNodeCopyProtectMask = 64,
+    kFSNodeForkOpenBit = 7,
+    kFSNodeForkOpenMask = 128,
+};
+
+enum {
+    kFSNodeInSharedBit = 2,
+    kFSNodeInSharedMask = 4,
+    kFSNodeIsMountedBit = 3,
+    kFSNodeIsMountedMask = 8,
+    kFSNodeIsSharePointBit = 5,
+    kFSNodeIsSharePointMask = 32,
+};
+
+enum {
+    kFSInvalidVolumeRefNum = 0,
+    kFSIterateFlat = 0,
+    kFSIterateSubtree = 1,
+    kFSIterateDelete = 2,
+    kFSIterateReserved = 4294967292,
+};
+
+typedef struct FSCatalogInfo FSCatalogInfo;
+struct FSCatalogInfo {
+    uint16_t nodeFlags;
+    FSVolumeRefNum volume;
+    unsigned long parentDirID;
+    unsigned long nodeID;
+    uint8_t sharingFlags;
+    uint8_t userPrivileges;
+    uint8_t reserved1;
+    uint8_t reserved2;
+    UTCDateTime createDate;
+    UTCDateTime contentModDate;
+    UTCDateTime attributeModDate;
+    UTCDateTime accessDate;
+    UTCDateTime backupDate;
+    unsigned long permissions[4];
+    uint8_t finderInfo[16];
+    uint8_t extFinderInfo[16];
+    UInt64 dataLogicalSize;
+    UInt64 dataPhysicalSize;
+    UInt64 rsrcLogicalSize;
+    UInt64 rsrcPhysicalSize;
+    unsigned long valence;
+    TextEncoding textEncodingHint;
+};
+
+typedef FSCatalogInfo *FSCatalogInfoPtr;
+
+typedef struct FSRefParam FSRefParam;
+struct FSRefParam {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    IOCompletionUPP ioCompletion;
+    OSErr ioResult;
+    ConstStringPtr ioNamePtr;
+    INTEGER ioVRefNum;
+    INTEGER reserved1;
+    uint8_t reserved2;
+    uint8_t reserved3;
+    const FSRef *ref;
+    FSCatalogInfoBitmap whichInfo;
+    FSCatalogInfo *catInfo;
+    UniCharCount nameLength;
+    const UniChar *name;
+    long ioDirID;
+    FSSpec *spec;
+    FSRef *parentRef;
+    FSRef *newRef;
+    TextEncoding textEncodingHint;
+    HFSUniStr255 *outName;
+};
+
+typedef FSRefParam *FSRefParamPtr;
+
+typedef struct OpaqueFSIterator *FSIterator;
+
+typedef unsigned long FSIteratorFlags;
+
+typedef struct FSSearchParams FSSearchParams;
+struct FSSearchParams {
+    Duration searchTime;
+    OptionBits searchBits;
+    UniCharCount searchNameLength;
+    const UniChar *searchName;
+    FSCatalogInfo *searchInfo1;
+    FSCatalogInfo *searchInfo2;
+};
+
+typedef FSSearchParams *FSSearchParamsPtr;
+
+typedef struct FSCatalogBulkParam FSCatalogBulkParam;
+struct FSCatalogBulkParam {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    IOCompletionUPP ioCompletion;
+    OSErr ioResult;
+    Boolean containerChanged;
+    uint8_t reserved;
+    FSIteratorFlags iteratorFlags;
+    FSIterator iterator;
+    const FSRef *container;
+    ItemCount maximumItems;
+    ItemCount actualItems;
+    FSCatalogInfoBitmap whichInfo;
+    FSCatalogInfo *catalogInfo;
+    FSRef *refs;
+    FSSpec *specs;
+    HFSUniStr255 *names;
+    const FSSearchParams *searchParams;
+};
+
+typedef FSCatalogBulkParam *FSCatalogBulkParamPtr;
+
+typedef uint16_t FSAllocationFlags;
+
+enum {
+    kFSAllocDefaultFlags = 0,
+    kFSAllocAllOrNothingMask = 1,
+    kFSAllocContiguousMask = 2,
+    kFSAllocNoRoundUpMask = 4,
+    kFSAllocReservedMask = 65528,
+};
+
+typedef struct FSForkIOParam FSForkIOParam;
+struct FSForkIOParam {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    IOCompletionUPP ioCompletion;
+    OSErr ioResult;
+    void *reserved1;
+    INTEGER reserved2;
+    INTEGER forkRefNum;
+    uint8_t reserved3;
+    int8_t permissions;
+    const FSRef *ref;
+    Ptr buffer;
+    unsigned long requestCount;
+    unsigned long actualCount;
+    uint16_t positionMode;
+    SInt64 positionOffset;
+    FSAllocationFlags allocationFlags;
+    UInt64 allocationAmount;
+    UniCharCount forkNameLength;
+    const UniChar *forkName;
+    CatPositionRec forkIterator;
+    HFSUniStr255 *outForkName;
+};
+
+typedef FSForkIOParam *FSForkIOParamPtr;
+
+typedef struct FSForkInfo FSForkInfo;
+struct FSForkInfo {
+    int8_t flags;
+    int8_t permissions;
+    FSVolumeRefNum volume;
+    unsigned long reserved2;
+    unsigned long nodeID;
+    unsigned long forkID;
+    UInt64 currentPosition;
+    UInt64 logicalEOF;
+    UInt64 physicalEOF;
+    UInt64 process;
+};
+
+typedef FSForkInfo *FSForkInfoPtr;
+
+typedef struct FSForkCBInfoParam FSForkCBInfoParam;
+struct FSForkCBInfoParam {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    IOCompletionUPP ioCompletion;
+    OSErr ioResult;
+    INTEGER desiredRefNum;
+    INTEGER volumeRefNum;
+    INTEGER iterator;
+    INTEGER actualRefNum;
+    FSRef *ref;
+    FSForkInfo *forkInfo;
+    HFSUniStr255 *forkName;
+};
+
+typedef FSForkCBInfoParam *FSForkCBInfoParamPtr;
+
+typedef unsigned long FSVolumeInfoBitmap;
+
+enum {
+    kFSVolInfoNone = 0,
+    kFSVolInfoCreateDate = 1,
+    kFSVolInfoModDate = 2,
+    kFSVolInfoBackupDate = 4,
+    kFSVolInfoCheckedDate = 8,
+    kFSVolInfoFileCount = 16,
+    kFSVolInfoDirCount = 32,
+    kFSVolInfoSizes = 64,
+    kFSVolInfoBlocks = 128,
+    kFSVolInfoNextAlloc = 256,
+    kFSVolInfoRsrcClump = 512,
+    kFSVolInfoDataClump = 1024,
+    kFSVolInfoNextID = 2048,
+    kFSVolInfoFinderInfo = 4096,
+    kFSVolInfoFlags = 8192,
+    kFSVolInfoFSInfo = 16384,
+    kFSVolInfoDriveInfo = 32768,
+    kFSVolInfoGettableInfo = 65535,
+    kFSVolInfoSettableInfo = 12292,
+};
+
+enum {
+    kFSVolFlagDefaultVolumeBit = 5,
+    kFSVolFlagDefaultVolumeMask = 32,
+    kFSVolFlagFilesOpenBit = 6,
+    kFSVolFlagFilesOpenMask = 64,
+    kFSVolFlagHardwareLockedBit = 7,
+    kFSVolFlagHardwareLockedMask = 128,
+    kFSVolFlagSoftwareLockedBit = 15,
+    kFSVolFlagSoftwareLockedMask = 32768,
+};
+
+typedef struct FSVolumeInfo FSVolumeInfo;
+struct FSVolumeInfo {
+    UTCDateTime createDate;
+    UTCDateTime modifyDate;
+    UTCDateTime backupDate;
+    UTCDateTime checkedDate;
+    unsigned long fileCount;
+    unsigned long folderCount;
+    UInt64 totalBytes;
+    UInt64 freeBytes;
+    unsigned long blockSize;
+    unsigned long totalBlocks;
+    unsigned long freeBlocks;
+    unsigned long nextAllocation;
+    unsigned long rsrcClumpSize;
+    unsigned long dataClumpSize;
+    unsigned long nextCatalogID;
+    uint8_t finderInfo[32];
+    uint16_t flags;
+    uint16_t filesystemID;
+    uint16_t signature;
+    uint16_t driveNumber;
+    INTEGER driverRefNum;
+};
+
+typedef FSVolumeInfo *FSVolumeInfoPtr;
+
+typedef struct FSVolumeInfoParam FSVolumeInfoParam;
+struct FSVolumeInfoParam {
+    QElemPtr qLink;
+    INTEGER qType;
+    INTEGER ioTrap;
+    Ptr ioCmdAddr;
+    IOCompletionUPP ioCompletion;
+    OSErr ioResult;
+    StringPtr ioNamePtr;
+    FSVolumeRefNum ioVRefNum;
+    unsigned long volumeIndex;
+    FSVolumeInfoBitmap whichInfo;
+    FSVolumeInfo *volumeInfo;
+    HFSUniStr255 *volumeName;
+    FSRef *ref;
+};
+
+typedef FSVolumeInfoParam *FSVolumeInfoParamPtr;
+
+// HFS Plus API (Mac OS 9 and later, PowerPC)
+pascal OSErr FSpMakeFSRef(const FSSpec *source, FSRef *newRef);
+
+pascal OSErr FSMakeFSRefUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef);
+
+pascal OSErr FSCompareFSRefs(const FSRef *ref1, const FSRef *ref2);
+
+pascal OSErr FSCreateFileUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec);
+
+pascal OSErr FSCreateDirectoryUnicode(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec, UInt32 *newDirID);
+
+pascal OSErr FSDeleteObject(const FSRef *ref);
+
+pascal OSErr FSMoveObject(const FSRef *ref, const FSRef *destDirectory, FSRef *newRef);
+
+pascal OSErr FSExchangeObjects(const FSRef *ref, const FSRef *destRef);
+
+pascal OSErr FSRenameUnicode(const FSRef *ref, UniCharCount nameLength, const UniChar *name, TextEncoding textEncodingHint, FSRef *newRef);
+
+pascal OSErr FSGetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfo, HFSUniStr255 *outName, FSSpec *fsSpec, FSRef *parentRef);
+
+pascal OSErr FSSetCatalogInfo(const FSRef *ref, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo);
+
+pascal OSErr FSOpenIterator(const FSRef *container, FSIteratorFlags iteratorFlags, FSIterator *iterator);
+
+pascal OSErr FSCloseIterator(FSIterator iterator);
+
+pascal OSErr FSGetCatalogInfoBulk(FSIterator iterator, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names);
+
+pascal OSErr FSCatalogSearch(FSIterator iterator, const FSSearchParams *searchCriteria, ItemCount maximumObjects, ItemCount *actualObjects, Boolean *containerChanged, FSCatalogInfoBitmap whichInfo, FSCatalogInfo *catalogInfos, FSRef *refs, FSSpec *specs, HFSUniStr255 *names);
+
+pascal OSErr FSCreateFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName);
+
+pascal OSErr FSDeleteFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName);
+
+pascal OSErr FSIterateForks(const FSRef *ref, CatPositionRec *forkIterator, HFSUniStr255 *forkName, SInt64 *forkSize, UInt64 *forkPhysicalSize);
+
+pascal OSErr FSOpenFork(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName, SInt8 permissions, SInt16 *forkRefNum);
+
+pascal OSErr FSReadFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, void *buffer, ByteCount *actualCount);
+
+pascal OSErr FSWriteFork(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset, ByteCount requestCount, const void *buffer, ByteCount *actualCount);
+
+pascal OSErr FSGetForkPosition(SInt16 forkRefNum, SInt64 *position);
+
+pascal OSErr FSSetForkPosition(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset);
+
+pascal OSErr FSGetForkSize(SInt16 forkRefNum, SInt64 *forkSize);
+
+pascal OSErr FSSetForkSize(SInt16 forkRefNum, UInt16 positionMode, SInt64 positionOffset);
+
+pascal OSErr FSAllocateFork(SInt16 forkRefNum, FSAllocationFlags flags, UInt16 positionMode, SInt64 positionOffset, UInt64 requestCount, UInt64 *actualCount);
+
+pascal OSErr FSFlushFork(SInt16 forkRefNum);
+
+pascal OSErr FSCloseFork(SInt16 forkRefNum);
+
+pascal OSErr FSGetForkCBInfo(SInt16 desiredRefNum, FSVolumeRefNum volume, SInt16 *iterator, SInt16 *actualRefNum, FSForkInfo *forkInfo, FSRef *ref, HFSUniStr255 *outForkName);
+
+pascal OSErr FSGetVolumeInfo(FSVolumeRefNum volume, ItemCount volumeIndex, FSVolumeRefNum *actualVolume, FSVolumeInfoBitmap whichInfo, FSVolumeInfo *info, HFSUniStr255 *volumeName, FSRef *rootDirectory);
+
+pascal OSErr FSSetVolumeInfo(FSVolumeRefNum volume, FSVolumeInfoBitmap whichInfo, const FSVolumeInfo *info);
+
+pascal OSErr FSGetDataForkName(HFSUniStr255 *dataForkName);
+
+pascal OSErr FSGetResourceForkName(HFSUniStr255 *resourceForkName);
+
+// Parameter block forms of the HFS Plus API
+pascal OSErr PBMakeFSRefSync(FSRefParam *paramBlock);
+
+pascal void PBMakeFSRefAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBMakeFSRefUnicodeSync(FSRefParam *paramBlock);
+
+pascal void PBMakeFSRefUnicodeAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBCompareFSRefsSync(FSRefParam *paramBlock);
+
+pascal void PBCompareFSRefsAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBCreateFileUnicodeSync(FSRefParam *paramBlock);
+
+pascal void PBCreateFileUnicodeAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBCreateDirectoryUnicodeSync(FSRefParam *paramBlock);
+
+pascal void PBCreateDirectoryUnicodeAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBDeleteObjectSync(FSRefParam *paramBlock);
+
+pascal void PBDeleteObjectAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBMoveObjectSync(FSRefParam *paramBlock);
+
+pascal void PBMoveObjectAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBExchangeObjectsSync(FSRefParam *paramBlock);
+
+pascal void PBExchangeObjectsAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBRenameUnicodeSync(FSRefParam *paramBlock);
+
+pascal void PBRenameUnicodeAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBGetCatalogInfoSync(FSRefParam *paramBlock);
+
+pascal void PBGetCatalogInfoAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBSetCatalogInfoSync(FSRefParam *paramBlock);
+
+pascal void PBSetCatalogInfoAsync(FSRefParam *paramBlock);
+
+pascal OSErr PBOpenIteratorSync(FSCatalogBulkParam *paramBlock);
+
+pascal void PBOpenIteratorAsync(FSCatalogBulkParam *paramBlock);
+
+pascal OSErr PBCloseIteratorSync(FSCatalogBulkParam *paramBlock);
+
+pascal void PBCloseIteratorAsync(FSCatalogBulkParam *paramBlock);
+
+pascal OSErr PBGetCatalogInfoBulkSync(FSCatalogBulkParam *paramBlock);
+
+pascal void PBGetCatalogInfoBulkAsync(FSCatalogBulkParam *paramBlock);
+
+pascal OSErr PBCatalogSearchSync(FSCatalogBulkParam *paramBlock);
+
+pascal void PBCatalogSearchAsync(FSCatalogBulkParam *paramBlock);
+
+pascal OSErr PBCreateForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBCreateForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBDeleteForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBDeleteForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBIterateForksSync(FSForkIOParam *paramBlock);
+
+pascal void PBIterateForksAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBOpenForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBOpenForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBReadForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBReadForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBWriteForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBWriteForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBGetForkPositionSync(FSForkIOParam *paramBlock);
+
+pascal void PBGetForkPositionAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBSetForkPositionSync(FSForkIOParam *paramBlock);
+
+pascal void PBSetForkPositionAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBGetForkSizeSync(FSForkIOParam *paramBlock);
+
+pascal void PBGetForkSizeAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBSetForkSizeSync(FSForkIOParam *paramBlock);
+
+pascal void PBSetForkSizeAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBAllocateForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBAllocateForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBFlushForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBFlushForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBCloseForkSync(FSForkIOParam *paramBlock);
+
+pascal void PBCloseForkAsync(FSForkIOParam *paramBlock);
+
+pascal OSErr PBGetForkCBInfoSync(FSForkCBInfoParam *paramBlock);
+
+pascal void PBGetForkCBInfoAsync(FSForkCBInfoParam *paramBlock);
+
+pascal OSErr PBGetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
+
+pascal void PBGetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
+
+pascal OSErr PBSetVolumeInfoSync(FSVolumeInfoParam *paramBlock);
+
+pascal void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
 
 #pragma options align=reset
 

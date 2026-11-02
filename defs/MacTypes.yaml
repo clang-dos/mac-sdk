@@ -393,3 +393,33 @@
 - typedef:
     name: UInt64
     type: uint64_t
+
+# ####
+
+- typedef:
+    name: UniChar
+    type: uint16_t
+
+# ####
+
+- typedef:
+    name: UniCharPtr
+    type: UniChar*
+
+# ####
+
+- typedef:
+    name: UniCharCount
+    type: uint32_t
+
+# ####
+
+- typedef:
+    name: UniCharCountPtr
+    type: UniCharCount*
+
+# ####
+
+- typedef:
+    name: TextEncoding
+    type: uint32_t

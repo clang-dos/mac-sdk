@@ -3724,3 +3724,1750 @@
     args:
     - name: wdRefNum
       type: INTEGER
+
+# ####
+
+- typedef:
+    name: IOCompletionUPP
+    type: UniversalProcPtr
+
+# ####
+
+- struct:
+    name: CatPositionRec
+    size: 16
+    members:
+    - name: initialize
+      type: int32_t
+    - name: priv
+      type: INTEGER[6]
+
+# ####
+
+- typedef:
+    name: FSVolumeRefNum
+    type: INTEGER
+
+# ####
+
+- struct:
+    name: HFSUniStr255
+    size: 512
+    members:
+    - name: length
+      type: uint16_t
+    - name: unicode
+      type: UniChar[255]
+
+# ####
+
+- typedef:
+    name: ConstHFSUniStr255Param
+    type: const HFSUniStr255*
+
+# ####
+
+- struct:
+    name: FSRef
+    size: 80
+    comment: An opaque reference to a file or folder (Mac OS 9 and later).
+    members:
+    - name: hidden
+      type: uint8_t[80]
+
+# ####
+
+- typedef:
+    name: FSRefPtr
+    type: FSRef*
+
+# ####
+
+- struct:
+    name: UTCDateTime
+    size: 8
+    members:
+    - name: highSeconds
+      type: uint16_t
+    - name: lowSeconds
+      type: uint32_t
+    - name: fraction
+      type: uint16_t
+
+# ####
+
+- typedef:
+    name: UTCDateTimePtr
+    type: UTCDateTime*
+
+# ####
+
+- typedef:
+    name: UTCDateTimeHandle
+    type: UTCDateTimePtr*
+
+# ####
+
+- typedef:
+    name: LocalDateTime
+    type: UTCDateTime
+
+# ####
+
+- typedef:
+    name: FSCatalogInfoBitmap
+    type: uint32_t
+
+# ####
+
+- enum:
+    values:
+    - name: kFSCatInfoNone
+      value: 0
+    - name: kFSCatInfoTextEncoding
+      value: 1
+    - name: kFSCatInfoNodeFlags
+      value: 2
+    - name: kFSCatInfoVolume
+      value: 4
+    - name: kFSCatInfoParentDirID
+      value: 8
+    - name: kFSCatInfoNodeID
+      value: 16
+    - name: kFSCatInfoCreateDate
+      value: 32
+    - name: kFSCatInfoContentMod
+      value: 64
+    - name: kFSCatInfoAttrMod
+      value: 128
+    - name: kFSCatInfoAccessDate
+      value: 256
+    - name: kFSCatInfoBackupDate
+      value: 512
+    - name: kFSCatInfoPermissions
+      value: 1024
+    - name: kFSCatInfoFinderInfo
+      value: 2048
+    - name: kFSCatInfoFinderXInfo
+      value: 4096
+    - name: kFSCatInfoValence
+      value: 8192
+    - name: kFSCatInfoDataSizes
+      value: 16384
+    - name: kFSCatInfoRsrcSizes
+      value: 32768
+    - name: kFSCatInfoSharingFlags
+      value: 65536
+    - name: kFSCatInfoUserPrivs
+      value: 131072
+    - name: kFSCatInfoAllDates
+      value: 992
+    - name: kFSCatInfoGettableInfo
+      value: 262143
+    - name: kFSCatInfoSettableInfo
+      value: 8163
+    - name: kFSCatInfoReserved
+      value: 4294705152
+
+# ####
+
+- enum:
+    values:
+    - name: kFSNodeLockedBit
+      value: 0
+    - name: kFSNodeLockedMask
+      value: 1
+    - name: kFSNodeResOpenBit
+      value: 2
+    - name: kFSNodeResOpenMask
+      value: 4
+    - name: kFSNodeDataOpenBit
+      value: 3
+    - name: kFSNodeDataOpenMask
+      value: 8
+    - name: kFSNodeIsDirectoryBit
+      value: 4
+    - name: kFSNodeIsDirectoryMask
+      value: 16
+    - name: kFSNodeCopyProtectBit
+      value: 6
+    - name: kFSNodeCopyProtectMask
+      value: 64
+    - name: kFSNodeForkOpenBit
+      value: 7
+    - name: kFSNodeForkOpenMask
+      value: 128
+
+# ####
+
+- enum:
+    values:
+    - name: kFSNodeInSharedBit
+      value: 2
+    - name: kFSNodeInSharedMask
+      value: 4
+    - name: kFSNodeIsMountedBit
+      value: 3
+    - name: kFSNodeIsMountedMask
+      value: 8
+    - name: kFSNodeIsSharePointBit
+      value: 5
+    - name: kFSNodeIsSharePointMask
+      value: 32
+
+# ####
+
+- enum:
+    values:
+    - name: kFSInvalidVolumeRefNum
+      value: 0
+    - name: kFSIterateFlat
+      value: 0
+    - name: kFSIterateSubtree
+      value: 1
+    - name: kFSIterateDelete
+      value: 2
+    - name: kFSIterateReserved
+      value: 4294967292
+
+# ####
+
+- struct:
+    name: FSCatalogInfo
+    size: 144
+    members:
+    - name: nodeFlags
+      type: uint16_t
+    - name: volume
+      type: FSVolumeRefNum
+    - name: parentDirID
+      type: uint32_t
+    - name: nodeID
+      type: uint32_t
+    - name: sharingFlags
+      type: uint8_t
+    - name: userPrivileges
+      type: uint8_t
+    - name: reserved1
+      type: uint8_t
+    - name: reserved2
+      type: uint8_t
+    - name: createDate
+      type: UTCDateTime
+    - name: contentModDate
+      type: UTCDateTime
+    - name: attributeModDate
+      type: UTCDateTime
+    - name: accessDate
+      type: UTCDateTime
+    - name: backupDate
+      type: UTCDateTime
+    - name: permissions
+      type: uint32_t[4]
+    - name: finderInfo
+      type: uint8_t[16]
+    - name: extFinderInfo
+      type: uint8_t[16]
+    - name: dataLogicalSize
+      type: UInt64
+    - name: dataPhysicalSize
+      type: UInt64
+    - name: rsrcLogicalSize
+      type: UInt64
+    - name: rsrcPhysicalSize
+      type: UInt64
+    - name: valence
+      type: uint32_t
+    - name: textEncodingHint
+      type: TextEncoding
+
+# ####
+
+- typedef:
+    name: FSCatalogInfoPtr
+    type: FSCatalogInfo*
+
+# ####
+
+- struct:
+    name: FSRefParam
+    size: 72
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: ioNamePtr
+      type: ConstStringPtr
+    - name: ioVRefNum
+      type: INTEGER
+    - name: reserved1
+      type: INTEGER
+    - name: reserved2
+      type: uint8_t
+    - name: reserved3
+      type: uint8_t
+    - name: ref
+      type: const FSRef*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catInfo
+      type: FSCatalogInfo*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: ioDirID
+      type: int32_t
+    - name: spec
+      type: FSSpec*
+    - name: parentRef
+      type: FSRef*
+    - name: newRef
+      type: FSRef*
+    - name: textEncodingHint
+      type: TextEncoding
+    - name: outName
+      type: HFSUniStr255*
+
+# ####
+
+- typedef:
+    name: FSRefParamPtr
+    type: FSRefParam*
+
+# ####
+
+- typedef:
+    name: FSIterator
+    type: struct OpaqueFSIterator*
+
+# ####
+
+- typedef:
+    name: FSIteratorFlags
+    type: uint32_t
+
+# ####
+
+- struct:
+    name: FSSearchParams
+    size: 24
+    members:
+    - name: searchTime
+      type: Duration
+    - name: searchBits
+      type: OptionBits
+    - name: searchNameLength
+      type: UniCharCount
+    - name: searchName
+      type: const UniChar*
+    - name: searchInfo1
+      type: FSCatalogInfo*
+    - name: searchInfo2
+      type: FSCatalogInfo*
+
+# ####
+
+- typedef:
+    name: FSSearchParamsPtr
+    type: FSSearchParams*
+
+# ####
+
+- struct:
+    name: FSCatalogBulkParam
+    size: 64
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: containerChanged
+      type: Boolean
+    - name: reserved
+      type: uint8_t
+    - name: iteratorFlags
+      type: FSIteratorFlags
+    - name: iterator
+      type: FSIterator
+    - name: container
+      type: const FSRef*
+    - name: maximumItems
+      type: ItemCount
+    - name: actualItems
+      type: ItemCount
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: FSCatalogInfo*
+    - name: refs
+      type: FSRef*
+    - name: specs
+      type: FSSpec*
+    - name: names
+      type: HFSUniStr255*
+    - name: searchParams
+      type: const FSSearchParams*
+
+# ####
+
+- typedef:
+    name: FSCatalogBulkParamPtr
+    type: FSCatalogBulkParam*
+
+# ####
+
+- typedef:
+    name: FSAllocationFlags
+    type: uint16_t
+
+# ####
+
+- enum:
+    values:
+    - name: kFSAllocDefaultFlags
+      value: 0
+    - name: kFSAllocAllOrNothingMask
+      value: 1
+    - name: kFSAllocContiguousMask
+      value: 2
+    - name: kFSAllocNoRoundUpMask
+      value: 4
+    - name: kFSAllocReservedMask
+      value: 65528
+
+# ####
+
+- struct:
+    name: FSForkIOParam
+    size: 92
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: reserved1
+      type: void*
+    - name: reserved2
+      type: INTEGER
+    - name: forkRefNum
+      type: INTEGER
+    - name: reserved3
+      type: uint8_t
+    - name: permissions
+      type: int8_t
+    - name: ref
+      type: const FSRef*
+    - name: buffer
+      type: Ptr
+    - name: requestCount
+      type: uint32_t
+    - name: actualCount
+      type: uint32_t
+    - name: positionMode
+      type: uint16_t
+    - name: positionOffset
+      type: SInt64
+    - name: allocationFlags
+      type: FSAllocationFlags
+    - name: allocationAmount
+      type: UInt64
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+    - name: forkIterator
+      type: CatPositionRec
+    - name: outForkName
+      type: HFSUniStr255*
+
+# ####
+
+- typedef:
+    name: FSForkIOParamPtr
+    type: FSForkIOParam*
+
+# ####
+
+- struct:
+    name: FSForkInfo
+    size: 48
+    members:
+    - name: flags
+      type: int8_t
+    - name: permissions
+      type: int8_t
+    - name: volume
+      type: FSVolumeRefNum
+    - name: reserved2
+      type: uint32_t
+    - name: nodeID
+      type: uint32_t
+    - name: forkID
+      type: uint32_t
+    - name: currentPosition
+      type: UInt64
+    - name: logicalEOF
+      type: UInt64
+    - name: physicalEOF
+      type: UInt64
+    - name: process
+      type: UInt64
+
+# ####
+
+- typedef:
+    name: FSForkInfoPtr
+    type: FSForkInfo*
+
+# ####
+
+- struct:
+    name: FSForkCBInfoParam
+    size: 38
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: desiredRefNum
+      type: INTEGER
+    - name: volumeRefNum
+      type: INTEGER
+    - name: iterator
+      type: INTEGER
+    - name: actualRefNum
+      type: INTEGER
+    - name: ref
+      type: FSRef*
+    - name: forkInfo
+      type: FSForkInfo*
+    - name: forkName
+      type: HFSUniStr255*
+
+# ####
+
+- typedef:
+    name: FSForkCBInfoParamPtr
+    type: FSForkCBInfoParam*
+
+# ####
+
+- typedef:
+    name: FSVolumeInfoBitmap
+    type: uint32_t
+
+# ####
+
+- enum:
+    values:
+    - name: kFSVolInfoNone
+      value: 0
+    - name: kFSVolInfoCreateDate
+      value: 1
+    - name: kFSVolInfoModDate
+      value: 2
+    - name: kFSVolInfoBackupDate
+      value: 4
+    - name: kFSVolInfoCheckedDate
+      value: 8
+    - name: kFSVolInfoFileCount
+      value: 16
+    - name: kFSVolInfoDirCount
+      value: 32
+    - name: kFSVolInfoSizes
+      value: 64
+    - name: kFSVolInfoBlocks
+      value: 128
+    - name: kFSVolInfoNextAlloc
+      value: 256
+    - name: kFSVolInfoRsrcClump
+      value: 512
+    - name: kFSVolInfoDataClump
+      value: 1024
+    - name: kFSVolInfoNextID
+      value: 2048
+    - name: kFSVolInfoFinderInfo
+      value: 4096
+    - name: kFSVolInfoFlags
+      value: 8192
+    - name: kFSVolInfoFSInfo
+      value: 16384
+    - name: kFSVolInfoDriveInfo
+      value: 32768
+    - name: kFSVolInfoGettableInfo
+      value: 65535
+    - name: kFSVolInfoSettableInfo
+      value: 12292
+
+# ####
+
+- enum:
+    values:
+    - name: kFSVolFlagDefaultVolumeBit
+      value: 5
+    - name: kFSVolFlagDefaultVolumeMask
+      value: 32
+    - name: kFSVolFlagFilesOpenBit
+      value: 6
+    - name: kFSVolFlagFilesOpenMask
+      value: 64
+    - name: kFSVolFlagHardwareLockedBit
+      value: 7
+    - name: kFSVolFlagHardwareLockedMask
+      value: 128
+    - name: kFSVolFlagSoftwareLockedBit
+      value: 15
+    - name: kFSVolFlagSoftwareLockedMask
+      value: 32768
+
+# ####
+
+- struct:
+    name: FSVolumeInfo
+    size: 126
+    members:
+    - name: createDate
+      type: UTCDateTime
+    - name: modifyDate
+      type: UTCDateTime
+    - name: backupDate
+      type: UTCDateTime
+    - name: checkedDate
+      type: UTCDateTime
+    - name: fileCount
+      type: uint32_t
+    - name: folderCount
+      type: uint32_t
+    - name: totalBytes
+      type: UInt64
+    - name: freeBytes
+      type: UInt64
+    - name: blockSize
+      type: uint32_t
+    - name: totalBlocks
+      type: uint32_t
+    - name: freeBlocks
+      type: uint32_t
+    - name: nextAllocation
+      type: uint32_t
+    - name: rsrcClumpSize
+      type: uint32_t
+    - name: dataClumpSize
+      type: uint32_t
+    - name: nextCatalogID
+      type: uint32_t
+    - name: finderInfo
+      type: uint8_t[32]
+    - name: flags
+      type: uint16_t
+    - name: filesystemID
+      type: uint16_t
+    - name: signature
+      type: uint16_t
+    - name: driveNumber
+      type: uint16_t
+    - name: driverRefNum
+      type: INTEGER
+
+# ####
+
+- typedef:
+    name: FSVolumeInfoPtr
+    type: FSVolumeInfo*
+
+# ####
+
+- struct:
+    name: FSVolumeInfoParam
+    size: 44
+    members:
+    - name: qLink
+      type: QElemPtr
+    - name: qType
+      type: INTEGER
+    - name: ioTrap
+      type: INTEGER
+    - name: ioCmdAddr
+      type: Ptr
+    - name: ioCompletion
+      type: IOCompletionUPP
+    - name: ioResult
+      type: OSErr
+    - name: ioNamePtr
+      type: StringPtr
+    - name: ioVRefNum
+      type: FSVolumeRefNum
+    - name: volumeIndex
+      type: uint32_t
+    - name: whichInfo
+      type: FSVolumeInfoBitmap
+    - name: volumeInfo
+      type: FSVolumeInfo*
+    - name: volumeName
+      type: HFSUniStr255*
+    - name: ref
+      type: FSRef*
+
+# ####
+
+- typedef:
+    name: FSVolumeInfoParamPtr
+    type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: FSpMakeFSRef
+    return: OSErr
+    args:
+    - name: source
+      type: const FSSpec*
+    - name: newRef
+      type: FSRef*
+    comment: HFS Plus API (Mac OS 9 and later, PowerPC)
+
+# ####
+
+- function:
+    name: FSMakeFSRefUnicode
+    return: OSErr
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: textEncodingHint
+      type: TextEncoding
+    - name: newRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSCompareFSRefs
+    return: OSErr
+    args:
+    - name: ref1
+      type: const FSRef*
+    - name: ref2
+      type: const FSRef*
+
+# ####
+
+- function:
+    name: FSCreateFileUnicode
+    return: OSErr
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+    - name: newRef
+      type: FSRef*
+    - name: newSpec
+      type: FSSpec*
+
+# ####
+
+- function:
+    name: FSCreateDirectoryUnicode
+    return: OSErr
+    args:
+    - name: parentRef
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+    - name: newRef
+      type: FSRef*
+    - name: newSpec
+      type: FSSpec*
+    - name: newDirID
+      type: UInt32*
+
+# ####
+
+- function:
+    name: FSDeleteObject
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+
+# ####
+
+- function:
+    name: FSMoveObject
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: destDirectory
+      type: const FSRef*
+    - name: newRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSExchangeObjects
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: destRef
+      type: const FSRef*
+
+# ####
+
+- function:
+    name: FSRenameUnicode
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: nameLength
+      type: UniCharCount
+    - name: name
+      type: const UniChar*
+    - name: textEncodingHint
+      type: TextEncoding
+    - name: newRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSGetCatalogInfo
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: FSCatalogInfo*
+    - name: outName
+      type: HFSUniStr255*
+    - name: fsSpec
+      type: FSSpec*
+    - name: parentRef
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSSetCatalogInfo
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfo
+      type: const FSCatalogInfo*
+
+# ####
+
+- function:
+    name: FSOpenIterator
+    return: OSErr
+    args:
+    - name: container
+      type: const FSRef*
+    - name: iteratorFlags
+      type: FSIteratorFlags
+    - name: iterator
+      type: FSIterator*
+
+# ####
+
+- function:
+    name: FSCloseIterator
+    return: OSErr
+    args:
+    - name: iterator
+      type: FSIterator
+
+# ####
+
+- function:
+    name: FSGetCatalogInfoBulk
+    return: OSErr
+    args:
+    - name: iterator
+      type: FSIterator
+    - name: maximumObjects
+      type: ItemCount
+    - name: actualObjects
+      type: ItemCount*
+    - name: containerChanged
+      type: Boolean*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfos
+      type: FSCatalogInfo*
+    - name: refs
+      type: FSRef*
+    - name: specs
+      type: FSSpec*
+    - name: names
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSCatalogSearch
+    return: OSErr
+    args:
+    - name: iterator
+      type: FSIterator
+    - name: searchCriteria
+      type: const FSSearchParams*
+    - name: maximumObjects
+      type: ItemCount
+    - name: actualObjects
+      type: ItemCount*
+    - name: containerChanged
+      type: Boolean*
+    - name: whichInfo
+      type: FSCatalogInfoBitmap
+    - name: catalogInfos
+      type: FSCatalogInfo*
+    - name: refs
+      type: FSRef*
+    - name: specs
+      type: FSSpec*
+    - name: names
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSCreateFork
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+
+# ####
+
+- function:
+    name: FSDeleteFork
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+
+# ####
+
+- function:
+    name: FSIterateForks
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkIterator
+      type: CatPositionRec*
+    - name: forkName
+      type: HFSUniStr255*
+    - name: forkSize
+      type: SInt64*
+    - name: forkPhysicalSize
+      type: UInt64*
+
+# ####
+
+- function:
+    name: FSOpenFork
+    return: OSErr
+    args:
+    - name: ref
+      type: const FSRef*
+    - name: forkNameLength
+      type: UniCharCount
+    - name: forkName
+      type: const UniChar*
+    - name: permissions
+      type: SInt8
+    - name: forkRefNum
+      type: SInt16*
+
+# ####
+
+- function:
+    name: FSReadFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+    - name: requestCount
+      type: ByteCount
+    - name: buffer
+      type: void*
+    - name: actualCount
+      type: ByteCount*
+
+# ####
+
+- function:
+    name: FSWriteFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+    - name: requestCount
+      type: ByteCount
+    - name: buffer
+      type: const void*
+    - name: actualCount
+      type: ByteCount*
+
+# ####
+
+- function:
+    name: FSGetForkPosition
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: position
+      type: SInt64*
+
+# ####
+
+- function:
+    name: FSSetForkPosition
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+
+# ####
+
+- function:
+    name: FSGetForkSize
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: forkSize
+      type: SInt64*
+
+# ####
+
+- function:
+    name: FSSetForkSize
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+
+# ####
+
+- function:
+    name: FSAllocateFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+    - name: flags
+      type: FSAllocationFlags
+    - name: positionMode
+      type: UInt16
+    - name: positionOffset
+      type: SInt64
+    - name: requestCount
+      type: UInt64
+    - name: actualCount
+      type: UInt64*
+
+# ####
+
+- function:
+    name: FSFlushFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+
+# ####
+
+- function:
+    name: FSCloseFork
+    return: OSErr
+    args:
+    - name: forkRefNum
+      type: SInt16
+
+# ####
+
+- function:
+    name: FSGetForkCBInfo
+    return: OSErr
+    args:
+    - name: desiredRefNum
+      type: SInt16
+    - name: volume
+      type: FSVolumeRefNum
+    - name: iterator
+      type: SInt16*
+    - name: actualRefNum
+      type: SInt16*
+    - name: forkInfo
+      type: FSForkInfo*
+    - name: ref
+      type: FSRef*
+    - name: outForkName
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSGetVolumeInfo
+    return: OSErr
+    args:
+    - name: volume
+      type: FSVolumeRefNum
+    - name: volumeIndex
+      type: ItemCount
+    - name: actualVolume
+      type: FSVolumeRefNum*
+    - name: whichInfo
+      type: FSVolumeInfoBitmap
+    - name: info
+      type: FSVolumeInfo*
+    - name: volumeName
+      type: HFSUniStr255*
+    - name: rootDirectory
+      type: FSRef*
+
+# ####
+
+- function:
+    name: FSSetVolumeInfo
+    return: OSErr
+    args:
+    - name: volume
+      type: FSVolumeRefNum
+    - name: whichInfo
+      type: FSVolumeInfoBitmap
+    - name: info
+      type: const FSVolumeInfo*
+
+# ####
+
+- function:
+    name: FSGetDataForkName
+    return: OSErr
+    args:
+    - name: dataForkName
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: FSGetResourceForkName
+    return: OSErr
+    args:
+    - name: resourceForkName
+      type: HFSUniStr255*
+
+# ####
+
+- function:
+    name: PBMakeFSRefSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+    comment: Parameter block forms of the HFS Plus API
+
+# ####
+
+- function:
+    name: PBMakeFSRefAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMakeFSRefUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMakeFSRefUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCompareFSRefsSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCompareFSRefsAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateFileUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateFileUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateDirectoryUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBCreateDirectoryUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBDeleteObjectSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBDeleteObjectAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMoveObjectSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBMoveObjectAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBExchangeObjectsSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBExchangeObjectsAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBRenameUnicodeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBRenameUnicodeAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBSetCatalogInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBSetCatalogInfoAsync
+    args:
+    - name: paramBlock
+      type: FSRefParam*
+
+# ####
+
+- function:
+    name: PBOpenIteratorSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBOpenIteratorAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCloseIteratorSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCloseIteratorAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoBulkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBGetCatalogInfoBulkAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCatalogSearchSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCatalogSearchAsync
+    args:
+    - name: paramBlock
+      type: FSCatalogBulkParam*
+
+# ####
+
+- function:
+    name: PBCreateForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBCreateForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBDeleteForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBDeleteForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBIterateForksSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBIterateForksAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBOpenForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBOpenForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBReadForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBReadForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBWriteForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBWriteForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkPositionSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkPositionAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkPositionSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkPositionAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkSizeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkSizeAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkSizeSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBSetForkSizeAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBAllocateForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBAllocateForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBFlushForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBFlushForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBCloseForkSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBCloseForkAsync
+    args:
+    - name: paramBlock
+      type: FSForkIOParam*
+
+# ####
+
+- function:
+    name: PBGetForkCBInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSForkCBInfoParam*
+
+# ####
+
+- function:
+    name: PBGetForkCBInfoAsync
+    args:
+    - name: paramBlock
+      type: FSForkCBInfoParam*
+
+# ####
+
+- function:
+    name: PBGetVolumeInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: PBGetVolumeInfoAsync
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: PBSetVolumeInfoSync
+    return: OSErr
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*
+
+# ####
+
+- function:
+    name: PBSetVolumeInfoAsync
+    args:
+    - name: paramBlock
+      type: FSVolumeInfoParam*

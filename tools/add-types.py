@@ -5,6 +5,7 @@
 
     struct Name [size]        members follow, indented: `type name`
       int16_t[4] counts
+      common COMMONFSQUEUEDEFS   (a shared member block)
     union Name [size]
     typedef Name type
     enum [Name]               values follow, indented: `name value`
@@ -34,7 +35,9 @@ def main():
         if raw[0] in " \t":
             body = line.split()
             kind, v = cur
-            if kind in ("struct", "union"):
+            if kind in ("struct", "union") and body[0] == "common":
+                v.setdefault("members", []).append({"common": body[1]})
+            elif kind in ("struct", "union"):
                 v.setdefault("members", []).append(
                     {"name": body[-1], "type": " ".join(body[:-1])})
             else:
