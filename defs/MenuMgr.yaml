@@ -877,3 +877,665 @@
       type: INTEGER
     dispatcher: MenuDispatch
     selector: 1537
+
+# ####
+
+- typedef:
+    name: MenuCommand
+    type: UInt32
+    comment: 'Menu Manager 8: item modifiers, icon types, keyboard glyphs.'
+
+# ####
+
+- enum:
+    values:
+    - name: gestaltMenuMgrAttr
+      value: '''menu'''
+    - name: gestaltMenuMgrPresent
+      value: 1
+    - name: gestaltMenuMgrPresentBit
+      value: 0
+    - name: kMenuNoModifiers
+      value: 0
+    - name: kMenuShiftModifier
+      value: 1
+    - name: kMenuOptionModifier
+      value: 2
+    - name: kMenuControlModifier
+      value: 4
+    - name: kMenuNoCommandModifier
+      value: 8
+    - name: kMenuNoIcon
+      value: 0
+    - name: kMenuIconType
+      value: 1
+    - name: kMenuShrinkIconType
+      value: 2
+    - name: kMenuSmallIconType
+      value: 3
+    - name: kMenuColorIconType
+      value: 4
+    - name: kMenuIconSuiteType
+      value: 5
+    - name: kMenuIconRefType
+      value: 6
+    - name: kMenuNullGlyph
+      value: 0
+    - name: kMenuTabRightGlyph
+      value: 2
+    - name: kMenuTabLeftGlyph
+      value: 3
+    - name: kMenuEnterGlyph
+      value: 4
+    - name: kMenuShiftGlyph
+      value: 5
+    - name: kMenuControlGlyph
+      value: 6
+    - name: kMenuOptionGlyph
+      value: 7
+    - name: kMenuSpaceGlyph
+      value: 9
+    - name: kMenuDeleteRightGlyph
+      value: 10
+    - name: kMenuReturnGlyph
+      value: 11
+    - name: kMenuReturnR2LGlyph
+      value: 12
+    - name: kMenuNonmarkingReturnGlyph
+      value: 13
+    - name: kMenuPencilGlyph
+      value: 15
+    - name: kMenuDownwardArrowDashedGlyph
+      value: 16
+    - name: kMenuCommandGlyph
+      value: 17
+    - name: kMenuCheckmarkGlyph
+      value: 18
+    - name: kMenuDiamondGlyph
+      value: 19
+    - name: kMenuAppleLogoFilledGlyph
+      value: 20
+    - name: kMenuParagraphKoreanGlyph
+      value: 21
+    - name: kMenuDeleteLeftGlyph
+      value: 23
+    - name: kMenuLeftArrowDashedGlyph
+      value: 24
+    - name: kMenuUpArrowDashedGlyph
+      value: 25
+    - name: kMenuRightArrowDashedGlyph
+      value: 26
+    - name: kMenuEscapeGlyph
+      value: 27
+    - name: kMenuClearGlyph
+      value: 28
+    - name: kMenuLeftDoubleQuotesJapaneseGlyph
+      value: 29
+    - name: kMenuRightDoubleQuotesJapaneseGlyph
+      value: 30
+    - name: kMenuTrademarkJapaneseGlyph
+      value: 31
+    - name: kMenuBlankGlyph
+      value: 97
+    - name: kMenuPageUpGlyph
+      value: 98
+    - name: kMenuCapsLockGlyph
+      value: 99
+    - name: kMenuLeftArrowGlyph
+      value: 100
+    - name: kMenuRightArrowGlyph
+      value: 101
+    - name: kMenuNorthwestArrowGlyph
+      value: 102
+    - name: kMenuHelpGlyph
+      value: 103
+    - name: kMenuUpArrowGlyph
+      value: 104
+    - name: kMenuSoutheastArrowGlyph
+      value: 105
+    - name: kMenuDownArrowGlyph
+      value: 106
+    - name: kMenuPageDownGlyph
+      value: 107
+    - name: kMenuAppleLogoOutlineGlyph
+      value: 108
+    - name: kMenuContextualMenuGlyph
+      value: 109
+    - name: kMenuPowerGlyph
+      value: 110
+    - name: kMenuF1Glyph
+      value: 111
+    - name: kMenuF2Glyph
+      value: 112
+    - name: kMenuF3Glyph
+      value: 113
+    - name: kMenuF4Glyph
+      value: 114
+    - name: kMenuF5Glyph
+      value: 115
+    - name: kMenuF6Glyph
+      value: 116
+    - name: kMenuF7Glyph
+      value: 117
+    - name: kMenuF8Glyph
+      value: 118
+    - name: kMenuF9Glyph
+      value: 119
+    - name: kMenuF10Glyph
+      value: 120
+    - name: kMenuF11Glyph
+      value: 121
+    - name: kMenuF12Glyph
+      value: 122
+    - name: kMenuF13Glyph
+      value: 135
+    - name: kMenuF14Glyph
+      value: 136
+    - name: kMenuF15Glyph
+      value: 137
+    - name: kMenuControlISOGlyph
+      value: 138
+
+# ####
+
+- function:
+    name: MenuEvent
+    return: UInt32
+    args:
+    - name: inEvent
+      type: const EventRecord*
+    comment: Menu Manager 8 (Appearance Manager)
+    dispatcher: MenuDispatch
+    selector: 524
+
+# ####
+
+- function:
+    name: SetMenuItemCommandID
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inCommandID
+      type: UInt32
+    dispatcher: MenuDispatch
+    selector: 1282
+
+# ####
+
+- function:
+    name: GetMenuItemCommandID
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outCommandID
+      type: UInt32*
+    dispatcher: MenuDispatch
+    selector: 1283
+
+# ####
+
+- function:
+    name: SetMenuItemModifiers
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inModifiers
+      type: UInt8
+    dispatcher: MenuDispatch
+    selector: 1028
+
+# ####
+
+- function:
+    name: GetMenuItemModifiers
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outModifiers
+      type: UInt8*
+    dispatcher: MenuDispatch
+    selector: 1285
+
+# ####
+
+- function:
+    name: SetMenuItemIconHandle
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inIconType
+      type: UInt8
+    - name: inIconHandle
+      type: Handle
+    dispatcher: MenuDispatch
+    selector: 1542
+
+# ####
+
+- function:
+    name: GetMenuItemIconHandle
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outIconType
+      type: UInt8*
+    - name: outIconHandle
+      type: Handle*
+    dispatcher: MenuDispatch
+    selector: 1799
+
+# ####
+
+- function:
+    name: SetMenuItemTextEncoding
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inScriptID
+      type: TextEncoding
+    dispatcher: MenuDispatch
+    selector: 1288
+
+# ####
+
+- function:
+    name: GetMenuItemTextEncoding
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outScriptID
+      type: TextEncoding*
+    dispatcher: MenuDispatch
+    selector: 1289
+
+# ####
+
+- function:
+    name: SetMenuItemHierarchicalID
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inHierID
+      type: SInt16
+    dispatcher: MenuDispatch
+    selector: 1037
+
+# ####
+
+- function:
+    name: GetMenuItemHierarchicalID
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outHierID
+      type: SInt16*
+    dispatcher: MenuDispatch
+    selector: 1294
+
+# ####
+
+- function:
+    name: SetMenuItemFontID
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inFontID
+      type: SInt16
+    dispatcher: MenuDispatch
+    selector: 1039
+
+# ####
+
+- function:
+    name: GetMenuItemFontID
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outFontID
+      type: SInt16*
+    dispatcher: MenuDispatch
+    selector: 1296
+
+# ####
+
+- function:
+    name: SetMenuItemRefCon
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inRefCon
+      type: UInt32
+    dispatcher: MenuDispatch
+    selector: 1290
+
+# ####
+
+- function:
+    name: GetMenuItemRefCon
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outRefCon
+      type: UInt32*
+    dispatcher: MenuDispatch
+    selector: 1291
+
+# ####
+
+- function:
+    name: SetMenuItemRefCon2
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inRefCon2
+      type: UInt32
+    dispatcher: MenuDispatch
+    selector: 1297
+
+# ####
+
+- function:
+    name: GetMenuItemRefCon2
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outRefCon2
+      type: UInt32*
+    dispatcher: MenuDispatch
+    selector: 1298
+
+# ####
+
+- function:
+    name: SetMenuItemKeyGlyph
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: inGlyph
+      type: SInt16
+    dispatcher: MenuDispatch
+    selector: 1299
+
+# ####
+
+- function:
+    name: GetMenuItemKeyGlyph
+    return: OSErr
+    args:
+    - name: inMenu
+      type: MenuRef
+    - name: inItem
+      type: SInt16
+    - name: outGlyph
+      type: SInt16*
+    dispatcher: MenuDispatch
+    selector: 1300
+
+# ####
+
+- function:
+    name: EnableMenuItemIcon
+    args:
+    - name: theMenu
+      type: MenuRef
+    - name: item
+      type: UInt16
+    comment: Menu Manager in Mac OS 8.5 (MenusLib)
+    m68k: none
+
+# ####
+
+- function:
+    name: DisableMenuItemIcon
+    args:
+    - name: theMenu
+      type: MenuRef
+    - name: item
+      type: UInt16
+    m68k: none
+
+# ####
+
+- function:
+    name: IsMenuItemIconEnabled
+    return: Boolean
+    args:
+    - name: theMenu
+      type: MenuRef
+    - name: item
+      type: UInt16
+    m68k: none
+
+# ####
+
+- function:
+    name: IsMenuItemEnabled
+    return: Boolean
+    args:
+    - name: menu
+      type: MenuRef
+    - name: item
+      type: UInt16
+    m68k: none
+
+# ####
+
+- function:
+    name: IsMenuBarVisible
+    return: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: ShowMenuBar
+    m68k: none
+
+# ####
+
+- function:
+    name: HideMenuBar
+    m68k: none
+
+# ####
+
+- function:
+    name: GetMenuFont
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: outFontID
+      type: SInt16*
+    - name: outFontSize
+      type: UInt16*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetMenuFont
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: inFontID
+      type: SInt16
+    - name: inFontSize
+      type: UInt16
+    m68k: none
+
+# ####
+
+- function:
+    name: GetMenuExcludesMarkColumn
+    return: Boolean
+    args:
+    - name: menu
+      type: MenuRef
+    m68k: none
+
+# ####
+
+- function:
+    name: SetMenuExcludesMarkColumn
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: excludesMark
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: GetMenuItemProperty
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: item
+      type: SInt16
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    - name: bufferSize
+      type: UInt32
+    - name: actualSize
+      type: UInt32*
+    - name: propertyBuffer
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetMenuItemPropertySize
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: item
+      type: SInt16
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    - name: size
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetMenuItemProperty
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: item
+      type: SInt16
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    - name: propertySize
+      type: UInt32
+    - name: propertyData
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: RemoveMenuItemProperty
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: item
+      type: SInt16
+    - name: propertyCreator
+      type: OSType
+    - name: propertyTag
+      type: OSType
+    m68k: none
+
+# ####
+
+- function:
+    name: InsertMenuItemText
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: inString
+      type: ConstStr255Param
+    - name: afterItem
+      type: UInt16
+    m68k: none
+
+# ####
+
+- function:
+    name: AppendMenuItemText
+    return: OSStatus
+    args:
+    - name: menu
+      type: MenuRef
+    - name: inString
+      type: ConstStr255Param
+    m68k: none

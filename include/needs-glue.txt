@@ -112,8 +112,6 @@ PBGetVolumeInfoSync
 PBGetVolumeInfoAsync
 PBSetVolumeInfoSync
 PBSetVolumeInfoAsync
-ATEvent
-ATPreFlightEvent
 IsAliasFile
 ResolveAliasFileWithMountFlags
 FSNewAlias
@@ -126,10 +124,13 @@ FSResolveAliasFile
 FSFollowFinderAlias
 FSUpdateAlias
 FSFindFolder
-TESetWordBreak
-TESetClickLoop
+ATEvent
+ATPreFlightEvent
 GetDefaultUser
 StartSecureSession
+KillProcess
+TESetWordBreak
+TESetClickLoop
 geteventelem
 SetUpA5
 RestoreA5
@@ -170,7 +171,6 @@ GetComponentResource
 GetComponentIndString
 CallComponentFunctionWithStorageProcInfo
 OpenADefaultComponent
-KillProcess
 NewGestaltValue
 ReplaceGestaltValue
 SetGestaltValue

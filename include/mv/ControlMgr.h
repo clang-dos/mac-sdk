@@ -3,7 +3,12 @@
 #define __MV_CONTROLMGR__
 
 #include "../ConditionalMacros.h"
+#include "DragMgr.h"
+#include "DriverServices.h"
+#include "FileMgr.h"
+#include "Iconutil.h"
 #include "MacTypes.h"
+#include "MenuMgr.h"
 #include "QuickDraw.h"
 #include "WindowMgr.h"
 
@@ -259,6 +264,841 @@ typedef ControlDefProcPtr ControlDefUPP;
 #endif
 #define NewControlDefProc(proc) NewControlDefUPP(proc)
 #define DisposeControlDefProc(proc) DisposeControlDefUPP(proc)
+
+// Control Manager 8 (Appearance Manager). Gestalt selector.
+enum {
+    gestaltControlMgrAttr = 'cntl',
+    gestaltControlMgrPresent = 1,
+    gestaltControlMgrPresentBit = 0,
+};
+
+typedef SInt16 ControlPartCode;
+
+typedef SInt16 ControlFocusPart;
+
+typedef SInt16 ControlContentType;
+
+typedef SInt16 ControlButtonGraphicAlignment;
+
+typedef SInt16 ControlButtonTextAlignment;
+
+typedef SInt16 ControlButtonTextPlacement;
+
+typedef SInt16 ControlVariant;
+
+typedef UInt16 EventModifiers;
+
+typedef UInt32 ClickActivationResult;
+
+// Control definition IDs for the Appearance controls (NewControl's procID).
+enum {
+    kControlBevelButtonSmallBevelProc = 32,
+    kControlBevelButtonNormalBevelProc = 33,
+    kControlBevelButtonLargeBevelProc = 34,
+    kControlSliderProc = 48,
+    kControlTriangleProc = 64,
+    kControlTriangleLeftFacingProc = 65,
+    kControlTriangleAutoToggleProc = 66,
+    kControlTriangleLeftFacingAutoToggleProc = 67,
+    kControlProgressBarProc = 80,
+    kControlLittleArrowsProc = 96,
+    kControlChasingArrowsProc = 112,
+    kControlTabLargeProc = 128,
+    kControlTabSmallProc = 129,
+    kControlTabLargeNorthProc = 128,
+    kControlTabSmallNorthProc = 129,
+    kControlTabLargeSouthProc = 130,
+    kControlTabSmallSouthProc = 131,
+    kControlTabLargeEastProc = 132,
+    kControlTabSmallEastProc = 133,
+    kControlTabLargeWestProc = 134,
+    kControlTabSmallWestProc = 135,
+    kControlSeparatorLineProc = 144,
+    kControlGroupBoxTextTitleProc = 160,
+    kControlGroupBoxCheckBoxProc = 161,
+    kControlGroupBoxPopupButtonProc = 162,
+    kControlGroupBoxSecondaryTextTitleProc = 164,
+    kControlGroupBoxSecondaryCheckBoxProc = 165,
+    kControlGroupBoxSecondaryPopupButtonProc = 166,
+    kControlImageWellProc = 176,
+    kControlPopupArrowEastProc = 192,
+    kControlPopupArrowWestProc = 193,
+    kControlPopupArrowNorthProc = 194,
+    kControlPopupArrowSouthProc = 195,
+    kControlPopupArrowSmallEastProc = 196,
+    kControlPopupArrowSmallWestProc = 197,
+    kControlPopupArrowSmallNorthProc = 198,
+    kControlPopupArrowSmallSouthProc = 199,
+    kControlPlacardProc = 224,
+    kControlClockTimeProc = 240,
+    kControlClockTimeSecondsProc = 241,
+    kControlClockDateProc = 242,
+    kControlClockMonthYearProc = 243,
+    kControlUserPaneProc = 256,
+    kControlEditTextProc = 272,
+    kControlEditTextPasswordProc = 274,
+    kControlEditTextInlineInputProc = 276,
+    kControlStaticTextProc = 288,
+    kControlPictureProc = 304,
+    kControlPictureNoTrackProc = 305,
+    kControlIconProc = 320,
+    kControlIconNoTrackProc = 321,
+    kControlIconSuiteProc = 322,
+    kControlIconSuiteNoTrackProc = 323,
+    kControlWindowHeaderProc = 336,
+    kControlWindowListViewHeaderProc = 337,
+    kControlListBoxProc = 352,
+    kControlListBoxAutoSizeProc = 353,
+    kControlPushButtonProc = 368,
+    kControlCheckBoxProc = 369,
+    kControlRadioButtonProc = 370,
+    kControlCheckBoxAutoToggleProc = 371,
+    kControlRadioButtonAutoToggleProc = 372,
+    kControlPushButLeftIconProc = 374,
+    kControlPushButRightIconProc = 375,
+    kControlScrollBarProc = 384,
+    kControlScrollBarLiveProc = 386,
+    kControlPopupButtonProc = 400,
+    kControlRadioGroupProc = 416,
+    kControlScrollTextBoxProc = 432,
+    kControlScrollTextBoxAutoScrollProc = 433,
+    kControlSliderLiveFeedback = 1,
+    kControlSliderHasTickMarks = 2,
+    kControlSliderReverseDirection = 4,
+    kControlSliderNonDirectional = 8,
+    kControlBevelButtonSmallBevel = 0,
+    kControlBevelButtonNormalBevel = 1,
+    kControlBevelButtonLargeBevel = 2,
+    kControlBehaviorPushbutton = 0,
+    kControlBehaviorToggles = 256,
+    kControlBehaviorSticky = 512,
+    kControlBehaviorSingleValueMenu = 0,
+    kControlBehaviorMultiValueMenu = 16384,
+    kControlBehaviorOffsetContents = 32768,
+    kControlBevelButtonMenuOnRight = 1,
+};
+
+// Part codes.
+enum {
+    kControlNoPart = 0,
+    kControlIndicatorPart = 129,
+    kControlDisabledPart = 254,
+    kControlInactivePart = 255,
+    kControlEntireControl = 0,
+    kControlStructureMetaPart = -1,
+    kControlContentMetaPart = -2,
+    kControlFocusNoPart = 0,
+    kControlFocusNextPart = -1,
+    kControlFocusPrevPart = -2,
+    kControlLabelPart = 1,
+    kControlMenuPart = 2,
+    kControlTrianglePart = 4,
+    kControlEditTextPart = 5,
+    kControlPicturePart = 6,
+    kControlIconPart = 7,
+    kControlClockPart = 8,
+    kControlButtonPart = 10,
+    kControlCheckBoxPart = 11,
+    kControlRadioButtonPart = 12,
+    kControlUpButtonPart = 20,
+    kControlDownButtonPart = 21,
+    kControlPageUpPart = 22,
+    kControlPageDownPart = 23,
+    kControlListBoxPart = 24,
+    kControlListBoxDoubleClickPart = 25,
+    kControlImageWellPart = 26,
+    kControlRadioGroupPart = 27,
+};
+
+// What GetControlFeatures reports.
+enum {
+    kControlSupportsGhosting = 1,
+    kControlSupportsEmbedding = 2,
+    kControlSupportsFocus = 4,
+    kControlWantsIdle = 8,
+    kControlWantsActivate = 16,
+    kControlHandlesTracking = 32,
+    kControlSupportsDataAccess = 64,
+    kControlHasSpecialBackground = 128,
+    kControlGetsFocusOnClick = 256,
+    kControlSupportsCalcBestRect = 512,
+    kControlSupportsLiveFeedback = 1024,
+    kControlHasRadioBehavior = 2048,
+};
+
+// Control definition messages added in Mac OS 8.
+enum {
+    kControlMsgDrawGhost = 13,
+    kControlMsgCalcBestRect = 14,
+    kControlMsgHandleTracking = 15,
+    kControlMsgFocus = 16,
+    kControlMsgKeyDown = 17,
+    kControlMsgIdle = 18,
+    kControlMsgGetFeatures = 19,
+    kControlMsgSetData = 20,
+    kControlMsgGetData = 21,
+    kControlMsgActivate = 22,
+    kControlMsgSetUpBackground = 23,
+    kControlMsgCalcValueFromPos = 26,
+    kControlMsgTestNewMsgSupport = 27,
+    kControlMsgSubValueChanged = 25,
+    kControlMsgSubControlAdded = 28,
+    kControlMsgSubControlRemoved = 29,
+};
+
+// ControlFontStyleRec flags.
+enum {
+    kControlUseFontMask = 1,
+    kControlUseFaceMask = 2,
+    kControlUseSizeMask = 4,
+    kControlUseForeColorMask = 8,
+    kControlUseBackColorMask = 16,
+    kControlUseModeMask = 32,
+    kControlUseJustMask = 64,
+    kControlUseAllMask = 255,
+    kControlAddFontSizeMask = 256,
+    kControlAddToMetaFontMask = 512,
+};
+
+typedef struct ControlFontStyleRec ControlFontStyleRec;
+struct ControlFontStyleRec {
+    SInt16 flags;
+    SInt16 font;
+    SInt16 size;
+    SInt16 style;
+    SInt16 mode;
+    SInt16 just;
+    RGBColor foreColor;
+    RGBColor backColor;
+};
+
+typedef ControlFontStyleRec *ControlFontStylePtr;
+
+// Button and image well content.
+enum {
+    kControlContentTextOnly = 0,
+    kControlNoContent = 0,
+    kControlContentIconSuiteRes = 1,
+    kControlContentCIconRes = 2,
+    kControlContentPictRes = 3,
+    kControlContentICONRes = 4,
+    kControlContentIconSuiteHandle = 129,
+    kControlContentCIconHandle = 130,
+    kControlContentPictHandle = 131,
+    kControlContentIconRef = 132,
+    kControlContentICON = 133,
+};
+
+typedef union ControlButtonContentUnion ControlButtonContentUnion;
+union ControlButtonContentUnion {
+    SInt16 resID;
+    CIconHandle cIconHandle;
+    Handle iconSuite;
+    Handle iconRef;
+    PicHandle picture;
+    Handle ICONHandle;
+};
+
+typedef struct ControlButtonContentInfo ControlButtonContentInfo;
+struct ControlButtonContentInfo {
+    ControlContentType contentType;
+    ControlButtonContentUnion u;
+};
+
+typedef ControlButtonContentInfo *ControlButtonContentInfoPtr;
+
+typedef ControlButtonContentInfo ControlImageContentInfo;
+
+typedef ControlButtonContentInfo *ControlImageContentInfoPtr;
+
+enum {
+    kControlBevelButtonAlignSysDirection = -1,
+    kControlBevelButtonAlignCenter = 0,
+    kControlBevelButtonAlignLeft = 1,
+    kControlBevelButtonAlignRight = 2,
+    kControlBevelButtonAlignTop = 3,
+    kControlBevelButtonAlignBottom = 4,
+    kControlBevelButtonAlignTopLeft = 5,
+    kControlBevelButtonAlignBottomLeft = 6,
+    kControlBevelButtonAlignTopRight = 7,
+    kControlBevelButtonAlignBottomRight = 8,
+    kControlBevelButtonAlignTextSysDirection = 0,
+    kControlBevelButtonAlignTextCenter = 1,
+    kControlBevelButtonAlignTextFlushRight = -1,
+    kControlBevelButtonAlignTextFlushLeft = -2,
+    kControlBevelButtonPlaceSysDirection = -1,
+    kControlBevelButtonPlaceNormally = 0,
+    kControlBevelButtonPlaceToRightOfGraphic = 1,
+    kControlBevelButtonPlaceToLeftOfGraphic = 2,
+    kControlBevelButtonPlaceBelowGraphic = 3,
+    kControlBevelButtonPlaceAboveGraphic = 4,
+};
+
+// Data tags for GetControlData and SetControlData.
+enum {
+    kControlFontStyleTag = 'font',
+    kControlKeyFilterTag = 'fltr',
+    kControlBevelButtonContentTag = 'cont',
+    kControlBevelButtonTransformTag = 'tran',
+    kControlBevelButtonTextAlignTag = 'tali',
+    kControlBevelButtonTextOffsetTag = 'toff',
+    kControlBevelButtonGraphicAlignTag = 'gali',
+    kControlBevelButtonGraphicOffsetTag = 'goff',
+    kControlBevelButtonTextPlaceTag = 'tplc',
+    kControlBevelButtonMenuValueTag = 'mval',
+    kControlBevelButtonMenuHandleTag = 'mhnd',
+    kControlBevelButtonCenterPopupGlyphTag = 'pglc',
+    kControlTriangleLastValueTag = 'last',
+    kControlProgressBarIndeterminateTag = 'inde',
+    kControlTabContentRectTag = 'rect',
+    kControlTabEnabledFlagTag = 'enab',
+    kControlTabFontStyleTag = 'font',
+    kControlGroupBoxMenuHandleTag = 'mhan',
+    kControlGroupBoxFontStyleTag = 'font',
+    kControlImageWellContentTag = 'cont',
+    kControlImageWellTransformTag = 'tran',
+    kControlClockLongDateTag = 'date',
+    kControlClockFontStyleTag = 'font',
+    kControlUserItemDrawProcTag = 'uidp',
+    kControlUserPaneDrawProcTag = 'draw',
+    kControlUserPaneHitTestProcTag = 'hitt',
+    kControlUserPaneTrackingProcTag = 'trak',
+    kControlUserPaneIdleProcTag = 'idle',
+    kControlUserPaneKeyDownProcTag = 'keyd',
+    kControlUserPaneActivateProcTag = 'acti',
+    kControlUserPaneFocusProcTag = 'foci',
+    kControlUserPaneBackgroundProcTag = 'back',
+    kControlEditTextStyleTag = 'font',
+    kControlEditTextTextTag = 'text',
+    kControlEditTextTEHandleTag = 'than',
+    kControlEditTextKeyFilterTag = 'fltr',
+    kControlEditTextSelectionTag = 'sele',
+    kControlEditTextPasswordTag = 'pass',
+    kControlEditTextLockedTag = 'lock',
+    kControlStaticTextStyleTag = 'font',
+    kControlStaticTextTextTag = 'text',
+    kControlStaticTextTextHeightTag = 'thei',
+    kControlPictureHandleTag = 'pich',
+    kControlIconTransformTag = 'trfm',
+    kControlIconAlignmentTag = 'algn',
+    kControlIconSuiteTag = 'icsu',
+    kControlListBoxListHandleTag = 'lhan',
+    kControlListBoxKeyFilterTag = 'fltr',
+    kControlListBoxFontStyleTag = 'font',
+    kControlPushButtonDefaultTag = 'dflt',
+    kControlPushButtonCancelTag = 'cncl',
+    kControlPopupButtonMenuHandleTag = 'mhan',
+    kControlPopupButtonMenuIDTag = 'mnid',
+    kControlScrollTextBoxDelayBeforeAutoScrollTag = 'stdl',
+    kControlScrollTextBoxDelayBetweenAutoScrollTag = 'scdl',
+    kControlScrollTextBoxAutoScrollAmountTag = 'samt',
+    kControlScrollTextBoxContentsTag = 'tres',
+};
+
+typedef struct ControlEditTextSelectionRec ControlEditTextSelectionRec;
+struct ControlEditTextSelectionRec {
+    SInt16 selStart;
+    SInt16 selEnd;
+};
+
+// Control Manager errors.
+enum {
+    errMessageNotSupported = -30580,
+    errDataNotSupported = -30581,
+    errControlDoesntSupportFocus = -30582,
+    errUnknownControl = -30584,
+    errCouldntSetFocus = -30585,
+    errNoRootControl = -30586,
+    errRootAlreadyExists = -30587,
+    errInvalidPartCode = -30588,
+    errControlsAlreadyExist = -30589,
+    errControlIsNotEmbedder = -30590,
+    errDataSizeMismatch = -30591,
+    errControlHiddenOrDisabled = -30592,
+    errCantEmbedIntoSelf = -30594,
+    errCantEmbedRoot = -30595,
+    errItemNotControl = -30596,
+    controlInvalidDataVersionErr = -30597,
+    controlPropertyInvalid = -5603,
+    controlPropertyNotFoundErr = -5604,
+    controlHandleInvalidErr = -30599,
+};
+
+typedef pascal OSStatus (*ControlColorProcPtr)(ControlRef inControl, SInt16 inMessage, SInt16 inDrawDepth, Boolean inDrawInColor);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlColorUPP;
+enum { uppControlColorProcInfo = 0x00001AF0 };
+#define NewControlColorUPP(proc) ((ControlColorUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlColorProcInfo, GetCurrentArchitecture()))
+#define DisposeControlColorUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlColorProcPtr ControlColorUPP;
+#define NewControlColorUPP(proc) (proc)
+#define DisposeControlColorUPP(upp) ((void)0)
+#endif
+#define NewControlColorProc(proc) NewControlColorUPP(proc)
+#define DisposeControlColorProc(proc) DisposeControlColorUPP(proc)
+
+typedef pascal SInt16 (*ControlKeyFilterProcPtr)(ControlRef theControl, SInt16 *keyCode, SInt16 *charCode, SInt16 *modifiers);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlKeyFilterUPP;
+enum { uppControlKeyFilterProcInfo = 0x00003FE0 };
+#define NewControlKeyFilterUPP(proc) ((ControlKeyFilterUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlKeyFilterProcInfo, GetCurrentArchitecture()))
+#define DisposeControlKeyFilterUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlKeyFilterProcPtr ControlKeyFilterUPP;
+#define NewControlKeyFilterUPP(proc) (proc)
+#define DisposeControlKeyFilterUPP(upp) ((void)0)
+#endif
+#define NewControlKeyFilterProc(proc) NewControlKeyFilterUPP(proc)
+#define DisposeControlKeyFilterProc(proc) DisposeControlKeyFilterUPP(proc)
+
+typedef pascal void (*ControlUserPaneDrawProcPtr)(ControlRef control, SInt16 part);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlUserPaneDrawUPP;
+enum { uppControlUserPaneDrawProcInfo = 0x000002C0 };
+#define NewControlUserPaneDrawUPP(proc) ((ControlUserPaneDrawUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlUserPaneDrawProcInfo, GetCurrentArchitecture()))
+#define DisposeControlUserPaneDrawUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlUserPaneDrawProcPtr ControlUserPaneDrawUPP;
+#define NewControlUserPaneDrawUPP(proc) (proc)
+#define DisposeControlUserPaneDrawUPP(upp) ((void)0)
+#endif
+#define NewControlUserPaneDrawProc(proc) NewControlUserPaneDrawUPP(proc)
+#define DisposeControlUserPaneDrawProc(proc) DisposeControlUserPaneDrawUPP(proc)
+
+typedef pascal ControlPartCode (*ControlUserPaneHitTestProcPtr)(ControlRef control, Point where);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlUserPaneHitTestUPP;
+enum { uppControlUserPaneHitTestProcInfo = 0x000003E0 };
+#define NewControlUserPaneHitTestUPP(proc) ((ControlUserPaneHitTestUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlUserPaneHitTestProcInfo, GetCurrentArchitecture()))
+#define DisposeControlUserPaneHitTestUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlUserPaneHitTestProcPtr ControlUserPaneHitTestUPP;
+#define NewControlUserPaneHitTestUPP(proc) (proc)
+#define DisposeControlUserPaneHitTestUPP(upp) ((void)0)
+#endif
+#define NewControlUserPaneHitTestProc(proc) NewControlUserPaneHitTestUPP(proc)
+#define DisposeControlUserPaneHitTestProc(proc) DisposeControlUserPaneHitTestUPP(proc)
+
+typedef pascal ControlPartCode (*ControlUserPaneTrackingProcPtr)(ControlRef control, Point startPt, ControlActionUPP actionProc);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlUserPaneTrackingUPP;
+enum { uppControlUserPaneTrackingProcInfo = 0x00000FE0 };
+#define NewControlUserPaneTrackingUPP(proc) ((ControlUserPaneTrackingUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlUserPaneTrackingProcInfo, GetCurrentArchitecture()))
+#define DisposeControlUserPaneTrackingUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlUserPaneTrackingProcPtr ControlUserPaneTrackingUPP;
+#define NewControlUserPaneTrackingUPP(proc) (proc)
+#define DisposeControlUserPaneTrackingUPP(upp) ((void)0)
+#endif
+#define NewControlUserPaneTrackingProc(proc) NewControlUserPaneTrackingUPP(proc)
+#define DisposeControlUserPaneTrackingProc(proc) DisposeControlUserPaneTrackingUPP(proc)
+
+typedef pascal void (*ControlUserPaneIdleProcPtr)(ControlRef control);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlUserPaneIdleUPP;
+enum { uppControlUserPaneIdleProcInfo = 0x000000C0 };
+#define NewControlUserPaneIdleUPP(proc) ((ControlUserPaneIdleUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlUserPaneIdleProcInfo, GetCurrentArchitecture()))
+#define DisposeControlUserPaneIdleUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlUserPaneIdleProcPtr ControlUserPaneIdleUPP;
+#define NewControlUserPaneIdleUPP(proc) (proc)
+#define DisposeControlUserPaneIdleUPP(upp) ((void)0)
+#endif
+#define NewControlUserPaneIdleProc(proc) NewControlUserPaneIdleUPP(proc)
+#define DisposeControlUserPaneIdleProc(proc) DisposeControlUserPaneIdleUPP(proc)
+
+typedef pascal ControlPartCode (*ControlUserPaneKeyDownProcPtr)(ControlRef control, SInt16 keyCode, SInt16 charCode, SInt16 modifiers);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlUserPaneKeyDownUPP;
+enum { uppControlUserPaneKeyDownProcInfo = 0x00002AE0 };
+#define NewControlUserPaneKeyDownUPP(proc) ((ControlUserPaneKeyDownUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlUserPaneKeyDownProcInfo, GetCurrentArchitecture()))
+#define DisposeControlUserPaneKeyDownUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlUserPaneKeyDownProcPtr ControlUserPaneKeyDownUPP;
+#define NewControlUserPaneKeyDownUPP(proc) (proc)
+#define DisposeControlUserPaneKeyDownUPP(upp) ((void)0)
+#endif
+#define NewControlUserPaneKeyDownProc(proc) NewControlUserPaneKeyDownUPP(proc)
+#define DisposeControlUserPaneKeyDownProc(proc) DisposeControlUserPaneKeyDownUPP(proc)
+
+typedef pascal void (*ControlUserPaneActivateProcPtr)(ControlRef control, Boolean activating);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlUserPaneActivateUPP;
+enum { uppControlUserPaneActivateProcInfo = 0x000001C0 };
+#define NewControlUserPaneActivateUPP(proc) ((ControlUserPaneActivateUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlUserPaneActivateProcInfo, GetCurrentArchitecture()))
+#define DisposeControlUserPaneActivateUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlUserPaneActivateProcPtr ControlUserPaneActivateUPP;
+#define NewControlUserPaneActivateUPP(proc) (proc)
+#define DisposeControlUserPaneActivateUPP(upp) ((void)0)
+#endif
+#define NewControlUserPaneActivateProc(proc) NewControlUserPaneActivateUPP(proc)
+#define DisposeControlUserPaneActivateProc(proc) DisposeControlUserPaneActivateUPP(proc)
+
+typedef pascal ControlPartCode (*ControlUserPaneFocusProcPtr)(ControlRef control, ControlFocusPart action);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ControlUserPaneFocusUPP;
+enum { uppControlUserPaneFocusProcInfo = 0x000002E0 };
+#define NewControlUserPaneFocusUPP(proc) ((ControlUserPaneFocusUPP)NewRoutineDescriptor((ProcPtr)(proc), uppControlUserPaneFocusProcInfo, GetCurrentArchitecture()))
+#define DisposeControlUserPaneFocusUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ControlUserPaneFocusProcPtr ControlUserPaneFocusUPP;
+#define NewControlUserPaneFocusUPP(proc) (proc)
+#define DisposeControlUserPaneFocusUPP(upp) ((void)0)
+#endif
+#define NewControlUserPaneFocusProc(proc) NewControlUserPaneFocusUPP(proc)
+#define DisposeControlUserPaneFocusProc(proc) DisposeControlUserPaneFocusUPP(proc)
+
+// Names a control in its window (Mac OS 8.5).
+typedef struct ControlID ControlID;
+struct ControlID {
+    OSType signature;
+    SInt32 id;
+};
+
+enum { _ControlDispatch = 0xAA73 };
+
+// Control Manager 8: embedding, keyboard focus, control data (Appearance Manager)
+pascal OSErr CreateRootControl(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x7001, 0xAA73);
+
+pascal OSErr GetRootControl(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x7002, 0xAA73);
+
+pascal OSErr EmbedControl(ControlRef inControl, ControlRef inContainer) M68K_INLINE(0x7003, 0xAA73);
+
+pascal OSErr AutoEmbedControl(ControlRef inControl, WindowRef inWindow) M68K_INLINE(0x7004, 0xAA73);
+
+pascal Boolean IsControlActive(ControlRef inControl) M68K_INLINE(0x7005, 0xAA73);
+
+pascal Boolean IsControlVisible(ControlRef inControl) M68K_INLINE(0x7006, 0xAA73);
+
+pascal OSErr ActivateControl(ControlRef inControl) M68K_INLINE(0x7007, 0xAA73);
+
+pascal OSErr DeactivateControl(ControlRef inControl) M68K_INLINE(0x7008, 0xAA73);
+
+pascal ControlRef FindControlUnderMouse(Point inWhere, WindowRef inWindow, SInt16 *outPart) M68K_INLINE(0x7009, 0xAA73);
+
+pascal ControlPartCode HandleControlClick(ControlRef inControl, Point inWhere, EventModifiers inModifiers, ControlActionUPP inAction) M68K_INLINE(0x700A, 0xAA73);
+
+pascal SInt16 HandleControlKey(ControlRef inControl, SInt16 inKeyCode, SInt16 inCharCode, EventModifiers inModifiers) M68K_INLINE(0x700B, 0xAA73);
+
+pascal void IdleControls(WindowRef inWindow) M68K_INLINE(0x700C, 0xAA73);
+
+pascal OSErr GetKeyboardFocus(WindowRef inWindow, ControlRef *outControl) M68K_INLINE(0x700D, 0xAA73);
+
+pascal OSErr SetKeyboardFocus(WindowRef inWindow, ControlRef inControl, ControlFocusPart inPart) M68K_INLINE(0x700E, 0xAA73);
+
+pascal OSErr AdvanceKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x700F, 0xAA73);
+
+pascal OSErr ReverseKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x7010, 0xAA73);
+
+pascal OSErr GetControlFeatures(ControlRef inControl, UInt32 *outFeatures) M68K_INLINE(0x7011, 0xAA73);
+
+pascal OSErr SetControlData(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size inSize, Ptr inData) M68K_INLINE(0x7012, 0xAA73);
+
+pascal OSErr GetControlData(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size inBufferSize, Ptr inBuffer, Size *outActualSize) M68K_INLINE(0x7013, 0xAA73);
+
+pascal OSErr GetControlDataSize(ControlRef inControl, ControlPartCode inPart, ResType inTagName, Size *outMaxSize) M68K_INLINE(0x7014, 0xAA73);
+
+pascal OSErr GetSuperControl(ControlRef inControl, ControlRef *outParent) M68K_INLINE(0x7015, 0xAA73);
+
+pascal OSErr CountSubControls(ControlRef inControl, UInt16 *outNumChildren) M68K_INLINE(0x7016, 0xAA73);
+
+pascal OSErr GetIndexedSubControl(ControlRef inControl, UInt16 inIndex, ControlRef *outSubControl) M68K_INLINE(0x7017, 0xAA73);
+
+pascal void DrawControlInCurrentPort(ControlRef inControl) M68K_INLINE(0x7018, 0xAA73);
+
+pascal OSErr ClearKeyboardFocus(WindowRef inWindow) M68K_INLINE(0x7019, 0xAA73);
+
+pascal OSErr SetControlSupervisor(ControlRef inControl, ControlRef inBoss) M68K_INLINE(0x701A, 0xAA73);
+
+pascal OSErr GetBestControlRect(ControlRef inControl, Rect *outRect, SInt16 *outBaseLineOffset) M68K_INLINE(0x701B, 0xAA73);
+
+pascal OSErr SetControlFontStyle(ControlRef inControl, const ControlFontStyleRec *inStyle) M68K_INLINE(0x701C, 0xAA73);
+
+pascal OSErr SetUpControlBackground(ControlRef inControl, SInt16 inDepth, Boolean inIsColorDevice) M68K_INLINE(0x701D, 0xAA73);
+
+pascal OSErr SetControlVisibility(ControlRef inControl, Boolean inIsVisible, Boolean inDoDraw) M68K_INLINE(0x701E, 0xAA73);
+
+pascal SInt32 SendControlMessage(ControlRef inControl, SInt16 inMessage, void *inParam) M68K_INLINE(0x303C, 0xFFFE, 0xAA73);
+
+pascal OSErr DumpControlHierarchy(WindowRef inWindow, const FSSpec *inDumpFile) M68K_INLINE(0x303C, 0xFFFF, 0xAA73);
+
+// Control Manager in Mac OS 8.5 (ControlsLib)
+#if !TARGET_CPU_68K
+pascal SInt32 GetControl32BitValue(ControlRef theControl);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void SetControl32BitValue(ControlRef theControl, SInt32 newValue);
+#endif
+
+#if !TARGET_CPU_68K
+pascal SInt32 GetControl32BitMaximum(ControlRef theControl);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void SetControl32BitMaximum(ControlRef theControl, SInt32 newMaximum);
+#endif
+
+#if !TARGET_CPU_68K
+pascal SInt32 GetControl32BitMinimum(ControlRef theControl);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void SetControl32BitMinimum(ControlRef theControl, SInt32 newMinimum);
+#endif
+
+#if !TARGET_CPU_68K
+pascal SInt32 GetControlViewSize(ControlRef theControl);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void SetControlViewSize(ControlRef theControl, SInt32 newViewSize);
+#endif
+
+#if !TARGET_CPU_68K
+pascal Boolean IsValidControlHandle(ControlRef theControl);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetControlID(ControlRef inControl, const ControlID *inID);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetControlID(ControlRef inControl, ControlID *outID);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetControlByID(WindowRef inWindow, const ControlID *inID, ControlRef *outControl);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetUpControlTextColor(ControlRef inControl, SInt16 inDepth, Boolean inIsColorDevice);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetControlRegion(ControlRef inControl, ControlPartCode inPart, RgnHandle outRegion);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetControlColorProc(ControlRef inControl, ControlColorUPP inProc);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetControlProperty(ControlRef control, OSType propertyCreator, OSType propertyTag, UInt32 bufferSize, UInt32 *actualSize, void *propertyBuffer);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetControlPropertySize(ControlRef control, OSType propertyCreator, OSType propertyTag, UInt32 *size);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetControlProperty(ControlRef control, OSType propertyCreator, OSType propertyTag, UInt32 propertySize, void *propertyData);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus RemoveControlProperty(ControlRef control, OSType propertyCreator, OSType propertyTag);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetControlClickActivation(ControlRef inControl, Point inWhere, EventModifiers inModifiers, ClickActivationResult *outResult);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus HandleControlContextualMenuClick(ControlRef inControl, Point inWhere, Boolean *menuDisplayed);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus HandleControlSetCursor(ControlRef control, Point localPoint, EventModifiers modifiers, Boolean *cursorWasSet);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus HandleControlDragTracking(ControlRef inControl, DragTrackingMessage inMessage, DragReference inDrag, Boolean *outLikesDrag);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus HandleControlDragReceive(ControlRef inControl, DragReference inDrag);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetControlDragTrackingEnabled(ControlRef theControl, Boolean tracks);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus IsControlDragTrackingEnabled(ControlRef theControl, Boolean *tracks);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetAutomaticControlDragTrackingEnabledForWindow(WindowRef theWindow, Boolean tracks);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus IsAutomaticControlDragTrackingEnabledForWindow(WindowRef theWindow, Boolean *tracks);
+#endif
+
+// Accessors for the Appearance controls. On 68k they are inline calls to GetControlData and SetControlData; PowerPC gets them from AppearanceLib.
+#if TARGET_CPU_68K
+static __inline__ OSErr GetBevelButtonMenuValue(ControlRef inButton, SInt16 *outValue);
+#else
+pascal OSErr GetBevelButtonMenuValue(ControlRef inButton, SInt16 *outValue);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetBevelButtonMenuValue(ControlRef inButton, SInt16 inValue);
+#else
+pascal OSErr SetBevelButtonMenuValue(ControlRef inButton, SInt16 inValue);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetBevelButtonMenuHandle(ControlRef inButton, MenuHandle *outHandle);
+#else
+pascal OSErr GetBevelButtonMenuHandle(ControlRef inButton, MenuHandle *outHandle);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetBevelButtonContentInfo(ControlRef inButton, ControlButtonContentInfoPtr outContent);
+#else
+pascal OSErr GetBevelButtonContentInfo(ControlRef inButton, ControlButtonContentInfoPtr outContent);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetBevelButtonContentInfo(ControlRef inButton, ControlButtonContentInfoPtr inContent);
+#else
+pascal OSErr SetBevelButtonContentInfo(ControlRef inButton, ControlButtonContentInfoPtr inContent);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetBevelButtonTransform(ControlRef inButton, IconTransformType transform);
+#else
+pascal OSErr SetBevelButtonTransform(ControlRef inButton, IconTransformType transform);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetBevelButtonGraphicAlignment(ControlRef inButton, ControlButtonGraphicAlignment inAlign, SInt16 inHOffset, SInt16 inVOffset);
+#else
+pascal OSErr SetBevelButtonGraphicAlignment(ControlRef inButton, ControlButtonGraphicAlignment inAlign, SInt16 inHOffset, SInt16 inVOffset);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetBevelButtonTextAlignment(ControlRef inButton, ControlButtonTextAlignment inAlign, SInt16 inHOffset);
+#else
+pascal OSErr SetBevelButtonTextAlignment(ControlRef inButton, ControlButtonTextAlignment inAlign, SInt16 inHOffset);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetBevelButtonTextPlacement(ControlRef inButton, ControlButtonTextPlacement inWhere);
+#else
+pascal OSErr SetBevelButtonTextPlacement(ControlRef inButton, ControlButtonTextPlacement inWhere);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetImageWellContentInfo(ControlRef inButton, ControlButtonContentInfoPtr outContent);
+#else
+pascal OSErr GetImageWellContentInfo(ControlRef inButton, ControlButtonContentInfoPtr outContent);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetImageWellContentInfo(ControlRef inButton, ControlButtonContentInfoPtr inContent);
+#else
+pascal OSErr SetImageWellContentInfo(ControlRef inButton, ControlButtonContentInfoPtr inContent);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetImageWellTransform(ControlRef inButton, IconTransformType inTransform);
+#else
+pascal OSErr SetImageWellTransform(ControlRef inButton, IconTransformType inTransform);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetTabContentRect(ControlRef inTabControl, Rect *outContentRect);
+#else
+pascal OSErr GetTabContentRect(ControlRef inTabControl, Rect *outContentRect);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetTabEnabled(ControlRef inTabControl, SInt16 inTabToHilite, Boolean inEnabled);
+#else
+pascal OSErr SetTabEnabled(ControlRef inTabControl, SInt16 inTabToHilite, Boolean inEnabled);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr SetDisclosureTriangleLastValue(ControlRef inTabControl, SInt16 inValue);
+#else
+pascal OSErr SetDisclosureTriangleLastValue(ControlRef inTabControl, SInt16 inValue);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ OSErr GetBevelButtonMenuValue(ControlRef inButton, SInt16 *outValue) {
+    return GetControlData(inButton, 0, kControlBevelButtonMenuValueTag, sizeof(SInt16), (Ptr)outValue, 0);
+}
+
+static __inline__ OSErr SetBevelButtonMenuValue(ControlRef inButton, SInt16 inValue) {
+    return SetControlData(inButton, 0, kControlBevelButtonMenuValueTag, sizeof(SInt16), (Ptr)&inValue);
+}
+
+static __inline__ OSErr GetBevelButtonMenuHandle(ControlRef inButton, MenuHandle *outHandle) {
+    return GetControlData(inButton, 0, kControlBevelButtonMenuHandleTag, sizeof(MenuHandle), (Ptr)outHandle, 0);
+}
+
+static __inline__ OSErr GetBevelButtonContentInfo(ControlRef inButton, ControlButtonContentInfoPtr outContent) {
+    return GetControlData(inButton, 0, kControlBevelButtonContentTag, sizeof(ControlButtonContentInfo), (Ptr)outContent, 0);
+}
+
+static __inline__ OSErr SetBevelButtonContentInfo(ControlRef inButton, ControlButtonContentInfoPtr inContent) {
+    return SetControlData(inButton, 0, kControlBevelButtonContentTag, sizeof(ControlButtonContentInfo), (Ptr)inContent);
+}
+
+static __inline__ OSErr SetBevelButtonTransform(ControlRef inButton, IconTransformType transform) {
+    return SetControlData(inButton, 0, kControlBevelButtonTransformTag, sizeof(IconTransformType), (Ptr)&transform);
+}
+
+static __inline__ OSErr SetBevelButtonGraphicAlignment(ControlRef inButton, ControlButtonGraphicAlignment inAlign, SInt16 inHOffset, SInt16 inVOffset) {
+    Point offset;
+    OSErr err = SetControlData(inButton, 0, kControlBevelButtonGraphicAlignTag, sizeof(ControlButtonGraphicAlignment), (Ptr)&inAlign);
+    if (err)
+      return err;
+    offset.h = inHOffset;
+    offset.v = inVOffset;
+    return SetControlData(inButton, 0, kControlBevelButtonGraphicOffsetTag, sizeof(Point), (Ptr)&offset);
+}
+
+static __inline__ OSErr SetBevelButtonTextAlignment(ControlRef inButton, ControlButtonTextAlignment inAlign, SInt16 inHOffset) {
+    OSErr err = SetControlData(inButton, 0, kControlBevelButtonTextAlignTag, sizeof(ControlButtonTextAlignment), (Ptr)&inAlign);
+    if (err)
+      return err;
+    return SetControlData(inButton, 0, kControlBevelButtonTextOffsetTag, sizeof(SInt16), (Ptr)&inHOffset);
+}
+
+static __inline__ OSErr SetBevelButtonTextPlacement(ControlRef inButton, ControlButtonTextPlacement inWhere) {
+    return SetControlData(inButton, 0, kControlBevelButtonTextPlaceTag, sizeof(ControlButtonTextPlacement), (Ptr)&inWhere);
+}
+
+static __inline__ OSErr GetImageWellContentInfo(ControlRef inButton, ControlButtonContentInfoPtr outContent) {
+    return GetControlData(inButton, 0, kControlImageWellContentTag, sizeof(ControlButtonContentInfo), (Ptr)outContent, 0);
+}
+
+static __inline__ OSErr SetImageWellContentInfo(ControlRef inButton, ControlButtonContentInfoPtr inContent) {
+    return SetControlData(inButton, 0, kControlImageWellContentTag, sizeof(ControlButtonContentInfo), (Ptr)inContent);
+}
+
+static __inline__ OSErr SetImageWellTransform(ControlRef inButton, IconTransformType inTransform) {
+    return SetControlData(inButton, 0, kControlImageWellTransformTag, sizeof(IconTransformType), (Ptr)&inTransform);
+}
+
+static __inline__ OSErr GetTabContentRect(ControlRef inTabControl, Rect *outContentRect) {
+    return GetControlData(inTabControl, 0, kControlTabContentRectTag, sizeof(Rect), (Ptr)outContentRect, 0);
+}
+
+static __inline__ OSErr SetTabEnabled(ControlRef inTabControl, SInt16 inTabToHilite, Boolean inEnabled) {
+    return SetControlData(inTabControl, inTabToHilite, kControlTabEnabledFlagTag, sizeof(Boolean), (Ptr)&inEnabled);
+}
+
+static __inline__ OSErr SetDisclosureTriangleLastValue(ControlRef inTabControl, SInt16 inValue) {
+    return SetControlData(inTabControl, 0, kControlTriangleLastValueTag, sizeof(SInt16), (Ptr)&inValue);
+}
+
+#endif
 
 #pragma options align=reset
 

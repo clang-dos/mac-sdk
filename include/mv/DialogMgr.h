@@ -3,6 +3,8 @@
 #define __MV_DIALOGMGR__
 
 #include "../ConditionalMacros.h"
+#include "ControlMgr.h"
+#include "DriverServices.h"
 #include "EventMgr.h"
 #include "MacTypes.h"
 #include "QuickDraw.h"
@@ -380,6 +382,82 @@ typedef int16_t DialogItemType;
 static __inline__ Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit);
 #else
 pascal Boolean StdFilterProc(DialogPtr theDialog, EventRecord *event, DialogItemIndex *itemHit);
+#endif
+
+// Alert types for StandardAlert (Dialog Manager 8).
+typedef SInt16 AlertType;
+
+enum {
+    kAlertStopAlert = 0,
+    kAlertNoteAlert = 1,
+    kAlertCautionAlert = 2,
+    kAlertPlainAlert = 3,
+    kAlertDefaultOKText = -1,
+    kAlertDefaultCancelText = -1,
+    kAlertDefaultOtherText = -1,
+    kAlertStdAlertOKButton = 1,
+    kAlertStdAlertCancelButton = 2,
+    kAlertStdAlertOtherButton = 3,
+    kAlertStdAlertHelpButton = 4,
+    kDialogFlagsUseThemeBackground = 1,
+    kDialogFlagsUseControlHierarchy = 2,
+    kDialogFlagsHandleMovableModal = 4,
+    kDialogFlagsUseThemeControls = 8,
+    kAlertFlagsUseThemeBackground = 1,
+    kAlertFlagsUseControlHierarchy = 2,
+    kAlertFlagsAlertIsMovable = 4,
+    kAlertFlagsUseThemeControls = 8,
+    gestaltDialogMgrAttr = 'dlog',
+    gestaltDialogMgrPresent = 1,
+    gestaltDialogMgrPresentBit = 0,
+};
+
+// The buttons and position of a StandardAlert.
+typedef struct AlertStdAlertParamRec AlertStdAlertParamRec;
+struct AlertStdAlertParamRec {
+    Boolean movable;
+    Boolean helpButton;
+    ModalFilterUPP filterProc;
+    StringPtr defaultText;
+    StringPtr cancelText;
+    StringPtr otherText;
+    SInt16 defaultButton;
+    SInt16 cancelButton;
+    UInt16 position;
+};
+
+typedef AlertStdAlertParamRec *AlertStdAlertParamPtr;
+
+// Dialog Manager 8 (Appearance Manager)
+pascal OSErr AutoSizeDialog(DialogRef inDialog) M68K_INLINE(0x303C, 0x020D, 0xAA68);
+
+pascal OSErr GetDialogItemAsControl(DialogRef inDialog, SInt16 inItemNo, ControlRef *outControl) M68K_INLINE(0x303C, 0x050F, 0xAA68);
+
+pascal OSErr MoveDialogItem(DialogRef inDialog, SInt16 inItemNo, SInt16 inHoriz, SInt16 inVert) M68K_INLINE(0x303C, 0x0510, 0xAA68);
+
+pascal OSErr SizeDialogItem(DialogRef inDialog, SInt16 inItemNo, SInt16 inWidth, SInt16 inHeight) M68K_INLINE(0x303C, 0x0511, 0xAA68);
+
+pascal OSErr StandardAlert(AlertType inAlertType, StringPtr inError, StringPtr inExplanation, AlertStdAlertParamPtr inAlertParam, SInt16 *outItemHit) M68K_INLINE(0x303C, 0x090E, 0xAA68);
+
+// Dialog Manager in Mac OS 8.5 (MacDialogsLib)
+#if !TARGET_CPU_68K
+pascal OSStatus AppendDialogItemList(DialogRef dialog, SInt16 ditlID, DITLMethod method);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetDialogTimeout(DialogRef inDialog, SInt16 inButtonToPress, UInt32 inSecondsToWait);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetDialogTimeout(DialogRef inDialog, SInt16 *outButtonToPress, UInt32 *outSecondsToWait, UInt32 *outSecondsRemaining);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus SetModalDialogEventMask(DialogRef inDialog, EventMask inMask);
+#endif
+
+#if !TARGET_CPU_68K
+pascal OSStatus GetModalDialogEventMask(DialogRef inDialog, EventMask *outMask);
 #endif
 
 #if TARGET_CPU_68K

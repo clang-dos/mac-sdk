@@ -892,3 +892,240 @@
       if (GetStdFilterProc((ProcPtr *)&proc) != noErr)
           return false;
       return proc(theDialog, event, itemHit);
+
+# ####
+
+- typedef:
+    name: AlertType
+    type: SInt16
+    comment: Alert types for StandardAlert (Dialog Manager 8).
+
+# ####
+
+- enum:
+    values:
+    - name: kAlertStopAlert
+      value: 0
+    - name: kAlertNoteAlert
+      value: 1
+    - name: kAlertCautionAlert
+      value: 2
+    - name: kAlertPlainAlert
+      value: 3
+    - name: kAlertDefaultOKText
+      value: -1
+    - name: kAlertDefaultCancelText
+      value: -1
+    - name: kAlertDefaultOtherText
+      value: -1
+    - name: kAlertStdAlertOKButton
+      value: 1
+    - name: kAlertStdAlertCancelButton
+      value: 2
+    - name: kAlertStdAlertOtherButton
+      value: 3
+    - name: kAlertStdAlertHelpButton
+      value: 4
+    - name: kDialogFlagsUseThemeBackground
+      value: 1
+    - name: kDialogFlagsUseControlHierarchy
+      value: 2
+    - name: kDialogFlagsHandleMovableModal
+      value: 4
+    - name: kDialogFlagsUseThemeControls
+      value: 8
+    - name: kAlertFlagsUseThemeBackground
+      value: 1
+    - name: kAlertFlagsUseControlHierarchy
+      value: 2
+    - name: kAlertFlagsAlertIsMovable
+      value: 4
+    - name: kAlertFlagsUseThemeControls
+      value: 8
+    - name: gestaltDialogMgrAttr
+      value: '''dlog'''
+    - name: gestaltDialogMgrPresent
+      value: 1
+    - name: gestaltDialogMgrPresentBit
+      value: 0
+
+# ####
+
+- struct:
+    name: AlertStdAlertParamRec
+    size: 24
+    comment: The buttons and position of a StandardAlert.
+    members:
+    - name: movable
+      type: Boolean
+    - name: helpButton
+      type: Boolean
+    - name: filterProc
+      type: ModalFilterUPP
+    - name: defaultText
+      type: StringPtr
+    - name: cancelText
+      type: StringPtr
+    - name: otherText
+      type: StringPtr
+    - name: defaultButton
+      type: SInt16
+    - name: cancelButton
+      type: SInt16
+    - name: position
+      type: UInt16
+
+# ####
+
+- typedef:
+    name: AlertStdAlertParamPtr
+    type: AlertStdAlertParamRec*
+
+# ####
+
+- function:
+    name: AutoSizeDialog
+    return: OSErr
+    args:
+    - name: inDialog
+      type: DialogRef
+    comment: Dialog Manager 8 (Appearance Manager)
+    dispatcher: DialogDispatch
+    selector: 525
+
+# ####
+
+- function:
+    name: GetDialogItemAsControl
+    return: OSErr
+    args:
+    - name: inDialog
+      type: DialogRef
+    - name: inItemNo
+      type: SInt16
+    - name: outControl
+      type: ControlRef*
+    dispatcher: DialogDispatch
+    selector: 1295
+
+# ####
+
+- function:
+    name: MoveDialogItem
+    return: OSErr
+    args:
+    - name: inDialog
+      type: DialogRef
+    - name: inItemNo
+      type: SInt16
+    - name: inHoriz
+      type: SInt16
+    - name: inVert
+      type: SInt16
+    dispatcher: DialogDispatch
+    selector: 1296
+
+# ####
+
+- function:
+    name: SizeDialogItem
+    return: OSErr
+    args:
+    - name: inDialog
+      type: DialogRef
+    - name: inItemNo
+      type: SInt16
+    - name: inWidth
+      type: SInt16
+    - name: inHeight
+      type: SInt16
+    dispatcher: DialogDispatch
+    selector: 1297
+
+# ####
+
+- function:
+    name: StandardAlert
+    return: OSErr
+    args:
+    - name: inAlertType
+      type: AlertType
+    - name: inError
+      type: StringPtr
+    - name: inExplanation
+      type: StringPtr
+    - name: inAlertParam
+      type: AlertStdAlertParamPtr
+    - name: outItemHit
+      type: SInt16*
+    dispatcher: DialogDispatch
+    selector: 2318
+
+# ####
+
+- function:
+    name: AppendDialogItemList
+    return: OSStatus
+    args:
+    - name: dialog
+      type: DialogRef
+    - name: ditlID
+      type: SInt16
+    - name: method
+      type: DITLMethod
+    comment: Dialog Manager in Mac OS 8.5 (MacDialogsLib)
+    m68k: none
+
+# ####
+
+- function:
+    name: SetDialogTimeout
+    return: OSStatus
+    args:
+    - name: inDialog
+      type: DialogRef
+    - name: inButtonToPress
+      type: SInt16
+    - name: inSecondsToWait
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetDialogTimeout
+    return: OSStatus
+    args:
+    - name: inDialog
+      type: DialogRef
+    - name: outButtonToPress
+      type: SInt16*
+    - name: outSecondsToWait
+      type: UInt32*
+    - name: outSecondsRemaining
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetModalDialogEventMask
+    return: OSStatus
+    args:
+    - name: inDialog
+      type: DialogRef
+    - name: inMask
+      type: EventMask
+    m68k: none
+
+# ####
+
+- function:
+    name: GetModalDialogEventMask
+    return: OSStatus
+    args:
+    - name: inDialog
+      type: DialogRef
+    - name: outMask
+      type: EventMask*
+    m68k: none

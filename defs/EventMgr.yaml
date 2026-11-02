@@ -142,3 +142,10 @@
     comment: |
       was LONGINT KeypadMap[2];
       EventMgr SysEqu.a (true-b);
+
+# ####
+
+- typedef:
+    name: EventMask
+    type: UInt16
+    comment: A set of event kinds, one bit each (everyEvent and friends).

@@ -1181,3 +1181,1017 @@
       SetPort((GrafPtr)w);
       InvalRect(r);
       SetPort(save);
+
+# ####
+
+- typedef:
+    name: WindowRegionCode
+    type: UInt16
+
+# ####
+
+- enum:
+    values:
+    - name: kWindowTitleBarRgn
+      value: 0
+    - name: kWindowTitleTextRgn
+      value: 1
+    - name: kWindowCloseBoxRgn
+      value: 2
+    - name: kWindowZoomBoxRgn
+      value: 3
+    - name: kWindowDragRgn
+      value: 5
+    - name: kWindowGrowRgn
+      value: 6
+    - name: kWindowCollapseBoxRgn
+      value: 7
+    - name: kWindowTitleProxyIconRgn
+      value: 8
+    - name: kWindowStructureRgn
+      value: 32
+    - name: kWindowContentRgn
+      value: 33
+    - name: kWindowUpdateRgn
+      value: 34
+    - name: kWindowGlobalPortRgn
+      value: 40
+    comment: Window regions, for GetWindowRegion and the theme window calls.
+
+# ####
+
+- enum:
+    values:
+    - name: gestaltWindowMgrAttr
+      value: '''wind'''
+    - name: gestaltWindowMgrPresent
+      value: 1
+    - name: gestaltWindowMgrPresentBit
+      value: 0
+    comment: Window Manager 8 and 8.5. Gestalt selector.
+
+# ####
+
+- enum:
+    values:
+    - name: kWindowDocumentProc
+      value: 1024
+    - name: kWindowGrowDocumentProc
+      value: 1025
+    - name: kWindowVertZoomDocumentProc
+      value: 1026
+    - name: kWindowVertZoomGrowDocumentProc
+      value: 1027
+    - name: kWindowHorizZoomDocumentProc
+      value: 1028
+    - name: kWindowHorizZoomGrowDocumentProc
+      value: 1029
+    - name: kWindowFullZoomDocumentProc
+      value: 1030
+    - name: kWindowFullZoomGrowDocumentProc
+      value: 1031
+    - name: kWindowPlainDialogProc
+      value: 1040
+    - name: kWindowShadowDialogProc
+      value: 1041
+    - name: kWindowModalDialogProc
+      value: 1042
+    - name: kWindowMovableModalDialogProc
+      value: 1043
+    - name: kWindowAlertProc
+      value: 1044
+    - name: kWindowMovableAlertProc
+      value: 1045
+    - name: kWindowMovableModalGrowProc
+      value: 1046
+    - name: kWindowFloatProc
+      value: 1057
+    - name: kWindowFloatGrowProc
+      value: 1059
+    - name: kWindowFloatVertZoomProc
+      value: 1061
+    - name: kWindowFloatVertZoomGrowProc
+      value: 1063
+    - name: kWindowFloatHorizZoomProc
+      value: 1065
+    - name: kWindowFloatHorizZoomGrowProc
+      value: 1067
+    - name: kWindowFloatFullZoomProc
+      value: 1069
+    - name: kWindowFloatFullZoomGrowProc
+      value: 1071
+    - name: kWindowFloatSideProc
+      value: 1073
+    - name: kWindowFloatSideGrowProc
+      value: 1075
+    - name: kWindowFloatSideVertZoomProc
+      value: 1077
+    - name: kWindowFloatSideVertZoomGrowProc
+      value: 1079
+    - name: kWindowFloatSideHorizZoomProc
+      value: 1081
+    - name: kWindowFloatSideHorizZoomGrowProc
+      value: 1083
+    - name: kWindowFloatSideFullZoomProc
+      value: 1085
+    - name: kWindowFloatSideFullZoomGrowProc
+      value: 1087
+    - name: inCollapseBox
+      value: 11
+    - name: inProxyIcon
+      value: 12
+    comment: Window definition IDs for the Appearance window definitions.
+
+# ####
+
+- enum:
+    values:
+    - name: kWindowCanGrow
+      value: 1
+    - name: kWindowCanZoom
+      value: 2
+    - name: kWindowCanCollapse
+      value: 4
+    - name: kWindowIsModal
+      value: 8
+    - name: kWindowCanGetWindowRegion
+      value: 16
+    - name: kWindowIsAlert
+      value: 32
+    - name: kWindowHasTitleBar
+      value: 64
+    - name: kWindowSupportsDragHilite
+      value: 128
+    - name: kWindowSupportsModifiedBit
+      value: 256
+    - name: kWindowCanDrawInCurrentPort
+      value: 512
+    - name: kWindowCanSetupProxyDragImage
+      value: 1024
+    - name: kWindowCanMeasureTitle
+      value: 2048
+    - name: kWindowWantsDisposeAtProcessDeath
+      value: 4096
+    - name: kWindowSupportsSetGrowImageRegion
+      value: 8192
+    - name: kWindowDefSupportsColorGrafPort
+      value: 1073741826
+    comment: What GetWindowFeatures reports.
+
+# ####
+
+- typedef:
+    name: WindowClass
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: WindowAttributes
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: WindowPositionMethod
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: WindowTransitionEffect
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: WindowTransitionAction
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: WindowPaintProcOptions
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: WindowDefPartCode
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: PropertyCreator
+    type: OSType
+
+# ####
+
+- typedef:
+    name: PropertyTag
+    type: OSType
+
+# ####
+
+- typedef:
+    name: IconRef
+    type: struct OpaqueIconRef*
+
+# ####
+
+- enum:
+    values:
+    - name: kAlertWindowClass
+      value: 1
+    - name: kMovableAlertWindowClass
+      value: 2
+    - name: kModalWindowClass
+      value: 3
+    - name: kMovableModalWindowClass
+      value: 4
+    - name: kFloatingWindowClass
+      value: 5
+    - name: kDocumentWindowClass
+      value: 6
+    - name: kDesktopWindowClass
+      value: 7
+    - name: kAllWindowClasses
+      value: 4294967295
+    - name: kWindowNoAttributes
+      value: 0
+    - name: kWindowCloseBoxAttribute
+      value: 1
+    - name: kWindowHorizontalZoomAttribute
+      value: 2
+    - name: kWindowVerticalZoomAttribute
+      value: 4
+    - name: kWindowFullZoomAttribute
+      value: 6
+    - name: kWindowCollapseBoxAttribute
+      value: 8
+    - name: kWindowResizableAttribute
+      value: 16
+    - name: kWindowSideTitlebarAttribute
+      value: 32
+    - name: kWindowNoUpdatesAttribute
+      value: 65536
+    - name: kWindowNoActivatesAttribute
+      value: 131072
+    - name: kWindowStandardDocumentAttributes
+      value: 31
+    - name: kWindowStandardFloatingAttributes
+      value: 9
+    - name: kWindowCenterOnMainScreen
+      value: 1
+    - name: kWindowCenterOnParentWindow
+      value: 2
+    - name: kWindowCenterOnParentWindowScreen
+      value: 3
+    - name: kWindowCascadeOnMainScreen
+      value: 4
+    - name: kWindowCascadeOnParentWindow
+      value: 5
+    - name: kWindowCascadeOnParentWindowScreen
+      value: 6
+    - name: kWindowAlertPositionOnMainScreen
+      value: 7
+    - name: kWindowAlertPositionOnParentWindow
+      value: 8
+    - name: kWindowAlertPositionOnParentWindowScreen
+      value: 9
+    - name: kWindowZoomTransitionEffect
+      value: 1
+    - name: kWindowShowTransitionAction
+      value: 1
+    - name: kWindowHideTransitionAction
+      value: 2
+    - name: kWindowPaintProcOptionsNone
+      value: 0
+    - name: kWindowDefaultPosition
+      value: 0
+    - name: kWindowCenterMainScreen
+      value: 10250
+    - name: kWindowAlertPositionMainScreen
+      value: 12298
+    - name: kWindowStaggerMainScreen
+      value: 14346
+    - name: kWindowCenterParentWindow
+      value: 43018
+    - name: kWindowAlertPositionParentWindow
+      value: 45066
+    - name: kWindowStaggerParentWindow
+      value: 47114
+    - name: kWindowCenterParentWindowScreen
+      value: 26634
+    - name: kWindowAlertPositionParentWindowScreen
+      value: 28682
+    - name: kWindowStaggerParentWindowScreen
+      value: 30730
+    comment: Window classes and attributes, for CreateNewWindow (Mac OS 8.5).
+
+# ####
+
+- enum:
+    values:
+    - name: errInvalidWindowPtr
+      value: -5600
+    - name: errInvalidWindowRef
+      value: -5600
+    - name: errUnsupportedWindowAttributesForClass
+      value: -5601
+    - name: errWindowDoesNotHaveProxy
+      value: -5602
+    - name: errInvalidWindowProperty
+      value: -5603
+    - name: errWindowPropertyNotFound
+      value: -5604
+    - name: errUnrecognizedWindowClass
+      value: -5605
+    - name: errCorruptWindowResource
+      value: -5606
+    - name: errUserWantsToDragWindow
+      value: -5607
+    - name: errWindowsAlreadyInitialized
+      value: -5608
+    - name: errFloatingWindowsNotInitialized
+      value: -5609
+    comment: Window Manager errors.
+
+# ####
+
+- dispatcher:
+    name: AppearanceDispatch
+    trap: 43636
+    selector-location: D0W
+
+# ####
+
+- function:
+    name: IsWindowCollapsable
+    return: Boolean
+    args:
+    - name: inWindow
+      type: WindowRef
+    comment: 'Window Manager 8: collapsing (window shade) and regions, from the Appearance Manager'
+    dispatcher: AppearanceDispatch
+    selector: 15
+
+# ####
+
+- function:
+    name: IsWindowCollapsed
+    return: Boolean
+    args:
+    - name: inWindow
+      type: WindowRef
+    dispatcher: AppearanceDispatch
+    selector: 16
+
+# ####
+
+- function:
+    name: CollapseWindow
+    return: OSStatus
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: inCollapseIt
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 17
+
+# ####
+
+- function:
+    name: CollapseAllWindows
+    return: OSStatus
+    args:
+    - name: inCollapseEm
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 18
+
+# ####
+
+- function:
+    name: GetWindowFeatures
+    return: OSStatus
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: outFeatures
+      type: UInt32*
+    dispatcher: AppearanceDispatch
+    selector: 19
+
+# ####
+
+- function:
+    name: GetWindowRegion
+    return: OSStatus
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: inRegionCode
+      type: WindowRegionCode
+    - name: ioWinRgn
+      type: RgnHandle
+    dispatcher: AppearanceDispatch
+    selector: 20
+
+# ####
+
+- function:
+    name: CreateNewWindow
+    return: OSStatus
+    args:
+    - name: windowClass
+      type: WindowClass
+    - name: attributes
+      type: WindowAttributes
+    - name: contentBounds
+      type: const Rect*
+    - name: outWindow
+      type: WindowRef*
+    comment: Window Manager 2.0 (Mac OS 8.5, WindowsLib)
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateWindowFromResource
+    return: OSStatus
+    args:
+    - name: resID
+      type: SInt16
+    - name: outWindow
+      type: WindowRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: StoreWindowIntoCollection
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: collection
+      type: Collection
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateWindowFromCollection
+    return: OSStatus
+    args:
+    - name: collection
+      type: Collection
+    - name: outWindow
+      type: WindowRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowOwnerCount
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: outCount
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: CloneWindow
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowClass
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: outClass
+      type: WindowClass*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowAttributes
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: outAttributes
+      type: WindowAttributes*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowContentColor
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: color
+      type: const RGBColor*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowContentColor
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: color
+      type: RGBColor*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowContentPattern
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: outPixPat
+      type: PixPatHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowContentPattern
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: pixPat
+      type: PixPatHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: InvalWindowRgn
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: region
+      type: RgnHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: ValidWindowRgn
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: region
+      type: RgnHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: ValidWindowRect
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: bounds
+      type: const Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowProxyFSSpec
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: inFile
+      type: const FSSpec*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowProxyFSSpec
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: outFile
+      type: FSSpec*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowProxyAlias
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: alias
+      type: AliasHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowProxyAlias
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: alias
+      type: AliasHandle*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowProxyCreatorAndType
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: fileCreator
+      type: OSType
+    - name: fileType
+      type: OSType
+    - name: vRefNum
+      type: SInt16
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowProxyIcon
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: outIcon
+      type: IconRef*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowProxyIcon
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: icon
+      type: IconRef
+    m68k: none
+
+# ####
+
+- function:
+    name: RemoveWindowProxy
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    m68k: none
+
+# ####
+
+- function:
+    name: TrackWindowProxyDrag
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: startPt
+      type: Point
+    m68k: none
+
+# ####
+
+- function:
+    name: IsWindowModified
+    return: Boolean
+    args:
+    - name: window
+      type: WindowRef
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowModified
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: modified
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: IsWindowPathSelectClick
+    return: Boolean
+    args:
+    - name: window
+      type: WindowRef
+    - name: event
+      type: const EventRecord*
+    m68k: none
+
+# ####
+
+- function:
+    name: WindowPathSelect
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: menu
+      type: MenuHandle
+    - name: outMenuResult
+      type: SInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: HiliteWindowFrameForDrag
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: hilited
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: TransitionWindow
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: effect
+      type: WindowTransitionEffect
+    - name: action
+      type: WindowTransitionAction
+    - name: rect
+      type: const Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: MoveWindowStructure
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: hGlobal
+      type: INTEGER
+    - name: vGlobal
+      type: INTEGER
+    m68k: none
+
+# ####
+
+- function:
+    name: IsWindowInStandardState
+    return: Boolean
+    args:
+    - name: window
+      type: WindowRef
+    - name: idealSize
+      type: Point*
+    - name: idealStandardState
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: ZoomWindowIdeal
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: partCode
+      type: SInt16
+    - name: ioIdealSize
+      type: Point*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowIdealUserState
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: userState
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowIdealUserState
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: userState
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: ResizeWindow
+    return: Boolean
+    args:
+    - name: window
+      type: WindowRef
+    - name: startPoint
+      type: Point
+    - name: sizeConstraints
+      type: const Rect*
+    - name: newContentRect
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowBounds
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: regionCode
+      type: WindowRegionCode
+    - name: globalBounds
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowBounds
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: regionCode
+      type: WindowRegionCode
+    - name: globalBounds
+      type: const Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: RepositionWindow
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: parentWindow
+      type: WindowRef
+    - name: method
+      type: WindowPositionMethod
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowProperty
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: propertyCreator
+      type: PropertyCreator
+    - name: propertyTag
+      type: PropertyTag
+    - name: bufferSize
+      type: UInt32
+    - name: actualSize
+      type: UInt32*
+    - name: propertyBuffer
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetWindowPropertySize
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: creator
+      type: PropertyCreator
+    - name: tag
+      type: PropertyTag
+    - name: size
+      type: UInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetWindowProperty
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: propertyCreator
+      type: PropertyCreator
+    - name: propertyTag
+      type: PropertyTag
+    - name: propertySize
+      type: UInt32
+    - name: propertyBuffer
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: RemoveWindowProperty
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: propertyCreator
+      type: PropertyCreator
+    - name: propertyTag
+      type: PropertyTag
+    m68k: none
+
+# ####
+
+- function:
+    name: InitFloatingWindows
+    return: OSStatus
+    m68k: none
+
+# ####
+
+- function:
+    name: ShowFloatingWindows
+    return: OSStatus
+    m68k: none
+
+# ####
+
+- function:
+    name: HideFloatingWindows
+    return: OSStatus
+    m68k: none
+
+# ####
+
+- function:
+    name: AreFloatingWindowsVisible
+    return: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: FrontNonFloatingWindow
+    return: WindowRef
+    m68k: none

@@ -52,6 +52,8 @@ def immediates(words):
 def main():
     verbose = "-v" in sys.argv
     info = json.load(open(os.path.join(ROOT, "data", "trapinfo.json")))
+    # Mac OS 8's Appearance, Collection and Drag Manager glue libraries
+    info.update(json.load(open(os.path.join(ROOT, "data", "trapinfo-os8.json"))))
     code = words_by_function()
     ok, bad, skipped = 0, [], 0
     for name, o in sorted(info.items()):

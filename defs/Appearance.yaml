@@ -1,0 +1,2390 @@
+
+# ####
+
+- enum:
+    values:
+    - name: gestaltAppearanceAttr
+      value: '''appr'''
+    - name: gestaltAppearanceExists
+      value: 0
+    - name: gestaltAppearanceCompatMode
+      value: 1
+    - name: gestaltAppearanceVersion
+      value: '''apvr'''
+    comment: Appearance Manager (Mac OS 8). Gestalt selectors.
+
+# ####
+
+- enum:
+    values:
+    - name: appearanceBadBrushIndexErr
+      value: -30560
+    - name: appearanceProcessRegisteredErr
+      value: -30561
+    - name: appearanceProcessNotRegisteredErr
+      value: -30562
+    - name: appearanceBadTextColorIndexErr
+      value: -30563
+    - name: appearanceThemeHasNoAccents
+      value: -30564
+    - name: appearanceBadCursorIndexErr
+      value: -30565
+    comment: Appearance Manager errors.
+
+# ####
+
+- typedef:
+    name: ThemeBrush
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ThemeTextColor
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ThemeDrawState
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: ThemeFontID
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeTabStyle
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeTabDirection
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeTrackKind
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeTrackEnableState
+    type: UInt8
+
+# ####
+
+- typedef:
+    name: ThemeTrackPressState
+    type: UInt8
+
+# ####
+
+- typedef:
+    name: ThemeThumbDirection
+    type: UInt8
+
+# ####
+
+- typedef:
+    name: ThemeTrackAttributes
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeWindowAttributes
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: ThemeWindowType
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeTitleBarWidget
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeArrowOrientation
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemePopupArrowSize
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeGrowDirection
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeButtonKind
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeButtonValue
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeButtonAdornment
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeMenuBarState
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeMenuState
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeMenuType
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeMenuItemType
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeBackgroundKind
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: ThemeCursor
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: ThemeCheckBoxStyle
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeScrollBarArrowStyle
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeScrollBarThumbStyle
+    type: UInt16
+
+# ####
+
+- typedef:
+    name: ThemeSoundKind
+    type: OSType
+
+# ####
+
+- typedef:
+    name: ThemeDragSoundKind
+    type: OSType
+
+# ####
+
+- typedef:
+    name: AppearancePartCode
+    type: SInt16
+
+# ####
+
+- typedef:
+    name: ThemeDrawingState
+    type: struct OpaqueThemeDrawingState*
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeBrushDialogBackgroundActive
+      value: 1
+    - name: kThemeBrushDialogBackgroundInactive
+      value: 2
+    - name: kThemeBrushAlertBackgroundActive
+      value: 3
+    - name: kThemeBrushAlertBackgroundInactive
+      value: 4
+    - name: kThemeBrushModelessDialogBackgroundActive
+      value: 5
+    - name: kThemeBrushModelessDialogBackgroundInactive
+      value: 6
+    - name: kThemeBrushUtilityWindowBackgroundActive
+      value: 7
+    - name: kThemeBrushUtilityWindowBackgroundInactive
+      value: 8
+    - name: kThemeBrushListViewSortColumnBackground
+      value: 9
+    - name: kThemeBrushListViewBackground
+      value: 10
+    - name: kThemeBrushIconLabelBackground
+      value: 11
+    - name: kThemeBrushListViewSeparator
+      value: 12
+    - name: kThemeBrushChasingArrows
+      value: 13
+    - name: kThemeBrushDragHilite
+      value: 14
+    - name: kThemeBrushDocumentWindowBackground
+      value: 15
+    - name: kThemeBrushFinderWindowBackground
+      value: 16
+    - name: kThemeBrushScrollBarDelimiterActive
+      value: 17
+    - name: kThemeBrushScrollBarDelimiterInactive
+      value: 18
+    - name: kThemeBrushFocusHighlight
+      value: 19
+    - name: kThemeBrushPopupArrowActive
+      value: 20
+    - name: kThemeBrushPopupArrowPressed
+      value: 21
+    - name: kThemeBrushPopupArrowInactive
+      value: 22
+    - name: kThemeBrushAppleGuideCoachmark
+      value: 23
+    - name: kThemeBrushIconLabelBackgroundSelected
+      value: 24
+    - name: kThemeBrushStaticAreaFill
+      value: 25
+    - name: kThemeBrushActiveAreaFill
+      value: 26
+    - name: kThemeBrushButtonFrameActive
+      value: 27
+    - name: kThemeBrushButtonFrameInactive
+      value: 28
+    - name: kThemeBrushButtonFaceActive
+      value: 29
+    - name: kThemeBrushButtonFaceInactive
+      value: 30
+    - name: kThemeBrushButtonFacePressed
+      value: 31
+    - name: kThemeBrushButtonActiveDarkShadow
+      value: 32
+    - name: kThemeBrushButtonActiveDarkHighlight
+      value: 33
+    - name: kThemeBrushButtonActiveLightShadow
+      value: 34
+    - name: kThemeBrushButtonActiveLightHighlight
+      value: 35
+    - name: kThemeBrushButtonInactiveDarkShadow
+      value: 36
+    - name: kThemeBrushButtonInactiveDarkHighlight
+      value: 37
+    - name: kThemeBrushButtonInactiveLightShadow
+      value: 38
+    - name: kThemeBrushButtonInactiveLightHighlight
+      value: 39
+    - name: kThemeBrushButtonPressedDarkShadow
+      value: 40
+    - name: kThemeBrushButtonPressedDarkHighlight
+      value: 41
+    - name: kThemeBrushButtonPressedLightShadow
+      value: 42
+    - name: kThemeBrushButtonPressedLightHighlight
+      value: 43
+    - name: kThemeBrushBevelActiveLight
+      value: 44
+    - name: kThemeBrushBevelActiveDark
+      value: 45
+    - name: kThemeBrushBevelInactiveLight
+      value: 46
+    - name: kThemeBrushBevelInactiveDark
+      value: 47
+    - name: kThemeBrushNotificationWindowBackground
+      value: 48
+    - name: kThemeBrushMovableModalBackground
+      value: 49
+    - name: kThemeBrushBlack
+      value: -1
+    - name: kThemeBrushWhite
+      value: -2
+    comment: Brushes for SetThemePen, SetThemeBackground and SetThemeWindowBackground.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeTextColorDialogActive
+      value: 1
+    - name: kThemeTextColorDialogInactive
+      value: 2
+    - name: kThemeTextColorAlertActive
+      value: 3
+    - name: kThemeTextColorAlertInactive
+      value: 4
+    - name: kThemeTextColorModelessDialogActive
+      value: 5
+    - name: kThemeTextColorModelessDialogInactive
+      value: 6
+    - name: kThemeTextColorWindowHeaderActive
+      value: 7
+    - name: kThemeTextColorWindowHeaderInactive
+      value: 8
+    - name: kThemeTextColorPlacardActive
+      value: 9
+    - name: kThemeTextColorPlacardInactive
+      value: 10
+    - name: kThemeTextColorPlacardPressed
+      value: 11
+    - name: kThemeTextColorPushButtonActive
+      value: 12
+    - name: kThemeTextColorPushButtonInactive
+      value: 13
+    - name: kThemeTextColorPushButtonPressed
+      value: 14
+    - name: kThemeTextColorBevelButtonActive
+      value: 15
+    - name: kThemeTextColorBevelButtonInactive
+      value: 16
+    - name: kThemeTextColorBevelButtonPressed
+      value: 17
+    - name: kThemeTextColorPopupButtonActive
+      value: 18
+    - name: kThemeTextColorPopupButtonInactive
+      value: 19
+    - name: kThemeTextColorPopupButtonPressed
+      value: 20
+    - name: kThemeTextColorIconLabel
+      value: 21
+    - name: kThemeTextColorListView
+      value: 22
+    - name: kThemeTextColorDocumentWindowTitleActive
+      value: 23
+    - name: kThemeTextColorDocumentWindowTitleInactive
+      value: 24
+    - name: kThemeTextColorMovableModalWindowTitleActive
+      value: 25
+    - name: kThemeTextColorMovableModalWindowTitleInactive
+      value: 26
+    - name: kThemeTextColorUtilityWindowTitleActive
+      value: 27
+    - name: kThemeTextColorUtilityWindowTitleInactive
+      value: 28
+    - name: kThemeTextColorPopupWindowTitleActive
+      value: 29
+    - name: kThemeTextColorPopupWindowTitleInactive
+      value: 30
+    - name: kThemeTextColorRootMenuActive
+      value: 31
+    - name: kThemeTextColorRootMenuSelected
+      value: 32
+    - name: kThemeTextColorRootMenuDisabled
+      value: 33
+    - name: kThemeTextColorMenuItemActive
+      value: 34
+    - name: kThemeTextColorMenuItemSelected
+      value: 35
+    - name: kThemeTextColorMenuItemDisabled
+      value: 36
+    - name: kThemeTextColorPopupLabelActive
+      value: 37
+    - name: kThemeTextColorPopupLabelInactive
+      value: 38
+    - name: kThemeTextColorTabFrontActive
+      value: 39
+    - name: kThemeTextColorTabNonFrontActive
+      value: 40
+    - name: kThemeTextColorTabNonFrontPressed
+      value: 41
+    - name: kThemeTextColorTabFrontInactive
+      value: 42
+    - name: kThemeTextColorTabNonFrontInactive
+      value: 43
+    - name: kThemeTextColorIconLabelSelected
+      value: 44
+    - name: kThemeTextColorBevelButtonStickyActive
+      value: 45
+    - name: kThemeTextColorBevelButtonStickyInactive
+      value: 46
+    - name: kThemeTextColorNotification
+      value: 47
+    - name: kThemeTextColorBlack
+      value: -1
+    - name: kThemeTextColorWhite
+      value: -2
+    comment: Text colors for SetThemeTextColor.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeStateInactive
+      value: 0
+    - name: kThemeStateActive
+      value: 1
+    - name: kThemeStatePressed
+      value: 2
+    - name: kThemeStateRollover
+      value: 6
+    - name: kThemeStateUnavailable
+      value: 7
+    - name: kThemeStateUnavailableInactive
+      value: 8
+    - name: kThemeStateDisabled
+      value: 0
+    - name: kThemeStatePressedUp
+      value: 2
+    - name: kThemeStatePressedDown
+      value: 3
+    comment: Drawing states.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeSystemFont
+      value: 0
+    - name: kThemeSmallSystemFont
+      value: 1
+    - name: kThemeSmallEmphasizedSystemFont
+      value: 2
+    - name: kThemeViewsFont
+      value: 3
+    - name: kThemeEmphasizedSystemFont
+      value: 4
+    - name: kThemeApplicationFont
+      value: 5
+    - name: kThemeLabelFont
+      value: 6
+    - name: kThemeMenuTitleFont
+      value: 100
+    - name: kThemeMenuItemFont
+      value: 101
+    - name: kThemeMenuItemMarkFont
+      value: 102
+    - name: kThemeMenuItemCmdKeyFont
+      value: 103
+    - name: kThemeWindowTitleFont
+      value: 104
+    - name: kThemePushButtonFont
+      value: 105
+    - name: kThemeUtilityWindowTitleFont
+      value: 106
+    - name: kThemeAlertHeaderFont
+      value: 107
+    - name: kThemeCurrentPortFont
+      value: 200
+    comment: Theme fonts, for UseThemeFont and GetThemeFont.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeTabNonFront
+      value: 0
+    - name: kThemeTabNonFrontPressed
+      value: 1
+    - name: kThemeTabNonFrontInactive
+      value: 2
+    - name: kThemeTabFront
+      value: 3
+    - name: kThemeTabFrontInactive
+      value: 4
+    - name: kThemeTabNonFrontUnavailable
+      value: 5
+    - name: kThemeTabFrontUnavailable
+      value: 6
+    - name: kThemeTabNorth
+      value: 0
+    - name: kThemeTabSouth
+      value: 1
+    - name: kThemeTabEast
+      value: 2
+    - name: kThemeTabWest
+      value: 3
+    - name: kThemeSmallTabHeight
+      value: 16
+    - name: kThemeLargeTabHeight
+      value: 21
+    - name: kThemeTabPaneOverlap
+      value: 3
+    - name: kThemeSmallTabHeightMax
+      value: 19
+    - name: kThemeLargeTabHeightMax
+      value: 24
+    comment: Tabs.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeMediumScrollBar
+      value: 0
+    - name: kThemeSmallScrollBar
+      value: 1
+    - name: kThemeMediumSlider
+      value: 2
+    - name: kThemeMediumProgressBar
+      value: 3
+    - name: kThemeMediumIndeterminateBar
+      value: 4
+    - name: kThemeRelevanceBar
+      value: 5
+    - name: kThemeSmallSlider
+      value: 6
+    - name: kThemeLargeProgressBar
+      value: 7
+    - name: kThemeLargeIndeterminateBar
+      value: 8
+    - name: kThemeTrackActive
+      value: 0
+    - name: kThemeTrackDisabled
+      value: 1
+    - name: kThemeTrackNothingToScroll
+      value: 2
+    - name: kThemeTrackInactive
+      value: 3
+    - name: kThemeLeftOutsideArrowPressed
+      value: 1
+    - name: kThemeLeftInsideArrowPressed
+      value: 2
+    - name: kThemeLeftTrackPressed
+      value: 4
+    - name: kThemeThumbPressed
+      value: 8
+    - name: kThemeRightTrackPressed
+      value: 16
+    - name: kThemeRightInsideArrowPressed
+      value: 32
+    - name: kThemeRightOutsideArrowPressed
+      value: 64
+    - name: kThemeTopOutsideArrowPressed
+      value: 1
+    - name: kThemeTopInsideArrowPressed
+      value: 2
+    - name: kThemeTopTrackPressed
+      value: 4
+    - name: kThemeBottomTrackPressed
+      value: 16
+    - name: kThemeBottomInsideArrowPressed
+      value: 32
+    - name: kThemeBottomOutsideArrowPressed
+      value: 64
+    - name: kThemeThumbPlain
+      value: 0
+    - name: kThemeThumbUpward
+      value: 1
+    - name: kThemeThumbDownward
+      value: 2
+    - name: kThemeTrackHorizontal
+      value: 1
+    - name: kThemeTrackRightToLeft
+      value: 2
+    - name: kThemeTrackShowThumb
+      value: 4
+    - name: kThemeTrackThumbRgnIsNotGhost
+      value: 8
+    - name: kThemeTrackNoScrollBarArrows
+      value: 16
+    comment: 'Tracks: scroll bars, sliders and progress bars.'
+
+# ####
+
+- struct:
+    name: ScrollBarTrackInfo
+    size: 6
+    members:
+    - name: viewsize
+      type: SInt32
+    - name: pressState
+      type: ThemeTrackPressState
+
+# ####
+
+- struct:
+    name: SliderTrackInfo
+    size: 2
+    members:
+    - name: thumbDir
+      type: ThemeThumbDirection
+    - name: pressState
+      type: ThemeTrackPressState
+
+# ####
+
+- struct:
+    name: ProgressTrackInfo
+    size: 2
+    members:
+    - name: phase
+      type: UInt8
+
+# ####
+
+- union:
+    name: ThemeTrackInfo
+    size: 6
+    members:
+    - name: scrollbar
+      type: ScrollBarTrackInfo
+    - name: slider
+      type: SliderTrackInfo
+    - name: progress
+      type: ProgressTrackInfo
+
+# ####
+
+- struct:
+    name: ThemeTrackDrawInfo
+    size: 36
+    comment: What DrawThemeTrack and the other track calls draw.
+    members:
+    - name: kind
+      type: ThemeTrackKind
+    - name: bounds
+      type: Rect
+    - name: min
+      type: SInt32
+    - name: max
+      type: SInt32
+    - name: value
+      type: SInt32
+    - name: reserved
+      type: UInt32
+    - name: attributes
+      type: ThemeTrackAttributes
+    - name: enableState
+      type: ThemeTrackEnableState
+    - name: filler1
+      type: UInt8
+    - name: trackInfo
+      type: ThemeTrackInfo
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeDocumentWindow
+      value: 0
+    - name: kThemeDialogWindow
+      value: 1
+    - name: kThemeMovableDialogWindow
+      value: 2
+    - name: kThemeAlertWindow
+      value: 3
+    - name: kThemeMovableAlertWindow
+      value: 4
+    - name: kThemePlainDialogWindow
+      value: 5
+    - name: kThemeShadowDialogWindow
+      value: 6
+    - name: kThemePopupWindow
+      value: 7
+    - name: kThemeUtilityWindow
+      value: 8
+    - name: kThemeUtilitySideWindow
+      value: 9
+    - name: kThemeWindowHasGrow
+      value: 2
+    - name: kThemeWindowHasHorizontalZoom
+      value: 8
+    - name: kThemeWindowHasVerticalZoom
+      value: 16
+    - name: kThemeWindowHasFullZoom
+      value: 24
+    - name: kThemeWindowHasCloseBox
+      value: 32
+    - name: kThemeWindowHasCollapseBox
+      value: 64
+    - name: kThemeWindowHasTitleText
+      value: 128
+    - name: kThemeWindowIsCollapsed
+      value: 256
+    - name: kThemeWindowHasDirty
+      value: 512
+    - name: kThemeWidgetCloseBox
+      value: 0
+    - name: kThemeWidgetZoomBox
+      value: 1
+    - name: kThemeWidgetCollapseBox
+      value: 2
+    - name: kThemeWidgetDirtyCloseBox
+      value: 6
+    comment: Windows.
+
+# ####
+
+- struct:
+    name: ThemeWindowMetrics
+    size: 12
+    members:
+    - name: metricSize
+      type: UInt16
+    - name: titleHeight
+      type: SInt16
+    - name: titleWidth
+      type: SInt16
+    - name: popupTabOffset
+      type: SInt16
+    - name: popupTabWidth
+      type: SInt16
+    - name: popupTabPosition
+      type: UInt16
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeArrowLeft
+      value: 0
+    - name: kThemeArrowDown
+      value: 1
+    - name: kThemeArrowRight
+      value: 2
+    - name: kThemeArrowUp
+      value: 3
+    - name: kThemeArrow3pt
+      value: 0
+    - name: kThemeArrow5pt
+      value: 1
+    - name: kThemeArrow7pt
+      value: 2
+    - name: kThemeArrow9pt
+      value: 3
+    - name: kThemeGrowLeft
+      value: 1
+    - name: kThemeGrowRight
+      value: 2
+    - name: kThemeGrowUp
+      value: 4
+    - name: kThemeGrowDown
+      value: 8
+    - name: kThemePushButton
+      value: 0
+    - name: kThemeCheckBox
+      value: 1
+    - name: kThemeRadioButton
+      value: 2
+    - name: kThemeBevelButton
+      value: 3
+    - name: kThemeArrowButton
+      value: 4
+    - name: kThemePopupButton
+      value: 5
+    - name: kThemeDisclosureButton
+      value: 6
+    - name: kThemeIncDecButton
+      value: 7
+    - name: kThemeSmallBevelButton
+      value: 8
+    - name: kThemeMediumBevelButton
+      value: 3
+    - name: kThemeLargeBevelButton
+      value: 9
+    - name: kThemeListHeaderButton
+      value: 10
+    - name: kThemeRoundButton
+      value: 11
+    - name: kThemeLargeRoundButton
+      value: 12
+    - name: kThemeSmallCheckBox
+      value: 13
+    - name: kThemeSmallRadioButton
+      value: 14
+    - name: kThemeRoundedBevelButton
+      value: 15
+    - name: kThemeNormalCheckBox
+      value: 1
+    - name: kThemeNormalRadioButton
+      value: 2
+    - name: kThemeButtonOff
+      value: 0
+    - name: kThemeButtonOn
+      value: 1
+    - name: kThemeButtonMixed
+      value: 2
+    - name: kThemeDisclosureRight
+      value: 0
+    - name: kThemeDisclosureDown
+      value: 1
+    - name: kThemeDisclosureLeft
+      value: 2
+    - name: kThemeAdornmentNone
+      value: 0
+    - name: kThemeAdornmentDefault
+      value: 1
+    - name: kThemeAdornmentFocus
+      value: 4
+    - name: kThemeAdornmentRightToLeft
+      value: 16
+    - name: kThemeAdornmentDrawIndicatorOnly
+      value: 32
+    - name: kThemeAdornmentArrowLeftArrow
+      value: 64
+    - name: kThemeAdornmentArrowDownArrow
+      value: 128
+    - name: kThemeAdornmentArrowDoubleArrow
+      value: 256
+    - name: kThemeAdornmentArrowUpArrow
+      value: 512
+    - name: kThemeCheckBoxClassicX
+      value: 0
+    - name: kThemeCheckBoxCheckMark
+      value: 1
+    - name: kThemeScrollBarArrowsSingle
+      value: 0
+    - name: kThemeScrollBarArrowsLowerRight
+      value: 1
+    - name: kThemeScrollBarThumbNormal
+      value: 0
+    - name: kThemeScrollBarThumbProportional
+      value: 1
+    comment: Arrows, grow boxes, buttons.
+
+# ####
+
+- struct:
+    name: ThemeButtonDrawInfo
+    size: 8
+    members:
+    - name: state
+      type: ThemeDrawState
+    - name: value
+      type: ThemeButtonValue
+    - name: adornment
+      type: ThemeButtonAdornment
+
+# ####
+
+- typedef:
+    name: ThemeButtonDrawInfoPtr
+    type: ThemeButtonDrawInfo*
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeMenuBarNormal
+      value: 0
+    - name: kThemeMenuBarSelected
+      value: 1
+    - name: kThemeMenuSquareMenuBar
+      value: 1
+    - name: kThemeMenuActive
+      value: 0
+    - name: kThemeMenuSelected
+      value: 1
+    - name: kThemeMenuDisabled
+      value: 3
+    - name: kThemeMenuTypePullDown
+      value: 0
+    - name: kThemeMenuTypePopUp
+      value: 1
+    - name: kThemeMenuTypeHierarchical
+      value: 2
+    - name: kThemeMenuTypeInactive
+      value: 256
+    - name: kThemeMenuItemPlain
+      value: 0
+    - name: kThemeMenuItemHierarchical
+      value: 1
+    - name: kThemeMenuItemScrollUpArrow
+      value: 2
+    - name: kThemeMenuItemScrollDownArrow
+      value: 3
+    - name: kThemeMenuItemAtTop
+      value: 256
+    - name: kThemeMenuItemAtBottom
+      value: 512
+    - name: kThemeMenuItemHierBackground
+      value: 1024
+    - name: kThemeMenuItemPopUpBackground
+      value: 2048
+    - name: kThemeMenuItemHasIcon
+      value: 32768
+    comment: Menus.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeBackgroundTabPane
+      value: 1
+    - name: kThemeBackgroundPlacard
+      value: 2
+    - name: kThemeBackgroundWindowHeader
+      value: 3
+    - name: kThemeBackgroundListViewWindowHeader
+      value: 4
+    - name: kThemeBackgroundSecondaryGroupBox
+      value: 5
+    comment: Backgrounds for ApplyThemeBackground.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeArrowCursor
+      value: 0
+    - name: kThemeCopyArrowCursor
+      value: 1
+    - name: kThemeAliasArrowCursor
+      value: 2
+    - name: kThemeContextualMenuArrowCursor
+      value: 3
+    - name: kThemeIBeamCursor
+      value: 4
+    - name: kThemeCrossCursor
+      value: 5
+    - name: kThemePlusCursor
+      value: 6
+    - name: kThemeWatchCursor
+      value: 7
+    - name: kThemeClosedHandCursor
+      value: 8
+    - name: kThemeOpenHandCursor
+      value: 9
+    - name: kThemePointingHandCursor
+      value: 10
+    - name: kThemeCountingUpHandCursor
+      value: 11
+    - name: kThemeCountingDownHandCursor
+      value: 12
+    - name: kThemeCountingUpAndDownHandCursor
+      value: 13
+    - name: kThemeSpinningCursor
+      value: 14
+    - name: kThemeResizeLeftCursor
+      value: 15
+    - name: kThemeResizeRightCursor
+      value: 16
+    - name: kThemeResizeLeftRightCursor
+      value: 17
+    comment: Cursors for SetThemeCursor.
+
+# ####
+
+- enum:
+    values:
+    - name: kThemeNoSounds
+      value: 0
+    - name: kThemeWindowSoundsMask
+      value: 1
+    - name: kThemeMenuSoundsMask
+      value: 2
+    - name: kThemeControlSoundsMask
+      value: 4
+    - name: kThemeFinderSoundsMask
+      value: 8
+    - name: kThemeDragSoundNone
+      value: 0
+    - name: kThemeDragSoundMoveWindow
+      value: '''wmov'''
+    - name: kThemeDragSoundGrowWindow
+      value: '''wgro'''
+    - name: kThemeDragSoundMoveUtilWindow
+      value: '''umov'''
+    - name: kThemeDragSoundGrowUtilWindow
+      value: '''ugro'''
+    - name: kThemeDragSoundMoveDialog
+      value: '''dmov'''
+    - name: kThemeDragSoundMoveAlert
+      value: '''amov'''
+    - name: kThemeDragSoundMoveIcon
+      value: '''imov'''
+    - name: kThemeDragSoundSliderThumb
+      value: '''slth'''
+    - name: kThemeDragSoundSliderGhost
+      value: '''slgh'''
+    - name: kThemeDragSoundScrollBarThumb
+      value: '''sbth'''
+    - name: kThemeDragSoundScrollBarGhost
+      value: '''sbgh'''
+    - name: kThemeDragSoundScrollBarArrowDecreasing
+      value: '''sbad'''
+    - name: kThemeDragSoundScrollBarArrowIncreasing
+      value: '''sbai'''
+    - name: kThemeDragSoundDragging
+      value: '''drag'''
+    - name: kThemeSoundNone
+      value: 0
+    - name: kThemeSoundMenuOpen
+      value: '''mnuo'''
+    - name: kThemeSoundMenuClose
+      value: '''mnuc'''
+    - name: kThemeSoundMenuItemHilite
+      value: '''mnui'''
+    - name: kThemeSoundMenuItemRelease
+      value: '''mnus'''
+    comment: Sounds.
+
+# ####
+
+- enum:
+    values:
+    - name: kAppearancePartMetaNone
+      value: 0
+    - name: kAppearancePartIndicator
+      value: 129
+    - name: kAppearancePartUpButton
+      value: 20
+    - name: kAppearancePartDownButton
+      value: 21
+    - name: kAppearancePartLeftButton
+      value: 20
+    - name: kAppearancePartRightButton
+      value: 21
+    - name: kAppearancePartPageUpArea
+      value: 22
+    - name: kAppearancePartPageDownArea
+      value: 23
+    - name: kAppearancePartPageLeftArea
+      value: 22
+    - name: kAppearancePartPageRightArea
+      value: 23
+    comment: Appearance part codes, for HitTestThemeTrack.
+
+# ####
+
+- funptr:
+    name: MenuTitleDrawingProcPtr
+    args:
+    - name: inBounds
+      type: const Rect*
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    - name: inUserData
+      type: SInt32
+
+# ####
+
+- funptr:
+    name: MenuItemDrawingProcPtr
+    args:
+    - name: inBounds
+      type: const Rect*
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    - name: inUserData
+      type: SInt32
+
+# ####
+
+- funptr:
+    name: ThemeTabTitleDrawProcPtr
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: style
+      type: ThemeTabStyle
+    - name: direction
+      type: ThemeTabDirection
+    - name: depth
+      type: SInt16
+    - name: isColorDev
+      type: Boolean
+    - name: userData
+      type: UInt32
+
+# ####
+
+- funptr:
+    name: ThemeEraseProcPtr
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: eraseData
+      type: UInt32
+    - name: depth
+      type: SInt16
+    - name: isColorDev
+      type: Boolean
+
+# ####
+
+- funptr:
+    name: ThemeButtonDrawProcPtr
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: kind
+      type: ThemeButtonKind
+    - name: info
+      type: const ThemeButtonDrawInfo*
+    - name: userData
+      type: UInt32
+    - name: depth
+      type: SInt16
+    - name: isColorDev
+      type: Boolean
+
+# ####
+
+- funptr:
+    name: WindowTitleDrawingProcPtr
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: depth
+      type: SInt16
+    - name: colorDevice
+      type: Boolean
+    - name: userData
+      type: UInt32
+
+# ####
+
+- funptr:
+    name: ThemeIteratorProcPtr
+    return: Boolean
+    args:
+    - name: inFileName
+      type: ConstStr255Param
+    - name: resID
+      type: SInt16
+    - name: inThemeSettings
+      type: Collection
+    - name: inUserData
+      type: void*
+
+# ####
+
+- funptr:
+    name: WindowPaintProcPtr
+    return: OSStatus
+    args:
+    - name: device
+      type: GDHandle
+    - name: qdContext
+      type: GrafPtr
+    - name: window
+      type: WindowRef
+    - name: inClientPaintRgn
+      type: RgnHandle
+    - name: outSystemPaintRgn
+      type: RgnHandle
+    - name: refCon
+      type: void*
+    comment: Draws a window's content (Mac OS 8.5). It is here, not in the Window Manager, because GDHandle comes from Color QuickDraw.
+
+# ####
+
+- function:
+    name: RegisterAppearanceClient
+    return: OSStatus
+    comment: Appearance Manager 1.0 (Mac OS 8)
+    dispatcher: AppearanceDispatch
+    selector: 21
+
+# ####
+
+- function:
+    name: UnregisterAppearanceClient
+    return: OSStatus
+    dispatcher: AppearanceDispatch
+    selector: 22
+
+# ####
+
+- function:
+    name: SetThemePen
+    return: OSStatus
+    args:
+    - name: inBrush
+      type: ThemeBrush
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 1
+
+# ####
+
+- function:
+    name: SetThemeBackground
+    return: OSStatus
+    args:
+    - name: inBrush
+      type: ThemeBrush
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 2
+
+# ####
+
+- function:
+    name: SetThemeTextColor
+    return: OSStatus
+    args:
+    - name: inColor
+      type: ThemeTextColor
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 3
+
+# ####
+
+- function:
+    name: SetThemeWindowBackground
+    return: OSStatus
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: inBrush
+      type: ThemeBrush
+    - name: inUpdate
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 4
+
+# ####
+
+- function:
+    name: DrawThemeWindowHeader
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 5
+
+# ####
+
+- function:
+    name: DrawThemeWindowListViewHeader
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 6
+
+# ####
+
+- function:
+    name: DrawThemePlacard
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 7
+
+# ####
+
+- function:
+    name: DrawThemeEditTextFrame
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 9
+
+# ####
+
+- function:
+    name: DrawThemeListBoxFrame
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 10
+
+# ####
+
+- function:
+    name: DrawThemeFocusRect
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inHasFocus
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: DrawThemePrimaryGroup
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 12
+
+# ####
+
+- function:
+    name: DrawThemeSecondaryGroup
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 13
+
+# ####
+
+- function:
+    name: DrawThemeSeparator
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 14
+
+# ####
+
+- function:
+    name: DrawThemeModelessDialogFrame
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    dispatcher: AppearanceDispatch
+    selector: 8
+
+# ####
+
+- function:
+    name: DrawThemeGenericWell
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    - name: inFillCenter
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 34
+
+# ####
+
+- function:
+    name: DrawThemeFocusRegion
+    return: OSStatus
+    args:
+    - name: inRegion
+      type: RgnHandle
+    - name: inHasFocus
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 35
+
+# ####
+
+- function:
+    name: IsThemeInColor
+    return: Boolean
+    args:
+    - name: inDepth
+      type: SInt16
+    - name: inIsColorDevice
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 36
+
+# ####
+
+- function:
+    name: GetThemeAccentColors
+    return: OSStatus
+    args:
+    - name: outColors
+      type: CTabHandle*
+    dispatcher: AppearanceDispatch
+    selector: 37
+
+# ####
+
+- function:
+    name: DrawThemeMenuBarBackground
+    return: OSStatus
+    args:
+    - name: inBounds
+      type: const Rect*
+    - name: inState
+      type: ThemeMenuBarState
+    - name: inAttributes
+      type: UInt32
+    dispatcher: AppearanceDispatch
+    selector: 24
+
+# ####
+
+- function:
+    name: DrawThemeMenuTitle
+    return: OSStatus
+    args:
+    - name: inMenuBarRect
+      type: const Rect*
+    - name: inTitleRect
+      type: const Rect*
+    - name: inState
+      type: ThemeMenuState
+    - name: inAttributes
+      type: UInt32
+    - name: inTitleProc
+      type: MenuTitleDrawingUPP
+    - name: inTitleData
+      type: UInt32
+    dispatcher: AppearanceDispatch
+    selector: 25
+
+# ####
+
+- function:
+    name: GetThemeMenuBarHeight
+    return: OSStatus
+    args:
+    - name: outHeight
+      type: SInt16*
+    dispatcher: AppearanceDispatch
+    selector: 26
+
+# ####
+
+- function:
+    name: DrawThemeMenuBackground
+    return: OSStatus
+    args:
+    - name: inMenuRect
+      type: const Rect*
+    - name: inMenuType
+      type: ThemeMenuType
+    dispatcher: AppearanceDispatch
+    selector: 27
+
+# ####
+
+- function:
+    name: GetThemeMenuBackgroundRegion
+    return: OSStatus
+    args:
+    - name: inMenuRect
+      type: const Rect*
+    - name: menuType
+      type: ThemeMenuType
+    - name: region
+      type: RgnHandle
+    dispatcher: AppearanceDispatch
+    selector: 28
+
+# ####
+
+- function:
+    name: DrawThemeMenuItem
+    return: OSStatus
+    args:
+    - name: inMenuRect
+      type: const Rect*
+    - name: inItemRect
+      type: const Rect*
+    - name: inVirtualMenuTop
+      type: SInt16
+    - name: inVirtualMenuBottom
+      type: SInt16
+    - name: inState
+      type: ThemeMenuState
+    - name: inItemType
+      type: ThemeMenuItemType
+    - name: inDrawProc
+      type: MenuItemDrawingUPP
+    - name: inUserData
+      type: UInt32
+    dispatcher: AppearanceDispatch
+    selector: 29
+
+# ####
+
+- function:
+    name: DrawThemeMenuSeparator
+    return: OSStatus
+    args:
+    - name: inItemRect
+      type: const Rect*
+    dispatcher: AppearanceDispatch
+    selector: 30
+
+# ####
+
+- function:
+    name: GetThemeMenuSeparatorHeight
+    return: OSStatus
+    args:
+    - name: outHeight
+      type: SInt16*
+    dispatcher: AppearanceDispatch
+    selector: 31
+
+# ####
+
+- function:
+    name: GetThemeMenuItemExtra
+    return: OSStatus
+    args:
+    - name: inItemType
+      type: ThemeMenuItemType
+    - name: outHeight
+      type: SInt16*
+    - name: outWidth
+      type: SInt16*
+    dispatcher: AppearanceDispatch
+    selector: 32
+
+# ####
+
+- function:
+    name: GetThemeMenuTitleExtra
+    return: OSStatus
+    args:
+    - name: outWidth
+      type: SInt16*
+    - name: inIsSquished
+      type: Boolean
+    dispatcher: AppearanceDispatch
+    selector: 33
+
+# ####
+
+- function:
+    name: IsAppearanceClient
+    return: Boolean
+    args:
+    - name: process
+      type: const ProcessSerialNumber*
+    comment: Appearance Manager 1.1 (Mac OS 8.5)
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeDrawingState
+    return: OSStatus
+    args:
+    - name: outState
+      type: ThemeDrawingState*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetThemeDrawingState
+    return: OSStatus
+    args:
+    - name: inState
+      type: ThemeDrawingState
+    - name: inDisposeNow
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: DisposeThemeDrawingState
+    return: OSStatus
+    args:
+    - name: inState
+      type: ThemeDrawingState
+    m68k: none
+
+# ####
+
+- function:
+    name: NormalizeThemeDrawingState
+    return: OSStatus
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTextColor
+    return: OSStatus
+    args:
+    - name: inColor
+      type: ThemeTextColor
+    - name: inDepth
+      type: SInt16
+    - name: inColorDev
+      type: Boolean
+    - name: outColor
+      type: RGBColor*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeBrushAsColor
+    return: OSStatus
+    args:
+    - name: inBrush
+      type: ThemeBrush
+    - name: inDepth
+      type: SInt16
+    - name: inColorDev
+      type: Boolean
+    - name: outColor
+      type: RGBColor*
+    m68k: none
+
+# ####
+
+- function:
+    name: ApplyThemeBackground
+    return: OSStatus
+    args:
+    - name: inKind
+      type: ThemeBackgroundKind
+    - name: bounds
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    - name: inDepth
+      type: SInt16
+    - name: inColorDev
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: SetThemeTextColorForWindow
+    return: OSStatus
+    args:
+    - name: inWindow
+      type: WindowRef
+    - name: isActive
+      type: Boolean
+    - name: depth
+      type: SInt16
+    - name: isColorDev
+      type: Boolean
+    m68k: none
+
+# ####
+
+- function:
+    name: IsValidAppearanceFileType
+    return: Boolean
+    args:
+    - name: fileType
+      type: OSType
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeFont
+    return: OSStatus
+    args:
+    - name: inFontID
+      type: ThemeFontID
+    - name: inScript
+      type: ScriptCode
+    - name: outFontName
+      type: Str255
+    - name: outFontSize
+      type: SInt16*
+    - name: outStyle
+      type: Style*
+    m68k: none
+
+# ####
+
+- function:
+    name: UseThemeFont
+    return: OSStatus
+    args:
+    - name: inFontID
+      type: ThemeFontID
+    - name: inScript
+      type: ScriptCode
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeTabPane
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inState
+      type: ThemeDrawState
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeTab
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inStyle
+      type: ThemeTabStyle
+    - name: inDirection
+      type: ThemeTabDirection
+    - name: labelProc
+      type: ThemeTabTitleDrawUPP
+    - name: userData
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTabRegion
+    return: OSStatus
+    args:
+    - name: inRect
+      type: const Rect*
+    - name: inStyle
+      type: ThemeTabStyle
+    - name: inDirection
+      type: ThemeTabDirection
+    - name: ioRgn
+      type: RgnHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: SetThemeCursor
+    return: OSStatus
+    args:
+    - name: inCursor
+      type: ThemeCursor
+    m68k: none
+
+# ####
+
+- function:
+    name: SetAnimatedThemeCursor
+    return: OSStatus
+    args:
+    - name: inCursor
+      type: ThemeCursor
+    - name: inAnimationStep
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeScrollBarThumbStyle
+    return: OSStatus
+    args:
+    - name: outStyle
+      type: ThemeScrollBarThumbStyle*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeScrollBarArrowStyle
+    return: OSStatus
+    args:
+    - name: outStyle
+      type: ThemeScrollBarArrowStyle*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeCheckBoxStyle
+    return: OSStatus
+    args:
+    - name: outStyle
+      type: ThemeCheckBoxStyle*
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeScrollBarArrows
+    return: OSStatus
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: enableState
+      type: ThemeTrackEnableState
+    - name: pressState
+      type: ThemeTrackPressState
+    - name: isHoriz
+      type: Boolean
+    - name: trackBounds
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeScrollBarTrackRect
+    return: OSStatus
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: enableState
+      type: ThemeTrackEnableState
+    - name: pressState
+      type: ThemeTrackPressState
+    - name: isHoriz
+      type: Boolean
+    - name: trackBounds
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: HitTestThemeScrollBarArrows
+    return: Boolean
+    args:
+    - name: scrollBarBounds
+      type: const Rect*
+    - name: enableState
+      type: ThemeTrackEnableState
+    - name: pressState
+      type: ThemeTrackPressState
+    - name: isHoriz
+      type: Boolean
+    - name: ptHit
+      type: Point
+    - name: trackBounds
+      type: Rect*
+    - name: partcode
+      type: ControlPartCode*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTrackBounds
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: bounds
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTrackThumbRgn
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: thumbRgn
+      type: RgnHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTrackDragRect
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: dragRect
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeTrack
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: rgnGhost
+      type: RgnHandle
+    - name: eraseProc
+      type: ThemeEraseUPP
+    - name: eraseData
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: HitTestThemeTrack
+    return: Boolean
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: mousePoint
+      type: Point
+    - name: partHit
+      type: AppearancePartCode*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTrackLiveValue
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: relativePosition
+      type: SInt32
+    - name: value
+      type: SInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeTrackTickMarks
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: numTicks
+      type: ItemCount
+    - name: eraseProc
+      type: ThemeEraseUPP
+    - name: eraseData
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTrackThumbPositionFromOffset
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: thumbOffset
+      type: Point
+    - name: relativePosition
+      type: SInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeTrackThumbPositionFromRegion
+    return: OSStatus
+    args:
+    - name: drawInfo
+      type: const ThemeTrackDrawInfo*
+    - name: thumbRgn
+      type: RgnHandle
+    - name: relativePosition
+      type: SInt32*
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeChasingArrows
+    return: OSStatus
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: index
+      type: UInt32
+    - name: state
+      type: ThemeDrawState
+    - name: eraseProc
+      type: ThemeEraseUPP
+    - name: eraseData
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemePopupArrow
+    return: OSStatus
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: orientation
+      type: ThemeArrowOrientation
+    - name: size
+      type: ThemePopupArrowSize
+    - name: state
+      type: ThemeDrawState
+    - name: eraseProc
+      type: ThemeEraseUPP
+    - name: eraseData
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeStandaloneGrowBox
+    return: OSStatus
+    args:
+    - name: origin
+      type: Point
+    - name: growDirection
+      type: ThemeGrowDirection
+    - name: isSmall
+      type: Boolean
+    - name: state
+      type: ThemeDrawState
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeStandaloneNoGrowBox
+    return: OSStatus
+    args:
+    - name: origin
+      type: Point
+    - name: growDirection
+      type: ThemeGrowDirection
+    - name: isSmall
+      type: Boolean
+    - name: state
+      type: ThemeDrawState
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeStandaloneGrowBoxBounds
+    return: OSStatus
+    args:
+    - name: origin
+      type: Point
+    - name: growDirection
+      type: ThemeGrowDirection
+    - name: isSmall
+      type: Boolean
+    - name: bounds
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeTickMark
+    return: OSStatus
+    args:
+    - name: bounds
+      type: const Rect*
+    - name: state
+      type: ThemeDrawState
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeButton
+    return: OSStatus
+    args:
+    - name: inBounds
+      type: const Rect*
+    - name: inKind
+      type: ThemeButtonKind
+    - name: inNewInfo
+      type: const ThemeButtonDrawInfo*
+    - name: inPrevInfo
+      type: const ThemeButtonDrawInfo*
+    - name: inEraseProc
+      type: ThemeEraseUPP
+    - name: inLabelProc
+      type: ThemeButtonDrawUPP
+    - name: inUserData
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeButtonRegion
+    return: OSStatus
+    args:
+    - name: inBounds
+      type: const Rect*
+    - name: inKind
+      type: ThemeButtonKind
+    - name: inNewInfo
+      type: const ThemeButtonDrawInfo*
+    - name: outRegion
+      type: RgnHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeButtonContentBounds
+    return: OSStatus
+    args:
+    - name: inBounds
+      type: const Rect*
+    - name: inKind
+      type: ThemeButtonKind
+    - name: inDrawInfo
+      type: const ThemeButtonDrawInfo*
+    - name: outBounds
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeButtonBackgroundBounds
+    return: OSStatus
+    args:
+    - name: inBounds
+      type: const Rect*
+    - name: inKind
+      type: ThemeButtonKind
+    - name: inDrawInfo
+      type: const ThemeButtonDrawInfo*
+    - name: outBounds
+      type: Rect*
+    m68k: none
+
+# ####
+
+- function:
+    name: PlayThemeSound
+    return: OSStatus
+    args:
+    - name: kind
+      type: ThemeSoundKind
+    m68k: none
+
+# ####
+
+- function:
+    name: BeginThemeDragSound
+    return: OSStatus
+    args:
+    - name: kind
+      type: ThemeDragSoundKind
+    m68k: none
+
+# ####
+
+- function:
+    name: EndThemeDragSound
+    return: OSStatus
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeWindowFrame
+    return: OSStatus
+    args:
+    - name: flavor
+      type: ThemeWindowType
+    - name: contRect
+      type: const Rect*
+    - name: state
+      type: ThemeDrawState
+    - name: metrics
+      type: const ThemeWindowMetrics*
+    - name: attributes
+      type: ThemeWindowAttributes
+    - name: titleProc
+      type: WindowTitleDrawingUPP
+    - name: titleData
+      type: UInt32
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeTitleBarWidget
+    return: OSStatus
+    args:
+    - name: flavor
+      type: ThemeWindowType
+    - name: contRect
+      type: const Rect*
+    - name: state
+      type: ThemeDrawState
+    - name: metrics
+      type: const ThemeWindowMetrics*
+    - name: attributes
+      type: ThemeWindowAttributes
+    - name: widget
+      type: ThemeTitleBarWidget
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeWindowRegionHit
+    return: Boolean
+    args:
+    - name: flavor
+      type: ThemeWindowType
+    - name: inContRect
+      type: const Rect*
+    - name: state
+      type: ThemeDrawState
+    - name: metrics
+      type: const ThemeWindowMetrics*
+    - name: inAttributes
+      type: ThemeWindowAttributes
+    - name: inPoint
+      type: Point
+    - name: outRegionHit
+      type: WindowRegionCode*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetThemeWindowRegion
+    return: OSStatus
+    args:
+    - name: flavor
+      type: ThemeWindowType
+    - name: contRect
+      type: const Rect*
+    - name: state
+      type: ThemeDrawState
+    - name: metrics
+      type: const ThemeWindowMetrics*
+    - name: attributes
+      type: ThemeWindowAttributes
+    - name: winRegion
+      type: WindowRegionCode
+    - name: rgn
+      type: RgnHandle
+    m68k: none
+
+# ####
+
+- function:
+    name: DrawThemeScrollBarDelimiters
+    return: OSStatus
+    args:
+    - name: flavor
+      type: ThemeWindowType
+    - name: inContRect
+      type: const Rect*
+    - name: state
+      type: ThemeDrawState
+    - name: attributes
+      type: ThemeWindowAttributes
+    m68k: none
+
+# ####
+
+- function:
+    name: IterateThemes
+    return: OSStatus
+    args:
+    - name: inProc
+      type: ThemeIteratorUPP
+    - name: inUserData
+      type: void*
+    m68k: none
+
+# ####
+
+- function:
+    name: GetTheme
+    return: OSStatus
+    args:
+    - name: ioCollection
+      type: Collection
+    m68k: none
+
+# ####
+
+- function:
+    name: SetTheme
+    return: OSStatus
+    args:
+    - name: ioCollection
+      type: Collection
+    m68k: none
+
+# ####
+
+- function:
+    name: InstallWindowContentPaintProc
+    return: OSStatus
+    args:
+    - name: window
+      type: WindowRef
+    - name: paintProc
+      type: WindowPaintUPP
+    - name: options
+      type: WindowPaintProcOptions
+    - name: refCon
+      type: void*
+    comment: Window content painting (Mac OS 8.5, WindowsLib)
+    m68k: none

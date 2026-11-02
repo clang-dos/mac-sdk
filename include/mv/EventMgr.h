@@ -84,6 +84,9 @@ struct EventRecord {
 #define LMGetKeyMap() ((uint8_t *)0x00000174)
 #define LMSetKeyMap(val) BlockMoveData((const void *)(val), (void *)0x00000174, sizeof(uint8_t[16]))
 
+// A set of event kinds, one bit each (everyEvent and friends).
+typedef UInt16 EventMask;
+
 #pragma options align=reset
 
 #endif

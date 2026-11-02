@@ -1,0 +1,660 @@
+
+# ####
+
+- typedef:
+    name: Collection
+    type: struct OpaqueCollection*
+    comment: 'Collection Manager: an ordered list of tagged items, used by the Window and Appearance Managers
+      to store settings.'
+
+# ####
+
+- typedef:
+    name: CollectionTag
+    type: OSType
+
+# ####
+
+- enum:
+    values:
+    - name: kCollectionDontWantTag
+      value: 0
+    - name: kCollectionDontWantId
+      value: 0
+    - name: kCollectionDontWantSize
+      value: 0
+    - name: kCollectionDontWantAttributes
+      value: 0
+    - name: kCollectionDontWantIndex
+      value: 0
+    - name: kCollectionDontWantData
+      value: 0
+    - name: kCollectionNoAttributes
+      value: 0
+    - name: kCollectionAllAttributes
+      value: 4294967295
+    - name: kCollectionUserAttributes
+      value: 65535
+    - name: kCollectionDefaultAttributes
+      value: 1073741824
+    - name: kCollectionUser0Bit
+      value: 0
+    - name: kCollectionPersistenceBit
+      value: 30
+    - name: kCollectionLockBit
+      value: 31
+    - name: kCollectionPersistenceMask
+      value: 1073741824
+    - name: kCollectionLockMask
+      value: 2147483648
+    - name: collectionItemLockedErr
+      value: -5750
+    - name: collectionItemNotFoundErr
+      value: -5751
+    - name: collectionIndexRangeErr
+      value: -5752
+    - name: collectionVersionErr
+      value: -5753
+    - name: gestaltCollectionMgrVersion
+      value: '''cltn'''
+
+# ####
+
+- funptr:
+    name: CollectionFlattenProcPtr
+    return: OSErr
+    args:
+    - name: size
+      type: SInt32
+    - name: data
+      type: void*
+    - name: refCon
+      type: void*
+
+# ####
+
+- funptr:
+    name: CollectionExceptionProcPtr
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: status
+      type: OSErr
+
+# ####
+
+- dispatcher:
+    name: CollectionMgr
+    trap: 44022
+    selector-location: D0L
+
+# ####
+
+- function:
+    name: NewCollection
+    return: Collection
+    dispatcher: CollectionMgr
+    selector: 0
+
+# ####
+
+- function:
+    name: DisposeCollection
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 1
+
+# ####
+
+- function:
+    name: CloneCollection
+    return: Collection
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 2
+
+# ####
+
+- function:
+    name: CountCollectionOwners
+    return: SInt32
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 3
+
+# ####
+
+- function:
+    name: CopyCollection
+    return: Collection
+    args:
+    - name: srcCollection
+      type: Collection
+    - name: dstCollection
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 4
+
+# ####
+
+- function:
+    name: GetCollectionDefaultAttributes
+    return: SInt32
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 5
+
+# ####
+
+- function:
+    name: SetCollectionDefaultAttributes
+    args:
+    - name: c
+      type: Collection
+    - name: whichAttributes
+      type: SInt32
+    - name: newAttributes
+      type: SInt32
+    dispatcher: CollectionMgr
+    selector: 6
+
+# ####
+
+- function:
+    name: CountCollectionItems
+    return: SInt32
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 7
+
+# ####
+
+- function:
+    name: AddCollectionItem
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: id
+      type: SInt32
+    - name: itemSize
+      type: SInt32
+    - name: itemData
+      type: void*
+    dispatcher: CollectionMgr
+    selector: 8
+
+# ####
+
+- function:
+    name: GetCollectionItem
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: id
+      type: SInt32
+    - name: itemSize
+      type: SInt32*
+    - name: itemData
+      type: void*
+    dispatcher: CollectionMgr
+    selector: 9
+
+# ####
+
+- function:
+    name: RemoveCollectionItem
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: id
+      type: SInt32
+    dispatcher: CollectionMgr
+    selector: 10
+
+# ####
+
+- function:
+    name: SetCollectionItemInfo
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: id
+      type: SInt32
+    - name: whichAttributes
+      type: SInt32
+    - name: newAttributes
+      type: SInt32
+    dispatcher: CollectionMgr
+    selector: 11
+
+# ####
+
+- function:
+    name: GetCollectionItemInfo
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: id
+      type: SInt32
+    - name: index
+      type: SInt32*
+    - name: itemSize
+      type: SInt32*
+    - name: attributes
+      type: SInt32*
+    dispatcher: CollectionMgr
+    selector: 12
+
+# ####
+
+- function:
+    name: ReplaceIndexedCollectionItem
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: index
+      type: SInt32
+    - name: itemSize
+      type: SInt32
+    - name: itemData
+      type: void*
+    dispatcher: CollectionMgr
+    selector: 13
+
+# ####
+
+- function:
+    name: GetIndexedCollectionItem
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: index
+      type: SInt32
+    - name: itemSize
+      type: SInt32*
+    - name: itemData
+      type: void*
+    dispatcher: CollectionMgr
+    selector: 14
+
+# ####
+
+- function:
+    name: RemoveIndexedCollectionItem
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: index
+      type: SInt32
+    dispatcher: CollectionMgr
+    selector: 15
+
+# ####
+
+- function:
+    name: SetIndexedCollectionItemInfo
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: index
+      type: SInt32
+    - name: whichAttributes
+      type: SInt32
+    - name: newAttributes
+      type: SInt32
+    dispatcher: CollectionMgr
+    selector: 16
+
+# ####
+
+- function:
+    name: GetIndexedCollectionItemInfo
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: index
+      type: SInt32
+    - name: tag
+      type: CollectionTag*
+    - name: id
+      type: SInt32*
+    - name: itemSize
+      type: SInt32*
+    - name: attributes
+      type: SInt32*
+    dispatcher: CollectionMgr
+    selector: 17
+
+# ####
+
+- function:
+    name: CollectionTagExists
+    return: Boolean
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    dispatcher: CollectionMgr
+    selector: 18
+
+# ####
+
+- function:
+    name: CountCollectionTags
+    return: SInt32
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 19
+
+# ####
+
+- function:
+    name: GetIndexedCollectionTag
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tagIndex
+      type: SInt32
+    - name: tag
+      type: CollectionTag*
+    dispatcher: CollectionMgr
+    selector: 20
+
+# ####
+
+- function:
+    name: CountTaggedCollectionItems
+    return: SInt32
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    dispatcher: CollectionMgr
+    selector: 21
+
+# ####
+
+- function:
+    name: GetTaggedCollectionItem
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: whichItem
+      type: SInt32
+    - name: itemSize
+      type: SInt32*
+    - name: itemData
+      type: void*
+    dispatcher: CollectionMgr
+    selector: 22
+
+# ####
+
+- function:
+    name: GetTaggedCollectionItemInfo
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: whichItem
+      type: SInt32
+    - name: id
+      type: SInt32*
+    - name: index
+      type: SInt32*
+    - name: itemSize
+      type: SInt32*
+    - name: attributes
+      type: SInt32*
+    dispatcher: CollectionMgr
+    selector: 23
+
+# ####
+
+- function:
+    name: PurgeCollection
+    args:
+    - name: c
+      type: Collection
+    - name: whichAttributes
+      type: SInt32
+    - name: matchingAttributes
+      type: SInt32
+    dispatcher: CollectionMgr
+    selector: 24
+
+# ####
+
+- function:
+    name: PurgeCollectionTag
+    args:
+    - name: c
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    dispatcher: CollectionMgr
+    selector: 25
+
+# ####
+
+- function:
+    name: EmptyCollection
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 26
+
+# ####
+
+- function:
+    name: FlattenCollection
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: flattenProc
+      type: CollectionFlattenUPP
+    - name: refCon
+      type: void*
+    dispatcher: CollectionMgr
+    selector: 27
+
+# ####
+
+- function:
+    name: FlattenPartialCollection
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: flattenProc
+      type: CollectionFlattenUPP
+    - name: refCon
+      type: void*
+    - name: whichAttributes
+      type: SInt32
+    - name: matchingAttributes
+      type: SInt32
+    dispatcher: CollectionMgr
+    selector: 28
+
+# ####
+
+- function:
+    name: UnflattenCollection
+    return: OSErr
+    args:
+    - name: c
+      type: Collection
+    - name: flattenProc
+      type: CollectionFlattenUPP
+    - name: refCon
+      type: void*
+    dispatcher: CollectionMgr
+    selector: 29
+
+# ####
+
+- function:
+    name: GetCollectionExceptionProc
+    return: CollectionExceptionUPP
+    args:
+    - name: c
+      type: Collection
+    dispatcher: CollectionMgr
+    selector: 30
+
+# ####
+
+- function:
+    name: SetCollectionExceptionProc
+    args:
+    - name: c
+      type: Collection
+    - name: exceptionProc
+      type: CollectionExceptionUPP
+    dispatcher: CollectionMgr
+    selector: 31
+
+# ####
+
+- function:
+    name: GetNewCollection
+    return: Collection
+    args:
+    - name: collectionID
+      type: SInt16
+    dispatcher: CollectionMgr
+    selector: 32
+
+# ####
+
+- function:
+    name: AddCollectionItemHdl
+    return: OSErr
+    args:
+    - name: aCollection
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: id
+      type: SInt32
+    - name: itemData
+      type: Handle
+    dispatcher: CollectionMgr
+    selector: 33
+
+# ####
+
+- function:
+    name: GetCollectionItemHdl
+    return: OSErr
+    args:
+    - name: aCollection
+      type: Collection
+    - name: tag
+      type: CollectionTag
+    - name: id
+      type: SInt32
+    - name: itemData
+      type: Handle
+    dispatcher: CollectionMgr
+    selector: 34
+
+# ####
+
+- function:
+    name: ReplaceIndexedCollectionItemHdl
+    return: OSErr
+    args:
+    - name: aCollection
+      type: Collection
+    - name: index
+      type: SInt32
+    - name: itemData
+      type: Handle
+    dispatcher: CollectionMgr
+    selector: 35
+
+# ####
+
+- function:
+    name: GetIndexedCollectionItemHdl
+    return: OSErr
+    args:
+    - name: aCollection
+      type: Collection
+    - name: index
+      type: SInt32
+    - name: itemData
+      type: Handle
+    dispatcher: CollectionMgr
+    selector: 36
+
+# ####
+
+- function:
+    name: FlattenCollectionToHdl
+    return: OSErr
+    args:
+    - name: aCollection
+      type: Collection
+    - name: flattened
+      type: Handle
+    dispatcher: CollectionMgr
+    selector: 37
+
+# ####
+
+- function:
+    name: UnflattenCollectionFromHdl
+    return: OSErr
+    args:
+    - name: aCollection
+      type: Collection
+    - name: flattened
+      type: Handle
+    dispatcher: CollectionMgr
+    selector: 38
