@@ -599,6 +599,34 @@ enum { _Pack9 = 0xA82B };
 
 pascal OSErr PPCBrowser(ConstStr255Param prompt, ConstStr255Param applListLabel, Boolean defaultSpecified, LocationNameRec *theLocation, PortInfoRec *thePortInfo, PPCFilterUPP portFilter, ConstStr32Param theLocNBPType) M68K_INLINE(0x303C, 0x0D00, 0xA82B);
 
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCKillSync(void *pb) {
+    register OSErr _ret __asm__("d0");
+    register void* _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x700B, 0xA0DD"
+        : "=r"(_ret), "+r"(_pb)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCKillSync(void *pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCKillAsync(void *pb) {
+    register OSErr _ret __asm__("d0");
+    register void* _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x700B, 0xA4DD"
+        : "=r"(_ret), "+r"(_pb)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCKillAsync(void *pb);
+#endif
+
 #pragma options align=reset
 
 #endif

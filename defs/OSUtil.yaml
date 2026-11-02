@@ -666,6 +666,7 @@
     executor: true
     trap: 0xA9C6
     executor_extras: SaveA1D1D2
+    old_name: Secs2Date
 
 # ####
 
@@ -1428,3 +1429,16 @@
       type: ExceptionHandler
     comment: |
       PowerPC only.
+
+# ####
+
+- function:
+    name: Translate24To32
+    return: Ptr
+    args:
+      - name: addr24
+        type: void*
+        register: D0
+    trap: 0xA091
+    returnreg: D0
+    comment: Converts a 24-bit address to a 32-bit one (MPW 3.2 interfaces).

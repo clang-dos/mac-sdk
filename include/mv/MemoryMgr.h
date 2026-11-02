@@ -705,6 +705,9 @@ static __inline__ __attribute__((__always_inline__)) void DisposeHandle(Handle h
 #else
 pascal void DisposeHandle(Handle h);
 #endif
+#if OLDROUTINENAMES
+#define DisposHandle(h) DisposeHandle(h)
+#endif
 
 enum { _GetHandleSize = 0xA025 };
 #if TARGET_CPU_68K
@@ -763,6 +766,9 @@ static __inline__ __attribute__((__always_inline__)) void ReallocateHandle(Handl
 #else
 pascal void ReallocateHandle(Handle h, Size size);
 #endif
+#if OLDROUTINENAMES
+#define ReallocHandle(h, size) ReallocateHandle(h, size)
+#endif
 
 enum { _DisposePtr = 0xA01F };
 #if TARGET_CPU_68K
@@ -775,6 +781,9 @@ static __inline__ __attribute__((__always_inline__)) void DisposePtr(Ptr p) {
 }
 #else
 pascal void DisposePtr(Ptr p);
+#endif
+#if OLDROUTINENAMES
+#define DisposPtr(p) DisposePtr(p)
 #endif
 
 enum { _GetPtrSize = 0xA021 };
@@ -966,18 +975,39 @@ enum { _OSDispatch = 0xA88F };
 
 // temporary memory functions; see tempmem.c
 pascal long TempFreeMem(void) M68K_INLINE(0x3F3C, 0x0018, 0xA88F);
+#if OLDROUTINENAMES
+#define MFFreeMem() TempFreeMem()
+#endif
 
 pascal Size TempMaxMem(Size *grow) M68K_INLINE(0x3F3C, 0x0015, 0xA88F);
+#if OLDROUTINENAMES
+#define MFMaxMem(grow) TempMaxMem(grow)
+#endif
 
 pascal Ptr TempTopMem(void) M68K_INLINE(0x3F3C, 0x0016, 0xA88F);
+#if OLDROUTINENAMES
+#define MFTopMem() TempTopMem()
+#endif
 
 pascal Handle TempNewHandle(Size logical_size, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001D, 0xA88F);
+#if OLDROUTINENAMES
+#define MFTempNewHandle(logical_size, result_code) TempNewHandle(logical_size, result_code)
+#endif
 
 pascal void TempHLock(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001E, 0xA88F);
+#if OLDROUTINENAMES
+#define MFTempHLock(h, result_code) TempHLock(h, result_code)
+#endif
 
 pascal void TempHUnlock(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x001F, 0xA88F);
+#if OLDROUTINENAMES
+#define MFTempHUnlock(h, result_code) TempHUnlock(h, result_code)
+#endif
 
 pascal void TempDisposeHandle(Handle h, OSErr *result_code) M68K_INLINE(0x3F3C, 0x0020, 0xA88F);
+#if OLDROUTINENAMES
+#define MFTempDisposHandle(h, result_code) TempDisposeHandle(h, result_code)
+#endif
 
 // Virtual memory
 #if TARGET_CPU_68K
@@ -1308,6 +1338,11 @@ static __inline__ __attribute__((__always_inline__)) void ReallocateHandleSys(Ha
 }
 #else
 pascal void ReallocateHandleSys(Handle h, Size byteCount);
+#endif
+
+#if OLDROUTINENAMES
+#define ResrvMem(needed) ReserveMem(needed)
+#define ResrvMemSys(needed) ReserveMemSys(needed)
 #endif
 
 #if TARGET_CPU_68K

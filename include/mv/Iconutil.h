@@ -149,6 +149,9 @@ pascal CIconHandle GetCIcon(int16_t icon_id) M68K_INLINE(0xAA1E);
 
 enum { _DisposeCIcon = 0xAA25 };
 pascal void DisposeCIcon(CIconHandle icon) M68K_INLINE(0xAA25);
+#if OLDROUTINENAMES
+#define DisposCIcon(icon) DisposeCIcon(icon)
+#endif
 
 pascal OSErr GetIconSuite(Handle *suite, int16_t res_id, IconSelectorValue selector) M68K_INLINE(0x303C, 0x0501, 0xABC9);
 

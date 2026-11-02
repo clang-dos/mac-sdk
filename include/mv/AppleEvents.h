@@ -424,12 +424,24 @@ pascal OSErr AEDisposeDesc(AEDesc *desc) M68K_INLINE(0x303C, 0x0204, 0xA816);
 pascal OSErr AECoerceDesc(AEDesc *desc, DescType result_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0603, 0xA816);
 
 pascal OSErr AEGetParamPtr(AERecord *record, AEKeyword keyword, DescType desired_type, DescType *type_out, Ptr data, Size max_size, Size *size_out) M68K_INLINE(0x303C, 0x0E11, 0xA816);
+#if OLDROUTINENAMES
+#define AEGetKeyPtr(record, keyword, desired_type, type_out, data, max_size, size_out) AEGetParamPtr(record, keyword, desired_type, type_out, data, max_size, size_out)
+#endif
 
 pascal OSErr AEGetParamDesc(AERecord *record, AEKeyword keyword, DescType desired_type, AEDesc *desc_out) M68K_INLINE(0x303C, 0x0812, 0xA816);
+#if OLDROUTINENAMES
+#define AEGetKeyDesc(record, keyword, desired_type, desc_out) AEGetParamDesc(record, keyword, desired_type, desc_out)
+#endif
 
 pascal OSErr AEPutParamPtr(AERecord *record, AEKeyword keyword, DescType type, const void *data, Size data_size) M68K_INLINE(0x303C, 0x0A0F, 0xA816);
+#if OLDROUTINENAMES
+#define AEPutKeyPtr(record, keyword, type, data, data_size) AEPutParamPtr(record, keyword, type, data, data_size)
+#endif
 
 pascal OSErr AEPutParamDesc(AERecord *record, AEKeyword keyword, AEDesc *desc) M68K_INLINE(0x303C, 0x0610, 0xA816);
+#if OLDROUTINENAMES
+#define AEPutKeyDesc(record, keyword, desc) AEPutParamDesc(record, keyword, desc)
+#endif
 
 // extern OSErr C_AEDeleteParam(AppleEvent *evt, AEKeyword keyword);
 // PASCAL_SUBTRAP(AEDeleteParam, 0xA816, 0x0413, Pack8);
@@ -438,6 +450,9 @@ pascal OSErr AEPutParamDesc(AERecord *record, AEKeyword keyword, AEDesc *desc) M
 //                                              AEKeyword keyword);
 // PASCAL_SUBTRAP_UNKNOWN(AEDeleteAttribute, 0xA816, Pack8);
 pascal OSErr AESizeOfParam(AERecord *record, AEKeyword keyword, DescType *type_out, Size *size_out) M68K_INLINE(0x303C, 0x0829, 0xA816);
+#if OLDROUTINENAMES
+#define AESizeOfKeyDesc(record, keyword, type_out, size_out) AESizeOfParam(record, keyword, type_out, size_out)
+#endif
 
 pascal OSErr AESetInteractionAllowed(AEInteractionAllowed level) M68K_INLINE(0x303C, 0x011E, 0xA816);
 
@@ -460,6 +475,9 @@ pascal OSErr AECountItems(AEDescList *list, long *count_out) M68K_INLINE(0x303C,
 pascal OSErr AEDeleteItem(AEDescList *list, long index) M68K_INLINE(0x303C, 0x040E, 0xA816);
 
 pascal OSErr AEDeleteParam(AERecord *record, AEKeyword keyword) M68K_INLINE(0x303C, 0x0413, 0xA816);
+#if OLDROUTINENAMES
+#define AEDeleteKeyDesc(record, keyword) AEDeleteParam(record, keyword)
+#endif
 
 pascal OSErr AEInstallSpecialHandler(AEKeyword function_class, AEEventHandlerUPP hdlr, Boolean system_handler_p) M68K_INLINE(0x303C, 0x0500, 0xA816);
 

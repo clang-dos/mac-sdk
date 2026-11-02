@@ -75,6 +75,7 @@
 #include "mv/Package.h"
 #include "mv/Power.h"
 #include "mv/PrintMgr.h"
+#include "mv/VDriver.h"
 #include "mv/QuickTime.h"
 #include "mv/SCSI.h"
 #include "mv/SegmentLdr.h"
@@ -93,7 +94,6 @@
 #include "mv/ToolboxEvent.h"
 #include "mv/URLAccess.h"
 #include "mv/UnicodeConverter.h"
-#include "mv/VDriver.h"
 
 extern QDGlobals qd;
 #endif

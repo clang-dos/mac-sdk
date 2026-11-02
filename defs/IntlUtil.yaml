@@ -277,6 +277,7 @@
     dispatcher: Pack6
     selector: 0x0006
     executor: C_
+    old_name: IUGetIntl
 
 # ####
 
@@ -333,6 +334,7 @@
     dispatcher: Pack6
     selector: 0x0004
     executor: C_
+    old_name: IUMetric
 
 # ####
 
@@ -348,6 +350,7 @@
     dispatcher: Pack6
     selector: 0x0008
     executor: C_
+    old_name: IUSetIntl
 
 # ####
 
@@ -471,6 +474,7 @@
     dispatcher: Pack6
     selector: 0x0018
     executor: C_
+    old_name: IUClearCache
 
 # ####
 
@@ -584,3 +588,4 @@
     dispatcher: Pack6
     selector: 0x0024
     executor: C_
+    old_name: IUGetItlTable

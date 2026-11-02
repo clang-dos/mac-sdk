@@ -264,6 +264,23 @@ pascal ComponentResult CallComponentGetPublicResource(ComponentInstance ci, OSTy
 
 pascal Component RegisterComponent(ComponentDescription *cd, ComponentRoutineUPP componentEntryPoint, INTEGER global, Handle componentName, Handle componentInfo, Handle componentIcon) M68K_INLINE(0x7001, 0xA82A);
 
+typedef ComponentRoutineProcPtr ComponentRoutine;
+
+typedef ComponentFunctionUPP ComponentFunction;
+
+enum {
+    invalidComponentID = -3000,
+    validInstancesExist = -3001,
+    componentNotCaptured = -3002,
+    componentDontRegister = -3003,
+};
+
+enum {
+    gestaltComponentMgr = 'cpnt',
+    badComponentInstance = 2147516417,
+    badComponentSelector = 2147516418,
+};
+
 #pragma options align=reset
 
 #endif

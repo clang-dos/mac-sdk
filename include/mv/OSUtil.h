@@ -376,6 +376,9 @@ static __inline__ __attribute__((__always_inline__)) void SecondsToDate(ULONGINT
 #else
 pascal void SecondsToDate(ULONGINT mactime, DateTimeRec *d);
 #endif
+#if OLDROUTINENAMES
+#define Secs2Date(mactime, d) SecondsToDate(mactime, d)
+#endif
 
 #if TARGET_CPU_68K
 static __inline__ void GetTime(DateTimeRec *d);
@@ -914,6 +917,22 @@ typedef OSStatus (*ExceptionHandler)(ExceptionInformation *theException);
 
 // PowerPC only.
 pascal ExceptionHandler InstallExceptionHandler(ExceptionHandler theHandler);
+
+// Converts a 24-bit address to a 32-bit one (MPW 3.2 interfaces).
+enum { _Translate24To32 = 0xA091 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Ptr Translate24To32(void *addr24) {
+    register Ptr _ret __asm__("d0");
+    register void* _addr24 __asm__("d0") = addr24;
+    __asm__ __volatile__(".short 0xA091"
+        : "=r"(_ret)
+        : "r"(_addr24)
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Ptr Translate24To32(void *addr24);
+#endif
 
 #if TARGET_CPU_68K
 static __inline__ INTEGER RelString(ConstStringPtr s1, ConstStringPtr s2, Boolean casesig, Boolean diacsig) {

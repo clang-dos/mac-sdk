@@ -4455,6 +4455,62 @@ pascal void PBSetVolumeInfoAsync(FSVolumeInfoParam *paramBlock);
 
 typedef DrvQEl *DrvQElPtr;
 
+// AppleShare alternate access privileges (MPW 3.2 interfaces).
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessSync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7060, 0xA060"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetAltAccessSync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBGetAltAccessAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7060, 0xA460"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBGetAltAccessAsync(HParmBlkPtr paramBlock);
+#endif
+
+// AppleShare alternate access privileges (MPW 3.2 interfaces).
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessSync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7061, 0xA060"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBSetAltAccessSync(HParmBlkPtr paramBlock);
+#endif
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PBSetAltAccessAsync(HParmBlkPtr paramBlock) {
+    register OSErr _ret __asm__("d0");
+    register HParmBlkPtr _paramBlock __asm__("a0") = paramBlock;
+    __asm__ __volatile__(".short 0x7061, 0xA460"
+        : "=r"(_ret), "+r"(_paramBlock)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PBSetAltAccessAsync(HParmBlkPtr paramBlock);
+#endif
+
 #if TARGET_CPU_68K
 static __inline__ OSErr FSOpen(ConstStringPtr filen, INTEGER vrn, INTEGER *rn) {
     ParamBlockRec pb;

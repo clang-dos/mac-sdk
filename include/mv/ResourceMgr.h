@@ -149,6 +149,9 @@ pascal INTEGER GetResAttrs(Handle res) M68K_INLINE(0xA9A6);
 
 enum { _GetResourceSizeOnDisk = 0xA9A5 };
 pascal LONGINT GetResourceSizeOnDisk(Handle res) M68K_INLINE(0xA9A5);
+#if OLDROUTINENAMES
+#define SizeResource(res) GetResourceSizeOnDisk(res)
+#endif
 
 enum { _CountTypes = 0xA99E };
 pascal INTEGER CountTypes(void) M68K_INLINE(0xA99E);
@@ -164,6 +167,9 @@ pascal void Get1IndType(ResType *typ, INTEGER indx) M68K_INLINE(0xA80F);
 
 enum { _GetMaxResourceSize = 0xA821 };
 pascal LONGINT GetMaxResourceSize(Handle h) M68K_INLINE(0xA821);
+#if OLDROUTINENAMES
+#define MaxSizeRsrc(h) GetMaxResourceSize(h)
+#endif
 
 enum { _RsrcMapEntry = 0xA9C5 };
 pascal LONGINT RsrcMapEntry(Handle h) M68K_INLINE(0xA9C5);
@@ -200,6 +206,9 @@ pascal void AddResource(Handle data, ResType typ, INTEGER id, ConstStringPtr nam
 
 enum { _RemoveResource = 0xA9AD };
 pascal void RemoveResource(Handle res) M68K_INLINE(0xA9AD);
+#if OLDROUTINENAMES
+#define RmveResource(res) RemoveResource(res)
+#endif
 
 enum { _UpdateResFile = 0xA999 };
 pascal void UpdateResFile(INTEGER rn) M68K_INLINE(0xA999);

@@ -3,11 +3,19 @@
 #define __MV_QUICKTIME__
 
 #include "../ConditionalMacros.h"
+#include "AliasMgr.h"
 #include "CQuickDraw.h"
 #include "Components.h"
+#include "DialogMgr.h"
+#include "EventMgr.h"
 #include "FileMgr.h"
 #include "MacTypes.h"
+#include "MenuMgr.h"
 #include "QuickDraw.h"
+#include "StdFilePkg.h"
+#include "TextEdit.h"
+#include "VDriver.h"
+#include "WindowMgr.h"
 
 #pragma options align=mac68k
 
@@ -63,6 +71,3773 @@ pascal ComponentInstance NewMovieController(Movie movie, const Rect *mrectp, LON
 pascal void DisposeMovieController(ComponentInstance cntrller) M68K_INLINE(0x303C, 0x018B, 0xAAAA);
 
 pascal OSErr OpenMovieFile(const FSSpec *filespecp, INTEGER *refnump, uint8_t perm) M68K_INLINE(0x303C, 0x0192, 0xAAAA);
+
+typedef struct MatrixRecord MatrixRecord;
+struct MatrixRecord {
+    Fixed matrix[3][3];
+};
+
+typedef MatrixRecord *MatrixRecordPtr;
+
+typedef struct FixedPoint FixedPoint;
+struct FixedPoint {
+    Fixed x;
+    Fixed y;
+};
+
+typedef struct FixedRect FixedRect;
+struct FixedRect {
+    Fixed left;
+    Fixed top;
+    Fixed right;
+    Fixed bottom;
+};
+
+typedef Component CompressorComponent;
+
+typedef Component DecompressorComponent;
+
+typedef Component CodecComponent;
+
+typedef long CodecType;
+
+typedef uint16_t CodecFlags;
+
+typedef unsigned long CodecQ;
+
+typedef pascal OSErr (*DataProcPtr)(Ptr*, long, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr DataUPP;
+enum { uppDataProcInfo = 0x00000FE0 };
+#define NewDataUPP(proc) ((DataUPP)NewRoutineDescriptor((ProcPtr)(proc), uppDataProcInfo, GetCurrentArchitecture()))
+#define DisposeDataUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef DataProcPtr DataUPP;
+#define NewDataUPP(proc) (proc)
+#define DisposeDataUPP(upp) ((void)0)
+#endif
+#define NewDataProc(proc) NewDataUPP(proc)
+#define DisposeDataProc(proc) DisposeDataUPP(proc)
+
+typedef pascal OSErr (*FlushProcPtr)(Ptr, long, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr FlushUPP;
+enum { uppFlushProcInfo = 0x00000FE0 };
+#define NewFlushUPP(proc) ((FlushUPP)NewRoutineDescriptor((ProcPtr)(proc), uppFlushProcInfo, GetCurrentArchitecture()))
+#define DisposeFlushUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef FlushProcPtr FlushUPP;
+#define NewFlushUPP(proc) (proc)
+#define DisposeFlushUPP(upp) ((void)0)
+#endif
+#define NewFlushProc(proc) NewFlushUPP(proc)
+#define DisposeFlushProc(proc) DisposeFlushUPP(proc)
+
+typedef pascal void (*CompletionProcPtr)(OSErr, INTEGER, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr CompletionUPP;
+enum { uppCompletionProcInfo = 0x00000E80 };
+#define NewCompletionUPP(proc) ((CompletionUPP)NewRoutineDescriptor((ProcPtr)(proc), uppCompletionProcInfo, GetCurrentArchitecture()))
+#define DisposeCompletionUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef CompletionProcPtr CompletionUPP;
+#define NewCompletionUPP(proc) (proc)
+#define DisposeCompletionUPP(upp) ((void)0)
+#endif
+#define NewCompletionProc(proc) NewCompletionUPP(proc)
+#define DisposeCompletionProc(proc) DisposeCompletionUPP(proc)
+
+typedef pascal OSErr (*ProgressProcPtr)(INTEGER, Fixed, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ProgressUPP;
+enum { uppProgressProcInfo = 0x00000FA0 };
+#define NewProgressUPP(proc) ((ProgressUPP)NewRoutineDescriptor((ProcPtr)(proc), uppProgressProcInfo, GetCurrentArchitecture()))
+#define DisposeProgressUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ProgressProcPtr ProgressUPP;
+#define NewProgressUPP(proc) (proc)
+#define DisposeProgressUPP(upp) ((void)0)
+#endif
+#define NewProgressProc(proc) NewProgressUPP(proc)
+#define DisposeProgressProc(proc) DisposeProgressUPP(proc)
+
+typedef pascal void (*StdPixProcPtr)(PixMap*, Rect*, MatrixRecord*, INTEGER, RgnHandle, PixMap*, Rect*, INTEGER);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr StdPixUPP;
+enum { uppStdPixProcInfo = 0x002FEFC0 };
+#define NewStdPixUPP(proc) ((StdPixUPP)NewRoutineDescriptor((ProcPtr)(proc), uppStdPixProcInfo, GetCurrentArchitecture()))
+#define DisposeStdPixUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef StdPixProcPtr StdPixUPP;
+#define NewStdPixUPP(proc) (proc)
+#define DisposeStdPixUPP(upp) ((void)0)
+#endif
+#define NewStdPixProc(proc) NewStdPixUPP(proc)
+#define DisposeStdPixProc(proc) DisposeStdPixUPP(proc)
+
+typedef long ImageSequence;
+
+typedef struct ProgressProcRecord ProgressProcRecord;
+struct ProgressProcRecord {
+    ProgressProcPtr progressProc;
+    long progressRefCon;
+};
+
+typedef ProgressProcRecord *ProgressProcRecordPtr;
+
+typedef struct CompletionProcRecord CompletionProcRecord;
+struct CompletionProcRecord {
+    CompletionProcPtr completionProc;
+    long completionRefCon;
+};
+
+typedef CompletionProcRecord *CompletionProcRecordPtr;
+
+typedef struct DataProcRecord DataProcRecord;
+struct DataProcRecord {
+    DataProcPtr dataProc;
+    long dataRefCon;
+};
+
+typedef DataProcRecord *DataProcRecordPtr;
+
+typedef struct FlushProcRecord FlushProcRecord;
+struct FlushProcRecord {
+    FlushProcPtr flushProc;
+    long flushRefCon;
+};
+
+typedef FlushProcRecord *FlushProcRecordPtr;
+
+typedef pascal void (*AlignmentProcPtr)(Rect*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr AlignmentUPP;
+enum { uppAlignmentProcInfo = 0x000003C0 };
+#define NewAlignmentUPP(proc) ((AlignmentUPP)NewRoutineDescriptor((ProcPtr)(proc), uppAlignmentProcInfo, GetCurrentArchitecture()))
+#define DisposeAlignmentUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef AlignmentProcPtr AlignmentUPP;
+#define NewAlignmentUPP(proc) (proc)
+#define DisposeAlignmentUPP(upp) ((void)0)
+#endif
+#define NewAlignmentProc(proc) NewAlignmentUPP(proc)
+#define DisposeAlignmentProc(proc) DisposeAlignmentUPP(proc)
+
+typedef struct AlignmentProcRecord AlignmentProcRecord;
+struct AlignmentProcRecord {
+    AlignmentProcPtr alignmentProc;
+    long alignmentRefCon;
+};
+
+typedef AlignmentProcRecord *AlignmentProcRecordPtr;
+
+typedef struct DataRateParams DataRateParams;
+struct DataRateParams {
+    long dataRate;
+    long dataOverrun;
+    long frameDuration;
+    long keyFrameRate;
+    CodecQ minSpatialQuality;
+    CodecQ minTemporalQuality;
+};
+
+typedef DataRateParams *DataRateParamsPtr;
+
+typedef struct ImageDescription ImageDescription;
+struct ImageDescription {
+    long idSize;
+    CodecType cType;
+    long resvd1;
+    INTEGER resvd2;
+    INTEGER dataRefIndex;
+    INTEGER version;
+    INTEGER revisionLevel;
+    long vendor;
+    CodecQ temporalQuality;
+    CodecQ spatialQuality;
+    INTEGER width;
+    INTEGER height;
+    Fixed hRes;
+    Fixed vRes;
+    long dataSize;
+    INTEGER frameCount;
+    char name[32];
+    INTEGER depth;
+    INTEGER clutID;
+};
+
+typedef ImageDescription *ImageDescriptionPtr;
+
+typedef ImageDescription **ImageDescriptionHandle;
+
+typedef struct CodecInfo CodecInfo;
+struct CodecInfo {
+    char typeName[32];
+    INTEGER version;
+    INTEGER revisionLevel;
+    long vendor;
+    long decompressFlags;
+    long compressFlags;
+    long formatFlags;
+    uint8_t compressionAccuracy;
+    uint8_t decompressionAccuracy;
+    uint16_t compressionSpeed;
+    uint16_t decompressionSpeed;
+    uint8_t compressionLevel;
+    char resvd;
+    INTEGER minimumHeight;
+    INTEGER minimumWidth;
+    INTEGER decompressPipelineLatency;
+    INTEGER compressPipelineLatency;
+    long privateData;
+};
+
+typedef struct CodecNameSpec CodecNameSpec;
+struct CodecNameSpec {
+    CodecComponent codec;
+    CodecType cType;
+    char typeName[32];
+    Handle name;
+};
+
+typedef struct CodecNameSpecList CodecNameSpecList;
+struct CodecNameSpecList {
+    INTEGER count;
+    CodecNameSpec list[1];
+};
+
+typedef CodecNameSpecList *CodecNameSpecListPtr;
+
+pascal OSErr CodecManagerVersion(long *version) M68K_INLINE(0x7000, 0xAAA3);
+
+pascal OSErr GetCodecNameList(CodecNameSpecListPtr *list, INTEGER showAll) M68K_INLINE(0x7001, 0xAAA3);
+
+pascal OSErr DisposeCodecNameList(CodecNameSpecListPtr list) M68K_INLINE(0x700F, 0xAAA3);
+
+pascal OSErr GetCodecInfo(CodecInfo *info, CodecType cType, CodecComponent codec) M68K_INLINE(0x7003, 0xAAA3);
+
+pascal OSErr GetMaxCompressionSize(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecQ quality, CodecType cType, CompressorComponent codec, long *size) M68K_INLINE(0x7004, 0xAAA3);
+
+pascal OSErr GetCompressionTime(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecType cType, CompressorComponent codec, CodecQ *spatialQuality, CodecQ *temporalQuality, unsigned long *compressTime) M68K_INLINE(0x7005, 0xAAA3);
+
+pascal OSErr CompressImage(PixMapHandle src, const Rect *srcRect, CodecQ quality, CodecType cType, ImageDescriptionHandle desc, Ptr data) M68K_INLINE(0x7006, 0xAAA3);
+
+pascal OSErr FCompressImage(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, CodecQ quality, CodecType cType, CompressorComponent codec, CTabHandle clut, CodecFlags flags, long bufferSize, FlushProcRecordPtr flushProc, ProgressProcRecordPtr progressProc, ImageDescriptionHandle desc, Ptr data) M68K_INLINE(0x7007, 0xAAA3);
+
+pascal OSErr DecompressImage(Ptr data, ImageDescriptionHandle desc, PixMapHandle dst, const Rect *srcRect, const Rect *dstRect, INTEGER mode, RgnHandle mask) M68K_INLINE(0x7008, 0xAAA3);
+
+pascal OSErr FDecompressImage(Ptr data, ImageDescriptionHandle desc, PixMapHandle dst, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, PixMapHandle matte, const Rect *matteRect, CodecQ accuracy, DecompressorComponent codec, long bufferSize, DataProcRecordPtr dataProc, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7009, 0xAAA3);
+
+pascal OSErr CompressSequenceBegin(ImageSequence *seqID, PixMapHandle src, PixMapHandle prev, const Rect *srcRect, const Rect *prevRect, INTEGER colorDepth, CodecType cType, CompressorComponent codec, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate, CTabHandle clut, CodecFlags flags, ImageDescriptionHandle desc) M68K_INLINE(0x700A, 0xAAA3);
+
+pascal OSErr CompressSequenceFrame(ImageSequence seqID, PixMapHandle src, const Rect *srcRect, CodecFlags flags, Ptr data, long *dataSize, uint8_t *similarity, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x700B, 0xAAA3);
+
+pascal OSErr DecompressSequenceBegin(ImageSequence *seqID, ImageDescriptionHandle desc, CGrafPtr port, GDHandle gdh, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, CodecFlags flags, CodecQ accuracy, DecompressorComponent codec) M68K_INLINE(0x700D, 0xAAA3);
+
+pascal OSErr DecompressSequenceFrame(ImageSequence seqID, Ptr data, CodecFlags inFlags, CodecFlags *outFlags, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x700E, 0xAAA3);
+
+pascal OSErr DecompressSequenceFrameS(ImageSequence seqID, Ptr data, long dataSize, CodecFlags inFlags, CodecFlags *outFlags, CompletionProcRecordPtr asyncCompletionProc) M68K_INLINE(0x203C, 0x0016, 0x0047, 0xAAA3);
+
+pascal OSErr SetDSequenceMatrix(ImageSequence seqID, MatrixRecordPtr matrix) M68K_INLINE(0x7010, 0xAAA3);
+
+pascal OSErr SetDSequenceMatte(ImageSequence seqID, PixMapHandle matte, const Rect *matteRect) M68K_INLINE(0x7011, 0xAAA3);
+
+pascal OSErr SetDSequenceMask(ImageSequence seqID, RgnHandle mask) M68K_INLINE(0x7012, 0xAAA3);
+
+pascal OSErr SetDSequenceTransferMode(ImageSequence seqID, INTEGER mode, const RGBColor *opColor) M68K_INLINE(0x7013, 0xAAA3);
+
+pascal OSErr SetDSequenceDataProc(ImageSequence seqID, DataProcRecordPtr dataProc, long bufferSize) M68K_INLINE(0x7014, 0xAAA3);
+
+pascal OSErr SetDSequenceAccuracy(ImageSequence seqID, CodecQ accuracy) M68K_INLINE(0x7034, 0xAAA3);
+
+pascal OSErr SetDSequenceSrcRect(ImageSequence seqID, const Rect *srcRect) M68K_INLINE(0x7035, 0xAAA3);
+
+pascal OSErr GetDSequenceImageBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7015, 0xAAA3);
+
+pascal OSErr GetDSequenceScreenBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7016, 0xAAA3);
+
+pascal OSErr SetCSequenceQuality(ImageSequence seqID, CodecQ spatialQuality, CodecQ temporalQuality) M68K_INLINE(0x7017, 0xAAA3);
+
+pascal OSErr SetCSequencePrev(ImageSequence seqID, PixMapHandle prev, const Rect *prevRect) M68K_INLINE(0x7018, 0xAAA3);
+
+pascal OSErr SetCSequenceFlushProc(ImageSequence seqID, FlushProcRecordPtr flushProc, long bufferSize) M68K_INLINE(0x7033, 0xAAA3);
+
+pascal OSErr SetCSequenceKeyFrameRate(ImageSequence seqID, long keyframerate) M68K_INLINE(0x7036, 0xAAA3);
+
+pascal OSErr GetCSequenceKeyFrameRate(ImageSequence seqID, long *keyframerate) M68K_INLINE(0x203C, 0x0008, 0x004B, 0xAAA3);
+
+pascal OSErr GetCSequencePrevBuffer(ImageSequence seqID, GWorldPtr *gworld) M68K_INLINE(0x7019, 0xAAA3);
+
+pascal OSErr CDSequenceBusy(ImageSequence seqID) M68K_INLINE(0x701A, 0xAAA3);
+
+pascal OSErr CDSequenceEnd(ImageSequence seqID) M68K_INLINE(0x701B, 0xAAA3);
+
+pascal OSErr GetCompressedImageSize(ImageDescriptionHandle desc, Ptr data, long bufferSize, DataProcRecordPtr dataProc, long *dataSize) M68K_INLINE(0x701C, 0xAAA3);
+
+pascal OSErr GetSimilarity(PixMapHandle src, const Rect *srcRect, ImageDescriptionHandle desc, Ptr data, Fixed *similarity) M68K_INLINE(0x701D, 0xAAA3);
+
+pascal OSErr GetImageDescriptionCTable(ImageDescriptionHandle desc, CTabHandle *ctable) M68K_INLINE(0x701E, 0xAAA3);
+
+pascal OSErr SetImageDescriptionCTable(ImageDescriptionHandle desc, CTabHandle ctable) M68K_INLINE(0x701F, 0xAAA3);
+
+pascal OSErr GetImageDescriptionExtension(ImageDescriptionHandle desc, Handle *extension, long type, long index) M68K_INLINE(0x7020, 0xAAA3);
+
+pascal OSErr SetImageDescriptionExtension(ImageDescriptionHandle desc, Handle extension, long type) M68K_INLINE(0x7021, 0xAAA3);
+
+pascal OSErr RemoveImageDescriptionExtension(ImageDescription **desc, long type, long index) M68K_INLINE(0x203C, 0x000C, 0x003A, 0xAAA3);
+
+pascal OSErr CountImageDescriptionExtensionType(ImageDescription **desc, long type, long *count) M68K_INLINE(0x203C, 0x000C, 0x003B, 0xAAA3);
+
+pascal OSErr GetNextImageDescriptionExtensionType(ImageDescription **desc, long *type) M68K_INLINE(0x203C, 0x0008, 0x003C, 0xAAA3);
+
+pascal OSErr FindCodec(CodecType cType, CodecComponent specCodec, CompressorComponent *compressor, DecompressorComponent *decompressor) M68K_INLINE(0x7023, 0xAAA3);
+
+pascal OSErr CompressPicture(PicHandle srcPicture, PicHandle dstPicture, CodecQ quality, CodecType cType) M68K_INLINE(0x7024, 0xAAA3);
+
+pascal OSErr FCompressPicture(PicHandle srcPicture, PicHandle dstPicture, INTEGER colorDepth, CTabHandle clut, CodecQ quality, INTEGER doDither, INTEGER compressAgain, ProgressProcRecordPtr progressProc, CodecType cType, CompressorComponent codec) M68K_INLINE(0x7025, 0xAAA3);
+
+pascal OSErr CompressPictureFile(INTEGER srcRefNum, INTEGER dstRefNum, CodecQ quality, CodecType cType) M68K_INLINE(0x7026, 0xAAA3);
+
+pascal OSErr FCompressPictureFile(INTEGER srcRefNum, INTEGER dstRefNum, INTEGER colorDepth, CTabHandle clut, CodecQ quality, INTEGER doDither, INTEGER compressAgain, ProgressProcRecordPtr progressProc, CodecType cType, CompressorComponent codec) M68K_INLINE(0x7027, 0xAAA3);
+
+pascal OSErr GetPictureFileHeader(INTEGER refNum, Rect *frame, OpenCPicParams *header) M68K_INLINE(0x7028, 0xAAA3);
+
+pascal OSErr DrawPictureFile(INTEGER refNum, const Rect *frame, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7029, 0xAAA3);
+
+pascal OSErr DrawTrimmedPicture(PicHandle srcPicture, const Rect *frame, RgnHandle trimMask, INTEGER doDither, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702E, 0xAAA3);
+
+pascal OSErr DrawTrimmedPictureFile(INTEGER srcRefnum, const Rect *frame, RgnHandle trimMask, INTEGER doDither, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702F, 0xAAA3);
+
+pascal OSErr MakeThumbnailFromPicture(PicHandle picture, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702A, 0xAAA3);
+
+pascal OSErr MakeThumbnailFromPictureFile(INTEGER refNum, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702B, 0xAAA3);
+
+pascal OSErr MakeThumbnailFromPixMap(PixMapHandle src, const Rect *srcRect, INTEGER colorDepth, PicHandle thumbnail, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702C, 0xAAA3);
+
+pascal OSErr TrimImage(ImageDescriptionHandle desc, Ptr inData, long inBufferSize, DataProcRecordPtr dataProc, Ptr outData, long outBufferSize, FlushProcRecordPtr flushProc, Rect *trimRect, ProgressProcRecordPtr progressProc) M68K_INLINE(0x702D, 0xAAA3);
+
+pascal OSErr ConvertImage(ImageDescriptionHandle srcDD, Ptr srcData, INTEGER colorDepth, CTabHandle clut, CodecQ accuracy, CodecQ quality, CodecType cType, CodecComponent codec, ImageDescriptionHandle dstDD, Ptr dstData) M68K_INLINE(0x7030, 0xAAA3);
+
+pascal OSErr GetCompressedPixMapInfo(PixMapPtr pix, ImageDescriptionHandle *desc, Ptr *data, long *bufferSize, DataProcRecord *dataProc, ProgressProcRecord *progressProc) M68K_INLINE(0x7037, 0xAAA3);
+
+pascal OSErr SetCompressedPixMapInfo(PixMapPtr pix, ImageDescriptionHandle desc, Ptr data, long bufferSize, DataProcRecordPtr dataProc, ProgressProcRecordPtr progressProc) M68K_INLINE(0x7038, 0xAAA3);
+
+pascal void StdPix(PixMapPtr src, const Rect *srcRect, MatrixRecordPtr matrix, INTEGER mode, RgnHandle mask, PixMapPtr matte, const Rect *matteRect, INTEGER flags) M68K_INLINE(0x700C, 0xAAA3);
+
+pascal OSErr TransformRgn(MatrixRecordPtr matrix, RgnHandle rgn) M68K_INLINE(0x7039, 0xAAA3);
+
+pascal void SFGetFilePreview(Point where, ConstStr255Param prompt, FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, DlgHookProcPtr dlgHook, SFReply *reply) M68K_INLINE(0x303C, 0x0041, 0xAAA3);
+
+pascal void SFPGetFilePreview(Point where, ConstStr255Param prompt, FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, DlgHookProcPtr dlgHook, SFReply *reply, INTEGER dlgID, ModalFilterProcPtr filterProc) M68K_INLINE(0x303C, 0x0042, 0xAAA3);
+
+pascal void StandardGetFilePreview(FileFilterProcPtr fileFilter, INTEGER numTypes, OSType *typeList, StandardFileReply *reply) M68K_INLINE(0x303C, 0x0043, 0xAAA3);
+
+pascal void CustomGetFilePreview(FileFilterYDProcPtr fileFilter, INTEGER numTypes, OSType *typeList, StandardFileReply *reply, INTEGER dlgID, Point where, DlgHookYDProcPtr dlgHook, ModalFilterYDProcPtr filterProc, INTEGER *activeList, ActivateYDProcPtr activateProc, void *yourDataPtr) M68K_INLINE(0x303C, 0x0044, 0xAAA3);
+
+pascal OSErr MakeFilePreview(INTEGER resRefNum, ProgressProcRecordPtr progress) M68K_INLINE(0x303C, 0x0045, 0xAAA3);
+
+pascal OSErr AddFilePreview(INTEGER resRefNum, OSType previewType, Handle previewData) M68K_INLINE(0x303C, 0x0046, 0xAAA3);
+
+enum {
+    sfpItemPreviewAreaUser = 11,
+    sfpItemPreviewStaticText = 12,
+    sfpItemPreviewDividerUser = 13,
+    sfpItemCreatePreviewButton = 14,
+    sfpItemShowPreviewButton = 15,
+};
+
+typedef struct PreviewResourceRecord PreviewResourceRecord;
+struct PreviewResourceRecord {
+    unsigned long modDate;
+    INTEGER version;
+    OSType resType;
+    INTEGER resID;
+};
+
+typedef PreviewResourceRecord *PreviewResourcePtr;
+
+typedef PreviewResourceRecord **PreviewResource;
+
+pascal void AlignScreenRect(Rect *rp, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x0008, 0x004C, 0xAAA3);
+
+pascal void AlignWindow(WindowPtr wp, Boolean front, const Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x000E, 0x004D, 0xAAA3);
+
+pascal void DragAlignedWindow(WindowPtr wp, Point startPt, Rect *boundsRect, Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x0014, 0x004E, 0xAAA3);
+
+pascal long DragAlignedGrayRgn(RgnHandle theRgn, Point startPt, Rect *boundsRect, Rect *slopRect, INTEGER axis, ProcPtr actionProc, Rect *alignmentRect, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x203C, 0x001E, 0x004F, 0xAAA3);
+
+pascal OSErr SetCSequenceDataRateParams(ImageSequence seqID, DataRateParamsPtr params) M68K_INLINE(0x203C, 0x0008, 0x0050, 0xAAA3);
+
+pascal OSErr SetCSequenceFrameNumber(ImageSequence seqID, long frameNumber) M68K_INLINE(0x203C, 0x0008, 0x0051, 0xAAA3);
+
+pascal QDErr NewImageGWorld(GWorldPtr *gworld, ImageDescription **idh, GWorldFlags flags) M68K_INLINE(0x203C, 0x000C, 0x0052, 0xAAA3);
+
+pascal OSErr GetCSequenceDataRateParams(ImageSequence seqID, DataRateParamsPtr params) M68K_INLINE(0x203C, 0x0008, 0x0053, 0xAAA3);
+
+pascal OSErr GetCSequenceFrameNumber(ImageSequence seqID, long *frameNumber) M68K_INLINE(0x203C, 0x0008, 0x0054, 0xAAA3);
+
+pascal OSErr GetBestDeviceRect(GDHandle *gdh, Rect *rp) M68K_INLINE(0x203C, 0x0008, 0x0055, 0xAAA3);
+
+enum {
+    identityMatrixType = 0,
+    translateMatrixType = 1,
+    scaleMatrixType = 2,
+    scaleTranslateMatrixType = 3,
+    linearMatrixType = 4,
+    linearTranslateMatrixType = 5,
+    perspectiveMatrixType = 6,
+};
+
+typedef uint16_t MatrixFlags;
+
+pascal INTEGER GetMatrixType(MatrixRecord *m) M68K_INLINE(0x7014, 0xABC2);
+
+pascal void CopyMatrix(MatrixRecord *m1, MatrixRecord *m2) M68K_INLINE(0x7020, 0xABC2);
+
+pascal Boolean EqualMatrix(const MatrixRecord *m1, const MatrixRecord *m2) M68K_INLINE(0x7021, 0xABC2);
+
+pascal void SetIdentityMatrix(MatrixRecord *matrix) M68K_INLINE(0x7015, 0xABC2);
+
+pascal void TranslateMatrix(MatrixRecord *m, Fixed deltaH, Fixed deltaV) M68K_INLINE(0x7019, 0xABC2);
+
+pascal void RotateMatrix(MatrixRecord *m, Fixed degrees, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7016, 0xABC2);
+
+pascal void ScaleMatrix(MatrixRecord *m, Fixed scaleX, Fixed scaleY, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7017, 0xABC2);
+
+pascal void SkewMatrix(MatrixRecord *m, Fixed skewX, Fixed skewY, Fixed aboutX, Fixed aboutY) M68K_INLINE(0x7018, 0xABC2);
+
+pascal OSErr TransformFixedPoints(MatrixRecord *m, FixedPoint *fpt, long count) M68K_INLINE(0x7022, 0xABC2);
+
+pascal OSErr TransformPoints(MatrixRecord *mp, Point *pt1, long count) M68K_INLINE(0x7023, 0xABC2);
+
+pascal Boolean TransformFixedRect(MatrixRecord *m, FixedRect *fr, FixedPoint *fpp) M68K_INLINE(0x7024, 0xABC2);
+
+pascal Boolean TransformRect(MatrixRecord *m, Rect *r, FixedPoint *fpp) M68K_INLINE(0x7025, 0xABC2);
+
+pascal Boolean InverseMatrix(MatrixRecord *m, MatrixRecord *im) M68K_INLINE(0x701C, 0xABC2);
+
+pascal void ConcatMatrix(MatrixRecord *a, MatrixRecord *b) M68K_INLINE(0x701B, 0xABC2);
+
+pascal void RectMatrix(MatrixRecord *matrix, Rect *srcRect, Rect *dstRect) M68K_INLINE(0x701E, 0xABC2);
+
+pascal void MapMatrix(MatrixRecord *matrix, Rect *fromRect, Rect *toRect) M68K_INLINE(0x701D, 0xABC2);
+
+typedef struct TrackRecord TrackRecord;
+struct TrackRecord {
+    long data[1];
+};
+
+typedef TrackRecord *Track;
+
+typedef struct MediaRecord MediaRecord;
+struct MediaRecord {
+    long data[1];
+};
+
+typedef MediaRecord *Media;
+
+typedef struct UserDataRecord UserDataRecord;
+struct UserDataRecord {
+    long data[1];
+};
+
+typedef UserDataRecord *UserData;
+
+typedef struct TrackEditStateRecord TrackEditStateRecord;
+struct TrackEditStateRecord {
+    long data[1];
+};
+
+typedef TrackEditStateRecord *TrackEditState;
+
+typedef struct MovieEditStateRecord MovieEditStateRecord;
+struct MovieEditStateRecord {
+    long data[1];
+};
+
+typedef MovieEditStateRecord *MovieEditState;
+
+typedef struct SampleDescription SampleDescription;
+struct SampleDescription {
+    long descSize;
+    long dataFormat;
+    long resvd1;
+    INTEGER resvd2;
+    INTEGER dataRefIndex;
+};
+
+typedef SampleDescription *SampleDescriptionPtr;
+
+typedef SampleDescription **SampleDescriptionHandle;
+
+typedef struct SoundDescription SoundDescription;
+struct SoundDescription {
+    long descSize;
+    long dataFormat;
+    long resvd1;
+    INTEGER resvd2;
+    INTEGER dataRefIndex;
+    INTEGER version;
+    INTEGER revlevel;
+    long vendor;
+    INTEGER numChannels;
+    INTEGER sampleSize;
+    INTEGER compressionID;
+    INTEGER packetSize;
+    Fixed sampleRate;
+};
+
+typedef SoundDescription *SoundDescriptionPtr;
+
+typedef SoundDescription **SoundDescriptionHandle;
+
+typedef struct TextDescription TextDescription;
+struct TextDescription {
+    long size;
+    long type;
+    long resvd1;
+    long resvd2;
+    long displayFlags;
+    long textJustification;
+    RGBColor bgColor;
+    Rect defaultTextBox;
+    ScrpSTElement defaultStyle;
+};
+
+typedef TextDescription *TextDescriptionPtr;
+
+typedef TextDescription **TextDescriptionHandle;
+
+enum {
+    dfDontDisplay = 1,
+    dfDontAutoScale = 2,
+    dfClipToTextBox = 4,
+    dfUseMovieBGColor = 8,
+    dfShrinkTextBoxToFit = 16,
+    dfScrollIn = 32,
+    dfScrollOut = 64,
+    dfHorizScroll = 128,
+    dfReverseScroll = 256,
+};
+
+enum {
+    movieProgressOpen = 0,
+    movieProgressUpdatePercent = 1,
+    movieProgressClose = 2,
+};
+
+enum {
+    progressOpFlatten = 1,
+    progressOpInsertTrackSegment = 2,
+    progressOpInsertMovieSegment = 3,
+    progressOpPaste = 4,
+    progressOpAddMovieSelection = 5,
+    progressOpCopy = 6,
+    progressOpCut = 7,
+    progressOpLoadMovieIntoRam = 8,
+    progressOpLoadTrackIntoRam = 9,
+    progressOpLoadMediaIntoRam = 10,
+    progressOpImportMovie = 11,
+    progressOpExportMovie = 12,
+};
+
+enum {
+    mediaQualityDraft = 0,
+    mediaQualityNormal = 64,
+    mediaQualityBetter = 128,
+    mediaQualityBest = 192,
+};
+
+typedef pascal OSErr (*MovieRgnCoverProcPtr)(Movie, RgnHandle, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr MovieRgnCoverUPP;
+enum { uppMovieRgnCoverProcInfo = 0x00000FE0 };
+#define NewMovieRgnCoverUPP(proc) ((MovieRgnCoverUPP)NewRoutineDescriptor((ProcPtr)(proc), uppMovieRgnCoverProcInfo, GetCurrentArchitecture()))
+#define DisposeMovieRgnCoverUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef MovieRgnCoverProcPtr MovieRgnCoverUPP;
+#define NewMovieRgnCoverUPP(proc) (proc)
+#define DisposeMovieRgnCoverUPP(upp) ((void)0)
+#endif
+#define NewMovieRgnCoverProc(proc) NewMovieRgnCoverUPP(proc)
+#define DisposeMovieRgnCoverProc(proc) DisposeMovieRgnCoverUPP(proc)
+
+typedef MovieRgnCoverProcPtr MovieRgnCoverProc;
+
+typedef pascal OSErr (*MovieProgressProcPtr)(Movie, INTEGER, INTEGER, Fixed, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr MovieProgressUPP;
+enum { uppMovieProgressProcInfo = 0x0000FAE0 };
+#define NewMovieProgressUPP(proc) ((MovieProgressUPP)NewRoutineDescriptor((ProcPtr)(proc), uppMovieProgressProcInfo, GetCurrentArchitecture()))
+#define DisposeMovieProgressUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef MovieProgressProcPtr MovieProgressUPP;
+#define NewMovieProgressUPP(proc) (proc)
+#define DisposeMovieProgressUPP(upp) ((void)0)
+#endif
+#define NewMovieProgressProc(proc) NewMovieProgressUPP(proc)
+#define DisposeMovieProgressProc(proc) DisposeMovieProgressUPP(proc)
+
+typedef ComponentInstance MediaHandler;
+
+typedef ComponentInstance DataHandler;
+
+typedef Component MediaHandlerComponent;
+
+typedef Component DataHandlerComponent;
+
+typedef ComponentResult HandlerError;
+
+typedef long TimeScale;
+
+typedef struct Int64 Int64;
+struct Int64 {
+    long hi;
+    long lo;
+};
+
+typedef Int64 CompTimeValue;
+
+enum {
+    loopTimeBase = 1,
+    palindromeLoopTimeBase = 2,
+};
+
+typedef unsigned long TimeBaseFlags;
+
+typedef struct TimeBaseRecord TimeBaseRecord;
+struct TimeBaseRecord {
+    long data[1];
+};
+
+typedef TimeBaseRecord *TimeBase;
+
+typedef struct CallBackRecord CallBackRecord;
+struct CallBackRecord {
+    long data[1];
+};
+
+typedef CallBackRecord *QTCallBack;
+
+typedef struct TimeRecord TimeRecord;
+struct TimeRecord {
+    CompTimeValue value;
+    TimeScale scale;
+    TimeBase base;
+};
+
+enum {
+    triggerTimeFwd = 1,
+    triggerTimeBwd = 2,
+    triggerTimeEither = 3,
+    triggerRateLT = 4,
+    triggerRateGT = 8,
+    triggerRateEqual = 16,
+    triggerRateLTE = 20,
+    triggerRateGTE = 24,
+    triggerRateNotEqual = 28,
+    triggerRateChange = 0,
+    triggerAtStart = 1,
+    triggerAtStop = 2,
+};
+
+typedef uint16_t QTCallBackFlags;
+
+enum {
+    timeBaseBeforeStartTime = 1,
+    timeBaseAfterStopTime = 2,
+};
+
+typedef unsigned long TimeBaseStatus;
+
+enum {
+    callBackAtTime = 1,
+    callBackAtRate = 2,
+    callBackAtTimeJump = 3,
+    callBackAtExtremes = 4,
+    callBackAtInterrupt = 32768,
+};
+
+typedef uint16_t QTCallBackType;
+
+typedef pascal void (*QTCallBackProcPtr)(QTCallBack, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr QTCallBackUPP;
+enum { uppQTCallBackProcInfo = 0x000003C0 };
+#define NewQTCallBackUPP(proc) ((QTCallBackUPP)NewRoutineDescriptor((ProcPtr)(proc), uppQTCallBackProcInfo, GetCurrentArchitecture()))
+#define DisposeQTCallBackUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef QTCallBackProcPtr QTCallBackUPP;
+#define NewQTCallBackUPP(proc) (proc)
+#define DisposeQTCallBackUPP(upp) ((void)0)
+#endif
+#define NewQTCallBackProc(proc) NewQTCallBackUPP(proc)
+#define DisposeQTCallBackProc(proc) DisposeQTCallBackUPP(proc)
+
+typedef QTCallBackProcPtr QTCallBackProc;
+
+enum {
+    qtcbNeedsRateChanges = 1,
+    qtcbNeedsTimeChanges = 2,
+    qtcbNeedsStartStopChanges = 4,
+};
+
+typedef struct QTCallBackHeader QTCallBackHeader;
+struct QTCallBackHeader {
+    long callBackFlags;
+    long reserved1;
+    char qtPrivate[40];
+};
+
+enum {
+    keepInRam = 1,
+    unkeepInRam = 2,
+    flushFromRam = 4,
+    loadForwardTrackEdits = 8,
+    loadBackwardTrackEdits = 16,
+};
+
+typedef pascal Boolean (*MoviePreviewCallOutProcPtr)(long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr MoviePreviewCallOutUPP;
+enum { uppMoviePreviewCallOutProcInfo = 0x000000D0 };
+#define NewMoviePreviewCallOutUPP(proc) ((MoviePreviewCallOutUPP)NewRoutineDescriptor((ProcPtr)(proc), uppMoviePreviewCallOutProcInfo, GetCurrentArchitecture()))
+#define DisposeMoviePreviewCallOutUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef MoviePreviewCallOutProcPtr MoviePreviewCallOutUPP;
+#define NewMoviePreviewCallOutUPP(proc) (proc)
+#define DisposeMoviePreviewCallOutUPP(upp) ((void)0)
+#endif
+#define NewMoviePreviewCallOutProc(proc) NewMoviePreviewCallOutUPP(proc)
+#define DisposeMoviePreviewCallOutProc(proc) DisposeMoviePreviewCallOutUPP(proc)
+
+typedef MoviePreviewCallOutProcPtr MoviePreviewCallOutProc;
+
+enum {
+    newMovieActive = 1,
+    newMovieDontResolveDataRefs = 2,
+    newMovieDontAskUnresolvedDataRefs = 4,
+    newMovieDontAutoAlternates = 8,
+};
+
+enum {
+    trackUsageInMovie = 2,
+    trackUsageInPreview = 4,
+    trackUsageInPoster = 8,
+};
+
+enum {
+    mediaSampleNotSync = 1,
+    mediaSampleShadowSync = 2,
+};
+
+enum {
+    pasteInParallel = 1,
+};
+
+enum {
+    nextTimeMediaSample = 1,
+    nextTimeMediaEdit = 2,
+    nextTimeTrackEdit = 4,
+    nextTimeSyncSample = 8,
+    nextTimeEdgeOK = 16384,
+    nextTimeIgnoreActiveSegment = 32768,
+};
+
+typedef uint16_t nextTimeFlagsEnum;
+
+enum {
+    createMovieFileDeleteCurFile = -2147483648,
+    createMovieFileDontCreateMovie = 1073741824,
+    createMovieFileDontOpenFile = 536870912,
+};
+
+typedef unsigned long createMovieFileFlagsEnum;
+
+enum {
+    flattenAddMovieToDataFork = 1,
+    flattenActiveTracksOnly = 4,
+    flattenDontInterleaveFlatten = 8,
+};
+
+typedef unsigned long movieFlattenFlagsEnum;
+
+enum {
+    movieInDataForkResID = -1,
+};
+
+enum {
+    mcTopLeftMovie = 1,
+    mcScaleMovieToFit = 2,
+    mcWithBadge = 4,
+    mcNotVisible = 8,
+    mcWithFrame = 16,
+};
+
+enum {
+    movieScrapDontZeroScrap = 1,
+    movieScrapOnlyPutMovie = 2,
+};
+
+enum {
+    dataRefSelfReference = 1,
+    dataRefWasNotResolved = 2,
+};
+
+typedef unsigned long dataRefAttributesFlags;
+
+enum {
+    hintsScrubMode = 1,
+    hintsUseScreenBuffer = 32,
+    hintsAllowInterlace = 64,
+    hintsUseSoundLerp = 128,
+};
+
+typedef unsigned long playHintsEnum;
+
+enum {
+    mediaHandlerFlagGenericClient = 1,
+};
+
+typedef unsigned long mediaHandlerFlagsEnum;
+
+typedef pascal void (*ErrorProcPtr)(OSErr, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr ErrorUPP;
+enum { uppErrorProcInfo = 0x00000380 };
+#define NewErrorUPP(proc) ((ErrorUPP)NewRoutineDescriptor((ProcPtr)(proc), uppErrorProcInfo, GetCurrentArchitecture()))
+#define DisposeErrorUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef ErrorProcPtr ErrorUPP;
+#define NewErrorUPP(proc) (proc)
+#define DisposeErrorUPP(upp) ((void)0)
+#endif
+#define NewErrorProc(proc) NewErrorUPP(proc)
+#define DisposeErrorProc(proc) DisposeErrorUPP(proc)
+
+pascal OSErr GetMoviesError(void) M68K_INLINE(0x303C, 0x0003, 0xAAAA);
+
+pascal void ClearMoviesStickyError(void) M68K_INLINE(0x303C, 0x00DE, 0xAAAA);
+
+pascal OSErr GetMoviesStickyError(void) M68K_INLINE(0x303C, 0x0004, 0xAAAA);
+
+pascal void SetMoviesErrorProc(ErrorProcPtr errProc, long refcon) M68K_INLINE(0x303C, 0x00EF, 0xAAAA);
+
+pascal OSErr LoadMovieIntoRam(Movie theMovie, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x0007, 0xAAAA);
+
+pascal OSErr LoadTrackIntoRam(Track theTrack, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x016E, 0xAAAA);
+
+pascal OSErr LoadMediaIntoRam(Media theMedia, TimeValue time, TimeValue duration, long flags) M68K_INLINE(0x303C, 0x0008, 0xAAAA);
+
+pascal Boolean GetMovieActive(Movie theMovie) M68K_INLINE(0x303C, 0x000A, 0xAAAA);
+
+pascal void GoToEndOfMovie(Movie theMovie) M68K_INLINE(0x303C, 0x000E, 0xAAAA);
+
+pascal Boolean GetMoviePreviewMode(Movie theMovie) M68K_INLINE(0x303C, 0x000F, 0xAAAA);
+
+pascal void SetMoviePreviewMode(Movie theMovie, Boolean usePreview) M68K_INLINE(0x303C, 0x0010, 0xAAAA);
+
+pascal void ShowMoviePoster(Movie theMovie) M68K_INLINE(0x303C, 0x0011, 0xAAAA);
+
+pascal void PlayMoviePreview(Movie theMovie, MoviePreviewCallOutProc callOutProc, long refcon) M68K_INLINE(0x303C, 0x00F2, 0xAAAA);
+
+pascal TimeBase GetMovieTimeBase(Movie theMovie) M68K_INLINE(0x303C, 0x0012, 0xAAAA);
+
+pascal void SetMovieMasterTimeBase(Movie theMovie, TimeBase tb, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x0167, 0xAAAA);
+
+pascal void SetMovieMasterClock(Movie theMovie, Component clockMeister, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x0168, 0xAAAA);
+
+pascal void GetMovieGWorld(Movie theMovie, CGrafPtr *port, GDHandle *gdh) M68K_INLINE(0x303C, 0x0015, 0xAAAA);
+
+pascal PicHandle GetMoviePict(Movie theMovie, TimeValue time) M68K_INLINE(0x303C, 0x001D, 0xAAAA);
+
+pascal PicHandle GetTrackPict(Track theTrack, TimeValue time) M68K_INLINE(0x303C, 0x001E, 0xAAAA);
+
+pascal PicHandle GetMoviePosterPict(Movie theMovie) M68K_INLINE(0x303C, 0x00F7, 0xAAAA);
+
+pascal RgnHandle GetMovieDisplayClipRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FC, 0xAAAA);
+
+pascal void SetMovieDisplayClipRgn(Movie theMovie, RgnHandle theClip) M68K_INLINE(0x303C, 0x00FD, 0xAAAA);
+
+pascal RgnHandle GetMovieClipRgn(Movie theMovie) M68K_INLINE(0x303C, 0x0100, 0xAAAA);
+
+pascal void SetMovieClipRgn(Movie theMovie, RgnHandle theClip) M68K_INLINE(0x303C, 0x0101, 0xAAAA);
+
+pascal RgnHandle GetTrackClipRgn(Track theTrack) M68K_INLINE(0x303C, 0x0102, 0xAAAA);
+
+pascal void SetTrackClipRgn(Track theTrack, RgnHandle theClip) M68K_INLINE(0x303C, 0x0103, 0xAAAA);
+
+pascal RgnHandle GetMovieDisplayBoundsRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FB, 0xAAAA);
+
+pascal RgnHandle GetTrackDisplayBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x0112, 0xAAAA);
+
+pascal RgnHandle GetMovieBoundsRgn(Movie theMovie) M68K_INLINE(0x303C, 0x00FE, 0xAAAA);
+
+pascal RgnHandle GetTrackMovieBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x00FF, 0xAAAA);
+
+pascal RgnHandle GetTrackBoundsRgn(Track theTrack) M68K_INLINE(0x303C, 0x0111, 0xAAAA);
+
+pascal PixMapHandle GetTrackMatte(Track theTrack) M68K_INLINE(0x303C, 0x0115, 0xAAAA);
+
+pascal void SetTrackMatte(Track theTrack, PixMapHandle theMatte) M68K_INLINE(0x303C, 0x0116, 0xAAAA);
+
+pascal void DisposeMatte(PixMapHandle theMatte) M68K_INLINE(0x303C, 0x014A, 0xAAAA);
+
+pascal Movie NewMovie(long flags) M68K_INLINE(0x303C, 0x0187, 0xAAAA);
+
+pascal OSErr PutMovieIntoHandle(Movie theMovie, Handle publicMovie) M68K_INLINE(0x303C, 0x0022, 0xAAAA);
+
+pascal OSErr PutMovieIntoDataFork(Movie theMovie, INTEGER fRefNum, long offset, long maxSize) M68K_INLINE(0x303C, 0x01B4, 0xAAAA);
+
+pascal unsigned long GetMovieCreationTime(Movie theMovie) M68K_INLINE(0x303C, 0x0026, 0xAAAA);
+
+pascal unsigned long GetMovieModificationTime(Movie theMovie) M68K_INLINE(0x303C, 0x0027, 0xAAAA);
+
+pascal TimeScale GetMovieTimeScale(Movie theMovie) M68K_INLINE(0x303C, 0x0029, 0xAAAA);
+
+pascal void SetMovieTimeScale(Movie theMovie, TimeScale timeScale) M68K_INLINE(0x303C, 0x002A, 0xAAAA);
+
+pascal TimeValue GetMovieDuration(Movie theMovie) M68K_INLINE(0x303C, 0x002B, 0xAAAA);
+
+pascal Fixed GetMovieRate(Movie theMovie) M68K_INLINE(0x303C, 0x002C, 0xAAAA);
+
+pascal void SetMovieRate(Movie theMovie, Fixed rate) M68K_INLINE(0x303C, 0x002D, 0xAAAA);
+
+pascal void SetMoviePreferredRate(Movie theMovie, Fixed rate) M68K_INLINE(0x303C, 0x00F4, 0xAAAA);
+
+pascal INTEGER GetMoviePreferredVolume(Movie theMovie) M68K_INLINE(0x303C, 0x00F5, 0xAAAA);
+
+pascal void SetMoviePreferredVolume(Movie theMovie, INTEGER volume) M68K_INLINE(0x303C, 0x00F6, 0xAAAA);
+
+pascal void SetMovieVolume(Movie theMovie, INTEGER volume) M68K_INLINE(0x303C, 0x002F, 0xAAAA);
+
+pascal void GetMovieMatrix(Movie theMovie, MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0031, 0xAAAA);
+
+pascal void SetMovieMatrix(Movie theMovie, const MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0032, 0xAAAA);
+
+pascal void GetMoviePreviewTime(Movie theMovie, TimeValue *previewTime, TimeValue *previewDuration) M68K_INLINE(0x303C, 0x0033, 0xAAAA);
+
+pascal void SetMoviePreviewTime(Movie theMovie, TimeValue previewTime, TimeValue previewDuration) M68K_INLINE(0x303C, 0x0034, 0xAAAA);
+
+pascal TimeValue GetMoviePosterTime(Movie theMovie) M68K_INLINE(0x303C, 0x0035, 0xAAAA);
+
+pascal void SetMoviePosterTime(Movie theMovie, TimeValue posterTime) M68K_INLINE(0x303C, 0x0036, 0xAAAA);
+
+pascal void GetMovieSelection(Movie theMovie, TimeValue *selectionTime, TimeValue *selectionDuration) M68K_INLINE(0x303C, 0x0037, 0xAAAA);
+
+pascal void SetMovieSelection(Movie theMovie, TimeValue selectionTime, TimeValue selectionDuration) M68K_INLINE(0x303C, 0x0038, 0xAAAA);
+
+pascal void SetMovieActiveSegment(Movie theMovie, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x015C, 0xAAAA);
+
+pascal void GetMovieActiveSegment(Movie theMovie, TimeValue *startTime, TimeValue *duration) M68K_INLINE(0x303C, 0x015D, 0xAAAA);
+
+pascal TimeValue GetMovieTime(Movie theMovie, TimeRecord *currentTime) M68K_INLINE(0x303C, 0x0039, 0xAAAA);
+
+pascal void SetMovieTime(Movie theMovie, const TimeRecord *newtime) M68K_INLINE(0x303C, 0x003C, 0xAAAA);
+
+pascal void SetMovieTimeValue(Movie theMovie, TimeValue newtime) M68K_INLINE(0x303C, 0x003D, 0xAAAA);
+
+pascal UserData GetMovieUserData(Movie theMovie) M68K_INLINE(0x303C, 0x003E, 0xAAAA);
+
+pascal long GetMovieTrackCount(Movie theMovie) M68K_INLINE(0x303C, 0x003F, 0xAAAA);
+
+pascal Track GetMovieTrack(Movie theMovie, long trackID) M68K_INLINE(0x303C, 0x0040, 0xAAAA);
+
+pascal Track GetMovieIndTrack(Movie theMovie, long index) M68K_INLINE(0x303C, 0x0117, 0xAAAA);
+
+pascal long GetTrackID(Track theTrack) M68K_INLINE(0x303C, 0x0127, 0xAAAA);
+
+pascal Movie GetTrackMovie(Track theTrack) M68K_INLINE(0x303C, 0x00D0, 0xAAAA);
+
+pascal Track NewMovieTrack(Movie theMovie, Fixed width, Fixed height, INTEGER trackVolume) M68K_INLINE(0x303C, 0x0188, 0xAAAA);
+
+pascal void DisposeMovieTrack(Track theTrack) M68K_INLINE(0x303C, 0x0042, 0xAAAA);
+
+pascal unsigned long GetTrackCreationTime(Track theTrack) M68K_INLINE(0x303C, 0x0043, 0xAAAA);
+
+pascal unsigned long GetTrackModificationTime(Track theTrack) M68K_INLINE(0x303C, 0x0044, 0xAAAA);
+
+pascal Boolean GetTrackEnabled(Track theTrack) M68K_INLINE(0x303C, 0x0045, 0xAAAA);
+
+pascal void SetTrackEnabled(Track theTrack, Boolean isEnabled) M68K_INLINE(0x303C, 0x0046, 0xAAAA);
+
+pascal long GetTrackUsage(Track theTrack) M68K_INLINE(0x303C, 0x0047, 0xAAAA);
+
+pascal void SetTrackUsage(Track theTrack, long usage) M68K_INLINE(0x303C, 0x0048, 0xAAAA);
+
+pascal TimeValue GetTrackDuration(Track theTrack) M68K_INLINE(0x303C, 0x004B, 0xAAAA);
+
+pascal TimeValue GetTrackOffset(Track theTrack) M68K_INLINE(0x303C, 0x004C, 0xAAAA);
+
+pascal void SetTrackOffset(Track theTrack, TimeValue movieOffsetTime) M68K_INLINE(0x303C, 0x004D, 0xAAAA);
+
+pascal INTEGER GetTrackLayer(Track theTrack) M68K_INLINE(0x303C, 0x0050, 0xAAAA);
+
+pascal void SetTrackLayer(Track theTrack, INTEGER layer) M68K_INLINE(0x303C, 0x0051, 0xAAAA);
+
+pascal Track GetTrackAlternate(Track theTrack) M68K_INLINE(0x303C, 0x0052, 0xAAAA);
+
+pascal void SetTrackAlternate(Track theTrack, Track alternateT) M68K_INLINE(0x303C, 0x0053, 0xAAAA);
+
+pascal void SetAutoTrackAlternatesEnabled(Movie theMovie, Boolean enable) M68K_INLINE(0x303C, 0x015E, 0xAAAA);
+
+pascal void SelectMovieAlternates(Movie theMovie) M68K_INLINE(0x303C, 0x015F, 0xAAAA);
+
+pascal INTEGER GetTrackVolume(Track theTrack) M68K_INLINE(0x303C, 0x0054, 0xAAAA);
+
+pascal void SetTrackVolume(Track theTrack, INTEGER volume) M68K_INLINE(0x303C, 0x0055, 0xAAAA);
+
+pascal void GetTrackMatrix(Track theTrack, MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0056, 0xAAAA);
+
+pascal void SetTrackMatrix(Track theTrack, const MatrixRecord *matrix) M68K_INLINE(0x303C, 0x0057, 0xAAAA);
+
+pascal void GetTrackDimensions(Track theTrack, Fixed *width, Fixed *height) M68K_INLINE(0x303C, 0x005D, 0xAAAA);
+
+pascal void SetTrackDimensions(Track theTrack, Fixed width, Fixed height) M68K_INLINE(0x303C, 0x005E, 0xAAAA);
+
+pascal UserData GetTrackUserData(Track theTrack) M68K_INLINE(0x303C, 0x005F, 0xAAAA);
+
+pascal Media NewTrackMedia(Track theTrack, OSType mediaType, TimeScale timeScale, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x018E, 0xAAAA);
+
+pascal void DisposeTrackMedia(Media theMedia) M68K_INLINE(0x303C, 0x0061, 0xAAAA);
+
+pascal Media GetTrackMedia(Track theTrack) M68K_INLINE(0x303C, 0x0062, 0xAAAA);
+
+pascal Track GetMediaTrack(Media theMedia) M68K_INLINE(0x303C, 0x00C5, 0xAAAA);
+
+pascal unsigned long GetMediaCreationTime(Media theMedia) M68K_INLINE(0x303C, 0x0066, 0xAAAA);
+
+pascal unsigned long GetMediaModificationTime(Media theMedia) M68K_INLINE(0x303C, 0x0067, 0xAAAA);
+
+pascal TimeScale GetMediaTimeScale(Media theMedia) M68K_INLINE(0x303C, 0x0068, 0xAAAA);
+
+pascal void SetMediaTimeScale(Media theMedia, TimeScale timeScale) M68K_INLINE(0x303C, 0x0069, 0xAAAA);
+
+pascal TimeValue GetMediaDuration(Media theMedia) M68K_INLINE(0x303C, 0x006A, 0xAAAA);
+
+pascal INTEGER GetMediaLanguage(Media theMedia) M68K_INLINE(0x303C, 0x006B, 0xAAAA);
+
+pascal void SetMediaLanguage(Media theMedia, INTEGER language) M68K_INLINE(0x303C, 0x006C, 0xAAAA);
+
+pascal INTEGER GetMediaQuality(Media theMedia) M68K_INLINE(0x303C, 0x006D, 0xAAAA);
+
+pascal void SetMediaQuality(Media theMedia, INTEGER quality) M68K_INLINE(0x303C, 0x006E, 0xAAAA);
+
+pascal void GetMediaHandlerDescription(Media theMedia, OSType *mediaType, uint8_t *creatorName, OSType *creatorManufacturer) M68K_INLINE(0x303C, 0x006F, 0xAAAA);
+
+pascal UserData GetMediaUserData(Media theMedia) M68K_INLINE(0x303C, 0x0070, 0xAAAA);
+
+pascal MediaHandler GetMediaHandler(Media theMedia) M68K_INLINE(0x303C, 0x0071, 0xAAAA);
+
+pascal OSErr SetMediaHandler(Media theMedia, MediaHandlerComponent mH) M68K_INLINE(0x303C, 0x0190, 0xAAAA);
+
+pascal OSErr BeginMediaEdits(Media theMedia) M68K_INLINE(0x303C, 0x0072, 0xAAAA);
+
+pascal OSErr EndMediaEdits(Media theMedia) M68K_INLINE(0x303C, 0x0073, 0xAAAA);
+
+pascal void GetMediaDataHandlerDescription(Media theMedia, INTEGER index, OSType *dhType, uint8_t *creatorName, OSType *creatorManufacturer) M68K_INLINE(0x303C, 0x019E, 0xAAAA);
+
+pascal DataHandler GetMediaDataHandler(Media theMedia, INTEGER index) M68K_INLINE(0x303C, 0x019F, 0xAAAA);
+
+pascal OSErr SetMediaDataHandler(Media theMedia, INTEGER index, DataHandlerComponent dataHandler) M68K_INLINE(0x303C, 0x01A0, 0xAAAA);
+
+pascal long GetMediaSampleDescriptionCount(Media theMedia) M68K_INLINE(0x303C, 0x0077, 0xAAAA);
+
+pascal void GetMediaSampleDescription(Media theMedia, long index, SampleDescriptionHandle descH) M68K_INLINE(0x303C, 0x0078, 0xAAAA);
+
+pascal OSErr SetMediaSampleDescription(Media theMedia, long index, SampleDescriptionHandle descH) M68K_INLINE(0x303C, 0x01D0, 0xAAAA);
+
+pascal long GetMediaSampleCount(Media theMedia) M68K_INLINE(0x303C, 0x0079, 0xAAAA);
+
+pascal void SampleNumToMediaTime(Media theMedia, long logicalSampleNum, TimeValue *sampleTime, TimeValue *sampleDuration) M68K_INLINE(0x303C, 0x007A, 0xAAAA);
+
+pascal void MediaTimeToSampleNum(Media theMedia, TimeValue time, long *sampleNum, TimeValue *sampleTime, TimeValue *sampleDuration) M68K_INLINE(0x303C, 0x007B, 0xAAAA);
+
+pascal OSErr AddMediaSample(Media theMedia, Handle dataIn, long inOffset, unsigned long size, TimeValue durationPerSample, SampleDescriptionHandle sampleDescriptionH, long numberOfSamples, INTEGER sampleFlags, TimeValue *sampleTime) M68K_INLINE(0x303C, 0x007C, 0xAAAA);
+
+pascal OSErr AddMediaSampleReference(Media theMedia, long dataOffset, unsigned long size, TimeValue durationPerSample, SampleDescriptionHandle sampleDescriptionH, long numberOfSamples, INTEGER sampleFlags, TimeValue *sampleTime) M68K_INLINE(0x303C, 0x007D, 0xAAAA);
+
+pascal OSErr GetMediaSample(Media theMedia, Handle dataOut, long maxSizeToGrow, long *size, TimeValue time, TimeValue *sampleTime, TimeValue *durationPerSample, SampleDescriptionHandle sampleDescriptionH, long *sampleDescriptionIndex, long maxNumberOfSamples, long *numberOfSamples, INTEGER *sampleFlags) M68K_INLINE(0x303C, 0x007E, 0xAAAA);
+
+pascal OSErr GetMediaSampleReference(Media theMedia, long *dataOffset, long *size, TimeValue time, TimeValue *sampleTime, TimeValue *durationPerSample, SampleDescriptionHandle sampleDescriptionH, long *sampleDescriptionIndex, long maxNumberOfSamples, long *numberOfSamples, INTEGER *sampleFlags) M68K_INLINE(0x303C, 0x007F, 0xAAAA);
+
+pascal OSErr SetMediaShadowSync(Media theMedia, long frameDiffSampleNum, long syncSampleNum) M68K_INLINE(0x303C, 0x0121, 0xAAAA);
+
+pascal OSErr GetMediaShadowSync(Media theMedia, long frameDiffSampleNum, long *syncSampleNum) M68K_INLINE(0x303C, 0x0122, 0xAAAA);
+
+pascal OSErr InsertMediaIntoTrack(Track theTrack, TimeValue trackStart, TimeValue mediaTime, TimeValue mediaDuration, Fixed mediaRate) M68K_INLINE(0x303C, 0x0183, 0xAAAA);
+
+pascal OSErr InsertTrackSegment(Track srcTrack, Track dstTrack, TimeValue srcIn, TimeValue srcDuration, TimeValue dstIn) M68K_INLINE(0x303C, 0x0085, 0xAAAA);
+
+pascal OSErr InsertMovieSegment(Movie srcMovie, Movie dstMovie, TimeValue srcIn, TimeValue srcDuration, TimeValue dstIn) M68K_INLINE(0x303C, 0x0086, 0xAAAA);
+
+pascal OSErr InsertEmptyTrackSegment(Track dstTrack, TimeValue dstIn, TimeValue dstDuration) M68K_INLINE(0x303C, 0x0087, 0xAAAA);
+
+pascal OSErr InsertEmptyMovieSegment(Movie dstMovie, TimeValue dstIn, TimeValue dstDuration) M68K_INLINE(0x303C, 0x0088, 0xAAAA);
+
+pascal OSErr DeleteTrackSegment(Track theTrack, TimeValue in, TimeValue duration) M68K_INLINE(0x303C, 0x0089, 0xAAAA);
+
+pascal OSErr DeleteMovieSegment(Movie theMovie, TimeValue in, TimeValue duration) M68K_INLINE(0x303C, 0x008A, 0xAAAA);
+
+pascal OSErr ScaleTrackSegment(Track theTrack, TimeValue in, TimeValue oldDuration, TimeValue newDuration) M68K_INLINE(0x303C, 0x008B, 0xAAAA);
+
+pascal OSErr ScaleMovieSegment(Movie theMovie, TimeValue in, TimeValue oldDuration, TimeValue newDuration) M68K_INLINE(0x303C, 0x008C, 0xAAAA);
+
+pascal Movie CutMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x008D, 0xAAAA);
+
+pascal Movie CopyMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x008E, 0xAAAA);
+
+pascal void PasteMovieSelection(Movie theMovie, Movie src) M68K_INLINE(0x303C, 0x008F, 0xAAAA);
+
+pascal void AddMovieSelection(Movie theMovie, Movie src) M68K_INLINE(0x303C, 0x0152, 0xAAAA);
+
+pascal void ClearMovieSelection(Movie theMovie) M68K_INLINE(0x303C, 0x00E1, 0xAAAA);
+
+pascal OSErr PasteHandleIntoMovie(Handle h, OSType handleType, Movie theMovie, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x00CB, 0xAAAA);
+
+pascal OSErr PutMovieIntoTypedHandle(Movie theMovie, Track targetTrack, OSType handleType, Handle publicMovie, TimeValue start, TimeValue dur, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x01CD, 0xAAAA);
+
+pascal Component IsScrapMovie(Track targetTrack) M68K_INLINE(0x303C, 0x00CC, 0xAAAA);
+
+pascal OSErr CopyTrackSettings(Track srcTrack, Track dstTrack) M68K_INLINE(0x303C, 0x0153, 0xAAAA);
+
+pascal OSErr CopyMovieSettings(Movie srcMovie, Movie dstMovie) M68K_INLINE(0x303C, 0x0154, 0xAAAA);
+
+pascal MovieEditState NewMovieEditState(Movie theMovie) M68K_INLINE(0x303C, 0x0104, 0xAAAA);
+
+pascal OSErr UseMovieEditState(Movie theMovie, MovieEditState toState) M68K_INLINE(0x303C, 0x0105, 0xAAAA);
+
+pascal OSErr DisposeMovieEditState(MovieEditState state) M68K_INLINE(0x303C, 0x0106, 0xAAAA);
+
+pascal TrackEditState NewTrackEditState(Track theTrack) M68K_INLINE(0x303C, 0x0107, 0xAAAA);
+
+pascal OSErr UseTrackEditState(Track theTrack, TrackEditState state) M68K_INLINE(0x303C, 0x0108, 0xAAAA);
+
+pascal OSErr DisposeTrackEditState(TrackEditState state) M68K_INLINE(0x303C, 0x0109, 0xAAAA);
+
+pascal OSErr ConvertFileToMovieFile(const FSSpec *inputFile, const FSSpec *outputFile, OSType creator, ScriptCode scriptTag, INTEGER *resID, long flags, ComponentInstance userComp, MovieProgressProcPtr proc, long refCon) M68K_INLINE(0x303C, 0x01CB, 0xAAAA);
+
+pascal OSErr ConvertMovieToFile(Movie theMovie, Track onlyTrack, const FSSpec *outputFile, OSType fileType, OSType creator, ScriptCode scriptTag, INTEGER *resID, long flags, ComponentInstance userComp) M68K_INLINE(0x303C, 0x01CC, 0xAAAA);
+
+pascal TimeValue TrackTimeToMediaTime(TimeValue value, Track theTrack) M68K_INLINE(0x303C, 0x0096, 0xAAAA);
+
+pascal Fixed GetTrackEditRate(Track theTrack, TimeValue atTime) M68K_INLINE(0x303C, 0x0123, 0xAAAA);
+
+pascal long GetMovieDataSize(Movie theMovie, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0098, 0xAAAA);
+
+pascal long GetTrackDataSize(Track theTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0149, 0xAAAA);
+
+pascal long GetMediaDataSize(Media theMedia, TimeValue startTime, TimeValue duration) M68K_INLINE(0x303C, 0x0099, 0xAAAA);
+
+pascal Boolean PtInMovie(Movie theMovie, Point pt) M68K_INLINE(0x303C, 0x009A, 0xAAAA);
+
+pascal Boolean PtInTrack(Track theTrack, Point pt) M68K_INLINE(0x303C, 0x009B, 0xAAAA);
+
+pascal void SetMovieLanguage(Movie theMovie, long language) M68K_INLINE(0x303C, 0x009C, 0xAAAA);
+
+pascal OSErr GetUserData(UserData theUserData, Handle data, OSType udType, long index) M68K_INLINE(0x303C, 0x009E, 0xAAAA);
+
+pascal OSErr AddUserData(UserData theUserData, Handle data, OSType udType) M68K_INLINE(0x303C, 0x009F, 0xAAAA);
+
+pascal OSErr RemoveUserData(UserData theUserData, OSType udType, long index) M68K_INLINE(0x303C, 0x00A0, 0xAAAA);
+
+pascal INTEGER CountUserDataType(UserData theUserData, OSType udType) M68K_INLINE(0x303C, 0x014B, 0xAAAA);
+
+pascal long GetNextUserDataType(UserData theUserData, OSType udType) M68K_INLINE(0x303C, 0x01A5, 0xAAAA);
+
+pascal OSErr GetUserDataItem(UserData theUserData, void *data, long size, OSType udType, long index) M68K_INLINE(0x303C, 0x0126, 0xAAAA);
+
+pascal OSErr SetUserDataItem(UserData theUserData, void *data, long size, OSType udType, long index) M68K_INLINE(0x303C, 0x012E, 0xAAAA);
+
+pascal OSErr AddUserDataText(UserData theUserData, Handle data, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014C, 0xAAAA);
+
+pascal OSErr GetUserDataText(UserData theUserData, Handle data, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014D, 0xAAAA);
+
+pascal OSErr RemoveUserDataText(UserData theUserData, OSType udType, long index, INTEGER itlRegionTag) M68K_INLINE(0x303C, 0x014E, 0xAAAA);
+
+pascal OSErr NewUserData(UserData *theUserData) M68K_INLINE(0x303C, 0x012F, 0xAAAA);
+
+pascal OSErr DisposeUserData(UserData theUserData) M68K_INLINE(0x303C, 0x0130, 0xAAAA);
+
+pascal OSErr NewUserDataFromHandle(Handle h, UserData *theUserData) M68K_INLINE(0x303C, 0x0131, 0xAAAA);
+
+pascal OSErr PutUserDataIntoHandle(UserData theUserData, Handle h) M68K_INLINE(0x303C, 0x0132, 0xAAAA);
+
+pascal void GetMediaNextInterestingTime(Media theMedia, INTEGER interestingTimeFlags, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x016D, 0xAAAA);
+
+pascal void GetTrackNextInterestingTime(Track theTrack, INTEGER interestingTimeFlags, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x00E2, 0xAAAA);
+
+pascal void GetMovieNextInterestingTime(Movie theMovie, INTEGER interestingTimeFlags, INTEGER numMediaTypes, const OSType *whichMediaTypes, TimeValue time, Fixed rate, TimeValue *interestingTime, TimeValue *interestingDuration) M68K_INLINE(0x303C, 0x010E, 0xAAAA);
+
+pascal OSErr CreateMovieFile(const FSSpec *fileSpec, OSType creator, ScriptCode scriptTag, long createMovieFileFlags, INTEGER *resRefNum, Movie *newmovie) M68K_INLINE(0x303C, 0x0191, 0xAAAA);
+
+pascal OSErr DeleteMovieFile(const FSSpec *fileSpec) M68K_INLINE(0x303C, 0x0175, 0xAAAA);
+
+pascal OSErr NewMovieFromHandle(Movie *theMovie, Handle h, INTEGER newMovieFlags, Boolean *dataRefWasChanged) M68K_INLINE(0x303C, 0x00F1, 0xAAAA);
+
+pascal OSErr NewMovieFromDataFork(Movie *theMovie, INTEGER fRefNum, long fileOffset, INTEGER newMovieFlags, Boolean *dataRefWasChanged) M68K_INLINE(0x303C, 0x01B3, 0xAAAA);
+
+pascal OSErr AddMovieResource(Movie theMovie, INTEGER resRefNum, INTEGER *resId, const StringPtr resName) M68K_INLINE(0x303C, 0x00D7, 0xAAAA);
+
+pascal OSErr UpdateMovieResource(Movie theMovie, INTEGER resRefNum, INTEGER resId, const StringPtr resName) M68K_INLINE(0x303C, 0x00D8, 0xAAAA);
+
+pascal OSErr RemoveMovieResource(INTEGER resRefNum, INTEGER resId) M68K_INLINE(0x303C, 0x0176, 0xAAAA);
+
+pascal Boolean HasMovieChanged(Movie theMovie) M68K_INLINE(0x303C, 0x00D9, 0xAAAA);
+
+pascal void ClearMovieChanged(Movie theMovie) M68K_INLINE(0x303C, 0x0113, 0xAAAA);
+
+pascal OSErr SetMovieDefaultDataRef(Movie theMovie, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x01C1, 0xAAAA);
+
+pascal OSErr GetMovieDefaultDataRef(Movie theMovie, Handle *dataRef, OSType *dataRefType) M68K_INLINE(0x303C, 0x01D2, 0xAAAA);
+
+pascal void FlattenMovie(Movie theMovie, long movieFlattenFlags, const FSSpec *theFile, OSType creator, ScriptCode scriptTag, long createMovieFileFlags, INTEGER *resId, const StringPtr resName) M68K_INLINE(0x303C, 0x019B, 0xAAAA);
+
+pascal Movie FlattenMovieData(Movie theMovie, long movieFlattenFlags, const FSSpec *theFile, OSType creator, ScriptCode scriptTag, long createMovieFileFlags) M68K_INLINE(0x303C, 0x019C, 0xAAAA);
+
+pascal void SetMovieProgressProc(Movie theMovie, MovieProgressProcPtr p, long refcon) M68K_INLINE(0x303C, 0x019A, 0xAAAA);
+
+pascal HandlerError GetVideoMediaGraphicsMode(MediaHandler mh, long *graphicsMode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0101, 0x7000, 0xA82A);
+
+pascal HandlerError SetVideoMediaGraphicsMode(MediaHandler mh, long graphicsMode, const RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0102, 0x7000, 0xA82A);
+
+pascal HandlerError GetSoundMediaBalance(MediaHandler mh, INTEGER *balance) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
+
+pascal HandlerError SetSoundMediaBalance(MediaHandler mh, INTEGER balance) M68K_INLINE(0x2F3C, 0x0002, 0x0102, 0x7000, 0xA82A);
+
+enum {
+    txtProcDefaultDisplay = 0,
+    txtProcDontDisplay = 1,
+    txtProcDoDisplay = 2,
+};
+
+typedef pascal OSErr (*TextMediaProcPtr)(Handle, Movie, INTEGER*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr TextMediaUPP;
+enum { uppTextMediaProcInfo = 0x00003FE0 };
+#define NewTextMediaUPP(proc) ((TextMediaUPP)NewRoutineDescriptor((ProcPtr)(proc), uppTextMediaProcInfo, GetCurrentArchitecture()))
+#define DisposeTextMediaUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef TextMediaProcPtr TextMediaUPP;
+#define NewTextMediaUPP(proc) (proc)
+#define DisposeTextMediaUPP(upp) ((void)0)
+#endif
+#define NewTextMediaProc(proc) NewTextMediaUPP(proc)
+#define DisposeTextMediaProc(proc) DisposeTextMediaUPP(proc)
+
+pascal ComponentResult SetTextProc(MediaHandler mh, TextMediaProcPtr TextProc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0101, 0x7000, 0xA82A);
+
+pascal ComponentResult AddTextSample(MediaHandler mh, Ptr text, unsigned long size, INTEGER fontNumber, INTEGER fontSize, Style textFace, RGBColor *textColor, RGBColor *backColor, INTEGER textJustification, Rect *textBox, long displayFlags, TimeValue scrollDelay, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0034, 0x0102, 0x7000, 0xA82A);
+
+pascal ComponentResult AddTESample(MediaHandler mh, TEHandle hTE, RGBColor *backColor, INTEGER textJustification, Rect *textBox, long displayFlags, TimeValue scrollDelay, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0026, 0x0103, 0x7000, 0xA82A);
+
+pascal ComponentResult AddHiliteSample(MediaHandler mh, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor, TimeValue duration, TimeValue *sampleTime) M68K_INLINE(0x2F3C, 0x0010, 0x0104, 0x7000, 0xA82A);
+
+enum {
+    findTextEdgeOK = 1,
+    findTextCaseSensitive = 2,
+    findTextReverseSearch = 4,
+    findTextWrapAround = 8,
+};
+
+pascal ComponentResult FindNextText(MediaHandler mh, Ptr text, long size, INTEGER findFlags, TimeValue startTime, TimeValue *foundTime, TimeValue *foundDuration, long *offset) M68K_INLINE(0x2F3C, 0x001A, 0x0105, 0x7000, 0xA82A);
+
+pascal ComponentResult HiliteTextSample(MediaHandler mh, TimeValue sampleTime, INTEGER hiliteStart, INTEGER hiliteEnd, RGBColor *rgbHiliteColor) M68K_INLINE(0x2F3C, 0x000C, 0x0106, 0x7000, 0xA82A);
+
+pascal void GetPosterBox(Movie theMovie, Rect *boxRect) M68K_INLINE(0x303C, 0x016F, 0xAAAA);
+
+pascal void SetPosterBox(Movie theMovie, const Rect *boxRect) M68K_INLINE(0x303C, 0x0170, 0xAAAA);
+
+pascal RgnHandle GetMovieSegmentDisplayBoundsRgn(Movie theMovie, TimeValue time, TimeValue duration) M68K_INLINE(0x303C, 0x016C, 0xAAAA);
+
+pascal RgnHandle GetTrackSegmentDisplayBoundsRgn(Track theTrack, TimeValue time, TimeValue duration) M68K_INLINE(0x303C, 0x016B, 0xAAAA);
+
+pascal void SetMovieCoverProcs(Movie theMovie, MovieRgnCoverProc uncoverProc, MovieRgnCoverProc coverProc, long refcon) M68K_INLINE(0x303C, 0x0179, 0xAAAA);
+
+pascal ComponentResult GetTrackStatus(Track theTrack) M68K_INLINE(0x303C, 0x0172, 0xAAAA);
+
+pascal ComponentResult GetMovieStatus(Movie theMovie, Track *firstProblemTrack) M68K_INLINE(0x303C, 0x0173, 0xAAAA);
+
+pascal OSErr PutMovieOnScrap(Movie theMovie, long movieScrapFlags) M68K_INLINE(0x303C, 0x018C, 0xAAAA);
+
+pascal Movie NewMovieFromScrap(long newMovieFlags) M68K_INLINE(0x303C, 0x018D, 0xAAAA);
+
+pascal OSErr GetMediaDataRef(Media theMedia, INTEGER index, Handle *dataRef, OSType *dataRefType, long *dataRefAttributes) M68K_INLINE(0x303C, 0x0197, 0xAAAA);
+
+pascal OSErr SetMediaDataRef(Media theMedia, INTEGER index, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x01C9, 0xAAAA);
+
+pascal OSErr SetMediaDataRefAttributes(Media theMedia, INTEGER index, long dataRefAttributes) M68K_INLINE(0x303C, 0x01CA, 0xAAAA);
+
+pascal OSErr AddMediaDataRef(Media theMedia, INTEGER *index, Handle dataRef, OSType dataRefType) M68K_INLINE(0x303C, 0x0198, 0xAAAA);
+
+pascal OSErr GetMediaDataRefCount(Media theMedia, INTEGER *count) M68K_INLINE(0x303C, 0x0199, 0xAAAA);
+
+pascal void SetMoviePlayHints(Movie theMovie, long flags, long flagsMask) M68K_INLINE(0x303C, 0x01A1, 0xAAAA);
+
+pascal void SetMediaPlayHints(Media theMedia, long flags, long flagsMask) M68K_INLINE(0x303C, 0x01A2, 0xAAAA);
+
+enum {
+    firstMoviesError = -2000,
+    couldNotResolveDataRef = -2000,
+    badImageDescription = -2001,
+    badPublicMovieAtom = -2002,
+    cantFindHandler = -2003,
+    cantOpenHandler = -2004,
+    badComponentType = -2005,
+    noMediaHandler = -2006,
+    noDataHandler = -2007,
+    invalidMedia = -2008,
+    invalidTrack = -2009,
+    invalidMovie = -2010,
+    invalidSampleTable = -2011,
+    invalidDataRef = -2012,
+    invalidHandler = -2013,
+    invalidDuration = -2014,
+    invalidTime = -2015,
+    cantPutPublicMovieAtom = -2016,
+    badEditList = -2017,
+    mediaTypesDontMatch = -2018,
+    progressProcAborted = -2019,
+    movieToolboxUninitialized = -2020,
+    wfFileNotFound = -2021,
+    cantCreateSingleForkFile = -2022,
+    invalidEditState = -2023,
+    nonMatchingEditState = -2024,
+    staleEditState = -2025,
+    userDataItemNotFound = -2026,
+    maxSizeToGrowTooSmall = -2027,
+    badTrackIndex = -2028,
+    trackIDNotFound = -2029,
+    trackNotInMovie = -2030,
+    timeNotInTrack = -2031,
+    timeNotInMedia = -2032,
+    badEditIndex = -2033,
+    internalQuickTimeError = -2034,
+    cantEnableTrack = -2035,
+    invalidRect = -2036,
+    invalidSampleNum = -2037,
+    invalidChunkNum = -2038,
+    invalidSampleDescIndex = -2039,
+    invalidChunkCache = -2040,
+    invalidSampleDescription = -2041,
+    dataNotOpenForRead = -2042,
+    dataNotOpenForWrite = -2043,
+    dataAlreadyOpenForWrite = -2044,
+    dataAlreadyClosed = -2045,
+    endOfDataReached = -2046,
+    dataNoDataRef = -2047,
+    noMovieFound = -2048,
+    invalidDataRefContainer = -2049,
+    badDataRefIndex = -2050,
+    noDefaultDataRef = -2051,
+    couldNotUseAnExistingSample = -2052,
+    featureUnsupported = -2053,
+    unsupportedAuxiliaryImportData = -2057,
+    lastMoviesError = -2056,
+    noRecordOfApp = -2020,
+};
+
+typedef ComponentInstance MovieController;
+
+enum {
+    mcActionIdle = 1,
+    mcActionDraw = 2,
+    mcActionActivate = 3,
+    mcActionDeactivate = 4,
+    mcActionMouseDown = 5,
+    mcActionKey = 6,
+    mcActionPlay = 8,
+    mcActionGoToTime = 12,
+    mcActionSetVolume = 14,
+    mcActionGetVolume = 15,
+    mcActionStep = 18,
+    mcActionSetLooping = 21,
+    mcActionGetLooping = 22,
+    mcActionSetLoopIsPalindrome = 23,
+    mcActionGetLoopIsPalindrome = 24,
+    mcActionSetGrowBoxBounds = 25,
+    mcActionControllerSizeChanged = 26,
+    mcActionSetSelectionBegin = 29,
+    mcActionSetSelectionDuration = 30,
+    mcActionSetPosterTime = 31,
+    mcActionSetKeysEnabled = 32,
+    mcActionGetKeysEnabled = 33,
+    mcActionSetPlaySelection = 34,
+    mcActionGetPlaySelection = 35,
+    mcActionSetUseBadge = 36,
+    mcActionGetUseBadge = 37,
+    mcActionSetFlags = 38,
+    mcActionGetFlags = 39,
+    mcActionSetPlayEveryFrame = 40,
+    mcActionGetPlayEveryFrame = 41,
+    mcActionGetPlayRate = 42,
+    mcActionShowBalloon = 43,
+    mcActionBadgeClick = 44,
+    mcActionMovieClick = 45,
+    mcActionSuspend = 46,
+    mcActionResume = 47,
+};
+
+typedef INTEGER mcAction;
+
+enum {
+    mcFlagSuppressMovieFrame = 1,
+    mcFlagSuppressStepButtons = 2,
+    mcFlagSuppressSpeakerButton = 4,
+    mcFlagsUseWindowPalette = 8,
+};
+
+enum {
+    mcPositionDontInvalidate = 32,
+};
+
+typedef unsigned long mcFlags;
+
+typedef pascal Boolean (*MCActionFilterProcPtr)(MovieController, INTEGER*, void*);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr MCActionFilterUPP;
+enum { uppMCActionFilterProcInfo = 0x00000FD0 };
+#define NewMCActionFilterUPP(proc) ((MCActionFilterUPP)NewRoutineDescriptor((ProcPtr)(proc), uppMCActionFilterProcInfo, GetCurrentArchitecture()))
+#define DisposeMCActionFilterUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef MCActionFilterProcPtr MCActionFilterUPP;
+#define NewMCActionFilterUPP(proc) (proc)
+#define DisposeMCActionFilterUPP(upp) ((void)0)
+#endif
+#define NewMCActionFilterProc(proc) NewMCActionFilterUPP(proc)
+#define DisposeMCActionFilterProc(proc) DisposeMCActionFilterUPP(proc)
+
+typedef MCActionFilterProcPtr MCActionFilter;
+
+typedef pascal Boolean (*MCActionFilterWithRefConProcPtr)(MovieController, INTEGER, void*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr MCActionFilterWithRefConUPP;
+enum { uppMCActionFilterWithRefConProcInfo = 0x00003ED0 };
+#define NewMCActionFilterWithRefConUPP(proc) ((MCActionFilterWithRefConUPP)NewRoutineDescriptor((ProcPtr)(proc), uppMCActionFilterWithRefConProcInfo, GetCurrentArchitecture()))
+#define DisposeMCActionFilterWithRefConUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef MCActionFilterWithRefConProcPtr MCActionFilterWithRefConUPP;
+#define NewMCActionFilterWithRefConUPP(proc) (proc)
+#define DisposeMCActionFilterWithRefConUPP(upp) ((void)0)
+#endif
+#define NewMCActionFilterWithRefConProc(proc) NewMCActionFilterWithRefConUPP(proc)
+#define DisposeMCActionFilterWithRefConProc(proc) DisposeMCActionFilterWithRefConUPP(proc)
+
+typedef MCActionFilterWithRefConProcPtr MCActionFilterWithRefCon;
+
+enum {
+    mcInfoUndoAvailable = 1,
+    mcInfoCutAvailable = 2,
+    mcInfoCopyAvailable = 4,
+    mcInfoPasteAvailable = 8,
+    mcInfoClearAvailable = 16,
+    mcInfoHasSound = 32,
+    mcInfoIsPlaying = 64,
+    mcInfoIsLooping = 128,
+    mcInfoIsInPalindrome = 256,
+    mcInfoEditingEnabled = 512,
+};
+
+enum {
+    mcMenuUndo = 1,
+    mcMenuCut = 3,
+    mcMenuCopy = 4,
+    mcMenuPaste = 5,
+    mcMenuClear = 6,
+};
+
+enum {
+    cannotMoveAttachedController = -9999,
+    controllerHasFixedHeight = -9998,
+    cannotSetWidthOfAttachedController = -9997,
+    controllerBoundsNotExact = -9996,
+    editingNotAllowed = -9995,
+    badControllerHeight = -9994,
+};
+
+pascal ComponentResult MCSetMovie(MovieController mc, Movie m, WindowPtr movieWindow, Point where) M68K_INLINE(0x2F3C, 0x000C, 0x0002, 0x7000, 0xA82A);
+
+pascal Movie MCGetMovie(MovieController mc) M68K_INLINE(0x4267, 0x2F3C, 0x0002, 0x0005, 0x7000, 0xA82A);
+
+pascal ComponentResult MCRemoveMovie(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0006, 0x7000, 0xA82A);
+
+pascal ComponentResult MCIsPlayerEvent(MovieController mc, const EventRecord *e) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetActionFilter(MovieController mc, MCActionFilter blob) M68K_INLINE(0x2F3C, 0x0004, 0x0008, 0x7000, 0xA82A);
+
+pascal ComponentResult MCDoAction(MovieController mc, INTEGER action, void *params) M68K_INLINE(0x2F3C, 0x0006, 0x0009, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetControllerAttached(MovieController mc, Boolean attach) M68K_INLINE(0x2F3C, 0x0002, 0x000A, 0x7000, 0xA82A);
+
+pascal ComponentResult MCIsControllerAttached(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000B, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetControllerPort(MovieController mc, CGrafPtr gp) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
+
+pascal CGrafPtr MCGetControllerPort(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000D, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetVisible(MovieController mc, Boolean visible) M68K_INLINE(0x2F3C, 0x0002, 0x000E, 0x7000, 0xA82A);
+
+pascal ComponentResult MCGetVisible(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x000F, 0x7000, 0xA82A);
+
+pascal ComponentResult MCGetControllerBoundsRect(MovieController mc, Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0010, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetControllerBoundsRect(MovieController mc, const Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0011, 0x7000, 0xA82A);
+
+pascal RgnHandle MCGetControllerBoundsRgn(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0012, 0x7000, 0xA82A);
+
+pascal RgnHandle MCGetWindowRgn(MovieController mc, WindowPtr w) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
+
+pascal ComponentResult MCMovieChanged(MovieController mc, Movie m) M68K_INLINE(0x2F3C, 0x0004, 0x0014, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetDuration(MovieController mc, TimeValue duration) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
+
+pascal TimeValue MCGetCurrentTime(MovieController mc, TimeScale *scale) M68K_INLINE(0x2F3C, 0x0004, 0x0016, 0x7000, 0xA82A);
+
+pascal ComponentResult MCNewAttachedController(MovieController mc, Movie m, WindowPtr w, Point where) M68K_INLINE(0x2F3C, 0x000C, 0x0017, 0x7000, 0xA82A);
+
+pascal ComponentResult MCDraw(MovieController mc, WindowPtr w) M68K_INLINE(0x2F3C, 0x0004, 0x0018, 0x7000, 0xA82A);
+
+pascal ComponentResult MCActivate(MovieController mc, WindowPtr w, Boolean activate) M68K_INLINE(0x2F3C, 0x0006, 0x0019, 0x7000, 0xA82A);
+
+pascal ComponentResult MCIdle(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001A, 0x7000, 0xA82A);
+
+pascal ComponentResult MCKey(MovieController mc, char key, long modifiers) M68K_INLINE(0x2F3C, 0x0006, 0x001B, 0x7000, 0xA82A);
+
+pascal ComponentResult MCClick(MovieController mc, WindowPtr w, Point where, long when, long modifiers) M68K_INLINE(0x2F3C, 0x0010, 0x001C, 0x7000, 0xA82A);
+
+pascal ComponentResult MCEnableEditing(MovieController mc, Boolean enabled) M68K_INLINE(0x2F3C, 0x0002, 0x001D, 0x7000, 0xA82A);
+
+pascal long MCIsEditingEnabled(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001E, 0x7000, 0xA82A);
+
+pascal Movie MCCopy(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x001F, 0x7000, 0xA82A);
+
+pascal Movie MCCut(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0020, 0x7000, 0xA82A);
+
+pascal ComponentResult MCPaste(MovieController mc, Movie srcMovie) M68K_INLINE(0x2F3C, 0x0004, 0x0021, 0x7000, 0xA82A);
+
+pascal ComponentResult MCClear(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0022, 0x7000, 0xA82A);
+
+pascal ComponentResult MCUndo(MovieController mc) M68K_INLINE(0x2F3C, 0x0000, 0x0023, 0x7000, 0xA82A);
+
+pascal ComponentResult MCPositionController(MovieController mc, const Rect *movieRect, const Rect *controllerRect, long someFlags) M68K_INLINE(0x2F3C, 0x000C, 0x0024, 0x7000, 0xA82A);
+
+pascal ComponentResult MCGetControllerInfo(MovieController mc, long *someFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0025, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetClip(MovieController mc, RgnHandle theClip, RgnHandle movieClip) M68K_INLINE(0x2F3C, 0x0008, 0x0028, 0x7000, 0xA82A);
+
+pascal ComponentResult MCGetClip(MovieController mc, RgnHandle *theClip, RgnHandle *movieClip) M68K_INLINE(0x2F3C, 0x0008, 0x0029, 0x7000, 0xA82A);
+
+pascal ComponentResult MCDrawBadge(MovieController mc, RgnHandle movieRgn, RgnHandle *badgeRgn) M68K_INLINE(0x2F3C, 0x0008, 0x002A, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetUpEditMenu(MovieController mc, long modifiers, MenuHandle mh) M68K_INLINE(0x2F3C, 0x0008, 0x002B, 0x7000, 0xA82A);
+
+pascal ComponentResult MCGetMenuString(MovieController mc, long modifiers, INTEGER item, uint8_t *aString) M68K_INLINE(0x2F3C, 0x000A, 0x002C, 0x7000, 0xA82A);
+
+pascal ComponentResult MCSetActionFilterWithRefCon(MovieController mc, MCActionFilterWithRefCon blob, long refCon) M68K_INLINE(0x2F3C, 0x0008, 0x002D, 0x7000, 0xA82A);
+
+enum {
+    kMCSetMovieSelect = 2,
+    kMCRemoveMovieSelect = 6,
+    kMCIsPlayerEventSelect = 7,
+    kMCSetActionFilterSelect = 8,
+    kMCDoActionSelect = 9,
+    kMCSetControllerAttachedSelect = 10,
+    kMCIsControllerAttachedSelect = 11,
+    kMCSetControllerPortSelect = 12,
+    kMCGetControllerPortSelect = 13,
+    kMCSetVisibleSelect = 14,
+    kMCGetVisibleSelect = 15,
+    kMCGetControllerBoundsRectSelect = 16,
+    kMCSetControllerBoundsRectSelect = 17,
+    kMCGetControllerBoundsRgnSelect = 18,
+    kMCGetWindowRgnSelect = 19,
+    kMCMovieChangedSelect = 20,
+    kMCSetDurationSelect = 21,
+    kMCGetCurrentTimeSelect = 22,
+    kMCNewAttachedControllerSelect = 23,
+    kMCDrawSelect = 24,
+    kMCActivateSelect = 25,
+    kMCIdleSelect = 26,
+    kMCKeySelect = 27,
+    kMCClickSelect = 28,
+    kMCEnableEditingSelect = 29,
+    kMCIsEditingEnabledSelect = 30,
+    kMCCopySelect = 31,
+    kMCCutSelect = 32,
+    kMCPasteSelect = 33,
+    kMCClearSelect = 34,
+    kMCUndoSelect = 35,
+    kMCPositionControllerSelect = 36,
+    kMCGetControllerInfoSelect = 37,
+    kMCSetClipSelect = 40,
+    kMCGetClipSelect = 41,
+    kMCDrawBadgeSelect = 42,
+    kMCSetUpEditMenuSelect = 43,
+    kMCGetMenuStringSelect = 44,
+    kMCSetActionFilterWithRefConSelect = 45,
+};
+
+pascal TimeBase NewTimeBase(void) M68K_INLINE(0x303C, 0x00A5, 0xAAAA);
+
+pascal void DisposeTimeBase(TimeBase tb) M68K_INLINE(0x303C, 0x00B6, 0xAAAA);
+
+pascal TimeValue GetTimeBaseTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00A6, 0xAAAA);
+
+pascal void SetTimeBaseTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00A7, 0xAAAA);
+
+pascal void SetTimeBaseValue(TimeBase tb, TimeValue t, TimeScale s) M68K_INLINE(0x303C, 0x00A8, 0xAAAA);
+
+pascal Fixed GetTimeBaseRate(TimeBase tb) M68K_INLINE(0x303C, 0x00A9, 0xAAAA);
+
+pascal void SetTimeBaseRate(TimeBase tb, Fixed r) M68K_INLINE(0x303C, 0x00AA, 0xAAAA);
+
+pascal TimeValue GetTimeBaseStartTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00AB, 0xAAAA);
+
+pascal void SetTimeBaseStartTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00AC, 0xAAAA);
+
+pascal TimeValue GetTimeBaseStopTime(TimeBase tb, TimeScale s, TimeRecord *tr) M68K_INLINE(0x303C, 0x00AD, 0xAAAA);
+
+pascal void SetTimeBaseStopTime(TimeBase tb, const TimeRecord *tr) M68K_INLINE(0x303C, 0x00AE, 0xAAAA);
+
+pascal long GetTimeBaseFlags(TimeBase tb) M68K_INLINE(0x303C, 0x00B1, 0xAAAA);
+
+pascal void SetTimeBaseFlags(TimeBase tb, long timeBaseFlags) M68K_INLINE(0x303C, 0x00B2, 0xAAAA);
+
+pascal void SetTimeBaseMasterTimeBase(TimeBase slave, TimeBase master, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x00B4, 0xAAAA);
+
+pascal TimeBase GetTimeBaseMasterTimeBase(TimeBase tb) M68K_INLINE(0x303C, 0x00AF, 0xAAAA);
+
+pascal void SetTimeBaseMasterClock(TimeBase slave, Component clockMeister, const TimeRecord *slaveZero) M68K_INLINE(0x303C, 0x00B3, 0xAAAA);
+
+pascal ComponentInstance GetTimeBaseMasterClock(TimeBase tb) M68K_INLINE(0x303C, 0x00B0, 0xAAAA);
+
+pascal void ConvertTime(TimeRecord *inout, TimeBase newBase) M68K_INLINE(0x303C, 0x00B5, 0xAAAA);
+
+pascal void ConvertTimeScale(TimeRecord *inout, TimeScale newScale) M68K_INLINE(0x303C, 0x00B7, 0xAAAA);
+
+pascal void AddTime(TimeRecord *dst, const TimeRecord *src) M68K_INLINE(0x303C, 0x010C, 0xAAAA);
+
+pascal void SubtractTime(TimeRecord *dst, const TimeRecord *src) M68K_INLINE(0x303C, 0x010D, 0xAAAA);
+
+pascal long GetTimeBaseStatus(TimeBase tb, TimeRecord *unpinnedTime) M68K_INLINE(0x303C, 0x010B, 0xAAAA);
+
+pascal void SetTimeBaseZero(TimeBase tb, TimeRecord *zero) M68K_INLINE(0x303C, 0x0128, 0xAAAA);
+
+pascal Fixed GetTimeBaseEffectiveRate(TimeBase tb) M68K_INLINE(0x303C, 0x0124, 0xAAAA);
+
+pascal QTCallBack NewCallBack(TimeBase tb, INTEGER cbType) M68K_INLINE(0x303C, 0x00EB, 0xAAAA);
+
+pascal void DisposeCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x00EC, 0xAAAA);
+
+pascal INTEGER GetCallBackType(QTCallBack cb) M68K_INLINE(0x303C, 0x00ED, 0xAAAA);
+
+pascal TimeBase GetCallBackTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x00EE, 0xAAAA);
+
+pascal OSErr CallMeWhen(QTCallBack cb, QTCallBackProc callBackProc, long refCon, long param1, long param2, long param3) M68K_INLINE(0x303C, 0x00B8, 0xAAAA);
+
+pascal void CancelCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x00B9, 0xAAAA);
+
+pascal OSErr AddCallBackToTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x0129, 0xAAAA);
+
+pascal OSErr RemoveCallBackFromTimeBase(QTCallBack cb) M68K_INLINE(0x303C, 0x012A, 0xAAAA);
+
+pascal QTCallBack GetFirstCallBack(TimeBase tb) M68K_INLINE(0x303C, 0x012B, 0xAAAA);
+
+pascal QTCallBack GetNextCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x012C, 0xAAAA);
+
+pascal void ExecuteCallBack(QTCallBack cb) M68K_INLINE(0x303C, 0x012D, 0xAAAA);
+
+typedef struct MoviesUserData MoviesUserData;
+struct MoviesUserData {
+    long size;
+    long type;
+    char data[1];
+};
+
+typedef struct UserDataAtom UserDataAtom;
+struct UserDataAtom {
+    long size;
+    long type;
+    MoviesUserData userData[1];
+};
+
+typedef struct SampleDescriptionAtom SampleDescriptionAtom;
+struct SampleDescriptionAtom {
+    long size;
+    long type;
+    long flags;
+    long numEntries;
+    SampleDescription sampleDescTable[1];
+};
+
+typedef struct TimeToSampleNum TimeToSampleNum;
+struct TimeToSampleNum {
+    long sampleCount;
+    TimeValue sampleDuration;
+};
+
+typedef struct TimeToSampleNumAtom TimeToSampleNumAtom;
+struct TimeToSampleNumAtom {
+    long size;
+    long type;
+    long flags;
+    long numEntries;
+    TimeToSampleNum timeToSampleNumTable[1];
+};
+
+typedef struct SyncSampleAtom SyncSampleAtom;
+struct SyncSampleAtom {
+    long size;
+    long type;
+    long flags;
+    long numEntries;
+    long syncSampleTable[1];
+};
+
+typedef struct SampleToChunk SampleToChunk;
+struct SampleToChunk {
+    long firstChunk;
+    long samplesPerChunk;
+    long sampleDescriptionID;
+};
+
+typedef struct SampleToChunkAtom SampleToChunkAtom;
+struct SampleToChunkAtom {
+    long size;
+    long type;
+    long flags;
+    long numEntries;
+    SampleToChunk sampleToChunkTable[1];
+};
+
+typedef struct ChunkOffsetAtom ChunkOffsetAtom;
+struct ChunkOffsetAtom {
+    long size;
+    long type;
+    long flags;
+    long numEntries;
+    long chunkOffsetTable[1];
+};
+
+typedef struct SampleSizeAtom SampleSizeAtom;
+struct SampleSizeAtom {
+    long size;
+    long type;
+    long flags;
+    long sampleSize;
+    long numEntries;
+    long sampleSizeTable[1];
+};
+
+typedef struct ShadowSync ShadowSync;
+struct ShadowSync {
+    long fdSampleNum;
+    long syncSampleNum;
+};
+
+typedef struct ShadowSyncAtom ShadowSyncAtom;
+struct ShadowSyncAtom {
+    long size;
+    long type;
+    long flags;
+    long numEntries;
+    ShadowSync shadowSyncTable[1];
+};
+
+typedef struct SampleTableAtom SampleTableAtom;
+struct SampleTableAtom {
+    long size;
+    long type;
+    SampleDescriptionAtom sampleDescription;
+    TimeToSampleNumAtom timeToSampleNum;
+    SampleToChunkAtom sampleToChunk;
+    SyncSampleAtom syncSample;
+    SampleSizeAtom sampleSize;
+    ChunkOffsetAtom chunkOffset;
+    ShadowSyncAtom shadowSync;
+};
+
+typedef struct PublicHandlerInfo PublicHandlerInfo;
+struct PublicHandlerInfo {
+    long flags;
+    long componentType;
+    long componentSubType;
+    long componentManufacturer;
+    long componentFlags;
+    long componentFlagsMask;
+    char componentName[1];
+};
+
+typedef struct HandlerAtom HandlerAtom;
+struct HandlerAtom {
+    long size;
+    long type;
+    PublicHandlerInfo hInfo;
+};
+
+typedef long DataRefAtom;
+
+typedef struct DataInfoAtom DataInfoAtom;
+struct DataInfoAtom {
+    long size;
+    long type;
+    DataRefAtom dataRef;
+};
+
+typedef struct RgnAtom RgnAtom;
+struct RgnAtom {
+    long size;
+    long type;
+    INTEGER rgnSize;
+    Rect rgnBBox;
+    char data[1];
+};
+
+typedef struct MatteCompressedAtom MatteCompressedAtom;
+struct MatteCompressedAtom {
+    long size;
+    long type;
+    long flags;
+    ImageDescription matteImageDescription;
+    char matteData[1];
+};
+
+typedef struct MatteAtom MatteAtom;
+struct MatteAtom {
+    long size;
+    long type;
+    MatteCompressedAtom aCompressedMatte;
+};
+
+typedef struct ClippingAtom ClippingAtom;
+struct ClippingAtom {
+    long size;
+    long type;
+    RgnAtom aRgnClip;
+};
+
+typedef struct VideoMediaInfoHeader VideoMediaInfoHeader;
+struct VideoMediaInfoHeader {
+    long flags;
+    INTEGER graphicsMode;
+    INTEGER opColorRed;
+    INTEGER opColorGreen;
+    INTEGER opColorBlue;
+};
+
+typedef struct VideoMediaInfoHeaderAtom VideoMediaInfoHeaderAtom;
+struct VideoMediaInfoHeaderAtom {
+    long size;
+    long type;
+    VideoMediaInfoHeader vmiHeader;
+};
+
+typedef struct VideoMediaInfo VideoMediaInfo;
+struct VideoMediaInfo {
+    long size;
+    long type;
+    VideoMediaInfoHeaderAtom header;
+    HandlerAtom dataHandler;
+    DataInfoAtom dataInfo;
+    SampleTableAtom sampleTable;
+};
+
+typedef struct SoundMediaInfoHeader SoundMediaInfoHeader;
+struct SoundMediaInfoHeader {
+    long flags;
+    INTEGER balance;
+    INTEGER rsrvd;
+};
+
+typedef struct SoundMediaInfoHeaderAtom SoundMediaInfoHeaderAtom;
+struct SoundMediaInfoHeaderAtom {
+    long size;
+    long type;
+    SoundMediaInfoHeader smiHeader;
+};
+
+typedef struct SoundMediaInfo SoundMediaInfo;
+struct SoundMediaInfo {
+    long size;
+    long type;
+    SoundMediaInfoHeaderAtom header;
+    HandlerAtom dataHandler;
+    DataRefAtom dataReference;
+    SampleTableAtom sampleTable;
+};
+
+typedef struct MediaInfo MediaInfo;
+struct MediaInfo {
+    long size;
+    long type;
+};
+
+typedef struct MediaHeader MediaHeader;
+struct MediaHeader {
+    long flags;
+    long creationTime;
+    long modificationTime;
+    TimeValue timeScale;
+    TimeValue duration;
+    INTEGER language;
+    INTEGER quality;
+};
+
+typedef struct MediaHeaderAtom MediaHeaderAtom;
+struct MediaHeaderAtom {
+    long size;
+    long type;
+    MediaHeader header;
+};
+
+typedef struct MediaDirectory MediaDirectory;
+struct MediaDirectory {
+    long size;
+    long type;
+    MediaHeaderAtom mediaHeader;
+    HandlerAtom mediaHandler;
+    MediaInfo mediaInfo;
+};
+
+enum {
+    TrackEnable = 1,
+    TrackInMovie = 2,
+    TrackInPreview = 4,
+    TrackInPoster = 8,
+};
+
+typedef struct TrackHeader TrackHeader;
+struct TrackHeader {
+    long flags;
+    long creationTime;
+    long modificationTime;
+    long trackID;
+    long reserved1;
+    TimeValue duration;
+    long reserved2;
+    long reserved3;
+    INTEGER layer;
+    INTEGER alternateGroup;
+    INTEGER volume;
+    INTEGER reserved4;
+    MatrixRecord matrix;
+    Fixed trackWidth;
+    Fixed trackHeight;
+};
+
+typedef struct TrackHeaderAtom TrackHeaderAtom;
+struct TrackHeaderAtom {
+    long size;
+    long type;
+    TrackHeader header;
+};
+
+typedef struct EditListType EditListType;
+struct EditListType {
+    TimeValue trackDuration;
+    TimeValue mediaTime;
+    Fixed mediaRate;
+};
+
+typedef struct EditListAtom EditListAtom;
+struct EditListAtom {
+    long size;
+    long type;
+    long flags;
+    long numEntries;
+    EditListType editListTable[1];
+};
+
+typedef struct EditsAtom EditsAtom;
+struct EditsAtom {
+    long size;
+    long type;
+    EditListAtom editList;
+};
+
+typedef struct TrackDirectory TrackDirectory;
+struct TrackDirectory {
+    long size;
+    long type;
+    TrackHeaderAtom trackHeader;
+    ClippingAtom trackClip;
+    EditsAtom edits;
+    MediaDirectory media;
+    UserDataAtom userData;
+};
+
+typedef struct MovieHeader MovieHeader;
+struct MovieHeader {
+    long flags;
+    long creationTime;
+    long modificationTime;
+    TimeValue timeScale;
+    TimeValue duration;
+    Fixed preferredRate;
+    INTEGER preferredVolume;
+    INTEGER reserved1;
+    long preferredLong1;
+    long preferredLong2;
+    MatrixRecord matrix;
+    TimeValue previewTime;
+    TimeValue previewDuration;
+    TimeValue posterTime;
+    TimeValue selectionTime;
+    TimeValue selectionDuration;
+    TimeValue currentTime;
+    long nextTrackID;
+};
+
+typedef struct MovieHeaderAtom MovieHeaderAtom;
+struct MovieHeaderAtom {
+    long size;
+    long type;
+    MovieHeader header;
+};
+
+typedef struct MovieDirectory MovieDirectory;
+struct MovieDirectory {
+    long size;
+    long type;
+    MovieHeaderAtom header;
+    ClippingAtom movieClip;
+    TrackDirectory track[1];
+    UserDataAtom userData;
+};
+
+enum {
+    kClockRateIsLinear = 1,
+    kClockImplementsCallBacks = 2,
+};
+
+pascal QTCallBack ClockNewCallBack(ComponentInstance aClock, TimeBase tb, INTEGER callBackType) M68K_INLINE(0x2F3C, 0x0006, 0x0002, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockDisposeCallBack(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0003, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockCallMeWhen(ComponentInstance aClock, QTCallBack cb, long param1, long param2, long param3) M68K_INLINE(0x2F3C, 0x0010, 0x0004, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockCancelCallBack(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0005, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockRateChanged(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0006, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockTimeChanged(ComponentInstance aClock, QTCallBack cb) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockSetTimeBase(ComponentInstance aClock, TimeBase tb) M68K_INLINE(0x2F3C, 0x0004, 0x0008, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockStartStopChanged(ComponentInstance aClock, QTCallBack cb, Boolean startChanged, Boolean stopChanged) M68K_INLINE(0x2F3C, 0x0008, 0x0009, 0x7000, 0xA82A);
+
+pascal ComponentResult ClockGetRate(ComponentInstance aClock, Fixed *rate) M68K_INLINE(0x2F3C, 0x0004, 0x000A, 0x7000, 0xA82A);
+
+enum {
+    kClockGetTimeSelect = 1,
+    kClockNewCallBackSelect = 2,
+    kClockDisposeCallBackSelect = 3,
+    kClockCallMeWhenSelect = 4,
+    kClockCancelCallBackSelect = 5,
+    kClockRateChangedSelect = 6,
+    kClockTimeChangedSelect = 7,
+    kClockSetTimeBaseSelect = 8,
+    kClockStartStopChangedSelect = 9,
+    kClockGetRateSelect = 10,
+};
+
+typedef ComponentInstance SeqGrabComponent;
+
+typedef ComponentInstance SGChannel;
+
+enum {
+    seqGrabToDisk = 1,
+    seqGrabToMemory = 2,
+    seqGrabDontUseTempMemory = 4,
+    seqGrabAppendToFile = 8,
+    seqGrabDontAddMovieResource = 16,
+    seqGrabDontMakeMovie = 32,
+    seqGrabPreExtendFile = 64,
+};
+
+typedef unsigned long SeqGrabDataOutputEnum;
+
+enum {
+    seqGrabRecord = 1,
+    seqGrabPreview = 2,
+    seqGrabPlayDuringRecord = 4,
+};
+
+typedef unsigned long SeqGrabUsageEnum;
+
+enum {
+    seqGrabHasBounds = 1,
+    seqGrabHasVolume = 2,
+    seqGrabHasDiscreteSamples = 4,
+};
+
+typedef unsigned long SeqGrabChannelInfoEnum;
+
+typedef struct seqGrabFrameInfo seqGrabFrameInfo;
+struct seqGrabFrameInfo {
+    long frameOffset;
+    long frameTime;
+    long frameSize;
+    SGChannel frameChannel;
+    long frameRefCon;
+};
+
+enum {
+    grabPictOffScreen = 1,
+    grabPictIgnoreClip = 2,
+};
+
+typedef pascal OSErr (*SGDataProcPtr)(SGChannel, Ptr, long, long*, long, TimeValue, INTEGER, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr SGDataUPP;
+enum { uppSGDataProcInfo = 0x003BFFE0 };
+#define NewSGDataUPP(proc) ((SGDataUPP)NewRoutineDescriptor((ProcPtr)(proc), uppSGDataProcInfo, GetCurrentArchitecture()))
+#define DisposeSGDataUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef SGDataProcPtr SGDataUPP;
+#define NewSGDataUPP(proc) (proc)
+#define DisposeSGDataUPP(upp) ((void)0)
+#endif
+#define NewSGDataProc(proc) NewSGDataUPP(proc)
+#define DisposeSGDataProc(proc) DisposeSGDataUPP(proc)
+
+typedef SGDataProcPtr SGDataProc;
+
+typedef struct SGDeviceName SGDeviceName;
+struct SGDeviceName {
+    Str63 name;
+    Handle icon;
+    long flags;
+    long refCon;
+    long reserved;
+};
+
+typedef struct SGDeviceListRecord SGDeviceListRecord;
+struct SGDeviceListRecord {
+    INTEGER count;
+    INTEGER selectedIndex;
+    long reserved;
+    SGDeviceName entry[1];
+};
+
+typedef struct SGDeviceListRecord *SGDeviceListPtr;
+
+typedef struct SGDeviceListRecord **SGDeviceList;
+
+enum {
+    seqGrabWriteAppend = 0,
+    seqGrabWriteReserve = 1,
+    seqGrabWriteFill = 2,
+};
+
+enum {
+    seqGrabUnpause = 0,
+    seqGrabPause = 1,
+    seqGrabPauseForMenu = 3,
+};
+
+enum {
+    channelFlagDontOpenResFile = 2,
+    channelFlagHasDependency = 4,
+};
+
+typedef pascal Boolean (*SGModalFilterProcPtr)(DialogPtr, EventRecord*, INTEGER*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr SGModalFilterUPP;
+enum { uppSGModalFilterProcInfo = 0x00003FD0 };
+#define NewSGModalFilterUPP(proc) ((SGModalFilterUPP)NewRoutineDescriptor((ProcPtr)(proc), uppSGModalFilterProcInfo, GetCurrentArchitecture()))
+#define DisposeSGModalFilterUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef SGModalFilterProcPtr SGModalFilterUPP;
+#define NewSGModalFilterUPP(proc) (proc)
+#define DisposeSGModalFilterUPP(upp) ((void)0)
+#endif
+#define NewSGModalFilterProc(proc) NewSGModalFilterUPP(proc)
+#define DisposeSGModalFilterProc(proc) DisposeSGModalFilterUPP(proc)
+
+enum {
+    sgPanelFlagForPanel = 1,
+};
+
+pascal ComponentResult SGInitialize(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0001, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetDataOutput(SeqGrabComponent s, FSSpec *movieFile, long whereFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0002, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetDataOutput(SeqGrabComponent s, FSSpec *movieFile, long *whereFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0003, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetGWorld(SeqGrabComponent s, CGrafPtr gp, GDHandle gd) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetGWorld(SeqGrabComponent s, CGrafPtr *gp, GDHandle *gd) M68K_INLINE(0x2F3C, 0x0008, 0x0005, 0x7000, 0xA82A);
+
+pascal ComponentResult SGNewChannel(SeqGrabComponent s, OSType channelType, SGChannel *ref) M68K_INLINE(0x2F3C, 0x0008, 0x0006, 0x7000, 0xA82A);
+
+pascal ComponentResult SGDisposeChannel(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+
+pascal ComponentResult SGStartPreview(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0010, 0x7000, 0xA82A);
+
+pascal ComponentResult SGStartRecord(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0011, 0x7000, 0xA82A);
+
+pascal ComponentResult SGIdle(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0012, 0x7000, 0xA82A);
+
+pascal ComponentResult SGStop(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0013, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPause(SeqGrabComponent s, Byte pause) M68K_INLINE(0x2F3C, 0x0002, 0x0014, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPrepare(SeqGrabComponent s, Boolean prepareForPreview, Boolean prepareForRecord) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
+
+pascal ComponentResult SGRelease(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0016, 0x7000, 0xA82A);
+
+pascal Movie SGGetMovie(SeqGrabComponent s) M68K_INLINE(0x2F3C, 0x0000, 0x0017, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetMaximumRecordTime(SeqGrabComponent s, unsigned long ticks) M68K_INLINE(0x2F3C, 0x0004, 0x0018, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetMaximumRecordTime(SeqGrabComponent s, unsigned long *ticks) M68K_INLINE(0x2F3C, 0x0004, 0x0019, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetStorageSpaceRemaining(SeqGrabComponent s, unsigned long *bytes) M68K_INLINE(0x2F3C, 0x0004, 0x001A, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetTimeRemaining(SeqGrabComponent s, long *ticksLeft) M68K_INLINE(0x2F3C, 0x0004, 0x001B, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGrabPict(SeqGrabComponent s, PicHandle *p, const Rect *bounds, INTEGER offscreenDepth, long grabPictFlags) M68K_INLINE(0x2F3C, 0x000E, 0x001C, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetLastMovieResID(SeqGrabComponent s, INTEGER *resID) M68K_INLINE(0x2F3C, 0x0004, 0x001D, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetFlags(SeqGrabComponent s, long sgFlags) M68K_INLINE(0x2F3C, 0x0004, 0x001E, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetFlags(SeqGrabComponent s, long *sgFlags) M68K_INLINE(0x2F3C, 0x0004, 0x001F, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetDataProc(SeqGrabComponent s, SGDataProc proc, long refCon) M68K_INLINE(0x2F3C, 0x0008, 0x0020, 0x7000, 0xA82A);
+
+pascal ComponentResult SGNewChannelFromComponent(SeqGrabComponent s, SGChannel *newChannel, Component sgChannelComponent) M68K_INLINE(0x2F3C, 0x0008, 0x0021, 0x7000, 0xA82A);
+
+pascal ComponentResult SGDisposeDeviceList(SeqGrabComponent s, SGDeviceList list) M68K_INLINE(0x2F3C, 0x0004, 0x0022, 0x7000, 0xA82A);
+
+pascal ComponentResult SGAppendDeviceListToMenu(SeqGrabComponent s, SGDeviceList list, MenuHandle mh) M68K_INLINE(0x2F3C, 0x0008, 0x0023, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetSettings(SeqGrabComponent s, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x0008, 0x0024, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetSettings(SeqGrabComponent s, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x0008, 0x0025, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetIndChannel(SeqGrabComponent s, INTEGER index, SGChannel *ref, OSType *chanType) M68K_INLINE(0x2F3C, 0x000A, 0x0026, 0x7000, 0xA82A);
+
+pascal ComponentResult SGUpdate(SeqGrabComponent s, RgnHandle updateRgn) M68K_INLINE(0x2F3C, 0x0004, 0x0027, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetPause(SeqGrabComponent s, Byte *paused) M68K_INLINE(0x2F3C, 0x0004, 0x0028, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSettingsDialog(SeqGrabComponent s, SGChannel c, INTEGER numPanels, Component *panelList, long flags, SGModalFilterProcPtr proc, long procRefNum) M68K_INLINE(0x2F3C, 0x0016, 0x0029, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetAlignmentProc(SeqGrabComponent s, AlignmentProcRecordPtr alignmentProc) M68K_INLINE(0x2F3C, 0x0004, 0x002A, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelSettings(SeqGrabComponent s, SGChannel c, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x002B, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelSettings(SeqGrabComponent s, SGChannel c, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x002C, 0x7000, 0xA82A);
+
+pascal ComponentResult SGWriteMovieData(SeqGrabComponent s, SGChannel c, Ptr p, long len, long *offset) M68K_INLINE(0x2F3C, 0x0010, 0x0100, 0x7000, 0xA82A);
+
+pascal ComponentResult SGAddFrameReference(SeqGrabComponent s, seqGrabFrameInfo *frameInfo) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetNextFrameReference(SeqGrabComponent s, seqGrabFrameInfo *frameInfo, TimeValue *frameDuration, long *frameNumber) M68K_INLINE(0x2F3C, 0x000C, 0x0102, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetTimeBase(SeqGrabComponent s, TimeBase *tb) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSortDeviceList(SeqGrabComponent s, SGDeviceList list) M68K_INLINE(0x2F3C, 0x0004, 0x0104, 0x7000, 0xA82A);
+
+pascal ComponentResult SGAddMovieData(SeqGrabComponent s, SGChannel c, Ptr p, long len, long *offset, long chRefCon, TimeValue time, INTEGER writeType) M68K_INLINE(0x2F3C, 0x001A, 0x0105, 0x7000, 0xA82A);
+
+pascal ComponentResult SGChangedSource(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0106, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelUsage(SGChannel c, long usage) M68K_INLINE(0x2F3C, 0x0004, 0x0080, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelUsage(SGChannel c, long *usage) M68K_INLINE(0x2F3C, 0x0004, 0x0081, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelBounds(SGChannel c, const Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0082, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelBounds(SGChannel c, Rect *bounds) M68K_INLINE(0x2F3C, 0x0004, 0x0083, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelVolume(SGChannel c, INTEGER volume) M68K_INLINE(0x2F3C, 0x0002, 0x0084, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelVolume(SGChannel c, INTEGER *volume) M68K_INLINE(0x2F3C, 0x0004, 0x0085, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelInfo(SGChannel c, long *channelInfo) M68K_INLINE(0x2F3C, 0x0004, 0x0086, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelPlayFlags(SGChannel c, long playFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0087, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelPlayFlags(SGChannel c, long *playFlags) M68K_INLINE(0x2F3C, 0x0004, 0x0088, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelMaxFrames(SGChannel c, long frameCount) M68K_INLINE(0x2F3C, 0x0004, 0x0089, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelMaxFrames(SGChannel c, long *frameCount) M68K_INLINE(0x2F3C, 0x0004, 0x008A, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelRefCon(SGChannel c, long refCon) M68K_INLINE(0x2F3C, 0x0004, 0x008B, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelClip(SGChannel c, RgnHandle theClip) M68K_INLINE(0x2F3C, 0x0004, 0x008C, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelClip(SGChannel c, RgnHandle *theClip) M68K_INLINE(0x2F3C, 0x0004, 0x008D, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelSampleDescription(SGChannel c, Handle sampleDesc) M68K_INLINE(0x2F3C, 0x0004, 0x008E, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelDeviceList(SGChannel c, long selectionFlags, SGDeviceList *list) M68K_INLINE(0x2F3C, 0x0008, 0x008F, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelDevice(SGChannel c, StringPtr name) M68K_INLINE(0x2F3C, 0x0004, 0x0090, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetChannelMatrix(SGChannel c, const MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0004, 0x0091, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelMatrix(SGChannel c, MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0004, 0x0092, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetChannelTimeScale(SGChannel c, TimeScale *scale) M68K_INLINE(0x2F3C, 0x0004, 0x0093, 0x7000, 0xA82A);
+
+pascal ComponentResult SGInitChannel(SGChannel c, SeqGrabComponent owner) M68K_INLINE(0x2F3C, 0x0004, 0x0180, 0x7000, 0xA82A);
+
+pascal ComponentResult SGWriteSamples(SGChannel c, Movie m, AliasHandle theFile) M68K_INLINE(0x2F3C, 0x0008, 0x0181, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetDataRate(SGChannel c, long *bytesPerSecond) M68K_INLINE(0x2F3C, 0x0004, 0x0182, 0x7000, 0xA82A);
+
+pascal ComponentResult SGAlignChannelRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0183, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelGetDitl(SeqGrabComponent s, Handle *ditl) M68K_INLINE(0x2F3C, 0x0004, 0x0200, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelGetTitle(SeqGrabComponent s, uint8_t *title) M68K_INLINE(0x2F3C, 0x0004, 0x0201, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelCanRun(SeqGrabComponent s, SGChannel c) M68K_INLINE(0x2F3C, 0x0004, 0x0202, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelInstall(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset) M68K_INLINE(0x2F3C, 0x000A, 0x0203, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelEvent(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset, EventRecord *theEvent, INTEGER *itemHit, Boolean *handled) M68K_INLINE(0x2F3C, 0x0016, 0x0204, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelItem(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset, INTEGER itemNum) M68K_INLINE(0x2F3C, 0x000C, 0x0205, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelRemove(SeqGrabComponent s, SGChannel c, DialogPtr d, INTEGER itemOffset) M68K_INLINE(0x2F3C, 0x000A, 0x0206, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelSetGrabber(SeqGrabComponent s, SeqGrabComponent sg) M68K_INLINE(0x2F3C, 0x0004, 0x0207, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelSetResFile(SeqGrabComponent s, INTEGER resRef) M68K_INLINE(0x2F3C, 0x0002, 0x0208, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelGetSettings(SeqGrabComponent s, SGChannel c, UserData *ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x0209, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelSetSettings(SeqGrabComponent s, SGChannel c, UserData ud, long flags) M68K_INLINE(0x2F3C, 0x000C, 0x020A, 0x7000, 0xA82A);
+
+pascal ComponentResult SGPanelValidateInput(SeqGrabComponent s, Boolean *ok) M68K_INLINE(0x2F3C, 0x0004, 0x020B, 0x7000, 0xA82A);
+
+typedef struct SGCompressInfo SGCompressInfo;
+struct SGCompressInfo {
+    Ptr buffer;
+    unsigned long bufferSize;
+    uint8_t similarity;
+    uint8_t reserved;
+};
+
+typedef pascal ComponentResult (*GrabProcPtr)(SGChannel, INTEGER, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr GrabUPP;
+enum { uppGrabProcInfo = 0x00000EF0 };
+#define NewGrabUPP(proc) ((GrabUPP)NewRoutineDescriptor((ProcPtr)(proc), uppGrabProcInfo, GetCurrentArchitecture()))
+#define DisposeGrabUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef GrabProcPtr GrabUPP;
+#define NewGrabUPP(proc) (proc)
+#define DisposeGrabUPP(upp) ((void)0)
+#endif
+#define NewGrabProc(proc) NewGrabUPP(proc)
+#define DisposeGrabProc(proc) DisposeGrabUPP(proc)
+
+typedef GrabProcPtr GrabProc;
+
+typedef pascal ComponentResult (*GrabCompleteProcPtr)(SGChannel, INTEGER, Boolean*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr GrabCompleteUPP;
+enum { uppGrabCompleteProcInfo = 0x00003EF0 };
+#define NewGrabCompleteUPP(proc) ((GrabCompleteUPP)NewRoutineDescriptor((ProcPtr)(proc), uppGrabCompleteProcInfo, GetCurrentArchitecture()))
+#define DisposeGrabCompleteUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef GrabCompleteProcPtr GrabCompleteUPP;
+#define NewGrabCompleteUPP(proc) (proc)
+#define DisposeGrabCompleteUPP(upp) ((void)0)
+#endif
+#define NewGrabCompleteProc(proc) NewGrabCompleteUPP(proc)
+#define DisposeGrabCompleteProc(proc) DisposeGrabCompleteUPP(proc)
+
+typedef GrabCompleteProcPtr GrabCompleteProc;
+
+typedef pascal ComponentResult (*DisplayProcPtr)(SGChannel, INTEGER, MatrixRecord*, RgnHandle, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr DisplayUPP;
+enum { uppDisplayProcInfo = 0x0000FEF0 };
+#define NewDisplayUPP(proc) ((DisplayUPP)NewRoutineDescriptor((ProcPtr)(proc), uppDisplayProcInfo, GetCurrentArchitecture()))
+#define DisposeDisplayUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef DisplayProcPtr DisplayUPP;
+#define NewDisplayUPP(proc) (proc)
+#define DisposeDisplayUPP(upp) ((void)0)
+#endif
+#define NewDisplayProc(proc) NewDisplayUPP(proc)
+#define DisposeDisplayProc(proc) DisposeDisplayUPP(proc)
+
+typedef DisplayProcPtr DisplayProc;
+
+typedef pascal ComponentResult (*CompressProcPtr)(SGChannel, INTEGER, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr CompressUPP;
+enum { uppCompressProcInfo = 0x00000EF0 };
+#define NewCompressUPP(proc) ((CompressUPP)NewRoutineDescriptor((ProcPtr)(proc), uppCompressProcInfo, GetCurrentArchitecture()))
+#define DisposeCompressUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef CompressProcPtr CompressUPP;
+#define NewCompressUPP(proc) (proc)
+#define DisposeCompressUPP(upp) ((void)0)
+#endif
+#define NewCompressProc(proc) NewCompressUPP(proc)
+#define DisposeCompressProc(proc) DisposeCompressUPP(proc)
+
+typedef CompressProcPtr CompressProc;
+
+typedef pascal ComponentResult (*CompressCompleteProcPtr)(SGChannel, INTEGER, Boolean*, SGCompressInfo*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr CompressCompleteUPP;
+enum { uppCompressCompleteProcInfo = 0x0000FEF0 };
+#define NewCompressCompleteUPP(proc) ((CompressCompleteUPP)NewRoutineDescriptor((ProcPtr)(proc), uppCompressCompleteProcInfo, GetCurrentArchitecture()))
+#define DisposeCompressCompleteUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef CompressCompleteProcPtr CompressCompleteUPP;
+#define NewCompressCompleteUPP(proc) (proc)
+#define DisposeCompressCompleteUPP(upp) ((void)0)
+#endif
+#define NewCompressCompleteProc(proc) NewCompressCompleteUPP(proc)
+#define DisposeCompressCompleteProc(proc) DisposeCompressCompleteUPP(proc)
+
+typedef CompressCompleteProcPtr CompressCompleteProc;
+
+typedef pascal ComponentResult (*AddFrameProcPtr)(SGChannel, INTEGER, TimeValue, TimeScale, const SGCompressInfo*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr AddFrameUPP;
+enum { uppAddFrameProcInfo = 0x0003FEF0 };
+#define NewAddFrameUPP(proc) ((AddFrameUPP)NewRoutineDescriptor((ProcPtr)(proc), uppAddFrameProcInfo, GetCurrentArchitecture()))
+#define DisposeAddFrameUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef AddFrameProcPtr AddFrameUPP;
+#define NewAddFrameUPP(proc) (proc)
+#define DisposeAddFrameUPP(upp) ((void)0)
+#endif
+#define NewAddFrameProc(proc) NewAddFrameUPP(proc)
+#define DisposeAddFrameProc(proc) DisposeAddFrameUPP(proc)
+
+typedef AddFrameProcPtr AddFrameProc;
+
+typedef pascal ComponentResult (*TransferFrameProcPtr)(SGChannel, INTEGER, MatrixRecord*, RgnHandle, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr TransferFrameUPP;
+enum { uppTransferFrameProcInfo = 0x0000FEF0 };
+#define NewTransferFrameUPP(proc) ((TransferFrameUPP)NewRoutineDescriptor((ProcPtr)(proc), uppTransferFrameProcInfo, GetCurrentArchitecture()))
+#define DisposeTransferFrameUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef TransferFrameProcPtr TransferFrameUPP;
+#define NewTransferFrameUPP(proc) (proc)
+#define DisposeTransferFrameUPP(upp) ((void)0)
+#endif
+#define NewTransferFrameProc(proc) NewTransferFrameUPP(proc)
+#define DisposeTransferFrameProc(proc) DisposeTransferFrameUPP(proc)
+
+typedef TransferFrameProcPtr TransferFrameProc;
+
+typedef pascal ComponentResult (*GrabCompressCompleteProcPtr)(SGChannel, Boolean*, SGCompressInfo*, TimeRecord*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr GrabCompressCompleteUPP;
+enum { uppGrabCompressCompleteProcInfo = 0x0000FFF0 };
+#define NewGrabCompressCompleteUPP(proc) ((GrabCompressCompleteUPP)NewRoutineDescriptor((ProcPtr)(proc), uppGrabCompressCompleteProcInfo, GetCurrentArchitecture()))
+#define DisposeGrabCompressCompleteUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef GrabCompressCompleteProcPtr GrabCompressCompleteUPP;
+#define NewGrabCompressCompleteUPP(proc) (proc)
+#define DisposeGrabCompressCompleteUPP(upp) ((void)0)
+#endif
+#define NewGrabCompressCompleteProc(proc) NewGrabCompressCompleteUPP(proc)
+#define DisposeGrabCompressCompleteProc(proc) DisposeGrabCompressCompleteUPP(proc)
+
+typedef GrabCompressCompleteProcPtr GrabCompressCompleteProc;
+
+typedef pascal ComponentResult (*DisplayCompressProcPtr)(SGChannel, Ptr, ImageDescriptionHandle, MatrixRecord*, RgnHandle, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr DisplayCompressUPP;
+enum { uppDisplayCompressProcInfo = 0x0003FFF0 };
+#define NewDisplayCompressUPP(proc) ((DisplayCompressUPP)NewRoutineDescriptor((ProcPtr)(proc), uppDisplayCompressProcInfo, GetCurrentArchitecture()))
+#define DisposeDisplayCompressUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef DisplayCompressProcPtr DisplayCompressUPP;
+#define NewDisplayCompressUPP(proc) (proc)
+#define DisposeDisplayCompressUPP(upp) ((void)0)
+#endif
+#define NewDisplayCompressProc(proc) NewDisplayCompressUPP(proc)
+#define DisposeDisplayCompressProc(proc) DisposeDisplayCompressUPP(proc)
+
+typedef DisplayCompressProcPtr DisplayCompressProc;
+
+typedef struct VideoBottles VideoBottles;
+struct VideoBottles {
+    INTEGER procCount;
+    GrabProc grabProc;
+    GrabCompleteProc grabCompleteProc;
+    DisplayProc displayProc;
+    CompressProc compressProc;
+    CompressCompleteProc compressCompleteProc;
+    AddFrameProc addFrameProc;
+    TransferFrameProc transferFrameProc;
+    GrabCompressCompleteProc grabCompressCompleteProc;
+    DisplayCompressProc displayCompressProc;
+};
+
+pascal ComponentResult SGGetSrcVideoBounds(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0100, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetVideoRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0101, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetVideoRect(SGChannel c, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0102, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetVideoCompressorType(SGChannel c, OSType *compressorType) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetVideoCompressorType(SGChannel c, OSType compressorType) M68K_INLINE(0x2F3C, 0x0004, 0x0104, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetVideoCompressor(SGChannel c, INTEGER depth, CompressorComponent compressor, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate) M68K_INLINE(0x2F3C, 0x0012, 0x0105, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetVideoCompressor(SGChannel c, INTEGER *depth, CompressorComponent *compressor, CodecQ *spatialQuality, CodecQ *temporalQuality, long *keyFrameRate) M68K_INLINE(0x2F3C, 0x0014, 0x0106, 0x7000, 0xA82A);
+
+pascal ComponentInstance SGGetVideoDigitizerComponent(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0107, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetVideoDigitizerComponent(SGChannel c, ComponentInstance vdig) M68K_INLINE(0x2F3C, 0x0004, 0x0108, 0x7000, 0xA82A);
+
+pascal ComponentResult SGVideoDigitizerChanged(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0109, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetVideoBottlenecks(SGChannel c, VideoBottles *vb) M68K_INLINE(0x2F3C, 0x0004, 0x010A, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetVideoBottlenecks(SGChannel c, VideoBottles *vb) M68K_INLINE(0x2F3C, 0x0004, 0x010B, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGrabFrame(SGChannel c, INTEGER bufferNum) M68K_INLINE(0x2F3C, 0x0002, 0x010C, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGrabFrameComplete(SGChannel c, INTEGER bufferNum, Boolean *done) M68K_INLINE(0x2F3C, 0x0006, 0x010D, 0x7000, 0xA82A);
+
+pascal ComponentResult SGDisplayFrame(SGChannel c, INTEGER bufferNum, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x000A, 0x010E, 0x7000, 0xA82A);
+
+pascal ComponentResult SGCompressFrame(SGChannel c, INTEGER bufferNum) M68K_INLINE(0x2F3C, 0x0002, 0x010F, 0x7000, 0xA82A);
+
+pascal ComponentResult SGCompressFrameComplete(SGChannel c, INTEGER bufferNum, Boolean *done, SGCompressInfo *ci) M68K_INLINE(0x2F3C, 0x000A, 0x0110, 0x7000, 0xA82A);
+
+pascal ComponentResult SGAddFrame(SGChannel c, INTEGER bufferNum, TimeValue atTime, TimeScale scale, const SGCompressInfo *ci) M68K_INLINE(0x2F3C, 0x000E, 0x0111, 0x7000, 0xA82A);
+
+pascal ComponentResult SGTransferFrameForCompress(SGChannel c, INTEGER bufferNum, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x000A, 0x0112, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetCompressBuffer(SGChannel c, INTEGER depth, const Rect *compressSize) M68K_INLINE(0x2F3C, 0x0006, 0x0113, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetCompressBuffer(SGChannel c, INTEGER *depth, Rect *compressSize) M68K_INLINE(0x2F3C, 0x0008, 0x0114, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetBufferInfo(SGChannel c, INTEGER bufferNum, PixMapHandle *bufferPM, Rect *bufferRect, GWorldPtr *compressBuffer, Rect *compressBufferRect) M68K_INLINE(0x2F3C, 0x0012, 0x0115, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetUseScreenBuffer(SGChannel c, Boolean useScreenBuffer) M68K_INLINE(0x2F3C, 0x0002, 0x0116, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetUseScreenBuffer(SGChannel c, Boolean *useScreenBuffer) M68K_INLINE(0x2F3C, 0x0004, 0x0117, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGrabCompressComplete(SGChannel c, Boolean *done, SGCompressInfo *ci, TimeRecord *tr) M68K_INLINE(0x2F3C, 0x000C, 0x0118, 0x7000, 0xA82A);
+
+pascal ComponentResult SGDisplayCompress(SGChannel c, Ptr dataPtr, ImageDescriptionHandle desc, MatrixRecord *mp, RgnHandle clipRgn) M68K_INLINE(0x2F3C, 0x0010, 0x0119, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetFrameRate(SGChannel c, Fixed frameRate) M68K_INLINE(0x2F3C, 0x0004, 0x011A, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetFrameRate(SGChannel c, Fixed *frameRate) M68K_INLINE(0x2F3C, 0x0004, 0x011B, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetSoundInputDriver(SGChannel c, const uint8_t *driverName) M68K_INLINE(0x2F3C, 0x0004, 0x0100, 0x7000, 0xA82A);
+
+pascal long SGGetSoundInputDriver(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0101, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSoundInputDriverChanged(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0102, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetSoundRecordChunkSize(SGChannel c, long seconds) M68K_INLINE(0x2F3C, 0x0004, 0x0103, 0x7000, 0xA82A);
+
+pascal long SGGetSoundRecordChunkSize(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0104, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetSoundInputRate(SGChannel c, Fixed rate) M68K_INLINE(0x2F3C, 0x0004, 0x0105, 0x7000, 0xA82A);
+
+pascal Fixed SGGetSoundInputRate(SGChannel c) M68K_INLINE(0x2F3C, 0x0000, 0x0106, 0x7000, 0xA82A);
+
+pascal ComponentResult SGSetSoundInputParameters(SGChannel c, INTEGER sampleSize, INTEGER numChannels, OSType compressionType) M68K_INLINE(0x2F3C, 0x0008, 0x0107, 0x7000, 0xA82A);
+
+pascal ComponentResult SGGetSoundInputParameters(SGChannel c, INTEGER *sampleSize, INTEGER *numChannels, OSType *compressionType) M68K_INLINE(0x2F3C, 0x000C, 0x0108, 0x7000, 0xA82A);
+
+enum {
+    noDeviceForChannel = -9400,
+    grabTimeComplete = -9401,
+    cantDoThatInCurrentMode = -9402,
+    notEnoughMemoryToGrab = -9403,
+    notEnoughDiskSpaceToGrab = -9404,
+    couldntGetRequiredComponent = -9405,
+    badSGChannel = -9406,
+    seqGrabInfoNotAvailable = -9407,
+    deviceCantMeetRequest = -9408,
+};
+
+enum {
+    kSGInitializeSelect = 1,
+    kSGSetDataOutputSelect = 2,
+    kSGGetDataOutputSelect = 3,
+    kSGSetGWorldSelect = 4,
+    kSGGetGWorldSelect = 5,
+    kSGNewChannelSelect = 6,
+    kSGDisposeChannelSelect = 7,
+    kSGStartPreviewSelect = 16,
+    kSGStartRecordSelect = 17,
+    kSGIdleSelect = 18,
+    kSGStopSelect = 19,
+    kSGPauseSelect = 20,
+    kSGPrepareSelect = 21,
+    kSGReleaseSelect = 22,
+    kSGGetMovieSelect = 23,
+    kSGSetMaximumRecordTimeSelect = 24,
+    kSGGetMaximumRecordTimeSelect = 25,
+    kSGGetStorageSpaceRemainingSelect = 26,
+    kSGGetTimeRemainingSelect = 27,
+    kSGGrabPictSelect = 28,
+    kSGGetLastMovieResIDSelect = 29,
+    kSGSetFlagsSelect = 30,
+    kSGGetFlagsSelect = 31,
+    kSGSetDataProcSelect = 32,
+    kSGNewChannelFromComponentSelect = 33,
+    kSGDisposeDeviceListSelect = 34,
+    kSGAppendDeviceListToMenuSelect = 35,
+    kSGSetSettingsSelect = 36,
+    kSGGetSettingsSelect = 37,
+    kSGGetIndChannelSelect = 38,
+    kSGUpdateSelect = 39,
+    kSGGetPauseSelect = 40,
+    kSGSettingsDialogSelect = 41,
+    kSGGetAlignmentProcSelect = 42,
+    kSGSetChannelSettingsSelect = 43,
+    kSGGetChannelSettingsSelect = 44,
+    kSGWriteMovieDataSelect = 256,
+    kSGAddFrameReferenceSelect = 257,
+    kSGGetNextFrameReferenceSelect = 258,
+    kSGGetTimeBaseSelect = 259,
+    kSGSortDeviceListSelect = 260,
+    kSGAddMovieDataSelect = 261,
+    kSGChangedSourceSelect = 262,
+    kSGCSetChannelUsageSelect = 128,
+    kSGCGetChannelUsageSelect = 129,
+    kSGCSetChannelBoundsSelect = 130,
+    kSGCGetChannelBoundsSelect = 131,
+    kSGCSetChannelVolumeSelect = 132,
+    kSGCGetChannelVolumeSelect = 133,
+    kSGCGetChannelInfoSelect = 134,
+    kSGCSetChannelPlayFlagsSelect = 135,
+    kSGCGetChannelPlayFlagsSelect = 136,
+    kSGCSetChannelMaxFramesSelect = 137,
+    kSGCGetChannelMaxFramesSelect = 138,
+    kSGCSetChannelRefConSelect = 139,
+    kSGCSetChannelClipSelect = 140,
+    kSGCGetChannelClipSelect = 141,
+    kSGCGetChannelSampleDescriptionSelect = 142,
+    kSGCGetChannelDeviceListSelect = 143,
+    kSGCSetChannelDeviceSelect = 144,
+    kSGCSetChannelMatrixSelect = 145,
+    kSGCGetChannelMatrixSelect = 146,
+    kSGCGetChannelTimeScaleSelect = 147,
+    kSGCInitChannelSelect = 384,
+    kSGCWriteSamplesSelect = 385,
+    kSGCGetDataRateSelect = 386,
+    kSGCAlignChannelRectSelect = 387,
+    kSGCPanelGetDitlSelect = 512,
+    kSGCPanelGetTitleSelect = 513,
+    kSGCPanelCanRunSelect = 514,
+    kSGCPanelInstallSelect = 515,
+    kSGCPanelEventSelect = 516,
+    kSGCPanelItemSelect = 517,
+    kSGCPanelRemoveSelect = 518,
+    kSGCPanelSetGrabberSelect = 519,
+    kSGCPanelSetResFileSelect = 520,
+    kSGCPanelGetSettingsSelect = 521,
+    kSGCPanelSetSettingsSelect = 522,
+    kSGCPanelValidateInputSelect = 523,
+    kSGCGetSrcVideoBoundsSelect = 256,
+    kSGCSetVideoRectSelect = 257,
+    kSGCGetVideoRectSelect = 258,
+    kSGCGetVideoCompressorTypeSelect = 259,
+    kSGCSetVideoCompressorTypeSelect = 260,
+    kSGCSetVideoCompressorSelect = 261,
+    kSGCGetVideoCompressorSelect = 262,
+    kSGCGetVideoDigitizerComponentSelect = 263,
+    kSGCSetVideoDigitizerComponentSelect = 264,
+    kSGCVideoDigitizerChangedSelect = 265,
+    kSGCSetVideoBottlenecksSelect = 266,
+    kSGCGetVideoBottlenecksSelect = 267,
+    kSGCGrabFrameSelect = 268,
+    kSGCGrabFrameCompleteSelect = 269,
+    kSGCDisplayFrameSelect = 270,
+    kSGCCompressFrameSelect = 271,
+    kSGCCompressFrameCompleteSelect = 272,
+    kSGCAddFrameSelect = 273,
+    kSGCTransferFrameForCompressSelect = 274,
+    kSGCSetCompressBufferSelect = 275,
+    kSGCGetCompressBufferSelect = 276,
+    kSGCGetBufferInfoSelect = 277,
+    kSGCSetUseScreenBufferSelect = 278,
+    kSGCGetUseScreenBufferSelect = 279,
+    kSGCGrabCompressCompleteSelect = 280,
+    kSGCDisplayCompressSelect = 281,
+    kSGCSetFrameRateSelect = 282,
+    kSGCGetFrameRateSelect = 283,
+    kSGCSetSoundInputDriverSelect = 256,
+    kSGCGetSoundInputDriverSelect = 257,
+    kSGCSoundInputDriverChangedSelect = 258,
+    kSGCSetSoundRecordChunkSizeSelect = 259,
+    kSGCGetSoundRecordChunkSizeSelect = 260,
+    kSGCSetSoundInputRateSelect = 261,
+    kSGCGetSoundInputRateSelect = 262,
+    kSGCSetSoundInputParametersSelect = 263,
+    kSGCGetSoundInputParametersSelect = 264,
+};
+
+typedef ComponentInstance VideoDigitizerComponent;
+
+typedef ComponentResult VideoDigitizerError;
+
+typedef struct DigitizerInfo DigitizerInfo;
+struct DigitizerInfo {
+    INTEGER vdigType;
+    long inputCapabilityFlags;
+    long outputCapabilityFlags;
+    long inputCurrentFlags;
+    long outputCurrentFlags;
+    INTEGER slot;
+    GDHandle gdh;
+    GDHandle maskgdh;
+    INTEGER minDestHeight;
+    INTEGER minDestWidth;
+    INTEGER maxDestHeight;
+    INTEGER maxDestWidth;
+    INTEGER blendLevels;
+    long reserved;
+};
+
+typedef struct VdigType VdigType;
+struct VdigType {
+    long type;
+    long reserved;
+};
+
+typedef struct VdigTypeList VdigTypeList;
+struct VdigTypeList {
+    INTEGER count;
+    VdigType list[1];
+};
+
+typedef struct VdigBufferRec VdigBufferRec;
+struct VdigBufferRec {
+    PixMapHandle dest;
+    Point location;
+    long reserved;
+};
+
+typedef struct VdigBufferRecList VdigBufferRecList;
+struct VdigBufferRecList {
+    INTEGER count;
+    MatrixRecordPtr matrix;
+    RgnHandle mask;
+    VdigBufferRec list[1];
+};
+
+typedef VdigBufferRecList *VdigBufferRecListPtr;
+
+typedef VdigBufferRecList **VdigBufferRecListHandle;
+
+typedef pascal void (*VdigIntProcPtr)(long, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr VdigIntUPP;
+enum { uppVdigIntProcInfo = 0x000003C0 };
+#define NewVdigIntUPP(proc) ((VdigIntUPP)NewRoutineDescriptor((ProcPtr)(proc), uppVdigIntProcInfo, GetCurrentArchitecture()))
+#define DisposeVdigIntUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef VdigIntProcPtr VdigIntUPP;
+#define NewVdigIntUPP(proc) (proc)
+#define DisposeVdigIntUPP(upp) ((void)0)
+#endif
+#define NewVdigIntProc(proc) NewVdigIntUPP(proc)
+#define DisposeVdigIntProc(proc) DisposeVdigIntUPP(proc)
+
+typedef VdigIntProcPtr VdigIntProc;
+
+typedef struct VDCompressionList VDCompressionList;
+struct VDCompressionList {
+    CodecComponent codec;
+    CodecType cType;
+    Str63 typeName;
+    Str63 name;
+    long formatFlags;
+    long compressFlags;
+    long reserved;
+};
+
+typedef struct VDCompressionList *VDCompressionListPtr;
+
+typedef struct VDCompressionList **VDCompressionListHandle;
+
+enum {
+    dmaDepth1 = 1,
+    dmaDepth2 = 2,
+    dmaDepth4 = 4,
+    dmaDepth8 = 8,
+    dmaDepth16 = 16,
+    dmaDepth32 = 32,
+    dmaDepth2Gray = 64,
+    dmaDepth4Gray = 128,
+    dmaDepth8Gray = 256,
+};
+
+enum {
+    kvdigSelectors = 82,
+};
+
+pascal VideoDigitizerError VDGetMaxSrcRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *maxSrcRect) M68K_INLINE(0x2F3C, 0x0006, 0x0001, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetActiveSrcRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *activeSrcRect) M68K_INLINE(0x2F3C, 0x0006, 0x0002, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetDigitizerRect(VideoDigitizerComponent ci, Rect *digitizerRect) M68K_INLINE(0x2F3C, 0x0004, 0x0003, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetDigitizerRect(VideoDigitizerComponent ci, Rect *digitizerRect) M68K_INLINE(0x2F3C, 0x0004, 0x0004, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetVBlankRect(VideoDigitizerComponent ci, INTEGER inputStd, Rect *vBlankRect) M68K_INLINE(0x2F3C, 0x0006, 0x0005, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetMaskPixMap(VideoDigitizerComponent ci, PixMapHandle maskPixMap) M68K_INLINE(0x2F3C, 0x0004, 0x0006, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetPlayThruDestination(VideoDigitizerComponent ci, PixMapHandle *dest, Rect *destRect, MatrixRecord *m, RgnHandle *mask) M68K_INLINE(0x2F3C, 0x0010, 0x0008, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDUseThisCLUT(VideoDigitizerComponent ci, CTabHandle colorTableHandle) M68K_INLINE(0x2F3C, 0x0004, 0x0009, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetInputGammaValue(VideoDigitizerComponent ci, Fixed channel1, Fixed channel2, Fixed channel3) M68K_INLINE(0x2F3C, 0x000C, 0x000A, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetInputGammaValue(VideoDigitizerComponent ci, Fixed *channel1, Fixed *channel2, Fixed *channel3) M68K_INLINE(0x2F3C, 0x000C, 0x000B, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetBrightness(VideoDigitizerComponent ci, uint16_t *brightness) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetBrightness(VideoDigitizerComponent ci, uint16_t *brightness) M68K_INLINE(0x2F3C, 0x0004, 0x000D, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetContrast(VideoDigitizerComponent ci, uint16_t *contrast) M68K_INLINE(0x2F3C, 0x0004, 0x000E, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetHue(VideoDigitizerComponent ci, uint16_t *hue) M68K_INLINE(0x2F3C, 0x0004, 0x000F, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetSharpness(VideoDigitizerComponent ci, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x0004, 0x0010, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetSaturation(VideoDigitizerComponent ci, uint16_t *saturation) M68K_INLINE(0x2F3C, 0x0004, 0x0011, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetContrast(VideoDigitizerComponent ci, uint16_t *contrast) M68K_INLINE(0x2F3C, 0x0004, 0x0012, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetHue(VideoDigitizerComponent ci, uint16_t *hue) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetSharpness(VideoDigitizerComponent ci, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x0004, 0x0014, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetSaturation(VideoDigitizerComponent ci, uint16_t *saturation) M68K_INLINE(0x2F3C, 0x0004, 0x0015, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGrabOneFrame(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0016, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetMaxAuxBuffer(VideoDigitizerComponent ci, PixMapHandle *pm, Rect *r) M68K_INLINE(0x2F3C, 0x0008, 0x0017, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetDigitizerInfo(VideoDigitizerComponent ci, DigitizerInfo *info) M68K_INLINE(0x2F3C, 0x0004, 0x0019, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetCurrentFlags(VideoDigitizerComponent ci, long *inputCurrentFlag, long *outputCurrentFlag) M68K_INLINE(0x2F3C, 0x0008, 0x001A, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetKeyColor(VideoDigitizerComponent ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x001B, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetKeyColor(VideoDigitizerComponent ci, long *index) M68K_INLINE(0x2F3C, 0x0004, 0x001C, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDAddKeyColor(VideoDigitizerComponent ci, long *index) M68K_INLINE(0x2F3C, 0x0004, 0x001D, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetNextKeyColor(VideoDigitizerComponent ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x001E, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetKeyColorRange(VideoDigitizerComponent ci, RGBColor *minRGB, RGBColor *maxRGB) M68K_INLINE(0x2F3C, 0x0008, 0x001F, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetKeyColorRange(VideoDigitizerComponent ci, RGBColor *minRGB, RGBColor *maxRGB) M68K_INLINE(0x2F3C, 0x0008, 0x0020, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetDigitizerUserInterrupt(VideoDigitizerComponent ci, long flags, VdigIntProc userInterruptProc, long refcon) M68K_INLINE(0x2F3C, 0x000C, 0x0021, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetInputColorSpaceMode(VideoDigitizerComponent ci, INTEGER colorSpaceMode) M68K_INLINE(0x2F3C, 0x0002, 0x0022, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetInputColorSpaceMode(VideoDigitizerComponent ci, INTEGER *colorSpaceMode) M68K_INLINE(0x2F3C, 0x0004, 0x0023, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetClipState(VideoDigitizerComponent ci, INTEGER clipEnable) M68K_INLINE(0x2F3C, 0x0002, 0x0024, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetClipState(VideoDigitizerComponent ci, INTEGER *clipEnable) M68K_INLINE(0x2F3C, 0x0004, 0x0025, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetClipRgn(VideoDigitizerComponent ci, RgnHandle clipRegion) M68K_INLINE(0x2F3C, 0x0004, 0x0026, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDClearClipRgn(VideoDigitizerComponent ci, RgnHandle clipRegion) M68K_INLINE(0x2F3C, 0x0004, 0x0027, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetCLUTInUse(VideoDigitizerComponent ci, CTabHandle *colorTableHandle) M68K_INLINE(0x2F3C, 0x0004, 0x0028, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetPLLFilterType(VideoDigitizerComponent ci, INTEGER pllType) M68K_INLINE(0x2F3C, 0x0002, 0x0029, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetPLLFilterType(VideoDigitizerComponent ci, INTEGER *pllType) M68K_INLINE(0x2F3C, 0x0004, 0x002A, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetMaskandValue(VideoDigitizerComponent ci, uint16_t blendLevel, long *mask, long *value) M68K_INLINE(0x2F3C, 0x000A, 0x002B, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetMasterBlendLevel(VideoDigitizerComponent ci, uint16_t *blendLevel) M68K_INLINE(0x2F3C, 0x0004, 0x002C, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetPlayThruDestination(VideoDigitizerComponent ci, PixMapHandle dest, Rect *destRect, MatrixRecord *m, RgnHandle mask) M68K_INLINE(0x2F3C, 0x0010, 0x002D, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetPlayThruOnOff(VideoDigitizerComponent ci, INTEGER state) M68K_INLINE(0x2F3C, 0x0002, 0x002E, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetFieldPreference(VideoDigitizerComponent ci, INTEGER fieldFlag) M68K_INLINE(0x2F3C, 0x0002, 0x002F, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetFieldPreference(VideoDigitizerComponent ci, INTEGER *fieldFlag) M68K_INLINE(0x2F3C, 0x0004, 0x0030, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDPreflightDestination(VideoDigitizerComponent ci, Rect *digitizerRect, PixMap **dest, Rect *destRect, MatrixRecord *m) M68K_INLINE(0x2F3C, 0x0010, 0x0032, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDPreflightGlobalRect(VideoDigitizerComponent ci, GrafPtr theWindow, Rect *globalRect) M68K_INLINE(0x2F3C, 0x0008, 0x0033, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetPlayThruGlobalRect(VideoDigitizerComponent ci, GrafPtr theWindow, Rect *globalRect) M68K_INLINE(0x2F3C, 0x0008, 0x0034, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetInputGammaRecord(VideoDigitizerComponent ci, VDGamRecPtr inputGammaPtr) M68K_INLINE(0x2F3C, 0x0004, 0x0035, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetInputGammaRecord(VideoDigitizerComponent ci, VDGamRecPtr *inputGammaPtr) M68K_INLINE(0x2F3C, 0x0004, 0x0036, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetBlackLevelValue(VideoDigitizerComponent ci, uint16_t *blackLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0037, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetBlackLevelValue(VideoDigitizerComponent ci, uint16_t *blackLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0038, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetWhiteLevelValue(VideoDigitizerComponent ci, uint16_t *whiteLevel) M68K_INLINE(0x2F3C, 0x0004, 0x0039, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetWhiteLevelValue(VideoDigitizerComponent ci, uint16_t *whiteLevel) M68K_INLINE(0x2F3C, 0x0004, 0x003A, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetVideoDefaults(VideoDigitizerComponent ci, uint16_t *blackLevel, uint16_t *whiteLevel, uint16_t *brightness, uint16_t *hue, uint16_t *saturation, uint16_t *contrast, uint16_t *sharpness) M68K_INLINE(0x2F3C, 0x001C, 0x003B, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetNumberOfInputs(VideoDigitizerComponent ci, INTEGER *inputs) M68K_INLINE(0x2F3C, 0x0004, 0x003C, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetInputFormat(VideoDigitizerComponent ci, INTEGER input, INTEGER *format) M68K_INLINE(0x2F3C, 0x0006, 0x003D, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetInput(VideoDigitizerComponent ci, INTEGER input) M68K_INLINE(0x2F3C, 0x0002, 0x003E, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetInput(VideoDigitizerComponent ci, INTEGER *input) M68K_INLINE(0x2F3C, 0x0004, 0x003F, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetInputStandard(VideoDigitizerComponent ci, INTEGER inputStandard) M68K_INLINE(0x2F3C, 0x0002, 0x0040, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetupBuffers(VideoDigitizerComponent ci, VdigBufferRecListHandle bufferList) M68K_INLINE(0x2F3C, 0x0004, 0x0041, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGrabOneFrameAsync(VideoDigitizerComponent ci, INTEGER buffer) M68K_INLINE(0x2F3C, 0x0002, 0x0042, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDDone(VideoDigitizerComponent ci, INTEGER buffer) M68K_INLINE(0x2F3C, 0x0002, 0x0043, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetCompression(VideoDigitizerComponent ci, OSType compressType, INTEGER depth, Rect *bounds, CodecQ spatialQuality, CodecQ temporalQuality, long keyFrameRate) M68K_INLINE(0x2F3C, 0x0016, 0x0044, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDCompressOneFrameAsync(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0045, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDCompressDone(VideoDigitizerComponent ci, Boolean *done, Ptr *theData, long *dataSize, uint8_t *similarity, TimeRecord *t) M68K_INLINE(0x2F3C, 0x0014, 0x0046, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDReleaseCompressBuffer(VideoDigitizerComponent ci, Ptr bufferAddr) M68K_INLINE(0x2F3C, 0x0004, 0x0047, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetImageDescription(VideoDigitizerComponent ci, ImageDescriptionHandle desc) M68K_INLINE(0x2F3C, 0x0004, 0x0048, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDResetCompressSequence(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0049, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetCompressionOnOff(VideoDigitizerComponent ci, Boolean state) M68K_INLINE(0x2F3C, 0x0002, 0x004A, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetCompressionTypes(VideoDigitizerComponent ci, VDCompressionListHandle h) M68K_INLINE(0x2F3C, 0x0004, 0x004B, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetTimeBase(VideoDigitizerComponent ci, TimeBase t) M68K_INLINE(0x2F3C, 0x0004, 0x004C, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDSetFrameRate(VideoDigitizerComponent ci, Fixed framesPerSecond) M68K_INLINE(0x2F3C, 0x0004, 0x004D, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetDataRate(VideoDigitizerComponent ci, long *milliSecPerFrame, Fixed *framesPerSecond, long *bytesPerSecond) M68K_INLINE(0x2F3C, 0x000C, 0x004E, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetSoundInputDriver(VideoDigitizerComponent ci, uint8_t *soundDriverName) M68K_INLINE(0x2F3C, 0x0004, 0x004F, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetDMADepths(VideoDigitizerComponent ci, long *depthArray, long *preferredDepth) M68K_INLINE(0x2F3C, 0x0008, 0x0050, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDGetPreferredTimeScale(VideoDigitizerComponent ci, TimeScale *preferred) M68K_INLINE(0x2F3C, 0x0004, 0x0051, 0x7000, 0xA82A);
+
+pascal VideoDigitizerError VDReleaseAsyncBuffers(VideoDigitizerComponent ci) M68K_INLINE(0x2F3C, 0x0000, 0x0052, 0x7000, 0xA82A);
+
+enum {
+    kSelectVDGetMaxSrcRect = 1,
+    kSelectVDGetActiveSrcRect = 2,
+    kSelectVDSetDigitizerRect = 3,
+    kSelectVDGetDigitizerRect = 4,
+    kSelectVDGetVBlankRect = 5,
+    kSelectVDGetMaskPixMap = 6,
+    kSelectVDGetPlayThruDestination = 8,
+    kSelectVDUseThisCLUT = 9,
+    kSelectVDSetInputGammaValue = 10,
+    kSelectVDGetInputGammaValue = 11,
+    kSelectVDSetBrightness = 12,
+    kSelectVDGetBrightness = 13,
+    kSelectVDSetContrast = 14,
+    kSelectVDSetHue = 15,
+    kSelectVDSetSharpness = 16,
+    kSelectVDSetSaturation = 17,
+    kSelectVDGetContrast = 18,
+    kSelectVDGetHue = 19,
+    kSelectVDGetSharpness = 20,
+    kSelectVDGetSaturation = 21,
+    kSelectVDGrabOneFrame = 22,
+    kSelectVDGetMaxAuxBuffer = 23,
+    kSelectVDGetDigitizerInfo = 25,
+    kSelectVDGetCurrentFlags = 26,
+    kSelectVDSetKeyColor = 27,
+    kSelectVDGetKeyColor = 28,
+    kSelectVDAddKeyColor = 29,
+    kSelectVDGetNextKeyColor = 30,
+    kSelectVDSetKeyColorRange = 31,
+    kSelectVDGetKeyColorRange = 32,
+    kSelectVDSetDigitizerUserInterrupt = 33,
+    kSelectVDSetInputColorSpaceMode = 34,
+    kSelectVDGetInputColorSpaceMode = 35,
+    kSelectVDSetClipState = 36,
+    kSelectVDGetClipState = 37,
+    kSelectVDSetClipRgn = 38,
+    kSelectVDClearClipRgn = 39,
+    kSelectVDGetCLUTInUse = 40,
+    kSelectVDSetPLLFilterType = 41,
+    kSelectVDGetPLLFilterType = 42,
+    kSelectVDGetMaskandValue = 43,
+    kSelectVDSetMasterBlendLevel = 44,
+    kSelectVDSetPlayThruDestination = 45,
+    kSelectVDSetPlayThruOnOff = 46,
+    kSelectVDSetFieldPreference = 47,
+    kSelectVDGetFieldPreference = 48,
+    kSelectVDPreflightDestination = 50,
+    kSelectVDPreflightGlobalRect = 51,
+    kSelectVDSetPlayThruGlobalRect = 52,
+    kSelectVDSetInputGammaRecord = 53,
+    kSelectVDGetInputGammaRecord = 54,
+    kSelectVDSetBlackLevelValue = 55,
+    kSelectVDGetBlackLevelValue = 56,
+    kSelectVDSetWhiteLevelValue = 57,
+    kSelectVDGetWhiteLevelValue = 58,
+    kSelectVDGetVideoDefaults = 59,
+    kSelectVDGetNumberOfInputs = 60,
+    kSelectVDGetInputFormat = 61,
+    kSelectVDSetInput = 62,
+    kSelectVDGetInput = 63,
+    kSelectVDSetInputStandard = 64,
+    kSelectVDSetupBuffers = 65,
+    kSelectVDGrabOneFrameAsync = 66,
+    kSelectVDDone = 67,
+    kSelectVDSetCompression = 68,
+    kSelectVDCompressOneFrameAsync = 69,
+    kSelectVDCompressDone = 70,
+    kSelectVDReleaseCompressBuffer = 71,
+    kSelectVDGetImageDescription = 72,
+    kSelectVDResetCompressSequence = 73,
+    kSelectVDSetCompressionOnOff = 74,
+    kSelectVDGetCompressionTypes = 75,
+    kSelectVDSetTimeBase = 76,
+    kSelectVDSetFrameRate = 77,
+    kSelectVDGetDataRate = 78,
+    kSelectVDGetSoundInputDriver = 79,
+    kSelectVDGetDMADepths = 80,
+    kSelectVDGetPreferredTimeScale = 81,
+    kSelectVDReleaseAsyncBuffers = 82,
+};
+
+typedef pascal Boolean (*SCModalFilterProcPtr)(DialogPtr, EventRecord*, INTEGER*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr SCModalFilterUPP;
+enum { uppSCModalFilterProcInfo = 0x00003FD0 };
+#define NewSCModalFilterUPP(proc) ((SCModalFilterUPP)NewRoutineDescriptor((ProcPtr)(proc), uppSCModalFilterProcInfo, GetCurrentArchitecture()))
+#define DisposeSCModalFilterUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef SCModalFilterProcPtr SCModalFilterUPP;
+#define NewSCModalFilterUPP(proc) (proc)
+#define DisposeSCModalFilterUPP(upp) ((void)0)
+#endif
+#define NewSCModalFilterProc(proc) NewSCModalFilterUPP(proc)
+#define DisposeSCModalFilterProc(proc) DisposeSCModalFilterUPP(proc)
+
+typedef pascal INTEGER (*SCModalHookProcPtr)(DialogPtr, INTEGER, void*, long);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr SCModalHookUPP;
+enum { uppSCModalHookProcInfo = 0x00003EE0 };
+#define NewSCModalHookUPP(proc) ((SCModalHookUPP)NewRoutineDescriptor((ProcPtr)(proc), uppSCModalHookProcInfo, GetCurrentArchitecture()))
+#define DisposeSCModalHookUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef SCModalHookProcPtr SCModalHookUPP;
+#define NewSCModalHookUPP(proc) (proc)
+#define DisposeSCModalHookUPP(upp) ((void)0)
+#endif
+#define NewSCModalHookProc(proc) NewSCModalHookUPP(proc)
+#define DisposeSCModalHookProc(proc) DisposeSCModalHookUPP(proc)
+
+typedef struct SCSpatialSettings SCSpatialSettings;
+struct SCSpatialSettings {
+    CodecType codecType;
+    CodecComponent codec;
+    INTEGER depth;
+    CodecQ spatialQuality;
+};
+
+typedef struct SCTemporalSettings SCTemporalSettings;
+struct SCTemporalSettings {
+    CodecQ temporalQuality;
+    Fixed frameRate;
+    long keyFrameRate;
+};
+
+typedef struct SCDataRateSettings SCDataRateSettings;
+struct SCDataRateSettings {
+    long dataRate;
+    long frameDuration;
+    CodecQ minSpatialQuality;
+    CodecQ minTemporalQuality;
+};
+
+typedef struct SCExtendedProcs SCExtendedProcs;
+struct SCExtendedProcs {
+    SCModalFilterProcPtr filterProc;
+    SCModalHookProcPtr hookProc;
+    long refcon;
+    Str31 customName;
+};
+
+pascal ComponentResult SCPositionRect(ComponentInstance ci, Rect *rp, Point *where) M68K_INLINE(0x2F3C, 0x0008, 0x0002, 0x7000, 0xA82A);
+
+pascal ComponentResult SCPositionDialog(ComponentInstance ci, INTEGER id, Point *where) M68K_INLINE(0x2F3C, 0x0006, 0x0003, 0x7000, 0xA82A);
+
+pascal ComponentResult SCSetTestImagePictHandle(ComponentInstance ci, PicHandle testPict, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x000A, 0x0004, 0x7000, 0xA82A);
+
+pascal ComponentResult SCSetTestImagePictFile(ComponentInstance ci, INTEGER testFileRef, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x0008, 0x0005, 0x7000, 0xA82A);
+
+pascal ComponentResult SCSetTestImagePixMap(ComponentInstance ci, PixMapHandle testPixMap, Rect *testRect, INTEGER testFlags) M68K_INLINE(0x2F3C, 0x000A, 0x0006, 0x7000, 0xA82A);
+
+pascal ComponentResult SCGetBestDeviceRect(ComponentInstance ci, Rect *r) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+
+pascal ComponentResult SCRequestImageSettings(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x000A, 0x7000, 0xA82A);
+
+pascal ComponentResult SCCompressImage(ComponentInstance ci, PixMapHandle src, Rect *srcRect, ImageDescriptionHandle *desc, Handle *data) M68K_INLINE(0x2F3C, 0x0010, 0x000B, 0x7000, 0xA82A);
+
+pascal ComponentResult SCCompressPicture(ComponentInstance ci, PicHandle srcPicture, PicHandle dstPicture) M68K_INLINE(0x2F3C, 0x0008, 0x000C, 0x7000, 0xA82A);
+
+pascal ComponentResult SCCompressPictureFile(ComponentInstance ci, INTEGER srcRefNum, INTEGER dstRefNum) M68K_INLINE(0x2F3C, 0x0004, 0x000D, 0x7000, 0xA82A);
+
+pascal ComponentResult SCRequestSequenceSettings(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x000E, 0x7000, 0xA82A);
+
+pascal ComponentResult SCCompressSequenceBegin(ComponentInstance ci, PixMapHandle src, Rect *srcRect, ImageDescriptionHandle *desc) M68K_INLINE(0x2F3C, 0x000C, 0x000F, 0x7000, 0xA82A);
+
+pascal ComponentResult SCCompressSequenceFrame(ComponentInstance ci, PixMapHandle src, Rect *srcRect, Handle *data, long *dataSize, INTEGER *notSyncFlag) M68K_INLINE(0x2F3C, 0x0014, 0x0010, 0x7000, 0xA82A);
+
+pascal ComponentResult SCCompressSequenceEnd(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x0011, 0x7000, 0xA82A);
+
+pascal ComponentResult SCDefaultPictHandleSettings(ComponentInstance ci, PicHandle srcPicture, INTEGER motion) M68K_INLINE(0x2F3C, 0x0006, 0x0012, 0x7000, 0xA82A);
+
+pascal ComponentResult SCDefaultPictFileSettings(ComponentInstance ci, INTEGER srcRef, INTEGER motion) M68K_INLINE(0x2F3C, 0x0004, 0x0013, 0x7000, 0xA82A);
+
+pascal ComponentResult SCDefaultPixMapSettings(ComponentInstance ci, PixMapHandle src, INTEGER motion) M68K_INLINE(0x2F3C, 0x0006, 0x0014, 0x7000, 0xA82A);
+
+pascal ComponentResult SCGetInfo(ComponentInstance ci, OSType type, void *info) M68K_INLINE(0x2F3C, 0x0008, 0x0015, 0x7000, 0xA82A);
+
+pascal ComponentResult SCSetInfo(ComponentInstance ci, OSType type, void *info) M68K_INLINE(0x2F3C, 0x0008, 0x0016, 0x7000, 0xA82A);
+
+pascal ComponentResult SCNewGWorld(ComponentInstance ci, GWorldPtr *gwp, Rect *rp, GWorldFlags flags) M68K_INLINE(0x2F3C, 0x000C, 0x0017, 0x7000, 0xA82A);
+
+typedef struct SCParams SCParams;
+struct SCParams {
+    long flags;
+    CodecType theCodecType;
+    CodecComponent theCodec;
+    CodecQ spatialQuality;
+    CodecQ temporalQuality;
+    INTEGER depth;
+    Fixed frameRate;
+    long keyFrameRate;
+    long reserved1;
+    long reserved2;
+};
+
+pascal ComponentResult SCGetCompressionExtended(ComponentInstance ci, SCParams *params, Point where, SCModalFilterProcPtr filterProc, SCModalHookProcPtr hookProc, long refcon, StringPtr customName) M68K_INLINE(0x2F3C, 0x0018, 0x0001, 0x7000, 0xA82A);
+
+pascal ComponentResult SCGetCompression(ComponentInstance ci, SCParams *params, Point where) M68K_INLINE(0x42A7, 0x42A7, 0x42A7, 0x42A7, 0x2F3C, 0x0018, 0x0001, 0x7000, 0xA82A);
+
+typedef ComponentInstance MovieImportComponent;
+
+typedef ComponentInstance MovieExportComponent;
+
+enum {
+    canMovieImportHandles = 1,
+    canMovieImportFiles = 2,
+    hasMovieImportUserInterface = 4,
+    canMovieExportHandles = 8,
+    canMovieExportFiles = 16,
+    hasMovieExportUserInterface = 32,
+    dontAutoFileMovieImport = 64,
+};
+
+enum {
+    kMovieImportExportOpenSelect = -1,
+    kMovieImportExportCloseSelect = -2,
+    kMovieImportExportCanDoSelect = -3,
+    kMovieImportExportVersionSelect = -4,
+    kMovieImportHandleSelect = 1,
+    kMovieImportFileSelect = 2,
+    kMovieImportSetFrameDurationSelect = 3,
+    kMovieImportSetSampleDescriptionSelect = 4,
+    kMovieImportSetMediaFileSelect = 5,
+    kMovieImportSetDimensionsSelect = 6,
+    kMovieImportSetChunkSizeSelect = 7,
+    kMovieImportSetProgressProcSelect = 8,
+    kMovieImportSetAuxiliaryDataSelect = 9,
+    kMovieImportSetFromScrapSelect = 10,
+    kMovieImportDoUserDialogSelect = 11,
+    kMovieImportSetDurationSelect = 12,
+    kMovieExportToHandleSelect = 128,
+    kMovieExportToFileSelect = 129,
+    kMovieExportDoUserDialogSelect = 130,
+    kMovieExportGetAuxiliaryDataSelect = 131,
+    kMovieExportSetProgressProcSelect = 132,
+};
+
+enum {
+    movieImportCreateTrack = 1,
+    movieImportInParallel = 2,
+    movieImportMustUseTrack = 4,
+};
+
+enum {
+    movieImportResultUsedMultipleTracks = 8,
+};
+
+pascal ComponentResult MovieImportHandle(MovieImportComponent ci, Handle dataH, Movie theMovie, Track targetTrack, Track *usedTrack, TimeValue atTime, TimeValue *addedDuration, long inFlags, long *outFlags) M68K_INLINE(0x2F3C, 0x0020, 0x0001, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportFile(MovieImportComponent ci, const FSSpec *theFile, Movie theMovie, Track targetTrack, Track *usedTrack, TimeValue atTime, TimeValue *addedDuration, long inFlags, long *outFlags) M68K_INLINE(0x2F3C, 0x0020, 0x0002, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetSampleDuration(MovieImportComponent ci, TimeValue duration, TimeScale scale) M68K_INLINE(0x2F3C, 0x0008, 0x0003, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetSampleDescription(MovieImportComponent ci, SampleDescriptionHandle desc, OSType mediaType) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetMediaFile(MovieImportComponent ci, AliasHandle alias) M68K_INLINE(0x2F3C, 0x0004, 0x0005, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetDimensions(MovieImportComponent ci, Fixed width, Fixed height) M68K_INLINE(0x2F3C, 0x0008, 0x0006, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetChunkSize(MovieImportComponent ci, long chunkSize) M68K_INLINE(0x2F3C, 0x0004, 0x0007, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetProgressProc(MovieImportComponent ci, MovieProgressProcPtr proc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0008, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetAuxiliaryData(MovieImportComponent ci, Handle data, OSType handleType) M68K_INLINE(0x2F3C, 0x0008, 0x0009, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetFromScrap(MovieImportComponent ci, Boolean fromScrap) M68K_INLINE(0x2F3C, 0x0002, 0x000A, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportDoUserDialog(MovieImportComponent ci, const FSSpec *theFile, Handle theData, Boolean *canceled) M68K_INLINE(0x2F3C, 0x000C, 0x000B, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieImportSetDuration(MovieImportComponent ci, TimeValue duration) M68K_INLINE(0x2F3C, 0x0004, 0x000C, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieExportToHandle(MovieExportComponent ci, Handle dataH, Movie theMovie, Track onlyThisTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x2F3C, 0x0014, 0x0080, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieExportToFile(MovieExportComponent ci, const FSSpec *theFile, Movie theMovie, Track onlyThisTrack, TimeValue startTime, TimeValue duration) M68K_INLINE(0x2F3C, 0x0014, 0x0081, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieExportDoUserDialog(MovieExportComponent ci, const FSSpec *theFile, Handle theData, Boolean *canceled) M68K_INLINE(0x2F3C, 0x000C, 0x0082, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieExportGetAuxiliaryData(MovieExportComponent ci, Handle dataH, OSType *handleType) M68K_INLINE(0x2F3C, 0x0008, 0x0083, 0x7000, 0xA82A);
+
+pascal ComponentResult MovieExportSetProgressProc(MovieExportComponent ci, MovieProgressProcPtr proc, long refcon) M68K_INLINE(0x2F3C, 0x0008, 0x0084, 0x7000, 0xA82A);
+
+typedef ComponentInstance pnotComponent;
+
+enum {
+    pnotComponentWantsEvents = 1,
+    pnotComponentNeedsNoCache = 2,
+};
+
+enum {
+    kPreviewOpenSelector = 0,
+    kPreviewCloseSelector = -1,
+    kPreviewCanDoSelector = -2,
+    kPreviewVersionSelector = -3,
+    kPreviewShowDataSelector = 1,
+    kPreviewMakePreviewSelector = 2,
+    kPreviewMakePreviewReferenceSelector = 3,
+    kPreviewEventSelector = 4,
+};
+
+pascal ComponentResult PreviewShowData(pnotComponent p, OSType dataType, Handle data, const Rect *inHere) M68K_INLINE(0x2F3C, 0x000C, 0x0001, 0x7000, 0xA82A);
+
+pascal ComponentResult PreviewMakePreview(pnotComponent p, OSType *previewType, Handle *previewResult, const FSSpec *sourceFile, ProgressProcRecordPtr progress) M68K_INLINE(0x2F3C, 0x0010, 0x0002, 0x7000, 0xA82A);
+
+pascal ComponentResult PreviewMakePreviewReference(pnotComponent p, OSType *previewType, INTEGER *resID, const FSSpec *sourceFile) M68K_INLINE(0x2F3C, 0x000C, 0x0003, 0x7000, 0xA82A);
+
+pascal ComponentResult PreviewEvent(pnotComponent p, EventRecord *e, Boolean *handledEvent) M68K_INLINE(0x2F3C, 0x0008, 0x0004, 0x7000, 0xA82A);
+
+enum {
+    handlerHasSpatial = 1,
+    handlerCanClip = 2,
+    handlerCanMatte = 4,
+    handlerCanTransferMode = 8,
+    handlerNeedsBuffer = 16,
+    handlerNoIdle = 32,
+    handlerNoScheduler = 64,
+    handlerWantsTime = 128,
+    handlerCGrafPortOnly = 256,
+};
+
+enum {
+    mMustDraw = 8,
+    mAtEnd = 16,
+    mPreflightDraw = 32,
+};
+
+enum {
+    mDidDraw = 1,
+    mNeedsToDraw = 4,
+};
+
+typedef struct GetMovieCompleteParams GetMovieCompleteParams;
+struct GetMovieCompleteParams {
+    INTEGER version;
+    Movie theMovie;
+    Track theTrack;
+    Media theMedia;
+    TimeScale movieScale;
+    TimeScale mediaScale;
+    TimeValue movieDuration;
+    TimeValue trackDuration;
+    TimeValue mediaDuration;
+    Fixed effectiveRate;
+    TimeBase timeBase;
+    INTEGER volume;
+    Fixed width;
+    Fixed height;
+    MatrixRecord trackMovieMatrix;
+    CGrafPtr moviePort;
+    GDHandle movieGD;
+    PixMapHandle trackMatte;
+};
+
+enum {
+    kMediaInitializeSelect = 1281,
+    kMediaSetHandlerCapabilitiesSelect = 1282,
+    kMediaIdleSelect = 1283,
+    kMediaGetMediaInfoSelect = 1284,
+    kMediaPutMediaInfoSelect = 1285,
+    kMediaSetActiveSelect = 1286,
+    kMediaSetRateSelect = 1287,
+    kMediaGGetStatusSelect = 1288,
+    kMediaTrackEditedSelect = 1289,
+    kMediaSetMediaTimeScaleSelect = 1290,
+    kMediaSetMovieTimeScaleSelect = 1291,
+    kMediaSetGWorldSelect = 1292,
+    kMediaSetDimensionsSelect = 1293,
+    kMediaSetClipSelect = 1294,
+    kMediaSetMatrixSelect = 1295,
+    kMediaGetTrackOpaqueSelect = 1296,
+    kMediaSetGraphicsModeSelect = 1297,
+    kMediaGetGraphicsModeSelect = 1298,
+    kMediaGSetVolumeSelect = 1299,
+    kMediaSetSoundBalanceSelect = 1300,
+    kMediaGetSoundBalanceSelect = 1301,
+    kMediaGetNextBoundsChangeSelect = 1302,
+    kMediaGetSrcRgnSelect = 1303,
+    kMediaPrerollSelect = 1304,
+};
+
+pascal ComponentResult MediaInitialize(ComponentInstance ci, GetMovieCompleteParams *gmc) M68K_INLINE(0x2F3C, 0x0004, 0x0501, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetHandlerCapabilities(ComponentInstance ci, long flags, long flagsMask) M68K_INLINE(0x2F3C, 0x0008, 0x0502, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaIdle(ComponentInstance ci, TimeValue atMediaTime, long flagsIn, long *flagsOut, const TimeRecord *movieTime) M68K_INLINE(0x2F3C, 0x0010, 0x0503, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGetMediaInfo(ComponentInstance ci, Handle h) M68K_INLINE(0x2F3C, 0x0004, 0x0504, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaPutMediaInfo(ComponentInstance ci, Handle h) M68K_INLINE(0x2F3C, 0x0004, 0x0505, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetActive(ComponentInstance ci, Boolean enableMedia) M68K_INLINE(0x2F3C, 0x0002, 0x0506, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetRate(ComponentInstance ci, Fixed rate) M68K_INLINE(0x2F3C, 0x0004, 0x0507, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGGetStatus(ComponentInstance ci, ComponentResult *statusErr) M68K_INLINE(0x2F3C, 0x0004, 0x0508, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaTrackEdited(ComponentInstance ci) M68K_INLINE(0x2F3C, 0x0000, 0x0509, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetMediaTimeScale(ComponentInstance ci, TimeScale newTimeScale) M68K_INLINE(0x2F3C, 0x0004, 0x050A, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetMovieTimeScale(ComponentInstance ci, TimeScale newTimeScale) M68K_INLINE(0x2F3C, 0x0004, 0x050B, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetGWorld(ComponentInstance ci, CGrafPtr aPort, GDHandle aGD) M68K_INLINE(0x2F3C, 0x0008, 0x050C, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetDimensions(ComponentInstance ci, Fixed width, Fixed height) M68K_INLINE(0x2F3C, 0x0008, 0x050D, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetClip(ComponentInstance ci, RgnHandle theClip) M68K_INLINE(0x2F3C, 0x0004, 0x050E, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetMatrix(ComponentInstance ci, MatrixRecord *trackMovieMatrix) M68K_INLINE(0x2F3C, 0x0004, 0x050F, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGetTrackOpaque(ComponentInstance ci, Boolean *trackIsOpaque) M68K_INLINE(0x2F3C, 0x0004, 0x0510, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetGraphicsMode(ComponentInstance ci, long mode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0511, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGetGraphicsMode(ComponentInstance ci, long *mode, RGBColor *opColor) M68K_INLINE(0x2F3C, 0x0008, 0x0512, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGSetVolume(ComponentInstance ci, INTEGER volume) M68K_INLINE(0x2F3C, 0x0002, 0x0513, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSetSoundBalance(ComponentInstance ci, INTEGER balance) M68K_INLINE(0x2F3C, 0x0002, 0x0514, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGetSoundBalance(ComponentInstance ci, INTEGER *balance) M68K_INLINE(0x2F3C, 0x0004, 0x0515, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGetNextBoundsChange(ComponentInstance ci, TimeValue *when) M68K_INLINE(0x2F3C, 0x0004, 0x0516, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaGetSrcRgn(ComponentInstance ci, RgnHandle rgn, TimeValue atMediaTime) M68K_INLINE(0x2F3C, 0x0008, 0x0517, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaPreroll(ComponentInstance ci, TimeValue time, Fixed rate) M68K_INLINE(0x2F3C, 0x0008, 0x0518, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaSampleDescriptionChanged(ComponentInstance ci, long index) M68K_INLINE(0x2F3C, 0x0004, 0x0519, 0x7000, 0xA82A);
+
+pascal ComponentResult MediaHasCharacteristic(ComponentInstance ci, OSType characteristic, Boolean *hasIt) M68K_INLINE(0x2F3C, 0x0008, 0x051A, 0x7000, 0xA82A);
+
+typedef struct CodecCapabilities CodecCapabilities;
+struct CodecCapabilities {
+    long flags;
+    INTEGER wantedPixelSize;
+    INTEGER extendWidth;
+    INTEGER extendHeight;
+    INTEGER bandMin;
+    INTEGER bandInc;
+    INTEGER pad;
+    unsigned long time;
+};
+
+typedef struct CodecCompressParams CodecCompressParams;
+struct CodecCompressParams {
+    ImageSequence sequenceID;
+    ImageDescriptionHandle imageDescription;
+    Ptr data;
+    long bufferSize;
+    long frameNumber;
+    long startLine;
+    long stopLine;
+    long conditionFlags;
+    CodecFlags callerFlags;
+    CodecCapabilities *capabilities;
+    ProgressProcRecord progressProcRecord;
+    CompletionProcRecord completionProcRecord;
+    FlushProcRecord flushProcRecord;
+    PixMap srcPixMap;
+    PixMap prevPixMap;
+    CodecQ spatialQuality;
+    CodecQ temporalQuality;
+    Fixed similarity;
+    DataRateParamsPtr dataRateParams;
+    long reserved;
+};
+
+typedef struct CodecDecompressParams CodecDecompressParams;
+struct CodecDecompressParams {
+    ImageSequence sequenceID;
+    ImageDescriptionHandle imageDescription;
+    Ptr data;
+    long bufferSize;
+    long frameNumber;
+    long startLine;
+    long stopLine;
+    long conditionFlags;
+    CodecFlags callerFlags;
+    CodecCapabilities *capabilities;
+    ProgressProcRecord progressProcRecord;
+    CompletionProcRecord completionProcRecord;
+    DataProcRecord dataProcRecord;
+    CGrafPtr port;
+    PixMap dstPixMap;
+    BitMapPtr maskBits;
+    PixMapPtr mattePixMap;
+    Rect srcRect;
+    MatrixRecord *matrix;
+    CodecQ accuracy;
+    INTEGER transferMode;
+    long reserved[2];
+};
+
+enum {
+    gestaltCompressionMgr = 'icmp',
+    codecInfoDoes1 = 1,
+    codecInfoDoes2 = 2,
+    codecInfoDoes4 = 4,
+    codecInfoDoes8 = 8,
+    codecInfoDoes16 = 16,
+    codecInfoDoes32 = 32,
+    codecInfoDoesDither = 64,
+    codecInfoDoesStretch = 128,
+    codecInfoDoesShrink = 256,
+    codecInfoDoesMask = 512,
+    codecInfoDoesTemporal = 1024,
+    codecInfoDoesDouble = 2048,
+    codecInfoDoesQuad = 4096,
+    codecInfoDoesHalf = 8192,
+    codecInfoDoesQuarter = 16384,
+    codecInfoDoesRotate = 32768,
+    codecInfoDoesHorizFlip = 65536,
+    codecInfoDoesVertFlip = 131072,
+    codecInfoDoesSkew = 262144,
+    codecInfoDoesBlend = 524288,
+    codecInfoDoesWarp = 1048576,
+    codecInfoDoesRecompress = 2097152,
+    codecInfoDoesSpool = 4194304,
+    codecInfoDoesRateConstrain = 8388608,
+    codecInfoDepth1 = 1,
+    codecInfoDepth2 = 2,
+    codecInfoDepth4 = 4,
+    codecInfoDepth8 = 8,
+    codecInfoDepth16 = 16,
+    codecInfoDepth32 = 32,
+    codecInfoDepth24 = 64,
+    codecInfoDepth33 = 128,
+    codecInfoDepth34 = 256,
+    codecInfoDepth36 = 512,
+    codecInfoDepth40 = 1024,
+    codecInfoStoresClut = 2048,
+    codecInfoDoesLossless = 4096,
+    codecInfoSequenceSensitive = 8192,
+    codecFlagUseImageBuffer = 1,
+    codecFlagUseScreenBuffer = 2,
+    codecFlagUpdatePrevious = 4,
+    codecFlagNoScreenUpdate = 8,
+    codecFlagWasCompressed = 16,
+    codecFlagDontOffscreen = 32,
+    codecFlagUpdatePreviousComp = 64,
+    codecFlagForceKeyFrame = 128,
+    codecFlagOnlyScreenUpdate = 256,
+    codecFlagLiveGrab = 512,
+    codecFlagDontUseNewImageBuffer = 1024,
+    codecFlagInterlaceUpdate = 2048,
+    codecFlagUsedNewImageBuffer = 16384,
+    codecFlagUsedImageBuffer = 32768,
+    codecErr = -8960,
+    noCodecErr = -8961,
+    codecUnimpErr = -8962,
+    codecSizeErr = -8963,
+    codecScreenBufErr = -8964,
+    codecImageBufErr = -8965,
+    codecSpoolErr = -8966,
+    codecAbortErr = -8967,
+    codecWouldOffscreenErr = -8968,
+    codecBadDataErr = -8969,
+    codecDataVersErr = -8970,
+    codecExtensionNotFoundErr = -8971,
+    codecConditionErr = -8972,
+    codecOpenErr = -8973,
+    codecMinimumDataSize = 32768,
+    compressorComponentType = 'imco',
+    decompressorComponentType = 'imdc',
+    codecLosslessQuality = 1024,
+    codecMaxQuality = 1023,
+    codecMinQuality = 0,
+    codecLowQuality = 256,
+    codecNormalQuality = 512,
+    codecHighQuality = 768,
+    codecCompletionSource = 1,
+    codecCompletionDest = 2,
+    codecProgressOpen = 0,
+    codecProgressUpdatePercent = 1,
+    codecProgressClose = 2,
+    defaultDither = 0,
+    forceDither = 1,
+    suppressDither = 2,
+    gestaltQuickTime = 'qtim',
+    MovieFileType = 'MooV',
+    MediaHandlerType = 'mhlr',
+    DataHandlerType = 'dhlr',
+    VideoMediaType = 'vide',
+    SoundMediaType = 'soun',
+    TextMediaType = 'text',
+    GenericMediaType = 'gnrc',
+    DoTheRightThing = 0,
+    kFullVolume = 256,
+    kNoVolume = 0,
+    MovieControllerComponentType = 'play',
+    kMovieVersion = 0,
+    sgChannelAtom = 'chan',
+    sgChannelSettingsAtom = 'ctom',
+    sgChannelDescription = 'cdsc',
+    sgChannelSettings = 'cset',
+    sgDeviceNameType = 'name',
+    sgUsageType = 'use ',
+    sgPlayFlagsType = 'plyf',
+    sgClipType = 'clip',
+    sgMatrixType = 'mtrx',
+    sgVolumeType = 'volu',
+    sgPanelSettingsAtom = 'ptom',
+    sgPanelDescription = 'pdsc',
+    sgPanelSettings = 'pset',
+    sgcSoundCompressionType = 'scmp',
+    sgcSoundSampleRateType = 'srat',
+    sgcSoundChannelCountType = 'schn',
+    sgcSoundSampleSizeType = 'ssiz',
+    sgcSoundInputType = 'sinp',
+    sgcSoundGainType = 'gain',
+    sgcVideoHueType = 'hue ',
+    sgcVideoSaturationType = 'satr',
+    sgcVideoContrastType = 'trst',
+    sgcVideoSharpnessType = 'shrp',
+    sgcVideoBrigtnessType = 'brit',
+    sgcVideoBlackLevelType = 'blkl',
+    sgcVideoWhiteLevelType = 'whtl',
+    sgcVideoInputType = 'vinp',
+    sgcVideoFormatType = 'vstd',
+    sgcVideoFilterType = 'vflt',
+    sgcVideoRectType = 'vrct',
+    sgVideoDigitizerType = 'vdig',
+    videoDigitizerComponentType = 'vdig',
+    vdigInterfaceRev = 2,
+    ntscIn = 0,
+    currentIn = 0,
+    palIn = 1,
+    secamIn = 2,
+    ntscReallyIn = 3,
+    compositeIn = 0,
+    sVideoIn = 1,
+    rgbComponentIn = 2,
+    vdPlayThruOff = 0,
+    vdPlayThruOn = 1,
+    vdDigitizerBW = 0,
+    vdDigitizerRGB = 1,
+    vdBroadcastMode = 0,
+    vdVTRMode = 1,
+    vdUseAnyField = 0,
+    vdUseOddField = 1,
+    vdUseEvenField = 2,
+    vdTypeBasic = 0,
+    vdTypeAlpha = 1,
+    vdTypeMask = 2,
+    vdTypeKey = 3,
+    digiUnimpErr = -2201,
+    qtParamErr = -2202,
+    matrixErr = -2203,
+    notExactMatrix = -2204,
+    noMoreKeyColors = -2205,
+    notExactSize = -2206,
+    badDepth = -2207,
+    noDMA = -2208,
+    badCallOrder = -2209,
+    digiInDoesNTSC = 1,
+    digiInDoesPAL = 2,
+    digiInDoesSECAM = 4,
+    digiInDoesGenLock = 128,
+    digiInDoesComposite = 256,
+    digiInDoesSVideo = 512,
+    digiInDoesComponent = 1024,
+    digiInVTR_Broadcast = 2048,
+    digiInDoesColor = 4096,
+    digiInDoesBW = 8192,
+    digiInSignalLock = -2147483648,
+    digiOutDoes1 = 1,
+    digiOutDoes2 = 2,
+    digiOutDoes4 = 4,
+    digiOutDoes8 = 8,
+    digiOutDoes16 = 16,
+    digiOutDoes32 = 32,
+    digiOutDoesDither = 64,
+    digiOutDoesStretch = 128,
+    digiOutDoesShrink = 256,
+    digiOutDoesMask = 512,
+    digiOutDoesDouble = 2048,
+    digiOutDoesQuad = 4096,
+    digiOutDoesQuarter = 8192,
+    digiOutDoesSixteenth = 16384,
+    digiOutDoesRotate = 32768,
+    digiOutDoesHorizFlip = 65536,
+    digiOutDoesVertFlip = 131072,
+    digiOutDoesSkew = 262144,
+    digiOutDoesBlend = 524288,
+    digiOutDoesWarp = 1048576,
+    digiOutDoesHW_DMA = 2097152,
+    digiOutDoesHWPlayThru = 4194304,
+    digiOutDoesILUT = 8388608,
+    digiOutDoesKeyColor = 16777216,
+    digiOutDoesAsyncGrabs = 33554432,
+    digiOutDoesUnreadableScreenBits = 67108864,
+    digiOutDoesCompress = 134217728,
+    digiOutDoesCompressOnly = 268435456,
+    digiOutDoesPlayThruDuringCompress = 536870912,
+    StandardCompressionType = 'scdi',
+    StandardCompressionSubType = 'imag',
+    scListEveryCodec = 2,
+    scAllowZeroFrameRate = 4,
+    scAllowZeroKeyFrameRate = 8,
+    scShowBestDepth = 16,
+    scUseMovableModal = 32,
+    scPreferCropping = 1,
+    scPreferScaling = 2,
+    scPreferScalingAndCropping = 3,
+    scTestImageWidth = 80,
+    scTestImageHeight = 80,
+    scOKItem = 1,
+    scCancelItem = 2,
+    scCustomItem = 3,
+    scUserCancelled = 1,
+    scPositionRect = 2,
+    scPositionDialog = 3,
+    scSetTestImagePictHandle = 4,
+    scSetTestImagePictFile = 5,
+    scSetTestImagePixMap = 6,
+    scGetBestDeviceRect = 7,
+    scRequestImageSettings = 10,
+    scCompressImage = 11,
+    scCompressPicture = 12,
+    scCompressPictureFile = 13,
+    scRequestSequenceSettings = 14,
+    scCompressSequenceBegin = 15,
+    scCompressSequenceFrame = 16,
+    scCompressSequenceEnd = 17,
+    scDefaultPictHandleSettings = 18,
+    scDefaultPictFileSettings = 19,
+    scDefaultPixMapSettings = 20,
+    scGetInfo = 21,
+    scSetInfo = 22,
+    scNewGWorld = 23,
+    scSpatialSettingsType = 1936749676,
+    scTemporalSettingsType = 1953526380,
+    scDataRateSettingsType = 1685217652,
+    scColorTableType = 1668052340,
+    scProgressProcType = 1886547815,
+    scExtendedProcsType = 2020635235,
+    scPreferenceFlagsType = 1886545254,
+    scSettingsStateType = 1936946273,
+    scSequenceIDType = 1936028021,
+    scWindowPositionType = 2003723383,
+    scCodecFlagsType = 1667656807,
+    scTypeNotFoundErr = -8971,
+    scGetCompression = 1,
+    scShowMotionSettings = 1,
+    scSettingsChangedItem = -1,
+    MovieImportType = 'eat ',
+    MovieExportType = 'spit',
+    ShowFilePreviewComponentType = 'pnot',
+    CreateFilePreviewrComponentType = 'pmak',
+    codecGetCodecInfo = 0,
+    codecGetCompressionTime = 1,
+    codecGetMaxCompressionSize = 2,
+    codecPreCompress = 3,
+    codecBandCompress = 4,
+    codecPreDecompress = 5,
+    codecBandDecompress = 6,
+    codecCDSequenceBusy = 7,
+    codecGetCompressedImageSize = 8,
+    codecGetSimilarity = 9,
+    codecTrimImage = 10,
+    codecCanScale = 1,
+    codecCanMask = 2,
+    codecCanMatte = 4,
+    codecCanTransform = 8,
+    codecCanTransferMode = 16,
+    codecCanCopyPrev = 32,
+    codecCanSpool = 64,
+    codecCanClipVertical = 128,
+    codecCanClipRectangular = 256,
+    codecCanRemapColor = 512,
+    codecCanFastDither = 1024,
+    codecCanSrcExtract = 2048,
+    codecCanCopyPrevComp = 4096,
+    codecCanAsync = 8192,
+    codecCanMakeMask = 16384,
+    codecCanShift = 32768,
+    codecConditionFirstBand = 1,
+    codecConditionLastBand = 2,
+    codecConditionFirstFrame = 4,
+    codecConditionNewDepth = 8,
+    codecConditionNewTransform = 16,
+    codecConditionNewSrcRect = 32,
+    codecConditionNewMask = 64,
+    codecConditionNewMatte = 128,
+    codecConditionNewTransferMode = 256,
+    codecConditionNewClut = 512,
+    codecConditionNewAccuracy = 1024,
+    codecConditionNewDestination = 2048,
+    codecConditionCodecChangedMask = -2147483648,
+    codecInfoResourceType = 'cdci',
+    codecInterfaceVersion = 1,
+};
 
 #pragma options align=reset
 

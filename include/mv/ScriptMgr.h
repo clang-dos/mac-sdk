@@ -216,18 +216,33 @@ enum { _ScriptUtil = 0xA8B5 };
 pascal LONGINT VisibleLength(Ptr textp, LONGINT len) M68K_INLINE(0x2F3C, 0x8408, 0x0028, 0xA8B5);
 
 pascal void LongDateToSeconds(LongDateRec *ldatep, ULONGINT *secs_outp) M68K_INLINE(0x2F3C, 0x8008, 0xFFF2, 0xA8B5);
+#if OLDROUTINENAMES
+#define LongDate2Secs(ldatep, secs_outp) LongDateToSeconds(ldatep, secs_outp)
+#endif
 
 pascal void LongSecondsToDate(ULONGINT *secs_inp, LongDateRec *ldatep) M68K_INLINE(0x2F3C, 0x8008, 0xFFF0, 0xA8B5);
+#if OLDROUTINENAMES
+#define LongSecs2Date(secs_inp, ldatep) LongSecondsToDate(secs_inp, ldatep)
+#endif
 
 pascal LONGINT GetScriptManagerVariable(INTEGER verb) M68K_INLINE(0x2F3C, 0x8402, 0x0008, 0xA8B5);
+#if OLDROUTINENAMES
+#define GetEnvirons(verb) GetScriptManagerVariable(verb)
+#endif
 
 pascal OSErr SetScriptManagerVariable(INTEGER verb, LONGINT param) M68K_INLINE(0x2F3C, 0x8206, 0x000A, 0xA8B5);
+#if OLDROUTINENAMES
+#define SetEnvirons(verb, param) SetScriptManagerVariable(verb, param)
+#endif
 
 pascal LONGINT GetScriptVariable(INTEGER script, INTEGER verb) M68K_INLINE(0x2F3C, 0x8404, 0x000C, 0xA8B5);
 
 pascal OSErr SetScriptVariable(INTEGER script, INTEGER verb, LONGINT param) M68K_INLINE(0x2F3C, 0x8208, 0x000E, 0xA8B5);
 
 pascal INTEGER FontToScript(INTEGER fontnum) M68K_INLINE(0x2F3C, 0x8202, 0x0006, 0xA8B5);
+#if OLDROUTINENAMES
+#define Font2Script(fontnum) FontToScript(fontnum)
+#endif
 
 pascal INTEGER Transliterate(Handle srch, Handle dsth, INTEGER target, LONGINT srcmask) M68K_INLINE(0x2F3C, 0x820E, 0x0018, 0xA8B5);
 
@@ -252,6 +267,9 @@ pascal void HiliteText(Ptr textbufp, INTEGER textLength, INTEGER firstoffset, IN
 pascal void DrawJust(Ptr textbufp, INTEGER length, INTEGER slop) M68K_INLINE(0x2F3C, 0x8008, 0x001E, 0xA8B5);
 
 pascal String2DateStatus StringToTime(Ptr textp, LONGINT len, Ptr cachep, LONGINT *lenusedp, Ptr *datetimep) M68K_INLINE(0x2F3C, 0x8214, 0xFFF4, 0xA8B5);
+#if OLDROUTINENAMES
+#define String2Time(textp, len, cachep, lenusedp, datetimep) StringToTime(textp, len, cachep, lenusedp, datetimep)
+#endif
 
 #if TARGET_CPU_68K
 static __inline__ INTEGER GetSysDirection(void);
@@ -270,6 +288,9 @@ pascal OSErr InitDateCache(DateCachePtr theCache) M68K_INLINE(0x2F3C, 0x8204, 0x
 pascal INTEGER CharByte(Ptr textBuf, INTEGER textOffset) M68K_INLINE(0x2F3C, 0x8206, 0x0010, 0xA8B5);
 
 pascal String2DateStatus StringToDate(Ptr text, long length, DateCachePtr cache, long *length_used_ret, LongDatePtr date_time) M68K_INLINE(0x2F3C, 0x8214, 0xFFF6, 0xA8B5);
+#if OLDROUTINENAMES
+#define String2Date(text, length, cache, length_used_ret, date_time) StringToDate(text, length, cache, length_used_ret, date_time)
+#endif
 
 pascal StyledLineBreakCode StyledLineBreak(Ptr textp, long length, long text_start, long text_end, long flags, Fixed *text_width_fp, long *text_offset) M68K_INLINE(0x2F3C, 0x821C, 0xFFFE, 0xA8B5);
 
@@ -284,10 +305,19 @@ pascal INTEGER ReplaceText(Handle base_text, Handle subst_text, Str15 key) M68K_
 pascal INTEGER TruncString(INTEGER width, Str255 string, TruncCode code) M68K_INLINE(0x2F3C, 0x8208, 0xFFE0, 0xA8B5);
 
 pascal FormatStatus StringToExtended(Str255 string, NumFormatStringRec *formatp, NumberParts *partsp, Extended80 *xp) M68K_INLINE(0x2F3C, 0x8210, 0xFFE6, 0xA8B5);
+#if OLDROUTINENAMES
+#define FormatStr2X(string, formatp, partsp, xp) StringToExtended(string, formatp, partsp, xp)
+#endif
 
 pascal FormatStatus ExtendedToString(Extended80 *xp, NumFormatStringRec *formatp, NumberParts *partsp, Str255 string) M68K_INLINE(0x2F3C, 0x8210, 0xFFE8, 0xA8B5);
+#if OLDROUTINENAMES
+#define FormatX2Str(xp, formatp, partsp, string) ExtendedToString(xp, formatp, partsp, string)
+#endif
 
 pascal FormatStatus StringToFormatRec(ConstStringPtr in_string, NumberParts *partsp, NumFormatStringRec *out_string) M68K_INLINE(0x2F3C, 0x820C, 0xFFEC, 0xA8B5);
+#if OLDROUTINENAMES
+#define Str2Format(in_string, partsp, out_string) StringToFormatRec(in_string, partsp, out_string)
+#endif
 
 pascal ToggleResults ToggleDate(LongDateTime *lsecsp, LongDateField field, DateDelta delta, INTEGER ch, TogglePB *paramsp) M68K_INLINE(0x2F3C, 0x820E, 0xFFEE, 0xA8B5);
 
@@ -651,6 +681,9 @@ pascal INTEGER IUStringOrder(ConstStr255Param aStr, ConstStr255Param bStr, Scrip
 #endif
 
 pascal FormatStatus FormatRecToString(const NumFormatStringRec *myCanonical, const NumberParts *partsTable, Str255 outString, TripleInt positions) M68K_INLINE(0x2F3C, 0x8210, 0xFFEA, 0xA8B5);
+#if OLDROUTINENAMES
+#define Format2Str(myCanonical, partsTable, outString, positions) FormatRecToString(myCanonical, partsTable, outString, positions)
+#endif
 
 pascal void GetFormatOrder(FormatOrderPtr ordering, INTEGER firstFormat, INTEGER lastFormat, Boolean lineRight, StyleRunDirectionUPP rlDirProc, Ptr dirParam) M68K_INLINE(0x2F3C, 0x8012, 0xFFFC, 0xA8B5);
 
@@ -658,15 +691,15 @@ pascal INTEGER ValidDate(LongDateRec *date, long flags, LongDateTime *newSecs) M
 
 pascal Boolean IsCmdChar(const EventRecord *event, INTEGER test) M68K_INLINE(0x2F3C, 0x8206, 0xFFD0, 0xA8B5);
 
-pascal INTEGER NPixel2Char(Ptr textBuf, long textLen, Fixed slop, Fixed pixelWidth, Boolean *leadingEdge, Fixed *widthRemaining, JustStyleCode styleRunPosition, Point numer, Point denom);
+pascal INTEGER NPixel2Char(Ptr textBuf, long textLen, Fixed slop, Fixed pixelWidth, Boolean *leadingEdge, Fixed *widthRemaining, JustStyleCode styleRunPosition, Point numer, Point denom) M68K_INLINE(0x2F3C, 0x8222, 0x002E, 0xA8B5);
 
-pascal INTEGER NChar2Pixel(Ptr textBuf, long textLen, Fixed slop, long offset, INTEGER direction, JustStyleCode styleRunPosition, Point numer, Point denom);
+pascal INTEGER NChar2Pixel(Ptr textBuf, long textLen, Fixed slop, long offset, INTEGER direction, JustStyleCode styleRunPosition, Point numer, Point denom) M68K_INLINE(0x2F3C, 0x821C, 0x0030, 0xA8B5);
 
-pascal void NDrawJust(Ptr textPtr, long textLength, Fixed slop, JustStyleCode styleRunPosition, Point numer, Point denom);
+pascal void NDrawJust(Ptr textPtr, long textLength, Fixed slop, JustStyleCode styleRunPosition, Point numer, Point denom) M68K_INLINE(0x2F3C, 0x8016, 0x0032, 0xA8B5);
 
-pascal void NMeasureJust(Ptr textPtr, long textLength, Fixed slop, Ptr charLocs, JustStyleCode styleRunPosition, Point numer, Point denom);
+pascal void NMeasureJust(Ptr textPtr, long textLength, Fixed slop, Ptr charLocs, JustStyleCode styleRunPosition, Point numer, Point denom) M68K_INLINE(0x2F3C, 0x801A, 0x0034, 0xA8B5);
 
-pascal Fixed NPortionText(Ptr textPtr, long textLength, JustStyleCode styleRunPosition, Point numer, Point denom);
+pascal Fixed NPortionText(Ptr textPtr, long textLength, JustStyleCode styleRunPosition, Point numer, Point denom) M68K_INLINE(0x2F3C, 0x8412, 0x0036, 0xA8B5);
 
 pascal Ptr GetScriptUtilityAddress(INTEGER selector, Boolean Before, ScriptCode script) M68K_INLINE(0x2F3C, 0xC404, 0x0038, 0xA8B5);
 

@@ -250,6 +250,9 @@ pascal LONGINT PopUpMenuSelect(MenuHandle mh, INTEGER top, INTEGER left, INTEGER
 
 enum { _DeleteMCEntries = 0xAA60 };
 pascal void DeleteMCEntries(INTEGER arg0, INTEGER arg1) M68K_INLINE(0xAA60);
+#if OLDROUTINENAMES
+#define DelMCEntries(arg0, arg1) DeleteMCEntries(arg0, arg1)
+#endif
 
 enum { _GetMCInfo = 0xAA61 };
 pascal MCTableHandle GetMCInfo(void) M68K_INLINE(0xAA61);
@@ -259,6 +262,9 @@ pascal void SetMCInfo(MCTableHandle arg0) M68K_INLINE(0xAA62);
 
 enum { _DisposeMCInfo = 0xAA63 };
 pascal void DisposeMCInfo(MCTableHandle arg0) M68K_INLINE(0xAA63);
+#if OLDROUTINENAMES
+#define DispMCInfo(arg0) DisposeMCInfo(arg0)
+#endif
 
 enum { _GetMCEntry = 0xAA64 };
 pascal MCEntryPtr GetMCEntry(INTEGER arg0, INTEGER arg1) M68K_INLINE(0xAA64);

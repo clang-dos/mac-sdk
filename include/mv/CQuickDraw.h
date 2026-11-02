@@ -357,6 +357,9 @@ pascal PixMapHandle NewPixMap(void) M68K_INLINE(0xAA03);
 
 enum { _DisposePixMap = 0xAA04 };
 pascal void DisposePixMap(PixMapHandle arg0) M68K_INLINE(0xAA04);
+#if OLDROUTINENAMES
+#define DisposPixMap(arg0) DisposePixMap(arg0)
+#endif
 
 enum { _CopyPixMap = 0xAA05 };
 pascal void CopyPixMap(PixMapHandle arg0, PixMapHandle arg1) M68K_INLINE(0xAA05);
@@ -366,6 +369,9 @@ pascal PixPatHandle NewPixPat(void) M68K_INLINE(0xAA07);
 
 enum { _DisposePixPat = 0xAA08 };
 pascal void DisposePixPat(PixPatHandle arg0) M68K_INLINE(0xAA08);
+#if OLDROUTINENAMES
+#define DisposPixPat(arg0) DisposePixPat(arg0)
+#endif
 
 enum { _CopyPixPat = 0xAA09 };
 pascal void CopyPixPat(PixPatHandle arg0, PixPatHandle arg1) M68K_INLINE(0xAA09);
@@ -387,6 +393,9 @@ pascal void SetGDevice(GDHandle arg0) M68K_INLINE(0xAA31);
 
 enum { _DisposeGDevice = 0xAA30 };
 pascal void DisposeGDevice(GDHandle arg0) M68K_INLINE(0xAA30);
+#if OLDROUTINENAMES
+#define DisposGDevice(arg0) DisposeGDevice(arg0)
+#endif
 
 enum { _GetGDevice = 0xAA32 };
 pascal GDHandle GetGDevice(void) M68K_INLINE(0xAA32);
@@ -513,6 +522,9 @@ pascal CTabHandle GetCTable(INTEGER arg0) M68K_INLINE(0xAA18);
 
 enum { _DisposeCTable = 0xAA24 };
 pascal void DisposeCTable(CTabHandle arg0) M68K_INLINE(0xAA24);
+#if OLDROUTINENAMES
+#define DisposCTable(arg0) DisposeCTable(arg0)
+#endif
 
 enum { _InitPalettes = 0xAA90 };
 pascal void InitPalettes(void) M68K_INLINE(0xAA90);
@@ -573,6 +585,9 @@ pascal void SetCCursor(CCrsrHandle arg0) M68K_INLINE(0xAA1C);
 
 enum { _DisposeCCursor = 0xAA26 };
 pascal void DisposeCCursor(CCrsrHandle arg0) M68K_INLINE(0xAA26);
+#if OLDROUTINENAMES
+#define DisposCCursor(arg0) DisposeCCursor(arg0)
+#endif
 
 enum { _AllocCursor = 0xAA1D };
 pascal void AllocCursor(void) M68K_INLINE(0xAA1D);
@@ -662,6 +677,9 @@ enum { _RestoreEntries = 0xAA4A };
 pascal void RestoreEntries(CTabHandle arg0, CTabHandle arg1, ReqListRec *arg2) M68K_INLINE(0xAA4A);
 
 pascal OSErr DisposePictInfo(PictInfoID arg0) M68K_INLINE(0x303C, 0x0206, 0xA831);
+#if OLDROUTINENAMES
+#define DisposPictInfo(arg0) DisposePictInfo(arg0)
+#endif
 
 pascal OSErr RecordPictInfo(PictInfoID arg0, PicHandle arg1) M68K_INLINE(0x303C, 0x0403, 0xA831);
 

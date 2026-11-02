@@ -175,6 +175,9 @@ enum {
 enum { _Pack11 = 0xA82D };
 
 pascal OSErr InitEditionPackVersion(INTEGER unused) M68K_INLINE(0x303C, 0x0100, 0xA82D);
+#if OLDROUTINENAMES
+#define InitEditionPack(unused) InitEditionPackVersion(unused)
+#endif
 
 pascal OSErr NewSection(EditionContainerSpecPtr container, FSSpecPtr section_doc, SectionType kind, long section_id, UpdateMode initial_mode, SectionHandle *section_out) M68K_INLINE(0x303C, 0x0A02, 0xA82D);
 

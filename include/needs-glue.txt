@@ -43,11 +43,6 @@ InstallExceptionHandler
 FSCreateResourceFile
 FSOpenResourceFile
 TempInsertROMMap
-NPixel2Char
-NChar2Pixel
-NDrawJust
-NMeasureJust
-NPortionText
 Fix2X
 X2Fix
 Frac2X

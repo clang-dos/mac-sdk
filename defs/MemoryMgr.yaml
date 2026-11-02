@@ -761,6 +761,7 @@
     executor: true
     trap: 0xA023
     executor_extras: ReturnMemErr<D0>
+    old_name: DisposHandle
 
 # ####
 
@@ -819,6 +820,7 @@
     executor: true
     trap: 0xA027
     executor_extras: ReturnMemErr<D0>
+    old_name: ReallocHandle
 
 # ####
 
@@ -831,6 +833,7 @@
     executor: true
     trap: 0xA01F
     executor_extras: ReturnMemErr<D0>
+    old_name: DisposPtr
 
 # ####
 
@@ -1040,6 +1043,7 @@
     dispatcher: OSDispatch
     selector: 0x0018
     executor: C_
+    old_name: MFFreeMem
 
 # ####
 
@@ -1052,6 +1056,7 @@
     dispatcher: OSDispatch
     selector: 0x0015
     executor: C_
+    old_name: MFMaxMem
 
 # ####
 
@@ -1061,6 +1066,7 @@
     dispatcher: OSDispatch
     selector: 0x0016
     executor: C_
+    old_name: MFTopMem
 
 # ####
 
@@ -1075,6 +1081,7 @@
     dispatcher: OSDispatch
     selector: 0x001D
     executor: C_
+    old_name: MFTempNewHandle
 
 # ####
 
@@ -1088,6 +1095,7 @@
     dispatcher: OSDispatch
     selector: 0x001E
     executor: C_
+    old_name: MFTempHLock
 
 # ####
 
@@ -1101,6 +1109,7 @@
     dispatcher: OSDispatch
     selector: 0x001F
     executor: C_
+    old_name: MFTempHUnlock
 
 # ####
 
@@ -1114,6 +1123,7 @@
     dispatcher: OSDispatch
     selector: 0x0020
     executor: C_
+    old_name: MFTempDisposHandle
 
 # ####
 # Raw 68K entry points (Executor only).  The wrapper objects and the
@@ -1562,3 +1572,11 @@
       type: Size
       register: D0
     trap: 42023
+
+# ####
+
+- verbatim: |
+    #if OLDROUTINENAMES
+    #define ResrvMem(needed) ReserveMem(needed)
+    #define ResrvMemSys(needed) ReserveMemSys(needed)
+    #endif

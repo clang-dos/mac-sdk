@@ -158,9 +158,15 @@ struct AuxCtlRec {
 
 enum { _SetControlTitle = 0xA95F };
 pascal void SetControlTitle(ControlHandle c, ConstStringPtr t) M68K_INLINE(0xA95F);
+#if OLDROUTINENAMES
+#define SetCTitle(c, t) SetControlTitle(c, t)
+#endif
 
 enum { _GetControlTitle = 0xA95E };
 pascal void GetControlTitle(ControlHandle c, StringPtr t) M68K_INLINE(0xA95E);
+#if OLDROUTINENAMES
+#define GetCTitle(c, t) GetControlTitle(c, t)
+#endif
 
 enum { _HideControl = 0xA958 };
 pascal void HideControl(ControlHandle c) M68K_INLINE(0xA958);
@@ -179,6 +185,9 @@ pascal void Draw1Control(ControlHandle c) M68K_INLINE(0xA96D);
 
 enum { _UpdateControls = 0xA953 };
 pascal void UpdateControls(WindowPtr wp, RgnHandle rh) M68K_INLINE(0xA953);
+#if OLDROUTINENAMES
+#define UpdtControl(wp, rh) UpdateControls(wp, rh)
+#endif
 
 enum { _NewControl = 0xA954 };
 pascal ControlHandle NewControl(WindowPtr wst, const Rect *r, ConstStringPtr title, Boolean vis, INTEGER value, INTEGER min, INTEGER max, INTEGER procid, LONGINT rc) M68K_INLINE(0xA954);
@@ -194,21 +203,39 @@ pascal void KillControls(WindowPtr w) M68K_INLINE(0xA956);
 
 enum { _SetControlReference = 0xA95B };
 pascal void SetControlReference(ControlHandle c, LONGINT data) M68K_INLINE(0xA95B);
+#if OLDROUTINENAMES
+#define SetCRefCon(c, data) SetControlReference(c, data)
+#endif
 
 enum { _GetControlReference = 0xA95A };
 pascal LONGINT GetControlReference(ControlHandle c) M68K_INLINE(0xA95A);
+#if OLDROUTINENAMES
+#define GetCRefCon(c) GetControlReference(c)
+#endif
 
 enum { _SetControlAction = 0xA96B };
 pascal void SetControlAction(ControlHandle c, ControlActionUPP a) M68K_INLINE(0xA96B);
+#if OLDROUTINENAMES
+#define SetCtlAction(c, a) SetControlAction(c, a)
+#endif
 
 enum { _GetControlAction = 0xA96A };
 pascal ControlActionUPP GetControlAction(ControlHandle c) M68K_INLINE(0xA96A);
+#if OLDROUTINENAMES
+#define GetCtlAction(c) GetControlAction(c)
+#endif
 
 enum { _GetControlVariant = 0xA809 };
 pascal INTEGER GetControlVariant(ControlHandle c) M68K_INLINE(0xA809);
+#if OLDROUTINENAMES
+#define GetCVariant(c) GetControlVariant(c)
+#endif
 
 enum { _GetAuxiliaryControlRecord = 0xAA44 };
 pascal Boolean GetAuxiliaryControlRecord(ControlHandle c, AuxCtlHandle *acHndl) M68K_INLINE(0xAA44);
+#if OLDROUTINENAMES
+#define GetAuxCtl(c, acHndl) GetAuxiliaryControlRecord(c, acHndl)
+#endif
 
 enum { _FindControl = 0xA96C };
 pascal INTEGER FindControl(Point p, WindowPtr w, ControlHandle *cp) M68K_INLINE(0xA96C);
@@ -221,21 +248,39 @@ pascal INTEGER TestControl(ControlHandle c, Point p) M68K_INLINE(0xA966);
 
 enum { _SetControlValue = 0xA963 };
 pascal void SetControlValue(ControlHandle c, INTEGER v) M68K_INLINE(0xA963);
+#if OLDROUTINENAMES
+#define SetCtlValue(c, v) SetControlValue(c, v)
+#endif
 
 enum { _GetControlValue = 0xA960 };
 pascal INTEGER GetControlValue(ControlHandle c) M68K_INLINE(0xA960);
+#if OLDROUTINENAMES
+#define GetCtlValue(c) GetControlValue(c)
+#endif
 
 enum { _SetControlMinimum = 0xA964 };
 pascal void SetControlMinimum(ControlHandle c, INTEGER v) M68K_INLINE(0xA964);
+#if OLDROUTINENAMES
+#define SetCtlMin(c, v) SetControlMinimum(c, v)
+#endif
 
 enum { _GetControlMinimum = 0xA961 };
 pascal INTEGER GetControlMinimum(ControlHandle c) M68K_INLINE(0xA961);
+#if OLDROUTINENAMES
+#define GetCtlMin(c) GetControlMinimum(c)
+#endif
 
 enum { _SetControlMaximum = 0xA965 };
 pascal void SetControlMaximum(ControlHandle c, INTEGER v) M68K_INLINE(0xA965);
+#if OLDROUTINENAMES
+#define SetCtlMax(c, v) SetControlMaximum(c, v)
+#endif
 
 enum { _GetControlMaximum = 0xA962 };
 pascal INTEGER GetControlMaximum(ControlHandle c) M68K_INLINE(0xA962);
+#if OLDROUTINENAMES
+#define GetCtlMax(c) GetControlMaximum(c)
+#endif
 
 enum { _MoveControl = 0xA959 };
 pascal void MoveControl(ControlHandle c, INTEGER h, INTEGER v) M68K_INLINE(0xA959);
@@ -248,6 +293,9 @@ pascal void SizeControl(ControlHandle c, INTEGER width, INTEGER height) M68K_INL
 
 enum { _SetControlColor = 0xAA43 };
 pascal void SetControlColor(ControlHandle ctl, CCTabHandle ctab) M68K_INLINE(0xAA43);
+#if OLDROUTINENAMES
+#define SetCtlColor(ctl, ctab) SetControlColor(ctl, ctab)
+#endif
 
 typedef ControlHandle ControlRef;
 

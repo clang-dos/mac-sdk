@@ -230,12 +230,18 @@ pascal CharsHandle TEGetText(TEHandle teh) M68K_INLINE(0xA9CB);
 
 enum { _TESetAlignment = 0xA9DF };
 pascal void TESetAlignment(INTEGER j, TEHandle teh) M68K_INLINE(0xA9DF);
+#if OLDROUTINENAMES
+#define TESetJust(j, teh) TESetAlignment(j, teh)
+#endif
 
 enum { _TEUpdate = 0xA9D3 };
 pascal void TEUpdate(const Rect *r, TEHandle teh) M68K_INLINE(0xA9D3);
 
 enum { _TETextBox = 0xA9CE };
 pascal void TETextBox(Ptr p, LONGINT ln, const Rect *r, INTEGER j) M68K_INLINE(0xA9CE);
+#if OLDROUTINENAMES
+#define TextBox(p, ln, r, j) TETextBox(p, ln, r, j)
+#endif
 
 enum { _TEScroll = 0xA9DD };
 pascal void TEScroll(INTEGER dh, INTEGER dv, TEHandle teh) M68K_INLINE(0xA9DD);
@@ -269,14 +275,38 @@ pascal void TEAutoView(Boolean autoflag, TEHandle teh) M68K_INLINE(0xA813);
 
 enum { _TEStyleNew = 0xA83E };
 pascal TEHandle TEStyleNew(const Rect *dst, const Rect *view) M68K_INLINE(0xA83E);
+#if OLDROUTINENAMES
+#define TEStylNew(dst, view) TEStyleNew(dst, view)
+#endif
 
 pascal void TESetStyleHandle(TEStyleHandle theHandle, TEHandle teh) M68K_INLINE(0x3F3C, 0x0005, 0xA83D);
+#if OLDROUTINENAMES
+#define SetStylHandle(theHandle, teh) TESetStyleHandle(theHandle, teh)
+#endif
+#if OLDROUTINENAMES
+#define SetStyleHandle(theHandle, teh) TESetStyleHandle(theHandle, teh)
+#endif
 
 pascal TEStyleHandle TEGetStyleHandle(TEHandle teh) M68K_INLINE(0x3F3C, 0x0004, 0xA83D);
+#if OLDROUTINENAMES
+#define GetStylHandle(teh) TEGetStyleHandle(teh)
+#endif
+#if OLDROUTINENAMES
+#define GetStyleHandle(teh) TEGetStyleHandle(teh)
+#endif
 
 pascal StScrpHandle TEGetStyleScrapHandle(TEHandle teh) M68K_INLINE(0x3F3C, 0x0006, 0xA83D);
+#if OLDROUTINENAMES
+#define GetStylScrap(teh) TEGetStyleScrapHandle(teh)
+#endif
+#if OLDROUTINENAMES
+#define GetStyleScrap(teh) TEGetStyleScrapHandle(teh)
+#endif
 
 pascal void TEStyleInsert(Ptr text, LONGINT length, StScrpHandle hST, TEHandle teh) M68K_INLINE(0x3F3C, 0x0007, 0xA83D);
+#if OLDROUTINENAMES
+#define TEStylInsert(text, length, hST, teh) TEStyleInsert(text, length, hST, teh)
+#endif
 
 enum { _TEGetOffset = 0xA83C };
 pascal INTEGER TEGetOffset(Point pt, TEHandle teh) M68K_INLINE(0xA83C);
@@ -288,6 +318,9 @@ pascal long TEGetHeight(LONGINT endLine, LONGINT startLine, TEHandle teh) M68K_I
 pascal void TEGetStyle(INTEGER offset, TextStyle *theStyle, INTEGER *lineHeight, INTEGER *fontAscent, TEHandle teh) M68K_INLINE(0x3F3C, 0x0003, 0xA83D);
 
 pascal void TEStylePaste(TEHandle teh) M68K_INLINE(0x3F3C, 0x0000, 0xA83D);
+#if OLDROUTINENAMES
+#define TEStylPaste(teh) TEStylePaste(teh)
+#endif
 
 pascal void TESetStyle(INTEGER mode, TextStyle *newStyle, Boolean redraw, TEHandle teh) M68K_INLINE(0x3F3C, 0x0001, 0xA83D);
 
@@ -296,6 +329,12 @@ pascal void TEReplaceStyle(INTEGER mode, TextStyle *oldStyle, TextStyle *newStyl
 pascal Boolean TEContinuousStyle(INTEGER *modep, TextStyle *thestyle, TEHandle teh) M68K_INLINE(0x3F3C, 0x000A, 0xA83D);
 
 pascal void TEUseStyleScrap(LONGINT start, LONGINT stop, StScrpHandle newstyles, Boolean redraw, TEHandle teh) M68K_INLINE(0x3F3C, 0x000B, 0xA83D);
+#if OLDROUTINENAMES
+#define SetStylScrap(start, stop, newstyles, redraw, teh) TEUseStyleScrap(start, stop, newstyles, redraw, teh)
+#endif
+#if OLDROUTINENAMES
+#define SetStyleScrap(start, stop, newstyles, redraw, teh) TEUseStyleScrap(start, stop, newstyles, redraw, teh)
+#endif
 
 pascal void TECustomHook(INTEGER sel, ProcPtr *addr, TEHandle teh) M68K_INLINE(0x3F3C, 0x000C, 0xA83D);
 

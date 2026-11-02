@@ -88,6 +88,10 @@ struct BitMap {
     Rect bounds;
 };
 
+typedef BitMap *BitMapPtr;
+
+typedef BitMap **BitMapHandle;
+
 typedef struct Pattern Pattern;
 struct Pattern {
     Byte pat[8];

@@ -227,6 +227,9 @@ pascal void CloseDialog(DialogPtr dp) M68K_INLINE(0xA982);
 
 enum { _DisposeDialog = 0xA983 };
 pascal void DisposeDialog(DialogPtr dp) M68K_INLINE(0xA983);
+#if OLDROUTINENAMES
+#define DisposDialog(dp) DisposeDialog(dp)
+#endif
 
 enum { _ModalDialog = 0xA991 };
 pascal void ModalDialog(ModalFilterUPP fp, INTEGER *item) M68K_INLINE(0xA991);
@@ -239,9 +242,15 @@ pascal void DrawDialog(DialogPtr dp) M68K_INLINE(0xA981);
 
 enum { _FindDialogItem = 0xA984 };
 pascal INTEGER FindDialogItem(DialogPtr dp, Point pt) M68K_INLINE(0xA984);
+#if OLDROUTINENAMES
+#define FindDItem(dp, pt) FindDialogItem(dp, pt)
+#endif
 
 enum { _UpdateDialog = 0xA978 };
 pascal void UpdateDialog(DialogPtr dp, RgnHandle rgn) M68K_INLINE(0xA978);
+#if OLDROUTINENAMES
+#define UpdtDialog(dp, rgn) UpdateDialog(dp, rgn)
+#endif
 
 enum { _DialogSelect = 0xA980 };
 pascal Boolean DialogSelect(EventRecord *evt, DialogPtr *dpp, INTEGER *item) M68K_INLINE(0xA980);
@@ -287,18 +296,33 @@ pascal void ParamText(ConstStringPtr p0, ConstStringPtr p1, ConstStringPtr p2, C
 
 enum { _GetDialogItem = 0xA98D };
 pascal void GetDialogItem(DialogPtr dp, INTEGER itemno, INTEGER *itype, Handle *item, Rect *r) M68K_INLINE(0xA98D);
+#if OLDROUTINENAMES
+#define GetDItem(dp, itemno, itype, item, r) GetDialogItem(dp, itemno, itype, item, r)
+#endif
 
 enum { _SetDialogItem = 0xA98E };
 pascal void SetDialogItem(DialogPtr dp, INTEGER itemno, INTEGER itype, Handle item, const Rect *r) M68K_INLINE(0xA98E);
+#if OLDROUTINENAMES
+#define SetDItem(dp, itemno, itype, item, r) SetDialogItem(dp, itemno, itype, item, r)
+#endif
 
 enum { _GetDialogItemText = 0xA990 };
 pascal void GetDialogItemText(Handle item, StringPtr text) M68K_INLINE(0xA990);
+#if OLDROUTINENAMES
+#define GetIText(item, text) GetDialogItemText(item, text)
+#endif
 
 enum { _SetDialogItemText = 0xA98F };
 pascal void SetDialogItemText(Handle item, ConstStringPtr text) M68K_INLINE(0xA98F);
+#if OLDROUTINENAMES
+#define SetIText(item, text) SetDialogItemText(item, text)
+#endif
 
 enum { _SelectDialogItemText = 0xA97E };
 pascal void SelectDialogItemText(DialogPtr dp, INTEGER itemno, INTEGER start, INTEGER stop) M68K_INLINE(0xA97E);
+#if OLDROUTINENAMES
+#define SelIText(dp, itemno, start, stop) SelectDialogItemText(dp, itemno, start, stop)
+#endif
 
 #if TARGET_CPU_68K
 static __inline__ INTEGER GetAlertStage(void);
@@ -314,12 +338,21 @@ pascal void ResetAlertStage(void);
 
 enum { _HideDialogItem = 0xA827 };
 pascal void HideDialogItem(DialogPtr dp, INTEGER item) M68K_INLINE(0xA827);
+#if OLDROUTINENAMES
+#define HideDItem(dp, item) HideDialogItem(dp, item)
+#endif
 
 enum { _ShowDialogItem = 0xA828 };
 pascal void ShowDialogItem(DialogPtr dp, INTEGER item) M68K_INLINE(0xA828);
+#if OLDROUTINENAMES
+#define ShowDItem(dp, item) ShowDialogItem(dp, item)
+#endif
 
 enum { _NewColorDialog = 0xAA4B };
 pascal DialogPtr NewColorDialog(void *arg0, const Rect *arg1, ConstStringPtr arg2, Boolean arg3, INTEGER arg4, WindowPtr arg5, Boolean arg6, LONGINT arg7, Handle arg8) M68K_INLINE(0xAA4B);
+#if OLDROUTINENAMES
+#define NewCDialog(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) NewColorDialog(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+#endif
 
 pascal OSErr GetStdFilterProc(ProcPtr *proc) M68K_INLINE(0x303C, 0x0203, 0xAA68);
 

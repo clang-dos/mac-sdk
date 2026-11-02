@@ -39,6 +39,9 @@
 
 enum { _KeyTranslate = 0xA9C3 };
 pascal unsigned long KeyTranslate(Ptr mapp, uint16_t code, unsigned long *state) M68K_INLINE(0xA9C3);
+#if OLDROUTINENAMES
+#define KeyTrans(mapp, code, state) KeyTranslate(mapp, code, state)
+#endif
 
 enum { _GetNextEvent = 0xA970 };
 pascal Boolean GetNextEvent(INTEGER em, EventRecord *evt) M68K_INLINE(0xA970);

@@ -19,6 +19,8 @@ python3 tests/blocks.py > "$BLOCKS"
 $CLANG --target=m68k-apple-macos -Wall -Werror -Wno-unused-function -Iinclude -x c -fsyntax-only "$BLOCKS"
 for t in m68k-apple-macos powerpc-apple-macos9; do
   $CLANG --target=$t -fsyntax-only -Wall -Werror -Iinclude tests/all.c
+  # The pre-1993 names (GetCtlValue, DisposPtr, ...) that old code uses.
+  $CLANG --target=$t -fsyntax-only -Wall -Werror -DOLDROUTINENAMES=1 -Iinclude tests/all.c
   $CLANG --target=$t -fsyntax-only -Iinclude tests/sizes.c
   $CLANG --target=$t -fsyntax-only -Iinclude -x c "$SIZES"
   $CLANG --target=$t -x c++ -std=c++17 -fsyntax-only -Werror -Iinclude tests/all.c

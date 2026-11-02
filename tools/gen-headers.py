@@ -45,6 +45,7 @@ APPLE_NAMES = [
     "AppleEvents", "Aliases", "CodeFragments", "Components", "CursorDevices", "DatabaseAccess",
     "ConditionalMacros", "Connections", "CommResources", "CTBUtilities", "Displays", "ADSP", "ENET", "FileTransfers", "Terminals", "AppleTalk", "Dictionary", "MIDI", "Power", "PPCToolbox", "SCSI", "Slots", "TextServices",
     "Appearance", "Collections", "ControlDefinitions", "ContextualMenu", "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices", "Multiprocessing", "Threads", "TextCommon", "TextEncodingConverter", "UnicodeConverter", "URLAccess", "Keychain",
+    "Movies", "ImageCompression", "QuickTimeComponents", "MediaHandler", "ImageCodec", "MoviesFormat",
     "Errors", "Events", "Files", "Finder", "FixMath", "Folders", "Fonts",
     "Gestalt", "Icons", "Interrupts", "Kernel", "Lists", "LowMem",
     "MacErrors", "MacMemory", "MacTypes", "MacWindows", "Memory", "Menus",
@@ -214,9 +215,9 @@ class Generator:
                 line += " /* " + " ".join(
                     str(val["comment"]).split()).replace("*/", "* /") + " */"
             out.append(line)
-            if val.get("old_name"):
+            for old in listify(val.get("old_name")):
                 out.append("#if OLDROUTINENAMES")
-                out.append(f"#define {val['old_name']} {val['name']}")
+                out.append(f"#define {old} {val['name']}")
                 out.append("#endif")
         out.append(f"}} {v['name']};" if v.get("name") else "};")
 
@@ -502,10 +503,10 @@ class Generator:
         else:
             out.append(proto + ";")
             self.glue.append(name)
-        if fun.get("old_name"):
+        for old in listify(fun.get("old_name")):
             names = ", ".join(a["name"] for a in args)
             out += ["#if OLDROUTINENAMES",
-                    f"#define {fun['old_name']}({names}) {name}({names})",
+                    f"#define {old}({names}) {name}({names})",
                     "#endif"]
 
     # -- files ---------------------------------------------------------

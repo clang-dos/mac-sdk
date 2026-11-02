@@ -1021,6 +1021,7 @@
     dispatcher: Pack8
     selector: 0x0E11
     executor: C_
+    old_name: AEGetKeyPtr
 
 # ####
 
@@ -1039,6 +1040,7 @@
     dispatcher: Pack8
     selector: 0x0812
     executor: C_
+    old_name: AEGetKeyDesc
 
 # ####
 
@@ -1059,6 +1061,7 @@
     dispatcher: Pack8
     selector: 0x0A0F
     executor: C_
+    old_name: AEPutKeyPtr
 
 # ####
 
@@ -1075,6 +1078,7 @@
     dispatcher: Pack8
     selector: 0x0610
     executor: C_
+    old_name: AEPutKeyDesc
 
 # ####
 
@@ -1100,6 +1104,7 @@
     dispatcher: Pack8
     selector: 0x0829
     executor: C_
+    old_name: AESizeOfKeyDesc
 
 # ####
 
@@ -1246,6 +1251,7 @@
     dispatcher: Pack8
     selector: 0x0413
     executor: C_
+    old_name: AEDeleteKeyDesc
 
 # ####
 

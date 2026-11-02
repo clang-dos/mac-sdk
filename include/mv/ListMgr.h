@@ -107,6 +107,9 @@ enum {
 enum { _Pack0 = 0xA9E7 };
 
 pascal void LGetCellDataLocation(INTEGER *offsetp, INTEGER *lenp, Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0034, 0xA9E7);
+#if OLDROUTINENAMES
+#define LFind(offsetp, lenp, cell, list) LGetCellDataLocation(offsetp, lenp, cell, list)
+#endif
 
 pascal Boolean LNextCell(Boolean hnext, Boolean vnext, Cell *cellp, ListHandle list) M68K_INLINE(0x3F3C, 0x0048, 0xA9E7);
 
@@ -131,6 +134,9 @@ pascal void LDispose(ListHandle list) M68K_INLINE(0x3F3C, 0x0028, 0xA9E7);
 pascal void LDraw(Cell cell, ListHandle list) M68K_INLINE(0x3F3C, 0x0030, 0xA9E7);
 
 pascal void LSetDrawingMode(Boolean draw, ListHandle list) M68K_INLINE(0x3F3C, 0x002C, 0xA9E7);
+#if OLDROUTINENAMES
+#define LDoDraw(draw, list) LSetDrawingMode(draw, list)
+#endif
 
 pascal void LScroll(INTEGER ncol, INTEGER nrow, ListHandle list) M68K_INLINE(0x3F3C, 0x0050, 0xA9E7);
 
