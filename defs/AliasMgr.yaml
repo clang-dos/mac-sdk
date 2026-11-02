@@ -247,6 +247,8 @@
       type: Boolean*
     - name: folderFlag
       type: Boolean*
+    dispatcher: AliasDispatch
+    selector: 42
 
 # ####
 
@@ -264,6 +266,8 @@
       type: Boolean*
     - name: mountFlags
       type: uint32_t
+    dispatcher: AliasDispatch
+    selector: 41
 
 # ####
 
@@ -278,6 +282,8 @@
     - name: inAlias
       type: AliasHandle*
     comment: Aliases by FSRef (Mac OS 9 and later)
+    dispatcher: AliasDispatch
+    selector: 54
 
 # ####
 
@@ -289,6 +295,8 @@
       type: const FSRef*
     - name: inAlias
       type: AliasHandle*
+    dispatcher: AliasDispatch
+    selector: 55
 
 # ####
 
@@ -302,6 +310,8 @@
       type: Boolean*
     - name: folderFlag
       type: Boolean*
+    dispatcher: AliasDispatch
+    selector: 56
 
 # ####
 
@@ -319,6 +329,8 @@
       type: Boolean*
     - name: mountFlags
       type: uint32_t
+    dispatcher: AliasDispatch
+    selector: 57
 
 # ####
 
@@ -334,6 +346,8 @@
       type: FSRef*
     - name: wasChanged
       type: Boolean*
+    dispatcher: AliasDispatch
+    selector: 58
 
 # ####
 
@@ -351,6 +365,8 @@
       type: Boolean*
     - name: mountFlags
       type: uint32_t
+    dispatcher: AliasDispatch
+    selector: 59
 
 # ####
 
@@ -366,6 +382,8 @@
       type: Boolean*
     - name: wasAliased
       type: Boolean*
+    dispatcher: AliasDispatch
+    selector: 60
 
 # ####
 
@@ -383,6 +401,8 @@
       type: FSRef*
     - name: wasChanged
       type: Boolean*
+    dispatcher: AliasDispatch
+    selector: 61
 
 # ####
 
@@ -398,6 +418,8 @@
       type: AliasHandle
     - name: wasChanged
       type: Boolean*
+    dispatcher: AliasDispatch
+    selector: 62
 
 # ####
 
@@ -413,3 +435,471 @@
       type: Boolean
     - name: foundRef
       type: FSRef*
+    dispatcher: AliasDispatch
+    selector: 52
+
+# ####
+
+- typedef:
+    name: FolderType
+    type: OSType
+    comment: 'Folder Manager 9: folder descriptors, routing and notifications.'
+
+# ####
+
+- typedef:
+    name: FolderClass
+    type: OSType
+
+# ####
+
+- typedef:
+    name: FolderLocation
+    type: OSType
+
+# ####
+
+- typedef:
+    name: FolderDescFlags
+    type: UInt32
+
+# ####
+
+- typedef:
+    name: RoutingFlags
+    type: UInt32
+
+# ####
+
+- enum:
+    values:
+    - name: kCreateFolderAtBoot
+      value: 2
+    - name: kCreateFolderAtBootBit
+      value: 1
+    - name: kFolderCreatedInvisible
+      value: 4
+    - name: kFolderCreatedInvisibleBit
+      value: 2
+    - name: kFolderCreatedNameLocked
+      value: 8
+    - name: kFolderCreatedNameLockedBit
+      value: 3
+    - name: kFolderCreatedAdminPrivs
+      value: 16
+    - name: kFolderCreatedAdminPrivsBit
+      value: 4
+    - name: kFolderInUserFolder
+      value: 32
+    - name: kFolderInUserFolderBit
+      value: 5
+    - name: kFolderTrackedByAlias
+      value: 64
+    - name: kFolderTrackedByAliasBit
+      value: 6
+    - name: kFolderInRemoteUserFolderIfAvailable
+      value: 128
+    - name: kFolderInRemoteUserFolderIfAvailableBit
+      value: 7
+    - name: kFolderNeverMatchedInIdentifyFolder
+      value: 256
+    - name: kFolderNeverMatchedInIdentifyFolderBit
+      value: 8
+    - name: kFolderMustStayOnSameVolume
+      value: 512
+    - name: kFolderMustStayOnSameVolumeBit
+      value: 9
+    - name: kFolderManagerFolderInMacOS9FolderIfMacOSXIsInstalledMask
+      value: 1024
+    - name: kFolderManagerFolderInMacOS9FolderIfMacOSXIsInstalledBit
+      value: 10
+    - name: kFolderInLocalOrRemoteUserFolder
+      value: 160
+    - name: kRelativeFolder
+      value: '''relf'''
+    - name: kSpecialFolder
+      value: '''spcf'''
+    - name: kBlessedFolder
+      value: '''blsf'''
+    - name: kRootFolder
+      value: '''rotf'''
+    - name: kCurrentUserFolderLocation
+      value: '''cusf'''
+    - name: kFindFolderExtendedFlagsDoNotFollowAliasesBit
+      value: 0
+    - name: kFindFolderExtendedFlagsDoNotUseUserFolderBit
+      value: 1
+    - name: kFindFolderExtendedFlagsUseOtherUserRecord
+      value: 16777216
+    - name: kFolderManagerNotificationMessageUserLogIn
+      value: '''log+'''
+    - name: kFolderManagerNotificationMessagePreUserLogIn
+      value: '''logj'''
+    - name: kFolderManagerNotificationMessageUserLogOut
+      value: '''log-'''
+    - name: kFolderManagerNotificationMessagePostUserLogOut
+      value: '''logp'''
+    - name: kFolderManagerNotificationDiscardCachedData
+      value: '''dche'''
+    - name: kFolderManagerNotificationMessageLoginStartup
+      value: '''stup'''
+    - name: kDoNotRemoveWhenCurrentApplicationQuitsBit
+      value: 0
+    - name: kDoNotRemoveWheCurrentApplicationQuitsBit
+      value: 0
+    - name: kStopIfAnyNotificationProcReturnsErrorBit
+      value: 31
+
+# ####
+
+- struct:
+    name: FolderDesc
+    size: 96
+    comment: What GetFolderDescriptor returns about a folder type.
+    members:
+    - name: descSize
+      type: Size
+    - name: foldType
+      type: FolderType
+    - name: flags
+      type: FolderDescFlags
+    - name: foldClass
+      type: FolderClass
+    - name: foldLocation
+      type: FolderType
+    - name: badgeSignature
+      type: OSType
+    - name: badgeType
+      type: OSType
+    - name: reserved
+      type: UInt32
+    - name: name
+      type: Str63
+
+# ####
+
+- struct:
+    name: FolderRouting
+    size: 20
+    comment: Where files of one type dropped on a folder go instead.
+    members:
+    - name: descSize
+      type: Size
+    - name: fileType
+      type: OSType
+    - name: routeFromFolder
+      type: FolderType
+    - name: routeToFolder
+      type: FolderType
+    - name: flags
+      type: RoutingFlags
+
+# ####
+
+- funptr:
+    name: FolderManagerNotificationProcPtr
+    return: OSStatus
+    args:
+    - name: message
+      type: OSType
+    - name: arg
+      type: void*
+    - name: userRefCon
+      type: void*
+
+# ####
+
+- function:
+    name: FindFolderExtended
+    return: OSErr
+    args:
+    - name: vol
+      type: INTEGER
+    - name: foldType
+      type: OSType
+    - name: createFolder
+      type: Boolean
+    - name: flags
+      type: UInt32
+    - name: data
+      type: void*
+    - name: vRefNum
+      type: INTEGER*
+    - name: dirID
+      type: int32_t*
+    comment: Folder Manager 9 (Mac OS 8.5 to 9)
+    dispatcher: AliasDispatch
+    selector: 2860
+
+# ####
+
+- function:
+    name: FSFindFolderExtended
+    return: OSErr
+    args:
+    - name: vol
+      type: INTEGER
+    - name: foldType
+      type: OSType
+    - name: createFolder
+      type: Boolean
+    - name: flags
+      type: UInt32
+    - name: data
+      type: void*
+    - name: foundRef
+      type: FSRef*
+    dispatcher: AliasDispatch
+    selector: 53
+
+# ####
+
+- function:
+    name: ReleaseFolder
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: folderType
+      type: OSType
+    dispatcher: AliasDispatch
+    selector: 11
+
+# ####
+
+- function:
+    name: GetFolderName
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: foldType
+      type: OSType
+    - name: foundVRefNum
+      type: INTEGER*
+    - name: name
+      type: StringPtr
+    dispatcher: AliasDispatch
+    selector: 14
+
+# ####
+
+- function:
+    name: AddFolderDescriptor
+    return: OSErr
+    args:
+    - name: foldType
+      type: FolderType
+    - name: flags
+      type: FolderDescFlags
+    - name: foldClass
+      type: FolderClass
+    - name: foldLocation
+      type: FolderLocation
+    - name: badgeSignature
+      type: OSType
+    - name: badgeType
+      type: OSType
+    - name: name
+      type: ConstStr63Param
+    - name: replaceFlag
+      type: Boolean
+    dispatcher: AliasDispatch
+    selector: 32
+
+# ####
+
+- function:
+    name: GetFolderDescriptor
+    return: OSErr
+    args:
+    - name: foldType
+      type: FolderType
+    - name: descSize
+      type: Size
+    - name: foldDesc
+      type: FolderDesc*
+    dispatcher: AliasDispatch
+    selector: 35
+
+# ####
+
+- function:
+    name: GetFolderTypes
+    return: OSErr
+    args:
+    - name: requestedTypeCount
+      type: UInt32
+    - name: totalTypeCount
+      type: UInt32*
+    - name: theTypes
+      type: FolderType*
+    dispatcher: AliasDispatch
+    selector: 36
+
+# ####
+
+- function:
+    name: RemoveFolderDescriptor
+    return: OSErr
+    args:
+    - name: foldType
+      type: FolderType
+    dispatcher: AliasDispatch
+    selector: 33
+
+# ####
+
+- function:
+    name: InvalidateFolderDescriptorCache
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    dispatcher: AliasDispatch
+    selector: 37
+
+# ####
+
+- function:
+    name: IdentifyFolder
+    return: OSErr
+    args:
+    - name: vRefNum
+      type: INTEGER
+    - name: dirID
+      type: int32_t
+    - name: foldType
+      type: FolderType*
+    dispatcher: AliasDispatch
+    selector: 31
+
+# ####
+
+- function:
+    name: AddFolderRouting
+    return: OSErr
+    args:
+    - name: fileType
+      type: OSType
+    - name: routeFromFolder
+      type: FolderType
+    - name: routeToFolder
+      type: FolderType
+    - name: flags
+      type: RoutingFlags
+    - name: replaceFlag
+      type: Boolean
+    dispatcher: AliasDispatch
+    selector: 38
+
+# ####
+
+- function:
+    name: RemoveFolderRouting
+    return: OSErr
+    args:
+    - name: fileType
+      type: OSType
+    - name: routeFromFolder
+      type: FolderType
+    dispatcher: AliasDispatch
+    selector: 39
+
+# ####
+
+- function:
+    name: FindFolderRouting
+    return: OSErr
+    args:
+    - name: fileType
+      type: OSType
+    - name: routeFromFolder
+      type: FolderType
+    - name: routeToFolder
+      type: FolderType*
+    - name: flags
+      type: RoutingFlags*
+    dispatcher: AliasDispatch
+    selector: 34
+
+# ####
+
+- function:
+    name: GetFolderRoutings
+    return: OSErr
+    args:
+    - name: requestedRoutingCount
+      type: UInt32
+    - name: totalRoutingCount
+      type: UInt32*
+    - name: routingSize
+      type: Size
+    - name: theRoutings
+      type: FolderRouting*
+    dispatcher: AliasDispatch
+    selector: 30
+
+# ####
+
+- function:
+    name: FolderManagerRegisterNotificationProc
+    return: OSErr
+    args:
+    - name: notificationProc
+      type: FolderManagerNotificationUPP
+    - name: refCon
+      type: void*
+    - name: options
+      type: UInt32
+    dispatcher: AliasDispatch
+    selector: 1583
+
+# ####
+
+- function:
+    name: FolderManagerUnregisterNotificationProc
+    return: OSErr
+    args:
+    - name: notificationProc
+      type: FolderManagerNotificationUPP
+    - name: refCon
+      type: void*
+    dispatcher: AliasDispatch
+    selector: 1072
+
+# ####
+
+- function:
+    name: ResolveAliasWithMountFlags
+    return: OSErr
+    args:
+    - name: fromFile
+      type: const FSSpec*
+    - name: alias
+      type: AliasHandle
+    - name: target
+      type: FSSpec*
+    - name: wasChanged
+      type: Boolean*
+    - name: mountFlags
+      type: uint32_t
+    comment: 'Alias Manager: resolve without mounting volumes (Mac OS 8.5)'
+    dispatcher: AliasDispatch
+    selector: 43
+
+# ####
+
+- enum:
+    values:
+    - name: kOnSystemDisk
+      value: -32768
+    - name: kOnAppropriateDisk
+      value: -32767
+    - name: kCreateFolder
+      value: 1
+    - name: kDontCreateFolder
+      value: 0
+    comment: Folder Manager volume and creation arguments.

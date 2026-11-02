@@ -1314,3 +1314,386 @@
       type: INTEGER
     dispatcher: SoundDispatch
     selector: 0
+
+# ####
+
+- struct:
+    name: SoundComponentData
+    size: 28
+    comment: 'Sound Manager 3.x: the format of a buffer of sound, for sound components and converters.'
+    members:
+    - name: flags
+      type: SInt32
+    - name: format
+      type: OSType
+    - name: numChannels
+      type: SInt16
+    - name: sampleSize
+      type: SInt16
+    - name: sampleRate
+      type: UnsignedFixed
+    - name: sampleCount
+      type: SInt32
+    - name: buffer
+      type: Byte*
+    - name: reserved
+      type: SInt32
+
+# ####
+
+- typedef:
+    name: SoundComponentDataPtr
+    type: SoundComponentData*
+
+# ####
+
+- typedef:
+    name: SoundConverter
+    type: struct OpaqueSoundConverter*
+
+# ####
+
+- funptr:
+    name: SoundConverterFillBufferDataProcPtr
+    return: Boolean
+    args:
+    - name: data
+      type: SoundComponentDataPtr*
+    - name: refCon
+      type: void*
+
+# ####
+
+- enum:
+    values:
+    - name: kNoSoundComponentType
+      value: '''****'''
+    - name: kSoundComponentType
+      value: '''sift'''
+    - name: kSoundComponentPPCType
+      value: '''nift'''
+    - name: kRate8SubType
+      value: '''ratb'''
+    - name: kRate16SubType
+      value: '''ratw'''
+    - name: kConverterSubType
+      value: '''conv'''
+    - name: kSndSourceSubType
+      value: '''sour'''
+    - name: kMixerType
+      value: '''mixr'''
+    - name: kMixer8SubType
+      value: '''mixb'''
+    - name: kMixer16SubType
+      value: '''mixw'''
+    - name: kSoundOutputDeviceType
+      value: '''sdev'''
+    - name: kClassicSubType
+      value: '''clsc'''
+    - name: kASCSubType
+      value: '''asc '''
+    - name: kDSPSubType
+      value: '''dsp '''
+    - name: kAwacsSubType
+      value: '''awac'''
+    - name: kGCAwacsSubType
+      value: '''awgc'''
+    - name: kSingerSubType
+      value: '''sing'''
+    - name: kSinger2SubType
+      value: '''sng2'''
+    - name: kWhitSubType
+      value: '''whit'''
+    - name: kSoundBlasterSubType
+      value: '''sbls'''
+    - name: kWaveInSubType
+      value: '''wavi'''
+    - name: kWaveInSnifferSubType
+      value: '''wisn'''
+    - name: kSoundDecompressor
+      value: '''sdec'''
+    - name: kSoundCompressor
+      value: '''scom'''
+    - name: kSoundConverterDidntFillBuffer
+      value: 1
+    - name: kSoundConverterHasLeftOverData
+      value: 2
+
+# ####
+
+- function:
+    name: GetSoundOutputInfo
+    return: OSErr
+    args:
+    - name: outputDevice
+      type: Component
+    - name: selector
+      type: OSType
+    - name: infoPtr
+      type: void*
+    comment: 'Sound Manager 3.1 to 3.6: output devices, converters, parsing sound headers'
+    dispatcher: SoundDispatch
+    selector: 105119768
+
+# ####
+
+- function:
+    name: SetSoundOutputInfo
+    return: OSErr
+    args:
+    - name: outputDevice
+      type: Component
+    - name: selector
+      type: OSType
+    - name: infoPtr
+      type: const void*
+    dispatcher: SoundDispatch
+    selector: 105381912
+
+# ####
+
+- function:
+    name: GetCompressionName
+    return: OSErr
+    args:
+    - name: compressionType
+      type: OSType
+    - name: compressionName
+      type: Str255
+    dispatcher: SoundDispatch
+    selector: 72089624
+
+# ####
+
+- function:
+    name: SoundConverterOpen
+    return: OSErr
+    args:
+    - name: inputFormat
+      type: const SoundComponentData*
+    - name: outputFormat
+      type: const SoundComponentData*
+    - name: sc
+      type: SoundConverter*
+    dispatcher: SoundDispatch
+    selector: 105906200
+
+# ####
+
+- function:
+    name: SoundConverterClose
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    dispatcher: SoundDispatch
+    selector: 39059480
+
+# ####
+
+- function:
+    name: SoundConverterGetBufferSizes
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    - name: inputBytesTarget
+      type: uint32_t
+    - name: inputFrames
+      type: uint32_t*
+    - name: inputBytes
+      type: uint32_t*
+    - name: outputBytes
+      type: uint32_t*
+    dispatcher: SoundDispatch
+    selector: 173539352
+
+# ####
+
+- function:
+    name: SoundConverterBeginConversion
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    dispatcher: SoundDispatch
+    selector: 39583768
+
+# ####
+
+- function:
+    name: SoundConverterConvertBuffer
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    - name: inputPtr
+      type: const void*
+    - name: inputFrames
+      type: uint32_t
+    - name: outputPtr
+      type: void*
+    - name: outputFrames
+      type: uint32_t*
+    - name: outputBytes
+      type: uint32_t*
+    dispatcher: SoundDispatch
+    selector: 207618072
+
+# ####
+
+- function:
+    name: SoundConverterEndConversion
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    - name: outputPtr
+      type: void*
+    - name: outputFrames
+      type: uint32_t*
+    - name: outputBytes
+      type: uint32_t*
+    dispatcher: SoundDispatch
+    selector: 140771352
+
+# ####
+
+- function:
+    name: SoundConverterGetInfo
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    - name: selector
+      type: OSType
+    - name: infoPtr
+      type: void*
+    dispatcher: SoundDispatch
+    selector: 107479064
+
+# ####
+
+- function:
+    name: SoundConverterSetInfo
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    - name: selector
+      type: OSType
+    - name: infoPtr
+      type: void*
+    dispatcher: SoundDispatch
+    selector: 107741208
+
+# ####
+
+- function:
+    name: SoundConverterFillBuffer
+    return: OSErr
+    args:
+    - name: sc
+      type: SoundConverter
+    - name: fillBufferDataUPP
+      type: SoundConverterFillBufferDataUPP
+    - name: fillBufferDataRefCon
+      type: void*
+    - name: outputBuffer
+      type: void*
+    - name: outputBufferByteSize
+      type: uint32_t
+    - name: bytesWritten
+      type: uint32_t*
+    - name: framesWritten
+      type: uint32_t*
+    - name: outputFlags
+      type: uint32_t*
+    dispatcher: SoundDispatch
+    selector: 276299800
+
+# ####
+
+- function:
+    name: SoundManagerGetInfo
+    return: OSErr
+    args:
+    - name: selector
+      type: OSType
+    - name: infoPtr
+      type: void*
+    dispatcher: SoundDispatch
+    selector: 75235352
+
+# ####
+
+- function:
+    name: SoundManagerSetInfo
+    return: OSErr
+    args:
+    - name: selector
+      type: OSType
+    - name: infoPtr
+      type: const void*
+    dispatcher: SoundDispatch
+    selector: 75497496
+
+# ####
+
+- function:
+    name: ParseAIFFHeader
+    return: OSErr
+    args:
+    - name: refNum
+      type: INTEGER
+    - name: sndInfo
+      type: SoundComponentData*
+    - name: numFrames
+      type: uint32_t*
+    - name: dataOffset
+      type: uint32_t*
+    dispatcher: SoundDispatch
+    selector: 123207700
+
+# ####
+
+- function:
+    name: ParseSndHeader
+    return: OSErr
+    args:
+    - name: sndHandle
+      type: Handle
+    - name: sndInfo
+      type: SoundComponentData*
+    - name: numFrames
+      type: uint32_t*
+    - name: dataOffset
+      type: uint32_t*
+    dispatcher: SoundDispatch
+    selector: 140247060
+
+# ####
+
+- function:
+    name: OpenMixerSoundComponent
+    return: OSErr
+    args:
+    - name: outputDescription
+      type: SoundComponentDataPtr
+    - name: outputFlags
+      type: int32_t
+    - name: mixerComponent
+      type: ComponentInstance*
+    dispatcher: SoundDispatch
+    selector: 101974040
+
+# ####
+
+- function:
+    name: CloseMixerSoundComponent
+    return: OSErr
+    args:
+    - name: ci
+      type: ComponentInstance
+    dispatcher: SoundDispatch
+    selector: 35127320

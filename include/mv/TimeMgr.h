@@ -73,6 +73,68 @@ pascal void PrimeTime(QElemPtr taskp, LONGINT count);
 // The trap returns the high half in A0 and the low half in D0.
 pascal void Microseconds(UnsignedWide *microTickCount) M68K_INLINE(0xA193, 0x225F, 0x22C8, 0x2280);
 
+// Time Manager calls that return an error (Mac OS 8.6)
+enum { _InstallTimeTask = 0xA058 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr InstallTimeTask(QElemPtr tmTaskPtr) {
+    register OSErr _ret __asm__("d0");
+    register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
+    __asm__ __volatile__(".short 0xA058"
+        : "=r"(_ret), "+r"(_tmTaskPtr)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr InstallTimeTask(QElemPtr tmTaskPtr);
+#endif
+
+enum { _InstallXTimeTask = 0xA458 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr InstallXTimeTask(QElemPtr tmTaskPtr) {
+    register OSErr _ret __asm__("d0");
+    register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
+    __asm__ __volatile__(".short 0xA458"
+        : "=r"(_ret), "+r"(_tmTaskPtr)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr InstallXTimeTask(QElemPtr tmTaskPtr);
+#endif
+
+enum { _PrimeTimeTask = 0xA05A };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PrimeTimeTask(QElemPtr tmTaskPtr, long count) {
+    register OSErr _ret __asm__("d0");
+    register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
+    register long _count __asm__("d0") = count;
+    __asm__ __volatile__(".short 0xA05A"
+        : "=r"(_ret), "+r"(_tmTaskPtr)
+        : "r"(_count)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PrimeTimeTask(QElemPtr tmTaskPtr, long count);
+#endif
+
+enum { _RemoveTimeTask = 0xA059 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr RemoveTimeTask(QElemPtr tmTaskPtr) {
+    register OSErr _ret __asm__("d0");
+    register QElemPtr _tmTaskPtr __asm__("a0") = tmTaskPtr;
+    __asm__ __volatile__(".short 0xA059"
+        : "=r"(_ret), "+r"(_tmTaskPtr)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr RemoveTimeTask(QElemPtr tmTaskPtr);
+#endif
+
 #pragma options align=reset
 
 #endif

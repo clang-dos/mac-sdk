@@ -248,6 +248,12 @@
 # ####
 
 - typedef:
+    name: FourCharCode
+    type: uint32_t
+
+# ####
+
+- typedef:
     name: ResType
     type: LONGINT
 

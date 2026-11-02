@@ -1463,3 +1463,102 @@
           : "+r"(_d0), "+r"(_a0), "+r"(_a1) : : "d1", "d2", "cc", "memory");
       *physicalEntryCount = _a1;
       return (OSErr)_d0;
+
+# ####
+
+- function:
+    name: LockMemoryForOutput
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    comment: 'Virtual memory: control paging of a range (Mac OS 8.5)'
+    returnreg: D0
+    m68k-inline:
+    - 28682
+    - 41052
+
+# ####
+
+- function:
+    name: MakeMemoryResident
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28683
+    - 41052
+
+# ####
+
+- function:
+    name: ReleaseMemoryData
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28684
+    - 41052
+
+# ####
+
+- function:
+    name: MakeMemoryNonResident
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28685
+    - 41052
+
+# ####
+
+- function:
+    name: FlushMemory
+    return: OSErr
+    args:
+    - name: address
+      type: void*
+      register: A0
+    - name: count
+      type: uint32_t
+      register: A1
+    returnreg: D0
+    m68k-inline:
+    - 28686
+    - 41052
+
+# ####
+
+- function:
+    name: ReallocateHandleSys
+    args:
+    - name: h
+      type: Handle
+      register: A0
+    - name: byteCount
+      type: Size
+      register: D0
+    trap: 42023

@@ -8,6 +8,7 @@
 #include "DriverServices.h"
 #include "EventMgr.h"
 #include "FileMgr.h"
+#include "Iconutil.h"
 #include "MacTypes.h"
 #include "MenuMgr.h"
 #include "QuickDraw.h"
@@ -542,8 +543,6 @@ typedef SInt16 WindowDefPartCode;
 typedef OSType PropertyCreator;
 
 typedef OSType PropertyTag;
-
-typedef struct OpaqueIconRef *IconRef;
 
 // Window classes and attributes, for CreateNewWindow (Mac OS 8.5).
 enum {

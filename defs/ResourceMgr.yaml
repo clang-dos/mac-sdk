@@ -768,6 +768,8 @@
     - name: permission
       type: SInt8
     comment: Opening resource files by FSRef (Mac OS 9 and later)
+    dispatcher: ResourceDispatch
+    selector: 19
 
 # ####
 
@@ -788,6 +790,8 @@
       type: FSRef*
     - name: newSpec
       type: FSSpec*
+    dispatcher: ResourceDispatch
+    selector: 20
 
 # ####
 
@@ -838,3 +842,34 @@
     args:
     - name: tempResLoad
       type: Boolean
+
+# ####
+
+- function:
+    name: FSpResourceFileAlreadyOpen
+    return: Boolean
+    args:
+    - name: resourceFile
+      type: const FSSpec*
+    - name: inChain
+      type: Boolean*
+    - name: refNum
+      type: SInt16*
+    comment: Is a resource file already open? (Mac OS 9)
+    dispatcher: ResourceDispatch
+    selector: 16
+
+# ####
+
+- function:
+    name: FSResourceFileAlreadyOpen
+    return: Boolean
+    args:
+    - name: resourceFileRef
+      type: const FSRef*
+    - name: inChain
+      type: Boolean*
+    - name: refNum
+      type: SInt16*
+    dispatcher: ResourceDispatch
+    selector: 21

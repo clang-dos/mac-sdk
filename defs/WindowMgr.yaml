@@ -1394,12 +1394,6 @@
 
 # ####
 
-- typedef:
-    name: IconRef
-    type: struct OpaqueIconRef*
-
-# ####
-
 - enum:
     values:
     - name: kAlertWindowClass

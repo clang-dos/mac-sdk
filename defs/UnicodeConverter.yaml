@@ -1,0 +1,604 @@
+
+# ####
+
+- typedef:
+    name: TextToUnicodeInfo
+    type: struct OpaqueTextToUnicodeInfo*
+    comment: Unicode Converter (Mac OS 8.5 and later; an extension for 7.6 and 8.1).
+
+# ####
+
+- typedef:
+    name: UnicodeToTextInfo
+    type: struct OpaqueUnicodeToTextInfo*
+
+# ####
+
+- typedef:
+    name: UnicodeToTextRunInfo
+    type: struct OpaqueUnicodeToTextRunInfo*
+
+# ####
+
+- typedef:
+    name: ConstTextToUnicodeInfo
+    type: struct OpaqueTextToUnicodeInfo*
+
+# ####
+
+- typedef:
+    name: ConstUnicodeToTextInfo
+    type: struct OpaqueUnicodeToTextInfo*
+
+# ####
+
+- typedef:
+    name: UnicodeMapVersion
+    type: SInt32
+
+# ####
+
+- enum:
+    values:
+    - name: kUnicodeUseLatestMapping
+      value: -1
+    - name: kUnicodeUseHFSPlusMapping
+      value: 4
+
+# ####
+
+- struct:
+    name: UnicodeMapping
+    size: 12
+    members:
+    - name: unicodeEncoding
+      type: TextEncoding
+    - name: otherEncoding
+      type: TextEncoding
+    - name: mappingVersion
+      type: UnicodeMapVersion
+
+# ####
+
+- typedef:
+    name: UnicodeMappingPtr
+    type: UnicodeMapping*
+
+# ####
+
+- typedef:
+    name: ConstUnicodeMappingPtr
+    type: const UnicodeMapping*
+
+# ####
+
+- enum:
+    values:
+    - name: kUnicodeUseFallbacksMask
+      value: 1
+    - name: kUnicodeKeepInfoMask
+      value: 2
+    - name: kUnicodeDirectionalityMask
+      value: 12
+    - name: kUnicodeVerticalFormMask
+      value: 16
+    - name: kUnicodeLooseMappingsMask
+      value: 32
+    - name: kUnicodeStringUnterminatedMask
+      value: 64
+    - name: kUnicodeTextRunMask
+      value: 128
+    - name: kUnicodeKeepSameEncodingMask
+      value: 256
+    - name: kUnicodeForceASCIIRangeMask
+      value: 512
+    - name: kUnicodeNoHalfwidthCharsMask
+      value: 1024
+    - name: kUnicodeTextRunHeuristicsMask
+      value: 2048
+
+# ####
+
+- enum:
+    values:
+    - name: kUnicodeFallbackDefaultOnly
+      value: 0
+    - name: kUnicodeFallbackCustomOnly
+      value: 1
+    - name: kUnicodeFallbackDefaultFirst
+      value: 2
+    - name: kUnicodeFallbackCustomFirst
+      value: 3
+    - name: kUnicodeFallbackInterruptSafeMask
+      value: 4
+
+# ####
+
+- enum:
+    values:
+    - name: kUnicodeMatchUnicodeBaseMask
+      value: 1
+    - name: kUnicodeMatchUnicodeVariantMask
+      value: 2
+    - name: kUnicodeMatchUnicodeFormatMask
+      value: 4
+    - name: kUnicodeMatchOtherBaseMask
+      value: 8
+    - name: kUnicodeMatchOtherVariantMask
+      value: 16
+    - name: kUnicodeMatchOtherFormatMask
+      value: 32
+
+# ####
+
+- funptr:
+    name: UnicodeToTextFallbackProcPtr
+    return: OSStatus
+    args:
+    - name: iSrcUniStr
+      type: UniChar*
+    - name: iSrcUniStrLen
+      type: ByteCount
+    - name: oSrcConvLen
+      type: ByteCount*
+    - name: oDestStr
+      type: TextPtr
+    - name: iDestStrLen
+      type: ByteCount
+    - name: oDestConvLen
+      type: ByteCount*
+    - name: iInfoPtr
+      type: LogicalAddress
+    - name: iUnicodeMappingPtr
+      type: ConstUnicodeMappingPtr
+
+# ####
+
+- function:
+    name: CreateTextToUnicodeInfo
+    return: OSStatus
+    args:
+    - name: iUnicodeMapping
+      type: ConstUnicodeMappingPtr
+    - name: oTextToUnicodeInfo
+      type: TextToUnicodeInfo*
+    comment: Unicode Converter
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateTextToUnicodeInfoByEncoding
+    return: OSStatus
+    args:
+    - name: iEncoding
+      type: TextEncoding
+    - name: oTextToUnicodeInfo
+      type: TextToUnicodeInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateUnicodeToTextInfo
+    return: OSStatus
+    args:
+    - name: iUnicodeMapping
+      type: ConstUnicodeMappingPtr
+    - name: oUnicodeToTextInfo
+      type: UnicodeToTextInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateUnicodeToTextInfoByEncoding
+    return: OSStatus
+    args:
+    - name: iEncoding
+      type: TextEncoding
+    - name: oUnicodeToTextInfo
+      type: UnicodeToTextInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateUnicodeToTextRunInfo
+    return: OSStatus
+    args:
+    - name: iNumberOfMappings
+      type: ItemCount
+    - name: iUnicodeMappings
+      type: const UnicodeMapping*
+    - name: oUnicodeToTextInfo
+      type: UnicodeToTextRunInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateUnicodeToTextRunInfoByEncoding
+    return: OSStatus
+    args:
+    - name: iNumberOfEncodings
+      type: ItemCount
+    - name: iEncodings
+      type: const TextEncoding*
+    - name: oUnicodeToTextInfo
+      type: UnicodeToTextRunInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: CreateUnicodeToTextRunInfoByScriptCode
+    return: OSStatus
+    args:
+    - name: iNumberOfScriptCodes
+      type: ItemCount
+    - name: iScripts
+      type: const ScriptCode*
+    - name: oUnicodeToTextInfo
+      type: UnicodeToTextRunInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: ChangeTextToUnicodeInfo
+    return: OSStatus
+    args:
+    - name: ioTextToUnicodeInfo
+      type: TextToUnicodeInfo
+    - name: iUnicodeMapping
+      type: ConstUnicodeMappingPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: ChangeUnicodeToTextInfo
+    return: OSStatus
+    args:
+    - name: ioUnicodeToTextInfo
+      type: UnicodeToTextInfo
+    - name: iUnicodeMapping
+      type: ConstUnicodeMappingPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: DisposeTextToUnicodeInfo
+    return: OSStatus
+    args:
+    - name: ioTextToUnicodeInfo
+      type: TextToUnicodeInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: DisposeUnicodeToTextInfo
+    return: OSStatus
+    args:
+    - name: ioUnicodeToTextInfo
+      type: UnicodeToTextInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: DisposeUnicodeToTextRunInfo
+    return: OSStatus
+    args:
+    - name: ioUnicodeToTextRunInfo
+      type: UnicodeToTextRunInfo*
+    m68k: none
+
+# ####
+
+- function:
+    name: ConvertFromTextToUnicode
+    return: OSStatus
+    args:
+    - name: iTextToUnicodeInfo
+      type: TextToUnicodeInfo
+    - name: iSourceLen
+      type: ByteCount
+    - name: iSourceStr
+      type: ConstLogicalAddress
+    - name: iControlFlags
+      type: OptionBits
+    - name: iOffsetCount
+      type: ItemCount
+    - name: iOffsetArray
+      type: ByteOffset*
+    - name: oOffsetCount
+      type: ItemCount*
+    - name: oOffsetArray
+      type: ByteOffset*
+    - name: iOutputBufLen
+      type: ByteCount
+    - name: oSourceRead
+      type: ByteCount*
+    - name: oUnicodeLen
+      type: ByteCount*
+    - name: oUnicodeStr
+      type: UniChar*
+    m68k: none
+
+# ####
+
+- function:
+    name: ConvertFromUnicodeToText
+    return: OSStatus
+    args:
+    - name: iUnicodeToTextInfo
+      type: UnicodeToTextInfo
+    - name: iUnicodeLen
+      type: ByteCount
+    - name: iUnicodeStr
+      type: const UniChar*
+    - name: iControlFlags
+      type: OptionBits
+    - name: iOffsetCount
+      type: ItemCount
+    - name: iOffsetArray
+      type: ByteOffset*
+    - name: oOffsetCount
+      type: ItemCount*
+    - name: oOffsetArray
+      type: ByteOffset*
+    - name: iOutputBufLen
+      type: ByteCount
+    - name: oInputRead
+      type: ByteCount*
+    - name: oOutputLen
+      type: ByteCount*
+    - name: oOutputStr
+      type: LogicalAddress
+    m68k: none
+
+# ####
+
+- function:
+    name: ConvertFromUnicodeToTextRun
+    return: OSStatus
+    args:
+    - name: iUnicodeToTextInfo
+      type: UnicodeToTextRunInfo
+    - name: iUnicodeLen
+      type: ByteCount
+    - name: iUnicodeStr
+      type: const UniChar*
+    - name: iControlFlags
+      type: OptionBits
+    - name: iOffsetCount
+      type: ItemCount
+    - name: iOffsetArray
+      type: ByteOffset*
+    - name: oOffsetCount
+      type: ItemCount*
+    - name: oOffsetArray
+      type: ByteOffset*
+    - name: iOutputBufLen
+      type: ByteCount
+    - name: oInputRead
+      type: ByteCount*
+    - name: oOutputLen
+      type: ByteCount*
+    - name: oOutputStr
+      type: LogicalAddress
+    - name: iEncodingRunBufLen
+      type: ItemCount
+    - name: oEncodingRunOutLen
+      type: ItemCount*
+    - name: oEncodingRuns
+      type: TextEncodingRun*
+    m68k: none
+
+# ####
+
+- function:
+    name: ConvertFromUnicodeToScriptCodeRun
+    return: OSStatus
+    args:
+    - name: iUnicodeToTextInfo
+      type: UnicodeToTextRunInfo
+    - name: iUnicodeLen
+      type: ByteCount
+    - name: iUnicodeStr
+      type: const UniChar*
+    - name: iFlags
+      type: OptionBits
+    - name: iOffsetCount
+      type: ItemCount
+    - name: iOffsetArray
+      type: ByteOffset*
+    - name: oOffsetCount
+      type: ItemCount*
+    - name: oOffsetArray
+      type: ByteOffset*
+    - name: iOutputBufLen
+      type: ByteCount
+    - name: oInputRead
+      type: ByteCount*
+    - name: oOutputLen
+      type: ByteCount*
+    - name: oOutputStr
+      type: LogicalAddress
+    - name: iScriptRunBufLen
+      type: ItemCount
+    - name: oScriptRunOutLen
+      type: ItemCount*
+    - name: oScriptCodeRuns
+      type: ScriptCodeRun*
+    m68k: none
+
+# ####
+
+- function:
+    name: TruncateForTextToUnicode
+    return: OSStatus
+    args:
+    - name: iTextToUnicodeInfo
+      type: ConstTextToUnicodeInfo
+    - name: iSourceLen
+      type: ByteCount
+    - name: iSourceStr
+      type: ConstLogicalAddress
+    - name: iMaxLen
+      type: ByteCount
+    - name: oTruncatedLen
+      type: ByteCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: TruncateForUnicodeToText
+    return: OSStatus
+    args:
+    - name: iUnicodeToTextInfo
+      type: ConstUnicodeToTextInfo
+    - name: iSourceLen
+      type: ByteCount
+    - name: iSourceStr
+      type: const UniChar*
+    - name: iControlFlags
+      type: OptionBits
+    - name: iMaxLen
+      type: ByteCount
+    - name: oTruncatedLen
+      type: ByteCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: ConvertFromPStringToUnicode
+    return: OSStatus
+    args:
+    - name: iTextToUnicodeInfo
+      type: TextToUnicodeInfo
+    - name: iPascalStr
+      type: ConstStr255Param
+    - name: iOutputBufLen
+      type: ByteCount
+    - name: oUnicodeLen
+      type: ByteCount*
+    - name: oUnicodeStr
+      type: UniChar*
+    m68k: none
+
+# ####
+
+- function:
+    name: ConvertFromUnicodeToPString
+    return: OSStatus
+    args:
+    - name: iUnicodeToTextInfo
+      type: UnicodeToTextInfo
+    - name: iUnicodeLen
+      type: ByteCount
+    - name: iUnicodeStr
+      type: const UniChar*
+    - name: oPascalStr
+      type: StringPtr
+    m68k: none
+
+# ####
+
+- function:
+    name: CountUnicodeMappings
+    return: OSStatus
+    args:
+    - name: iFilter
+      type: OptionBits
+    - name: iFindMapping
+      type: ConstUnicodeMappingPtr
+    - name: oActualCount
+      type: ItemCount*
+    m68k: none
+
+# ####
+
+- function:
+    name: QueryUnicodeMappings
+    return: OSStatus
+    args:
+    - name: iFilter
+      type: OptionBits
+    - name: iFindMapping
+      type: ConstUnicodeMappingPtr
+    - name: iMaxCount
+      type: ItemCount
+    - name: oActualCount
+      type: ItemCount*
+    - name: oReturnedMappings
+      type: UnicodeMapping*
+    m68k: none
+
+# ####
+
+- function:
+    name: SetFallbackUnicodeToText
+    return: OSStatus
+    args:
+    - name: iUnicodeToTextInfo
+      type: UnicodeToTextInfo
+    - name: iFallback
+      type: UnicodeToTextFallbackUPP
+    - name: iControlFlags
+      type: OptionBits
+    - name: iInfoPtr
+      type: LogicalAddress
+    m68k: none
+
+# ####
+
+- function:
+    name: SetFallbackUnicodeToTextRun
+    return: OSStatus
+    args:
+    - name: iUnicodeToTextRunInfo
+      type: UnicodeToTextRunInfo
+    - name: iFallback
+      type: UnicodeToTextFallbackUPP
+    - name: iControlFlags
+      type: OptionBits
+    - name: iInfoPtr
+      type: LogicalAddress
+    m68k: none
+
+# ####
+
+- function:
+    name: ResetTextToUnicodeInfo
+    return: OSStatus
+    args:
+    - name: ioTextToUnicodeInfo
+      type: TextToUnicodeInfo
+    m68k: none
+
+# ####
+
+- function:
+    name: ResetUnicodeToTextInfo
+    return: OSStatus
+    args:
+    - name: ioUnicodeToTextInfo
+      type: UnicodeToTextInfo
+    m68k: none
+
+# ####
+
+- function:
+    name: ResetUnicodeToTextRunInfo
+    return: OSStatus
+    args:
+    - name: ioUnicodeToTextRunInfo
+      type: UnicodeToTextRunInfo
+    m68k: none

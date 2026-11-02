@@ -156,6 +156,691 @@ pascal OSErr SetWUTime(long wTime);
 
 pascal OSErr DisableWUTime(void);
 
+// Power Manager 2 (PowerBooks, System 7.5 and later).
+typedef struct BatteryInfo BatteryInfo;
+struct BatteryInfo {
+    UInt8 flags;
+    UInt8 warningLevel;
+    UInt8 reserved;
+    UInt8 batteryLevel;
+};
+
+typedef struct BatteryTimeRec BatteryTimeRec;
+struct BatteryTimeRec {
+    UInt32 expectedBatteryTime;
+    UInt32 minimumBatteryTime;
+    UInt32 maximumBatteryTime;
+    UInt32 timeUntilCharged;
+};
+
+typedef struct WakeupTime WakeupTime;
+struct WakeupTime {
+    UInt32 wakeTime;
+    Boolean wakeEnabled;
+    SInt8 filler;
+};
+
+typedef struct StartupTime StartupTime;
+struct StartupTime {
+    UInt32 startTime;
+    Boolean startEnabled;
+    SInt8 filler;
+};
+
+typedef struct ActivityInfo ActivityInfo;
+struct ActivityInfo {
+    SInt16 ActivityType;
+    UInt32 ActivityTime;
+};
+
+typedef SInt8 SoundMixerByte;
+
+typedef struct HDQueueElement HDQueueElement;
+
+typedef pascal void (*HDSpindownProcPtr)(HDQueueElement *theElement);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr HDSpindownUPP;
+enum { uppHDSpindownProcInfo = 0x000000C0 };
+#define NewHDSpindownUPP(proc) ((HDSpindownUPP)NewRoutineDescriptor((ProcPtr)(proc), uppHDSpindownProcInfo, GetCurrentArchitecture()))
+#define DisposeHDSpindownUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef HDSpindownProcPtr HDSpindownUPP;
+#define NewHDSpindownUPP(proc) (proc)
+#define DisposeHDSpindownUPP(upp) ((void)0)
+#endif
+#define NewHDSpindownProc(proc) NewHDSpindownUPP(proc)
+#define DisposeHDSpindownProc(proc) DisposeHDSpindownUPP(proc)
+
+typedef struct HDQueueElement HDQueueElement;
+struct HDQueueElement {
+    HDQueueElement *hdQLink;
+    SInt16 hdQType;
+    SInt16 hdFlags;
+    HDSpindownUPP hdProc;
+    SInt32 hdUser;
+};
+
+typedef struct PMgrQueueElement PMgrQueueElement;
+
+typedef pascal void (*PMgrStateChangeProcPtr)(PMgrQueueElement *theElement, SInt32 stateBits);
+#if TARGET_RT_MAC_CFM
+typedef UniversalProcPtr PMgrStateChangeUPP;
+enum { uppPMgrStateChangeProcInfo = 0x000003C0 };
+#define NewPMgrStateChangeUPP(proc) ((PMgrStateChangeUPP)NewRoutineDescriptor((ProcPtr)(proc), uppPMgrStateChangeProcInfo, GetCurrentArchitecture()))
+#define DisposePMgrStateChangeUPP(upp) DisposeRoutineDescriptor((UniversalProcPtr)(upp))
+#else
+typedef PMgrStateChangeProcPtr PMgrStateChangeUPP;
+#define NewPMgrStateChangeUPP(proc) (proc)
+#define DisposePMgrStateChangeUPP(upp) ((void)0)
+#endif
+#define NewPMgrStateChangeProc(proc) NewPMgrStateChangeUPP(proc)
+#define DisposePMgrStateChangeProc(proc) DisposePMgrStateChangeUPP(proc)
+
+typedef struct PMgrQueueElement PMgrQueueElement;
+struct PMgrQueueElement {
+    PMgrQueueElement *pmQLink;
+    SInt16 pmQType;
+    SInt16 pmFlags;
+    SInt32 pmNotifyBits;
+    PMgrStateChangeUPP pmProc;
+    SInt32 pmUser;
+};
+
+enum {
+    hasWakeupTimer = 0,
+    hasSharedModemPort = 1,
+    hasProcessorCycling = 2,
+    mustProcessorCycle = 3,
+    hasReducedSpeed = 4,
+    dynamicSpeedChange = 5,
+    hasSCSIDiskMode = 6,
+    canGetBatteryTime = 7,
+    canWakeupOnRing = 8,
+    hasDimmingSupport = 9,
+    hasStartupTimer = 10,
+    hasChargeNotification = 11,
+    hasDimSuspendSupport = 12,
+    hasWakeOnNetActivity = 13,
+    hasWakeOnLid = 14,
+    canPowerOffPCIGraphicsCard = 15,
+    hasDeepSleep = 16,
+    OverallAct = 0,
+    UsrActivity = 1,
+    NetActivity = 2,
+    HDActivity = 3,
+    kHDQueuePostBit = 0,
+    kHDQueuePostMask = 1,
+    batteryInstalled = 7,
+    batteryCharging = 6,
+    chargerConnected = 5,
+};
+
+// Power Manager 2 (System 7.5 and later), trap 0xA09E with the selector in D0
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER PMSelectorCount(void) {
+    register INTEGER _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7000, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal INTEGER PMSelectorCount(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) UInt32 PMFeatures(void) {
+    register UInt32 _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7001, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal UInt32 PMFeatures(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) UInt8 GetSleepTimeout(void) {
+    register UInt8 _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7002, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal UInt8 GetSleepTimeout(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) UInt8 GetHardDiskTimeout(void) {
+    register UInt8 _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7004, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal UInt8 GetHardDiskTimeout(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean HardDiskPowered(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7006, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean HardDiskPowered(void);
+#endif
+
+pascal void SpinDownHardDisk(void) M68K_INLINE(0x7007, 0xA09E);
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean IsSpindownDisabled(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7008, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean IsSpindownDisabled(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQInstall(HDQueueElement *theElement) {
+    register OSErr _ret __asm__("d0");
+    register HDQueueElement* _theElement __asm__("a0") = theElement;
+    __asm__ __volatile__(".short 0x700A, 0xA09E"
+        : "=r"(_ret), "+r"(_theElement)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr HardDiskQInstall(HDQueueElement *theElement);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr HardDiskQRemove(HDQueueElement *theElement) {
+    register OSErr _ret __asm__("d0");
+    register HDQueueElement* _theElement __asm__("a0") = theElement;
+    __asm__ __volatile__(".short 0x700B, 0xA09E"
+        : "=r"(_ret), "+r"(_theElement)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr HardDiskQRemove(HDQueueElement *theElement);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) UInt32 GetIntModemInfo(void) {
+    register UInt32 _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x700E, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal UInt32 GetIntModemInfo(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER MaximumProcessorSpeed(void) {
+    register INTEGER _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7010, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal INTEGER MaximumProcessorSpeed(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER CurrentProcessorSpeed(void) {
+    register INTEGER _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7011, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal INTEGER CurrentProcessorSpeed(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean FullProcessorSpeed(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7012, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean FullProcessorSpeed(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER GetSCSIDiskModeAddress(void) {
+    register INTEGER _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7014, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal INTEGER GetSCSIDiskModeAddress(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void GetWakeupTimer(WakeupTime *theTime) {
+    register WakeupTime* _theTime __asm__("a0") = theTime;
+    __asm__ __volatile__(".short 0x7016, 0xA09E"
+        : "+r"(_theTime)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void GetWakeupTimer(WakeupTime *theTime);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetWakeupTimer(WakeupTime *theTime) {
+    register WakeupTime* _theTime __asm__("a0") = theTime;
+    __asm__ __volatile__(".short 0x7017, 0xA09E"
+        : "+r"(_theTime)
+        : 
+        : "d0", "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void SetWakeupTimer(WakeupTime *theTime);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean IsProcessorCyclingEnabled(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7018, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean IsProcessorCyclingEnabled(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) INTEGER BatteryCount(void) {
+    register INTEGER _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x701A, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal INTEGER BatteryCount(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) UInt8 GetDimmingTimeout(void) {
+    register UInt8 _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x701D, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal UInt8 GetDimmingTimeout(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean IsDimmingControlDisabled(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7020, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean IsDimmingControlDisabled(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean IsAutoSlpControlDisabled(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7021, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean IsAutoSlpControlDisabled(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQInstall(PMgrQueueElement *theElement) {
+    register OSErr _ret __asm__("d0");
+    register PMgrQueueElement* _theElement __asm__("a0") = theElement;
+    __asm__ __volatile__(".short 0x7022, 0xA09E"
+        : "=r"(_ret), "+r"(_theElement)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PMgrStateQInstall(PMgrQueueElement *theElement);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PMgrStateQRemove(PMgrQueueElement *theElement) {
+    register OSErr _ret __asm__("d0");
+    register PMgrQueueElement* _theElement __asm__("a0") = theElement;
+    __asm__ __volatile__(".short 0x7023, 0xA09E"
+        : "=r"(_ret), "+r"(_theElement)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PMgrStateQRemove(PMgrQueueElement *theElement);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DelaySystemIdle(void) {
+    register OSErr _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7025, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DelaySystemIdle(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr GetStartupTimer(StartupTime *theTime) {
+    register OSErr _ret __asm__("d0");
+    register StartupTime* _theTime __asm__("a0") = theTime;
+    __asm__ __volatile__(".short 0x7026, 0xA09E"
+        : "=r"(_ret), "+r"(_theTime)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr GetStartupTimer(StartupTime *theTime);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr SetStartupTimer(StartupTime *theTime) {
+    register OSErr _ret __asm__("d0");
+    register StartupTime* _theTime __asm__("a0") = theTime;
+    __asm__ __volatile__(".short 0x7027, 0xA09E"
+        : "=r"(_ret), "+r"(_theTime)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr SetStartupTimer(StartupTime *theTime);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr GetLastActivity(ActivityInfo *theActivity) {
+    register OSErr _ret __asm__("d0");
+    register ActivityInfo* _theActivity __asm__("a0") = theActivity;
+    __asm__ __volatile__(".short 0x7028, 0xA09E"
+        : "=r"(_ret), "+r"(_theActivity)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr GetLastActivity(ActivityInfo *theActivity);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr GetSoundMixerState(SoundMixerByte *theSoundMixerByte) {
+    register OSErr _ret __asm__("d0");
+    register SoundMixerByte* _theSoundMixerByte __asm__("a0") = theSoundMixerByte;
+    __asm__ __volatile__(".short 0x7029, 0xA09E"
+        : "=r"(_ret), "+r"(_theSoundMixerByte)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr GetSoundMixerState(SoundMixerByte *theSoundMixerByte);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr SetSoundMixerState(SoundMixerByte *theSoundMixerByte) {
+    register OSErr _ret __asm__("d0");
+    register SoundMixerByte* _theSoundMixerByte __asm__("a0") = theSoundMixerByte;
+    __asm__ __volatile__(".short 0x702A, 0xA09E"
+        : "=r"(_ret), "+r"(_theSoundMixerByte)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr SetSoundMixerState(SoundMixerByte *theSoundMixerByte);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean GetDimSuspendState(void) {
+    register Boolean _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x702B, 0xA09E"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean GetDimSuspendState(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetSleepTimeout(UInt8 timeout) {
+    register UInt8 _timeout __asm__("d0") = timeout;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x0003, 0xA09E"
+        : "+r"(_timeout)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void SetSleepTimeout(UInt8 timeout);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetHardDiskTimeout(UInt8 timeout) {
+    register UInt8 _timeout __asm__("d0") = timeout;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x0005, 0xA09E"
+        : "+r"(_timeout)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void SetHardDiskTimeout(UInt8 timeout);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetSpindownDisable(Boolean setDisable) {
+    register Boolean _setDisable __asm__("d0") = setDisable;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x0009, 0xA09E"
+        : "+r"(_setDisable)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void SetSpindownDisable(Boolean setDisable);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void AutoSleepControl(Boolean enableSleep) {
+    register Boolean _enableSleep __asm__("d0") = enableSleep;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x000D, 0xA09E"
+        : "+r"(_enableSleep)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void AutoSleepControl(Boolean enableSleep);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetIntModemState(INTEGER theState) {
+    register INTEGER _theState __asm__("d0") = theState;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x000F, 0xA09E"
+        : "+r"(_theState)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void SetIntModemState(INTEGER theState);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Boolean SetProcessorSpeed(Boolean fullSpeed) {
+    register Boolean _ret __asm__("d0");
+    register Boolean _fullSpeed __asm__("d0") = fullSpeed;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x0013, 0xA09E"
+        : "=r"(_ret)
+        : "r"(_fullSpeed)
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Boolean SetProcessorSpeed(Boolean fullSpeed);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetSCSIDiskModeAddress(INTEGER scsiAddress) {
+    register INTEGER _scsiAddress __asm__("d0") = scsiAddress;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x0015, 0xA09E"
+        : "+r"(_scsiAddress)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void SetSCSIDiskModeAddress(INTEGER scsiAddress);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void EnableProcessorCycling(Boolean enable) {
+    register Boolean _enable __asm__("d0") = enable;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x0019, 0xA09E"
+        : "+r"(_enable)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void EnableProcessorCycling(Boolean enable);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetDimmingTimeout(UInt8 timeout) {
+    register UInt8 _timeout __asm__("d0") = timeout;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x001E, 0xA09E"
+        : "+r"(_timeout)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void SetDimmingTimeout(UInt8 timeout);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void DimmingControl(Boolean enableSleep) {
+    register Boolean _enableSleep __asm__("d0") = enableSleep;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x001F, 0xA09E"
+        : "+r"(_enableSleep)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void DimmingControl(Boolean enableSleep);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr UpdateSystemActivity(UInt8 activity) {
+    register OSErr _ret __asm__("d0");
+    register UInt8 _activity __asm__("d0") = activity;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x0024, 0xA09E"
+        : "=r"(_ret)
+        : "r"(_activity)
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr UpdateSystemActivity(UInt8 activity);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void SetDimSuspendState(Boolean dimSuspendState) {
+    register Boolean _dimSuspendState __asm__("d0") = dimSuspendState;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x002C, 0xA09E"
+        : "+r"(_dimSuspendState)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+}
+#else
+pascal void SetDimSuspendState(Boolean dimSuspendState);
+#endif
+
+#if !TARGET_CPU_68K
+pascal void GetScaledBatteryInfo(INTEGER whichBattery, BatteryInfo *theInfo);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) Fixed GetBatteryVoltage(INTEGER whichBattery) {
+    register Fixed _ret __asm__("d0");
+    register INTEGER _whichBattery __asm__("d0") = whichBattery;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x001B, 0xA09E"
+        : "=r"(_ret)
+        : "r"(_whichBattery)
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal Fixed GetBatteryVoltage(INTEGER whichBattery);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void GetBatteryTimes(INTEGER whichBattery, BatteryTimeRec *theTimes) {
+    register INTEGER _whichBattery __asm__("d0") = whichBattery;
+    register BatteryTimeRec* _theTimes __asm__("a0") = theTimes;
+    __asm__ __volatile__(".short 0x4840, 0x303C, 0x001C, 0xA09E"
+        : "+r"(_whichBattery), "+r"(_theTimes)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void GetBatteryTimes(INTEGER whichBattery, BatteryTimeRec *theTimes);
+#endif
+
 #pragma options align=reset
 
 #endif

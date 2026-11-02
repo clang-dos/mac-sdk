@@ -1220,6 +1220,96 @@ static __inline__ OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned 
 pascal OSErr GetPhysical(LogicalToPhysicalTable *addresses, unsigned long *physicalEntryCount);
 #endif
 
+// Virtual memory: control paging of a range (Mac OS 8.5)
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr LockMemoryForOutput(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x700A, 0xA05C"
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr LockMemoryForOutput(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryResident(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x700B, 0xA05C"
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr MakeMemoryResident(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr ReleaseMemoryData(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x700C, 0xA05C"
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr ReleaseMemoryData(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr MakeMemoryNonResident(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x700D, 0xA05C"
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr MakeMemoryNonResident(void *address, unsigned long count);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr FlushMemory(void *address, unsigned long count) {
+    register OSErr _ret __asm__("d0");
+    register void* _address __asm__("a0") = address;
+    register unsigned long _count __asm__("a1") = count;
+    __asm__ __volatile__(".short 0x700E, 0xA05C"
+        : "=r"(_ret), "+r"(_address), "+r"(_count)
+        : 
+        : "d1", "d2", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr FlushMemory(void *address, unsigned long count);
+#endif
+
+enum { _ReallocateHandleSys = 0xA427 };
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) void ReallocateHandleSys(Handle h, Size byteCount) {
+    register Handle _h __asm__("a0") = h;
+    register Size _byteCount __asm__("d0") = byteCount;
+    __asm__ __volatile__(".short 0xA427"
+        : "+r"(_h), "+r"(_byteCount)
+        : 
+        : "d1", "d2", "a1", "cc", "memory");
+}
+#else
+pascal void ReallocateHandleSys(Handle h, Size byteCount);
+#endif
+
 #if TARGET_CPU_68K
 static __inline__ void InitZone(GrowZoneUPP pGrowZone, int16_t cMoreMasters, Ptr limitPtr, THz startPtr) {
     struct {

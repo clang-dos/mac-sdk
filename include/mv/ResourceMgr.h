@@ -240,15 +240,20 @@ pascal void SetResourceSize(Handle resource, long size) M68K_INLINE(0x7003, 0xA8
 pascal Handle GetNextFOND(Handle fondHandle) M68K_INLINE(0x700A, 0xA822);
 
 // Opening resource files by FSRef (Mac OS 9 and later)
-pascal INTEGER FSOpenResFile(const FSRef *ref, SInt8 permission);
+pascal INTEGER FSOpenResFile(const FSRef *ref, SInt8 permission) M68K_INLINE(0x7013, 0xA822);
 
-pascal void FSCreateResFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec);
+pascal void FSCreateResFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, FSRef *newRef, FSSpec *newSpec) M68K_INLINE(0x7014, 0xA822);
 
 pascal OSErr FSCreateResourceFile(const FSRef *parentRef, UniCharCount nameLength, const UniChar *name, FSCatalogInfoBitmap whichInfo, const FSCatalogInfo *catalogInfo, UniCharCount forkNameLength, const UniChar *forkName, FSRef *newRef, FSSpec *newSpec);
 
 pascal OSErr FSOpenResourceFile(const FSRef *ref, UniCharCount forkNameLength, const UniChar *forkName, SInt8 permissions, SInt16 *refNum);
 
 pascal void TempInsertROMMap(Boolean tempResLoad);
+
+// Is a resource file already open? (Mac OS 9)
+pascal Boolean FSpResourceFileAlreadyOpen(const FSSpec *resourceFile, Boolean *inChain, SInt16 *refNum) M68K_INLINE(0x7010, 0xA822);
+
+pascal Boolean FSResourceFileAlreadyOpen(const FSRef *resourceFileRef, Boolean *inChain, SInt16 *refNum) M68K_INLINE(0x7015, 0xA822);
 
 #pragma options align=reset
 

@@ -3,6 +3,7 @@
 #define __MV_ICONUTIL__
 
 #include "../ConditionalMacros.h"
+#include "FileMgr.h"
 #include "MacTypes.h"
 #include "QuickDraw.h"
 
@@ -198,6 +199,217 @@ pascal OSErr SetIconCacheData(Handle cache, void *data) M68K_INLINE(0x303C, 0x04
 pascal OSErr GetIconCacheProc(Handle cache, IconGetterUPP *proc) M68K_INLINE(0x303C, 0x041B, 0xABC9);
 
 pascal OSErr SetIconCacheProc(Handle cache, IconGetterUPP proc) M68K_INLINE(0x303C, 0x041C, 0xABC9);
+
+// Icon Services (Mac OS 8.5): a reference to an icon of every size and depth.
+typedef struct OpaqueIconRef *IconRef;
+
+typedef Handle IconSuiteRef;
+
+typedef UInt32 IconServicesUsageFlags;
+
+// One icon in an 'icns' icon family.
+typedef struct IconFamilyElement IconFamilyElement;
+struct IconFamilyElement {
+    OSType elementType;
+    Size elementSize;
+    UInt8 elementData[1];
+};
+
+// An 'icns' resource: the icons of one family, of every size and depth.
+typedef struct IconFamilyResource IconFamilyResource;
+struct IconFamilyResource {
+    OSType resourceType;
+    Size resourceSize;
+    IconFamilyElement elements[1];
+};
+
+typedef IconFamilyResource *IconFamilyPtr;
+
+typedef IconFamilyPtr *IconFamilyHandle;
+
+enum {
+    kIconServicesNormalUsageFlag = 0,
+    kIconFamilyType = 'icns',
+    kThumbnail32BitData = 'it32',
+    kThumbnail8BitMask = 't8mk',
+    kHuge1BitMask = 'ich#',
+    kHuge4BitData = 'ich4',
+    kHuge8BitData = 'ich8',
+    kHuge32BitData = 'ih32',
+    kHuge8BitMask = 'h8mk',
+    kLarge32BitData = 'il32',
+    kLarge8BitMask = 'l8mk',
+    kSmall32BitData = 'is32',
+    kSmall8BitMask = 's8mk',
+    kTileIconVariant = 'tile',
+    kRolloverIconVariant = 'over',
+    kDropIconVariant = 'drop',
+    kOpenIconVariant = 'open',
+    kOpenDropIconVariant = 'odrp',
+    kSystemIconsCreator = 'macs',
+    kClipboardIcon = 'CLIP',
+    kClippingUnknownTypeIcon = 'clpu',
+    kClippingPictureTypeIcon = 'clpp',
+    kClippingTextTypeIcon = 'clpt',
+    kClippingSoundTypeIcon = 'clps',
+    kDesktopIcon = 'desk',
+    kFinderIcon = 'FNDR',
+    kFontSuitcaseIcon = 'FFIL',
+    kFullTrashIcon = 'ftrh',
+    kGenericApplicationIcon = 'APPL',
+    kGenericCDROMIcon = 'cddr',
+    kGenericControlPanelIcon = 'APPC',
+    kGenericControlStripModuleIcon = 'sdev',
+    kGenericComponentIcon = 'thng',
+    kGenericDeskAccessoryIcon = 'APPD',
+    kGenericDocumentIcon = 'docu',
+    kGenericEditionFileIcon = 'edtf',
+    kGenericExtensionIcon = 'INIT',
+    kGenericFileServerIcon = 'srvr',
+    kGenericFontIcon = 'ffil',
+    kGenericFontScalerIcon = 'sclr',
+    kGenericFloppyIcon = 'flpy',
+    kGenericHardDiskIcon = 'hdsk',
+    kGenericRemovableMediaIcon = 'rmov',
+    kGenericMoverObjectIcon = 'movr',
+    kGenericPCCardIcon = 'pcmc',
+    kGenericPreferencesIcon = 'pref',
+    kGenericQueryDocumentIcon = 'qery',
+    kGenericRAMDiskIcon = 'ramd',
+    kGenericSharedLibaryIcon = 'shlb',
+    kGenericStationeryIcon = 'sdoc',
+    kGenericSuitcaseIcon = 'suit',
+    kGenericWORMIcon = 'worm',
+    kInternationResourcesIcon = 'ifil',
+    kKeyboardLayoutIcon = 'kfil',
+    kSoundFileIcon = 'sfil',
+    kSystemSuitcaseIcon = 'zsys',
+    kTrashIcon = 'trsh',
+    kTrueTypeFontIcon = 'tfil',
+    kTrueTypeFlatFontIcon = 'sfnt',
+    kTrueTypeMultiFlatFontIcon = 'ttcf',
+    kUserIDiskIcon = 'udsk',
+    kGenericFolderIcon = 'fldr',
+    kDropFolderIcon = 'dbox',
+    kMountedFolderIcon = 'mntd',
+    kOpenFolderIcon = 'ofld',
+    kOwnedFolderIcon = 'ownd',
+    kPrivateFolderIcon = 'prvf',
+    kSharedFolderIcon = 'shfl',
+    kAppleMenuFolderIcon = 'amnu',
+    kApplicationsFolderIcon = 'apps',
+    kControlPanelFolderIcon = 'ctrl',
+    kDocumentsFolderIcon = 'docs',
+    kExtensionsFolderIcon = 'extn',
+    kFontsFolderIcon = 'font',
+    kHelpFolderIcon = 3295177840,
+    kPreferencesFolderIcon = 'prff',
+    kShutdownItemsFolderIcon = 'shdf',
+    kStartupItemsFolderIcon = 'strt',
+    kSystemFolderIcon = 'macs',
+    kAppleScriptBadgeIcon = 'scrp',
+    kLockedBadgeIcon = 'lbdg',
+    kAliasBadgeIcon = 'abdg',
+    kAppleLogoIcon = 'capl',
+    kAppleMenuIcon = 'sapl',
+    kBackwardArrowIcon = 'baro',
+    kForwardArrowIcon = 'faro',
+    kHelpIcon = 'help',
+    kComputerIcon = 'root',
+    kAlertNoteIcon = 'note',
+    kAlertCautionIcon = 'caut',
+    kAlertStopIcon = 'stop',
+    kUnknownFSObjectIcon = 'unfs',
+    kNoFilesIcon = 'nfil',
+    kGenericNetworkIcon = 'gnet',
+    kAppleTalkIcon = 'atlk',
+    kAppleTalkZoneIcon = 'atzn',
+    kInternetLocationHTTPIcon = 'ilht',
+    kInternetLocationFTPIcon = 'ilft',
+    kInternetLocationGenericIcon = 'ilge',
+    kInternetLocationMailIcon = 'ilma',
+    kInternetLocationNewsIcon = 'ilnw',
+    invalidIconRefErr = -2580,
+    noSuchIconErr = -2581,
+    noIconDataAvailableErr = -2582,
+};
+
+enum { _IconServicesDispatch = 0xAA75 };
+
+// Icon Services (Mac OS 8.5). 68k applications reach it through trap 0xAA75 under Mac OS 8.5 and later.
+pascal OSErr IconRefToIconFamily(IconRef theIconRef, IconSelectorValue whichIcons, IconFamilyHandle *iconFamily) M68K_INLINE(0x7024, 0xAA75);
+
+pascal OSErr IconFamilyToIconSuite(IconFamilyHandle iconFamily, IconSelectorValue whichIcons, IconSuiteRef *iconSuite) M68K_INLINE(0x7025, 0xAA75);
+
+pascal OSErr IconSuiteToIconFamily(IconSuiteRef iconSuite, IconSelectorValue whichIcons, IconFamilyHandle *iconFamily) M68K_INLINE(0x7026, 0xAA75);
+
+pascal OSErr SetIconFamilyData(IconFamilyHandle iconFamily, OSType iconType, Handle h) M68K_INLINE(0x7030, 0xAA75);
+
+pascal OSErr GetIconFamilyData(IconFamilyHandle iconFamily, OSType iconType, Handle h) M68K_INLINE(0x7031, 0xAA75);
+
+pascal OSErr GetIconRefOwners(IconRef theIconRef, UInt16 *owners) M68K_INLINE(0x700B, 0xAA75);
+
+pascal OSErr AcquireIconRef(IconRef theIconRef) M68K_INLINE(0x7027, 0xAA75);
+
+pascal OSErr ReleaseIconRef(IconRef theIconRef) M68K_INLINE(0x7028, 0xAA75);
+
+pascal OSErr GetIconRefFromFile(const FSSpec *theFile, IconRef *theIconRef, SInt16 *theLabel) M68K_INLINE(0x7002, 0xAA75);
+
+pascal OSErr GetIconRef(SInt16 vRefNum, OSType creator, OSType iconType, IconRef *theIconRef) M68K_INLINE(0x7021, 0xAA75);
+
+pascal OSErr GetIconRefFromFolder(SInt16 vRefNum, SInt32 parentFolderID, SInt32 folderID, SInt8 attributes, SInt8 accessPrivileges, IconRef *theIconRef) M68K_INLINE(0x7022, 0xAA75);
+
+pascal OSErr RegisterIconRefFromIconFamily(OSType creator, OSType iconType, IconFamilyHandle iconFamily, IconRef *theIconRef) M68K_INLINE(0x701C, 0xAA75);
+
+pascal OSErr RegisterIconRefFromResource(OSType creator, OSType iconType, const FSSpec *resourceFile, SInt16 resourceID, IconRef *theIconRef) M68K_INLINE(0x7023, 0xAA75);
+
+pascal OSErr UnregisterIconRef(OSType creator, OSType iconType) M68K_INLINE(0x7008, 0xAA75);
+
+pascal OSErr UpdateIconRef(IconRef theIconRef) M68K_INLINE(0x7009, 0xAA75);
+
+pascal OSErr OverrideIconRefFromResource(IconRef theIconRef, const FSSpec *resourceFile, SInt16 resourceID) M68K_INLINE(0x702A, 0xAA75);
+
+pascal OSErr OverrideIconRef(IconRef oldIconRef, IconRef newIconRef) M68K_INLINE(0x702B, 0xAA75);
+
+pascal OSErr RemoveIconRefOverride(IconRef theIconRef) M68K_INLINE(0x701E, 0xAA75);
+
+pascal OSErr CompositeIconRef(IconRef backgroundIconRef, IconRef foregroundIconRef, IconRef *compositeIconRef) M68K_INLINE(0x7014, 0xAA75);
+
+pascal OSErr IsIconRefComposite(IconRef compositeIconRef, IconRef *backgroundIconRef, IconRef *foregroundIconRef) M68K_INLINE(0x701A, 0xAA75);
+
+pascal Boolean IsValidIconRef(IconRef theIconRef) M68K_INLINE(0x7032, 0xAA75);
+
+pascal OSErr PlotIconRef(const Rect *theRect, IconAlignmentType align, IconTransformType transform, IconServicesUsageFlags theIconServicesUsageFlags, IconRef theIconRef) M68K_INLINE(0x700E, 0xAA75);
+
+pascal Boolean PtInIconRef(const Point *testPt, const Rect *iconRect, IconAlignmentType align, IconServicesUsageFlags theIconServicesUsageFlags, IconRef theIconRef) M68K_INLINE(0x700F, 0xAA75);
+
+pascal Boolean RectInIconRef(const Rect *testRect, const Rect *iconRect, IconAlignmentType align, IconServicesUsageFlags iconServicesUsageFlags, IconRef theIconRef) M68K_INLINE(0x7010, 0xAA75);
+
+pascal OSErr IconRefToRgn(RgnHandle theRgn, const Rect *iconRect, IconAlignmentType align, IconServicesUsageFlags iconServicesUsageFlags, IconRef theIconRef) M68K_INLINE(0x7011, 0xAA75);
+
+pascal OSErr GetIconSizesFromIconRef(IconSelectorValue iconSelectorInput, IconSelectorValue *iconSelectorOutputPtr, IconServicesUsageFlags iconServicesUsageFlags, IconRef theIconRef) M68K_INLINE(0x7012, 0xAA75);
+
+pascal OSErr FlushIconRefs(OSType creator, OSType iconType) M68K_INLINE(0x7029, 0xAA75);
+
+pascal OSErr FlushIconRefsByVolume(SInt16 vRefNum) M68K_INLINE(0x7018, 0xAA75);
+
+pascal OSErr SetCustomIconsEnabled(SInt16 vRefNum, Boolean enableCustomIcons) M68K_INLINE(0x701F, 0xAA75);
+
+pascal OSErr GetCustomIconsEnabled(SInt16 vRefNum, Boolean *customIconsEnabled) M68K_INLINE(0x7020, 0xAA75);
+
+pascal Boolean IsIconRefMaskEmpty(IconRef iconRef) M68K_INLINE(0x7033, 0xAA75);
+
+pascal IconRef GetIconRefVariant(IconRef inIconRef, OSType inVariant, IconTransformType *outTransform) M68K_INLINE(0x7034, 0xAA75);
+
+pascal OSErr RegisterIconRefFromIconFile(OSType creator, OSType iconType, const FSSpec *iconFile, IconRef *theIconRef) M68K_INLINE(0x7035, 0xAA75);
+
+pascal OSErr ReadIconFile(const FSSpec *iconFile, IconFamilyHandle *iconFamily) M68K_INLINE(0x7036, 0xAA75);
+
+pascal OSErr WriteIconFile(IconFamilyHandle iconFamily, const FSSpec *iconFile) M68K_INLINE(0x7037, 0xAA75);
+
+enum {
+    kAlignNone = 0,
+};
 
 #pragma options align=reset
 

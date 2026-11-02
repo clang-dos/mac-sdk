@@ -259,13 +259,24 @@ pascal OSErr ReplaceGestalt(OSType selector, SelectorFunctionUPP selFunc, Select
 #endif
 
 // Gestalt values (System 7.5 and later)
-pascal OSErr NewGestaltValue(OSType selector, long newValue);
+pascal OSErr NewGestaltValue(OSType selector, long newValue) M68K_INLINE(0x303C, 0x0401, 0xABF1);
 
-pascal OSErr ReplaceGestaltValue(OSType selector, long replacementValue);
+pascal OSErr ReplaceGestaltValue(OSType selector, long replacementValue) M68K_INLINE(0x303C, 0x0402, 0xABF1);
 
-pascal OSErr SetGestaltValue(OSType selector, long newValue);
+pascal OSErr SetGestaltValue(OSType selector, long newValue) M68K_INLINE(0x303C, 0x0404, 0xABF1);
 
-pascal OSErr DeleteGestaltValue(OSType selector);
+pascal OSErr DeleteGestaltValue(OSType selector) M68K_INLINE(0x303C, 0x0203, 0xABF1);
+
+enum { _GestaltValueDispatch = 0xABF1 };
+
+// Thread Manager and HFS Plus API Gestalt selectors and bits.
+enum {
+    gestaltThreadMgrAttr = 'thds',
+    gestaltThreadMgrPresent = 0,
+    gestaltSpecificMatchSupport = 1,
+    gestaltThreadsLibraryPresent = 2,
+    gestaltHasHFSPlusAPIs = 12,
+};
 
 #pragma options align=reset
 

@@ -17,14 +17,25 @@ A line `# text` puts a comment on the next definition. Struct sizes are
 checked by tests/sizes.c only where listed there, so give the size from
 Apple's headers when you know it.
 """
+import glob
+import os
 import re
 import sys
 
 import yaml
 
 
+def defined_names():
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "defs")
+    names = set()
+    for f in glob.glob(os.path.join(root, "*.yaml")):
+        names |= set(re.findall(r"name: (\w+)", open(f).read()))
+    return names
+
+
 def main():
     items, cur, comment = [], None, None
+    known = defined_names()
     for raw in sys.stdin:
         line = raw.rstrip()
         if not line.strip():
@@ -47,7 +58,10 @@ def main():
                 except ValueError:
                     if re.fullmatch(r"'.{4}'", val):
                         val = val
-                v["values"].append({"name": body[0], "value": val})
+                if body[0] in known:    # constants are often repeated
+                    print(f"{body[0]}: already defined, skipped", file=sys.stderr)
+                else:
+                    v["values"].append({"name": body[0], "value": val})
             continue
         word = line.split()
         kind = word[0]

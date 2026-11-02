@@ -723,3 +723,59 @@
     return: INTEGER
     inline: "(LMGetSysFontSiz() ? LMGetSysFontSiz() : 12)"
     noinline: ppc
+
+# ####
+
+- function:
+    name: SetAntiAliasedTextEnabled
+    return: OSStatus
+    args:
+    - name: iEnable
+      type: Boolean
+    - name: iMinFontSize
+      type: SInt16
+    comment: Anti-aliased text and text measurement (QuickDraw in Mac OS 8.5)
+    dispatcher: FontDispatch
+    selector: 17
+
+# ####
+
+- function:
+    name: IsAntiAliasedTextEnabled
+    return: Boolean
+    args:
+    - name: oMinFontSize
+      type: SInt16*
+    dispatcher: FontDispatch
+    selector: 18
+
+# ####
+
+- function:
+    name: QDTextBounds
+    args:
+    - name: byteCount
+      type: INTEGER
+    - name: textAddr
+      type: const void*
+    - name: bounds
+      type: Rect*
+    dispatcher: FontDispatch
+    selector: 19
+
+# ####
+
+- function:
+    name: FetchFontInfo
+    return: OSErr
+    args:
+    - name: fontID
+      type: SInt16
+    - name: fontSize
+      type: SInt16
+    - name: fontStyle
+      type: SInt16
+    - name: info
+      type: FontInfo*
+    dispatcher: FontDispatch
+    selector: 20

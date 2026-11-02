@@ -44,7 +44,7 @@ TYPE_SIZE = {"uint8_t": 1, "uint16_t": 2, "uint32_t": 4, "uint64_t": 8,
 APPLE_NAMES = [
     "AppleEvents", "Aliases", "CodeFragments", "Components", "CursorDevices", "DatabaseAccess",
     "ConditionalMacros", "Connections", "CommResources", "CTBUtilities", "Displays", "ADSP", "ENET", "FileTransfers", "Terminals", "AppleTalk", "Dictionary", "MIDI", "Power", "PPCToolbox", "SCSI", "Slots", "TextServices",
-    "Appearance", "Collections", "ControlDefinitions", "ContextualMenu", "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices",
+    "Appearance", "Collections", "ControlDefinitions", "ContextualMenu", "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices", "Multiprocessing", "Threads", "TextCommon", "TextEncodingConverter", "UnicodeConverter", "URLAccess", "Keychain",
     "Errors", "Events", "Files", "Finder", "FixMath", "Folders", "Fonts",
     "Gestalt", "Icons", "Interrupts", "Kernel", "Lists", "LowMem",
     "MacErrors", "MacMemory", "MacTypes", "MacWindows", "Memory", "Menus",
@@ -272,6 +272,17 @@ class Generator:
         m = re.match(r"^([A-Za-z_][A-Za-z0-9]*)(ProcPtr|UPP)$", v["name"])
         name = m.group(1) if m else v["name"]
         out.append(f"typedef pascal {ret} (*{name}ProcPtr)({params});")
+        if v.get("tvector"):
+            # Called directly on both CPUs, never through Mixed Mode: the
+            # Thread Manager's callbacks are TVector UPPs in Apple's headers.
+            out += [
+                f"typedef {name}ProcPtr {name}UPP;",
+                f"#define New{name}UPP(proc) (({name}UPP)(proc))",
+                f"#define Dispose{name}UPP(upp) ((void)0)",
+                f"#define New{name}Proc(proc) New{name}UPP(proc)",
+                f"#define Dispose{name}Proc(proc) Dispose{name}UPP(proc)",
+            ]
+            return
         regs = any(a.get("register") for a in args)
         info = 42 if regs else self.procinfo(v.get("return"), args)
         out += [
