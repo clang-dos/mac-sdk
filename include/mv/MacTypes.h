@@ -167,6 +167,14 @@ typedef UniCharCount *UniCharCountPtr;
 
 typedef unsigned long TextEncoding;
 
+typedef ConstStringPtr ConstStr32Param;
+
+typedef ConstStringPtr ConstStr27Param;
+
+typedef ConstStringPtr ConstStr15Param;
+
+typedef Byte Str27[28];
+
 #pragma options align=reset
 
 #endif

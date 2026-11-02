@@ -423,3 +423,27 @@
 - typedef:
     name: TextEncoding
     type: uint32_t
+
+# ####
+
+- typedef:
+    name: ConstStr32Param
+    type: ConstStringPtr
+
+# ####
+
+- typedef:
+    name: ConstStr27Param
+    type: ConstStringPtr
+
+# ####
+
+- typedef:
+    name: ConstStr15Param
+    type: ConstStringPtr
+
+# ####
+
+- typedef:
+    name: Str27
+    type: Byte[28]

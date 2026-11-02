@@ -227,6 +227,8 @@ CountDITL
 DiskEject
 SetTagBuffer
 DriveStatus
+GetDefaultUser
+StartSecureSession
 KillProcess
 NewGestaltValue
 ReplaceGestaltValue

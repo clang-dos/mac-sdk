@@ -57,6 +57,554 @@ struct {
 
 typedef PPCPortRec *PPCPortPtr;
 
+typedef uint8_t PPCServiceType;
+
+typedef int8_t PPCSessionOrigin;
+
+typedef INTEGER PPCPortRefNum;
+
+typedef long PPCSessRefNum;
+
+typedef LocationNameRec *LocationNamePtr;
+
+typedef UniversalProcPtr PPCCompUPP;
+
+typedef UniversalProcPtr PPCFilterUPP;
+
+enum {
+    ppcServiceRealTime = 1,
+    ppcLocalOrigin = 1,
+    ppcRemoteOrigin = 2,
+    ppcNoLocation = 0,
+    ppcNBPLocation = 1,
+    ppcNBPTypeLocation = 2,
+    ppcXTIAddrLocation = 3,
+    ppcByCreatorAndType = 1,
+    ppcByString = 2,
+};
+
+typedef struct PortInfoRec PortInfoRec;
+struct PortInfoRec {
+    uint8_t filler1;
+    Boolean authRequired;
+    PPCPortRec name;
+};
+
+typedef PortInfoRec *PortInfoPtr;
+
+typedef PortInfoRec *PortInfoArrayPtr;
+
+typedef struct PPCOpenPBRec PPCOpenPBRec;
+struct PPCOpenPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    PPCPortRefNum portRefNum;
+    long filler1;
+    PPCServiceType serviceType;
+    uint8_t resFlag;
+    PPCPortPtr portName;
+    LocationNamePtr locationName;
+    Boolean networkVisible;
+    Boolean nbpRegistered;
+};
+
+typedef PPCOpenPBRec *PPCOpenPBPtr;
+
+typedef struct PPCInformPBRec PPCInformPBRec;
+struct PPCInformPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    PPCPortRefNum portRefNum;
+    PPCSessRefNum sessRefNum;
+    PPCServiceType serviceType;
+    Boolean autoAccept;
+    PPCPortPtr portName;
+    LocationNamePtr locationName;
+    StringPtr userName;
+    unsigned long userData;
+    PPCSessionOrigin requestType;
+    int8_t filler;
+};
+
+typedef PPCInformPBRec *PPCInformPBPtr;
+
+typedef struct PPCStartPBRec PPCStartPBRec;
+struct PPCStartPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    PPCPortRefNum portRefNum;
+    PPCSessRefNum sessRefNum;
+    PPCServiceType serviceType;
+    uint8_t resFlag;
+    PPCPortPtr portName;
+    LocationNamePtr locationName;
+    unsigned long rejectInfo;
+    unsigned long userData;
+    unsigned long userRefNum;
+};
+
+typedef PPCStartPBRec *PPCStartPBPtr;
+
+typedef struct PPCAcceptPBRec PPCAcceptPBRec;
+struct PPCAcceptPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    INTEGER filler1;
+    PPCSessRefNum sessRefNum;
+};
+
+typedef PPCAcceptPBRec *PPCAcceptPBPtr;
+
+typedef struct PPCRejectPBRec PPCRejectPBRec;
+struct PPCRejectPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    INTEGER filler1;
+    PPCSessRefNum sessRefNum;
+    INTEGER filler2;
+    long filler3;
+    long filler4;
+    long rejectInfo;
+};
+
+typedef PPCRejectPBRec *PPCRejectPBPtr;
+
+typedef struct PPCWritePBRec PPCWritePBRec;
+struct PPCWritePBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    INTEGER filler1;
+    PPCSessRefNum sessRefNum;
+    Size bufferLength;
+    Size actualLength;
+    Ptr bufferPtr;
+    Boolean more;
+    uint8_t filler2;
+    unsigned long userData;
+    OSType blockCreator;
+    OSType blockType;
+};
+
+typedef PPCWritePBRec *PPCWritePBPtr;
+
+typedef struct PPCReadPBRec PPCReadPBRec;
+struct PPCReadPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    INTEGER filler1;
+    PPCSessRefNum sessRefNum;
+    Size bufferLength;
+    Size actualLength;
+    Ptr bufferPtr;
+    Boolean more;
+    uint8_t filler2;
+    unsigned long userData;
+    OSType blockCreator;
+    OSType blockType;
+};
+
+typedef PPCReadPBRec *PPCReadPBPtr;
+
+typedef struct PPCEndPBRec PPCEndPBRec;
+struct PPCEndPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    INTEGER filler1;
+    PPCSessRefNum sessRefNum;
+};
+
+typedef PPCEndPBRec *PPCEndPBPtr;
+
+typedef struct PPCClosePBRec PPCClosePBRec;
+struct PPCClosePBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    PPCPortRefNum portRefNum;
+};
+
+typedef PPCClosePBRec *PPCClosePBPtr;
+
+typedef struct IPCListPortsPBRec IPCListPortsPBRec;
+struct IPCListPortsPBRec {
+    Ptr qLink;
+    uint16_t csCode;
+    uint16_t intUse;
+    Ptr intUsePtr;
+    PPCCompUPP ioCompletion;
+    OSErr ioResult;
+    unsigned long Reserved[5];
+    INTEGER filler1;
+    uint16_t startIndex;
+    uint16_t requestCount;
+    uint16_t actualCount;
+    PPCPortPtr portName;
+    LocationNamePtr locationName;
+    PortInfoArrayPtr bufferPtr;
+};
+
+typedef IPCListPortsPBRec *IPCListPortsPBPtr;
+
+// PPC Toolbox
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCInit(void) {
+    register OSErr _ret __asm__("d0");
+    __asm__ __volatile__(".short 0x7000, 0xA0DD"
+        : "=r"(_ret)
+        : 
+        : "d1", "d2", "a0", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCInit(void);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenSync(PPCOpenPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCOpenPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7001, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCOpenSync(PPCOpenPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCOpenAsync(PPCOpenPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCOpenPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7001, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCOpenAsync(PPCOpenPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCStartSync(PPCStartPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCStartPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7002, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCStartSync(PPCStartPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCStartAsync(PPCStartPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCStartPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7002, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCStartAsync(PPCStartPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCInformSync(PPCInformPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCInformPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7003, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCInformSync(PPCInformPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCInformAsync(PPCInformPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCInformPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7003, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCInformAsync(PPCInformPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptSync(PPCAcceptPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCAcceptPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7004, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCAcceptSync(PPCAcceptPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCAcceptAsync(PPCAcceptPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCAcceptPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7004, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCAcceptAsync(PPCAcceptPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectSync(PPCRejectPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCRejectPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7005, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCRejectSync(PPCRejectPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCRejectAsync(PPCRejectPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCRejectPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7005, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCRejectAsync(PPCRejectPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteSync(PPCWritePBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCWritePBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7006, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCWriteSync(PPCWritePBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCWriteAsync(PPCWritePBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCWritePBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7006, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCWriteAsync(PPCWritePBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCReadSync(PPCReadPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCReadPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7007, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCReadSync(PPCReadPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCReadAsync(PPCReadPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCReadPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7007, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCReadAsync(PPCReadPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCEndSync(PPCEndPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCEndPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7008, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCEndSync(PPCEndPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCEndAsync(PPCEndPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCEndPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7008, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCEndAsync(PPCEndPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseSync(PPCClosePBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCClosePBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7009, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCCloseSync(PPCClosePBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr PPCCloseAsync(PPCClosePBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register PPCClosePBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x7009, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr PPCCloseAsync(PPCClosePBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsSync(IPCListPortsPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register IPCListPortsPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x700A, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr IPCListPortsSync(IPCListPortsPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr IPCListPortsAsync(IPCListPortsPBPtr pb) {
+    register OSErr _ret __asm__("d0");
+    register IPCListPortsPBPtr _pb __asm__("a0") = pb;
+    __asm__ __volatile__(".short 0x700A, 0xA4DD"
+        : "=r"(_ret)
+        : "r"(_pb)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr IPCListPortsAsync(IPCListPortsPBPtr pb);
+#endif
+
+#if TARGET_CPU_68K
+static __inline__ __attribute__((__always_inline__)) OSErr DeleteUserIdentity(unsigned long userRef) {
+    register OSErr _ret __asm__("d0");
+    register unsigned long _userRef __asm__("a0") = userRef;
+    __asm__ __volatile__(".short 0x700C, 0xA0DD"
+        : "=r"(_ret)
+        : "r"(_userRef)
+        : "d1", "d2", "a1", "cc", "memory");
+    return _ret;
+}
+#else
+pascal OSErr DeleteUserIdentity(unsigned long userRef);
+#endif
+
+pascal OSErr GetDefaultUser(unsigned long *userRef, Str32 userName);
+
+pascal OSErr StartSecureSession(PPCStartPBPtr pb, Str32 userName, Boolean useDefault, Boolean allowGuest, Boolean *guestSelected, ConstStr255Param prompt);
+
+enum { _Pack9 = 0xA82B };
+
+pascal OSErr PPCBrowser(ConstStr255Param prompt, ConstStr255Param applListLabel, Boolean defaultSpecified, LocationNameRec *theLocation, PortInfoRec *thePortInfo, PPCFilterUPP portFilter, ConstStr32Param theLocNBPType) M68K_INLINE(0x303C, 0x0D00, 0xA82B);
+
 #pragma options align=reset
 
 #endif

@@ -43,7 +43,7 @@ TYPE_SIZE = {"uint8_t": 1, "uint16_t": 2, "uint32_t": 4, "uint64_t": 8,
 # one includes the whole set.
 APPLE_NAMES = [
     "AppleEvents", "Aliases", "CodeFragments", "Components", "CursorDevices",
-    "ConditionalMacros", "Displays", "Power", "SCSI", "Slots", "TextServices",
+    "ConditionalMacros", "Displays", "Power", "PPCToolbox", "SCSI", "Slots", "TextServices",
     "Controls", "Devices", "Dialogs", "DiskInit", "Drag", "DriverServices",
     "Errors", "Events", "Files", "Finder", "FixMath", "Folders", "Fonts",
     "Gestalt", "Icons", "Interrupts", "Kernel", "Lists", "LowMem",
